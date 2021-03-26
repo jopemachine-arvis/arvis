@@ -3,20 +3,24 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
+import { Switch, Route } from 'react-router-dom';
 import { Store } from '../reducers/types';
-import Routes from '../Routes';
+import PreferenceContainer from '../containers/Preference';
+import routes from '../constants/routes.json';
 
 type Props = {
   store: Store;
   history: History;
 };
 
-const Root = ({ store, history }: Props) => (
+const RootRouter = ({ store, history }: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Routes />
+      <Switch>
+        <Route path={routes.HOME} component={PreferenceContainer} />
+      </Switch>
     </ConnectedRouter>
   </Provider>
 );
 
-export default hot(Root);
+export default hot(RootRouter);
