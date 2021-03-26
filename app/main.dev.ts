@@ -16,6 +16,10 @@ import log from 'electron-log';
 import MenuBuilder from './src/components/menu';
 import TrayBuilder from './src/components/tray';
 
+const trayIconPath = path.join(__dirname, 'resources', 'icons', '24x24.png');
+const trayBuilder = new TrayBuilder(trayIconPath);
+trayBuilder.buildTray();
+
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -92,10 +96,6 @@ const createWindow = async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
-
-  const trayIconPath = path.join(__dirname, 'resources', 'icons', '24x24.png');
-  const trayBuilder = new TrayBuilder(trayIconPath);
-  trayBuilder.buildTray();
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
