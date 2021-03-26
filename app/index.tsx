@@ -4,6 +4,7 @@ import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
 import Root from './src/containers/Root';
 import { configureStore, history } from './src/store/configureStore';
 import './app.global.css';
+import {} from 'wf-creator-core';
 
 const store = configureStore();
 

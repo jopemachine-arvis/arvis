@@ -12,6 +12,7 @@ import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+
 import MenuBuilder from './src/components/menu';
 import TrayBuilder from './src/components/tray';
 

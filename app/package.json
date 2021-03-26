@@ -13,6 +13,11 @@
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
   },
+  "keywords": [
+    "electron",
+    "wf-creator"
+  ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+  }
 }
