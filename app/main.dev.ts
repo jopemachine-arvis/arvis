@@ -16,6 +16,9 @@ import log from 'electron-log';
 import MenuBuilder from './src/components/menu';
 import TrayBuilder from './src/components/tray';
 
+import { registerGlobalShortcut } from './src/utils';
+import constants from './src/constants';
+
 const trayIconPath = path.join(__dirname, 'resources', 'icons', '24x24.png');
 const trayBuilder = new TrayBuilder(trayIconPath);
 trayBuilder.buildTray();
@@ -62,8 +65,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: constants.windowWidth,
+    height: constants.windowHeight,
     webPreferences:
       process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
         ? {
@@ -97,6 +100,7 @@ const createWindow = async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
+  registerGlobalShortcut();
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
