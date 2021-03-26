@@ -1,0 +1,18 @@
+{
+  "name": "wf-creator-gui",
+  "productName": "wf-creator-gui",
+  "version": "0.0.1",
+  "description": "demo version",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "jopemachine",
+    "email": "jopemachine@gmail.com",
+    "url": "https://github.com/jopemachine/wf-creator-gui"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
