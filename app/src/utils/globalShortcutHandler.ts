@@ -1,7 +1,7 @@
 import { globalShortcut } from 'electron';
 
 const registerGlobalShortcut = (callback: () => void) => {
-  globalShortcut.register('Alt+X', callback);
+  globalShortcut.register('Ctrl+Space', callback);
 };
 
 export default registerGlobalShortcut;
