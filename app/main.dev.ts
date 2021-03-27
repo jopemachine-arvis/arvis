@@ -126,9 +126,9 @@ const createSearchWindow = async () => {
   }
 
   searchWindow = new BrowserWindow({
+    center: true,
     show: false,
     frame: false,
-    transparent: true,
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences:
@@ -145,8 +145,12 @@ const createSearchWindow = async () => {
     query: { window: 'searchWindow' }
   });
 
-  searchWindow.on('closed', () => {
-    createSearchWindow();
+  searchWindow.on('close', e => {
+    e.preventDefault();
+    if (searchWindow) {
+      searchWindow.hide();
+    }
+    // createSearchWindow();
   });
 
   searchWindow.on('blur', () => {
@@ -156,12 +160,20 @@ const createSearchWindow = async () => {
   });
 };
 
+app.on('before-quit', () => {
+  if (searchWindow && searchWindow.closable) {
+    searchWindow.close();
+    searchWindow = null;
+    app.exit();
+  }
+});
+
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  // if (process.platform !== 'darwin') {
+  //   app.quit();
+  // }
 });
 
 app.on('ready', () => {
