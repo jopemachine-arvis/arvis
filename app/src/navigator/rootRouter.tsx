@@ -5,7 +5,10 @@ import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { Switch, Route } from 'react-router-dom';
 import { Store } from '../reducers/types';
-import PreferenceContainer from '../containers/Preference';
+import {
+  Preference as PreferenceContainer,
+  Search as SearchContainer
+} from '../containers';
 
 type Props = {
   store: Store;
@@ -22,7 +25,7 @@ const RootRouter = ({ store, history, windowName }: Props) => {
       </Switch>
     );
   } else {
-    
+    <SearchContainer></SearchContainer>
   }
 
   return (

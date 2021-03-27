@@ -3,7 +3,6 @@ import {
   ProSidebar,
   Menu,
   MenuItem,
-  SubMenu,
   SidebarHeader,
   SidebarContent,
   SidebarFooter
@@ -18,7 +17,6 @@ import './index.global.css';
 import './sidebar.global.css';
 import styled from 'styled-components';
 import sidebarBg from '../../../resources/images/sidebar_bg.jpg';
-
 import SidebarTitle from './sidebarTitle';
 
 const OuterContainer = styled.div`
