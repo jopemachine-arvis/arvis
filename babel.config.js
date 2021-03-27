@@ -28,7 +28,6 @@ module.exports = api => {
     plugins: [
       // Stage 0
       require('@babel/plugin-proposal-function-bind'),
-
       // Stage 1
       require('@babel/plugin-proposal-export-default-from'),
       require('@babel/plugin-proposal-logical-assignment-operators'),
@@ -55,6 +54,8 @@ module.exports = api => {
       require('@babel/plugin-syntax-import-meta'),
       [require('@babel/plugin-proposal-class-properties'), { loose: true }],
       require('@babel/plugin-proposal-json-strings'),
+
+      'babel-plugin-styled-components',
 
       ...(development ? developmentPlugins : productionPlugins)
     ]

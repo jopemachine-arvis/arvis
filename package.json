@@ -164,6 +164,7 @@
     "@types/react-test-renderer": "^16.9.2",
     "@types/redux-logger": "^3.0.7",
     "@types/sinon": "^7.5.2",
+    "@types/styled-components": "^5.1.9",
     "@types/tapable": "^1.0.5",
     "@types/vfile-message": "^2.0.0",
     "@types/webpack": "^4.41.3",
@@ -174,6 +175,7 @@
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-dev-expression": "^0.2.2",
+    "babel-plugin-styled-components": "^1.12.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist-config-erb": "^0.0.1",
     "chalk": "^3.0.0",
@@ -260,6 +262,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.16",
+    "styled-components": "^5.2.1",
     "wf-creator-core": "file:../wf-creator-core"
   },
   "devEngines": {

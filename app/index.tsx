@@ -4,7 +4,7 @@ import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
 import RootRouter from './src/navigator/rootRouter';
 import { configureStore, history } from './src/store/configureStore';
 import './app.global.css';
-import { IconContext } from "react-icons";
+import { IconContext } from 'react-icons';
 
 const store = configureStore();
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () =>
   render(
     <AppContainer>
       <IconContext.Provider
-        value={{ color: 'blue', className: 'global-class-name' }}
+        value={{ color: 'white', className: 'global-class-name' }}
       >
         <RootRouter store={store} history={history} />
       </IconContext.Provider>
