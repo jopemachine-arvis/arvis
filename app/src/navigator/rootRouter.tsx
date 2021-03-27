@@ -6,21 +6,30 @@ import { History } from 'history';
 import { Switch, Route } from 'react-router-dom';
 import { Store } from '../reducers/types';
 import PreferenceContainer from '../containers/Preference';
-import routes from '../constants/routes.json';
 
 type Props = {
   store: Store;
   history: History;
+  windowName: string;
 };
 
-const RootRouter = ({ store, history }: Props) => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
+const RootRouter = ({ store, history, windowName }: Props) => {
+  let windowComp;
+  if (windowName === 'preferenceWindow') {
+    windowComp = (
       <Switch>
-        <Route path={routes.HOME} component={PreferenceContainer} />
+        <Route path="/" component={PreferenceContainer} />
       </Switch>
-    </ConnectedRouter>
-  </Provider>
-);
+    );
+  } else {
+    
+  }
+
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>{windowComp}</ConnectedRouter>
+    </Provider>
+  );
+};
 
 export default hot(RootRouter);

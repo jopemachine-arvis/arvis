@@ -31,7 +31,8 @@ export default class AppUpdater {
   }
 }
 
-let mainWindow: BrowserWindow | null = null;
+let preferenceWindow: BrowserWindow | null = null;
+let searchWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -55,7 +56,7 @@ const installExtensions = async () => {
   ).catch(console.log);
 };
 
-const createWindow = async () => {
+const createPreferenceWindow = async () => {
   if (
     process.env.NODE_ENV === 'development' ||
     process.env.DEBUG_PROD === 'true'
@@ -63,10 +64,10 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  mainWindow = new BrowserWindow({
+  preferenceWindow = new BrowserWindow({
     show: false,
-    width: constants.windowWidth,
-    height: constants.windowHeight,
+    width: constants.preferenceWindowWidth,
+    height: constants.preferenceWindowHeight,
     webPreferences:
       process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
         ? {
@@ -77,38 +78,83 @@ const createWindow = async () => {
           }
   });
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  preferenceWindow.loadFile(`${__dirname}/app.html`, {
+    query: { window: 'preferenceWindow' }
+  });
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
+  preferenceWindow.webContents.on('did-finish-load', () => {
+    if (!preferenceWindow) {
+      throw new Error('"preferenceWindow" is not defined');
     }
     if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
+      preferenceWindow.minimize();
     } else {
-      mainWindow.show();
-      mainWindow.focus();
+      preferenceWindow.show();
+      preferenceWindow.focus();
     }
   });
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  preferenceWindow.on('closed', () => {
+    preferenceWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  const menuBuilder = new MenuBuilder(preferenceWindow);
   menuBuilder.buildMenu();
 
-  registerGlobalShortcut(() => {});
+  registerGlobalShortcut(() => {
+    if (!searchWindow) {
+      throw new Error('"searchWindow" is not defined');
+    }
+
+    searchWindow.show();
+    searchWindow.focus();
+  });
+
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
+const createSearchWindow = async () => {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    await installExtensions();
+  }
+
+  searchWindow = new BrowserWindow({
+    show: false,
+    frame: false,
+    transparent: true,
+    width: constants.searchWindowWidth,
+    height: constants.searchWindowHeight,
+    webPreferences:
+      process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
+        ? {
+            nodeIntegration: true
+          }
+        : {
+            preload: path.join(__dirname, 'dist/renderer.prod.js')
+          }
+  });
+
+  searchWindow.loadFile(`${__dirname}/app.html`, {
+    query: { window: 'searchWindow' }
+  });
+
+  searchWindow.on('closed', () => {
+    createSearchWindow();
+  });
+
+  searchWindow.on('blur', () => {
+    if (searchWindow) {
+      searchWindow.hide();
+    }
+  });
+};
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
@@ -118,10 +164,13 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createSearchWindow();
+  createPreferenceWindow();
+});
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow();
+  if (preferenceWindow === null) createPreferenceWindow();
 });
