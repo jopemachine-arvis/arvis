@@ -1,4 +1,4 @@
-import MenuBuilder from './menu';
+import MenuBuilder from './menus';
 import TrayBuilder from './tray';
 import SearchBar from './searchBar';
 import SearchResultItem from './searchResultItem';

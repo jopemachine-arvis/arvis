@@ -2,7 +2,7 @@ import path from 'path';
 import { BrowserWindow } from 'electron';
 import { registerGlobalShortcut } from '../utils';
 import constants from '../constants';
-import MenuBuilder from '../components/menu';
+import MenuBuilder from '../components/menus';
 import AppUpdater from '../config/appUpdater';
 import installExtensions from '../config/extensionInstaller';
 
