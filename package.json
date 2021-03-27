@@ -262,7 +262,6 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.16",
-    "styled-components": "^5.2.1",
     "wf-creator-core": "file:../wf-creator-core"
   },
   "devEngines": {

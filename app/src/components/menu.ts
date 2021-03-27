@@ -195,7 +195,9 @@ export default class MenuBuilder {
             label: '&Close',
             accelerator: 'Ctrl+W',
             click: () => {
-              this.mainWindow.close();
+              if (this.mainWindow && !this.mainWindow.isDestroyed()) {
+                this.mainWindow.close();
+              }
             }
           }
         ]

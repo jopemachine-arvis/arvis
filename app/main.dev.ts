@@ -150,7 +150,6 @@ const createSearchWindow = async () => {
     if (searchWindow) {
       searchWindow.hide();
     }
-    // createSearchWindow();
   });
 
   searchWindow.on('blur', () => {
