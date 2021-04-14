@@ -12,15 +12,15 @@ type IProps = {
 };
 
 const Container = styled.div`
-  flexdirection: column;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
-  wordwrap: break-word;
+  word-wrap: break-word;
 `;
 
 const SubTitle = styled.div`
-  wordwrap: break-word;
+  word-wrap: break-word;
 `;
 
 const searchResultItem = (props: IProps) => {

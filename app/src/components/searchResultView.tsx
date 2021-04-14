@@ -13,16 +13,16 @@ type IProps = {
 const Divider = styled.div`
   width: 100vh;
   border: 1px;
-  borderColor: #000000;
+  border-color: #000000;
 `;
 
 const OuterContainer = styled.div`
-  flexDirection: column;
+  flex-direction: column;
   width: 100vh;
 `;
 
 const InnerContainer = styled.div`
-  flexDirection: column;
+  flex-direction: column;
   width: 100vh;
 `;
 

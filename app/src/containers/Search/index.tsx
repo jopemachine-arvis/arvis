@@ -7,7 +7,7 @@ import { maxItemCount, useControl } from '../../hooks/useControl';
 const commandManager = new Core.CommandManager();
 
 const Container = styled.div`
-  flexDirection: column;
+  flex-direction: column;
   width: 100vh;
 `;
 

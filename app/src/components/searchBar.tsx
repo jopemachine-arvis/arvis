@@ -2,12 +2,12 @@ import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Text = styled.div`
-  fontweight: bold;
+  font-weight: bold;
   color: white;
 `;
 
 const PlaceHolder = styled.div`
-  fontweight: normal;
+  font-weight: normal;
   color: gray;
 `;
 
