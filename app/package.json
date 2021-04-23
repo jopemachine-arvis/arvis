@@ -18,6 +18,5 @@
     "wf-creator"
   ],
   "license": "MIT",
-  "dependencies": {
-  }
+  "dependencies": {}
 }

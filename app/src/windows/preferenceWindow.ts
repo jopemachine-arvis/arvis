@@ -6,10 +6,13 @@ import MenuBuilder from '../components/menus';
 import AppUpdater from '../config/appUpdater';
 import installExtensions from '../config/extensionInstaller';
 
-const createPreferenceWindow = (
-  trayBuilder: any,
-  searchWindow: BrowserWindow
-) => {
+const createPreferenceWindow = ({
+  trayBuilder,
+  searchWindow
+}: {
+  trayBuilder: any;
+  searchWindow: BrowserWindow;
+}) => {
   if (
     process.env.NODE_ENV === 'development' ||
     process.env.DEBUG_PROD === 'true'
@@ -35,8 +38,6 @@ const createPreferenceWindow = (
     query: { window: 'preferenceWindow' }
   });
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   preferenceWindow.webContents.on('did-finish-load', () => {
     if (!preferenceWindow) {
       throw new Error('"preferenceWindow" is not defined');
@@ -68,7 +69,6 @@ const createPreferenceWindow = (
     searchWindow.focus();
   });
 
-  // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
 

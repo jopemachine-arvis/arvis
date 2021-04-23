@@ -1,31 +1,27 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Text = styled.div`
-  font-weight: bold;
-  color: white;
-`;
-
-const PlaceHolder = styled.div`
+const Input = styled.input`
   font-weight: normal;
   color: gray;
 `;
 
 const Container = styled.div`
   width: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
 const searchBar = (props: any) => {
-  const { input } = props;
+  // eslint-disable-next-line react/destructuring-assignment
+  const inputProps = props.getInputProps();
 
-  const inputElem =
-    input !== '' ? (
-      <Text>{`${input}`}</Text>
-    ) : (
-      <PlaceHolder>Search..</PlaceHolder>
-    );
-
-  return <Container>{inputElem}</Container>;
+  return (
+    <Container>
+      <Input {...inputProps} />
+    </Container>
+  );
 };
 
 export default searchBar;

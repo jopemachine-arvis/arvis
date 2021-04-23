@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import useKey from 'use-key-capture';
 
@@ -16,6 +16,8 @@ const useControl = ({
   items: any[];
   commandManager: Core.CommandManager;
 }) => {
+  const { keyData, getTargetProps } = useKey();
+
   const [inputStr, setInputStr] = useState<string>('');
   const [indexInfo, setIndexInfo] = useState<IIndexInfos>({
     itemStartIdx: 0,
@@ -26,14 +28,31 @@ const useControl = ({
     setInputStr('');
   };
 
+  const clearIndexInfo = () => {
+    setIndexInfo({
+      itemStartIdx: 0,
+      selectedItemIdx: 0
+    });
+  };
+
   const handleReturn = async (modifiers: any) => {
     try {
-      await commandManager.commandExcute(
-        items[indexInfo.selectedItemIdx],
-        inputStr,
-        modifiers
-      );
-      setInputStr('');
+      const selectedItem = items[indexInfo.selectedItemIdx];
+      if (selectedItem.type === 'scriptfilter') {
+        setInputStr(selectedItem.command);
+
+        try {
+          commandManager.scriptFilterExcute(
+            selectedItem.command,
+            items[indexInfo.selectedItemIdx]
+          );
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        await commandManager.commandExcute(selectedItem, inputStr, modifiers);
+        setInputStr('');
+      }
     } catch (err) {
       console.error(err);
     }
@@ -90,32 +109,38 @@ const useControl = ({
 
     // Assume withspace's default value is true
     if (items.length !== 0) {
-      if (items[0].type === 'scriptfilter') {
-        const cond1 =
-          items[0].withspace === false && updatedInput === items[0].command;
-        const cond2 =
-          items[0].withspace === true &&
-          updatedInput.includes(items[0].command) &&
-          input !== ' ';
+      // When script filter is running
+      const onScriptFilter = !commandManager.hasEmptyCommandStk();
 
-        if (cond1 || cond2) {
-          try {
-            commandManager.scriptFilterExcute(
-              items[indexInfo.selectedItemIdx],
-              updatedInput
-            );
-          } catch (err) {
-            console.error(err);
-          }
+      // When script filter should be running
+      const goScriptFilterWithSpace =
+        items[0].withspace === true &&
+        updatedInput.includes(items[0].command) &&
+        input !== ' ';
+
+      const goScriptFilterWithoutSpace =
+        items[0].withspace === false && updatedInput.includes(items[0].command);
+
+      if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
+        try {
+          commandManager.scriptFilterExcute(
+            updatedInput,
+            items[indexInfo.selectedItemIdx]
+          );
+        } catch (err) {
+          console.error(err);
+        }
+      } else if (onScriptFilter) {
+        try {
+          commandManager.scriptFilterExcute(updatedInput);
+        } catch (err) {
+          console.error(err);
         }
       }
     }
   };
 
-  const { keyData, getTargetProps } = useKey();
-
-  const onKeydown = async (e: any) => {
-    // const key, input ;
+  const onKeydown = async () => {
     const input = keyData.key;
     let updatedInput = inputStr + input;
 
@@ -141,10 +166,17 @@ const useControl = ({
     }
   };
 
+  useEffect(() => {
+    if (keyData.key === null) return;
+    onKeydown();
+  }, [keyData]);
+
   return {
     inputStr,
     indexInfo,
-    clearInput
+    clearInput,
+    clearIndexInfo,
+    getInputProps: getTargetProps
   };
 };
 

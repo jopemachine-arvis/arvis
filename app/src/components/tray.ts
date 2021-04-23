@@ -39,7 +39,10 @@ export default class TrayBuilder {
           return;
         } else if (this.preferenceWindow.isDestroyed()) {
           this.setPreferenceWindow(
-            createPreferenceWindow(this, this.searchWindow!)
+            createPreferenceWindow({
+              trayBuilder: this,
+              searchWindow: this.searchWindow!
+            })
           );
         }
         this.preferenceWindow.show();

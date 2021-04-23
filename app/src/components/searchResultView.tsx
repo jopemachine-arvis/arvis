@@ -19,6 +19,8 @@ const Divider = styled.div`
 const OuterContainer = styled.div`
   flex-direction: column;
   width: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
 const InnerContainer = styled.div`

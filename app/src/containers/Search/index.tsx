@@ -9,11 +9,13 @@ const commandManager = new Core.CommandManager();
 const Container = styled.div`
   flex-direction: column;
   width: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
-const App: FC<any> = () => {
+export default function SearchWindow() {
   const [items, setItems] = useState<any>([]);
-  const { inputStr, indexInfo, clearInput } = useControl({
+  const { inputStr, indexInfo, clearInput, getInputProps } = useControl({
     items,
     commandManager
   });
@@ -31,18 +33,21 @@ const App: FC<any> = () => {
 
     const command = inputStr.split(' ')[0];
     const result = Core.findCommands(command);
+
+    console.log('command', command);
+    console.log('res', result);
     setItems(result);
   };
 
   useEffect(() => {
-    if (commandManager.commandStk.length === 0) {
+    if (commandManager.hasEmptyCommandStk()) {
       searchCommands();
     }
   }, [inputStr]);
 
   return (
     <Container>
-      <SearchBar input={inputStr} />
+      <SearchBar input={inputStr} getInputProps={getInputProps} />
       <SearchResultView
         startIdx={indexInfo.itemStartIdx}
         selectedItemIdx={indexInfo.selectedItemIdx}
@@ -51,6 +56,4 @@ const App: FC<any> = () => {
       />
     </Container>
   );
-};
-
-export default App;
+}

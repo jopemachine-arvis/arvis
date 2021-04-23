@@ -24,7 +24,7 @@ const OuterContainer = styled.div`
   width: 100vh;
 `;
 
-export default function Preference() {
+export default function PreferenceWindow() {
   return (
     <OuterContainer>
       <ProSidebar image={sidebarBg}>

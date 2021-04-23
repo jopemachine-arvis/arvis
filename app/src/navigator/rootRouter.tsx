@@ -25,7 +25,7 @@ const RootRouter = ({ store, history, windowName }: Props) => {
       </Switch>
     );
   } else {
-    <SearchContainer></SearchContainer>
+    windowComp = <SearchContainer />;
   }
 
   return (

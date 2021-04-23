@@ -44,13 +44,16 @@ app.on('before-quit', () => {
 
 app.on('ready', () => {
   searchWindow = createSearchWindow();
-  createPreferenceWindow(trayBuilder, searchWindow);
+  createPreferenceWindow({ trayBuilder, searchWindow });
 });
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (preferenceWindow === null) {
-    preferenceWindow = createPreferenceWindow(trayBuilder, searchWindow!);
+    preferenceWindow = createPreferenceWindow({
+      trayBuilder,
+      searchWindow: searchWindow!
+    });
   }
 });
