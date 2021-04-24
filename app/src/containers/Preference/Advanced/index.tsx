@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+export default function Advanced() {
+  return (
+    <OuterContainer>
+    </OuterContainer>
+  );
+}
+
 const OuterContainer = styled.div`
   height: 100vh;
   width: 100vh;
@@ -9,10 +16,3 @@ const OuterContainer = styled.div`
   flex-direction: row;
   background-color: #444444;
 `;
-
-export default function InstalledWorkflow() {
-  return (
-    <OuterContainer>
-    </OuterContainer>
-  );
-}

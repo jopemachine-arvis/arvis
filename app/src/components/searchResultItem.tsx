@@ -11,18 +11,6 @@ type IProps = {
   variables?: any;
 };
 
-const Container = styled.div`
-  flex-direction: column;
-`;
-
-const Title = styled.div`
-  word-wrap: break-word;
-`;
-
-const SubTitle = styled.div`
-  word-wrap: break-word;
-`;
-
 const searchResultItem = (props: IProps) => {
   const { selected, title, subtitle } = props;
 
@@ -35,5 +23,17 @@ const searchResultItem = (props: IProps) => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  flex-direction: column;
+`;
+
+const Title = styled.div`
+  word-wrap: break-word;
+`;
+
+const SubTitle = styled.div`
+  word-wrap: break-word;
+`;
 
 export default searchResultItem;

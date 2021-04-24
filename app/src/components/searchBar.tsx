@@ -1,18 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { FC, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-const Input = styled.input`
-  font-weight: normal;
-  color: gray;
-`;
-
-const Container = styled.div`
-  width: 100vh;
-  justify-content: center;
-  align-items: center;
-`;
 
 const searchBar = (props: any) => {
   const inputProps = props.getInputProps();
@@ -27,5 +16,16 @@ const searchBar = (props: any) => {
     </Container>
   );
 };
+
+const Input = styled.input`
+  font-weight: normal;
+  color: gray;
+`;
+
+const Container = styled.div`
+  width: 100vh;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default searchBar;
