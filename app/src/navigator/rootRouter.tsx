@@ -1,3 +1,5 @@
+/* eslint-disable import/no-webpack-loader-syntax */
+/* eslint-disable import/order */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
@@ -9,6 +11,10 @@ import {
   Preference as PreferenceContainer,
   Search as SearchContainer
 } from '../containers';
+
+import $ from 'jquery';
+import Popper from 'popper.js';
+import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
 type Props = {
   store: Store;

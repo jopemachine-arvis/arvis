@@ -2,25 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
+
 import GeneralPage from './General';
 import WorkflowPage from './Workflow';
 import ThemePage from './Theme';
 import AdvancedPage from './Advanced';
-
-const OuterContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-`;
-
-const MainContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
 
 const INITIAL_PAGE = PreferencePage.General;
 
@@ -53,3 +39,18 @@ export default function PreferenceWindow() {
     </OuterContainer>
   );
 }
+
+const OuterContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+`;
+
+const MainContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+`;

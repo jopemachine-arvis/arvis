@@ -10,7 +10,7 @@ html {
   overflow-x: hidden;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
   background: transparent;  /* Optional: just make scrollbar invisible */
 }
 ::-webkit-scrollbar-thumb {

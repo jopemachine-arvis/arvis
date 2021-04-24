@@ -25,6 +25,8 @@ const createPreferenceWindow = ({
     show: false,
     width: constants.preferenceWindowWidth,
     height: constants.preferenceWindowHeight,
+    minWidth: constants.preferenceMinWindowWidth,
+    minHeight: constants.preferenceMinWindowHeight,
     webPreferences:
       process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
         ? {

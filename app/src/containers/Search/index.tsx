@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import styled from 'styled-components';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
-import { ipcRenderer } from 'electron';
 import { SearchBar, SearchResultView } from '../../components';
 import { maxItemCount, useControl } from '../../hooks/useControl';
 

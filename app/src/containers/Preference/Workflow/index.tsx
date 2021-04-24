@@ -85,7 +85,8 @@ export default function Workflow() {
       if (!fileInfo.file.filePaths[0]) return;
       const selectedConfigFilePath = fileInfo.file.filePaths[0];
       const selectFileName = selectedConfigFilePath.split(path.sep).pop();
-      if (selectFileName.split('.')[1] !== 'json') {
+      const selectedFileExt = selectFileName.split('.')[1];
+      if (selectedFileExt !== 'json') {
         return;
       }
 
