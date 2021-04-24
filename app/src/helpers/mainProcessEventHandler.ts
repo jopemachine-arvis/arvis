@@ -21,7 +21,7 @@ export const initIPCHandler = ({
   ipcMain.on('resize-searchwindow-height', (evt: any, itemCount: number) => {
     const maxCount = 9;
     const heightPerItem = 45;
-    let heightToSet = 0;
+    let heightToSet;
 
     if (itemCount >= maxCount) {
       heightToSet = maxCount * heightPerItem;

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -14,12 +15,15 @@ const Container = styled.div`
 `;
 
 const searchBar = (props: any) => {
-  // eslint-disable-next-line react/destructuring-assignment
   const inputProps = props.getInputProps();
+
+  const preventUpAndDownArrow = (e: any) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') e.preventDefault();
+  };
 
   return (
     <Container>
-      <Input {...inputProps} />
+      <Input {...inputProps} onKeyDown={preventUpAndDownArrow} />
     </Container>
   );
 };
