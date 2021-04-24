@@ -8,7 +8,7 @@ import ThemePage from './Theme';
 import AdvancedPage from './Advanced';
 
 const OuterContainer = styled.div`
-  width: 100vh;
+  width: 100%;
   height: 100vh;
   flex: 1;
   display: flex;
@@ -16,7 +16,7 @@ const OuterContainer = styled.div`
 `;
 
 const MainContainer = styled.div`
-  width: 100vh;
+  width: 100%;
   display: flex;
   flex: 1;
   flex-direction: row;
