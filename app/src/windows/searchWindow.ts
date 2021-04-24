@@ -7,6 +7,7 @@ const createSearchWindow = () => {
     center: true,
     show: false,
     frame: false,
+    transparent: true,
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences:

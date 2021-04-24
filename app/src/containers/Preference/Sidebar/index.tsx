@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
   ProSidebar,
@@ -20,12 +21,15 @@ import SidebarTitle from './sidebarTitle';
 import { PreferencePage } from '../preferencePageEnum';
 
 type IProps = {
+  page: PreferencePage;
   setPage: Function;
 };
 
 export default function Sidebar(props: IProps) {
-  const setPage = (page: PreferencePage) => {
-    props.setPage(page);
+  const { page } = props;
+
+  const setPage = (pageToSet: PreferencePage) => {
+    props.setPage(pageToSet);
   };
 
   return (
@@ -38,24 +42,28 @@ export default function Sidebar(props: IProps) {
           <MenuItem
             onClick={() => setPage(PreferencePage.General)}
             icon={<AiOutlineSetting />}
+            active={page === PreferencePage.General}
           >
             General
           </MenuItem>
           <MenuItem
             onClick={() => setPage(PreferencePage.Workflow)}
             icon={<AiOutlineAppstore />}
+            active={page === PreferencePage.Workflow}
           >
             Installed workflows
           </MenuItem>
           <MenuItem
             onClick={() => setPage(PreferencePage.Theme)}
             icon={<AiOutlineFormatPainter />}
+            active={page === PreferencePage.Theme}
           >
             Theme
           </MenuItem>
           <MenuItem
             onClick={() => setPage(PreferencePage.Advanced)}
             icon={<AiOutlineTool />}
+            active={page === PreferencePage.Advanced}
           >
             Advanced
           </MenuItem>

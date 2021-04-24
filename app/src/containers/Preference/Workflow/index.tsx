@@ -18,8 +18,8 @@ import {
 import { CgSmileNone } from 'react-icons/cg';
 
 const bottomFixedBarIconStyle = {
-  width: 26,
-  height: 26,
+  width: 22,
+  height: 22,
   marginLeft: 24
 };
 
@@ -172,6 +172,8 @@ const WorkflowItemTitle = styled.div`
 `;
 
 const WorkflowItemCreatorText = styled.div`
+  margin-top: 5px;
+  font-size: 12px;
   color: #cccccc;
 `;
 
@@ -183,7 +185,6 @@ const OuterContainer = styled.div`
   flex-direction: row;
   background-color: #444444;
   justify-content: flex-start;
-  margin-left: 15px;
 `;
 
 const WorkflowListView = styled.div`
@@ -209,7 +210,7 @@ const WorkflowListOrderedList = styled.ol``;
 
 const WorkflowItemContainer = styled.div`
   width: 300px;
-  height: 60px;
+  height: 45px;
   justify-content: center;
   align-items: center;
   padding: 10px;

@@ -48,7 +48,7 @@ export default function PreferenceWindow() {
 
   return (
     <OuterContainer>
-      <Sidebar setPage={setPage} />
+      <Sidebar page={page} setPage={setPage} />
       <MainContainer>{main}</MainContainer>
     </OuterContainer>
   );
