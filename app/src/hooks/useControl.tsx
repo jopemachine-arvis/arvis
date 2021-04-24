@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
-import useKey from 'use-key-capture';
+import useKey from '../../use-key-capture/dist/index';
 
 const maxItemCount = 5;
 
@@ -16,7 +16,7 @@ const useControl = ({
   items: any[];
   commandManager: Core.CommandManager;
 }) => {
-  const { keyData, getTargetProps } = useKey();
+  const { keyData, getTargetProps, resetKeyData } = useKey();
 
   const [inputStr, setInputStr] = useState<string>('');
   const [indexInfo, setIndexInfo] = useState<IIndexInfos>({
@@ -26,6 +26,7 @@ const useControl = ({
 
   const clearInput = () => {
     setInputStr('');
+    resetKeyData();
   };
 
   const clearIndexInfo = () => {
@@ -159,14 +160,13 @@ const useControl = ({
       handleDownArrow();
     } else if (keyData.isArrowUp) {
       handleUpArrow();
-    } else if (keyData.isEscape) {
-      console.log('esc~');
     } else {
       handleNormalInput(input, updatedInput, modifiers);
     }
   };
 
   useEffect(() => {
+    // Ignore Initial Mount
     if (keyData.key === null) return;
     onKeydown();
   }, [keyData]);

@@ -1,0 +1,5 @@
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "ignore": ["*/__tests__.js", "*.test.js", "/__tests__/"],
+  "plugins": ["@babel/transform-runtime"]
+}

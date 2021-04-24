@@ -16292,11 +16292,6 @@ use-force-update@^1.0.7:
   resolved "https://registry.yarnpkg.com/use-force-update/-/use-force-update-1.0.7.tgz#f5e672633f5a398b25c33b2287150918bcb3526b"
   integrity sha512-k5dppYhO+I5X/cd7ildbrzeMZJkWwdAh5adaIk0qKN2euh7J0h2GBGBcB4QZ385eyHHnp7LIygvebdRx3XKdwA==
 
-use-key-capture@^1.0.1-beta.1:
-  version "1.0.1-beta.1"
-  resolved "https://registry.yarnpkg.com/use-key-capture/-/use-key-capture-1.0.1-beta.1.tgz#82ae19b71ef7ea0fc9858bf542cd68c17f7e8733"
-  integrity sha512-6COrP5DGWm8f4x3nFr2p2IlixxY1H3jn3a9gnsoolJWDuA+Lhb+lwayZhztgMSUNxyJxMYefM9wU875g0nV45A==
-
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"

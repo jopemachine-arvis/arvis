@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import styled from 'styled-components';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
+import { ipcRenderer } from 'electron';
 import { SearchBar, SearchResultView } from '../../components';
 import { maxItemCount, useControl } from '../../hooks/useControl';
 
@@ -9,15 +10,21 @@ const commandManager = new Core.CommandManager();
 
 export default function SearchWindow() {
   const [items, setItems] = useState<any>([]);
-  const { inputStr, indexInfo, clearInput, getInputProps } = useControl({
+  const {
+    inputStr,
+    indexInfo,
+    clearInput,
+    clearIndexInfo,
+    getInputProps
+  } = useControl({
     items,
     commandManager
   });
 
-  useEffect(() => {
-    commandManager.onItemPressHandler = clearInput;
-    commandManager.onItemShouldBeUpdate = setItems;
-  }, []);
+  const itemSetEventHandler = (itemsToSet: any[]) => {
+    clearIndexInfo();
+    setItems(itemsToSet);
+  };
 
   const searchCommands = () => {
     if (inputStr === '') {
@@ -38,6 +45,22 @@ export default function SearchWindow() {
         console.error(error);
       });
   };
+
+  const cleanUpHandler = () => {
+    clearInput();
+    clearIndexInfo();
+  };
+
+  useEffect(() => {
+    commandManager.onItemPressHandler = clearInput;
+    commandManager.onItemShouldBeUpdate = itemSetEventHandler;
+
+    ipcRenderer.on('searchwindow-hide', () => {
+      cleanUpHandler();
+    });
+
+    return cleanUpHandler;
+  }, []);
 
   useEffect(() => {
     if (commandManager.hasEmptyCommandStk()) {

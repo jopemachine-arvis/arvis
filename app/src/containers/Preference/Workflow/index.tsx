@@ -23,6 +23,11 @@ const bottomFixedBarIconStyle = {
   marginLeft: 24
 };
 
+const emptyListIconStyle = {
+  width: 35,
+  height: 35
+};
+
 export default function Workflow() {
   const [workflows, setWorkflows] = useState<any[]>([]);
   // object with bundleId as key and workflow info in value
@@ -115,12 +120,7 @@ export default function Workflow() {
   const renderEmptyList = () => {
     return (
       <EmptyListContainer>
-        <CgSmileNone
-          style={{
-            width: 35,
-            height: 35
-          }}
-        />
+        <CgSmileNone style={emptyListIconStyle} />
         <EmptyListDesc>There is no workflow to show.</EmptyListDesc>
       </EmptyListContainer>
     );

@@ -37,6 +37,10 @@ const createSearchWindow = () => {
     }
   });
 
+  searchWindow.on('hide', () => {
+    searchWindow.webContents.send('searchwindow-hide');
+  });
+
   return searchWindow;
 };
 
