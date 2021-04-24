@@ -7,13 +7,6 @@ import { maxItemCount, useControl } from '../../hooks/useControl';
 
 const commandManager = new Core.CommandManager();
 
-const Container = styled.div`
-  flex-direction: column;
-  width: 100vh;
-  justify-content: center;
-  align-items: center;
-`;
-
 export default function SearchWindow() {
   const [items, setItems] = useState<any>([]);
   const { inputStr, indexInfo, clearInput, getInputProps } = useControl({
@@ -64,3 +57,10 @@ export default function SearchWindow() {
     </Container>
   );
 }
+
+const Container = styled.div`
+  flex-direction: column;
+  width: 100vh;
+  justify-content: center;
+  align-items: center;
+`;

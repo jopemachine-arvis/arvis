@@ -12,7 +12,7 @@ export const initIPCHandler = ({
       properties: ['openFile']
     });
     preferenceWindow.webContents.send('open-wfconf-file-dialog-ret', {
-      file,
+      file
     });
   });
 };

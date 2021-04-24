@@ -1,6 +1,6 @@
 export enum PreferencePage {
   General,
-  InstalledWorkflow,
+  Workflow,
   Theme,
   Advanced
 }

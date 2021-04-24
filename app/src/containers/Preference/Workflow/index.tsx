@@ -1,3 +1,5 @@
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Core } from 'wf-creator-core';
@@ -5,6 +7,7 @@ import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import path from 'path';
+import useForceUpdate from 'use-force-update';
 
 import {
   AiOutlineAppstoreAdd,
@@ -12,12 +15,23 @@ import {
   AiOutlineFileAdd
 } from 'react-icons/ai';
 
-export default function InstalledWorkflow() {
-  const [workflows, setWorkflows] = useState<any[]>();
-  const [workflowInfo, setWorkflowInfo] = useState<any>();
+import { CgSmileNone } from 'react-icons/cg';
+
+const bottomFixedBarIconStyle = {
+  width: 26,
+  height: 26,
+  marginLeft: 24
+};
+
+export default function Workflow() {
+  const [workflows, setWorkflows] = useState<any[]>([]);
+  // object with bundleId as key and workflow info in value
+  const [workflowInfo, setWorkflowInfo] = useState<any>({});
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(0);
 
-  useEffect(() => {
+  const forceUpdate = useForceUpdate();
+
+  const fetchWorkflows = () => {
     Core.getWorkflowList(StoreType.Electron)
       .then((workflowsToSet: object) => {
         setWorkflowInfo(workflowsToSet);
@@ -25,6 +39,10 @@ export default function InstalledWorkflow() {
         return null;
       })
       .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchWorkflows();
   }, []);
 
   const itemClickHandler = (idx: number) => {
@@ -38,7 +56,8 @@ export default function InstalledWorkflow() {
     let optionalStyle = {};
     if (selectedWorkflowIdx === idx) {
       optionalStyle = {
-        backgroundColor: '#000000'
+        backgroundColor: '#2862DA',
+        borderRadius: 10
       };
     }
 
@@ -48,28 +67,26 @@ export default function InstalledWorkflow() {
         key={idx}
         onClick={() => itemClickHandler(idx)}
       >
-        <div>{name}</div>
-        <div>{createdby}</div>
+        <WorkflowItemTitle>{name}</WorkflowItemTitle>
+        <WorkflowItemCreatorText>{createdby}</WorkflowItemCreatorText>
       </WorkflowItemContainer>
     );
-  };
-
-  const bottomFixedBarIconStyle = {
-    width: 21,
-    height: 21,
-    marginLeft: 15
   };
 
   const addNewWorkflowByFile = () => {
     ipcRenderer.send('open-wfconf-file-dialog');
     ipcRenderer.on('open-wfconf-file-dialog-ret', (evt: any, fileInfo: any) => {
+      // Cancel selecting file
+      if (!fileInfo.file.filePaths[0]) return;
       const selectedConfigFilePath = fileInfo.file.filePaths[0];
       const selectFileName = selectedConfigFilePath.split(path.sep).pop();
       if (selectFileName.split('.')[1] !== 'json') {
         return;
       }
 
-      Core.install(StoreType.Electron, selectedConfigFilePath);
+      Core.install(StoreType.Electron, selectedConfigFilePath).then(() => {
+        fetchWorkflows();
+      });
     });
   };
 
@@ -78,9 +95,34 @@ export default function InstalledWorkflow() {
   };
 
   const deleteSelectedWorkflow = () => {
+    if (workflows.length === 0) return;
+
     Core.unInstall(
       StoreType.Electron,
-      (workflowInfo as any)[selectedWorkflowIdx].bundleId
+      workflowInfo[workflows[selectedWorkflowIdx]].bundleId
+    ).then(() => {
+      const temp = workflows;
+      workflows.splice(selectedWorkflowIdx, 1);
+      setWorkflows(temp);
+      if (workflows.length !== 0) {
+        setSelectedWorkflowIdx(selectedWorkflowIdx - 1);
+      } else {
+        forceUpdate();
+      }
+    });
+  };
+
+  const renderEmptyList = () => {
+    return (
+      <EmptyListContainer>
+        <CgSmileNone
+          style={{
+            width: 35,
+            height: 35
+          }}
+        />
+        <EmptyListDesc>There is no workflow to show.</EmptyListDesc>
+      </EmptyListContainer>
     );
   };
 
@@ -91,7 +133,7 @@ export default function InstalledWorkflow() {
           <FlatList
             list={workflows}
             renderItem={renderItem}
-            renderWhenEmpty={() => <div>List is empty!</div>}
+            renderWhenEmpty={renderEmptyList}
           />
         </WorkflowListOrderedList>
         <WorkflowListViewFooter>
@@ -114,6 +156,25 @@ export default function InstalledWorkflow() {
   );
 }
 
+const EmptyListDesc = styled.div`
+  margin-left: 11px;
+`;
+
+const EmptyListContainer = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const WorkflowItemTitle = styled.div`
+  color: #ffffff;
+`;
+
+const WorkflowItemCreatorText = styled.div`
+  color: #cccccc;
+`;
+
 const OuterContainer = styled.div`
   height: 100vh;
   width: 100vh;
@@ -134,7 +195,7 @@ const WorkflowListView = styled.div`
 const WorkflowListViewFooter = styled.div`
   overflow-y: auto;
   width: 100vh;
-  height: 40px;
+  height: 65px;
   background-color: #222222;
   position: fixed;
   bottom: 0;
@@ -147,10 +208,11 @@ const WorkflowListViewFooter = styled.div`
 const WorkflowListOrderedList = styled.ol``;
 
 const WorkflowItemContainer = styled.div`
-  height: 50px;
+  width: 300px;
+  height: 60px;
   justify-content: center;
   align-items: center;
-  background-color: #777777;
+  padding: 10px;
 `;
 
 const WorkflowDescContainer = styled.div`

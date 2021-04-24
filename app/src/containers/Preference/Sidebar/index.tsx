@@ -42,7 +42,7 @@ export default function Sidebar(props: IProps) {
             General
           </MenuItem>
           <MenuItem
-            onClick={() => setPage(PreferencePage.InstalledWorkflow)}
+            onClick={() => setPage(PreferencePage.Workflow)}
             icon={<AiOutlineAppstore />}
           >
             Installed workflows

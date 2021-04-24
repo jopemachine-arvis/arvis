@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
-import InstalledWorkflowPage from './InstalledWorkflow';
+import WorkflowPage from './Workflow';
 import ThemePage from './Theme';
 import AdvancedPage from './Advanced';
 
@@ -32,8 +32,8 @@ export default function PreferenceWindow() {
     case PreferencePage.General:
       main = <GeneralPage />;
       break;
-    case PreferencePage.InstalledWorkflow:
-      main = <InstalledWorkflowPage />;
+    case PreferencePage.Workflow:
+      main = <WorkflowPage />;
       break;
     case PreferencePage.Advanced:
       main = <AdvancedPage />;
