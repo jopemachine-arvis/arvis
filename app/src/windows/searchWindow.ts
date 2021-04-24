@@ -32,13 +32,7 @@ const createSearchWindow = () => {
   });
 
   searchWindow.on('blur', () => {
-    if (searchWindow) {
-      searchWindow.hide();
-    }
-  });
-
-  searchWindow.on('hide', () => {
-    searchWindow.webContents.send('searchwindow-hide');
+    searchWindow.webContents.send('hide-search-window-by-blur-event');
   });
 
   return searchWindow;

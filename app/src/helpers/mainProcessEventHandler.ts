@@ -32,4 +32,8 @@ export const initIPCHandler = ({
     const [width] = searchWindow.getSize();
     searchWindow.setSize(width, heightToSet);
   });
+
+  ipcMain.on('hide-search-window', (evt: any) => {
+    searchWindow.hide();
+  });
 };

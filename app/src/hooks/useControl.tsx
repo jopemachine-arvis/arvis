@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
+import { ipcRenderer } from 'electron';
 import useKey from '../../use-key-capture/dist/index';
 
 const maxItemCount = 5;
 
-type IIndexInfos = {
+type IndexInfo = {
   selectedItemIdx: number;
   itemStartIdx: number;
 };
 
 const useControl = ({
   items,
+  clearItems,
   commandManager
 }: {
   items: any[];
+  clearItems: Function;
   commandManager: Core.CommandManager;
 }) => {
   const { keyData, getTargetProps, resetKeyData } = useKey();
 
+  const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
+
   const [inputStr, setInputStr] = useState<string>('');
-  const [indexInfo, setIndexInfo] = useState<IIndexInfos>({
+  const [indexInfo, setIndexInfo] = useState<IndexInfo>({
     itemStartIdx: 0,
     selectedItemIdx: 0
   });
@@ -27,6 +32,8 @@ const useControl = ({
   const clearInput = () => {
     setInputStr('');
     resetKeyData();
+    commandManager.clearCommandStack();
+    clearItems();
   };
 
   const clearIndexInfo = () => {
@@ -141,6 +148,12 @@ const useControl = ({
     }
   };
 
+  const cleanUp = () => {
+    clearInput();
+    clearIndexInfo();
+    setShouldBeHided(true);
+  };
+
   const onKeydown = async () => {
     const input = keyData.key;
     let updatedInput = inputStr + input;
@@ -160,16 +173,35 @@ const useControl = ({
       handleDownArrow();
     } else if (keyData.isArrowUp) {
       handleUpArrow();
+    } else if (keyData.isEscape) {
+      cleanUp();
     } else {
       handleNormalInput(input, updatedInput, modifiers);
     }
   };
 
   useEffect(() => {
+    ipcRenderer.on('hide-search-window-by-blur-event', () => {
+      cleanUp();
+    });
+  }, []);
+
+  useEffect(() => {
     // Ignore Initial Mount
     if (keyData.key === null) return;
     onKeydown();
   }, [keyData]);
+
+  useEffect(() => {
+    // After cleanUp
+    if (shouldBeHided === true && items.length === 0) {
+      // Give some time to remove Afterimage
+      setTimeout(() => {
+        ipcRenderer.send('hide-search-window');
+      }, 10);
+      setShouldBeHided(false);
+    }
+  }, [shouldBeHided, items]);
 
   return {
     inputStr,

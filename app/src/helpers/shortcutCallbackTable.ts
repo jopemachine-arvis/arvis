@@ -13,13 +13,6 @@ export default function ShortcutCallbackTableGenerator({
 
       searchWindow.show();
       searchWindow.focus();
-    },
-    hideSearchWindow: () => {
-      if (!searchWindow) {
-        throw new Error('"searchWindow" is not defined');
-      }
-
-      searchWindow.hide();
     }
   };
 }

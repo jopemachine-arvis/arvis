@@ -10,6 +10,10 @@ const commandManager = new Core.CommandManager();
 
 export default function SearchWindow() {
   const [items, setItems] = useState<any>([]);
+  const clearItems = () => {
+    setItems([]);
+  };
+
   const {
     inputStr,
     indexInfo,
@@ -18,6 +22,7 @@ export default function SearchWindow() {
     getInputProps
   } = useControl({
     items,
+    clearItems,
     commandManager
   });
 
@@ -36,8 +41,6 @@ export default function SearchWindow() {
 
     Core.findCommands(StoreType.Electron, assumedCommand)
       .then((result: any) => {
-        console.log('command', assumedCommand);
-        console.log('res', result);
         setItems(result);
         return null;
       })
@@ -46,20 +49,9 @@ export default function SearchWindow() {
       });
   };
 
-  const cleanUpHandler = () => {
-    clearInput();
-    clearIndexInfo();
-  };
-
   useEffect(() => {
     commandManager.onItemPressHandler = clearInput;
     commandManager.onItemShouldBeUpdate = itemSetEventHandler;
-
-    ipcRenderer.on('searchwindow-hide', () => {
-      cleanUpHandler();
-    });
-
-    return cleanUpHandler;
   }, []);
 
   useEffect(() => {
