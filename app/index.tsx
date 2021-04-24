@@ -8,7 +8,7 @@ import './app.global.css';
 
 import initialState from './src/config/initialState';
 
-const store = configureStore(initialState);
+const { store, persistor } = configureStore(initialState);
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 const urlParams = new URLSearchParams(window.location.search);
 const windowName = urlParams.get('window');
@@ -20,7 +20,12 @@ if (windowName) {
         <IconContext.Provider
           value={{ color: 'white', className: 'global-class-name' }}
         >
-          <RootRouter store={store} history={history} windowName={windowName} />
+          <RootRouter
+            store={store}
+            persistor={persistor}
+            history={history}
+            windowName={windowName}
+          />
         </IconContext.Provider>
       </AppContainer>,
       document.getElementById('root')

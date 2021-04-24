@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
+import createElectronStorage from 'redux-persist-electron-storage';
+import { persistStore, persistReducer } from 'redux-persist';
 import createRootReducer from '../redux/reducers';
 import { StateType } from '../redux/reducers/types';
 
@@ -23,6 +25,19 @@ declare global {
 const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
+
+const persistConfig = {
+  key: 'root',
+  storage: createElectronStorage()
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+createElectronStorage({
+  electronStoreOpts: {
+    encryptionKey: 'MY_ENCRYPTION_KEY'
+  }
+});
 
 const configureStore = (initialState?: StateType) => {
   // Redux Configuration
@@ -66,7 +81,10 @@ const configureStore = (initialState?: StateType) => {
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(persistedReducer, initialState, enhancer);
+
+  // Create Persistor
+  const persistor = persistStore(store);
 
   if (module.hot) {
     module.hot.accept(
@@ -76,7 +94,10 @@ const configureStore = (initialState?: StateType) => {
     );
   }
 
-  return store;
+  return {
+    store,
+    persistor
+  };
 };
 
 export default { configureStore, history };
