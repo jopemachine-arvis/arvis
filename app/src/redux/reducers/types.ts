@@ -4,6 +4,7 @@ export type StateType = {
   globalConfig: {
     hotkey: string;
     launch_at_login: boolean;
+    max_item_count: number;
   };
 };
 

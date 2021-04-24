@@ -18,20 +18,28 @@ export const initIPCHandler = ({
   });
 
   // Used to automatically change the height of searchWindow
-  ipcMain.on('resize-searchwindow-height', (evt: any, itemCount: number) => {
-    const maxCount = 9;
-    const heightPerItem = 45;
-    let heightToSet;
+  ipcMain.on(
+    'resize-searchwindow-height',
+    (
+      evt: any,
+      {
+        itemCount,
+        maxItemCount,
+        itemHeight
+      }: { itemCount: number; maxItemCount: number; itemHeight: number }
+    ) => {
+      let heightToSet;
 
-    if (itemCount >= maxCount) {
-      heightToSet = maxCount * heightPerItem;
-    } else {
-      heightToSet = itemCount * heightPerItem;
+      if (itemCount >= maxItemCount) {
+        heightToSet = maxItemCount * itemHeight;
+      } else {
+        heightToSet = itemCount * itemHeight;
+      }
+
+      const [width] = searchWindow.getSize();
+      searchWindow.setSize(width, heightToSet);
     }
-
-    const [width] = searchWindow.getSize();
-    searchWindow.setSize(width, heightToSet);
-  });
+  );
 
   ipcMain.on('hide-search-window', (evt: any) => {
     searchWindow.hide();

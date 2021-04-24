@@ -6,6 +6,10 @@ import { StateType } from '../../../redux/reducers/types';
 
 import { GlobalConfigActions } from '../../../redux/actions';
 
+const formGroupStyle = {
+  marginBottom: 35
+};
+
 export default function General() {
   const isAutoLaunchAtLogin = useSelector(
     (state: StateType) => state.globalConfig.launch_at_login
@@ -17,6 +21,10 @@ export default function General() {
     useSelector((state: StateType) => state.globalConfig.hotkey)
   );
 
+  const [maxItemCount, setMaxItemCount] = useState<number>(
+    useSelector((state: StateType) => state.globalConfig.max_item_count)
+  );
+
   const toggleAutoLaunchAtLogin = () => {
     dispatch(GlobalConfigActions.setLaunchAtLogin(!isAutoLaunchAtLogin));
   };
@@ -25,21 +33,25 @@ export default function General() {
     dispatch(GlobalConfigActions.setHotkey(hotkey));
   }, [hotkey]);
 
+  useEffect(() => {
+    dispatch(GlobalConfigActions.setMaxItemCount(maxItemCount));
+  }, [maxItemCount]);
+
   return (
     <OuterContainer>
       <Form>
-        <FormGroup check style={{ marginBottom: 35 }}>
-          <Label check>
+        <FormGroup check style={formGroupStyle}>
+          <Label checked>
             <Input
               type="checkbox"
               checked={isAutoLaunchAtLogin}
-              onClick={() => toggleAutoLaunchAtLogin()}
+              onChange={() => toggleAutoLaunchAtLogin()}
             />
             Launch at login
           </Label>
         </FormGroup>
 
-        <FormGroup>
+        <FormGroup style={formGroupStyle}>
           <Label>Hotkey</Label>
           <Input
             type="text"
@@ -48,6 +60,28 @@ export default function General() {
               setHotkey(e.target.value);
             }}
           />
+        </FormGroup>
+
+        <FormGroup style={formGroupStyle}>
+          <Label>Max item count</Label>
+          <Input
+            type="select"
+            name="select"
+            value={maxItemCount}
+            onChange={e => {
+              setMaxItemCount(Number(e.target.value));
+            }}
+          >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+          </Input>
         </FormGroup>
       </Form>
     </OuterContainer>

@@ -35,7 +35,7 @@ export default function Sidebar(props: IProps) {
   return (
     <ProSidebar image={sidebarBg}>
       <SidebarHeader>
-        <SidebarTitle>Preference</SidebarTitle>
+        <SidebarTitle>{page}</SidebarTitle>
       </SidebarHeader>
       <SidebarContent>
         <Menu iconShape="circle">
@@ -51,7 +51,7 @@ export default function Sidebar(props: IProps) {
             icon={<AiOutlineAppstore />}
             active={page === PreferencePage.Workflow}
           >
-            Installed workflows
+            Workflows
           </MenuItem>
           <MenuItem
             onClick={() => setPage(PreferencePage.Theme)}

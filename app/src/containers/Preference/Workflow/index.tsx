@@ -211,7 +211,7 @@ const WorkflowListOrderedList = styled.ol``;
 
 const WorkflowItemContainer = styled.div`
   width: 300px;
-  height: 45px;
+  height: 65px;
   justify-content: center;
   align-items: center;
   padding: 10px;

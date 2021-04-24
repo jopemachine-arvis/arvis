@@ -32,6 +32,5 @@ if (windowName) {
     )
   );
 } else {
-  // eslint-disable-next-line no-console
-  console.error('windowName is not set!!');
+  throw new Error('windowName is not set!!');
 }

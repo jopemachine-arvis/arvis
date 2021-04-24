@@ -15,6 +15,11 @@ export default (state = {}, action: any) => {
         ...state,
         launch_at_login: payload.bool
       };
+    case GlobalConfigActionTypes.SET_MAX_ITEM_COUNT:
+      return {
+        ...state,
+        max_item_count: payload.number
+      };
     default:
       return state;
   }
@@ -26,4 +31,8 @@ export function getHotkey(state: any) {
 
 export function isAutoLaunchAtLogin(state: any) {
   return state.globalConfig.launch_at_login;
+}
+
+export function getItemMaxCount(state: any) {
+  return state.globalConfig.max_item_count;
 }
