@@ -4,6 +4,19 @@
  */
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
+/* xd.adobe.com/view/0358f8ac-f035-4816-94fa-750e13ec13c3-560b/ */
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+  background: #282C34;
+}
+
 body {
   position: relative;
   color: white;
