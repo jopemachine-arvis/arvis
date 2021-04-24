@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
-import createRootReducer from '../reducers';
-import { counterStateType } from '../reducers/types';
+import createRootReducer from '../redux/reducers';
+import { StateType } from '../redux/reducers/types';
 
 declare global {
   interface Window {
@@ -24,7 +24,7 @@ const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: StateType) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -70,9 +70,9 @@ const configureStore = (initialState?: counterStateType) => {
 
   if (module.hot) {
     module.hot.accept(
-      '../reducers',
+      '../redux/reducers',
       // eslint-disable-next-line global-require
-      () => store.replaceReducer(require('../reducers').default)
+      () => store.replaceReducer(require('../redux/reducers').default)
     );
   }
 

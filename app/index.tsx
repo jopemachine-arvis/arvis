@@ -6,7 +6,9 @@ import RootRouter from './src/navigator/rootRouter';
 import { configureStore, history } from './src/store/configureStore';
 import './app.global.css';
 
-const store = configureStore();
+import initialState from './src/config/initialState';
+
+const store = configureStore(initialState);
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 const urlParams = new URLSearchParams(window.location.search);
 const windowName = urlParams.get('window');

@@ -6,14 +6,12 @@ import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { Switch, Route } from 'react-router-dom';
-import { Store } from '../reducers/types';
+import { Store } from '../redux/reducers/types';
 import {
   Preference as PreferenceContainer,
   Search as SearchContainer
 } from '../containers';
 
-import $ from 'jquery';
-import Popper from 'popper.js';
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
 type Props = {
