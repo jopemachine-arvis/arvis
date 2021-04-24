@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import styled from 'styled-components';
+import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import { SearchBar, SearchResultView } from '../../components';
 import { maxItemCount, useControl } from '../../hooks/useControl';
 
@@ -31,12 +32,18 @@ export default function SearchWindow() {
       return;
     }
 
-    const command = inputStr.split(' ')[0];
-    const result = Core.findCommands(command);
+    const assumedCommand = inputStr.split(' ')[0];
 
-    console.log('command', command);
-    console.log('res', result);
-    setItems(result);
+    Core.findCommands(StoreType.Electron, assumedCommand)
+      .then((result: any) => {
+        console.log('command', assumedCommand);
+        console.log('res', result);
+        setItems(result);
+        return null;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   useEffect(() => {

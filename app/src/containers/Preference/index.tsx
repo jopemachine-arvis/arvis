@@ -1,50 +1,55 @@
-import React from 'react';
-import {
-  ProSidebar,
-  Menu,
-  MenuItem,
-  SidebarHeader,
-  SidebarContent,
-  SidebarFooter
-} from 'react-pro-sidebar';
-import {
-  AiOutlineSetting,
-  AiOutlineFormatPainter,
-  AiOutlineTool,
-  AiOutlineAppstore
-} from 'react-icons/ai';
-import './index.global.css';
-import './sidebar.global.css';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import sidebarBg from '../../../resources/images/sidebar_bg.jpg';
-import SidebarTitle from './sidebarTitle';
+import Sidebar from './Sidebar';
+import { PreferencePage } from './preferencePageEnum';
+import GeneralPage from './General';
+import InstalledWorkflowPage from './InstalledWorkflow';
+import ThemePage from './Theme';
+import AdvancedPage from './Advanced';
 
 const OuterContainer = styled.div`
-  height: 100vh;
   width: 100vh;
+  height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
 `;
 
+const MainContainer = styled.div`
+  width: 100vh;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+`;
+
+const INITIAL_PAGE = PreferencePage.General;
+
 export default function PreferenceWindow() {
+  const [page, setPage] = useState(INITIAL_PAGE);
+
+  let main;
+  switch (page) {
+    case PreferencePage.General:
+      main = <GeneralPage />;
+      break;
+    case PreferencePage.InstalledWorkflow:
+      main = <InstalledWorkflowPage />;
+      break;
+    case PreferencePage.Advanced:
+      main = <AdvancedPage />;
+      break;
+    case PreferencePage.Theme:
+      main = <ThemePage />;
+      break;
+    default:
+      console.error('Error, page is not valid value, page: ', page);
+      break;
+  }
+
   return (
     <OuterContainer>
-      <ProSidebar image={sidebarBg}>
-        <SidebarHeader>
-          <SidebarTitle>Preference</SidebarTitle>
-        </SidebarHeader>
-        <SidebarContent>
-          <Menu iconShape="circle">
-            <MenuItem icon={<AiOutlineSetting />}>General</MenuItem>
-            <MenuItem icon={<AiOutlineAppstore />}>
-              Installed workflows
-            </MenuItem>
-            <MenuItem icon={<AiOutlineFormatPainter />}>Theme</MenuItem>
-            <MenuItem icon={<AiOutlineTool />}>Advanced</MenuItem>
-          </Menu>
-        </SidebarContent>
-        <SidebarFooter>
-          <div>Footer</div>
-        </SidebarFooter>
-      </ProSidebar>
+      <Sidebar setPage={setPage} />
+      <MainContainer>{main}</MainContainer>
     </OuterContainer>
   );
 }

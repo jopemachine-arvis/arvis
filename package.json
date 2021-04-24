@@ -265,7 +265,7 @@
     "source-map-support": "^0.5.16",
     "styled-components": "^5.2.1",
     "use-key-capture": "^1.0.1-beta.1",
-    "wf-creator-core": "file:../wf-creator-core"
+    "wf-creator-core": "../wf-creator-core"
   },
   "devEngines": {
     "node": ">=7.x",

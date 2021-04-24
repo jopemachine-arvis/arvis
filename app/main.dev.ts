@@ -11,6 +11,7 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import TrayBuilder from './src/components/tray';
+import ElectronStore from '../node_modules/wf-creator-core/node_modules/electron-store/index.js';
 
 import { createPreferenceWindow } from './src/windows/preferenceWindow';
 import { createSearchWindow } from './src/windows/searchWindow';
@@ -21,6 +22,8 @@ let searchWindow: BrowserWindow | null = null;
 const trayIconPath = path.join(__dirname, 'resources', 'icons', '24x24.png');
 const trayBuilder = new TrayBuilder(trayIconPath);
 trayBuilder.buildTray();
+
+ElectronStore.initRenderer();
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
