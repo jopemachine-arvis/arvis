@@ -30,6 +30,10 @@ const OuterContainer = styled.div`
   user-select: none;
 `;
 
+const TextContainer = styled.div`
+  text-align: center;
+`;
+
 export default function General() {
   const isAutoLaunchAtLogin = useSelector(
     (state: StateType) => state.globalConfig.launch_at_login
@@ -79,6 +83,9 @@ export default function General() {
             onChange={e => {
               setHotkey(e.target.value);
             }}
+            style={{
+              textAlign: 'center'
+            }}
           />
         </FormGroup>
 
@@ -103,6 +110,7 @@ export default function General() {
             <option>9</option>
           </Input>
         </FormGroup>
+
       </Form>
     </OuterContainer>
   );

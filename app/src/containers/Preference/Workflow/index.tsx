@@ -29,8 +29,6 @@ import {
   Header,
   WorkflowListViewFooter
 } from './components';
-import { setHotkey } from '../../../redux/actions/globalConfig';
-import { isAutoLaunchAtLogin } from '../../../redux/reducers/globalConfig';
 
 const bottomFixedBarIconStyle = {
   width: 22,
@@ -45,11 +43,31 @@ const emptyListIconStyle = {
 
 const formGroupStyle = {
   marginBottom: 15,
-  width: '75%'
+  width: '75%',
+  flexDirection: 'row',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
 };
 
 const labelStyle = {
-  color: '#ffffff'
+  fontSize: 14,
+  color: '#ffffff',
+  width: 150,
+  marginRight: 15
+};
+
+const descriptionContainerStyle = {
+  justifyContent: 'center',
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '#666666',
+  paddingTop: 10,
+  paddingBottom: 10,
+  borderRadius: 10,
+  marginLeft: 20,
+  marginRight: 20
 };
 
 export default function Workflow() {
@@ -174,17 +192,7 @@ export default function Workflow() {
       </WorkflowListView>
       <WorkflowDescContainer>
         <Header>Workflow config</Header>
-        <Form
-          style={{
-            paddingLeft: '5%',
-            backgroundColor: '#777777',
-            paddingTop: 10,
-            paddingBottom: 10,
-            borderRadius: 10,
-            marginLeft: 25,
-            marginRight: 25
-          }}
-        >
+        <Form style={descriptionContainerStyle}>
           <FormGroup check style={formGroupStyle}>
             <Label checked style={labelStyle}>
               <Input type="checkbox" onChange={() => {}} />
