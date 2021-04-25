@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import styled from 'styled-components';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
+import { useSelector } from 'react-redux';
 import { SearchBar, SearchResultView } from '../../components';
 import { maxItemCount, useControl } from '../../hooks/useControl';
+import { StateType } from '../../redux/reducers/types';
 
 const commandManager = new Core.CommandManager();
 
@@ -13,10 +16,13 @@ const OuterContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #444444;
 `;
 
 export default function SearchWindow() {
+  const { item_background_color } = useSelector(
+    (state: StateType) => state.uiConfig
+  );
+
   const [items, setItems] = useState<any>([]);
   const clearItems = () => {
     setItems([]);
@@ -69,7 +75,11 @@ export default function SearchWindow() {
   }, [inputStr]);
 
   return (
-    <OuterContainer>
+    <OuterContainer
+      style={{
+        backgroundColor: item_background_color
+      }}
+    >
       <SearchBar input={inputStr} getInputProps={getInputProps} />
       <SearchResultView
         startIdx={indexInfo.itemStartIdx}

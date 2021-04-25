@@ -1,30 +1,35 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { StateType } from '../../redux/reducers/types';
 import './index.global.css';
 
 const Input = styled.input`
-  background-color: #444444;
-  color: #ffffff;
-  font-size: 20px;
   font-weight: normal;
   height: 100%;
-  padding-left: 15px;
   width: 100%;
   border-width: 0px;
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: 60px;
   justify-content: center;
   align-items: center;
-  background-color: #333333;
 `;
 
 const searchBar = (props: any) => {
   const { ref: inputRef, type, originalRef } = props.getInputProps();
+
+  const {
+    item_background_color,
+    item_font_color,
+    item_left_padding,
+    searchbar_font_size,
+    searchbar_height
+  } = useSelector((state: StateType) => state.uiConfig);
 
   const preventUpAndDownArrow = (e: any) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
@@ -44,8 +49,18 @@ const searchBar = (props: any) => {
   };
 
   return (
-    <Container>
+    <Container
+      style={{
+        height: searchbar_height
+      }}
+    >
       <Input
+        style={{
+          backgroundColor: item_background_color,
+          color: item_font_color,
+          fontSize: searchbar_font_size,
+          paddingLeft: item_left_padding
+        }}
         ref={inputRef}
         type={type}
         onKeyDown={preventUpAndDownArrow}

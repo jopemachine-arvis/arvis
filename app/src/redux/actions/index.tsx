@@ -1,3 +1,4 @@
+import * as UIConfigActions from './uiConfig';
 import * as GlobalConfigActions from './globalConfig';
 
-export { GlobalConfigActions };
+export { UIConfigActions, GlobalConfigActions };

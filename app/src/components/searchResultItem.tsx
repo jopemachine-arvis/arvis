@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/camelcase */
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { StateType } from '../redux/reducers/types';
 
 type IProps = {
   title: string;
@@ -13,32 +16,59 @@ type IProps = {
 
 const Container = styled.div`
   flex-direction: column;
-  height: 60px;
   width: 100%;
-  background-color: #444444;
 `;
 
 const Title = styled.div`
   word-wrap: break-word;
-  padding-left: 15px;
-  padding-top: 7px;
-  font-size: 15px;
 `;
 
 const SubTitle = styled.div`
   word-wrap: break-word;
-  padding-left: 15px;
-  padding-top: 7px;
-  font-size: 10px;
 `;
 
 const searchResultItem = (props: IProps) => {
   const { selected, title, subtitle } = props;
 
+  const {
+    item_background_color,
+    item_font_color,
+    item_height,
+    item_left_padding,
+    item_top_padding,
+    selected_item_background_color,
+    selected_item_font_color,
+    subtitle_font_size,
+    title_font_size
+  } = useSelector((state: StateType) => state.uiConfig);
+
   return (
-    <Container style={{ backgroundColor: selected ? '#222222' : '#444444' }}>
-      <Title style={{ color: selected ? 'white' : 'gray' }}>{title}</Title>
-      <SubTitle style={{ color: selected ? 'white' : 'gray' }}>
+    <Container
+      style={{
+        height: item_height,
+        backgroundColor: selected
+          ? selected_item_background_color
+          : item_background_color
+      }}
+    >
+      <Title
+        style={{
+          fontSize: title_font_size,
+          paddingTop: item_top_padding,
+          paddingLeft: item_left_padding,
+          color: selected ? selected_item_font_color : item_font_color
+        }}
+      >
+        {title}
+      </Title>
+      <SubTitle
+        style={{
+          fontSize: subtitle_font_size,
+          paddingTop: item_top_padding,
+          paddingLeft: item_left_padding,
+          color: selected ? selected_item_font_color : item_font_color
+        }}
+      >
         {subtitle}
       </SubTitle>
     </Container>

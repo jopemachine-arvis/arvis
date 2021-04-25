@@ -35,8 +35,7 @@ export default class TrayBuilder {
       type: 'normal',
       click: () => {
         if (this.preferenceWindow === null) {
-          console.error('Preference window is not linked.');
-          return;
+          throw new Error('Preference window is not linked.');
         } else if (this.preferenceWindow.isDestroyed()) {
           this.setPreferenceWindow(
             createPreferenceWindow({

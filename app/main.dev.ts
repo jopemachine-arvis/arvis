@@ -59,7 +59,7 @@ app.on('before-quit', () => {
 });
 
 app.on('ready', () => {
-  setTimeout(() => {
+  const onReadyHandler = () => {
     searchWindow = createSearchWindow();
     preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
@@ -71,7 +71,14 @@ app.on('ready', () => {
       searchWindow.webContents.openDevTools({ mode: 'undocked' });
     }
     initIPCHandler({ searchWindow, preferenceWindow });
-  }, 300);
+  };
+
+  onReadyHandler();
+
+  // setTimeout(() => {
+  //   //* Transparent window hack (Not working)
+  //   onReadyHandler();
+  // }, 300);
 });
 
 app.on('activate', () => {
