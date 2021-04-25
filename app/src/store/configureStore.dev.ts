@@ -28,16 +28,14 @@ const rootReducer = createRootReducer(history);
 
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage()
+  storage: createElectronStorage({
+    electronStoreOpts: {
+      encryptionKey: 'MY_ENCRYPTION_KEY'
+    }
+  })
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-createElectronStorage({
-  electronStoreOpts: {
-    encryptionKey: 'MY_ENCRYPTION_KEY'
-  }
-});
 
 const configureStore = (initialState?: StateType) => {
   // Redux Configuration

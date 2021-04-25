@@ -10,7 +10,8 @@ export const initIPCHandler = ({
   // Used to select wfconf file
   ipcMain.on('open-wfconf-file-dialog', async (evt: any) => {
     const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
-      properties: ['openFile']
+      properties: ['openFile'],
+      filters: [{ name: 'wf-creator setting files', extensions: ['json'] }]
     });
     preferenceWindow.webContents.send('open-wfconf-file-dialog-ret', {
       file

@@ -10,6 +10,17 @@ const formGroupStyle = {
   marginBottom: 35
 };
 
+const OuterContainer = styled.div`
+  width: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  background-color: #16181b;
+  padding-top: 15px;
+  padding-left: 15px;
+  justify-content: center;
+`;
+
 export default function General() {
   const isAutoLaunchAtLogin = useSelector(
     (state: StateType) => state.globalConfig.launch_at_login
@@ -87,14 +98,3 @@ export default function General() {
     </OuterContainer>
   );
 }
-
-const OuterContainer = styled.div`
-  width: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  background-color: #16181b;
-  padding-top: 15px;
-  padding-left: 15px;
-  justify-content: center;
-`;

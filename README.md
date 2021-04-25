@@ -6,7 +6,7 @@ This project is created using [electron-react-boilerplate](https://github.com/el
 
 ```
 // Run after source build in dev mode
-$ yarn run dev
+$ yarn dev
 
 // Run after source build in prod mode
 $ yarn start

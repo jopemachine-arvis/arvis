@@ -37,6 +37,9 @@ if (
   process.env.DEBUG_PROD === 'true'
 ) {
   require('electron-debug')();
+} else {
+  // The below code could also be used for testing in production if needed
+  // require('electron-debug')();
 }
 
 app.on('before-quit', () => {
@@ -48,10 +51,12 @@ app.on('before-quit', () => {
 });
 
 app.on('ready', () => {
-  searchWindow = createSearchWindow();
-  preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
+  setTimeout(() => {
+    searchWindow = createSearchWindow();
+    preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
-  initIPCHandler({ searchWindow, preferenceWindow });
+    initIPCHandler({ searchWindow, preferenceWindow });
+  }, 300);
 });
 
 app.on('activate', () => {

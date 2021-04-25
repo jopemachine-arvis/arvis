@@ -10,6 +10,24 @@ type IProps = {
   maxItemCount: number;
 };
 
+const Divider = styled.div`
+  width: 100%;
+  border: 1px;
+  border-color: #000000;
+`;
+
+const OuterContainer = styled.div`
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const InnerContainer = styled.div`
+  flex-direction: column;
+  width: 100%;
+`;
+
 const searchResultView = (props: IProps) => {
   const resultToRenders = useMemo(
     () =>
@@ -41,23 +59,5 @@ const searchResultView = (props: IProps) => {
     </OuterContainer>
   );
 };
-
-const Divider = styled.div`
-  width: 100vh;
-  border: 1px;
-  border-color: #000000;
-`;
-
-const OuterContainer = styled.div`
-  flex-direction: column;
-  width: 100vh;
-  justify-content: center;
-  align-items: center;
-`;
-
-const InnerContainer = styled.div`
-  flex-direction: column;
-  width: 100vh;
-`;
 
 export default searchResultView;

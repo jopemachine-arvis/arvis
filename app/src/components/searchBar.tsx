@@ -3,6 +3,24 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const Input = styled.input`
+  background-color: #dddddd;
+  color: gray;
+  font-size: 20px;
+  font-weight: normal;
+  height: 100%;
+  padding-left: 15px;
+  width: 100%;
+`;
+
+const Container = styled.div`
+  width: 100%;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  background-color: #333333;
+`;
+
 const searchBar = (props: any) => {
   const inputProps = props.getInputProps();
 
@@ -16,16 +34,5 @@ const searchBar = (props: any) => {
     </Container>
   );
 };
-
-const Input = styled.input`
-  font-weight: normal;
-  color: gray;
-`;
-
-const Container = styled.div`
-  width: 100vh;
-  justify-content: center;
-  align-items: center;
-`;
 
 export default searchBar;

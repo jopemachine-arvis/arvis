@@ -1,12 +1,10 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Core } from 'wf-creator-core';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
-import path from 'path';
 import useForceUpdate from 'use-force-update';
 
 import {
@@ -16,6 +14,19 @@ import {
 } from 'react-icons/ai';
 
 import { CgSmileNone } from 'react-icons/cg';
+
+import {
+  EmptyListContainer,
+  EmptyListDesc,
+  OuterContainer,
+  WorkflowDescContainer,
+  WorkflowItemContainer,
+  WorkflowItemCreatorText,
+  WorkflowItemTitle,
+  WorkflowListOrderedList,
+  WorkflowListView,
+  WorkflowListViewFooter
+} from './components';
 
 const bottomFixedBarIconStyle = {
   width: 22,
@@ -84,11 +95,6 @@ export default function Workflow() {
       // Cancel selecting file
       if (!fileInfo.file.filePaths[0]) return;
       const selectedConfigFilePath = fileInfo.file.filePaths[0];
-      const selectFileName = selectedConfigFilePath.split(path.sep).pop();
-      const selectedFileExt = selectFileName.split('.')[1];
-      if (selectedFileExt !== 'json') {
-        return;
-      }
 
       Core.install(StoreType.Electron, selectedConfigFilePath).then(() => {
         fetchWorkflows();
@@ -156,68 +162,3 @@ export default function Workflow() {
     </OuterContainer>
   );
 }
-
-const EmptyListDesc = styled.div`
-  margin-left: 11px;
-`;
-
-const EmptyListContainer = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const WorkflowItemTitle = styled.div`
-  color: #ffffff;
-`;
-
-const WorkflowItemCreatorText = styled.div`
-  margin-top: 5px;
-  font-size: 12px;
-  color: #cccccc;
-`;
-
-const OuterContainer = styled.div`
-  height: 100vh;
-  width: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  background-color: #444444;
-  justify-content: flex-start;
-`;
-
-const WorkflowListView = styled.div`
-  overflow-y: auto;
-  width: 50%;
-  background-color: #555555;
-`;
-
-const WorkflowListViewFooter = styled.div`
-  overflow-y: auto;
-  width: 100vh;
-  height: 65px;
-  background-color: #222222;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-`;
-
-const WorkflowListOrderedList = styled.ol``;
-
-const WorkflowItemContainer = styled.div`
-  width: 300px;
-  height: 65px;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-`;
-
-const WorkflowDescContainer = styled.div`
-  background-color: #888888;
-  width: 50%;
-`;

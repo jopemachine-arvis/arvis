@@ -8,19 +8,22 @@ const createSearchWindow = () => {
     show: false,
     frame: false,
     transparent: true,
+    alwaysOnTop: true,
+    hasShadow: false,
+    backgroundColor: '#00ffffff',
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
-    webPreferences:
-      process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
-        ? {
-            nodeIntegration: true
-          }
-        : {
-            preload: path.join(__dirname, '../../', 'dist/renderer.prod.js')
-          }
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
-  searchWindow.loadFile(path.join(__dirname, '../../', 'app.html'), {
+  const filePath =
+    process.env.NODE_ENV === 'development'
+      ? path.join(__dirname, '../../', 'app.html')
+      : path.join(__dirname, 'app.html');
+
+  searchWindow.loadFile(filePath, {
     query: { window: 'searchWindow' }
   });
 
