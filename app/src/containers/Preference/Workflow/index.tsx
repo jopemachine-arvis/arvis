@@ -50,6 +50,12 @@ const formGroupStyle = {
   justifyContent: 'center'
 };
 
+const checkboxStyle = {
+  marginBottom: 15,
+  left: '13%',
+  alignSelf: 'flex-start'
+};
+
 const labelStyle = {
   fontSize: 14,
   color: '#ffffff',
@@ -62,7 +68,7 @@ const descriptionContainerStyle = {
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '#666666',
+  backgroundColor: '#22262F',
   paddingTop: 10,
   paddingBottom: 10,
   borderRadius: 10,
@@ -75,6 +81,14 @@ export default function Workflow() {
   // object with bundleId as key and workflow info in value
   const [workflowInfo, setWorkflowInfo] = useState<any>({});
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(0);
+
+  const [workflowName, setWorkflowName] = useState<string>('');
+  const [workflowVersion, setWorkflowVersion] = useState<string>('');
+  const [workflowCreator, setWorkflowCreator] = useState<string>('');
+  const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
+  const [workflowCategory, setWorkflowCategory] = useState<string>('');
+  const [workflowDescription, setWorkflowDescription] = useState<string>('');
+  const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
 
   const forceUpdate = useForceUpdate();
 
@@ -91,6 +105,29 @@ export default function Workflow() {
   useEffect(() => {
     fetchWorkflows();
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(workflowInfo).length >= 1) {
+      const info = workflowInfo[workflows[selectedWorkflowIdx]];
+      const {
+        createdby,
+        name,
+        bundleId,
+        version,
+        webaddress,
+        description,
+        category
+      } = info;
+
+      setWorkflowName(name);
+      setWorkflowCreator(createdby);
+      setWorkflowBundleId(bundleId);
+      setWorkflowCategory(category);
+      setWorkflowDescription(description);
+      setWorkflowVersion(version);
+      setWorkflowWebsite(webaddress);
+    }
+  }, [selectedWorkflowIdx, workflows]);
 
   const itemClickHandler = (idx: number) => {
     setSelectedWorkflowIdx(idx);
@@ -167,7 +204,13 @@ export default function Workflow() {
   return (
     <OuterContainer>
       <WorkflowListView>
-        <Header>Installed Workflows</Header>
+        <Header
+          style={{
+            marginLeft: 40
+          }}
+        >
+          Installed Workflows
+        </Header>
         <WorkflowListOrderedList>
           <FlatList
             list={workflows}
@@ -191,9 +234,15 @@ export default function Workflow() {
         </WorkflowListViewFooter>
       </WorkflowListView>
       <WorkflowDescContainer>
-        <Header>Workflow config</Header>
+        <Header
+          style={{
+            marginLeft: 20
+          }}
+        >
+          Workflow config
+        </Header>
         <Form style={descriptionContainerStyle}>
-          <FormGroup check style={formGroupStyle}>
+          <FormGroup check style={checkboxStyle}>
             <Label checked style={labelStyle}>
               <Input type="checkbox" onChange={() => {}} />
               Enabled
@@ -202,37 +251,37 @@ export default function Workflow() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Name</Label>
-            <Input type="text" />
+            <Input type="text" value={workflowName} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Version</Label>
-            <Input type="text" />
+            <Input type="text" value={workflowVersion} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Creator</Label>
-            <Input type="text" />
+            <Input type="text" value={workflowCreator} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Bundle Id</Label>
-            <Input type="text" />
+            <Input type="text" value={workflowBundleId} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Category</Label>
-            <Input type="text" />
+            <Input type="text" value={workflowCategory} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Description</Label>
-            <Input type="textarea" />
+            <Input type="textarea" value={workflowDescription} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Web site</Label>
-            <Input type="url" />
+            <Input type="url" value={workflowWebsite} />
           </FormGroup>
         </Form>
       </WorkflowDescContainer>

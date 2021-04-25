@@ -6,7 +6,7 @@ export const OuterContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  background-color: #555555;
+  background-color: #16181b;
   justify-content: flex-start;
 `;
 

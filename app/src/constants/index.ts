@@ -1,5 +1,5 @@
 export default {
-  preferenceWindowWidth: 1200,
+  preferenceWindowWidth: 1600,
   preferenceWindowHeight: 900,
   preferenceMinWindowWidth: 1200,
   preferenceMinWindowHeight: 900,

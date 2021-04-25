@@ -36,7 +36,7 @@ const descriptionContainerStyle = {
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '#666666',
+  backgroundColor: '#23262E',
   paddingTop: 10,
   paddingBottom: 10,
   borderRadius: 10,
