@@ -3,7 +3,9 @@ module.exports = {
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'no-console': 'off',
+    '@typescript-eslint/camelcase': 'off'
   },
   settings: {
     'import/resolver': {
