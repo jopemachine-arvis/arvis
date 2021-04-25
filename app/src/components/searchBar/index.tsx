@@ -2,15 +2,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import './index.global.css';
 
 const Input = styled.input`
-  background-color: #dddddd;
-  color: gray;
+  background-color: #444444;
+  color: #ffffff;
   font-size: 20px;
   font-weight: normal;
   height: 100%;
   padding-left: 15px;
   width: 100%;
+  border-width: 0px;
 `;
 
 const Container = styled.div`
