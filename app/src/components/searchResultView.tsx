@@ -38,18 +38,19 @@ const searchResultView = (props: IProps) => {
   return (
     <OuterContainer>
       {resultToRenders.map((command: any, index: number) => {
+        const itemIdx = props.startIdx + index;
         return (
           <InnerContainer key={`item-${index}`}>
             <SearchResultItem
-              selected={props.startIdx + index === props.selectedItemIdx}
+              selected={itemIdx === props.selectedItemIdx}
               title={command.title ? command.title : command.command}
               subtitle={command.subtitle}
               arg={command.arg}
               text={command.text}
               autocomplete={command.autocomplete}
               variables={command.variables}
-              onMouseoverHandler={() => props.onMouseoverHandler(index)}
-              onDoubleClickHandler={() => props.onDoubleClickHandler(index)}
+              onMouseoverHandler={() => props.onMouseoverHandler(itemIdx)}
+              onDoubleClickHandler={() => props.onDoubleClickHandler(itemIdx)}
             />
           </InnerContainer>
         );

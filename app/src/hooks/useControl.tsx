@@ -1,3 +1,4 @@
+/* eslint-disable no-lonely-if */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
@@ -150,9 +151,19 @@ const useControl = ({
 
   const onScrollHandler = (e: any) => {
     if (e.deltaY > 0) {
-      handleDownArrow();
+      if (indexInfo.itemStartIdx < items.length) {
+        setIndexInfo({
+          itemStartIdx: indexInfo.itemStartIdx + 1,
+          selectedItemIdx: indexInfo.selectedItemIdx
+        });
+      }
     } else {
-      handleUpArrow();
+      if (indexInfo.itemStartIdx > 0) {
+        setIndexInfo({
+          itemStartIdx: indexInfo.itemStartIdx - 1,
+          selectedItemIdx: indexInfo.selectedItemIdx
+        });
+      }
     }
   };
 
