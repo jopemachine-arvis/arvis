@@ -74,7 +74,10 @@ export const WorkflowItemContainer = styled.div`
   height: 65px;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  margin-bottom: 7px;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
