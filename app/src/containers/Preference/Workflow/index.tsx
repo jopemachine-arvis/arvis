@@ -133,8 +133,8 @@ export default function Workflow() {
     setSelectedWorkflowIdx(idx);
   };
 
-  const renderItem = (workflowBundleId: string, idx: number) => {
-    const info = workflowInfo[workflowBundleId];
+  const renderItem = (itemBundleId: string, idx: number) => {
+    const info = workflowInfo[itemBundleId];
     const { createdby, name, bundleId } = info;
 
     let optionalStyle = {};

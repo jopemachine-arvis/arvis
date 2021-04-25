@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -11,6 +12,8 @@ type IProps = {
   text?: any;
   autocomplete?: string;
   variables?: any;
+  onMouseoverHandler: Function;
+  onDoubleClickHandler: Function;
 };
 
 const Container = styled.div`
@@ -27,7 +30,13 @@ const SubTitle = styled.div`
 `;
 
 const searchResultItem = (props: IProps) => {
-  const { selected, title, subtitle } = props;
+  const {
+    selected,
+    title,
+    subtitle,
+    onMouseoverHandler,
+    onDoubleClickHandler
+  } = props;
 
   const {
     item_background_color,
@@ -49,6 +58,8 @@ const searchResultItem = (props: IProps) => {
           ? selected_item_background_color
           : item_background_color
       }}
+      onMouseOver={() => onMouseoverHandler()}
+      onDoubleClick={() => onDoubleClickHandler()}
     >
       <Title
         style={{

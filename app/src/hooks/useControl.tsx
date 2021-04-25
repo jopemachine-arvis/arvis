@@ -148,6 +148,29 @@ const useControl = ({
     }
   };
 
+  const onScrollHandler = (e: any) => {
+    if (e.deltaY > 0) {
+      handleDownArrow();
+    } else {
+      handleUpArrow();
+    }
+  };
+
+  const onMouseoverHandler = (index: number) => {
+    setIndexInfo({
+      itemStartIdx: indexInfo.itemStartIdx,
+      selectedItemIdx: index
+    });
+  };
+
+  const onDoubleClickHandler = (index: number) => {
+    handleReturn({
+      ctrl: false,
+      shift: false,
+      cmd: false
+    });
+  };
+
   const cleanUp = () => {
     clearInput();
     clearIndexInfo();
@@ -208,6 +231,9 @@ const useControl = ({
     indexInfo,
     clearInput,
     clearIndexInfo,
+    onScrollHandler,
+    onMouseoverHandler,
+    onDoubleClickHandler,
     getInputProps: getTargetProps
   };
 };

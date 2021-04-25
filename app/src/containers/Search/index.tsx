@@ -32,6 +32,9 @@ export default function SearchWindow() {
     indexInfo,
     clearInput,
     clearIndexInfo,
+    onScrollHandler,
+    onMouseoverHandler,
+    onDoubleClickHandler,
     getInputProps
   } = useControl({
     items,
@@ -78,6 +81,7 @@ export default function SearchWindow() {
       style={{
         backgroundColor: item_background_color
       }}
+      onWheel={onScrollHandler}
     >
       <SearchBar input={inputStr} getInputProps={getInputProps} />
       <SearchResultView
@@ -85,6 +89,8 @@ export default function SearchWindow() {
         selectedItemIdx={indexInfo.selectedItemIdx}
         maxItemCount={maxItemCount}
         searchResult={items}
+        onDoubleClickHandler={onDoubleClickHandler}
+        onMouseoverHandler={onMouseoverHandler}
       />
     </OuterContainer>
   );

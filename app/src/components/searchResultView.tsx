@@ -8,6 +8,8 @@ type IProps = {
   selectedItemIdx: number;
   startIdx: number;
   maxItemCount: number;
+  onMouseoverHandler: Function;
+  onDoubleClickHandler: Function;
 };
 
 const OuterContainer = styled.div`
@@ -46,6 +48,8 @@ const searchResultView = (props: IProps) => {
               text={command.text}
               autocomplete={command.autocomplete}
               variables={command.variables}
+              onMouseoverHandler={() => props.onMouseoverHandler(index)}
+              onDoubleClickHandler={() => props.onDoubleClickHandler(index)}
             />
           </InnerContainer>
         );
