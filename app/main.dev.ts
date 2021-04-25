@@ -27,6 +27,12 @@ trayBuilder.buildTray();
 
 ElectronStore.initRenderer();
 
+// If run a specific script with Electron, app name would be Electron. (Not wf-creator-gui)
+// To do:: In production, The storage location of the setup file should be wf-creator-gui, not Electron.
+// In development env, setting file should be under /Users/me/Library/Application Support/Electron
+// because app.getPath('userData') return 'Electron' as App name.
+app.name = 'wf-creator-gui';
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -42,6 +48,8 @@ if (
   // require('electron-debug')();
 }
 
+app.disableHardwareAcceleration();
+
 app.on('before-quit', () => {
   if (searchWindow && searchWindow.closable) {
     searchWindow.close();
@@ -55,6 +63,13 @@ app.on('ready', () => {
     searchWindow = createSearchWindow();
     preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
+    // Open debugging tool by 'undocked'
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
+      searchWindow.webContents.openDevTools({ mode: 'undocked' });
+    }
     initIPCHandler({ searchWindow, preferenceWindow });
   }, 300);
 });

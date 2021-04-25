@@ -21,6 +21,7 @@ const OuterContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  height: 100%;
 `;
 
 const InnerContainer = styled.div`
@@ -40,7 +41,7 @@ const searchResultView = (props: IProps) => {
 
   return (
     <OuterContainer>
-      {resultToRenders.map((command, index: number) => {
+      {resultToRenders.map((command: any, index: number) => {
         return (
           <InnerContainer key={`item-${index}`}>
             <SearchResultItem

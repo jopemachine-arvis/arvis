@@ -13,11 +13,7 @@ const rootReducer = createRootReducer(history);
 
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage({
-    electronStoreOpts: {
-      encryptionKey: 'MY_ENCRYPTION_KEY'
-    }
-  })
+  storage: createElectronStorage()
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

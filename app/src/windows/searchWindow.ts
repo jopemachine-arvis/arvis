@@ -7,6 +7,7 @@ const createSearchWindow = () => {
     center: true,
     show: false,
     frame: false,
+    // To do:: Fix me! 'transparent' window is not working.
     transparent: true,
     alwaysOnTop: true,
     hasShadow: false,

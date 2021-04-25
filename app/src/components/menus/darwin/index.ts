@@ -13,7 +13,7 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
 
 export default (mainWindow: BrowserWindow) => {
   const subMenuAbout: DarwinMenuItemConstructorOptions = {
-    label: 'Electron',
+    label: 'wf-creator-gui',
     submenu: [
       {
         label: 'About wf-creator-gui',

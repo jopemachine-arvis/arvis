@@ -7,11 +7,12 @@ import { maxItemCount, useControl } from '../../hooks/useControl';
 
 const commandManager = new Core.CommandManager();
 
-const Container = styled.div`
+const OuterContainer = styled.div`
   flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
+  background-color: #444444;
 `;
 
 export default function SearchWindow() {
@@ -67,7 +68,7 @@ export default function SearchWindow() {
   }, [inputStr]);
 
   return (
-    <Container>
+    <OuterContainer>
       <SearchBar input={inputStr} getInputProps={getInputProps} />
       <SearchResultView
         startIdx={indexInfo.itemStartIdx}
@@ -75,6 +76,6 @@ export default function SearchWindow() {
         maxItemCount={maxItemCount}
         searchResult={items}
       />
-    </Container>
+    </OuterContainer>
   );
 }
