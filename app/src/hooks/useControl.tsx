@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
-import useKey from '../../use-key-capture/dist/index';
+import useKey from '../../use-key-capture/_dist/index';
 
 const maxItemCount = 5;
 
