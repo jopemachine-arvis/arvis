@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const Input = styled.input`
@@ -25,16 +25,30 @@ const searchBar = (props: any) => {
   const { ref: inputRef, type, originalRef } = props.getInputProps();
 
   const preventUpAndDownArrow = (e: any) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') e.preventDefault();
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
   };
 
   useEffect(() => {
-    if (originalRef && originalRef.current) originalRef.current.focus();
+    if (originalRef && originalRef.current) {
+      originalRef.current.focus();
+    }
   }, [originalRef]);
+
+  const onBlurHandler = (e: any) => {
+    e.preventDefault();
+    originalRef.current.focus();
+  };
 
   return (
     <Container>
-      <Input ref={inputRef} type={type} onKeyDown={preventUpAndDownArrow} />
+      <Input
+        ref={inputRef}
+        type={type}
+        onKeyDown={preventUpAndDownArrow}
+        onBlur={onBlurHandler}
+      />
     </Container>
   );
 };

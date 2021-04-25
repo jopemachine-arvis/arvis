@@ -10,12 +10,6 @@ type IProps = {
   maxItemCount: number;
 };
 
-const Divider = styled.div`
-  width: 100%;
-  border: 1px;
-  border-color: #000000;
-`;
-
 const OuterContainer = styled.div`
   flex-direction: column;
   width: 100%;
@@ -53,7 +47,6 @@ const searchResultView = (props: IProps) => {
               autocomplete={command.autocomplete}
               variables={command.variables}
             />
-            <Divider />
           </InnerContainer>
         );
       })}

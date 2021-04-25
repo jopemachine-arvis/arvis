@@ -29,10 +29,10 @@ export function getHotkey(state: any) {
   return state.globalConfig.hotkey;
 }
 
-export function isAutoLaunchAtLogin(state: any) {
-  return state.globalConfig.launch_at_login;
-}
-
 export function getItemMaxCount(state: any) {
   return state.globalConfig.max_item_count;
+}
+
+export function isAutoLaunchAtLogin(state: any) {
+  return state.globalConfig.launch_at_login;
 }

@@ -15,6 +15,7 @@ import {
 
 import { CgSmileNone } from 'react-icons/cg';
 
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 import {
   EmptyListContainer,
   EmptyListDesc,
@@ -25,8 +26,11 @@ import {
   WorkflowItemTitle,
   WorkflowListOrderedList,
   WorkflowListView,
+  Header,
   WorkflowListViewFooter
 } from './components';
+import { setHotkey } from '../../../redux/actions/globalConfig';
+import { isAutoLaunchAtLogin } from '../../../redux/reducers/globalConfig';
 
 const bottomFixedBarIconStyle = {
   width: 22,
@@ -37,6 +41,15 @@ const bottomFixedBarIconStyle = {
 const emptyListIconStyle = {
   width: 35,
   height: 35
+};
+
+const formGroupStyle = {
+  marginBottom: 15,
+  width: '75%'
+};
+
+const labelStyle = {
+  color: '#ffffff'
 };
 
 export default function Workflow() {
@@ -136,6 +149,7 @@ export default function Workflow() {
   return (
     <OuterContainer>
       <WorkflowListView>
+        <Header>Installed Workflows</Header>
         <WorkflowListOrderedList>
           <FlatList
             list={workflows}
@@ -158,7 +172,62 @@ export default function Workflow() {
           />
         </WorkflowListViewFooter>
       </WorkflowListView>
-      <WorkflowDescContainer />
+      <WorkflowDescContainer>
+        <Header>Workflow config</Header>
+        <Form
+          style={{
+            paddingLeft: '5%',
+            backgroundColor: '#777777',
+            paddingTop: 10,
+            paddingBottom: 10,
+            borderRadius: 10,
+            marginLeft: 25,
+            marginRight: 25
+          }}
+        >
+          <FormGroup check style={formGroupStyle}>
+            <Label checked style={labelStyle}>
+              <Input type="checkbox" onChange={() => {}} />
+              Enabled
+            </Label>
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Name</Label>
+            <Input type="text" />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Version</Label>
+            <Input type="text" />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Creator</Label>
+            <Input type="text" />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Bundle Id</Label>
+            <Input type="text" />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Category</Label>
+            <Input type="text" />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Description</Label>
+            <Input type="textarea" />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Web site</Label>
+            <Input type="url" />
+          </FormGroup>
+        </Form>
+      </WorkflowDescContainer>
     </OuterContainer>
   );
 }

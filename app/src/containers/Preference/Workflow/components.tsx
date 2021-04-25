@@ -27,14 +27,24 @@ export const OuterContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  background-color: #444444;
+  background-color: #555555;
   justify-content: flex-start;
 `;
 
 export const WorkflowListView = styled.div`
   overflow-y: auto;
   width: 50%;
-  background-color: #555555;
+`;
+
+export const Header = styled.div`
+  width: 50%;
+  margin-left: 45px;
+  margin-top: 25px;
+  height: 70px;
+  color: #ffffff;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 20px;
 `;
 
 export const WorkflowListViewFooter = styled.div`
@@ -46,11 +56,18 @@ export const WorkflowListViewFooter = styled.div`
   bottom: 0;
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 `;
 
-export const WorkflowListOrderedList = styled.ol``;
+export const WorkflowListOrderedList = styled.ol`
+  background-color: #666666;
+  margin-left: 25px;
+  margin-right: 25px;
+  border-radius: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+`;
 
 export const WorkflowItemContainer = styled.div`
   width: 300px;
@@ -66,6 +83,6 @@ export const WorkflowItemContainer = styled.div`
 `;
 
 export const WorkflowDescContainer = styled.div`
-  background-color: #888888;
   width: 50%;
+  padding-left: 15px;
 `;

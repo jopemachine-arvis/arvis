@@ -10,15 +10,24 @@ const formGroupStyle = {
   marginBottom: 35
 };
 
+const labelStyle = {
+  color: '#ffffff'
+};
+
 const OuterContainer = styled.div`
   width: 100vh;
   flex: 1;
   display: flex;
   flex-direction: row;
   background-color: #16181b;
-  padding-top: 15px;
+  padding-top: 60px;
   padding-left: 15px;
   justify-content: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 `;
 
 export default function General() {
@@ -52,7 +61,7 @@ export default function General() {
     <OuterContainer>
       <Form>
         <FormGroup check style={formGroupStyle}>
-          <Label checked>
+          <Label checked style={labelStyle}>
             <Input
               type="checkbox"
               checked={isAutoLaunchAtLogin}
@@ -63,7 +72,7 @@ export default function General() {
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
-          <Label>Hotkey</Label>
+          <Label style={labelStyle}>Hotkey</Label>
           <Input
             type="text"
             value={hotkey}
@@ -74,7 +83,7 @@ export default function General() {
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
-          <Label>Max item count</Label>
+          <Label style={labelStyle}>Max item count</Label>
           <Input
             type="select"
             name="select"
