@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { StateType } from '../redux/reducers/types';
+
+import { BsApp } from 'react-icons/bs';
 
 type IProps = {
   title: string;
@@ -64,6 +66,20 @@ const searchResultItem = (props: IProps) => {
     title_font_size
   } = useSelector((state: StateType) => state.uiConfig);
 
+  const iconStyle = useMemo(() => {
+    return {
+      width: item_height - 20,
+      height: item_height - 20,
+      marginRight: item_left_padding
+    };
+  }, []);
+
+  const iconElem = icon ? (
+    <IconImg style={iconStyle} src={icon} />
+  ) : (
+    <BsApp style={iconStyle} />
+  );
+
   return (
     <OuterContainer
       style={{
@@ -77,14 +93,7 @@ const searchResultItem = (props: IProps) => {
       onMouseOver={() => onMouseoverHandler()}
       onDoubleClick={() => onDoubleClickHandler()}
     >
-      <IconImg
-        style={{
-          width: item_height - 20,
-          height: item_height - 20,
-          marginRight: item_left_padding
-        }}
-        src={icon}
-      />
+      {iconElem}
       <InnerContainer>
         <Title
           style={{

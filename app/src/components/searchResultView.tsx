@@ -53,12 +53,13 @@ const searchResultView = (props: IProps) => {
     [props]
   );
 
-  const determineIconPath = async (command: any) => {
-    const defaultIcon = '';
+  const determineIconPath = async (
+    command: any
+  ): Promise<string | undefined> => {
     const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${command.bundleId}`;
     const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
 
-    let iconPath = defaultIcon;
+    let iconPath;
     if (command.icon) {
       iconPath = command.icon.path;
       if (!path.isAbsolute(command.icon.path)) {
