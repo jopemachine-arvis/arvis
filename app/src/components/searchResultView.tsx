@@ -1,10 +1,13 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { ipcRenderer } from 'electron';
 import SearchResultItem from './searchResultItem';
 
 type IProps = {
+  itemHeight: number;
   searchResult: any[];
+  searchbarHeight: number;
   selectedItemIdx: number;
   startIdx: number;
   maxItemCount: number;
@@ -26,31 +29,47 @@ const InnerContainer = styled.div`
 `;
 
 const searchResultView = (props: IProps) => {
+  const {
+    itemHeight,
+    searchbarHeight,
+    searchResult,
+    startIdx,
+    maxItemCount,
+    selectedItemIdx,
+    onDoubleClickHandler,
+    onMouseoverHandler
+  } = props;
+
   const resultToRenders = useMemo(
-    () =>
-      props.searchResult.slice(
-        props.startIdx,
-        props.startIdx + props.maxItemCount
-      ),
+    () => searchResult.slice(startIdx, startIdx + maxItemCount),
     [props]
   );
+
+  useEffect(() => {
+    ipcRenderer.send('resize-searchwindow-height', {
+      itemCount: searchResult.length,
+      maxItemCount,
+      itemHeight,
+      searchbarHeight
+    });
+  }, [searchResult]);
 
   return (
     <OuterContainer>
       {resultToRenders.map((command: any, index: number) => {
-        const itemIdx = props.startIdx + index;
+        const itemIdx = startIdx + index;
         return (
           <InnerContainer key={`item-${index}`}>
             <SearchResultItem
-              selected={itemIdx === props.selectedItemIdx}
+              selected={itemIdx === selectedItemIdx}
               title={command.title ? command.title : command.command}
               subtitle={command.subtitle}
               arg={command.arg}
               text={command.text}
               autocomplete={command.autocomplete}
               variables={command.variables}
-              onMouseoverHandler={() => props.onMouseoverHandler(itemIdx)}
-              onDoubleClickHandler={() => props.onDoubleClickHandler(itemIdx)}
+              onMouseoverHandler={() => onMouseoverHandler(itemIdx)}
+              onDoubleClickHandler={() => onDoubleClickHandler(itemIdx)}
             />
           </InnerContainer>
         );

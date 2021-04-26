@@ -26,18 +26,27 @@ export const initIPCHandler = ({
       {
         itemCount,
         maxItemCount,
-        itemHeight
-      }: { itemCount: number; maxItemCount: number; itemHeight: number }
+        itemHeight,
+        searchbarHeight
+      }: {
+        itemCount: number;
+        maxItemCount: number;
+        itemHeight: number;
+        searchbarHeight: number;
+      }
     ) => {
       let heightToSet;
 
-      if (itemCount >= maxItemCount) {
-        heightToSet = maxItemCount * itemHeight;
+      if (itemCount === 0) {
+        heightToSet = searchbarHeight;
+      } else if (itemCount >= maxItemCount) {
+        heightToSet = maxItemCount * itemHeight + searchbarHeight;
       } else {
-        heightToSet = itemCount * itemHeight;
+        heightToSet = itemCount * itemHeight + searchbarHeight;
       }
 
       const [width] = searchWindow.getSize();
+
       searchWindow.setSize(width, heightToSet);
     }
   );

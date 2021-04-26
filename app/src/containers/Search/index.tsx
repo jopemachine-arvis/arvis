@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import { useSelector } from 'react-redux';
 import { SearchBar, SearchResultView } from '../../components';
-import { maxItemCount, useControl } from '../../hooks/useControl';
+import useControl from '../../hooks/useControl';
 import { StateType } from '../../redux/reducers/types';
 
 const commandManager = new Core.CommandManager();
@@ -18,8 +18,12 @@ const OuterContainer = styled.div`
 `;
 
 export default function SearchWindow() {
-  const { item_background_color } = useSelector(
+  const { item_background_color, item_height, searchbar_height } = useSelector(
     (state: StateType) => state.uiConfig
+  );
+
+  const { max_item_count } = useSelector(
+    (state: StateType) => state.globalConfig
   );
 
   const [items, setItems] = useState<any>([]);
@@ -38,6 +42,7 @@ export default function SearchWindow() {
     getInputProps
   } = useControl({
     items,
+    maxItemCount: max_item_count,
     clearItems,
     commandManager
   });
@@ -85,9 +90,11 @@ export default function SearchWindow() {
     >
       <SearchBar input={inputStr} getInputProps={getInputProps} />
       <SearchResultView
+        itemHeight={item_height}
         startIdx={indexInfo.itemStartIdx}
         selectedItemIdx={indexInfo.selectedItemIdx}
-        maxItemCount={maxItemCount}
+        searchbarHeight={searchbar_height}
+        maxItemCount={max_item_count}
         searchResult={items}
         onDoubleClickHandler={onDoubleClickHandler}
         onMouseoverHandler={onMouseoverHandler}

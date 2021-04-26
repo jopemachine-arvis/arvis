@@ -4,8 +4,6 @@ import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
 import useKey from '../../use-key-capture/_dist/index';
 
-const maxItemCount = 5;
-
 type IndexInfo = {
   selectedItemIdx: number;
   itemStartIdx: number;
@@ -13,10 +11,12 @@ type IndexInfo = {
 
 const useControl = ({
   items,
+  maxItemCount,
   clearItems,
   commandManager
 }: {
   items: any[];
+  maxItemCount: number;
   clearItems: Function;
   commandManager: Core.CommandManager;
 }) => {
@@ -249,4 +249,4 @@ const useControl = ({
   };
 };
 
-export { useControl, maxItemCount };
+export default useControl;
