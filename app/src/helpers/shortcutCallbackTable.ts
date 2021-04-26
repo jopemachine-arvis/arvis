@@ -1,18 +1,18 @@
 import { BrowserWindow } from 'electron';
 
-export default function ShortcutCallbackTableGenerator({
-  searchWindow
-}: {
-  searchWindow: BrowserWindow;
-}) {
-  return {
-    showSearchWindow: () => {
-      if (!searchWindow) {
-        throw new Error('"searchWindow" is not defined');
-      }
-
-      searchWindow.show();
-      searchWindow.focus();
+export default {
+  showSearchWindow: ({
+    preferenceWindow,
+    searchWindow
+  }: {
+    preferenceWindow: BrowserWindow;
+    searchWindow: BrowserWindow;
+  }) => () => {
+    if (!searchWindow) {
+      throw new Error('"searchWindow" is not defined');
     }
-  };
-}
+
+    searchWindow.show();
+    searchWindow.focus();
+  }
+};

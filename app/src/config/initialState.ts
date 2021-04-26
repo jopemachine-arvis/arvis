@@ -10,14 +10,14 @@ export default {
     item_font_color: '#cccccc',
     item_height: 65,
     item_left_padding: 15,
-    item_top_padding: 7,
+    item_top_padding: 3,
     searchbar_font_size: 20,
     searchbar_height: 60,
     search_window_height: 400,
     search_window_width: 900,
     selected_item_background_color: '#222222',
     selected_item_font_color: '#ffffff',
-    subtitle_font_size: 10,
-    title_font_size: 15
+    subtitle_font_size: 12,
+    title_font_size: 17
   }
 };

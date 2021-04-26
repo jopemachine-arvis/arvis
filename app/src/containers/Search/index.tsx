@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import styled from 'styled-components';
@@ -63,10 +64,9 @@ export default function SearchWindow() {
     Core.findCommands(StoreType.Electron, assumedCommand)
       .then((result: any) => {
         setItems(result);
-        return null;
       })
       .catch(error => {
-        console.error(error);
+        throw new Error(`findCommands throws Error\n ${error}`);
       });
   };
 
@@ -88,7 +88,7 @@ export default function SearchWindow() {
       }}
       onWheel={onScrollHandler}
     >
-      <SearchBar input={inputStr} getInputProps={getInputProps} />
+      <SearchBar getInputProps={getInputProps} />
       <SearchResultView
         itemHeight={item_height}
         startIdx={indexInfo.itemStartIdx}

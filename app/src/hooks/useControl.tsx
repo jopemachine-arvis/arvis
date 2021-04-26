@@ -130,20 +130,23 @@ const useControl = ({
       const goScriptFilterWithoutSpace =
         items[0].withspace === false && updatedInput.includes(items[0].command);
 
+      let commandOnStackIsEmpty;
       if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
+        commandOnStackIsEmpty = items[indexInfo.selectedItemIdx];
+      }
+
+      if (
+        goScriptFilterWithSpace ||
+        goScriptFilterWithoutSpace ||
+        onScriptFilter
+      ) {
         try {
           commandManager.scriptFilterExcute(
             updatedInput,
-            items[indexInfo.selectedItemIdx]
+            commandOnStackIsEmpty
           );
         } catch (err) {
-          console.error(err);
-        }
-      } else if (onScriptFilter) {
-        try {
-          commandManager.scriptFilterExcute(updatedInput);
-        } catch (err) {
-          console.error(err);
+          throw new Error(`scriptFilterExcute throws Error. \n${err}`);
         }
       }
     }

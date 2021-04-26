@@ -1,4 +1,7 @@
-import { ipcMain, dialog, BrowserWindow } from 'electron';
+/* eslint-disable no-restricted-syntax */
+import { ipcMain, dialog, BrowserWindow, globalShortcut } from 'electron';
+
+import shortcutCallbackTbl from './shortcutCallbackTable';
 
 export const initIPCHandler = ({
   searchWindow,
@@ -51,7 +54,24 @@ export const initIPCHandler = ({
     }
   );
 
+  // Used to hide search window with avoiding afterimage
   ipcMain.on('hide-search-window', (evt: any) => {
     searchWindow.hide();
   });
+
+  // Used to register global shortcuts
+  ipcMain.on(
+    'set-global-shortcut',
+    (evt: any, { callbackTable }: { callbackTable: any }) => {
+      const shortcuts = Object.keys(callbackTable);
+      for (const shortcut of shortcuts) {
+        const action = callbackTable[shortcut];
+
+        globalShortcut.register(
+          shortcut,
+          shortcutCallbackTbl[action]({ preferenceWindow, searchWindow })
+        );
+      }
+    }
+  );
 };

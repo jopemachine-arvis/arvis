@@ -1,11 +1,9 @@
 import path from 'path';
 import { BrowserWindow } from 'electron';
-import registerGlobalShortcut from '../config/globalShortcuts';
 import constants from '../constants';
 import MenuBuilder from '../components/menus';
 import AppUpdater from '../config/appUpdater';
 import installExtensions from '../config/extensionInstaller';
-import generateShortcutCallbackTable from '../helpers/shortcutCallbackTable';
 
 const createPreferenceWindow = ({
   trayBuilder,
@@ -62,8 +60,6 @@ const createPreferenceWindow = ({
 
   const menuBuilder = new MenuBuilder(preferenceWindow);
   menuBuilder.buildMenu();
-
-  registerGlobalShortcut(generateShortcutCallbackTable({ searchWindow }));
 
   // eslint-disable-next-line
   new AppUpdater();

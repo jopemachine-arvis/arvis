@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { ipcRenderer } from 'electron';
+import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 
@@ -7,11 +9,24 @@ import GeneralPage from './General';
 import WorkflowPage from './Workflow';
 import ThemePage from './Theme';
 import AdvancedPage from './Advanced';
+import { StateType } from '../../redux/reducers/types';
 
 const INITIAL_PAGE = PreferencePage.General;
 
 export default function PreferenceWindow() {
   const [page, setPage] = useState(INITIAL_PAGE);
+
+  const { hotkey } = useSelector((state: StateType) => state.globalConfig);
+
+  useEffect(() => {
+    const globalShortcutCallbackTable = {
+      [hotkey]: 'showSearchWindow'
+    };
+
+    ipcRenderer.send('set-global-shortcut', {
+      callbackTable: globalShortcutCallbackTable
+    });
+  }, []);
 
   let main;
   switch (page) {
@@ -28,8 +43,7 @@ export default function PreferenceWindow() {
       main = <ThemePage />;
       break;
     default:
-      console.error('Error, page is not valid value, page: ', page);
-      break;
+      throw new Error(`Error, page is not valid value, page: ${page}`);
   }
 
   return (

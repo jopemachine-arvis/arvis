@@ -19,8 +19,18 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const searchBar = (props: any) => {
-  const { ref: inputRef, type, originalRef } = props.getInputProps();
+type IProps = {
+  getInputProps?: Function;
+};
+
+const searchBar = (props: IProps) => {
+  const { ref: inputRef, type, originalRef } = props.getInputProps
+    ? props.getInputProps()
+    : {
+        ref: null,
+        type: '',
+        originalRef: null
+      };
 
   const {
     item_background_color,
@@ -44,7 +54,7 @@ const searchBar = (props: any) => {
 
   const preventBlur = (e: any) => {
     e.preventDefault();
-    originalRef.current.focus();
+    originalRef && originalRef.current && originalRef.current.focus();
   };
 
   return (
@@ -58,7 +68,8 @@ const searchBar = (props: any) => {
           backgroundColor: item_background_color,
           color: item_font_color,
           fontSize: searchbar_font_size,
-          paddingLeft: item_left_padding
+          paddingLeft: item_left_padding,
+          borderRadius: 10
         }}
         ref={inputRef}
         type={type}

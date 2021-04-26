@@ -12,7 +12,19 @@ export const OuterContainer = styled.div`
 
 export const PreviewContainer = styled.div`
   overflow-y: auto;
-  width: 50%;
+  width: 65%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const PreviewMainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5%;
 `;
 
 export const Header = styled.div`
@@ -27,6 +39,6 @@ export const Header = styled.div`
 `;
 
 export const ConfigContainer = styled.div`
-  width: 50%;
+  width: 35%;
   padding-left: 15px;
 `;

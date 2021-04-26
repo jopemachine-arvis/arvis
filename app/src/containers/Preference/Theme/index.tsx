@@ -8,8 +8,11 @@ import {
   OuterContainer,
   ConfigContainer,
   Header,
-  PreviewContainer
+  PreviewContainer,
+  PreviewMainContainer
 } from './components';
+
+import { SearchBar, SearchResultView } from '../../../components';
 
 import { UIConfigActions } from '../../../redux/actions';
 
@@ -44,6 +47,25 @@ const descriptionContainerStyle = {
   marginRight: 20
 };
 
+const mockItems = [
+  {
+    title: 'selected item',
+    subtitle: 'subtitle'
+  },
+  {
+    title: 'normal item',
+    subtitle: 'subtitle'
+  },
+  {
+    title: 'normal item',
+    subtitle: 'subtitle'
+  },
+  {
+    title: 'normal item',
+    subtitle: 'subtitle'
+  }
+];
+
 export default function Theme() {
   const {
     item_background_color,
@@ -74,7 +96,27 @@ export default function Theme() {
   return (
     <OuterContainer>
       <PreviewContainer>
-        <Header>Preview</Header>
+        <PreviewMainContainer
+          style={{
+            backgroundColor: item_background_color,
+            width: search_window_width,
+            height: search_window_height,
+            borderRadius: 10
+          }}
+          onWheel={() => {}}
+        >
+          <SearchBar />
+          <SearchResultView
+            itemHeight={item_height}
+            startIdx={0}
+            selectedItemIdx={0}
+            searchbarHeight={searchbar_height}
+            maxItemCount={4}
+            searchResult={mockItems}
+            onDoubleClickHandler={() => {}}
+            onMouseoverHandler={() => {}}
+          />
+        </PreviewMainContainer>
       </PreviewContainer>
       <ConfigContainer>
         <Header>Theme config</Header>
