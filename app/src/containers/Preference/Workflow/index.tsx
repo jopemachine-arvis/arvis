@@ -30,6 +30,8 @@ import {
   WorkflowListViewFooter
 } from './components';
 
+import { StyledInput } from '../../../components';
+
 const bottomFixedBarIconStyle = {
   width: 22,
   height: 22,
@@ -68,7 +70,7 @@ const descriptionContainerStyle = {
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '#22262F',
+  backgroundColor: '#1f2228',
   paddingTop: 10,
   paddingBottom: 10,
   borderRadius: 10,
@@ -143,15 +145,18 @@ export default function Workflow() {
     let optionalStyle = {};
     if (selectedWorkflowIdx === idx) {
       optionalStyle = {
-        backgroundColor: '#2862DA',
-        borderRadius: 10
+        backgroundColor: '#656C7B',
+        borderRadius: 10,
+        // Fix me! Not working!
+        borderWidth: 1,
+        borderColor: '#565A65'
       };
     }
 
     return (
       <WorkflowItemContainer
         style={optionalStyle}
-        key={idx}
+        key={`workflowItem-${idx}`}
         onClick={() => itemClickHandler(idx)}
       >
         <WorkflowItemTitle>{name}</WorkflowItemTitle>
@@ -258,37 +263,37 @@ export default function Workflow() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Name</Label>
-            <Input type="text" value={workflowName} />
+            <StyledInput type="text" value={workflowName} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Version</Label>
-            <Input type="text" value={workflowVersion} />
+            <StyledInput type="text" value={workflowVersion} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Creator</Label>
-            <Input type="text" value={workflowCreator} />
+            <StyledInput type="text" value={workflowCreator} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Bundle Id</Label>
-            <Input type="text" value={workflowBundleId} />
+            <StyledInput type="text" value={workflowBundleId} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Category</Label>
-            <Input type="text" value={workflowCategory} />
+            <StyledInput type="text" value={workflowCategory} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Description</Label>
-            <Input type="textarea" value={workflowDescription} />
+            <StyledInput type="textarea" value={workflowDescription} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Web site</Label>
-            <Input type="url" value={workflowWebsite} />
+            <StyledInput type="url" value={workflowWebsite} />
           </FormGroup>
         </Form>
       </WorkflowDescContainer>

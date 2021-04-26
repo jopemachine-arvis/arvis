@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { StateType } from '../redux/reducers/types';
-
 import { BsApp } from 'react-icons/bs';
+import { StateType } from '../redux/reducers/types';
 
 type IProps = {
   title: string;

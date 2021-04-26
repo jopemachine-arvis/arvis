@@ -27,7 +27,7 @@ export const OuterContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  background-color: #16181b;
+  background-color: #12151a;
   justify-content: flex-start;
 `;
 
@@ -60,7 +60,7 @@ export const WorkflowListViewFooter = styled.div`
 `;
 
 export const WorkflowListOrderedList = styled.ol`
-  background-color: #22262f;
+  background-color: #1f2228;
   margin-left: 40px;
   margin-right: 25px;
   border-radius: 10px;

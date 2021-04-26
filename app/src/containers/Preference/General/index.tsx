@@ -6,6 +6,8 @@ import { StateType } from '../../../redux/reducers/types';
 
 import { GlobalConfigActions } from '../../../redux/actions';
 
+import { StyledInput } from '../../../components';
+
 const formGroupStyle = {
   marginBottom: 35
 };
@@ -19,7 +21,7 @@ const OuterContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  background-color: #16181b;
+  background-color: #12151a;
   padding-top: 60px;
   padding-left: 15px;
   justify-content: center;
@@ -83,14 +85,11 @@ export default function General() {
 
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Hotkey</Label>
-          <Input
+          <StyledInput
             type="text"
             value={hotkey}
             onChange={e => {
               setHotkey(e.target.value);
-            }}
-            style={{
-              textAlign: 'center'
             }}
           />
         </FormGroup>
@@ -99,14 +98,11 @@ export default function General() {
           <Label style={labelStyle}>
             Max item count to show on search window
           </Label>
-          <Input
+          <StyledInput
             type="select"
             value={maxItemCountToShow}
             onChange={e => {
               setMaxItemCountToShow(Number(e.target.value));
-            }}
-            style={{
-              textAlign: 'center'
             }}
           >
             <option>1</option>
@@ -118,19 +114,16 @@ export default function General() {
             <option>7</option>
             <option>8</option>
             <option>9</option>
-          </Input>
+          </StyledInput>
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Max item count to search</Label>
-          <Input
+          <StyledInput
             type="number"
             value={maxItemCountToSearch}
             onChange={e => {
               setMaxItemCountToSearch(Number(e.target.value));
-            }}
-            style={{
-              textAlign: 'center'
             }}
           />
         </FormGroup>

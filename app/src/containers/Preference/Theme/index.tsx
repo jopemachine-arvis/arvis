@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label } from 'reactstrap';
 import { StateType } from '../../../redux/reducers/types';
 
 import {
@@ -12,7 +12,7 @@ import {
   PreviewMainContainer
 } from './components';
 
-import { SearchBar, SearchResultView } from '../../../components';
+import { SearchBar, SearchResultView, StyledInput } from '../../../components';
 
 import { UIConfigActions } from '../../../redux/actions';
 
@@ -39,7 +39,7 @@ const descriptionContainerStyle = {
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '#23262E',
+  backgroundColor: '#1f2228',
   paddingTop: 10,
   paddingBottom: 10,
   borderRadius: 10,
@@ -123,7 +123,7 @@ export default function Theme() {
         <Form style={descriptionContainerStyle}>
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Window Width</Label>
-            <Input
+            <StyledInput
               type="number"
               value={search_window_width}
               onChange={e =>
@@ -134,7 +134,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Window Height</Label>
-            <Input
+            <StyledInput
               type="number"
               value={search_window_height}
               onChange={e =>
@@ -145,7 +145,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item Height</Label>
-            <Input
+            <StyledInput
               type="number"
               value={item_height}
               onChange={e =>
@@ -156,7 +156,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item background color</Label>
-            <Input
+            <StyledInput
               type="color"
               value={item_background_color}
               onChange={e =>
@@ -167,7 +167,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Selected item background color</Label>
-            <Input
+            <StyledInput
               type="color"
               value={selected_item_background_color}
               onChange={e =>
@@ -181,7 +181,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Title font size</Label>
-            <Input
+            <StyledInput
               type="number"
               value={title_font_size}
               onChange={e =>
@@ -192,7 +192,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Subtitle font size</Label>
-            <Input
+            <StyledInput
               type="number"
               value={subtitle_font_size}
               onChange={e =>
@@ -203,7 +203,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item font color</Label>
-            <Input
+            <StyledInput
               type="color"
               value={item_font_color}
               onChange={e =>
@@ -214,7 +214,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Selected item font color</Label>
-            <Input
+            <StyledInput
               type="color"
               value={selected_item_font_color}
               onChange={e =>
@@ -225,7 +225,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item left padding</Label>
-            <Input
+            <StyledInput
               type="number"
               value={item_left_padding}
               onChange={e =>
@@ -236,7 +236,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item top padding</Label>
-            <Input
+            <StyledInput
               type="number"
               value={item_top_padding}
               onChange={e =>
@@ -247,7 +247,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Search bar Height</Label>
-            <Input
+            <StyledInput
               type="number"
               value={searchbar_height}
               onChange={e =>
@@ -258,7 +258,7 @@ export default function Theme() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Search bar Font size</Label>
-            <Input
+            <StyledInput
               type="number"
               value={searchbar_font_size}
               onChange={e =>

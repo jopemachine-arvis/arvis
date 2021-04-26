@@ -11,12 +11,12 @@ export const OuterContainer = styled.div`
 `;
 
 export const PreviewContainer = styled.div`
-  overflow-y: auto;
   width: 65%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #1f2227;
 `;
 
 export const PreviewMainContainer = styled.div`
