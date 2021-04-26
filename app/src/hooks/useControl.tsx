@@ -154,7 +154,7 @@ const useControl = ({
 
   const onScrollHandler = (e: any) => {
     if (e.deltaY > 0) {
-      if (indexInfo.itemStartIdx < items.length) {
+      if (indexInfo.itemStartIdx + maxItemCount < items.length) {
         setIndexInfo({
           itemStartIdx: indexInfo.itemStartIdx + 1,
           selectedItemIdx: indexInfo.selectedItemIdx
