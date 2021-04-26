@@ -53,6 +53,23 @@ const searchResultView = (props: IProps) => {
     [props]
   );
 
+  const determineIconPath = async (command: any) => {
+    const defaultIcon = '';
+    const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${command.bundleId}`;
+    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
+
+    let iconPath = defaultIcon;
+    if (command.icon) {
+      iconPath = command.icon.path;
+      if (!path.isAbsolute(command.icon.path)) {
+        iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+      }
+    } else if (await checkFileExists(workflowDefaultIconPath))
+      iconPath = workflowDefaultIconPath;
+
+    return iconPath;
+  };
+
   useEffect(() => {
     ipcRenderer.send('resize-searchwindow-height', {
       itemCount: searchResult.length,
@@ -66,13 +83,7 @@ const searchResultView = (props: IProps) => {
     Promise.all(
       _.map(resultToRenders, async (command: any, offset: number) => {
         const itemIdx = startIdx + offset;
-        const defaultIcon = '';
-        const workflowDefaultIconPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${command.bundleId}${path.sep}icon.png`;
-
-        let iconPath = defaultIcon;
-        if (command.icon) iconPath = command.icon.path;
-        else if (await checkFileExists(workflowDefaultIconPath))
-          iconPath = workflowDefaultIconPath;
+        const iconPath = await determineIconPath(command);
 
         return (
           <InnerContainer key={`item-${offset}`}>

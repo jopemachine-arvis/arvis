@@ -34,13 +34,13 @@ export default function SearchWindow() {
 
   const {
     inputStr,
+    setInputStr,
     indexInfo,
     clearInput,
     clearIndexInfo,
     onScrollHandler,
     onMouseoverHandler,
-    onDoubleClickHandler,
-    getInputProps
+    onDoubleClickHandler
   } = useControl({
     items,
     maxItemCount: max_item_count_to_show,
@@ -88,7 +88,7 @@ export default function SearchWindow() {
       }}
       onWheel={onScrollHandler}
     >
-      <SearchBar getInputProps={getInputProps} />
+      <SearchBar setInputStr={setInputStr} />
       <SearchResultView
         itemHeight={item_height}
         startIdx={indexInfo.itemStartIdx}

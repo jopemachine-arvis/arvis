@@ -6,6 +6,10 @@ import { useSelector } from 'react-redux';
 import { StateType } from '../../redux/reducers/types';
 import './index.global.css';
 
+import useKey from '../../../use-key-capture/_dist/index';
+
+const clipboardy = require('clipboardy');
+
 const Input = styled.input`
   font-weight: normal;
   height: 100%;
@@ -20,18 +24,13 @@ const Container = styled.div`
 `;
 
 type IProps = {
-  getInputProps?: Function;
+  setInputStr: Function;
 };
 
 const searchBar = (props: IProps) => {
-  const { ref: inputRef, type, originalRef } = props.getInputProps
-    ? props.getInputProps()
-    : {
-        ref: null,
-        type: '',
-        originalRef: null
-      };
+  const { keyData, getTargetProps, resetKeyData } = useKey();
 
+  const { ref: inputRef, type, originalRef } = getTargetProps();
   const {
     item_background_color,
     item_font_color,
@@ -46,16 +45,60 @@ const searchBar = (props: IProps) => {
     }
   };
 
+  const preventBlur = (e: any) => {
+    e.preventDefault();
+    originalRef && originalRef.current && originalRef.current.focus();
+  };
+
+  const selectAllHandler = () => {
+    originalRef.current.select();
+  };
+
+  const copyHandler = () => {
+    const { selectionStart, selectionEnd } = originalRef.current;
+    const oldStr = originalRef.current.value;
+
+    const selectedText = oldStr.substring(
+      selectionStart,
+      selectionEnd
+    );
+
+    clipboardy.write(selectedText);
+  };
+
+  const pasteHandler = () => {
+    const { selectionStart, selectionEnd } = originalRef.current;
+    const oldStr = originalRef.current.value;
+
+    clipboardy.read().then((str: string) => {
+      const newText =
+        oldStr.substring(0, selectionStart) +
+        str +
+        oldStr.substring(selectionEnd, oldStr.length);
+      props.setInputStr(newText);
+      originalRef.current.value = newText;
+      originalRef.current.selectionStart = selectionEnd + str.length;
+      originalRef.current.selectionEnd = selectionEnd + str.length;
+    });
+  };
+
   useEffect(() => {
     if (originalRef && originalRef.current) {
       originalRef.current.focus();
     }
   }, [originalRef]);
 
-  const preventBlur = (e: any) => {
-    e.preventDefault();
-    originalRef && originalRef.current && originalRef.current.focus();
-  };
+  useEffect(() => {
+    if (keyData.isWithMeta || keyData.isWithCtrl) {
+      if (keyData.key.toLowerCase() === 'c') {
+        copyHandler();
+      } else if (keyData.key.toLowerCase() === 'v') {
+        pasteHandler();
+      } else if (keyData.key.toLowerCase() === 'a') {
+        selectAllHandler();
+      }
+    }
+  }, [keyData]);
 
   return (
     <Container

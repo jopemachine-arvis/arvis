@@ -81,7 +81,6 @@ const searchResultItem = (props: IProps) => {
         style={{
           width: item_height - 20,
           height: item_height - 20,
-          backgroundColor: '#ffffff',
           marginRight: item_left_padding
         }}
         src={icon}

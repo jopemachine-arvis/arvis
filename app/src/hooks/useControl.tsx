@@ -20,7 +20,7 @@ const useControl = ({
   clearItems: Function;
   commandManager: Core.CommandManager;
 }) => {
-  const { keyData, getTargetProps, resetKeyData } = useKey();
+  const { keyData, resetKeyData } = useKey();
 
   const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
 
@@ -136,9 +136,9 @@ const useControl = ({
       }
 
       if (
+        onScriptFilter ||
         goScriptFilterWithSpace ||
-        goScriptFilterWithoutSpace ||
-        onScriptFilter
+        goScriptFilterWithoutSpace
       ) {
         try {
           commandManager.scriptFilterExcute(
@@ -198,7 +198,8 @@ const useControl = ({
     const modifiers = {
       ctrl: keyData.isWithCtrl,
       shift: keyData.isWithShift,
-      cmd: false
+      // On mac, cmd key is handled by meta;
+      cmd: keyData.isWithMeta
     };
 
     if (keyData.isBackspace) {
@@ -212,7 +213,7 @@ const useControl = ({
       handleUpArrow();
     } else if (keyData.isEscape) {
       cleanUp();
-    } else {
+    } else if (!keyData.isSpecialCharacter) {
       handleNormalInput(input, updatedInput, modifiers);
     }
   };
@@ -242,13 +243,13 @@ const useControl = ({
 
   return {
     inputStr,
+    setInputStr,
     indexInfo,
     clearInput,
     clearIndexInfo,
     onScrollHandler,
     onMouseoverHandler,
-    onDoubleClickHandler,
-    getInputProps: getTargetProps
+    onDoubleClickHandler
   };
 };
 
