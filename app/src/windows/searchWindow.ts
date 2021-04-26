@@ -10,8 +10,9 @@ const createSearchWindow = () => {
     // To do:: Fix me! 'transparent' window is not working.
     transparent: true,
     resizable: false,
-    alwaysOnTop: true,
-    hasShadow: false,
+    movable: true,
+    hasShadow: true,
+    fullscreenable: false,
     backgroundColor: '#00ffffff',
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,

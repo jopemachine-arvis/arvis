@@ -28,7 +28,7 @@ type IProps = {
 };
 
 const searchBar = (props: IProps) => {
-  const { keyData, getTargetProps, resetKeyData } = useKey();
+  const { keyData, getTargetProps } = useKey();
 
   const { ref: inputRef, type, originalRef } = getTargetProps();
   const {
@@ -36,7 +36,7 @@ const searchBar = (props: IProps) => {
     item_font_color,
     item_left_padding,
     searchbar_font_size,
-    searchbar_height
+    searchbar_height,
   } = useSelector((state: StateType) => state.uiConfig);
 
   const preventUpAndDownArrow = (e: any) => {

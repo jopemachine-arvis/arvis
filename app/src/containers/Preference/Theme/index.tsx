@@ -105,13 +105,13 @@ export default function Theme() {
           }}
           onWheel={() => {}}
         >
-          <SearchBar />
+          <SearchBar setInputStr={() => {}} />
           <SearchResultView
             itemHeight={item_height}
             startIdx={0}
             selectedItemIdx={0}
             searchbarHeight={searchbar_height}
-            maxItemCount={4}
+            maxItemCount={mockItems.length + 1}
             searchResult={mockItems}
             onDoubleClickHandler={() => {}}
             onMouseoverHandler={() => {}}
