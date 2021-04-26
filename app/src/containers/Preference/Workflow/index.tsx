@@ -89,6 +89,7 @@ export default function Workflow() {
   const [workflowCategory, setWorkflowCategory] = useState<string>('');
   const [workflowDescription, setWorkflowDescription] = useState<string>('');
   const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
+  const [workflowEnabled, setWorkflowEnabled] = useState<boolean>(false);
 
   const forceUpdate = useForceUpdate();
 
@@ -116,9 +117,11 @@ export default function Workflow() {
         version,
         webaddress,
         description,
-        category
+        category,
+        enabled
       } = info;
 
+      setWorkflowEnabled(enabled);
       setWorkflowName(name);
       setWorkflowCreator(createdby);
       setWorkflowBundleId(bundleId);
@@ -244,7 +247,11 @@ export default function Workflow() {
         <Form style={descriptionContainerStyle}>
           <FormGroup check style={checkboxStyle}>
             <Label checked style={labelStyle}>
-              <Input type="checkbox" onChange={() => {}} />
+              <Input
+                type="checkbox"
+                checked={workflowEnabled}
+                onChange={() => {}}
+              />
               Enabled
             </Label>
           </FormGroup>
