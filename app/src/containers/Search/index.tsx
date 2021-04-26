@@ -22,7 +22,7 @@ export default function SearchWindow() {
     (state: StateType) => state.uiConfig
   );
 
-  const { max_item_count } = useSelector(
+  const { max_item_count_to_show } = useSelector(
     (state: StateType) => state.globalConfig
   );
 
@@ -42,7 +42,7 @@ export default function SearchWindow() {
     getInputProps
   } = useControl({
     items,
-    maxItemCount: max_item_count,
+    maxItemCount: max_item_count_to_show,
     clearItems,
     commandManager
   });
@@ -94,7 +94,7 @@ export default function SearchWindow() {
         startIdx={indexInfo.itemStartIdx}
         selectedItemIdx={indexInfo.selectedItemIdx}
         searchbarHeight={searchbar_height}
-        maxItemCount={max_item_count}
+        maxItemCount={max_item_count_to_show}
         searchResult={items}
         onDoubleClickHandler={onDoubleClickHandler}
         onMouseoverHandler={onMouseoverHandler}

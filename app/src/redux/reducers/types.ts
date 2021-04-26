@@ -4,7 +4,8 @@ export type StateType = {
   globalConfig: {
     hotkey: string;
     launch_at_login: boolean;
-    max_item_count: number;
+    max_item_count_to_show: number;
+    max_item_count_to_search: number;
   };
   uiConfig: {
     item_background_color: string;

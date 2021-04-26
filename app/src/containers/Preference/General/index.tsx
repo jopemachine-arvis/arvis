@@ -30,10 +30,6 @@ const OuterContainer = styled.div`
   user-select: none;
 `;
 
-const TextContainer = styled.div`
-  text-align: center;
-`;
-
 export default function General() {
   const isAutoLaunchAtLogin = useSelector(
     (state: StateType) => state.globalConfig.launch_at_login
@@ -45,8 +41,14 @@ export default function General() {
     useSelector((state: StateType) => state.globalConfig.hotkey)
   );
 
-  const [maxItemCount, setMaxItemCount] = useState<number>(
-    useSelector((state: StateType) => state.globalConfig.max_item_count)
+  const [maxItemCountToShow, setMaxItemCountToShow] = useState<number>(
+    useSelector((state: StateType) => state.globalConfig.max_item_count_to_show)
+  );
+
+  const [maxItemCountToSearch, setMaxItemCountToSearch] = useState<number>(
+    useSelector(
+      (state: StateType) => state.globalConfig.max_item_count_to_search
+    )
   );
 
   const toggleAutoLaunchAtLogin = () => {
@@ -58,8 +60,12 @@ export default function General() {
   }, [hotkey]);
 
   useEffect(() => {
-    dispatch(GlobalConfigActions.setMaxItemCount(maxItemCount));
-  }, [maxItemCount]);
+    dispatch(GlobalConfigActions.setMaxItemCountToShow(maxItemCountToShow));
+  }, [maxItemCountToShow]);
+
+  useEffect(() => {
+    dispatch(GlobalConfigActions.setMaxItemCountToSearch(maxItemCountToSearch));
+  }, [maxItemCountToSearch]);
 
   return (
     <OuterContainer>
@@ -90,13 +96,17 @@ export default function General() {
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Max item count</Label>
+          <Label style={labelStyle}>
+            Max item count to show on search window
+          </Label>
           <Input
             type="select"
-            name="select"
-            value={maxItemCount}
+            value={maxItemCountToShow}
             onChange={e => {
-              setMaxItemCount(Number(e.target.value));
+              setMaxItemCountToShow(Number(e.target.value));
+            }}
+            style={{
+              textAlign: 'center'
             }}
           >
             <option>1</option>
@@ -111,6 +121,19 @@ export default function General() {
           </Input>
         </FormGroup>
 
+        <FormGroup style={formGroupStyle}>
+          <Label style={labelStyle}>Max item count to search</Label>
+          <Input
+            type="number"
+            value={maxItemCountToSearch}
+            onChange={e => {
+              setMaxItemCountToSearch(Number(e.target.value));
+            }}
+            style={{
+              textAlign: 'center'
+            }}
+          />
+        </FormGroup>
       </Form>
     </OuterContainer>
   );

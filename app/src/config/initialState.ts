@@ -2,7 +2,8 @@ export default {
   globalConfig: {
     hotkey: 'Ctrl+Space',
     launch_at_login: true,
-    max_item_count: 9
+    max_item_count_to_show: 9,
+    max_item_count_to_search: 100
   },
   uiConfig: {
     item_background_color: '#444444',

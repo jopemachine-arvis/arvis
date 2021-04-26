@@ -42,7 +42,7 @@ const searchBar = (props: any) => {
     }
   }, [originalRef]);
 
-  const onBlurHandler = (e: any) => {
+  const preventBlur = (e: any) => {
     e.preventDefault();
     originalRef.current.focus();
   };
@@ -63,7 +63,7 @@ const searchBar = (props: any) => {
         ref={inputRef}
         type={type}
         onKeyDown={preventUpAndDownArrow}
-        onBlur={onBlurHandler}
+        onBlur={preventBlur}
       />
     </Container>
   );

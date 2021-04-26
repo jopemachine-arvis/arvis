@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -8,6 +7,7 @@ type IProps = {
   title: string;
   subtitle: string;
   selected: boolean;
+  icon?: string;
   arg?: any;
   text?: any;
   autocomplete?: string;
@@ -16,9 +16,16 @@ type IProps = {
   onDoubleClickHandler: Function;
 };
 
-const Container = styled.div`
-  flex-direction: column;
+const OuterContainer = styled.div`
+  flex-direction: row;
   width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const InnerContainer = styled.div`
+  flex-direction: column;
 `;
 
 const Title = styled.div`
@@ -29,13 +36,20 @@ const SubTitle = styled.div`
   word-wrap: break-word;
 `;
 
+const IconImg = styled.img``;
+
 const searchResultItem = (props: IProps) => {
   const {
     selected,
     title,
     subtitle,
     onMouseoverHandler,
-    onDoubleClickHandler
+    onDoubleClickHandler,
+    arg,
+    icon,
+    autocomplete,
+    text,
+    variables
   } = props;
 
   const {
@@ -51,37 +65,48 @@ const searchResultItem = (props: IProps) => {
   } = useSelector((state: StateType) => state.uiConfig);
 
   return (
-    <Container
+    <OuterContainer
       style={{
         height: item_height,
+        paddingLeft: item_left_padding,
         backgroundColor: selected
           ? selected_item_background_color
           : item_background_color
       }}
+      onFocus={() => {}}
       onMouseOver={() => onMouseoverHandler()}
       onDoubleClick={() => onDoubleClickHandler()}
     >
-      <Title
+      <IconImg
         style={{
-          fontSize: title_font_size,
-          paddingTop: item_top_padding,
-          paddingLeft: item_left_padding,
-          color: selected ? selected_item_font_color : item_font_color
+          width: item_height - 20,
+          height: item_height - 20,
+          backgroundColor: '#ffffff',
+          marginRight: item_left_padding
         }}
-      >
-        {title}
-      </Title>
-      <SubTitle
-        style={{
-          fontSize: subtitle_font_size,
-          paddingTop: item_top_padding,
-          paddingLeft: item_left_padding,
-          color: selected ? selected_item_font_color : item_font_color
-        }}
-      >
-        {subtitle}
-      </SubTitle>
-    </Container>
+        src={icon}
+      />
+      <InnerContainer>
+        <Title
+          style={{
+            fontSize: title_font_size,
+            paddingTop: item_top_padding,
+            color: selected ? selected_item_font_color : item_font_color
+          }}
+        >
+          {title}
+        </Title>
+        <SubTitle
+          style={{
+            fontSize: subtitle_font_size,
+            paddingTop: item_top_padding,
+            color: selected ? selected_item_font_color : item_font_color
+          }}
+        >
+          {subtitle}
+        </SubTitle>
+      </InnerContainer>
+    </OuterContainer>
   );
 };
 

@@ -1,8 +1,14 @@
+/* eslint-disable promise/catch-or-return */
+/* eslint-disable promise/always-return */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
+import path from 'path';
+import { Core } from 'wf-creator-core';
+import _ from 'lodash';
 import SearchResultItem from './searchResultItem';
+import { checkFileExists } from '../utils';
 
 type IProps = {
   itemHeight: number;
@@ -40,6 +46,8 @@ const searchResultView = (props: IProps) => {
     onMouseoverHandler
   } = props;
 
+  const [contents, setContents] = useState<any>();
+
   const resultToRenders = useMemo(
     () => searchResult.slice(startIdx, startIdx + maxItemCount),
     [props]
@@ -54,18 +62,27 @@ const searchResultView = (props: IProps) => {
     });
   }, [searchResult]);
 
-  return (
-    <OuterContainer>
-      {resultToRenders.map((command: any, index: number) => {
-        const itemIdx = startIdx + index;
+  useEffect(() => {
+    Promise.all(
+      _.map(resultToRenders, async (command: any, offset: number) => {
+        const itemIdx = startIdx + offset;
+        const defaultIcon = '';
+        const workflowDefaultIconPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${command.bundleId}${path.sep}icon.png`;
+
+        let iconPath = defaultIcon;
+        if (command.icon) iconPath = command.icon.path;
+        else if (await checkFileExists(workflowDefaultIconPath))
+          iconPath = workflowDefaultIconPath;
+
         return (
-          <InnerContainer key={`item-${index}`}>
+          <InnerContainer key={`item-${offset}`}>
             <SearchResultItem
               selected={itemIdx === selectedItemIdx}
               title={command.title ? command.title : command.command}
               subtitle={command.subtitle}
               arg={command.arg}
               text={command.text}
+              icon={iconPath}
               autocomplete={command.autocomplete}
               variables={command.variables}
               onMouseoverHandler={() => onMouseoverHandler(itemIdx)}
@@ -73,9 +90,13 @@ const searchResultView = (props: IProps) => {
             />
           </InnerContainer>
         );
-      })}
-    </OuterContainer>
-  );
+      })
+    ).then((result: any) => {
+      setContents(result);
+    });
+  }, [resultToRenders]);
+
+  return <OuterContainer>{contents}</OuterContainer>;
 };
 
 export default searchResultView;
