@@ -24,7 +24,7 @@ const useControl = ({
   setErrorItem: Function;
   commandManager: Core.CommandManager;
 }) => {
-  const { keyData, resetKeyData } = useKey();
+  const { keyData, getTargetProps, resetKeyData } = useKey();
 
   const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
 
@@ -79,7 +79,7 @@ const useControl = ({
       await commandManager
         .commandExcute(selectedItem, inputStr, modifiers)
         .catch(err => {
-          console.error('Error occured in commandExecute!');
+          console.error('Error occured in commandExecute!', err);
         });
       setInputStr('');
     }
@@ -89,12 +89,15 @@ const useControl = ({
     const selectedItemIdx =
       (indexInfo.selectedItemIdx - 1 + items.length) % items.length;
 
-    if (selectedItemIdx === items.length - 1) {
+    // Select most bottom item
+    if (selectedItemIdx === items.length - 1 && items.length !== 1) {
       setIndexInfo({
         itemStartIdx: items.length - maxItemCount,
         selectedItemIdx: items.length - 1
       });
-    } else if (indexInfo.itemStartIdx > selectedItemIdx) {
+    }
+    // Select up
+    else if (indexInfo.itemStartIdx > selectedItemIdx) {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx - 1,
         selectedItemIdx
@@ -139,7 +142,7 @@ const useControl = ({
       // When script filter is running
       const onScriptFilter = !commandManager.hasEmptyCommandStk();
 
-      // When script filter should be running
+      // When script filter is not running (and should be running)
       const goScriptFilterWithSpace =
         items[0].withspace === true &&
         updatedInput.includes(items[0].command) &&
@@ -162,6 +165,8 @@ const useControl = ({
           .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
           .catch(handleWorkflowError);
       }
+
+      clearIndexInfo();
     }
   };
 
@@ -262,7 +267,8 @@ const useControl = ({
     clearIndexInfo,
     onScrollHandler,
     onMouseoverHandler,
-    onDoubleClickHandler
+    onDoubleClickHandler,
+    getInputProps: getTargetProps
   };
 };
 

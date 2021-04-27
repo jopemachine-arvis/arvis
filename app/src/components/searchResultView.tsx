@@ -8,7 +8,7 @@ import path from 'path';
 import { Core } from 'wf-creator-core';
 import _ from 'lodash';
 import SearchResultItem from './searchResultItem';
-import { checkFileExists } from '../utils';
+import { checkFileExists, isSupportedImageFormat } from '../utils';
 
 type IProps = {
   demo: boolean;
@@ -65,12 +65,21 @@ const searchResultView = (props: IProps) => {
 
     let iconPath;
     if (command.icon) {
-      iconPath = command.icon.path;
-      if (!path.isAbsolute(command.icon.path)) {
-        iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+      const iconExt = command.icon.path.split('.').pop();
+
+      if (isSupportedImageFormat(iconExt)) {
+        if (path.isAbsolute(command.icon.path)) {
+          iconPath = command.icon.path;
+        } else {
+          iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+        }
       }
-    } else if (await checkFileExists(workflowDefaultIconPath))
+    } else if (
+      command.bundleId &&
+      (await checkFileExists(workflowDefaultIconPath))
+    ) {
       iconPath = workflowDefaultIconPath;
+    }
 
     return iconPath;
   };
@@ -102,6 +111,7 @@ const searchResultView = (props: IProps) => {
               arg={command.arg}
               text={command.text}
               icon={iconPath}
+              valid={command.valid}
               autocomplete={command.autocomplete}
               variables={command.variables}
               onMouseoverHandler={() => onMouseoverHandler(itemIdx)}

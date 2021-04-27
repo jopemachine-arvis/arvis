@@ -1,8 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { BsApp } from 'react-icons/bs';
+import { BiErrorAlt } from 'react-icons/bi';
 import { StateType } from '../redux/reducers/types';
+
+import useKey from '../../use-key-capture/_dist/index';
+
+const clipboardy = require('clipboardy');
 
 type IProps = {
   title: string;
@@ -13,6 +18,7 @@ type IProps = {
   text?: any;
   autocomplete?: string;
   variables?: any;
+  valid?: boolean;
   onMouseoverHandler: Function;
   onDoubleClickHandler: Function;
 };
@@ -23,6 +29,7 @@ const OuterContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  overflow: hidden;
 `;
 
 const InnerContainer = styled.div`
@@ -30,11 +37,15 @@ const InnerContainer = styled.div`
 `;
 
 const Title = styled.div`
-  word-wrap: break-word;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const SubTitle = styled.div`
-  word-wrap: break-word;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const IconImg = styled.img``;
@@ -50,7 +61,8 @@ const searchResultItem = (props: IProps) => {
     icon,
     autocomplete,
     text,
-    variables
+    variables,
+    valid
   } = props;
 
   const {
@@ -66,19 +78,41 @@ const searchResultItem = (props: IProps) => {
     title_font_size
   } = useSelector((state: StateType) => state.uiConfig);
 
+  const { keyData } = useKey();
+
+  const copyHandler = () => {
+    clipboardy.write(title);
+  };
+
+  useEffect(() => {
+    if (selected) {
+      if (keyData.isWithMeta || keyData.isWithCtrl) {
+        if (keyData.key.toLowerCase() === 'c') {
+          copyHandler();
+        }
+      }
+    }
+  }, [keyData]);
+
+  const iconSize = item_height - 20;
+
   const iconStyle = useMemo(() => {
     return {
-      width: item_height - 20,
-      height: item_height - 20,
-      marginRight: icon_right_margin
+      width: iconSize,
+      height: iconSize,
+      marginRight: icon_right_margin,
+      position: 'absolute'
     };
   }, [icon_right_margin]);
 
-  const iconElem = icon ? (
-    <IconImg style={iconStyle} src={icon} />
-  ) : (
-    <BsApp style={iconStyle} />
-  );
+  let iconElem;
+  if (icon) {
+    iconElem = <IconImg style={iconStyle} src={icon} />;
+  } else if (valid === false) {
+    iconElem = <BiErrorAlt style={iconStyle} />;
+  } else {
+    iconElem = <BsApp style={iconStyle} />;
+  }
 
   return (
     <OuterContainer
@@ -94,7 +128,11 @@ const searchResultItem = (props: IProps) => {
       onDoubleClick={() => onDoubleClickHandler()}
     >
       {iconElem}
-      <InnerContainer>
+      <InnerContainer
+        style={{
+          paddingLeft: iconSize + icon_right_margin
+        }}
+      >
         <Title
           style={{
             fontSize: title_font_size,

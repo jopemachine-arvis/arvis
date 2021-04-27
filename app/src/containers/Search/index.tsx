@@ -43,11 +43,12 @@ export default function SearchWindow() {
     } else {
       setItems([
         {
-          title: 'Unexpected error occured',
-          subtitle: err,
+          valid: false,
+          title: err.name,
+          subtitle: err.message,
           text: {
-            copy: err,
-            largetype: err
+            copy: err.message,
+            largetype: err.message
           }
         }
       ]);
@@ -58,6 +59,7 @@ export default function SearchWindow() {
     inputStr,
     setInputStr,
     indexInfo,
+    getInputProps,
     clearInput,
     clearIndexInfo,
     onScrollHandler,
@@ -111,7 +113,11 @@ export default function SearchWindow() {
       }}
       onWheel={onScrollHandler}
     >
-      <SearchBar alwaysFocus setInputStr={setInputStr} />
+      <SearchBar
+        getInputProps={getInputProps}
+        alwaysFocus
+        setInputStr={setInputStr}
+      />
       <SearchResultView
         demo={false}
         searchResult={items}

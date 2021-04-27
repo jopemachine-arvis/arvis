@@ -26,13 +26,21 @@ const Container = styled.div`
 type IProps = {
   alwaysFocus: boolean;
   setInputStr: Function;
+  getInputProps?: Function;
 };
 
 const searchBar = (props: IProps) => {
-  const { alwaysFocus, setInputStr }= props;
-  const { keyData, getTargetProps } = useKey();
+  const { alwaysFocus, setInputStr, getInputProps } = props;
 
-  const { ref: inputRef, type, originalRef } = getTargetProps();
+  const { keyData } = useKey();
+  const { ref: inputRef, type, originalRef } = getInputProps
+    ? getInputProps()
+    : {
+        ref: null,
+        originalRef: null,
+        type: ''
+      };
+
   const {
     item_background_color,
     item_left_padding,
@@ -53,22 +61,26 @@ const searchBar = (props: IProps) => {
   };
 
   const selectAllHandler = () => {
-    originalRef.current.select();
+    originalRef && originalRef.current && originalRef.current.select();
   };
 
   const copyHandler = () => {
+    if (!originalRef) return; 
     const { selectionStart, selectionEnd } = originalRef.current;
-    const oldStr = originalRef.current.value;
-
-    const selectedText = oldStr.substring(
-      selectionStart,
-      selectionEnd
-    );
-
-    clipboardy.write(selectedText);
+    if (selectionStart < selectionEnd) {
+      const oldStr = originalRef.current.value;
+  
+      const selectedText = oldStr.substring(
+        selectionStart,
+        selectionEnd
+      );
+  
+      clipboardy.write(selectedText);
+    }
   };
 
   const pasteHandler = () => {
+    if (!originalRef) return; 
     const { selectionStart, selectionEnd } = originalRef.current;
     const oldStr = originalRef.current.value;
 
