@@ -11,7 +11,9 @@ import SearchResultItem from './searchResultItem';
 import { checkFileExists } from '../utils';
 
 type IProps = {
+  demo: boolean;
   itemHeight: number;
+  footerHeight: number;
   searchResult: any[];
   searchbarHeight: number;
   selectedItemIdx: number;
@@ -36,14 +38,16 @@ const InnerContainer = styled.div`
 
 const searchResultView = (props: IProps) => {
   const {
+    demo,
+    footerHeight,
     itemHeight,
+    maxItemCount,
+    onDoubleClickHandler,
+    onMouseoverHandler,
     searchbarHeight,
     searchResult,
-    startIdx,
-    maxItemCount,
     selectedItemIdx,
-    onDoubleClickHandler,
-    onMouseoverHandler
+    startIdx
   } = props;
 
   const [contents, setContents] = useState<any>();
@@ -72,12 +76,15 @@ const searchResultView = (props: IProps) => {
   };
 
   useEffect(() => {
-    ipcRenderer.send('resize-searchwindow-height', {
-      itemCount: searchResult.length,
-      maxItemCount,
-      itemHeight,
-      searchbarHeight
-    });
+    if (!demo) {
+      ipcRenderer.send('resize-searchwindow-height', {
+        itemCount: searchResult.length,
+        maxItemCount,
+        itemHeight,
+        searchbarHeight,
+        footerHeight
+      });
+    }
   }, [searchResult]);
 
   useEffect(() => {

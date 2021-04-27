@@ -15,7 +15,7 @@ export default {
     searchbar_font_color: '#ffffff',
     searchbar_font_size: 20,
     searchbar_height: 60,
-    search_window_height: 400,
+    search_window_footer_height: 10,
     search_window_width: 900,
     selected_item_background_color: '#222222',
     selected_item_font_color: '#ffffff',

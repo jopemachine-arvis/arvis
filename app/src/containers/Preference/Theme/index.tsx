@@ -77,7 +77,7 @@ export default function Theme() {
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
-    search_window_height,
+    search_window_footer_height,
     search_window_width,
     selected_item_background_color,
     selected_item_font_color,
@@ -100,20 +100,25 @@ export default function Theme() {
       <PreviewContainer>
         <PreviewMainContainer
           style={{
+            borderRadius: 10,
             backgroundColor: item_background_color,
             width: search_window_width,
-            height: search_window_height,
-            borderRadius: 10
+            height:
+              item_height * mockItems.length +
+              searchbar_height +
+              search_window_footer_height
           }}
           onWheel={() => {}}
         >
           <SearchBar alwaysFocus={false} setInputStr={() => {}} />
           <SearchResultView
+            demo
             itemHeight={item_height}
+            searchbarHeight={searchbar_height}
+            footerHeight={search_window_footer_height}
             startIdx={0}
             selectedItemIdx={0}
-            searchbarHeight={searchbar_height}
-            maxItemCount={mockItems.length + 1}
+            maxItemCount={mockItems.length}
             searchResult={mockItems}
             onDoubleClickHandler={() => {}}
             onMouseoverHandler={() => {}}
@@ -135,12 +140,15 @@ export default function Theme() {
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Window Height</Label>
+            <Label style={labelStyle}>Window Footer Height</Label>
             <StyledInput
               type="number"
-              value={search_window_height}
+              value={search_window_footer_height}
               onChange={(e: any) =>
-                configChangeHandler(e, UIConfigActions.setSearchWindowHeight)
+                configChangeHandler(
+                  e,
+                  UIConfigActions.setSearchWindowFooterHeight
+                )
               }
             />
           </FormGroup>

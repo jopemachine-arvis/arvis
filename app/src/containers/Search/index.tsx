@@ -21,9 +21,12 @@ const OuterContainer = styled.div`
 `;
 
 export default function SearchWindow() {
-  const { item_background_color, item_height, searchbar_height } = useSelector(
-    (state: StateType) => state.uiConfig
-  );
+  const {
+    item_background_color,
+    item_height,
+    searchbar_height,
+    search_window_footer_height
+  } = useSelector((state: StateType) => state.uiConfig);
 
   const { max_item_count_to_show } = useSelector(
     (state: StateType) => state.globalConfig
@@ -110,14 +113,16 @@ export default function SearchWindow() {
     >
       <SearchBar alwaysFocus setInputStr={setInputStr} />
       <SearchResultView
-        itemHeight={item_height}
+        demo={false}
+        searchResult={items}
         startIdx={indexInfo.itemStartIdx}
         selectedItemIdx={indexInfo.selectedItemIdx}
-        searchbarHeight={searchbar_height}
-        maxItemCount={max_item_count_to_show}
-        searchResult={items}
         onDoubleClickHandler={onDoubleClickHandler}
         onMouseoverHandler={onMouseoverHandler}
+        itemHeight={item_height}
+        footerHeight={search_window_footer_height}
+        searchbarHeight={searchbar_height}
+        maxItemCount={max_item_count_to_show}
       />
     </OuterContainer>
   );

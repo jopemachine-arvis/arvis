@@ -25,10 +25,10 @@ export default (state = {}, action: any) => {
         ...state,
         item_title_subtitle_margin: payload.arg
       };
-    case UIConfigActionTypes.SET_SEARCH_WINDOW_HEIGHT:
+    case UIConfigActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT:
       return {
         ...state,
-        search_window_height: payload.arg
+        search_window_footer_height: payload.arg
       };
     case UIConfigActionTypes.SET_SEARCH_WINDOW_WIDTH:
       return {

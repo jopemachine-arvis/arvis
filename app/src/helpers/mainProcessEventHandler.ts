@@ -30,12 +30,14 @@ export const initIPCHandler = ({
         itemCount,
         maxItemCount,
         itemHeight,
-        searchbarHeight
+        searchbarHeight,
+        footerHeight
       }: {
         itemCount: number;
         maxItemCount: number;
         itemHeight: number;
         searchbarHeight: number;
+        footerHeight: number;
       }
     ) => {
       let heightToSet;
@@ -43,9 +45,10 @@ export const initIPCHandler = ({
       if (itemCount === 0) {
         heightToSet = searchbarHeight;
       } else if (itemCount >= maxItemCount) {
-        heightToSet = maxItemCount * itemHeight + searchbarHeight;
+        heightToSet =
+          maxItemCount * itemHeight + searchbarHeight + footerHeight;
       } else {
-        heightToSet = itemCount * itemHeight + searchbarHeight;
+        heightToSet = itemCount * itemHeight + searchbarHeight + footerHeight;
       }
 
       const [width] = searchWindow.getSize();
