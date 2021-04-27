@@ -32,6 +32,23 @@ export default function SearchWindow() {
     setItems([]);
   };
 
+  const setErrorItem = (err: any, errorItems: any[]) => {
+    if (errorItems.length !== 0) {
+      setItems(errorItems);
+    } else {
+      setItems([
+        {
+          title: 'Unexpected error occured',
+          subtitle: err,
+          text: {
+            copy: err,
+            largetype: err
+          }
+        }
+      ]);
+    }
+  };
+
   const {
     inputStr,
     setInputStr,
@@ -45,6 +62,7 @@ export default function SearchWindow() {
     items,
     maxItemCount: max_item_count_to_show,
     clearItems,
+    setErrorItem,
     commandManager
   });
 

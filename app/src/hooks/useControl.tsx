@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
+import _ from 'lodash';
 import useKey from '../../use-key-capture/_dist/index';
+import { extractJson } from '../utils';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -13,11 +15,13 @@ const useControl = ({
   items,
   maxItemCount,
   clearItems,
+  setErrorItem,
   commandManager
 }: {
   items: any[];
   maxItemCount: number;
   clearItems: Function;
+  setErrorItem: Function;
   commandManager: Core.CommandManager;
 }) => {
   const { keyData, resetKeyData } = useKey();
@@ -44,26 +48,40 @@ const useControl = ({
     });
   };
 
-  const handleReturn = async (modifiers: any) => {
-    try {
-      const selectedItem = items[indexInfo.selectedItemIdx];
-      if (selectedItem.type === 'scriptfilter') {
-        setInputStr(selectedItem.command);
+  const handleWorkflowError = (err: any) => {
+    const possibleJsons = extractJson(err.toString());
+    const errors = possibleJsons.filter(item => item.items);
 
-        try {
-          commandManager.scriptFilterExcute(
-            selectedItem.command,
-            items[indexInfo.selectedItemIdx]
-          );
-        } catch (err) {
-          console.error(err);
-        }
-      } else {
-        await commandManager.commandExcute(selectedItem, inputStr, modifiers);
-        setInputStr('');
-      }
-    } catch (err) {
-      console.error(err);
+    const errorItems = _.reduce(
+      errors,
+      (ret: any, errorObj: any) => {
+        ret.push(errorObj.items[0]);
+        return ret;
+      },
+      []
+    );
+
+    setErrorItem(err, errorItems);
+  };
+
+  const handleReturn = async (modifiers: any) => {
+    const selectedItem = items[indexInfo.selectedItemIdx];
+    if (selectedItem.type === 'scriptfilter') {
+      setInputStr(selectedItem.command);
+
+      commandManager
+        .scriptFilterExcute(
+          selectedItem.command,
+          items[indexInfo.selectedItemIdx]
+        )
+        .catch(handleWorkflowError);
+    } else {
+      await commandManager
+        .commandExcute(selectedItem, inputStr, modifiers)
+        .catch(err => {
+          console.error('Error occured in commandExecute!');
+        });
+      setInputStr('');
     }
   };
 
@@ -140,14 +158,9 @@ const useControl = ({
         goScriptFilterWithSpace ||
         goScriptFilterWithoutSpace
       ) {
-        try {
-          commandManager.scriptFilterExcute(
-            updatedInput,
-            commandOnStackIsEmpty
-          );
-        } catch (err) {
-          throw new Error(`scriptFilterExcute throws Error. \n${err}`);
-        }
+        commandManager
+          .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
+          .catch(handleWorkflowError);
       }
     }
   };
