@@ -22,10 +22,20 @@ const OuterContainer = styled.div`
 
 export default function SearchWindow() {
   const {
+    icon_right_margin,
     item_background_color,
+    item_font_color,
     item_height,
+    item_left_padding,
+    item_title_subtitle_margin,
+    searchbar_font_color,
+    searchbar_font_size,
     searchbar_height,
-    search_window_footer_height
+    search_window_footer_height,
+    selected_item_background_color,
+    selected_item_font_color,
+    subtitle_font_size,
+    title_font_size
   } = useSelector((state: StateType) => state.uiConfig);
 
   const { max_item_count_to_show } = useSelector(
@@ -114,9 +124,14 @@ export default function SearchWindow() {
       onWheel={onScrollHandler}
     >
       <SearchBar
-        getInputProps={getInputProps}
         alwaysFocus
         setInputStr={setInputStr}
+        getInputProps={getInputProps}
+        itemBackgroundColor={item_background_color}
+        itemLeftPadding={item_left_padding}
+        searchbarFontSize={searchbar_font_size}
+        searchbarHeight={searchbar_height}
+        searchbarFontColor={searchbar_font_color}
       />
       <SearchResultView
         demo={false}
@@ -129,6 +144,15 @@ export default function SearchWindow() {
         footerHeight={search_window_footer_height}
         searchbarHeight={searchbar_height}
         maxItemCount={max_item_count_to_show}
+        iconRightMargin={icon_right_margin}
+        itemBackgroundColor={item_background_color}
+        itemFontColor={item_font_color}
+        itemLeftPadding={item_left_padding}
+        itemTitleSubtitleMargin={item_title_subtitle_margin}
+        selectedItemBackgroundColor={selected_item_background_color}
+        selectedItemFontColor={selected_item_font_color}
+        subtitleFontSize={subtitle_font_size}
+        titleFontSize={title_font_size}
       />
     </OuterContainer>
   );

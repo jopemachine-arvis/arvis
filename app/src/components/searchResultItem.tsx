@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
-import { StateType } from '../redux/reducers/types';
 
 import useKey from '../../use-key-capture/_dist/index';
 
@@ -21,6 +19,17 @@ type IProps = {
   valid?: boolean;
   onMouseoverHandler: Function;
   onDoubleClickHandler: Function;
+
+  itemBackgroundColor: string;
+  itemFontColor: string;
+  itemHeight: number;
+  itemLeftPadding: number;
+  itemTitleSubtitleMargin: number;
+  iconRightMargin: number;
+  selectedItemBackgroundColor: string;
+  selectedItemFontColor: string;
+  subtitleFontSize: number;
+  titleFontSize: number;
 };
 
 const OuterContainer = styled.div`
@@ -62,21 +71,18 @@ const searchResultItem = (props: IProps) => {
     autocomplete,
     text,
     variables,
-    valid
+    valid,
+    iconRightMargin,
+    itemBackgroundColor,
+    itemFontColor,
+    itemHeight,
+    itemLeftPadding,
+    itemTitleSubtitleMargin,
+    selectedItemBackgroundColor,
+    selectedItemFontColor,
+    subtitleFontSize,
+    titleFontSize
   } = props;
-
-  const {
-    item_background_color,
-    item_font_color,
-    item_height,
-    item_left_padding,
-    item_title_subtitle_margin,
-    icon_right_margin,
-    selected_item_background_color,
-    selected_item_font_color,
-    subtitle_font_size,
-    title_font_size
-  } = useSelector((state: StateType) => state.uiConfig);
 
   const { keyData } = useKey();
 
@@ -94,16 +100,16 @@ const searchResultItem = (props: IProps) => {
     }
   }, [keyData]);
 
-  const iconSize = item_height - 20;
+  const iconSize = itemHeight - 20;
 
   const iconStyle = useMemo(() => {
     return {
       width: iconSize,
       height: iconSize,
-      marginRight: icon_right_margin,
+      marginRight: iconRightMargin,
       position: 'absolute'
     };
-  }, [icon_right_margin]);
+  }, [iconRightMargin]);
 
   let iconElem;
   if (icon) {
@@ -117,11 +123,11 @@ const searchResultItem = (props: IProps) => {
   return (
     <OuterContainer
       style={{
-        height: item_height,
-        paddingLeft: item_left_padding,
+        height: itemHeight,
+        paddingLeft: itemLeftPadding,
         backgroundColor: selected
-          ? selected_item_background_color
-          : item_background_color
+          ? selectedItemBackgroundColor
+          : itemBackgroundColor
       }}
       onFocus={() => {}}
       onMouseOver={() => onMouseoverHandler()}
@@ -130,22 +136,22 @@ const searchResultItem = (props: IProps) => {
       {iconElem}
       <InnerContainer
         style={{
-          paddingLeft: iconSize + icon_right_margin
+          paddingLeft: iconSize + iconRightMargin
         }}
       >
         <Title
           style={{
-            fontSize: title_font_size,
-            color: selected ? selected_item_font_color : item_font_color
+            fontSize: titleFontSize,
+            color: selected ? selectedItemFontColor : itemFontColor
           }}
         >
           {title}
         </Title>
         <SubTitle
           style={{
-            fontSize: subtitle_font_size,
-            marginTop: item_title_subtitle_margin,
-            color: selected ? selected_item_font_color : item_font_color
+            fontSize: subtitleFontSize,
+            marginTop: itemTitleSubtitleMargin,
+            color: selected ? selectedItemFontColor : itemFontColor
           }}
         >
           {subtitle}

@@ -27,10 +27,25 @@ type IProps = {
   alwaysFocus: boolean;
   setInputStr: Function;
   getInputProps?: Function;
+
+  itemBackgroundColor: string;
+  itemLeftPadding: number;
+  searchbarFontSize: number;
+  searchbarHeight: number;
+  searchbarFontColor: string;
 };
 
 const searchBar = (props: IProps) => {
-  const { alwaysFocus, setInputStr, getInputProps } = props;
+  const {
+    alwaysFocus,
+    getInputProps,
+    itemBackgroundColor,
+    itemLeftPadding,
+    searchbarFontColor,
+    searchbarFontSize,
+    searchbarHeight,
+    setInputStr
+  } = props;
 
   const { keyData } = useKey();
   const { ref: inputRef, type, originalRef } = getInputProps
@@ -40,14 +55,6 @@ const searchBar = (props: IProps) => {
         originalRef: null,
         type: ''
       };
-
-  const {
-    item_background_color,
-    item_left_padding,
-    searchbar_font_size,
-    searchbar_height,
-    searchbar_font_color,
-  } = useSelector((state: StateType) => state.uiConfig);
 
   const preventUpAndDownArrow = (e: any) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
@@ -119,16 +126,16 @@ const searchBar = (props: IProps) => {
   return (
     <Container
       style={{
-        height: searchbar_height
+        height: searchbarHeight
       }}
     >
       <Input
         className={'searchBar'}
         style={{
-          backgroundColor: item_background_color,
-          color: searchbar_font_color,
-          fontSize: searchbar_font_size,
-          paddingLeft: item_left_padding,
+          backgroundColor: itemBackgroundColor,
+          color: searchbarFontColor,
+          fontSize: searchbarFontSize,
+          paddingLeft: itemLeftPadding,
           borderRadius: 10
         }}
         ref={inputRef}

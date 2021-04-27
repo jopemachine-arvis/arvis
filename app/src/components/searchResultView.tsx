@@ -12,15 +12,24 @@ import { checkFileExists, isSupportedImageFormat } from '../utils';
 
 type IProps = {
   demo: boolean;
-  itemHeight: number;
   footerHeight: number;
-  searchResult: any[];
+  iconRightMargin: number;
+  itemBackgroundColor: string;
+  itemFontColor: string;
+  itemHeight: number;
+  itemLeftPadding: number;
+  itemTitleSubtitleMargin: number;
+  maxItemCount: number;
+  onDoubleClickHandler: Function;
+  onMouseoverHandler: Function;
   searchbarHeight: number;
+  searchResult: any[];
+  selectedItemBackgroundColor: string;
+  selectedItemFontColor: string;
   selectedItemIdx: number;
   startIdx: number;
-  maxItemCount: number;
-  onMouseoverHandler: Function;
-  onDoubleClickHandler: Function;
+  subtitleFontSize: number;
+  titleFontSize: number;
 };
 
 const OuterContainer = styled.div`
@@ -40,14 +49,23 @@ const searchResultView = (props: IProps) => {
   const {
     demo,
     footerHeight,
+    iconRightMargin,
+    itemBackgroundColor,
+    itemFontColor,
     itemHeight,
+    itemLeftPadding,
+    itemTitleSubtitleMargin,
     maxItemCount,
     onDoubleClickHandler,
     onMouseoverHandler,
     searchbarHeight,
     searchResult,
+    selectedItemBackgroundColor,
+    selectedItemFontColor,
     selectedItemIdx,
-    startIdx
+    startIdx,
+    subtitleFontSize,
+    titleFontSize
   } = props;
 
   const [contents, setContents] = useState<any>();
@@ -116,6 +134,16 @@ const searchResultView = (props: IProps) => {
               variables={command.variables}
               onMouseoverHandler={() => onMouseoverHandler(itemIdx)}
               onDoubleClickHandler={() => onDoubleClickHandler(itemIdx)}
+              iconRightMargin={iconRightMargin}
+              itemBackgroundColor={itemBackgroundColor}
+              itemFontColor={itemFontColor}
+              itemHeight={itemHeight}
+              itemLeftPadding={itemLeftPadding}
+              itemTitleSubtitleMargin={itemTitleSubtitleMargin}
+              selectedItemBackgroundColor={selectedItemBackgroundColor}
+              selectedItemFontColor={selectedItemFontColor}
+              subtitleFontSize={subtitleFontSize}
+              titleFontSize={titleFontSize}
             />
           </InnerContainer>
         );

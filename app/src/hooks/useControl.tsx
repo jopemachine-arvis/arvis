@@ -112,12 +112,13 @@ const useControl = ({
 
   const handleDownArrow = () => {
     const selectedItemIdx = (indexInfo.selectedItemIdx + 1) % items.length;
+
+    // Select most upper item
     if (selectedItemIdx === 0) {
-      setIndexInfo({
-        itemStartIdx: 0,
-        selectedItemIdx: 0
-      });
-    } else if (indexInfo.itemStartIdx + maxItemCount <= selectedItemIdx) {
+      clearIndexInfo();
+    }
+    // Select down
+    else if (indexInfo.itemStartIdx + maxItemCount <= selectedItemIdx) {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx + 1,
         selectedItemIdx

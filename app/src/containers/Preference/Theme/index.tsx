@@ -110,18 +110,35 @@ export default function Theme() {
           }}
           onWheel={() => {}}
         >
-          <SearchBar alwaysFocus={false} setInputStr={() => {}} />
+          <SearchBar
+            itemBackgroundColor={item_background_color}
+            itemLeftPadding={item_left_padding}
+            searchbarFontColor={searchbar_font_color}
+            searchbarFontSize={searchbar_font_size}
+            searchbarHeight={searchbar_height}
+            alwaysFocus={false}
+            setInputStr={() => {}}
+          />
           <SearchResultView
             demo
-            itemHeight={item_height}
-            searchbarHeight={searchbar_height}
-            footerHeight={search_window_footer_height}
             startIdx={0}
             selectedItemIdx={0}
             maxItemCount={mockItems.length}
             searchResult={mockItems}
             onDoubleClickHandler={() => {}}
             onMouseoverHandler={() => {}}
+            itemHeight={item_height}
+            searchbarHeight={searchbar_height}
+            footerHeight={search_window_footer_height}
+            iconRightMargin={icon_right_margin}
+            itemBackgroundColor={item_background_color}
+            itemFontColor={item_font_color}
+            itemLeftPadding={item_left_padding}
+            itemTitleSubtitleMargin={item_title_subtitle_margin}
+            selectedItemBackgroundColor={selected_item_background_color}
+            selectedItemFontColor={selected_item_font_color}
+            subtitleFontSize={subtitle_font_size}
+            titleFontSize={title_font_size}
           />
         </PreviewMainContainer>
       </PreviewContainer>
