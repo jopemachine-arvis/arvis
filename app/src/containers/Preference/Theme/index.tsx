@@ -2,7 +2,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
-import useForceUpdate from 'use-force-update';
 import { StateType } from '../../../redux/reducers/types';
 
 import {
@@ -88,15 +87,12 @@ export default function Theme() {
 
   const dispatch = useDispatch();
 
-  const forceUpdate = useForceUpdate();
-
   const configChangeHandler = (e: any, action: any) => {
     const target: string | number = isNumeric(e.target.value)
       ? Number(e.target.value)
       : e.target.value;
 
     dispatch(action(target));
-    forceUpdate();
   };
 
   return (

@@ -111,6 +111,7 @@ const searchBar = (props: IProps) => {
       }}
     >
       <Input
+        className={'searchBar'}
         style={{
           backgroundColor: item_background_color,
           color: searchbar_font_color,
