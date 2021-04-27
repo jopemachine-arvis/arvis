@@ -4,16 +4,19 @@ import constants from '../constants';
 
 const createSearchWindow = () => {
   const searchWindow = new BrowserWindow({
+    title: 'wf-creator-gui',
     center: true,
     show: false,
     frame: false,
     // To do:: Fix me! 'transparent' window is not working.
     transparent: true,
+    // backgroundColor: '#00ffffff',
     resizable: false,
+    disableAutoHideCursor: true,
+    skipTaskbar: true,
     movable: true,
     hasShadow: true,
     fullscreenable: false,
-    backgroundColor: '#00ffffff',
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences: {

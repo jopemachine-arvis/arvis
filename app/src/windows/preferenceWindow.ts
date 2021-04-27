@@ -20,7 +20,9 @@ const createPreferenceWindow = ({
   }
 
   let preferenceWindow: BrowserWindow | null = new BrowserWindow({
+    title: 'wf-creator-gui',
     show: false,
+    skipTaskbar: true,
     width: constants.preferenceWindowWidth,
     height: constants.preferenceWindowHeight,
     minWidth: constants.preferenceMinWindowWidth,

@@ -17,7 +17,6 @@ const OuterContainer = styled.div`
   align-items: center;
   height: 100vh;
   border: 1px solid #585c67;
-  border-radius: 10px;
 `;
 
 export default function SearchWindow() {
