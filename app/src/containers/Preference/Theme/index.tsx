@@ -92,7 +92,13 @@ export default function Theme() {
       ? Number(e.target.value)
       : e.target.value;
 
+    // Fix me!!
+    // When dispatched from a preference window, action is not dispatched to a search window.
+    // So, therefore, it should be dispatched to all windows via ipc.
     dispatch(action(target));
+
+    // Example:
+    // ipcRenderer.send('theme-changed', { actionNameToDispatch: 'some_color', arg: '#000000' });
   };
 
   return (

@@ -16,12 +16,14 @@ const useControl = ({
   maxItemCount,
   clearItems,
   setErrorItem,
+  setRunningText,
   commandManager
 }: {
   items: any[];
   maxItemCount: number;
   clearItems: Function;
   setErrorItem: Function;
+  setRunningText: Function;
   commandManager: Core.CommandManager;
 }) => {
   const { keyData, getTargetProps, resetKeyData } = useKey();
@@ -68,6 +70,9 @@ const useControl = ({
     const selectedItem = items[indexInfo.selectedItemIdx];
     if (selectedItem.type === 'scriptfilter') {
       setInputStr(selectedItem.command);
+
+      const { runningSubText } = items[indexInfo.selectedItemIdx];
+      setRunningText({ index: indexInfo.selectedItemIdx, runningSubText });
 
       commandManager
         .scriptFilterExcute(
@@ -162,6 +167,9 @@ const useControl = ({
         goScriptFilterWithSpace ||
         goScriptFilterWithoutSpace
       ) {
+        const { runningSubText } = items[indexInfo.selectedItemIdx];
+        setRunningText({ index: indexInfo.selectedItemIdx, runningSubText });
+
         commandManager
           .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
           .catch(handleWorkflowError);

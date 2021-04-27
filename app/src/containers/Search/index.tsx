@@ -64,6 +64,21 @@ export default function SearchWindow() {
     }
   };
 
+  const setRunningText = ({
+    index,
+    runningSubText
+  }: {
+    index: number;
+    runningSubText: string;
+  }) => {
+    const swap = items;
+    swap[index] = {
+      ...items[index],
+      subtitle: runningSubText
+    };
+    setItems(swap);
+  };
+
   const {
     inputStr,
     setInputStr,
@@ -79,6 +94,7 @@ export default function SearchWindow() {
     maxItemCount: max_item_count_to_show,
     clearItems,
     setErrorItem,
+    setRunningText,
     commandManager
   });
 
