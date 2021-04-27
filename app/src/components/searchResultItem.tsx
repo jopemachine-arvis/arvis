@@ -58,7 +58,8 @@ const searchResultItem = (props: IProps) => {
     item_font_color,
     item_height,
     item_left_padding,
-    item_top_padding,
+    item_title_subtitle_margin,
+    icon_right_margin,
     selected_item_background_color,
     selected_item_font_color,
     subtitle_font_size,
@@ -69,9 +70,9 @@ const searchResultItem = (props: IProps) => {
     return {
       width: item_height - 20,
       height: item_height - 20,
-      marginRight: item_left_padding
+      marginRight: icon_right_margin
     };
-  }, []);
+  }, [icon_right_margin]);
 
   const iconElem = icon ? (
     <IconImg style={iconStyle} src={icon} />
@@ -97,7 +98,6 @@ const searchResultItem = (props: IProps) => {
         <Title
           style={{
             fontSize: title_font_size,
-            paddingTop: item_top_padding,
             color: selected ? selected_item_font_color : item_font_color
           }}
         >
@@ -106,7 +106,7 @@ const searchResultItem = (props: IProps) => {
         <SubTitle
           style={{
             fontSize: subtitle_font_size,
-            paddingTop: item_top_padding,
+            marginTop: item_title_subtitle_margin,
             color: selected ? selected_item_font_color : item_font_color
           }}
         >

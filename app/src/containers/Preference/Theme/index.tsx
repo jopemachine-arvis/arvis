@@ -2,6 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
+import useForceUpdate from 'use-force-update';
 import { StateType } from '../../../redux/reducers/types';
 
 import {
@@ -68,11 +69,13 @@ const mockItems = [
 
 export default function Theme() {
   const {
+    icon_right_margin,
     item_background_color,
     item_font_color,
     item_height,
     item_left_padding,
-    item_top_padding,
+    item_title_subtitle_margin,
+    searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
     search_window_height,
@@ -85,12 +88,15 @@ export default function Theme() {
 
   const dispatch = useDispatch();
 
+  const forceUpdate = useForceUpdate();
+
   const configChangeHandler = (e: any, action: any) => {
     const target: string | number = isNumeric(e.target.value)
       ? Number(e.target.value)
       : e.target.value;
 
     dispatch(action(target));
+    forceUpdate();
   };
 
   return (
@@ -105,7 +111,7 @@ export default function Theme() {
           }}
           onWheel={() => {}}
         >
-          <SearchBar setInputStr={() => {}} />
+          <SearchBar alwaysFocus={false} setInputStr={() => {}} />
           <SearchResultView
             itemHeight={item_height}
             startIdx={0}
@@ -126,7 +132,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={search_window_width}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setSearchWindowWidth)
               }
             />
@@ -137,7 +143,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={search_window_height}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setSearchWindowHeight)
               }
             />
@@ -148,7 +154,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={item_height}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setItemHeight)
               }
             />
@@ -159,7 +165,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={item_background_color}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setItemBackgroundColor)
               }
             />
@@ -170,7 +176,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={selected_item_background_color}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(
                   e,
                   UIConfigActions.setSelectedItemBackgroundColor
@@ -184,7 +190,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={title_font_size}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setTitleFontSize)
               }
             />
@@ -195,7 +201,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={subtitle_font_size}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setSubTitleFontSize)
               }
             />
@@ -206,7 +212,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={item_font_color}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setItemFontColor)
               }
             />
@@ -217,8 +223,19 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={selected_item_font_color}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setItemFontColor)
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Searchbar font color</Label>
+            <StyledInput
+              type="color"
+              value={searchbar_font_color}
+              onChange={(e: any) =>
+                configChangeHandler(e, UIConfigActions.setSearchBarFontColor)
               }
             />
           </FormGroup>
@@ -228,19 +245,19 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={item_left_padding}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setItemLeftPadding)
               }
             />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Item top padding</Label>
+            <Label style={labelStyle}>Margin between title and subtitle</Label>
             <StyledInput
               type="number"
-              value={item_top_padding}
-              onChange={e =>
-                configChangeHandler(e, UIConfigActions.setItemTopPadding)
+              value={item_title_subtitle_margin}
+              onChange={(e: any) =>
+                configChangeHandler(e, UIConfigActions.setTitleSubTitleMargin)
               }
             />
           </FormGroup>
@@ -250,8 +267,19 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={searchbar_height}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setSearchBarHeight)
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Icon right margin</Label>
+            <StyledInput
+              type="number"
+              value={icon_right_margin}
+              onChange={(e: any) =>
+                configChangeHandler(e, UIConfigActions.setIconRightMargin)
               }
             />
           </FormGroup>
@@ -261,7 +289,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={searchbar_font_size}
-              onChange={e =>
+              onChange={(e: any) =>
                 configChangeHandler(e, UIConfigActions.setSearchBarFontSize)
               }
             />

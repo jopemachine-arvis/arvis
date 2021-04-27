@@ -8,11 +8,13 @@ export type StateType = {
     max_item_count_to_search: number;
   };
   uiConfig: {
+    icon_right_margin: number;
     item_background_color: string;
     item_font_color: string;
     item_height: number;
     item_left_padding: number;
-    item_top_padding: number;
+    item_title_subtitle_margin: number;
+    searchbar_font_color: string;
     searchbar_font_size: number;
     searchbar_height: number;
     search_window_height: number;

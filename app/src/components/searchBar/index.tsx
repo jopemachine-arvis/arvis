@@ -24,19 +24,21 @@ const Container = styled.div`
 `;
 
 type IProps = {
+  alwaysFocus: boolean;
   setInputStr: Function;
 };
 
 const searchBar = (props: IProps) => {
+  const { alwaysFocus, setInputStr }= props;
   const { keyData, getTargetProps } = useKey();
 
   const { ref: inputRef, type, originalRef } = getTargetProps();
   const {
     item_background_color,
-    item_font_color,
     item_left_padding,
     searchbar_font_size,
     searchbar_height,
+    searchbar_font_color,
   } = useSelector((state: StateType) => state.uiConfig);
 
   const preventUpAndDownArrow = (e: any) => {
@@ -75,7 +77,9 @@ const searchBar = (props: IProps) => {
         oldStr.substring(0, selectionStart) +
         str +
         oldStr.substring(selectionEnd, oldStr.length);
-      props.setInputStr(newText);
+
+      setInputStr(newText);
+
       originalRef.current.value = newText;
       originalRef.current.selectionStart = selectionEnd + str.length;
       originalRef.current.selectionEnd = selectionEnd + str.length;
@@ -109,7 +113,7 @@ const searchBar = (props: IProps) => {
       <Input
         style={{
           backgroundColor: item_background_color,
-          color: item_font_color,
+          color: searchbar_font_color,
           fontSize: searchbar_font_size,
           paddingLeft: item_left_padding,
           borderRadius: 10
@@ -117,7 +121,7 @@ const searchBar = (props: IProps) => {
         ref={inputRef}
         type={type}
         onKeyDown={preventUpAndDownArrow}
-        onBlur={preventBlur}
+        onBlur={alwaysFocus ? preventBlur : () => {}}
       />
     </Container>
   );

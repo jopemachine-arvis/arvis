@@ -8,6 +8,7 @@ export const OuterContainer = styled.div`
   flex-direction: row;
   background-color: #16181b;
   justify-content: flex-start;
+  overflow-y: auto;
 `;
 
 export const PreviewContainer = styled.div`
@@ -30,8 +31,8 @@ export const PreviewMainContainer = styled.div`
 export const Header = styled.div`
   width: 50%;
   margin-left: 45px;
-  margin-top: 25px;
-  height: 70px;
+  margin-top: 20px;
+  height: 60px;
   color: #ffffff;
   justify-content: flex-start;
   align-items: center;

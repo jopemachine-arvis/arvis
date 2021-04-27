@@ -88,7 +88,7 @@ export default function General() {
           <StyledInput
             type="text"
             value={hotkey}
-            onChange={e => {
+            onChange={(e: any) => {
               setHotkey(e.target.value);
             }}
           />
@@ -101,7 +101,7 @@ export default function General() {
           <StyledInput
             type="select"
             value={maxItemCountToShow}
-            onChange={e => {
+            onChange={(e: any) => {
               setMaxItemCountToShow(Number(e.target.value));
             }}
           >
@@ -122,7 +122,7 @@ export default function General() {
           <StyledInput
             type="number"
             value={maxItemCountToSearch}
-            onChange={e => {
+            onChange={(e: any) => {
               setMaxItemCountToSearch(Number(e.target.value));
             }}
           />

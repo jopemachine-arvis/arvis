@@ -6,11 +6,13 @@ export default {
     max_item_count_to_search: 100
   },
   uiConfig: {
+    icon_right_margin: 15,
     item_background_color: '#444444',
     item_font_color: '#cccccc',
     item_height: 65,
     item_left_padding: 15,
-    item_top_padding: 3,
+    item_title_subtitle_margin: 3,
+    searchbar_font_color: '#ffffff',
     searchbar_font_size: 20,
     searchbar_height: 60,
     search_window_height: 400,

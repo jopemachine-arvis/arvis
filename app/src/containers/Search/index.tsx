@@ -106,7 +106,7 @@ export default function SearchWindow() {
       }}
       onWheel={onScrollHandler}
     >
-      <SearchBar setInputStr={setInputStr} />
+      <SearchBar alwaysFocus setInputStr={setInputStr} />
       <SearchResultView
         itemHeight={item_height}
         startIdx={indexInfo.itemStartIdx}

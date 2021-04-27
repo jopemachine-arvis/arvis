@@ -20,10 +20,10 @@ export default (state = {}, action: any) => {
         ...state,
         item_left_padding: payload.arg
       };
-    case UIConfigActionTypes.SET_ITEM_TOP_PADDING:
+    case UIConfigActionTypes.SET_TITLE_SUBTITLE_MARGIN:
       return {
         ...state,
-        item_top_padding: payload.arg
+        item_title_subtitle_margin: payload.arg
       };
     case UIConfigActionTypes.SET_SEARCH_WINDOW_HEIGHT:
       return {
@@ -69,6 +69,16 @@ export default (state = {}, action: any) => {
       return {
         ...state,
         searchbar_font_size: payload.arg
+      };
+    case UIConfigActionTypes.SET_SEARCHBAR_FONTCOLOR:
+      return {
+        ...state,
+        searchbar_font_color: payload.arg
+      };
+    case UIConfigActionTypes.SET_ICON_RIGHT_MARGIN:
+      return {
+        ...state,
+        icon_right_margin: payload.arg
       };
     default:
       return state;

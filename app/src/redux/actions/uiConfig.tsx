@@ -17,10 +17,13 @@ export const actionTypes = {
   SET_SELECTED_ITEM_FONTCOLOR: '@uiConfig/SET_SELECTED_ITEM_FONTCOLOR',
 
   SET_ITEM_LEFT_PADDING: '@uiConfig/SET_ITEM_LEFT_PADDING',
-  SET_ITEM_TOP_PADDING: '@uiConfig/SET_ITEM_TOP_PADDING',
+  SET_TITLE_SUBTITLE_MARGIN: '@uiConfig/SET_TITLE_SUBTITLE_MARGIN',
 
   SET_SEARCHBAR_HEIGHT: '@uiConfig/SET_SEARCHBAR_HEIGHT',
-  SET_SEARCHBAR_FONTSIZE: '@uiConfig/SET_SEARCHBAR_FONTSIZE'
+  SET_SEARCHBAR_FONTSIZE: '@uiConfig/SET_SEARCHBAR_FONTSIZE',
+  SET_SEARCHBAR_FONTCOLOR: '@uiConfig/SET_SEARCHBAR_FONTCOLOR',
+
+  SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN'
 };
 
 export const setSearchBarFontSize = makeActionCreator(
@@ -83,7 +86,17 @@ export const setItemLeftPadding = makeActionCreator(
   'arg'
 );
 
-export const setItemTopPadding = makeActionCreator(
-  actionTypes.SET_ITEM_TOP_PADDING,
+export const setTitleSubTitleMargin = makeActionCreator(
+  actionTypes.SET_TITLE_SUBTITLE_MARGIN,
+  'arg'
+);
+
+export const setSearchBarFontColor = makeActionCreator(
+  actionTypes.SET_SEARCHBAR_FONTCOLOR,
+  'arg'
+);
+
+export const setIconRightMargin = makeActionCreator(
+  actionTypes.SET_ICON_RIGHT_MARGIN,
   'arg'
 );
