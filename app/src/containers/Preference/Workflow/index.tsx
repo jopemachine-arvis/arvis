@@ -34,6 +34,8 @@ import { StyledInput, Spinner } from '../../../components';
 
 import { ScreenCoverContext } from '../screenCoverContext';
 
+import './index.global.css';
+
 const bottomFixedBarIconStyle = {
   width: 22,
   height: 22,
@@ -77,7 +79,8 @@ const descriptionContainerStyle = {
   paddingBottom: 10,
   borderRadius: 10,
   marginLeft: 20,
-  marginRight: 20
+  marginRight: 20,
+  userSelect: 'none'
 };
 
 export default function Workflow() {
@@ -212,6 +215,17 @@ export default function Workflow() {
     });
   };
 
+  const callDeleteWorkflowConfModal = () => {
+    ipcRenderer.send('open-yesno-dialog', {
+      msg: 'Are you sure you want to delete the selected workflow?'
+    });
+    ipcRenderer.on('open-yesno-dialog-ret', (e, { yesPressed }) => {
+      if (yesPressed) {
+        deleteSelectedWorkflow();
+      }
+    });
+  };
+
   const renderEmptyList = () => {
     return (
       <EmptyListContainer>
@@ -241,16 +255,19 @@ export default function Workflow() {
         </WorkflowListOrderedList>
         <WorkflowListViewFooter>
           <AiOutlineFileAdd
+            className="workflow-page-buttons"
             style={bottomFixedBarIconStyle}
             onClick={() => addNewWorkflowByFile()}
           />
           <AiOutlineAppstoreAdd
+            className="workflow-page-buttons"
             style={bottomFixedBarIconStyle}
             onClick={() => addNewWorkflow()}
           />
           <AiOutlineDelete
+            className="workflow-page-buttons"
             style={bottomFixedBarIconStyle}
-            onClick={() => deleteSelectedWorkflow()}
+            onClick={() => callDeleteWorkflowConfModal()}
           />
         </WorkflowListViewFooter>
       </WorkflowListView>

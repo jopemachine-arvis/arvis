@@ -42,4 +42,5 @@ export const Header = styled.div`
 export const ConfigContainer = styled.div`
   width: 35%;
   padding-left: 15px;
+  user-select: none;
 `;

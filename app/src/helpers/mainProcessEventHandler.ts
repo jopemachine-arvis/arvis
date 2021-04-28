@@ -23,6 +23,23 @@ export const initIPCHandler = ({
     });
   });
 
+  // Used to open yesno modal box
+  ipcMain.on(
+    'open-yesno-dialog',
+    async (evt: any, { msg }: { msg: string }) => {
+      const ret: Electron.MessageBoxReturnValue = await dialog.showMessageBox({
+        type: 'info',
+        buttons: ['ok', 'cancel'],
+        message: msg
+      });
+
+      const yesPressed = ret.response === 0;
+      preferenceWindow.webContents.send('open-yesno-dialog-ret', {
+        yesPressed
+      });
+    }
+  );
+
   // Used to automatically change the height of searchWindow
   ipcMain.on(
     'resize-searchwindow-height',
