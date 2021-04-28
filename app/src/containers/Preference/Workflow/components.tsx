@@ -77,10 +77,6 @@ export const WorkflowItemContainer = styled.div`
   padding-bottom: 10px;
   padding-left: 20px;
   margin-bottom: 7px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 `;
 
