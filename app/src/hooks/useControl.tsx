@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
@@ -11,17 +12,22 @@ type IndexInfo = {
   itemStartIdx: number;
 };
 
+const allIsFalse = (obj: any) => {
+  for (const key of Object.keys(obj)) {
+    if (obj[key] === true) return false;
+  }
+  return true;
+};
+
 const useControl = ({
   items,
   maxItemCount,
-  clearItems,
   setErrorItem,
   setRunningText,
   commandManager
 }: {
   items: any[];
   maxItemCount: number;
-  clearItems: Function;
   setErrorItem: Function;
   setRunningText: Function;
   commandManager: Core.CommandManager;
@@ -39,8 +45,6 @@ const useControl = ({
   const clearInput = () => {
     setInputStr('');
     resetKeyData();
-    commandManager.clearCommandStack();
-    clearItems();
   };
 
   const clearIndexInfo = () => {
@@ -71,7 +75,9 @@ const useControl = ({
     if (selectedItem.type === 'scriptfilter') {
       setInputStr(selectedItem.command);
 
-      const { runningSubText } = items[indexInfo.selectedItemIdx];
+      const { running_subtext: runningSubText } = items[
+        indexInfo.selectedItemIdx
+      ];
       setRunningText({ index: indexInfo.selectedItemIdx, runningSubText });
 
       commandManager
@@ -83,11 +89,14 @@ const useControl = ({
     } else {
       await commandManager
         .commandExcute(selectedItem, inputStr, modifiers)
-        .catch(err => {
+        .catch((err: any) => {
           console.error('Error occured in commandExecute!', err);
         });
-      setInputStr('');
+      clearInput();
     }
+
+    // May or may not be needed.. case by case
+    // clearInput();
   };
 
   const handleUpArrow = () => {
@@ -167,7 +176,9 @@ const useControl = ({
         goScriptFilterWithSpace ||
         goScriptFilterWithoutSpace
       ) {
-        const { runningSubText } = items[indexInfo.selectedItemIdx];
+        const { running_subtext: runningSubText } = items[
+          indexInfo.selectedItemIdx
+        ];
         setRunningText({ index: indexInfo.selectedItemIdx, runningSubText });
 
         commandManager
@@ -206,15 +217,16 @@ const useControl = ({
 
   const onDoubleClickHandler = (index: number) => {
     handleReturn({
+      cmd: false,
       ctrl: false,
-      shift: false,
-      cmd: false
+      shift: false
     });
   };
 
-  const cleanUp = () => {
+  const cleanUpBeforeHide = () => {
     clearInput();
     clearIndexInfo();
+    commandManager.clearCommandStack();
     setShouldBeHided(true);
   };
 
@@ -223,10 +235,11 @@ const useControl = ({
     let updatedInput = inputStr + input;
 
     const modifiers = {
+      // On mac, cmd key is handled by meta;
+      cmd: keyData.isWithMeta,
       ctrl: keyData.isWithCtrl,
       shift: keyData.isWithShift,
-      // On mac, cmd key is handled by meta;
-      cmd: keyData.isWithMeta
+      alt: keyData.isWithAlt
     };
 
     if (keyData.isBackspace) {
@@ -239,7 +252,7 @@ const useControl = ({
     } else if (keyData.isArrowUp) {
       handleUpArrow();
     } else if (keyData.isEscape) {
-      cleanUp();
+      cleanUpBeforeHide();
     } else if (!keyData.isSpecialCharacter) {
       handleNormalInput(input, updatedInput, modifiers);
     }
@@ -247,7 +260,7 @@ const useControl = ({
 
   useEffect(() => {
     ipcRenderer.on('hide-search-window-by-blur-event', () => {
-      cleanUp();
+      cleanUpBeforeHide();
     });
   }, []);
 

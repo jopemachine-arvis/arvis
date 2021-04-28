@@ -277,7 +277,7 @@
     "wf-creator-core": "../wf-creator-core"
   },
   "devEngines": {
-    "node": ">=7.x",
+    "node": ">=12.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
   },

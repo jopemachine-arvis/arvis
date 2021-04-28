@@ -8,7 +8,7 @@ import { SearchBar, SearchResultView } from '../../components';
 import useControl from '../../hooks/useControl';
 import { StateType } from '../../redux/reducers/types';
 
-const commandManager = new Core.CommandManager();
+const commandManager = new Core.CommandManager({ printDebuggingInfo: true });
 
 const OuterContainer = styled.div`
   flex-direction: column;
@@ -42,9 +42,6 @@ export default function SearchWindow() {
   );
 
   const [items, setItems] = useState<any>([]);
-  const clearItems = () => {
-    setItems([]);
-  };
 
   const setErrorItem = (err: any, errorItems: any[]) => {
     if (errorItems.length !== 0) {
@@ -92,7 +89,6 @@ export default function SearchWindow() {
   } = useControl({
     items,
     maxItemCount: max_item_count_to_show,
-    clearItems,
     setErrorItem,
     setRunningText,
     commandManager
@@ -115,13 +111,19 @@ export default function SearchWindow() {
       .then((result: any) => {
         setItems(result);
       })
-      .catch(error => {
+      .catch((error: any) => {
         throw new Error(`findCommands throws Error\n ${error}`);
       });
   };
 
+  const onItemPressHandler = () => {
+    setItems([]);
+    clearInput();
+    commandManager.clearCommandStack();
+  };
+
   useEffect(() => {
-    commandManager.onItemPressHandler = clearInput;
+    commandManager.onItemPressHandler = onItemPressHandler;
     commandManager.onItemShouldBeUpdate = itemSetEventHandler;
   }, []);
 
