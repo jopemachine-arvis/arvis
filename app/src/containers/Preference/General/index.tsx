@@ -28,10 +28,6 @@ const OuterContainer = styled.div`
   padding-top: 60px;
   padding-left: 15px;
   justify-content: center;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 `;
 

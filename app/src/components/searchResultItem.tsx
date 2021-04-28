@@ -91,13 +91,13 @@ const searchResultItem = (props: IProps) => {
   };
 
   useEffect(() => {
-    if (selected) {
-      if (keyData.isWithMeta || keyData.isWithCtrl) {
-        if (keyData.key.toLowerCase() === 'c') {
-          copyHandler();
-        }
-      }
-    }
+    // if (selected) {
+    //   if (keyData.isWithMeta || keyData.isWithCtrl) {
+    //     if (keyData.key.toLowerCase() === 'c') {
+    //       copyHandler();
+    //     }
+    //   }
+    // }
   }, [keyData]);
 
   const iconSize = itemHeight - 20;
