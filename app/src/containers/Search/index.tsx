@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import styled from 'styled-components';
-import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import { useSelector } from 'react-redux';
 import { SearchBar, SearchResultView } from '../../components';
 import useControl from '../../hooks/useControl';
@@ -43,41 +42,7 @@ export default function SearchWindow() {
 
   const [items, setItems] = useState<any>([]);
 
-  const setErrorItem = (err: any, errorItems: any[]) => {
-    if (errorItems.length !== 0) {
-      setItems(errorItems);
-    } else {
-      setItems([
-        {
-          valid: false,
-          title: err.name,
-          subtitle: err.message,
-          text: {
-            copy: err.message,
-            largetype: err.message
-          }
-        }
-      ]);
-    }
-  };
-
-  const setRunningText = ({
-    index,
-    runningSubText
-  }: {
-    index: number;
-    runningSubText: string;
-  }) => {
-    const swap = items;
-    swap[index] = {
-      ...items[index],
-      subtitle: runningSubText
-    };
-    setItems(swap);
-  };
-
   const {
-    inputStr,
     setInputStr,
     indexInfo,
     getInputProps,
@@ -88,32 +53,14 @@ export default function SearchWindow() {
     onDoubleClickHandler
   } = useControl({
     items,
-    maxItemCount: max_item_count_to_show,
-    setErrorItem,
-    setRunningText,
-    commandManager
+    setItems,
+    commandManager,
+    maxItemCount: max_item_count_to_show
   });
 
   const itemSetEventHandler = (itemsToSet: any[]) => {
     clearIndexInfo();
     setItems(itemsToSet);
-  };
-
-  const searchCommands = () => {
-    if (inputStr === '') {
-      setItems([]);
-      return;
-    }
-
-    const assumedCommand = inputStr.split(' ')[0];
-
-    Core.findCommands(StoreType.Electron, assumedCommand)
-      .then((result: any) => {
-        setItems(result);
-      })
-      .catch((error: any) => {
-        throw new Error(`findCommands throws Error\n ${error}`);
-      });
   };
 
   const onItemPressHandler = () => {
@@ -126,12 +73,6 @@ export default function SearchWindow() {
     commandManager.onItemPressHandler = onItemPressHandler;
     commandManager.onItemShouldBeUpdate = itemSetEventHandler;
   }, []);
-
-  useEffect(() => {
-    if (commandManager.hasEmptyCommandStk()) {
-      searchCommands();
-    }
-  }, [inputStr]);
 
   return (
     <OuterContainer

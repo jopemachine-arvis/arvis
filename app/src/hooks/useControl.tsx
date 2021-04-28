@@ -1,35 +1,28 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
 import _ from 'lodash';
+import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import useKey from '../../use-key-capture/_dist/index';
-import { extractJson } from '../utils';
+import { extractJson, checkObjectsAllValue } from '../utils';
 
 type IndexInfo = {
   selectedItemIdx: number;
   itemStartIdx: number;
 };
 
-const allIsFalse = (obj: any) => {
-  for (const key of Object.keys(obj)) {
-    if (obj[key] === true) return false;
-  }
-  return true;
-};
-
 const useControl = ({
   items,
+  setItems,
   maxItemCount,
-  setErrorItem,
-  setRunningText,
   commandManager
 }: {
   items: any[];
+  setItems: Function;
   maxItemCount: number;
-  setErrorItem: Function;
-  setRunningText: Function;
   commandManager: Core.CommandManager;
 }) => {
   const { keyData, getTargetProps, resetKeyData } = useKey();
@@ -52,6 +45,41 @@ const useControl = ({
       itemStartIdx: 0,
       selectedItemIdx: 0
     });
+  };
+
+  const setRunningText = ({
+    itemArr,
+    index,
+    runningSubText
+  }: {
+    itemArr: any[];
+    index: number;
+    runningSubText: string;
+  }) => {
+    const swap = itemArr;
+    swap[index] = {
+      ...itemArr[index],
+      subtitle: runningSubText
+    };
+    setItems(swap);
+  };
+
+  const setErrorItem = (err: any, errorItems: any[]) => {
+    if (errorItems.length !== 0) {
+      setItems(errorItems);
+    } else {
+      setItems([
+        {
+          valid: false,
+          title: err.name,
+          subtitle: err.message,
+          text: {
+            copy: err.message,
+            largetype: err.message
+          }
+        }
+      ]);
+    }
   };
 
   const handleWorkflowError = (err: any) => {
@@ -78,7 +106,12 @@ const useControl = ({
       const { running_subtext: runningSubText } = items[
         indexInfo.selectedItemIdx
       ];
-      setRunningText({ index: indexInfo.selectedItemIdx, runningSubText });
+
+      setRunningText({
+        itemArr: items,
+        index: indexInfo.selectedItemIdx,
+        runningSubText
+      });
 
       commandManager
         .scriptFilterExcute(
@@ -145,6 +178,51 @@ const useControl = ({
     }
   };
 
+  const handleScriptFilterAutoExecute = ({
+    itemArr,
+    input,
+    updatedInput
+  }: {
+    itemArr: any[];
+    input: string;
+    updatedInput: string;
+  }) => {
+    let commandOnStackIsEmpty;
+
+    // Assume withspace's default value is true
+    // When script filter is not running (and should be running)
+    if (itemArr.length > 0) {
+      // auto script filter executing should be started from first item
+      const firstItem = itemArr[0];
+      const goScriptFilterWithSpace =
+        firstItem.withspace === true &&
+        updatedInput.includes(firstItem.command) &&
+        input !== ' ';
+
+      const goScriptFilterWithoutSpace =
+        firstItem.withspace === false &&
+        updatedInput.includes(firstItem.command);
+
+      if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
+        // eslint-disable-next-line prefer-destructuring
+        commandOnStackIsEmpty = firstItem;
+
+        if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
+          const { running_subtext: runningSubText } = firstItem;
+          setRunningText({
+            itemArr,
+            index: 0,
+            runningSubText
+          });
+
+          commandManager
+            .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
+            .catch(handleWorkflowError);
+        }
+      }
+    }
+  };
+
   const handleNormalInput = (
     input: string,
     updatedInput: string,
@@ -152,42 +230,26 @@ const useControl = ({
   ) => {
     setInputStr(updatedInput);
 
-    // Assume withspace's default value is true
-    if (items.length !== 0) {
-      // When script filter is running
-      const onScriptFilter = !commandManager.hasEmptyCommandStk();
+    if (commandManager.hasEmptyCommandStk()) {
+      const assumedCommand = updatedInput.split(' ')[0];
 
-      // When script filter is not running (and should be running)
-      const goScriptFilterWithSpace =
-        items[0].withspace === true &&
-        updatedInput.includes(items[0].command) &&
-        input !== ' ';
-
-      const goScriptFilterWithoutSpace =
-        items[0].withspace === false && updatedInput.includes(items[0].command);
-
-      let commandOnStackIsEmpty;
-      if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
-        commandOnStackIsEmpty = items[indexInfo.selectedItemIdx];
-      }
-
-      if (
-        onScriptFilter ||
-        goScriptFilterWithSpace ||
-        goScriptFilterWithoutSpace
-      ) {
-        const { running_subtext: runningSubText } = items[
-          indexInfo.selectedItemIdx
-        ];
-        setRunningText({ index: indexInfo.selectedItemIdx, runningSubText });
-
-        commandManager
-          .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
-          .catch(handleWorkflowError);
-      }
-
-      clearIndexInfo();
+      Core.findCommands(StoreType.Electron, assumedCommand)
+        .then((result: any) => {
+          setItems(result);
+          handleScriptFilterAutoExecute({
+            itemArr: result,
+            input,
+            updatedInput
+          });
+        })
+        .catch((error: any) => {
+          throw new Error(`findCommands throws Error\n ${error}`);
+        });
+    } else {
+      handleScriptFilterAutoExecute({ itemArr: items, input, updatedInput });
     }
+
+    clearIndexInfo();
   };
 
   const onScrollHandler = (e: any) => {
@@ -224,6 +286,7 @@ const useControl = ({
   };
 
   const cleanUpBeforeHide = () => {
+    setItems([]);
     clearInput();
     clearIndexInfo();
     commandManager.clearCommandStack();
@@ -253,7 +316,12 @@ const useControl = ({
       handleUpArrow();
     } else if (keyData.isEscape) {
       cleanUpBeforeHide();
-    } else if (!keyData.isSpecialCharacter) {
+    } else if (keyData.isArrowLeft || keyData.isArrowRight) {
+      // Skip
+    } else if (
+      checkObjectsAllValue(modifiers)(false) &&
+      !keyData.isSpecialCharacter
+    ) {
       handleNormalInput(input, updatedInput, modifiers);
     }
   };

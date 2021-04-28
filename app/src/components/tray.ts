@@ -52,7 +52,9 @@ export default class TrayBuilder {
       label: 'Show Debugging View',
       type: 'normal',
       click: () => {
-        this.searchWindow.webContents.toggleDevTools();
+        if (this.searchWindow) {
+          this.searchWindow.webContents.toggleDevTools();
+        }
       }
     }
   ];
