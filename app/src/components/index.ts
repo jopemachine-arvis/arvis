@@ -4,6 +4,8 @@ import SearchBar from './searchBar';
 import SearchResultItem from './searchResultItem';
 import SearchResultView from './searchResultView';
 import StyledInput from './styledInput';
+import Spinner from './spinner';
+import ScreenCover from './screenCover';
 
 export {
   MenuBuilder,
@@ -11,5 +13,7 @@ export {
   SearchBar,
   StyledInput,
   SearchResultItem,
-  SearchResultView
+  SearchResultView,
+  Spinner,
+  ScreenCover
 };

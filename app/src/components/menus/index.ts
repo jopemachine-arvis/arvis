@@ -4,10 +4,10 @@ import getWindowsTemplate from './windows';
 import getDarwinTemplate from './darwin';
 
 export default class MenuBuilder {
-  mainWindow: BrowserWindow;
+  preferenceWindow: BrowserWindow;
 
-  constructor(mainWindow: BrowserWindow) {
-    this.mainWindow = mainWindow;
+  constructor(preferenceWindow: BrowserWindow) {
+    this.preferenceWindow = preferenceWindow;
   }
 
   buildMenu() {
@@ -30,25 +30,25 @@ export default class MenuBuilder {
   }
 
   setupDevelopmentEnvironment() {
-    this.mainWindow.webContents.on('context-menu', (_, props) => {
+    this.preferenceWindow.webContents.on('context-menu', (_, props) => {
       const { x, y } = props;
 
       Menu.buildFromTemplate([
         {
           label: 'Inspect element',
           click: () => {
-            this.mainWindow.webContents.inspectElement(x, y);
+            this.preferenceWindow.webContents.inspectElement(x, y);
           }
         }
-      ]).popup({ window: this.mainWindow });
+      ]).popup({ window: this.preferenceWindow });
     });
   }
 
   buildDarwinTemplate() {
-    return getDarwinTemplate(this.mainWindow);
+    return getDarwinTemplate(this.preferenceWindow);
   }
 
   buildDefaultTemplate() {
-    return getWindowsTemplate(this.mainWindow);
+    return getWindowsTemplate(this.preferenceWindow);
   }
 }

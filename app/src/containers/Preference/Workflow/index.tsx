@@ -1,6 +1,6 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import FlatList from 'flatlist-react';
@@ -30,7 +30,9 @@ import {
   WorkflowListViewFooter
 } from './components';
 
-import { StyledInput } from '../../../components';
+import { StyledInput, Spinner } from '../../../components';
+
+import { ScreenCoverContext } from '../screenCoverContext';
 
 const bottomFixedBarIconStyle = {
   width: 22,
@@ -95,6 +97,8 @@ export default function Workflow() {
 
   const forceUpdate = useForceUpdate();
 
+  const [spinning, setSpinning] = useContext(ScreenCoverContext) as any;
+
   const fetchWorkflows = () => {
     Core.getWorkflowList(StoreType.Electron)
       .then((workflowsToSet: object) => {
@@ -102,7 +106,7 @@ export default function Workflow() {
         setWorkflows(Object.keys(workflowsToSet));
         return null;
       })
-      .catch(err => console.error(err));
+      .catch((err: any) => console.error(err));
   };
 
   useEffect(() => {
@@ -167,14 +171,19 @@ export default function Workflow() {
 
   const addNewWorkflowByFile = () => {
     ipcRenderer.send('open-wfconf-file-dialog');
-    ipcRenderer.on('open-wfconf-file-dialog-ret', (evt: any, fileInfo: any) => {
-      // Cancel selecting file
-      if (!fileInfo.file.filePaths[0]) return;
-      const selectedConfigFilePath = fileInfo.file.filePaths[0];
+    setSpinning(true);
 
-      Core.install(StoreType.Electron, selectedConfigFilePath).then(() => {
-        fetchWorkflows();
-      });
+    ipcRenderer.on('open-wfconf-file-dialog-ret', (evt: any, fileInfo: any) => {
+      if (fileInfo.file.filePaths[0]) {
+        const selectedConfigFilePath = fileInfo.file.filePaths[0];
+
+        Core.install(StoreType.Electron, selectedConfigFilePath).then(() => {
+          fetchWorkflows();
+          setSpinning(false);
+        });
+      } else {
+        setSpinning(false);
+      }
     });
   };
 
@@ -184,6 +193,8 @@ export default function Workflow() {
 
   const deleteSelectedWorkflow = () => {
     if (workflows.length === 0) return;
+
+    setSpinning(true);
 
     Core.unInstall(
       StoreType.Electron,
@@ -197,6 +208,7 @@ export default function Workflow() {
       } else {
         forceUpdate();
       }
+      setSpinning(false);
     });
   };
 
@@ -211,6 +223,7 @@ export default function Workflow() {
 
   return (
     <OuterContainer>
+      {spinning && <Spinner center />}
       <WorkflowListView>
         <Header
           style={{

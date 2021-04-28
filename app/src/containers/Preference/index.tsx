@@ -11,12 +11,32 @@ import ThemePage from './Theme';
 import AdvancedPage from './Advanced';
 import { StateType } from '../../redux/reducers/types';
 
+import { ScreenCoverContext } from './screenCoverContext';
+import { ScreenCover } from '../../components';
+
 const INITIAL_PAGE = PreferencePage.General;
+
+const OuterContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+`;
+
+const MainContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+`;
 
 export default function PreferenceWindow() {
   const [page, setPage] = useState(INITIAL_PAGE);
 
   const { hotkey } = useSelector((state: StateType) => state.globalConfig);
+
+  const screenCoverState = useState<boolean>();
 
   useEffect(() => {
     const globalShortcutCallbackTable = {
@@ -48,23 +68,11 @@ export default function PreferenceWindow() {
 
   return (
     <OuterContainer>
-      <Sidebar page={page} setPage={setPage} />
-      <MainContainer>{main}</MainContainer>
+      {screenCoverState[0] && <ScreenCover />}
+      <ScreenCoverContext.Provider value={screenCoverState}>
+        <Sidebar page={page} setPage={setPage} />
+        <MainContainer>{main}</MainContainer>
+      </ScreenCoverContext.Provider>
     </OuterContainer>
   );
 }
-
-const OuterContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-`;
-
-const MainContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;

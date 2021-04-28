@@ -47,6 +47,13 @@ export default class TrayBuilder {
         this.preferenceWindow.show();
         this.preferenceWindow.focus();
       }
+    },
+    {
+      label: 'Show Debugging View',
+      type: 'normal',
+      click: () => {
+        this.searchWindow.webContents.toggleDevTools();
+      }
     }
   ];
 
