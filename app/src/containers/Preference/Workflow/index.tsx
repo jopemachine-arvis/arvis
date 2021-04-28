@@ -10,23 +10,27 @@ import useForceUpdate from 'use-force-update';
 import {
   AiOutlineAppstoreAdd,
   AiOutlineDelete,
-  AiOutlineFileAdd
+  AiOutlineFileAdd,
+  AiOutlineBranches
 } from 'react-icons/ai';
 
 import { CgSmileNone } from 'react-icons/cg';
 
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import path from 'path';
+import fse from 'fs-extra';
 import {
   EmptyListContainer,
   EmptyListDesc,
+  Header,
   OuterContainer,
   WorkflowDescContainer,
+  WorkflowImg,
   WorkflowItemContainer,
   WorkflowItemCreatorText,
   WorkflowItemTitle,
   WorkflowListOrderedList,
   WorkflowListView,
-  Header,
   WorkflowListViewFooter
 } from './components';
 
@@ -81,6 +85,14 @@ const descriptionContainerStyle = {
   marginLeft: 20,
   marginRight: 20,
   userSelect: 'none'
+};
+
+const iconStyle = {
+  position: 'absolute',
+  width: 40,
+  height: 40,
+  top: 14,
+  left: 15
 };
 
 export default function Workflow() {
@@ -145,9 +157,27 @@ export default function Workflow() {
     setSelectedWorkflowIdx(idx);
   };
 
+  const getDefaultIcon = (bundleId: string) => {
+    const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${bundleId}`;
+    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
+
+    if (fse.existsSync(workflowDefaultIconPath)) {
+      return workflowDefaultIconPath;
+    }
+    return undefined;
+  };
+
   const renderItem = (itemBundleId: string, idx: number) => {
     const info = workflowInfo[itemBundleId];
-    const { createdby, name, bundleId } = info;
+    const { createdby, name } = info;
+
+    let icon;
+    const defaultIconPath = getDefaultIcon(itemBundleId);
+    if (defaultIconPath) {
+      icon = <WorkflowImg style={iconStyle} src={defaultIconPath} />;
+    } else {
+      icon = <AiOutlineBranches style={iconStyle} />;
+    }
 
     let optionalStyle = {};
     if (selectedWorkflowIdx === idx) {
@@ -166,6 +196,7 @@ export default function Workflow() {
         key={`workflowItem-${idx}`}
         onClick={() => itemClickHandler(idx)}
       >
+        {icon}
         <WorkflowItemTitle>{name}</WorkflowItemTitle>
         <WorkflowItemCreatorText>{createdby}</WorkflowItemCreatorText>
       </WorkflowItemContainer>
@@ -217,7 +248,8 @@ export default function Workflow() {
 
   const callDeleteWorkflowConfModal = () => {
     ipcRenderer.send('open-yesno-dialog', {
-      msg: `Are you sure you want to delete '${workflowBundleId}'?`
+      msg: `Are you sure you want to delete '${workflowBundleId}'?`,
+      icon: getDefaultIcon(workflowBundleId)
     });
     ipcRenderer.on('open-yesno-dialog-ret', (e, { yesPressed }) => {
       if (yesPressed) {

@@ -48,7 +48,7 @@ export default function SearchWindow() {
     getInputProps,
     clearInput,
     clearIndexInfo,
-    onScrollHandler,
+    onWheelHandler,
     onMouseoverHandler,
     onDoubleClickHandler
   } = useControl({
@@ -79,7 +79,7 @@ export default function SearchWindow() {
       style={{
         backgroundColor: item_background_color
       }}
-      onWheel={onScrollHandler}
+      onWheel={onWheelHandler}
     >
       <SearchBar
         alwaysFocus

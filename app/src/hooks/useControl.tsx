@@ -265,7 +265,7 @@ const useControl = ({
     clearIndexInfo();
   };
 
-  const onScrollHandler = (e: any) => {
+  const onWheelHandler = (e: any) => {
     if (e.deltaY > 0) {
       if (indexInfo.itemStartIdx + maxItemCount < items.length) {
         setIndexInfo({
@@ -369,7 +369,7 @@ const useControl = ({
     indexInfo,
     clearInput,
     clearIndexInfo,
-    onScrollHandler,
+    onWheelHandler,
     onMouseoverHandler,
     onDoubleClickHandler,
     getInputProps: getTargetProps

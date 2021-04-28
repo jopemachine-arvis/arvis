@@ -75,12 +75,15 @@ export const WorkflowItemContainer = styled.div`
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 20px;
+  padding-left: 68px;
   margin-bottom: 7px;
   user-select: none;
+  position: relative;
 `;
 
 export const WorkflowDescContainer = styled.div`
   width: 50%;
   padding-left: 15px;
 `;
+
+export const WorkflowImg = styled.img``;
