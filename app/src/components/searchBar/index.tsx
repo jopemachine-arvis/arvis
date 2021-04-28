@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { StateType } from '../../redux/reducers/types';
 import './index.global.css';
 
-import useKey from '../../../use-key-capture/_dist/index';
+import useKey from '../../../use-key-capture/src';
 
 const clipboardy = require('clipboardy');
 

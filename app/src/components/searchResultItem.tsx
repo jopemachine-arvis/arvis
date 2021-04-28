@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
 
-import useKey from '../../use-key-capture/_dist/index';
+import useKey from '../../use-key-capture/src';
 
 const clipboardy = require('clipboardy');
 

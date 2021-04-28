@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
@@ -7,6 +8,8 @@ import { StateType } from '../../../redux/reducers/types';
 import { GlobalConfigActions } from '../../../redux/actions';
 
 import { StyledInput } from '../../../components';
+
+import useKey from '../../../../use-key-capture/src';
 
 const formGroupStyle = {
   marginBottom: 35
@@ -33,6 +36,8 @@ const OuterContainer = styled.div`
 `;
 
 export default function General() {
+  const { keyData } = useKey();
+
   const isAutoLaunchAtLogin = useSelector(
     (state: StateType) => state.globalConfig.launch_at_login
   );
@@ -53,12 +58,12 @@ export default function General() {
     )
   );
 
-  const toggleAutoLaunchAtLogin = () => {
-    dispatch(GlobalConfigActions.setLaunchAtLogin(!isAutoLaunchAtLogin));
-  };
+  const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(GlobalConfigActions.setHotkey(hotkey));
+    if (hotkey !== '') {
+      dispatch(GlobalConfigActions.setHotkey(hotkey));
+    }
   }, [hotkey]);
 
   useEffect(() => {
@@ -68,6 +73,42 @@ export default function General() {
   useEffect(() => {
     dispatch(GlobalConfigActions.setMaxItemCountToSearch(maxItemCountToSearch));
   }, [maxItemCountToSearch]);
+
+  useEffect(() => {
+    if (hotkeyFormFocused) {
+      let result = '';
+      const modifiers = {
+        // On mac, cmd key is handled by meta;
+        cmd: keyData.isWithMeta,
+        ctrl: keyData.isWithCtrl,
+        shift: keyData.isWithShift,
+        alt: keyData.isWithAlt
+      };
+
+      for (const modifier in modifiers) {
+        if (modifiers[modifier]) {
+          result += `${modifier}+`;
+        }
+      }
+
+      const normalKey = keyData.key;
+      if (normalKey) {
+        if (keyData.isSpace) {
+          result += 'space';
+        } else {
+          result += normalKey;
+        }
+      } else {
+        result = result.substring(0, result.length - 1);
+      }
+
+      setHotkey(result);
+    }
+  }, [keyData]);
+
+  const toggleAutoLaunchAtLogin = () => {
+    dispatch(GlobalConfigActions.setLaunchAtLogin(!isAutoLaunchAtLogin));
+  };
 
   return (
     <OuterContainer>
@@ -88,9 +129,9 @@ export default function General() {
           <StyledInput
             type="text"
             value={hotkey}
-            onChange={(e: any) => {
-              setHotkey(e.target.value);
-            }}
+            onFocus={() => setHotkeyFormFocused(true)}
+            onBlur={() => setHotkeyFormFocused(false)}
+            onChange={(e: any) => e.preventDefault()}
           />
         </FormGroup>
 

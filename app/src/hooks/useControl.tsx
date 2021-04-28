@@ -6,7 +6,7 @@ import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
 import _ from 'lodash';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
-import useKey from '../../use-key-capture/_dist/index';
+import useKey from '../../use-key-capture/src';
 import { extractJson, checkObjectsAllValue } from '../utils';
 
 type IndexInfo = {
