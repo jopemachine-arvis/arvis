@@ -217,7 +217,7 @@ export default function Workflow() {
 
   const callDeleteWorkflowConfModal = () => {
     ipcRenderer.send('open-yesno-dialog', {
-      msg: 'Are you sure you want to delete the selected workflow?'
+      msg: `Are you sure you want to delete '${workflowBundleId}'?`
     });
     ipcRenderer.on('open-yesno-dialog-ret', (e, { yesPressed }) => {
       if (yesPressed) {

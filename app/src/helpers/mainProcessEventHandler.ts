@@ -1,5 +1,12 @@
 /* eslint-disable no-restricted-syntax */
-import { ipcMain, dialog, BrowserWindow, globalShortcut } from 'electron';
+import {
+  ipcMain,
+  dialog,
+  BrowserWindow,
+  globalShortcut,
+  nativeImage,
+  Notification
+} from 'electron';
 
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
@@ -26,17 +33,31 @@ export const initIPCHandler = ({
   // Used to open yesno modal box
   ipcMain.on(
     'open-yesno-dialog',
-    async (evt: any, { msg }: { msg: string }) => {
+    async (evt: any, { msg, icon }: { msg: string; icon?: string }) => {
       const ret: Electron.MessageBoxReturnValue = await dialog.showMessageBox({
         type: 'info',
         buttons: ['ok', 'cancel'],
-        message: msg
+        message: msg,
+        icon: icon ? nativeImage.createFromPath(icon) : undefined
       });
 
       const yesPressed = ret.response === 0;
       preferenceWindow.webContents.send('open-yesno-dialog-ret', {
         yesPressed
       });
+    }
+  );
+
+  // Used to show notification
+  ipcMain.on(
+    'show-notification',
+    (evt: any, { title, body }: { title: string; body: string }) => {
+      // https://www.electronjs.org/docs/tutorial/notifications
+      const notification = {
+        title,
+        body
+      };
+      new Notification(notification).show();
     }
   );
 
