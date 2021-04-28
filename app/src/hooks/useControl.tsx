@@ -194,6 +194,7 @@ const useControl = ({
     if (itemArr.length > 0) {
       // auto script filter executing should be started from first item
       const firstItem = itemArr[0];
+
       const goScriptFilterWithSpace =
         firstItem.withspace === true &&
         updatedInput.includes(firstItem.command) &&
@@ -207,18 +208,16 @@ const useControl = ({
         // eslint-disable-next-line prefer-destructuring
         commandOnStackIsEmpty = firstItem;
 
-        if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
-          const { running_subtext: runningSubText } = firstItem;
-          setRunningText({
-            itemArr,
-            index: 0,
-            runningSubText
-          });
+        const { running_subtext: runningSubText } = firstItem;
+        setRunningText({
+          itemArr,
+          index: 0,
+          runningSubText
+        });
 
-          commandManager
-            .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
-            .catch(handleWorkflowError);
-        }
+        commandManager
+          .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
+          .catch(handleWorkflowError);
       }
     }
   };
@@ -229,10 +228,9 @@ const useControl = ({
     modifiers: any
   ) => {
     setInputStr(updatedInput);
+    const assumedCommand = updatedInput.split(' ')[0];
 
-    if (commandManager.hasEmptyCommandStk()) {
-      const assumedCommand = updatedInput.split(' ')[0];
-
+    const searchCommands = () => {
       Core.findCommands(StoreType.Electron, assumedCommand)
         .then((result: any) => {
           setItems(result);
@@ -245,8 +243,23 @@ const useControl = ({
         .catch((error: any) => {
           throw new Error(`findCommands throws Error\n ${error}`);
         });
-    } else {
-      handleScriptFilterAutoExecute({ itemArr: items, input, updatedInput });
+    };
+
+    // Search workflow commands, builtInCommands
+    if (commandManager.hasEmptyCommandStk()) {
+      searchCommands();
+    }
+    // Execute Script filter
+    else if (commandManager.getTopCommand().type === 'scriptfilter') {
+      // Execute current command's script filter
+      if (assumedCommand === commandManager.getTopCommand().input) {
+        commandManager.scriptFilterExcute(updatedInput);
+      }
+      // Clear stack and search commands
+      else {
+        commandManager.clearCommandStack();
+        searchCommands();
+      }
     }
 
     clearIndexInfo();
@@ -308,6 +321,7 @@ const useControl = ({
     if (keyData.isBackspace) {
       updatedInput = inputStr.substr(0, inputStr.length - 1);
       setInputStr(updatedInput);
+      handleNormalInput(input, updatedInput, modifiers);
     } else if (keyData.isEnter) {
       await handleReturn(modifiers);
     } else if (keyData.isArrowDown) {
