@@ -8,6 +8,8 @@ import {
   Notification
 } from 'electron';
 
+import WorkflowItemMenu from '../components/contextMenus/workflow';
+
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
 export const initIPCHandler = ({
@@ -115,6 +117,14 @@ export const initIPCHandler = ({
           shortcutCallbackTbl[action]({ preferenceWindow, searchWindow })
         );
       }
+    }
+  );
+
+  // Used to popup context menu
+  ipcMain.on(
+    'popup-workflowItem-menu',
+    (evt: any, { path }: { path: string }) => {
+      new WorkflowItemMenu({ path }).popup();
     }
   );
 };

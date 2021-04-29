@@ -11877,6 +11877,15 @@ open@^8.0.4:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
+open@^8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/open/-/open-8.0.7.tgz#5597eeff14b440f6ff78fb7ced9ede9f69b2122d"
+  integrity sha512-qoyG0kpdaWVoL5MiwTRQWujSdivwBOgfLadVEdpsZNHOK1+kBvmVtLYdgWr8G4cgBpG9zaxezn6jz6PPdQW5xg==
+  dependencies:
+    define-lazy-prop "^2.0.0"
+    is-docker "^2.1.1"
+    is-wsl "^2.2.0"
+
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz#5657f1bede69b6e33a45939b061eb53d3c6c3a89"

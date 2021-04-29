@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable prettier/prettier */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -47,6 +49,8 @@ import {
 } from './style';
 
 import { ScreenCoverContext } from '../screenCoverContext';
+
+import WorkflowItemMenu from '../../../components/contextMenus/workflow';
 
 import './index.global.css';
 
@@ -123,6 +127,12 @@ export default function Workflow() {
     return undefined;
   };
 
+  const workflowItemRightClickHandler = (e: any, bundleId: string) => {
+    e.preventDefault();
+    const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${bundleId}`;
+    ipcRenderer.send('popup-workflowItem-menu', { path: workflowRootPath });
+  };
+
   const renderItem = (itemBundleId: string, idx: number) => {
     const info = workflows[itemBundleId];
     if (!info) return <></>;
@@ -152,6 +162,9 @@ export default function Workflow() {
         style={optionalStyle}
         key={`workflowItem-${idx}`}
         onClick={() => itemClickHandler(idx)}
+        onContextMenu={(e: any) =>
+          workflowItemRightClickHandler(e, itemBundleId)
+        }
       >
         {icon}
         <WorkflowItemTitle>{name}</WorkflowItemTitle>
@@ -301,37 +314,61 @@ export default function Workflow() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Name</Label>
-            <StyledInput type="text" value={workflowName} />
+            <StyledInput type="text" value={workflowName} onChange={() => {}} />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Version</Label>
-            <StyledInput type="text" value={workflowVersion} />
+            <StyledInput
+              type="text"
+              value={workflowVersion}
+              onChange={() => {}}
+            />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Creator</Label>
-            <StyledInput type="text" value={workflowCreator} />
+            <StyledInput
+              type="text"
+              value={workflowCreator}
+              onChange={() => {}}
+            />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Bundle Id</Label>
-            <StyledInput type="text" value={workflowBundleId} />
+            <StyledInput
+              type="text"
+              value={workflowBundleId}
+              onChange={() => {}}
+            />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Category</Label>
-            <StyledInput type="text" value={workflowCategory} />
+            <StyledInput
+              type="text"
+              value={workflowCategory}
+              onChange={() => {}}
+            />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Description</Label>
-            <StyledInput type="textarea" value={workflowDescription} />
+            <StyledInput
+              type="textarea"
+              value={workflowDescription}
+              onChange={() => {}}
+            />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Web site</Label>
-            <StyledInput type="url" value={workflowWebsite} />
+            <StyledInput
+              type="url"
+              value={workflowWebsite}
+              onChange={() => {}}
+            />
           </FormGroup>
         </Form>
       </WorkflowDescContainer>
