@@ -253,9 +253,7 @@ const useSearchWindowControl = ({
     else if (workManager.getTopCommand().type === 'scriptfilter') {
       // Execute current command's script filter
       if (assumedCommand === workManager.getTopCommand().input) {
-        workManager
-          .scriptFilterExcute(updatedInput)
-          .catch(handleWorkflowError);
+        workManager.scriptFilterExcute(updatedInput).catch(handleWorkflowError);
       }
       // Clear stack and search commands
       else {

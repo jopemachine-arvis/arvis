@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-curly-newline */
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
+import { IoMdColorPalette } from 'react-icons/io';
 import { StateType } from '../../../redux/reducers/types';
+import './index.global.css';
 
 import {
   OuterContainer,
@@ -13,12 +15,14 @@ import {
 } from './components';
 
 import { SearchBar, SearchResultView, StyledInput } from '../../../components';
-
 import { UIConfigActions } from '../../../redux/actions';
-
-import { isNumeric } from '../../../utils';
-
-import { descriptionContainerStyle, formGroupStyle, labelStyle } from './style';
+import { isNumeric, getRandomColor } from '../../../utils';
+import {
+  descriptionContainerStyle,
+  formGroupStyle,
+  labelStyle,
+  iconStyle
+} from './style';
 
 const mockItems = [
   {
@@ -60,6 +64,10 @@ export default function Theme() {
 
   const dispatch = useDispatch();
 
+  const [previewBackgroundColor, setPreviewBackgroundColor] = useState<string>(
+    '#000000'
+  );
+
   const configChangeHandler = (e: any, action: any) => {
     const target: string | number = isNumeric(e.target.value)
       ? Number(e.target.value)
@@ -74,9 +82,23 @@ export default function Theme() {
     // ipcRenderer.send('theme-changed', { actionNameToDispatch: 'some_color', arg: '#000000' });
   };
 
+  const changeBackgroundColor = () => {
+    console.log(getRandomColor());
+    setPreviewBackgroundColor(getRandomColor());
+  };
+
   return (
     <OuterContainer>
-      <PreviewContainer>
+      <IoMdColorPalette
+        className="theme-page-buttons"
+        style={iconStyle}
+        onClick={() => changeBackgroundColor()}
+      />
+      <PreviewContainer
+        style={{
+          backgroundColor: previewBackgroundColor
+        }}
+      >
         <PreviewMainContainer
           style={{
             borderRadius: 10,
@@ -122,7 +144,7 @@ export default function Theme() {
         </PreviewMainContainer>
       </PreviewContainer>
       <ConfigContainer>
-        <Header>Theme config</Header>
+        <Header>Config</Header>
         <Form style={descriptionContainerStyle}>
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Window Width</Label>

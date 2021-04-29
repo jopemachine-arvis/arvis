@@ -8,16 +8,16 @@ export const OuterContainer = styled.div`
   flex-direction: row;
   background-color: #16181b;
   justify-content: flex-start;
-  overflow-y: auto;
 `;
 
 export const PreviewContainer = styled.div`
-  width: 65%;
+  width: 75%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1f2227;
+  padding-left: 5%;
+  padding-right: 5%;
 `;
 
 export const PreviewMainContainer = styled.div`
@@ -25,12 +25,11 @@ export const PreviewMainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 5%;
 `;
 
 export const Header = styled.div`
   width: 50%;
-  margin-left: 45px;
+  margin-left: 25px;
   margin-top: 20px;
   height: 60px;
   color: #ffffff;
@@ -40,7 +39,9 @@ export const Header = styled.div`
 `;
 
 export const ConfigContainer = styled.div`
-  width: 35%;
+  width: 25%;
   padding-left: 15px;
   user-select: none;
+  overflow-y: auto;
+  padding-bottom: 20px;
 `;

@@ -50,8 +50,6 @@ import {
 
 import { ScreenCoverContext } from '../screenCoverContext';
 
-import WorkflowItemMenu from '../../../components/contextMenus/workflow';
-
 import './index.global.css';
 
 export default function Workflow() {

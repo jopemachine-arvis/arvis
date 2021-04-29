@@ -41,7 +41,7 @@ export const descriptionContainerStyle: React.CSSProperties = {
   paddingBottom: 10,
   borderRadius: 10,
   marginLeft: 20,
-  marginRight: 20,
+  marginRight: 60,
   userSelect: 'none'
 };
 
@@ -50,5 +50,6 @@ export const iconStyle: React.CSSProperties = {
   width: 40,
   height: 40,
   top: 14,
-  left: 15
+  left: 15,
+  userSelect: 'none'
 };

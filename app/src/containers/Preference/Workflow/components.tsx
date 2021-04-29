@@ -86,4 +86,6 @@ export const WorkflowDescContainer = styled.div`
   padding-left: 15px;
 `;
 
-export const WorkflowImg = styled.img``;
+export const WorkflowImg = styled.img`
+  user-select: none;
+`;

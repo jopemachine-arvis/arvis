@@ -26,3 +26,11 @@ export const descriptionContainerStyle: React.CSSProperties = {
   marginLeft: 20,
   marginRight: 20
 };
+
+export const iconStyle: React.CSSProperties = {
+  width: 30,
+  height: 30,
+  position: 'absolute',
+  bottom: 30,
+  left: 300
+};
