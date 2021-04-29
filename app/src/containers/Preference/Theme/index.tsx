@@ -18,34 +18,7 @@ import { UIConfigActions } from '../../../redux/actions';
 
 import { isNumeric } from '../../../utils';
 
-const formGroupStyle = {
-  marginBottom: 15,
-  width: '75%',
-  flexDirection: 'row',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-
-const labelStyle = {
-  fontSize: 13,
-  color: '#ffffff',
-  width: 400,
-  marginRight: 15
-};
-
-const descriptionContainerStyle = {
-  justifyContent: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: '#1f2228',
-  paddingTop: 10,
-  paddingBottom: 10,
-  borderRadius: 10,
-  marginLeft: 20,
-  marginRight: 20
-};
+import { descriptionContainerStyle, formGroupStyle, labelStyle } from './style';
 
 const mockItems = [
   {

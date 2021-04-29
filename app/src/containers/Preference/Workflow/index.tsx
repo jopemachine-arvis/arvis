@@ -36,64 +36,19 @@ import {
 
 import { StyledInput, Spinner } from '../../../components';
 
+import {
+  bottomFixedBarIconStyle,
+  checkboxStyle,
+  descriptionContainerStyle,
+  emptyListIconStyle,
+  formGroupStyle,
+  iconStyle,
+  labelStyle
+} from './style';
+
 import { ScreenCoverContext } from '../screenCoverContext';
 
 import './index.global.css';
-
-const bottomFixedBarIconStyle = {
-  width: 22,
-  height: 22,
-  marginLeft: 24
-};
-
-const emptyListIconStyle = {
-  width: 35,
-  height: 35
-};
-
-const formGroupStyle = {
-  marginBottom: 15,
-  width: '75%',
-  flexDirection: 'row',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-
-const checkboxStyle = {
-  marginBottom: 15,
-  left: '13%',
-  alignSelf: 'flex-start'
-};
-
-const labelStyle = {
-  fontSize: 14,
-  color: '#ffffff',
-  width: 150,
-  marginRight: 15
-};
-
-const descriptionContainerStyle = {
-  justifyContent: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: '#1f2228',
-  paddingTop: 10,
-  paddingBottom: 10,
-  borderRadius: 10,
-  marginLeft: 20,
-  marginRight: 20,
-  userSelect: 'none'
-};
-
-const iconStyle = {
-  position: 'absolute',
-  width: 40,
-  height: 40,
-  top: 14,
-  left: 15
-};
 
 export default function Workflow() {
   const [workflows, setWorkflows] = useState<any[]>([]);
