@@ -8,7 +8,7 @@ import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
 import { OuterContainer } from './components';
 
-const commandManager = new Core.CommandManager({ printDebuggingInfo: true });
+const workManager = new Core.WorkManager({ printDebuggingInfo: true });
 
 export default function SearchWindow() {
   const {
@@ -46,13 +46,13 @@ export default function SearchWindow() {
   } = useSearchWindowControl({
     items,
     setItems,
-    commandManager,
+    workManager,
     maxItemCount: max_item_count_to_show
   });
 
   useEffect(() => {
-    commandManager.onItemPressHandler = onItemPressHandler;
-    commandManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
+    workManager.onItemPressHandler = onItemPressHandler;
+    workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
 
     Core.registerCustomAction('notification', (action: any) =>
       ipcRenderer.send('send-notification', {

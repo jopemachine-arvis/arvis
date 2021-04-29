@@ -18,12 +18,12 @@ const useSearchWindowControl = ({
   items,
   setItems,
   maxItemCount,
-  commandManager
+  workManager
 }: {
   items: any[];
   setItems: Function;
   maxItemCount: number;
-  commandManager: Core.CommandManager;
+  workManager: Core.WorkManager;
 }) => {
   const { keyData, getTargetProps, resetKeyData } = useKey();
 
@@ -113,14 +113,14 @@ const useSearchWindowControl = ({
         runningSubText
       });
 
-      commandManager
+      workManager
         .scriptFilterExcute(
           selectedItem.command,
           items[indexInfo.selectedItemIdx]
         )
         .catch(handleWorkflowError);
     } else {
-      await commandManager
+      await workManager
         .commandExcute(selectedItem, inputStr, modifiers)
         .catch((err: any) => {
           console.error('Error occured in commandExecute!', err);
@@ -215,7 +215,7 @@ const useSearchWindowControl = ({
           runningSubText
         });
 
-        commandManager
+        workManager
           .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
           .catch(handleWorkflowError);
       }
@@ -246,20 +246,20 @@ const useSearchWindowControl = ({
     };
 
     // Search workflow commands, builtInCommands
-    if (commandManager.hasEmptyCommandStk()) {
+    if (workManager.hasEmptyWorkStk()) {
       searchCommands();
     }
     // Execute Script filter
-    else if (commandManager.getTopCommand().type === 'scriptfilter') {
+    else if (workManager.getTopCommand().type === 'scriptfilter') {
       // Execute current command's script filter
-      if (assumedCommand === commandManager.getTopCommand().input) {
-        commandManager
+      if (assumedCommand === workManager.getTopCommand().input) {
+        workManager
           .scriptFilterExcute(updatedInput)
           .catch(handleWorkflowError);
       }
       // Clear stack and search commands
       else {
-        commandManager.clearCommandStack();
+        workManager.clearCommandStack();
         searchCommands();
       }
     }
@@ -304,7 +304,7 @@ const useSearchWindowControl = ({
     setItems([]);
     clearInput();
     clearIndexInfo();
-    commandManager.clearCommandStack();
+    workManager.clearCommandStack();
     setShouldBeHided(true);
   };
 
