@@ -24,14 +24,7 @@ export default class TrayBuilder {
 
   trayTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
     {
-      label: 'Quit app',
-      type: 'normal',
-      click: () => {
-        app.quit();
-      }
-    },
-    {
-      label: 'Open Preference',
+      label: 'Open Preference Window',
       type: 'normal',
       click: () => {
         if (this.preferenceWindow === null) {
@@ -55,6 +48,16 @@ export default class TrayBuilder {
         if (this.searchWindow) {
           this.searchWindow.webContents.toggleDevTools();
         }
+      }
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Quit app',
+      type: 'normal',
+      click: () => {
+        app.quit();
       }
     }
   ];

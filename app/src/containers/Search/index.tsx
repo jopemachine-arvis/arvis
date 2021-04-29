@@ -46,11 +46,11 @@ export default function SearchWindow() {
     setInputStr,
     indexInfo,
     getInputProps,
-    clearInput,
-    clearIndexInfo,
     onWheelHandler,
     onMouseoverHandler,
-    onDoubleClickHandler
+    onDoubleClickHandler,
+    onItemPressHandler,
+    onItemShouldBeUpdate
   } = useControl({
     items,
     setItems,
@@ -58,20 +58,9 @@ export default function SearchWindow() {
     maxItemCount: max_item_count_to_show
   });
 
-  const itemSetEventHandler = (itemsToSet: any[]) => {
-    clearIndexInfo();
-    setItems(itemsToSet);
-  };
-
-  const onItemPressHandler = () => {
-    setItems([]);
-    clearInput();
-    commandManager.clearCommandStack();
-  };
-
   useEffect(() => {
     commandManager.onItemPressHandler = onItemPressHandler;
-    commandManager.onItemShouldBeUpdate = itemSetEventHandler;
+    commandManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
   }, []);
 
   return (

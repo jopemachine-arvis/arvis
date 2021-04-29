@@ -253,7 +253,9 @@ const useControl = ({
     else if (commandManager.getTopCommand().type === 'scriptfilter') {
       // Execute current command's script filter
       if (assumedCommand === commandManager.getTopCommand().input) {
-        commandManager.scriptFilterExcute(updatedInput);
+        commandManager
+          .scriptFilterExcute(updatedInput)
+          .catch(handleWorkflowError);
       }
       // Clear stack and search commands
       else {
@@ -340,6 +342,13 @@ const useControl = ({
     }
   };
 
+  const onItemShouldBeUpdate = (itemsToSet: any[]) => {
+    clearIndexInfo();
+    setItems(itemsToSet);
+  };
+
+  const onItemPressHandler = () => {};
+
   useEffect(() => {
     ipcRenderer.on('hide-search-window-by-blur-event', () => {
       cleanUpBeforeHide();
@@ -372,6 +381,8 @@ const useControl = ({
     onWheelHandler,
     onMouseoverHandler,
     onDoubleClickHandler,
+    onItemPressHandler,
+    onItemShouldBeUpdate,
     getInputProps: getTargetProps
   };
 };
