@@ -102,7 +102,7 @@ const searchResultItem = (props: IProps) => {
 
   const iconSize = itemHeight - 20;
 
-  const iconStyle = useMemo(() => {
+  const iconStyle: React.CSSProperties = useMemo(() => {
     return {
       width: iconSize,
       height: iconSize,

@@ -1,6 +1,6 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import FlatList from 'flatlist-react';
@@ -51,10 +51,11 @@ import { ScreenCoverContext } from '../screenCoverContext';
 import './index.global.css';
 
 export default function Workflow() {
-  const [workflows, setWorkflows] = useState<any[]>([]);
   // object with bundleId as key and workflow info in value
-  const [workflowInfo, setWorkflowInfo] = useState<any>({});
+  const [workflows, setWorkflows] = useState<any>({});
+  const workflowsRef = useRef<any>();
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(0);
+  const selectedWorkflowIdxRef = useRef<any>();
 
   const [workflowName, setWorkflowName] = useState<string>('');
   const [workflowVersion, setWorkflowVersion] = useState<string>('');
@@ -72,20 +73,18 @@ export default function Workflow() {
   const fetchWorkflows = () => {
     Core.getWorkflowList(StoreType.Electron)
       .then((workflowsToSet: object) => {
-        setWorkflowInfo(workflowsToSet);
-        setWorkflows(Object.keys(workflowsToSet));
+        setWorkflows(workflowsToSet);
+        setSpinning(false);
         return null;
       })
       .catch((err: any) => console.error(err));
   };
 
   useEffect(() => {
-    fetchWorkflows();
-  }, []);
+    const workflowBundleIds = Object.keys(workflows);
 
-  useEffect(() => {
-    if (Object.keys(workflowInfo).length >= 1) {
-      const info = workflowInfo[workflows[selectedWorkflowIdx]];
+    if (workflowBundleIds.length >= 1) {
+      const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
       const {
         createdby,
         name,
@@ -106,7 +105,9 @@ export default function Workflow() {
       setWorkflowVersion(version);
       setWorkflowWebsite(webaddress);
     }
-  }, [selectedWorkflowIdx, workflows]);
+  }, [selectedWorkflowIdx, Object.keys(workflows).length]);
+
+  const deleteWorkflowEventHandler = useRef<any>();
 
   const itemClickHandler = (idx: number) => {
     setSelectedWorkflowIdx(idx);
@@ -123,7 +124,8 @@ export default function Workflow() {
   };
 
   const renderItem = (itemBundleId: string, idx: number) => {
-    const info = workflowInfo[itemBundleId];
+    const info = workflows[itemBundleId];
+    if (!info) return <></>;
     const { createdby, name } = info;
 
     let icon;
@@ -164,11 +166,10 @@ export default function Workflow() {
 
     ipcRenderer.on('open-wfconf-file-dialog-ret', (evt: any, fileInfo: any) => {
       if (fileInfo.file.filePaths[0]) {
-        const selectedConfigFilePath = fileInfo.file.filePaths[0];
+        const wfConfigFilePath = fileInfo.file.filePaths[0];
 
-        Core.install(StoreType.Electron, selectedConfigFilePath).then(() => {
+        Core.install(StoreType.Electron, wfConfigFilePath).then(() => {
           fetchWorkflows();
-          setSpinning(false);
         });
       } else {
         setSpinning(false);
@@ -180,20 +181,22 @@ export default function Workflow() {
     // Add new workflow through npm or git
   };
 
-  const deleteSelectedWorkflow = () => {
-    if (workflows.length === 0) return;
+  const deleteSelectedWorkflow = (workflowList: any, idxToRemove: number) => {
+    const workflowBundleIds = Object.keys(workflowList);
+    if (workflowBundleIds.length === 0) return;
 
     setSpinning(true);
 
-    Core.unInstall(
-      StoreType.Electron,
-      workflowInfo[workflows[selectedWorkflowIdx]].bundleId
-    ).then(() => {
-      const temp = workflows;
-      workflows.splice(selectedWorkflowIdx, 1);
+    Core.unInstall({
+      storeType: StoreType.Electron,
+      bundleId: workflowList[workflowBundleIds[idxToRemove]].bundleId
+    }).then(() => {
+      const temp = workflowList;
+      delete temp[workflowList[workflowBundleIds[idxToRemove]].bundleId];
       setWorkflows(temp);
-      if (workflows.length !== 0) {
-        setSelectedWorkflowIdx(selectedWorkflowIdx - 1);
+
+      if (idxToRemove !== 0) {
+        setSelectedWorkflowIdx(idxToRemove - 1);
       } else {
         forceUpdate();
       }
@@ -201,14 +204,32 @@ export default function Workflow() {
     });
   };
 
+  useEffect(() => {
+    workflowsRef.current = workflows;
+    selectedWorkflowIdxRef.current = selectedWorkflowIdx;
+  });
+
+  useEffect(() => {
+    fetchWorkflows();
+    deleteWorkflowEventHandler.current = () => {
+      deleteSelectedWorkflow(
+        workflowsRef.current,
+        selectedWorkflowIdxRef.current
+      );
+    };
+  }, []);
+
   const callDeleteWorkflowConfModal = () => {
+    const workflowBundleIds = Object.keys(workflows);
+    if (workflowBundleIds.length === 0) return;
+
     ipcRenderer.send('open-yesno-dialog', {
       msg: `Are you sure you want to delete '${workflowBundleId}'?`,
       icon: getDefaultIcon(workflowBundleId)
     });
     ipcRenderer.on('open-yesno-dialog-ret', (e, { yesPressed }) => {
       if (yesPressed) {
-        deleteSelectedWorkflow();
+        deleteWorkflowEventHandler.current();
       }
     });
   };
@@ -235,7 +256,7 @@ export default function Workflow() {
         </Header>
         <WorkflowListOrderedList>
           <FlatList
-            list={workflows}
+            list={Object.keys(workflows)}
             renderItem={renderItem}
             renderWhenEmpty={renderEmptyList}
           />
