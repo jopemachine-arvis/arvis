@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-curly-newline */
-/* eslint-disable prettier/prettier */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';

@@ -83,7 +83,6 @@ export default function Theme() {
   };
 
   const changeBackgroundColor = () => {
-    console.log(getRandomColor());
     setPreviewBackgroundColor(getRandomColor());
   };
 

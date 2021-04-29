@@ -35,6 +35,10 @@ const initialState = {
   isSmall: false,
   isNumber: false,
 
+  isControl: false,
+  isAlt: false,
+  isMeta: false,
+
   // For special character
   isSpecialCharacter: false
 };
@@ -52,7 +56,11 @@ const useKeyActionTypes = {
   TAB: 'TAB',
   CAPSLOCK: 'CAPSLOCK',
   SHIFT: 'SHIFT',
-  BACKSPACE: 'BACKSPACE'
+  BACKSPACE: 'BACKSPACE',
+
+  CONTROL: 'CONTROL',
+  ALT: 'ALT',
+  META: 'META'
 };
 
 const modifierKeys = {
@@ -69,6 +77,8 @@ const keyCodeMapper = {
   CapsLock: useKeyActionTypes.CAPSLOCK,
   Shift: useKeyActionTypes.SHIFT,
   Backspace: useKeyActionTypes.BACKSPACE,
+  Control: useKeyActionTypes.CONTROL,
+  META: useKeyActionTypes.META,
   // eslint-disable-next-line no-useless-computed-key
   [' ']: useKeyActionTypes.SPACE
 };
@@ -84,6 +94,10 @@ const isSmallLetterPressed = key => /^[a-z]$/.test(key);
 const isNumberPressed = key => /^[0-9]/.test(key);
 const isSpecialCharacter = key =>
   /^[!@#$%^&*()_+<>?:"{}[\]';.,|/\-\\=_+~`]/.test(key);
+const isControl = key => key === 'Control';
+const isAlt = key => key === 'Alt';
+const isMeta = key => key === 'Meta';
+const isShift = key => key === 'Shift';
 
 const isSpecialCharacterPressed = key => {
   return (
@@ -118,7 +132,7 @@ const getAction = eventDetails => {
     throw new Error('Event called with no details');
   }
 
-  const { key } = eventDetails;
+  let { key } = eventDetails;
 
   if (key.includes('Arrow')) {
     return {
@@ -149,6 +163,26 @@ const getAction = eventDetails => {
 
   if (!type && isSpecialCharacterPressed(key)) {
     type = useKeyActionTypes.SPECIAL;
+  }
+
+  if (isControl(key)) {
+    type = useKeyActionTypes.CONTROL;
+    key = undefined;
+  }
+
+  if (isShift(key)) {
+    type = useKeyActionTypes.SHIFT;
+    key = undefined;
+  }
+
+  if (isAlt(key)) {
+    type = useKeyActionTypes.ALT;
+    key = undefined;
+  }
+
+  if (isMeta(key)) {
+    type = useKeyActionTypes.META;
+    key = undefined;
   }
 
   if (!type) {

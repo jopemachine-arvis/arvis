@@ -97,6 +97,31 @@ export default function keyReducer(state, action) {
         ...action.payload
       };
     }
+
+    case useKeyActionTypes.CONTROL: {
+      return {
+        ...initialState,
+        isControl: true,
+        ...action.payload
+      };
+    }
+
+    case useKeyActionTypes.ALT: {
+      return {
+        ...initialState,
+        isAlt: true,
+        ...action.payload
+      };
+    }
+
+    case useKeyActionTypes.META: {
+      return {
+        ...initialState,
+        isMeta: true,
+        ...action.payload
+      };
+    }
+
     default:
       return { ...initialState };
   }

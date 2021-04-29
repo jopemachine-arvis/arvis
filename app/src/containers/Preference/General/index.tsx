@@ -72,6 +72,8 @@ export default function General() {
 
   useEffect(() => {
     if (hotkeyFormFocused) {
+      console.log('Recorded keyData', keyData);
+
       let result = '';
       const modifiers = {
         // On mac, cmd key is handled by meta;
