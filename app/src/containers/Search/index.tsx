@@ -1,22 +1,14 @@
 /* eslint-disable promise/always-return */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 import { SearchBar, SearchResultView } from '../../components';
-import useControl from '../../hooks/useControl';
+import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
+import { OuterContainer } from './components';
 
 const commandManager = new Core.CommandManager({ printDebuggingInfo: true });
-
-const OuterContainer = styled.div`
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  border: 1px solid #585c67;
-`;
 
 export default function SearchWindow() {
   const {
@@ -51,7 +43,7 @@ export default function SearchWindow() {
     onDoubleClickHandler,
     onItemPressHandler,
     onItemShouldBeUpdate
-  } = useControl({
+  } = useSearchWindowControl({
     items,
     setItems,
     commandManager,
@@ -61,6 +53,13 @@ export default function SearchWindow() {
   useEffect(() => {
     commandManager.onItemPressHandler = onItemPressHandler;
     commandManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
+
+    Core.registerCustomAction('notification', (action: any) =>
+      ipcRenderer.send('send-notification', {
+        title: action.title,
+        body: action.text
+      })
+    );
   }, []);
 
   return (

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
 
-import useKey from '../../use-key-capture/src';
+import useKey from '../../../use-key-capture/src';
+
+import { InnerContainer, OuterContainer, SubTitle, Title } from './components';
 
 const clipboardy = require('clipboardy');
 
@@ -31,31 +33,6 @@ type IProps = {
   subtitleFontSize: number;
   titleFontSize: number;
 };
-
-const OuterContainer = styled.div`
-  flex-direction: row;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: hidden;
-`;
-
-const InnerContainer = styled.div`
-  flex-direction: column;
-`;
-
-const Title = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-const SubTitle = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
 
 const IconImg = styled.img``;
 

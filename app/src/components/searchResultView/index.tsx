@@ -2,13 +2,13 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 import path from 'path';
 import { Core } from 'wf-creator-core';
 import _ from 'lodash';
-import SearchResultItem from './searchResultItem';
-import { checkFileExists, isSupportedImageFormat } from '../utils';
+import SearchResultItem from '../searchResultItem';
+import { checkFileExists, isSupportedImageFormat } from '../../utils';
+import { InnerContainer, OuterContainer } from './components';
 
 type IProps = {
   demo: boolean;
@@ -31,19 +31,6 @@ type IProps = {
   subtitleFontSize: number;
   titleFontSize: number;
 };
-
-const OuterContainer = styled.div`
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const InnerContainer = styled.div`
-  flex-direction: column;
-  width: 100%;
-`;
 
 const searchResultView = (props: IProps) => {
   const {

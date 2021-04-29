@@ -14,7 +14,7 @@ type IndexInfo = {
   itemStartIdx: number;
 };
 
-const useControl = ({
+const useSearchWindowControl = ({
   items,
   setItems,
   maxItemCount,
@@ -376,8 +376,6 @@ const useControl = ({
     inputStr,
     setInputStr,
     indexInfo,
-    clearInput,
-    clearIndexInfo,
     onWheelHandler,
     onMouseoverHandler,
     onDoubleClickHandler,
@@ -387,4 +385,4 @@ const useControl = ({
   };
 };
 
-export default useControl;
+export default useSearchWindowControl;

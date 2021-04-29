@@ -11,7 +11,7 @@ import {
   MenuItem
 } from 'electron';
 
-import { createPreferenceWindow } from '../windows/preferenceWindow';
+import { createPreferenceWindow } from '../../windows/preferenceWindow';
 
 export default class TrayBuilder {
   trayFilePath: string;
