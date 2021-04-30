@@ -34,7 +34,9 @@ const MainContainer = styled.div`
 export default function PreferenceWindow() {
   const [page, setPage] = useState(INITIAL_PAGE);
 
-  const { hotkey } = useSelector((state: StateType) => state.globalConfig);
+  const { hotkey, global_font } = useSelector(
+    (state: StateType) => state.globalConfig
+  );
 
   const screenCoverState = useState<boolean>();
 
@@ -67,7 +69,11 @@ export default function PreferenceWindow() {
   }
 
   return (
-    <OuterContainer>
+    <OuterContainer
+      style={{
+        fontFamily: global_font
+      }}
+    >
       {screenCoverState[0] && <ScreenCover />}
       <ScreenCoverContext.Provider value={screenCoverState}>
         <Sidebar page={page} setPage={setPage} />

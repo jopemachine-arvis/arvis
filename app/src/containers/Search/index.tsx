@@ -28,7 +28,7 @@ export default function SearchWindow() {
     title_font_size
   } = useSelector((state: StateType) => state.uiConfig);
 
-  const { max_item_count_to_show } = useSelector(
+  const { max_item_count_to_show, global_font } = useSelector(
     (state: StateType) => state.globalConfig
   );
 
@@ -67,7 +67,8 @@ export default function SearchWindow() {
   return (
     <OuterContainer
       style={{
-        backgroundColor: item_background_color
+        backgroundColor: item_background_color,
+        fontFamily: global_font
       }}
       onWheel={onWheelHandler}
     >

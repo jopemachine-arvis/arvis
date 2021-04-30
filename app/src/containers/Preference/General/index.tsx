@@ -1,14 +1,24 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable promise/catch-or-return */
+/* eslint-disable promise/always-return */
 /* eslint-disable no-restricted-syntax */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 import { StateType } from '../../../redux/reducers/types';
-
 import { GlobalConfigActions } from '../../../redux/actions';
-
 import { StyledInput } from '../../../components';
-
 import useKey from '../../../../use-key-capture/src';
 
 const formGroupStyle = {
@@ -34,9 +44,10 @@ const OuterContainer = styled.div`
 export default function General() {
   const { keyData } = useKey();
 
-  const isAutoLaunchAtLogin = useSelector(
-    (state: StateType) => state.globalConfig.launch_at_login
-  );
+  const {
+    launch_at_login: isAutoLaunchAtLogin,
+    global_font: globalFont
+  } = useSelector((state: StateType) => state.globalConfig);
 
   const dispatch = useDispatch();
 
@@ -55,6 +66,26 @@ export default function General() {
   );
 
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
+
+  const [fontList, setFontList] = useState<string[]>([]);
+
+  const [fontListDrawerOpen, setFontListDrawerOpen] = useState(false);
+
+  const toggleFontListDrawerOpen = () =>
+    setFontListDrawerOpen(prevState => !prevState);
+
+  const fontSelectEventHandler = (font: string) => {
+    dispatch(GlobalConfigActions.setGlobalFont(font));
+  };
+
+  useEffect(() => {
+    ipcRenderer.send('get-system-fonts');
+
+    ipcRenderer.on('get-system-fonts-ret', (e, { fonts }) => {
+      console.log(fonts);
+      setFontList(fonts);
+    });
+  }, []);
 
   useEffect(() => {
     if (hotkey !== '') {
@@ -165,6 +196,34 @@ export default function General() {
               setMaxItemCountToSearch(Number(e.target.value));
             }}
           />
+        </FormGroup>
+
+        <FormGroup style={formGroupStyle}>
+          <Label style={labelStyle}>Fonts</Label>
+          <Dropdown
+            isOpen={fontListDrawerOpen}
+            toggle={toggleFontListDrawerOpen}
+          >
+            <DropdownToggle caret>{globalFont}</DropdownToggle>
+            <DropdownMenu
+              style={{
+                overflow: 'auto',
+                maxHeight: 300
+              }}
+            >
+              {fontList.map((font: string, idx: number) => {
+                return (
+                  <DropdownItem
+                    key={`font-${idx}`}
+                    style={{ fontFamily: font }}
+                    onClick={() => fontSelectEventHandler(font)}
+                  >
+                    {font}
+                  </DropdownItem>
+                );
+              })}
+            </DropdownMenu>
+          </Dropdown>
         </FormGroup>
       </Form>
     </OuterContainer>

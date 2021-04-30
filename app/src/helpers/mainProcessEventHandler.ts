@@ -8,6 +8,7 @@ import {
   Notification
 } from 'electron';
 
+import { getFonts } from 'font-list';
 import WorkflowItemMenu from '../components/contextMenus/workflow';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
@@ -61,6 +62,12 @@ export const initIPCHandler = ({
       new Notification(notification).show();
     }
   );
+
+  // Used to get all system fonts
+  ipcMain.on('get-system-fonts', async (evt: any) => {
+    const fonts = await getFonts({ disableQuoting: true });
+    preferenceWindow.webContents.send('get-system-fonts-ret', { fonts });
+  });
 
   // Used to automatically change the height of searchWindow
   ipcMain.on(

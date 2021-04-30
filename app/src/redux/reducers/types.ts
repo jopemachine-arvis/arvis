@@ -6,6 +6,7 @@ export type StateType = {
     launch_at_login: boolean;
     max_item_count_to_show: number;
     max_item_count_to_search: number;
+    global_font: string;
   };
   uiConfig: {
     icon_right_margin: number;

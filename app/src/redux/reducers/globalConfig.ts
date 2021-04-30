@@ -25,6 +25,11 @@ export default (state = {}, action: any) => {
         ...state,
         max_item_count_to_search: payload.number
       };
+    case GlobalConfigActionTypes.SET_GLOBAL_FONT:
+      return {
+        ...state,
+        global_font: payload.font
+      };
     default:
       return state;
   }
@@ -44,4 +49,8 @@ export function getItemMaxCountToSearch(state: any) {
 
 export function isAutoLaunchAtLogin(state: any) {
   return state.globalConfig.launch_at_login;
+}
+
+export function getGlobalFont(state: any) {
+  return state.globalConfig.global_font;
 }

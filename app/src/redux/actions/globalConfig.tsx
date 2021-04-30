@@ -4,7 +4,8 @@ export const actionTypes = {
   SET_LAUNCH_AT_LOGIN: '@globalConfig/SET_SAVE_REGULAR',
   SET_HOT_KEY: '@globalConfig/SET_HOT_KEY',
   SET_MAX_ITEM_COUNT_TO_SEARCH: '@globalConfig/SET_MAX_ITEM_COUNT_TO_SEARCH',
-  SET_MAX_ITEM_COUNT_TO_SHOW: '@globalConfig/SET_MAX_ITEM_COUNT_TO_SHOW'
+  SET_MAX_ITEM_COUNT_TO_SHOW: '@globalConfig/SET_MAX_ITEM_COUNT_TO_SHOW',
+  SET_GLOBAL_FONT: '@globalConfig/SET_GLOBAL_FONT'
 };
 
 export const setLaunchAtLogin = makeActionCreator(
@@ -22,4 +23,9 @@ export const setMaxItemCountToSearch = makeActionCreator(
 export const setMaxItemCountToShow = makeActionCreator(
   actionTypes.SET_MAX_ITEM_COUNT_TO_SHOW,
   'number'
+);
+
+export const setGlobalFont = makeActionCreator(
+  actionTypes.SET_GLOBAL_FONT,
+  'font'
 );

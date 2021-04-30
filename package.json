@@ -255,6 +255,7 @@
     "electron-store": "^8.0.0",
     "electron-updater": "^4.2.0",
     "flatlist-react": "^1.5.0",
+    "font-list": "^1.2.14",
     "history": "^4.10.1",
     "jquery": "^3.6.0",
     "open": "^8.0.7",
