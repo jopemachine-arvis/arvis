@@ -56,12 +56,12 @@ export default function SearchWindow() {
     workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
     workManager.onWorkEndHandler = onWorkEndHandler;
 
-    Core.registerCustomAction('notification', (action: any) =>
-      ipcRenderer.send('send-notification', {
+    Core.registerCustomAction('notification', (action: any) => {
+      ipcRenderer.send('show-notification', {
         title: action.title,
         body: action.text
-      })
-    );
+      });
+    });
   }, []);
 
   return (

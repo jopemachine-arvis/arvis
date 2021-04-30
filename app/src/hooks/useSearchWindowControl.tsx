@@ -343,11 +343,13 @@ const useSearchWindowControl = ({
   };
 
   const onItemShouldBeUpdate = (itemsToSet: any[]) => {
-    clearIndexInfo();
     setItems(itemsToSet);
+    clearIndexInfo();
   };
 
-  const onItemPressHandler = () => {};
+  const onItemPressHandler = () => {
+    clearIndexInfo();
+  };
 
   const onWorkEndHandler = () => {
     setShouldBeHided(true);

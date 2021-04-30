@@ -9,7 +9,6 @@ import {
 } from 'electron';
 
 import WorkflowItemMenu from '../components/contextMenus/workflow';
-
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
 export const initIPCHandler = ({
