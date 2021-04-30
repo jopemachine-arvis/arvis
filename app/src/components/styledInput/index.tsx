@@ -7,14 +7,16 @@ import './index.global.css';
 const StyledInput = (props: any) => {
   return (
     <ReactStrapInput
+      {...props}
       className={'styledInput'}
       style={{
         backgroundColor: '#1f2228',
         borderColor: '#2f323c',
         color: '#ffffff',
-        textAlign: 'center'
+        textAlign: 'center',
+        // eslint-disable-next-line react/destructuring-assignment
+        ...props.style
       }}
-      {...props}
     />
   );
 };

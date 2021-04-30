@@ -15,7 +15,7 @@ class WorkflowItemContextMenu extends Menu {
     super.append(
       new MenuItem({
         type: 'normal',
-        label: `Open this workflow's directory`,
+        label: `Open Directory`,
         toolTip:
           'Opens the installation path of the selected workflow with Explorer',
         click() {

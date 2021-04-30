@@ -80,9 +80,7 @@ export default function General() {
 
   useEffect(() => {
     ipcRenderer.send('get-system-fonts');
-
     ipcRenderer.on('get-system-fonts-ret', (e, { fonts }) => {
-      console.log(fonts);
       setFontList(fonts);
     });
   }, []);
@@ -116,19 +114,20 @@ export default function General() {
 
       for (const modifier in modifiers) {
         if (modifiers[modifier]) {
-          result += `${modifier}+`;
+          result += `${modifier} + `;
         }
       }
 
       const normalKey = keyData.key;
       if (normalKey) {
         if (keyData.isSpace) {
-          result += 'space';
+          result += 'Space';
         } else {
           result += normalKey;
         }
       } else {
-        result = result.substring(0, result.length - 1);
+        // remove ' + '
+        result = result.substring(0, result.length - 3);
       }
 
       setHotkey(result);
@@ -156,6 +155,11 @@ export default function General() {
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Hotkey</Label>
           <StyledInput
+            style={{
+              textTransform: 'capitalize',
+              color: 'transparent',
+              textShadow: '0px 0px 0px #fff'
+            }}
             type="text"
             value={hotkey}
             onFocus={() => setHotkeyFormFocused(true)}
@@ -204,18 +208,32 @@ export default function General() {
             isOpen={fontListDrawerOpen}
             toggle={toggleFontListDrawerOpen}
           >
-            <DropdownToggle caret>{globalFont}</DropdownToggle>
+            <DropdownToggle
+              style={{
+                width: '100%',
+                backgroundColor: '#1F2227',
+                borderColor: '#2F323B'
+              }}
+              caret
+            >
+              {globalFont}
+            </DropdownToggle>
             <DropdownMenu
               style={{
-                overflow: 'auto',
-                maxHeight: 300
+                overflowY: 'auto',
+                maxHeight: 300,
+                backgroundColor: '#1F2227'
               }}
             >
               {fontList.map((font: string, idx: number) => {
                 return (
                   <DropdownItem
                     key={`font-${idx}`}
-                    style={{ fontFamily: font }}
+                    style={{
+                      fontFamily: font,
+                      backgroundColor: '#1F2227',
+                      color: '#fff'
+                    }}
                     onClick={() => fontSelectEventHandler(font)}
                   >
                     {font}
