@@ -42,7 +42,8 @@ export default function SearchWindow() {
     onMouseoverHandler,
     onDoubleClickHandler,
     onItemPressHandler,
-    onItemShouldBeUpdate
+    onItemShouldBeUpdate,
+    onWorkEndHandler
   } = useSearchWindowControl({
     items,
     setItems,
@@ -53,6 +54,7 @@ export default function SearchWindow() {
   useEffect(() => {
     workManager.onItemPressHandler = onItemPressHandler;
     workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
+    workManager.onWorkEndHandler = onWorkEndHandler;
 
     Core.registerCustomAction('notification', (action: any) =>
       ipcRenderer.send('send-notification', {

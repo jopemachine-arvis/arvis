@@ -113,12 +113,10 @@ const useSearchWindowControl = ({
         runningSubText
       });
 
-      workManager
-        .scriptFilterExcute(
-          selectedItem.command,
-          items[indexInfo.selectedItemIdx]
-        )
-        .catch(handleWorkflowError);
+      Core.scriptFilterExcute(
+        selectedItem.command,
+        items[indexInfo.selectedItemIdx]
+      ).catch(handleWorkflowError);
     } else {
       await workManager
         .commandExcute(selectedItem, inputStr, modifiers)
@@ -215,9 +213,11 @@ const useSearchWindowControl = ({
           runningSubText
         });
 
-        workManager
-          .scriptFilterExcute(updatedInput, commandOnStackIsEmpty)
-          .catch(handleWorkflowError);
+        Core.scriptFilterExcute(
+          workManager,
+          updatedInput,
+          commandOnStackIsEmpty
+        ).catch(handleWorkflowError);
       }
     }
   };
@@ -253,7 +253,9 @@ const useSearchWindowControl = ({
     else if (workManager.getTopCommand().type === 'scriptfilter') {
       // Execute current command's script filter
       if (assumedCommand === workManager.getTopCommand().input) {
-        workManager.scriptFilterExcute(updatedInput).catch(handleWorkflowError);
+        Core.scriptFilterExcute(workManager, updatedInput).catch(
+          handleWorkflowError
+        );
       }
       // Clear stack and search commands
       else {
@@ -347,6 +349,10 @@ const useSearchWindowControl = ({
 
   const onItemPressHandler = () => {};
 
+  const onWorkEndHandler = () => {
+    setShouldBeHided(true);
+  };
+
   useEffect(() => {
     ipcRenderer.on('hide-search-window-by-blur-event', () => {
       cleanUpBeforeHide();
@@ -379,6 +385,7 @@ const useSearchWindowControl = ({
     onDoubleClickHandler,
     onItemPressHandler,
     onItemShouldBeUpdate,
+    onWorkEndHandler,
     getInputProps: getTargetProps
   };
 };
