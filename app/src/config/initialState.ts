@@ -22,5 +22,10 @@ export default {
     selected_item_font_color: '#ffffff',
     subtitle_font_size: 12,
     title_font_size: 17
+  },
+  advancedConfig: {
+    debugging_workflow_output: true,
+    debugging_workstack: false,
+    debugging_action_type: true
   }
 };

@@ -1,5 +1,5 @@
 /* eslint-disable promise/always-return */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
@@ -7,8 +7,6 @@ import { SearchBar, SearchResultView } from '../../components';
 import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
 import { OuterContainer } from './components';
-
-const workManager = new Core.WorkManager({ printDebuggingInfo: true });
 
 export default function SearchWindow() {
   const {
@@ -32,7 +30,23 @@ export default function SearchWindow() {
     (state: StateType) => state.globalConfig
   );
 
+  const {
+    debugging_action_type,
+    debugging_workflow_output,
+    debugging_workstack
+  } = useSelector((state: StateType) => state.advancedConfig);
+
   const [items, setItems] = useState<any>([]);
+
+  const workManager = useMemo(
+    () =>
+      new Core.WorkManager({
+        printActionType: debugging_action_type,
+        printWorkStack: debugging_workstack,
+        printWorkflowOutput: debugging_workflow_output
+      }),
+    [debugging_action_type, debugging_workflow_output, debugging_workstack]
+  );
 
   const {
     setInputStr,
@@ -52,18 +66,22 @@ export default function SearchWindow() {
     maxItemCount: max_item_count_to_show
   });
 
-  useEffect(() => {
-    workManager.onItemPressHandler = onItemPressHandler;
-    workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
-    workManager.onWorkEndHandler = onWorkEndHandler;
-    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
-
+  const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
       ipcRenderer.send('show-notification', {
         title: action.title,
         body: action.text
       });
     });
+  };
+
+  useEffect(() => {
+    workManager.onItemPressHandler = onItemPressHandler;
+    workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
+    workManager.onWorkEndHandler = onWorkEndHandler;
+    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
+
+    initializeCustomActions();
   }, []);
 
   return (

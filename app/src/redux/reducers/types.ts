@@ -25,6 +25,11 @@ export type StateType = {
     subtitle_font_size: number;
     title_font_size: number;
   };
+  advancedConfig: {
+    debugging_workflow_output: boolean;
+    debugging_workstack: boolean;
+    debugging_action_type: boolean;
+  };
 };
 
 export type GetState = () => StateType;
