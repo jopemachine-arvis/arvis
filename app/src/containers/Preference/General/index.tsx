@@ -3,7 +3,6 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable no-restricted-syntax */
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import {
   Form,
   FormGroup,
@@ -18,28 +17,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import { StateType } from '../../../redux/reducers/types';
 import { GlobalConfigActions } from '../../../redux/actions';
+import { OuterContainer } from './components';
+import { formGroupStyle, labelStyle } from './style';
 import { StyledInput } from '../../../components';
 import useKey from '../../../../use-key-capture/src';
-
-const formGroupStyle = {
-  marginBottom: 35
-};
-
-const labelStyle = {
-  color: '#ffffff'
-};
-
-const OuterContainer = styled.div`
-  width: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  background-color: #12151a;
-  padding-top: 60px;
-  padding-left: 15px;
-  justify-content: center;
-  user-select: none;
-`;
 
 export default function General() {
   const { keyData } = useKey();

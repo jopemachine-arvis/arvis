@@ -12,7 +12,8 @@ import {
   AiOutlineSetting,
   AiOutlineFormatPainter,
   AiOutlineTool,
-  AiOutlineAppstore
+  AiOutlineAppstore,
+  AiTwotoneThunderbolt
 } from 'react-icons/ai';
 import './index.global.css';
 import './sidebar.global.css';
@@ -58,6 +59,13 @@ export default function Sidebar(props: IProps) {
               active={page === PreferencePage.Workflow}
             >
               Workflows
+            </MenuItem>
+            <MenuItem
+              onClick={() => setPage(PreferencePage.Plugin)}
+              icon={<AiTwotoneThunderbolt />}
+              active={page === PreferencePage.Plugin}
+            >
+              Plugins
             </MenuItem>
             <MenuItem
               onClick={() => setPage(PreferencePage.Theme)}

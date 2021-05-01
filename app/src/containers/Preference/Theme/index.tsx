@@ -26,20 +26,20 @@ import {
 
 const mockItems = [
   {
-    title: 'selected item',
-    subtitle: 'subtitle'
+    title: 'Selected Item',
+    subtitle: 'Subtitle'
   },
   {
-    title: 'normal item',
-    subtitle: 'subtitle'
+    title: 'Normal Item',
+    subtitle: 'Subtitle'
   },
   {
-    title: 'normal item',
-    subtitle: 'subtitle'
+    title: 'Normal Item',
+    subtitle: 'Subtitle'
   },
   {
-    title: 'normal item',
-    subtitle: 'subtitle'
+    title: 'Normal Item',
+    subtitle: 'Subtitle'
   }
 ];
 
@@ -100,7 +100,6 @@ export default function Theme() {
       >
         <PreviewMainContainer
           style={{
-            borderRadius: 10,
             backgroundColor: item_background_color,
             width: search_window_width,
             height:

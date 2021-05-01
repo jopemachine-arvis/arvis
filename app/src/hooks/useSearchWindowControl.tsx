@@ -26,6 +26,7 @@ const useSearchWindowControl = ({
   workManager: Core.WorkManager;
 }) => {
   const { keyData, getTargetProps, resetKeyData } = useKey();
+  const { originalRef } = getTargetProps();
 
   const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
 
@@ -123,7 +124,9 @@ const useSearchWindowControl = ({
         .catch((err: any) => {
           console.error('Error occured in commandExecute!', err);
         });
-      clearInput();
+
+      // Fix me!! - clearInput should be called here
+      // clearInput();
     }
 
     // May or may not be needed.. case by case
@@ -250,16 +253,18 @@ const useSearchWindowControl = ({
       searchCommands();
     }
     // Execute Script filter
-    else if (workManager.getTopCommand().type === 'scriptfilter') {
+    else if (workManager.getTopWork().type === 'scriptfilter') {
       // Execute current command's script filter
-      if (assumedCommand === workManager.getTopCommand().input) {
+
+      console.log('input', workManager.getTopWork().input);
+      if (assumedCommand === workManager.getTopWork().input) {
         Core.scriptFilterExcute(workManager, updatedInput).catch(
           handleWorkflowError
         );
       }
-      // Clear stack and search commands
+      // If the command changes, clear stack and search commands
       else {
-        workManager.clearCommandStack();
+        workManager.clearWorkStack();
         searchCommands();
       }
     }
@@ -304,7 +309,7 @@ const useSearchWindowControl = ({
     setItems([]);
     clearInput();
     clearIndexInfo();
-    workManager.clearCommandStack();
+    workManager.clearWorkStack();
     setShouldBeHided(true);
   };
 
@@ -355,6 +360,14 @@ const useSearchWindowControl = ({
     setShouldBeHided(true);
   };
 
+  const onInputShouldBeUpdate = (str: string) => {
+    // Set input directly
+    setInputStr(str);
+    if (originalRef && originalRef.current) {
+      originalRef.current!.value = str;
+    }
+  };
+
   useEffect(() => {
     ipcRenderer.on('hide-search-window-by-blur-event', () => {
       cleanUpBeforeHide();
@@ -388,6 +401,7 @@ const useSearchWindowControl = ({
     onItemPressHandler,
     onItemShouldBeUpdate,
     onWorkEndHandler,
+    onInputShouldBeUpdate,
     getInputProps: getTargetProps
   };
 };

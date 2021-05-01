@@ -8,6 +8,7 @@ import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
 import WorkflowPage from './Workflow';
 import ThemePage from './Theme';
+import PluginPage from './Plugin';
 import AdvancedPage from './Advanced';
 import { StateType } from '../../redux/reducers/types';
 
@@ -63,6 +64,9 @@ export default function PreferenceWindow() {
       break;
     case PreferencePage.Theme:
       main = <ThemePage />;
+      break;
+    case PreferencePage.Plugin:
+      main = <PluginPage />;
       break;
     default:
       throw new Error(`Error, page is not valid value, page: ${page}`);

@@ -21,6 +21,7 @@ export const PreviewContainer = styled.div`
 `;
 
 export const PreviewMainContainer = styled.div`
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
