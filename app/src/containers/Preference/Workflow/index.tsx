@@ -34,9 +34,9 @@ import {
   WorkflowListView,
   WorkflowListViewFooter
 } from './components';
-
 import { StyledInput, Spinner } from '../../../components';
-
+import { ScreenCoverContext } from '../screenCoverContext';
+import './index.global.css';
 import {
   bottomFixedBarIconStyle,
   checkboxStyle,
@@ -46,10 +46,6 @@ import {
   iconStyle,
   labelStyle
 } from './style';
-
-import { ScreenCoverContext } from '../screenCoverContext';
-
-import './index.global.css';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value

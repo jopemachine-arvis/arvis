@@ -11,6 +11,7 @@ export const OuterContainer = styled.div`
 
 export const InnerContainer = styled.div`
   flex-direction: column;
+  width: 90%;
 `;
 
 export const Title = styled.div`
@@ -23,4 +24,13 @@ export const SubTitle = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+`;
+
+export const IconImg = styled.img``;
+
+export const OffsetText = styled.div`
+  position: absolute;
+  right: 15px;
+  display: flex;
+  align-items: center;
 `;

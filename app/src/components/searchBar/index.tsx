@@ -63,8 +63,7 @@ const searchBar = (props: IProps) => {
           backgroundColor: itemBackgroundColor,
           color: searchbarFontColor,
           fontSize: searchbarFontSize,
-          paddingLeft: itemLeftPadding,
-          borderRadius: 10
+          paddingLeft: itemLeftPadding
         }}
         ref={inputRef}
         type={type}

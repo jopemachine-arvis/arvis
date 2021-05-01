@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
-import styled from 'styled-components';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
-
 import useKey from '../../../use-key-capture/src';
-
-import { InnerContainer, OuterContainer, SubTitle, Title } from './components';
+import {
+  InnerContainer,
+  OuterContainer,
+  SubTitle,
+  Title,
+  IconImg,
+  OffsetText
+} from './components';
 
 const clipboardy = require('clipboardy');
 
@@ -21,7 +25,6 @@ type IProps = {
   valid?: boolean;
   onMouseoverHandler: Function;
   onDoubleClickHandler: Function;
-
   itemBackgroundColor: string;
   itemFontColor: string;
   itemHeight: number;
@@ -32,12 +35,12 @@ type IProps = {
   selectedItemFontColor: string;
   subtitleFontSize: number;
   titleFontSize: number;
+  offset: number;
 };
-
-const IconImg = styled.img``;
 
 const searchResultItem = (props: IProps) => {
   const {
+    offset,
     selected,
     title,
     subtitle,
@@ -97,6 +100,12 @@ const searchResultItem = (props: IProps) => {
     iconElem = <BsApp style={iconStyle} />;
   }
 
+  const getOffsetText = () => {
+    return process.platform === 'darwin'
+      ? `⌘${offset + 1}`
+      : `ctrl${offset + 1}`;
+  };
+
   return (
     <OuterContainer
       style={{
@@ -111,6 +120,14 @@ const searchResultItem = (props: IProps) => {
       onDoubleClick={() => onDoubleClickHandler()}
     >
       {iconElem}
+      <OffsetText
+        style={{
+          fontSize: titleFontSize,
+          color: selected ? selectedItemFontColor : itemFontColor
+        }}
+      >
+        {getOffsetText()}
+      </OffsetText>
       <InnerContainer
         style={{
           paddingLeft: iconSize + iconRightMargin

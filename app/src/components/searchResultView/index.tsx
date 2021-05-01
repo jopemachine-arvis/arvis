@@ -110,6 +110,7 @@ const searchResultView = (props: IProps) => {
         return (
           <InnerContainer key={`item-${offset}`}>
             <SearchResultItem
+              offset={offset}
               selected={itemIdx === selectedItemIdx}
               title={command.title ? command.title : command.command}
               subtitle={command.subtitle}

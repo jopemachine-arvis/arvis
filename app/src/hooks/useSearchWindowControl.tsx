@@ -8,6 +8,7 @@ import _ from 'lodash';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import useKey from '../../use-key-capture/src';
 import { extractJson, checkObjectsAllValue } from '../utils';
+import { BsFillAspectRatioFill } from 'react-icons/bs';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -99,24 +100,27 @@ const useSearchWindowControl = ({
     setErrorItem(err, errorItems);
   };
 
-  const handleReturn = async (modifiers: any) => {
-    const selectedItem = items[indexInfo.selectedItemIdx];
+  const handleReturn = async ({
+    selectedItemIdx,
+    modifiers
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    const selectedItem = items[selectedItemIdx];
     if (selectedItem.type === 'scriptfilter') {
       setInputStr(selectedItem.command);
-
-      const { running_subtext: runningSubText } = items[
-        indexInfo.selectedItemIdx
-      ];
+      const { running_subtext: runningSubText } = items[selectedItemIdx];
 
       setRunningText({
         itemArr: items,
-        index: indexInfo.selectedItemIdx,
+        index: selectedItemIdx,
         runningSubText
       });
 
       Core.scriptFilterExcute(
         selectedItem.command,
-        items[indexInfo.selectedItemIdx]
+        items[selectedItemIdx]
       ).catch(handleWorkflowError);
     } else {
       await workManager
@@ -299,9 +303,13 @@ const useSearchWindowControl = ({
 
   const onDoubleClickHandler = (index: number) => {
     handleReturn({
-      cmd: false,
-      ctrl: false,
-      shift: false
+      selectedItemIdx: indexInfo.selectedItemIdx,
+      modifiers: {
+        cmd: keyData.isWithMeta,
+        ctrl: keyData.isWithCtrl,
+        shift: keyData.isWithShift,
+        alt: keyData.isWithAlt
+      }
     });
   };
 
@@ -311,6 +319,22 @@ const useSearchWindowControl = ({
     clearIndexInfo();
     workManager.clearWorkStack();
     setShouldBeHided(true);
+  };
+
+  const onHandleReturnByNumberKey = async (selectedItemIdx: number) => {
+    if (selectedItemIdx === 0 || selectedItemIdx >= items.length) {
+      return;
+    }
+
+    await handleReturn({
+      selectedItemIdx: selectedItemIdx - 1,
+      modifiers: {
+        cmd: false,
+        ctrl: false,
+        shift: false,
+        alt: false
+      }
+    });
   };
 
   const onKeydown = async () => {
@@ -325,12 +349,20 @@ const useSearchWindowControl = ({
       alt: keyData.isWithAlt
     };
 
+    if (keyData.isNumber && (modifiers.cmd || modifiers.ctrl)) {
+      await onHandleReturnByNumberKey(Number(input));
+      return;
+    }
+
     if (keyData.isBackspace) {
       updatedInput = inputStr.substr(0, inputStr.length - 1);
       setInputStr(updatedInput);
       handleNormalInput(input, updatedInput, modifiers);
     } else if (keyData.isEnter) {
-      await handleReturn(modifiers);
+      await handleReturn({
+        selectedItemIdx: indexInfo.selectedItemIdx,
+        modifiers
+      });
     } else if (keyData.isArrowDown) {
       handleDownArrow();
     } else if (keyData.isArrowUp) {
