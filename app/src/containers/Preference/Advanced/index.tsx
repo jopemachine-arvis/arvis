@@ -68,6 +68,12 @@ export default function Advanced() {
             Debugging workstack
           </Label>
         </FormGroup>
+        <FormGroup check style={formGroupStyle}>
+          <Label checked style={labelStyle}>
+            <Input type="number" onChange={() => {}} />
+            Workflow script executing timeout
+          </Label>
+        </FormGroup>
       </Form>
     </OuterContainer>
   );

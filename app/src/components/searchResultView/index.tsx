@@ -108,7 +108,7 @@ const searchResultView = (props: IProps) => {
         const iconPath = await determineIconPath(command);
 
         return (
-          <InnerContainer key={`item-${offset}`}>
+          <InnerContainer key={`searchResultViewItem-${offset}`}>
             <SearchResultItem
               offset={offset}
               selected={itemIdx === selectedItemIdx}

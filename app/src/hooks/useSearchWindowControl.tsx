@@ -4,11 +4,9 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
-import _ from 'lodash';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import useKey from '../../use-key-capture/src';
-import { extractJson, checkObjectsAllValue } from '../utils';
-import { BsFillAspectRatioFill } from 'react-icons/bs';
+import { checkObjectsAllValue } from '../utils';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -49,57 +47,6 @@ const useSearchWindowControl = ({
     });
   };
 
-  const setRunningText = ({
-    itemArr,
-    index,
-    runningSubText
-  }: {
-    itemArr: any[];
-    index: number;
-    runningSubText: string;
-  }) => {
-    const swap = itemArr;
-    swap[index] = {
-      ...itemArr[index],
-      subtitle: runningSubText
-    };
-    setItems(swap);
-  };
-
-  const setErrorItem = (err: any, errorItems: any[]) => {
-    if (errorItems.length !== 0) {
-      setItems(errorItems);
-    } else {
-      setItems([
-        {
-          valid: false,
-          title: err.name,
-          subtitle: err.message,
-          text: {
-            copy: err.message,
-            largetype: err.message
-          }
-        }
-      ]);
-    }
-  };
-
-  const handleWorkflowError = (err: any) => {
-    const possibleJsons = extractJson(err.toString());
-    const errors = possibleJsons.filter(item => item.items);
-
-    const errorItems = _.reduce(
-      errors,
-      (ret: any, errorObj: any) => {
-        ret.push(errorObj.items[0]);
-        return ret;
-      },
-      []
-    );
-
-    setErrorItem(err, errorItems);
-  };
-
   const handleReturn = async ({
     selectedItemIdx,
     modifiers
@@ -112,16 +59,13 @@ const useSearchWindowControl = ({
       setInputStr(selectedItem.command);
       const { running_subtext: runningSubText } = items[selectedItemIdx];
 
-      setRunningText({
+      workManager.setRunningText({
         itemArr: items,
         index: selectedItemIdx,
         runningSubText
       });
 
-      Core.scriptFilterExcute(
-        selectedItem.command,
-        items[selectedItemIdx]
-      ).catch(handleWorkflowError);
+      Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
     } else {
       await workManager
         .commandExcute(selectedItem, inputStr, modifiers)
@@ -214,7 +158,7 @@ const useSearchWindowControl = ({
         commandOnStackIsEmpty = firstItem;
 
         const { running_subtext: runningSubText } = firstItem;
-        setRunningText({
+        workManager.setRunningText({
           itemArr,
           index: 0,
           runningSubText
@@ -224,7 +168,7 @@ const useSearchWindowControl = ({
           workManager,
           updatedInput,
           commandOnStackIsEmpty
-        ).catch(handleWorkflowError);
+        );
       }
     }
   };
@@ -262,9 +206,7 @@ const useSearchWindowControl = ({
 
       console.log('input', workManager.getTopWork().input);
       if (assumedCommand === workManager.getTopWork().input) {
-        Core.scriptFilterExcute(workManager, updatedInput).catch(
-          handleWorkflowError
-        );
+        Core.scriptFilterExcute(workManager, updatedInput);
       }
       // If the command changes, clear stack and search commands
       else {

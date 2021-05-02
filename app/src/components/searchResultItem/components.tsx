@@ -29,8 +29,7 @@ export const SubTitle = styled.div`
 export const IconImg = styled.img``;
 
 export const OffsetText = styled.div`
-  position: absolute;
-  right: 15px;
   display: flex;
   align-items: center;
+  margin-right: 15px;
 `;

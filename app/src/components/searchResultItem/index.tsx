@@ -86,8 +86,7 @@ const searchResultItem = (props: IProps) => {
     return {
       width: iconSize,
       height: iconSize,
-      marginRight: iconRightMargin,
-      position: 'absolute'
+      marginRight: iconRightMargin
     };
   }, [iconRightMargin]);
 
@@ -103,7 +102,7 @@ const searchResultItem = (props: IProps) => {
   const getOffsetText = () => {
     return process.platform === 'darwin'
       ? `⌘${offset + 1}`
-      : `ctrl${offset + 1}`;
+      : `Ctrl ${offset + 1}`;
   };
 
   return (
@@ -120,17 +119,9 @@ const searchResultItem = (props: IProps) => {
       onDoubleClick={() => onDoubleClickHandler()}
     >
       {iconElem}
-      <OffsetText
-        style={{
-          fontSize: titleFontSize,
-          color: selected ? selectedItemFontColor : itemFontColor
-        }}
-      >
-        {getOffsetText()}
-      </OffsetText>
       <InnerContainer
         style={{
-          paddingLeft: iconSize + iconRightMargin
+          paddingLeft: iconRightMargin
         }}
       >
         <Title
@@ -151,6 +142,14 @@ const searchResultItem = (props: IProps) => {
           {subtitle}
         </SubTitle>
       </InnerContainer>
+      <OffsetText
+        style={{
+          fontSize: titleFontSize,
+          color: selected ? selectedItemFontColor : itemFontColor
+        }}
+      >
+        {getOffsetText()}
+      </OffsetText>
     </OuterContainer>
   );
 };
