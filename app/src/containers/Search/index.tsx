@@ -1,12 +1,13 @@
 /* eslint-disable promise/always-return */
 import React, { useEffect, useMemo, useState } from 'react';
 import { Core } from 'wf-creator-core';
-import { useSelector } from 'react-redux';
-import { ipcRenderer } from 'electron';
+import { useDispatch, useSelector } from 'react-redux';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { SearchBar, SearchResultView } from '../../components';
 import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
 import { OuterContainer } from './components';
+import { makeActionCreator } from '../../utils';
 
 export default function SearchWindow() {
   const {
@@ -48,6 +49,8 @@ export default function SearchWindow() {
     [debugging_action_type, debugging_workflow_output, debugging_workstack]
   );
 
+  const dispatch = useDispatch();
+
   const {
     setInputStr,
     indexInfo,
@@ -75,6 +78,19 @@ export default function SearchWindow() {
     });
   };
 
+  const initilizeSearchWindowIPCHandler = () => {
+    // Used to receive dispatched action from different window
+    ipcRenderer.on(
+      'fetch-action',
+      (
+        evt: IpcRendererEvent,
+        { actionType, args }: { actionType: string; args: any }
+      ) => {
+        dispatch(makeActionCreator(actionType, 'arg')(args));
+      }
+    );
+  };
+
   useEffect(() => {
     workManager.onItemPressHandler = onItemPressHandler;
     workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
@@ -82,6 +98,7 @@ export default function SearchWindow() {
     workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
 
     initializeCustomActions();
+    initilizeSearchWindowIPCHandler();
   }, []);
 
   return (

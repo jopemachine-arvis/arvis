@@ -34,11 +34,13 @@ const useSearchWindowControl = ({
     selectedItemIdx: 0
   });
 
-  const inputStr = inputRef.current ? (inputRef.current as any).value : '';
+  const inputStr = inputRef.current
+    ? (inputRef.current! as HTMLInputElement).value
+    : '';
 
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {
-      (inputRef.current! as any).value = str;
+      (inputRef.current! as HTMLInputElement).value = str;
     }
   };
 
@@ -288,7 +290,7 @@ const useSearchWindowControl = ({
     ];
 
     if (!exceptionKeys.includes(e.key)) {
-      handleNormalInput(e.key, (inputRef.current! as any).value);
+      handleNormalInput(e.key, (inputRef.current! as HTMLInputElement).value);
     }
   };
 
@@ -344,7 +346,7 @@ const useSearchWindowControl = ({
     });
 
     if (inputRef.current) {
-      (inputRef.current! as any).onkeyup = onKeyupHandler;
+      (inputRef.current! as HTMLInputElement).onkeyup = onKeyupHandler;
     }
   }, []);
 

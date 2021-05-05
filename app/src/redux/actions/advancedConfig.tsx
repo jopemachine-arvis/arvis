@@ -9,15 +9,15 @@ export const actionTypes = {
 
 export const setDebuggingActionType = makeActionCreator(
   actionTypes.SET_DEBUGGING_ACTION_TYPE,
-  'bool'
+  'arg'
 );
 
 export const setDebuggingWorkflowOutput = makeActionCreator(
   actionTypes.SET_DEBUGGING_WORKFLOW_OUTPUT,
-  'bool'
+  'arg'
 );
 
 export const setDebuggingWorkstack = makeActionCreator(
   actionTypes.SET_DEBUGGING_WORKSTACK,
-  'bool'
+  'arg'
 );

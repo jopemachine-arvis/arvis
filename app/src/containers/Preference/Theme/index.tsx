@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
 import { IoMdColorPalette } from 'react-icons/io';
+import { ipcRenderer } from 'electron';
 import { StateType } from '../../../redux/reducers/types';
 import './index.global.css';
 
@@ -15,8 +16,8 @@ import {
 } from './components';
 
 import { SearchBar, SearchResultView, StyledInput } from '../../../components';
-import { UIConfigActions } from '../../../redux/actions';
-import { isNumeric, getRandomColor } from '../../../utils';
+import { actionTypes as UIActionTypes } from '../../../redux/actions/uiConfig';
+import { isNumeric, getRandomColor, makeActionCreator } from '../../../utils';
 import {
   descriptionContainerStyle,
   formGroupStyle,
@@ -70,19 +71,18 @@ export default function Theme() {
 
   const configChangeHandler = (
     e: React.FormEvent<HTMLInputElement>,
-    action: Function
+    actionType: string
   ) => {
     const target: string | number = isNumeric(e.currentTarget.value)
       ? Number(e.currentTarget.value)
       : e.currentTarget.value;
 
-    // Fix me!!
-    // When dispatched from a preference window, action is not dispatched to a search window.
-    // So, therefore, it should be dispatched to all windows via ipc.
-    dispatch(action(target));
-
-    // Example:
-    // ipcRenderer.send('theme-changed', { actionNameToDispatch: 'some_color', arg: '#000000' });
+    dispatch(makeActionCreator(actionType, 'arg')(target));
+    ipcRenderer.send('dispatch-action', {
+      destWindow: 'searchWindow',
+      actionType,
+      args: target
+    });
   };
 
   const changeBackgroundColor = () => {
@@ -153,7 +153,7 @@ export default function Theme() {
               type="number"
               value={search_window_width}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setSearchWindowWidth)
+                configChangeHandler(e, UIActionTypes.SET_SEARCH_WINDOW_WIDTH)
               }
             />
           </FormGroup>
@@ -166,7 +166,7 @@ export default function Theme() {
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
                   e,
-                  UIConfigActions.setSearchWindowFooterHeight
+                  UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
                 )
               }
             />
@@ -178,7 +178,7 @@ export default function Theme() {
               type="number"
               value={item_height}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setItemHeight)
+                configChangeHandler(e, UIActionTypes.SET_ITEM_HEIGHT)
               }
             />
           </FormGroup>
@@ -189,7 +189,7 @@ export default function Theme() {
               type="color"
               value={item_background_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setItemBackgroundColor)
+                configChangeHandler(e, UIActionTypes.SET_ITEM_BACKGROUND_COLOR)
               }
             />
           </FormGroup>
@@ -202,7 +202,7 @@ export default function Theme() {
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
                   e,
-                  UIConfigActions.setSelectedItemBackgroundColor
+                  UIActionTypes.SET_SELECTED_ITEM_BACKGROUND_COLOR
                 )
               }
             />
@@ -214,7 +214,7 @@ export default function Theme() {
               type="number"
               value={title_font_size}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setTitleFontSize)
+                configChangeHandler(e, UIActionTypes.SET_TITLE_FONTSIZE)
               }
             />
           </FormGroup>
@@ -225,7 +225,7 @@ export default function Theme() {
               type="number"
               value={subtitle_font_size}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setSubTitleFontSize)
+                configChangeHandler(e, UIActionTypes.SET_SUBTITLE_FONTSIZE)
               }
             />
           </FormGroup>
@@ -236,7 +236,7 @@ export default function Theme() {
               type="color"
               value={item_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setItemFontColor)
+                configChangeHandler(e, UIActionTypes.SET_ITEM_FONTCOLOR)
               }
             />
           </FormGroup>
@@ -247,7 +247,10 @@ export default function Theme() {
               type="color"
               value={selected_item_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setItemFontColor)
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
+                )
               }
             />
           </FormGroup>
@@ -258,7 +261,7 @@ export default function Theme() {
               type="color"
               value={searchbar_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setSearchBarFontColor)
+                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONTCOLOR)
               }
             />
           </FormGroup>
@@ -269,7 +272,7 @@ export default function Theme() {
               type="number"
               value={item_left_padding}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setItemLeftPadding)
+                configChangeHandler(e, UIActionTypes.SET_ITEM_LEFT_PADDING)
               }
             />
           </FormGroup>
@@ -280,7 +283,7 @@ export default function Theme() {
               type="number"
               value={item_title_subtitle_margin}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setTitleSubTitleMargin)
+                configChangeHandler(e, UIActionTypes.SET_TITLE_SUBTITLE_MARGIN)
               }
             />
           </FormGroup>
@@ -291,7 +294,7 @@ export default function Theme() {
               type="number"
               value={searchbar_height}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setSearchBarHeight)
+                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_HEIGHT)
               }
             />
           </FormGroup>
@@ -302,7 +305,7 @@ export default function Theme() {
               type="number"
               value={icon_right_margin}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setIconRightMargin)
+                configChangeHandler(e, UIActionTypes.SET_ICON_RIGHT_MARGIN)
               }
             />
           </FormGroup>
@@ -313,7 +316,7 @@ export default function Theme() {
               type="number"
               value={searchbar_font_size}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIConfigActions.setSearchBarFontSize)
+                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONTSIZE)
               }
             />
           </FormGroup>

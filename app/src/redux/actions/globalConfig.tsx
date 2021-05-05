@@ -17,15 +17,15 @@ export const setHotkey = makeActionCreator(actionTypes.SET_HOT_KEY, 'hotkey');
 
 export const setMaxItemCountToSearch = makeActionCreator(
   actionTypes.SET_MAX_ITEM_COUNT_TO_SEARCH,
-  'number'
+  'arg'
 );
 
 export const setMaxItemCountToShow = makeActionCreator(
   actionTypes.SET_MAX_ITEM_COUNT_TO_SHOW,
-  'number'
+  'arg'
 );
 
 export const setGlobalFont = makeActionCreator(
   actionTypes.SET_GLOBAL_FONT,
-  'font'
+  'arg'
 );

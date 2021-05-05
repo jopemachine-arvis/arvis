@@ -9,17 +9,17 @@ export default (state = {}, action: any) => {
     case AdvancedConfigActionTypes.SET_DEBUGGING_ACTION_TYPE:
       return {
         ...state,
-        debugging_action_type: payload.bool
+        debugging_action_type: payload.arg
       };
     case AdvancedConfigActionTypes.SET_DEBUGGING_WORKFLOW_OUTPUT:
       return {
         ...state,
-        debugging_workflow_output: payload.bool
+        debugging_workflow_output: payload.arg
       };
     case AdvancedConfigActionTypes.SET_DEBUGGING_WORKSTACK:
       return {
         ...state,
-        debugging_workstack: payload.bool
+        debugging_workstack: payload.arg
       };
     default:
       return state;

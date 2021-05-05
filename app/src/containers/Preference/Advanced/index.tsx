@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-curly-newline */
+import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import StyledInput from '../../../components/styledInput';
-import { AdvancedConfigActions } from '../../../redux/actions';
+import { actionTypes as AdvancedActionTypes } from '../../../redux/actions/advancedConfig';
 import { StateType } from '../../../redux/reducers/types';
+import { makeActionCreator } from '../../../utils';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
@@ -17,8 +19,14 @@ export default function Advanced() {
 
   const dispatch = useDispatch();
 
-  const toggleState = (action: Function, bool: boolean) => {
-    dispatch(action(!bool));
+  const toggleState = (actionType: string, bool: boolean) => {
+    dispatch(makeActionCreator(actionType, 'arg')(!bool));
+
+    ipcRenderer.send('dispatch-action', {
+      destWindow: 'searchWindow',
+      actionType,
+      args: bool
+    });
   };
 
   return (
@@ -31,7 +39,7 @@ export default function Advanced() {
               checked={debugging_action_type}
               onChange={() =>
                 toggleState(
-                  AdvancedConfigActions.setDebuggingActionType,
+                  AdvancedActionTypes.SET_DEBUGGING_ACTION_TYPE,
                   debugging_action_type
                 )
               }
@@ -46,7 +54,7 @@ export default function Advanced() {
               checked={debugging_workflow_output}
               onChange={() =>
                 toggleState(
-                  AdvancedConfigActions.setDebuggingWorkflowOutput,
+                  AdvancedActionTypes.SET_DEBUGGING_WORKFLOW_OUTPUT,
                   debugging_workflow_output
                 )
               }
@@ -61,7 +69,7 @@ export default function Advanced() {
               checked={debugging_workstack}
               onChange={() =>
                 toggleState(
-                  AdvancedConfigActions.setDebuggingWorkstack,
+                  AdvancedActionTypes.SET_DEBUGGING_WORKSTACK,
                   debugging_workstack
                 )
               }
