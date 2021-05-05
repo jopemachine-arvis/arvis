@@ -23,7 +23,7 @@ const searchBar = (props: IProps) => {
     itemLeftPadding,
     searchbarFontColor,
     searchbarFontSize,
-    searchbarHeight,
+    searchbarHeight
   } = props;
 
   const { ref: inputRef, type, originalRef } = getInputProps
@@ -58,7 +58,7 @@ const searchBar = (props: IProps) => {
       }}
     >
       <Input
-        className={'searchBar'}
+        className="searchBar"
         style={{
           backgroundColor: itemBackgroundColor,
           color: searchbarFontColor,

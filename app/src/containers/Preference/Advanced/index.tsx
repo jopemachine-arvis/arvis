@@ -2,6 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
+import StyledInput from '../../../components/styledInput';
 import { AdvancedConfigActions } from '../../../redux/actions';
 import { StateType } from '../../../redux/reducers/types';
 import { OuterContainer } from './components';
@@ -68,11 +69,10 @@ export default function Advanced() {
             Debugging workstack
           </Label>
         </FormGroup>
-        <FormGroup check style={formGroupStyle}>
-          <Label checked style={labelStyle}>
-            <Input type="number" onChange={() => {}} />
-            Workflow script executing timeout
-          </Label>
+
+        <FormGroup style={formGroupStyle}>
+          <Label style={labelStyle}>Workflow script executing timeout</Label>
+          <StyledInput type="number" onChange={() => {}} />
         </FormGroup>
       </Form>
     </OuterContainer>

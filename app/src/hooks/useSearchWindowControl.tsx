@@ -6,7 +6,6 @@ import { Core } from 'wf-creator-core';
 import { ipcRenderer } from 'electron';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import useKey from '../../use-key-capture/src';
-import { checkObjectsAllValue } from '../utils';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -25,18 +24,24 @@ const useSearchWindowControl = ({
   workManager: Core.WorkManager;
 }) => {
   const { keyData, getTargetProps, resetKeyData } = useKey();
-  const { originalRef } = getTargetProps();
+  const { originalRef: inputRef } = getTargetProps();
 
   const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
 
-  const [inputStr, setInputStr] = useState<string>('');
   const [indexInfo, setIndexInfo] = useState<IndexInfo>({
     itemStartIdx: 0,
     selectedItemIdx: 0
   });
 
+  const inputStr = inputRef.current ? (inputRef.current as any).value : '';
+
+  const setInputStr = (str: string) => {
+    if (inputRef && inputRef.current) {
+      (inputRef.current! as any).value = str;
+    }
+  };
+
   const clearInput = () => {
-    setInputStr('');
     resetKeyData();
   };
 
@@ -129,11 +134,11 @@ const useSearchWindowControl = ({
 
   const handleScriptFilterAutoExecute = ({
     itemArr,
-    input,
+    pressedKey,
     updatedInput
   }: {
     itemArr: any[];
-    input: string;
+    pressedKey: string;
     updatedInput: string;
   }) => {
     let commandOnStackIsEmpty;
@@ -147,7 +152,7 @@ const useSearchWindowControl = ({
       const goScriptFilterWithSpace =
         firstItem.withspace === true &&
         updatedInput.includes(firstItem.command) &&
-        input !== ' ';
+        pressedKey !== ' ';
 
       const goScriptFilterWithoutSpace =
         firstItem.withspace === false &&
@@ -173,12 +178,7 @@ const useSearchWindowControl = ({
     }
   };
 
-  const handleNormalInput = (
-    input: string,
-    updatedInput: string,
-    modifiers: any
-  ) => {
-    setInputStr(updatedInput);
+  const handleNormalInput = (pressedKey: string, updatedInput: string) => {
     const assumedCommand = updatedInput.split(' ')[0];
 
     const searchCommands = () => {
@@ -187,7 +187,7 @@ const useSearchWindowControl = ({
           setItems(result);
           handleScriptFilterAutoExecute({
             itemArr: result,
-            input,
+            pressedKey,
             updatedInput
           });
         })
@@ -204,7 +204,6 @@ const useSearchWindowControl = ({
     else if (workManager.getTopWork().type === 'scriptfilter') {
       // Execute current command's script filter
 
-      console.log('input', workManager.getTopWork().input);
       if (assumedCommand === workManager.getTopWork().input) {
         Core.scriptFilterExcute(workManager, updatedInput);
       }
@@ -279,9 +278,28 @@ const useSearchWindowControl = ({
     });
   };
 
-  const onKeydown = async () => {
+  const onKeyupHandler = (e: KeyboardEvent) => {
+    const exceptionKeys = [
+      'ArrowUp',
+      'ArrowDown',
+      'ArrowLeft',
+      'ArrowRight',
+      'Control',
+      'Meta',
+      'Alt',
+      'Shift',
+      'CapsLock',
+      'Tab',
+      'Esc'
+    ];
+
+    if (!exceptionKeys.includes(e.key)) {
+      handleNormalInput(e.key, (inputRef.current! as any).value);
+    }
+  };
+
+  const onKeydownHandler = async () => {
     const input = keyData.key;
-    let updatedInput = inputStr + input;
 
     const modifiers = {
       // On mac, cmd key is handled by meta;
@@ -296,11 +314,7 @@ const useSearchWindowControl = ({
       return;
     }
 
-    if (keyData.isBackspace) {
-      updatedInput = inputStr.substr(0, inputStr.length - 1);
-      setInputStr(updatedInput);
-      handleNormalInput(input, updatedInput, modifiers);
-    } else if (keyData.isEnter) {
+    if (keyData.isEnter) {
       await handleReturn({
         selectedItemIdx: indexInfo.selectedItemIdx,
         modifiers
@@ -313,11 +327,6 @@ const useSearchWindowControl = ({
       cleanUpBeforeHide();
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
-    } else if (
-      checkObjectsAllValue(modifiers)(false) &&
-      !keyData.isSpecialCharacter
-    ) {
-      handleNormalInput(input, updatedInput, modifiers);
     }
   };
 
@@ -335,23 +344,24 @@ const useSearchWindowControl = ({
   };
 
   const onInputShouldBeUpdate = (str: string) => {
-    // Set input directly
     setInputStr(str);
-    if (originalRef && originalRef.current) {
-      originalRef.current!.value = str;
-    }
   };
 
   useEffect(() => {
     ipcRenderer.on('hide-search-window-by-blur-event', () => {
       cleanUpBeforeHide();
     });
+
+    if (inputRef.current) {
+      (inputRef.current! as any).onkeyup = onKeyupHandler;
+    }
   }, []);
 
   useEffect(() => {
     // Ignore Initial Mount
+
     if (keyData.key === null) return;
-    onKeydown();
+    onKeydownHandler();
   }, [keyData]);
 
   useEffect(() => {
@@ -366,7 +376,6 @@ const useSearchWindowControl = ({
   }, [shouldBeHided, items]);
 
   return {
-    inputStr,
     setInputStr,
     indexInfo,
     onWheelHandler,
