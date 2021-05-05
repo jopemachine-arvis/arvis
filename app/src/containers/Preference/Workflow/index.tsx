@@ -7,16 +7,13 @@ import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
-
 import {
   AiOutlineAppstoreAdd,
   AiOutlineDelete,
   AiOutlineFileAdd,
   AiOutlineBranches
 } from 'react-icons/ai';
-
 import { CgSmileNone } from 'react-icons/cg';
-
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
@@ -120,7 +117,10 @@ export default function Workflow() {
     return undefined;
   };
 
-  const workflowItemRightClickHandler = (e: any, bundleId: string) => {
+  const workflowItemRightClickHandler = (
+    e: React.MouseEvent<HTMLInputElement>,
+    bundleId: string
+  ) => {
     e.preventDefault();
     const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${bundleId}`;
     ipcRenderer.send('popup-workflowItem-menu', { path: workflowRootPath });
@@ -155,7 +155,7 @@ export default function Workflow() {
         style={optionalStyle}
         key={`workflowItem-${idx}`}
         onClick={() => itemClickHandler(idx)}
-        onContextMenu={(e: any) =>
+        onContextMenu={(e: React.MouseEvent<HTMLInputElement>) =>
           workflowItemRightClickHandler(e, itemBundleId)
         }
       >
@@ -170,17 +170,20 @@ export default function Workflow() {
     ipcRenderer.send('open-wfconf-file-dialog');
     setSpinning(true);
 
-    ipcRenderer.on('open-wfconf-file-dialog-ret', (evt: any, fileInfo: any) => {
-      if (fileInfo.file.filePaths[0]) {
-        const wfConfigFilePath = fileInfo.file.filePaths[0];
+    ipcRenderer.on(
+      'open-wfconf-file-dialog-ret',
+      (evt: Electron.IpcRendererEvent, fileInfo: any) => {
+        if (fileInfo.file.filePaths[0]) {
+          const wfConfigFilePath = fileInfo.file.filePaths[0];
 
-        Core.install(StoreType.Electron, wfConfigFilePath).then(() => {
-          fetchWorkflows();
-        });
-      } else {
-        setSpinning(false);
+          Core.install(StoreType.Electron, wfConfigFilePath).then(() => {
+            fetchWorkflows();
+          });
+        } else {
+          setSpinning(false);
+        }
       }
-    });
+    );
   };
 
   const addNewWorkflow = () => {

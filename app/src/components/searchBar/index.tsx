@@ -34,13 +34,13 @@ const searchBar = (props: IProps) => {
         type: ''
       };
 
-  const preventUpAndDownArrow = (e: any) => {
+  const preventUpAndDownArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
     }
   };
 
-  const preventBlur = (e: any) => {
+  const preventBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     e.preventDefault();
     originalRef && originalRef.current && originalRef.current.focus();
   };

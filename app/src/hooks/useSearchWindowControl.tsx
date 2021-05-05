@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable promise/always-return */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-lonely-if */
@@ -23,7 +24,7 @@ const useSearchWindowControl = ({
   maxItemCount: number;
   workManager: Core.WorkManager;
 }) => {
-  const { keyData, getTargetProps, resetKeyData } = useKey();
+  const { keyData, getTargetProps, resetKeyData: clearInput } = useKey();
   const { originalRef: inputRef } = getTargetProps();
 
   const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
@@ -39,10 +40,6 @@ const useSearchWindowControl = ({
     if (inputRef && inputRef.current) {
       (inputRef.current! as any).value = str;
     }
-  };
-
-  const clearInput = () => {
-    resetKeyData();
   };
 
   const clearIndexInfo = () => {
@@ -179,10 +176,8 @@ const useSearchWindowControl = ({
   };
 
   const handleNormalInput = (pressedKey: string, updatedInput: string) => {
-    const assumedCommand = updatedInput.split(' ')[0];
-
     const searchCommands = () => {
-      Core.findCommands(StoreType.Electron, assumedCommand)
+      Core.findCommands(StoreType.Electron, updatedInput)
         .then((result: any) => {
           setItems(result);
           handleScriptFilterAutoExecute({
@@ -203,8 +198,7 @@ const useSearchWindowControl = ({
     // Execute Script filter
     else if (workManager.getTopWork().type === 'scriptfilter') {
       // Execute current command's script filter
-
-      if (assumedCommand === workManager.getTopWork().input) {
+      if (updatedInput.startsWith(workManager.getTopWork().input)) {
         Core.scriptFilterExcute(workManager, updatedInput);
       }
       // If the command changes, clear stack and search commands
@@ -217,7 +211,7 @@ const useSearchWindowControl = ({
     clearIndexInfo();
   };
 
-  const onWheelHandler = (e: any) => {
+  const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
     if (e.deltaY > 0) {
       if (indexInfo.itemStartIdx + maxItemCount < items.length) {
         setIndexInfo({
@@ -311,10 +305,7 @@ const useSearchWindowControl = ({
 
     if (keyData.isNumber && (modifiers.cmd || modifiers.ctrl)) {
       await onHandleReturnByNumberKey(Number(input));
-      return;
-    }
-
-    if (keyData.isEnter) {
+    } else if (keyData.isEnter) {
       await handleReturn({
         selectedItemIdx: indexInfo.selectedItemIdx,
         modifiers
@@ -359,8 +350,8 @@ const useSearchWindowControl = ({
 
   useEffect(() => {
     // Ignore Initial Mount
-
     if (keyData.key === null) return;
+
     onKeydownHandler();
   }, [keyData]);
 

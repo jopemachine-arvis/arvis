@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/always-return */
@@ -107,7 +108,7 @@ export default function General() {
           result += normalKey;
         }
       } else {
-        // remove ' + '
+        // remove last ' + '
         result = result.substring(0, result.length - 3);
       }
 
@@ -145,7 +146,9 @@ export default function General() {
             value={hotkey}
             onFocus={() => setHotkeyFormFocused(true)}
             onBlur={() => setHotkeyFormFocused(false)}
-            onChange={(e: any) => e.preventDefault()}
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              e.preventDefault()
+            }
           />
         </FormGroup>
 
@@ -156,8 +159,8 @@ export default function General() {
           <StyledInput
             type="select"
             value={maxItemCountToShow}
-            onChange={(e: any) => {
-              setMaxItemCountToShow(Number(e.target.value));
+            onChange={(e: React.FormEvent<HTMLInputElement>) => {
+              setMaxItemCountToShow(Number(e.currentTarget.value));
             }}
           >
             <option>1</option>
@@ -177,8 +180,8 @@ export default function General() {
           <StyledInput
             type="number"
             value={maxItemCountToSearch}
-            onChange={(e: any) => {
-              setMaxItemCountToSearch(Number(e.target.value));
+            onChange={(e: React.FormEvent<HTMLInputElement>) => {
+              setMaxItemCountToSearch(Number(e.currentTarget.value));
             }}
           />
         </FormGroup>

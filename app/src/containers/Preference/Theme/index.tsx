@@ -68,10 +68,13 @@ export default function Theme() {
     '#000000'
   );
 
-  const configChangeHandler = (e: any, action: any) => {
-    const target: string | number = isNumeric(e.target.value)
-      ? Number(e.target.value)
-      : e.target.value;
+  const configChangeHandler = (
+    e: React.FormEvent<HTMLInputElement>,
+    action: Function
+  ) => {
+    const target: string | number = isNumeric(e.currentTarget.value)
+      ? Number(e.currentTarget.value)
+      : e.currentTarget.value;
 
     // Fix me!!
     // When dispatched from a preference window, action is not dispatched to a search window.
@@ -149,7 +152,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={search_window_width}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setSearchWindowWidth)
               }
             />
@@ -160,7 +163,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={search_window_footer_height}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
                   e,
                   UIConfigActions.setSearchWindowFooterHeight
@@ -174,7 +177,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={item_height}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setItemHeight)
               }
             />
@@ -185,7 +188,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={item_background_color}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setItemBackgroundColor)
               }
             />
@@ -196,7 +199,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={selected_item_background_color}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
                   e,
                   UIConfigActions.setSelectedItemBackgroundColor
@@ -210,7 +213,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={title_font_size}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setTitleFontSize)
               }
             />
@@ -221,7 +224,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={subtitle_font_size}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setSubTitleFontSize)
               }
             />
@@ -232,7 +235,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={item_font_color}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setItemFontColor)
               }
             />
@@ -243,7 +246,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={selected_item_font_color}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setItemFontColor)
               }
             />
@@ -254,7 +257,7 @@ export default function Theme() {
             <StyledInput
               type="color"
               value={searchbar_font_color}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setSearchBarFontColor)
               }
             />
@@ -265,7 +268,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={item_left_padding}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setItemLeftPadding)
               }
             />
@@ -276,7 +279,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={item_title_subtitle_margin}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setTitleSubTitleMargin)
               }
             />
@@ -287,7 +290,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={searchbar_height}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setSearchBarHeight)
               }
             />
@@ -298,7 +301,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={icon_right_margin}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setIconRightMargin)
               }
             />
@@ -309,7 +312,7 @@ export default function Theme() {
             <StyledInput
               type="number"
               value={searchbar_font_size}
-              onChange={(e: any) =>
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIConfigActions.setSearchBarFontSize)
               }
             />
