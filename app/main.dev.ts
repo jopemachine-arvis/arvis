@@ -16,7 +16,7 @@ import ElectronStore from '../node_modules/wf-creator-core/node_modules/electron
 import { createPreferenceWindow } from './src/windows/preferenceWindow';
 import { createSearchWindow } from './src/windows/searchWindow';
 
-import { initIPCHandler } from './src/helpers/mainProcessEventHandler';
+import { initIPCHandler } from './src/ipc/mainProcessEventHandler';
 
 let preferenceWindow: BrowserWindow | null = null;
 let searchWindow: BrowserWindow | null = null;

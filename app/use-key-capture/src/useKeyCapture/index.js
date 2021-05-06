@@ -12,7 +12,7 @@ import {
   handleRefAssignment
 } from './useKeyCaptureUtils';
 
-const doubleKeyRecognitionInterval = 500;
+const doubleKeyRecognitionInterval = 200;
 
 const doubleKeyRecognizer = ['Meta', 'Control', 'Alt', 'Shift', 'Backspace'];
 

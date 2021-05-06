@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-restricted-syntax */
 import {
   ipcMain,
   dialog,
   BrowserWindow,
-  globalShortcut,
   nativeImage,
   Notification,
   IpcMainEvent
@@ -12,7 +10,8 @@ import {
 
 import { getFonts } from 'font-list';
 import WorkflowItemMenu from '../components/contextMenus/workflow';
-import shortcutCallbackTbl from './shortcutCallbackTable';
+import globalShortcutHandler from './globalShortcutHandler';
+import resizeEventHandler from './resizeEventHandler';
 
 export const initIPCHandler = ({
   searchWindow,
@@ -93,20 +92,14 @@ export const initIPCHandler = ({
         footerHeight: number;
       }
     ) => {
-      let heightToSet;
-
-      if (itemCount === 0) {
-        heightToSet = searchbarHeight;
-      } else if (itemCount >= maxItemCount) {
-        heightToSet =
-          maxItemCount * itemHeight + searchbarHeight + footerHeight;
-      } else {
-        heightToSet = itemCount * itemHeight + searchbarHeight + footerHeight;
-      }
-
-      const [width] = searchWindow.getSize();
-
-      searchWindow.setSize(width, heightToSet);
+      resizeEventHandler({
+        footerHeight,
+        itemCount,
+        itemHeight,
+        maxItemCount,
+        searchWindow,
+        searchbarHeight
+      });
     }
   );
 
@@ -119,15 +112,7 @@ export const initIPCHandler = ({
   ipcMain.on(
     'set-global-shortcut',
     (evt: IpcMainEvent, { callbackTable }: { callbackTable: any }) => {
-      const shortcuts = Object.keys(callbackTable);
-      for (const shortcut of shortcuts) {
-        const action = callbackTable[shortcut];
-
-        globalShortcut.register(
-          shortcut,
-          shortcutCallbackTbl[action]({ preferenceWindow, searchWindow })
-        );
-      }
+      globalShortcutHandler({ callbackTable, preferenceWindow, searchWindow });
     }
   );
 

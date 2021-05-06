@@ -112,7 +112,9 @@ export default function General() {
         result = result.substring(0, result.length - 3);
       }
 
-      setHotkey(result);
+      const doubledStr = keyData.doubleKeyPressed ? 'Double ' : '';
+
+      setHotkey(doubledStr + result);
     }
   }, [keyData]);
 

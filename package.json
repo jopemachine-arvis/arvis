@@ -258,6 +258,7 @@
     "flatlist-react": "^1.5.0",
     "font-list": "^1.2.14",
     "history": "^4.10.1",
+    "iohook": "^0.9.1",
     "jquery": "^3.6.0",
     "open": "^8.0.7",
     "popper.js": "^1.16.1",
@@ -318,5 +319,19 @@
     "hooks": {
       "pre-commit": "echo 'hooks disabled temporarily. Replace me with lint-staged'"
     }
+  },
+  "iohook": {
+    "targets": [
+      "node-72",
+      "electron-75"
+    ],
+    "platforms": [
+      "win32",
+      "darwin"
+    ],
+    "arches": [
+      "x64",
+      "ia32"
+    ]
   }
 }
