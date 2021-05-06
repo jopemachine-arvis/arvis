@@ -1,5 +1,7 @@
-import { useEffect, useReducer, useRef } from 'react';
+/* eslint-disable dot-notation */
+import { useEffect, useReducer, useRef, useState } from 'react';
 import reducer from './useKeyCaptureReducer';
+import { usePreviousKey } from './usePreviousKey';
 
 import {
   initialState,
@@ -10,16 +12,51 @@ import {
   handleRefAssignment
 } from './useKeyCaptureUtils';
 
+const doubleKeyRecognitionInterval = 500;
+
+const doubleKeyRecognizer = ['Meta', 'Control', 'Alt', 'Shift', 'Backspace'];
+
 function useKeys() {
   const [keyData, dispatch] = useReducer(
     useEnhancedReducer(reducer),
     initialState
   );
 
+  const prevKey = usePreviousKey(keyData);
+  const prevKeyRef = useRef(prevKey);
+  prevKeyRef.current = prevKey;
+
+  const [doubleKeyTimerValid, setDoubleKeyTimerValid] = useState(false);
+  const doubleKeyTimerValidRef = useRef(doubleKeyTimerValid);
+  doubleKeyTimerValidRef.current = doubleKeyTimerValid;
+
+  const [doubleKeyRecognitionTimer, setDoubleKeyRecognitionTimer] = useState(
+    null
+  );
+
   const targetItemRef = useRef(null);
 
+  const doubleKeyPressHandler = (event, action) => {
+    // Add double key event
+    const doubleKeyIsPressed = () => {
+      let ret = false;
+      // eslint-disable-next-line no-restricted-syntax
+      for (const key of doubleKeyRecognizer) {
+        if (event.key === ' ' && prevKeyRef.current['isBackspace']) ret = true;
+        if (event.key === key && prevKeyRef.current[`is${key}`]) ret = true;
+      }
+      return ret;
+    };
+
+    if (doubleKeyTimerValidRef.current && doubleKeyIsPressed()) {
+      action.payload.doubleKeyPressed = true;
+    }
+
+    return action;
+  };
+
   const dispatchWithActionDetails = event => {
-    dispatch(getAction(event));
+    dispatch(doubleKeyPressHandler(event, getAction(event)));
   };
 
   /**
@@ -36,10 +73,15 @@ function useKeys() {
   };
 
   useEffect(() => {
-    // example for IS_TRUSTED as false
-    // setTimeout(() => {
-    //   document.dispatchEvent(new KeyboardEvent('keydown'), { key: 'Escape' });
-    // }, 2000);
+    if (keyData.key !== null) {
+      if (doubleKeyRecognitionTimer) clearInterval(doubleKeyRecognitionTimer);
+      setDoubleKeyTimerValid(true);
+      setDoubleKeyRecognitionTimer(
+        setTimeout(() => {
+          setDoubleKeyTimerValid(false);
+        }, doubleKeyRecognitionInterval)
+      );
+    }
   }, [keyData]);
 
   useEffect(() => {

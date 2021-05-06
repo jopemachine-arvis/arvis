@@ -243,14 +243,14 @@ export default function Workflow() {
     });
   };
 
-  const renderEmptyList = () => {
-    return (
-      <EmptyListContainer>
-        <CgSmileNone style={emptyListIconStyle} />
-        <EmptyListDesc>There is no workflow to show.</EmptyListDesc>
-      </EmptyListContainer>
-    );
-  };
+  // const renderEmptyList = () => {
+  //   return (
+  //     <EmptyListContainer>
+  //       <CgSmileNone style={emptyListIconStyle} />
+  //       <EmptyListDesc>There is no workflow to show.</EmptyListDesc>
+  //     </EmptyListContainer>
+  //   );
+  // };
 
   return (
     <OuterContainer>
@@ -267,7 +267,7 @@ export default function Workflow() {
           <FlatList
             list={Object.keys(workflows)}
             renderItem={renderItem}
-            renderWhenEmpty={renderEmptyList}
+            renderWhenEmpty={() => <></>}
           />
         </WorkflowListOrderedList>
         <WorkflowListViewFooter>

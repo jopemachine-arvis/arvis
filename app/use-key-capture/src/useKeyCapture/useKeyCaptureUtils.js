@@ -40,7 +40,9 @@ const initialState = {
   isMeta: false,
 
   // For special character
-  isSpecialCharacter: false
+  isSpecialCharacter: false,
+
+  doubleKeyPressed: false
 };
 
 const useKeyActionTypes = {
