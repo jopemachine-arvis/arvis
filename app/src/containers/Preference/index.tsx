@@ -41,7 +41,7 @@ export default function PreferenceWindow() {
 
   useEffect(() => {
     const globalShortcutCallbackTable = {
-      [hotkey]: 'showSearchWindow'
+      [hotkey]: 'toggleSearchWindow'
     };
 
     ipcRenderer.send('set-global-shortcut', {

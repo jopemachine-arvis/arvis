@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron';
 
 export default {
-  showSearchWindow: ({
+  toggleSearchWindow: ({
     preferenceWindow,
     searchWindow
   }: {
@@ -12,7 +12,11 @@ export default {
       throw new Error('"searchWindow" is not defined');
     }
 
-    searchWindow.show();
-    searchWindow.focus();
+    if (searchWindow.isVisible()) {
+      searchWindow.hide();
+    } else {
+      searchWindow.show();
+      searchWindow.focus();
+    }
   }
 };
