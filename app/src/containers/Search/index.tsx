@@ -1,5 +1,5 @@
 /* eslint-disable promise/always-return */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Core } from 'wf-creator-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -31,23 +31,19 @@ export default function SearchWindow() {
     (state: StateType) => state.globalConfig
   );
 
-  const {
-    debugging_action_type,
-    debugging_workflow_output,
-    debugging_workstack
-  } = useSelector((state: StateType) => state.advancedConfig);
+  const debuggingConfig = useSelector(
+    (state: StateType) => state.advancedConfig
+  );
 
   const [items, setItems] = useState<any>([]);
 
-  const workManager = useMemo(
-    () =>
-      new Core.WorkManager({
-        printActionType: debugging_action_type,
-        printWorkStack: debugging_workstack,
-        printWorkflowOutput: debugging_workflow_output
-      }),
-    [debugging_action_type, debugging_workflow_output, debugging_workstack]
-  );
+  const workManager = Core.WorkManager.getInstance();
+
+  useEffect(() => {
+    workManager.printActionType = debuggingConfig.debugging_action_type;
+    workManager.printWorkStack = debuggingConfig.debugging_workstack;
+    workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
+  }, [debuggingConfig]);
 
   const dispatch = useDispatch();
 
@@ -65,9 +61,15 @@ export default function SearchWindow() {
   } = useSearchWindowControl({
     items,
     setItems,
-    workManager,
     maxItemCount: max_item_count_to_show
   });
+
+  const registerWindowUpdater = () => {
+    workManager.onItemPressHandler = onItemPressHandler;
+    workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
+    workManager.onWorkEndHandler = onWorkEndHandler;
+    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
+  };
 
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
@@ -92,11 +94,7 @@ export default function SearchWindow() {
   };
 
   useEffect(() => {
-    workManager.onItemPressHandler = onItemPressHandler;
-    workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
-    workManager.onWorkEndHandler = onWorkEndHandler;
-    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
-
+    registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
   }, []);

@@ -16,14 +16,14 @@ type IndexInfo = {
 const useSearchWindowControl = ({
   items,
   setItems,
-  maxItemCount,
-  workManager
+  maxItemCount
 }: {
   items: any[];
   setItems: Function;
   maxItemCount: number;
-  workManager: Core.WorkManager;
 }) => {
+  const workManager = Core.WorkManager.getInstance();
+
   const { keyData, getTargetProps, resetKeyData: clearInput } = useKey();
   const { originalRef: inputRef } = getTargetProps();
 
@@ -168,11 +168,7 @@ const useSearchWindowControl = ({
           runningSubText
         });
 
-        Core.scriptFilterExcute(
-          workManager,
-          updatedInput,
-          commandOnStackIsEmpty
-        );
+        Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
       }
     }
   };
@@ -201,7 +197,7 @@ const useSearchWindowControl = ({
     else if (workManager.getTopWork().type === 'scriptfilter') {
       // Execute current command's script filter
       if (updatedInput.startsWith(workManager.getTopWork().input)) {
-        Core.scriptFilterExcute(workManager, updatedInput);
+        Core.scriptFilterExcute(updatedInput);
       }
       // If the command changes, clear stack and search commands
       else {

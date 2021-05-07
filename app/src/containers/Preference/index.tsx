@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 import { useSelector } from 'react-redux';
+import { Core } from 'wf-creator-core';
+import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -39,7 +41,7 @@ export default function PreferenceWindow() {
     (state: StateType) => state.globalConfig
   );
 
-  useEffect(() => {
+  const registerAllGlobalHotkey = () => {
     const globalShortcutCallbackTable = {
       [hotkey]: 'toggleSearchWindow'
     };
@@ -47,6 +49,10 @@ export default function PreferenceWindow() {
     ipcRenderer.send('set-global-shortcut', {
       callbackTable: globalShortcutCallbackTable
     });
+  };
+
+  useEffect(() => {
+    registerAllGlobalHotkey();
   }, []);
 
   useEffect(() => {

@@ -25,7 +25,7 @@ export default function Advanced() {
     ipcRenderer.send('dispatch-action', {
       destWindow: 'searchWindow',
       actionType,
-      args: bool
+      args: !bool
     });
   };
 
