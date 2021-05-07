@@ -1,13 +1,13 @@
 {
-  "name": "wf-creator-gui",
-  "productName": "wf-creator-gui",
+  "name": "arvis",
+  "productName": "Arvis",
   "version": "0.0.1",
   "description": "demo version",
   "main": "./main.prod.js",
   "author": {
     "name": "jopemachine",
     "email": "jopemachine@gmail.com",
-    "url": "https://github.com/jopemachine/wf-creator-gui"
+    "url": "https://github.com/jopemachine/Arvis"
   },
   "scripts": {
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
@@ -15,7 +15,7 @@
   },
   "keywords": [
     "electron",
-    "wf-creator"
+    "arvis"
   ],
   "license": "MIT",
   "dependencies": {},

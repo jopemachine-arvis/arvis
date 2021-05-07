@@ -1,6 +1,6 @@
 /* eslint-disable promise/always-return */
 import React, { useEffect, useState } from 'react';
-import { Core } from 'wf-creator-core';
+import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { SearchBar, SearchResultView } from '../../components';

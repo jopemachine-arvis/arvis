@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import path from 'path';
-import { Core } from 'wf-creator-core';
+import { Core } from 'arvis-core';
 import _ from 'lodash';
 import SearchResultItem from '../searchResultItem';
 import { checkFileExists, isSupportedImageFormat } from '../../utils';

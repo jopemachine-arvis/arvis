@@ -8,8 +8,8 @@ This package is builded on [electron-react-boilerplate](https://github.com/elect
 
 Packages directly related to this package.
 
-* [wf-creator-core]()
-* [wf-creator-plist-converter]()
+* [arvis-core]()
+* [arvis-plist-converter]()
 
 ### Build from sources
 

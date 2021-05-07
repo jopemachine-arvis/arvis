@@ -2,8 +2,8 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Core } from 'wf-creator-core';
-import { StoreType } from 'wf-creator-core/dist/types/storeType';
+import { Core } from 'arvis-core';
+import { StoreType } from 'arvis-core/dist/types/storeType';
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';

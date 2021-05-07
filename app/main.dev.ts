@@ -11,7 +11,7 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import TrayBuilder from './src/components/tray';
-import ElectronStore from '../node_modules/wf-creator-core/node_modules/electron-store/index.js';
+import ElectronStore from '../node_modules/arvis-core/node_modules/electron-store/index.js';
 
 import { createPreferenceWindow } from './src/windows/preferenceWindow';
 import { createSearchWindow } from './src/windows/searchWindow';
@@ -27,11 +27,11 @@ trayBuilder.buildTray();
 
 ElectronStore.initRenderer();
 
-// If run a specific script with Electron, app name would be Electron. (Not wf-creator-gui)
-// To do:: In production, The storage location of the setup file should be wf-creator-gui, not Electron.
+// If run a specific script with Electron, app name would be Electron. (Not Arvis)
+// To do:: In production, The storage location of the setup file should be Arvis, not Electron.
 // In development env, setting file should be under /Users/me/Library/Application Support/Electron
 // because app.getPath('userData') return 'Electron' as App name.
-app.name = 'wf-creator-gui';
+app.name = 'Arvis';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

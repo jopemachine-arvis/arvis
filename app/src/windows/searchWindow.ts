@@ -4,7 +4,7 @@ import constants from '../constants';
 
 const createSearchWindow = () => {
   const searchWindow = new BrowserWindow({
-    title: 'wf-creator-gui',
+    title: 'Arvis',
     center: true,
     show: false,
     frame: false,

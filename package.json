@@ -1,6 +1,6 @@
 {
-  "name": "wf-creator-gui",
-  "productName": "wf-creator-gui",
+  "name": "arvis",
+  "productName": "Arvis",
   "version": "0.0.1",
   "description": "demo version",
   "scripts": {
@@ -35,7 +35,7 @@
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.ts",
     "test-watch": "yarn test --watch",
     "rebuild": "rm -rf node_modules && yarn",
-    "replace-core": "rm -rf node_modules/wf-creator-core && cp -R ../wf-creator-core node_modules/wf-creator-core"
+    "replace-core": "rm -rf node_modules/arvis && cp -R ../arvis node_modules/arvis-core"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -53,7 +53,7 @@
     ]
   },
   "build": {
-    "productName": "wf-creator-gui",
+    "productName": "Arvis",
     "appId": "org.wfcreatorgui",
     "files": [
       "dist/",
@@ -97,14 +97,14 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "wf-creator-gui",
-      "repo": "wf-creator-gui",
+      "owner": "jopemachine",
+      "repo": "Arvis",
       "private": false
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jopemachine/wf-creator-gui.git"
+    "url": "git+https://github.com/jopemachine/arvis.git"
   },
   "license": "MIT",
   "jest": {
@@ -278,7 +278,7 @@
     "source-map-support": "^0.5.16",
     "styled-components": "^5.2.1",
     "use-force-update": "^1.0.7",
-    "wf-creator-core": "../wf-creator-core"
+    "arvis-core": "../arvis-core"
   },
   "devEngines": {
     "node": ">=12.x",
@@ -326,7 +326,6 @@
       "electron-75"
     ],
     "platforms": [
-      "win32",
       "darwin"
     ],
     "arches": [

@@ -13,17 +13,17 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
 
 export default (mainWindow: BrowserWindow) => {
   const subMenuAbout: DarwinMenuItemConstructorOptions = {
-    label: 'wf-creator-gui',
+    label: 'Arvis',
     submenu: [
       {
-        label: 'About wf-creator-gui',
+        label: 'About Arvis',
         selector: 'orderFrontStandardAboutPanel:'
       },
       { type: 'separator' },
       { label: 'Services', submenu: [] },
       { type: 'separator' },
       {
-        label: 'Hide wf-creator-gui',
+        label: 'Hide Arvis',
         accelerator: 'Command+H',
         selector: 'hide:'
       },
@@ -101,15 +101,13 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'Documentation',
         click() {
-          shell.openExternal('https://github.com/jopemachine/wf-creator-gui/');
+          shell.openExternal('https://github.com/jopemachine/arvis/');
         }
       },
       {
         label: 'Search Issues',
         click() {
-          shell.openExternal(
-            'https://github.com/jopemachine/wf-creator-gui/issues'
-          );
+          shell.openExternal('https://github.com/jopemachine/arvis/issues');
         }
       }
     ]

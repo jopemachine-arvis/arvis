@@ -18,12 +18,14 @@ export const Title = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  user-select: none;
 `;
 
 export const SubTitle = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  user-select: none;
 `;
 
 export const IconImg = styled.img``;
@@ -32,4 +34,5 @@ export const OffsetText = styled.div`
   display: flex;
   align-items: center;
   margin-right: 15px;
+  user-select: none;
 `;

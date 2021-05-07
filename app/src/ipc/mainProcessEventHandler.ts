@@ -25,7 +25,7 @@ export const initIPCHandler = ({
     const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
       properties: ['openFile'],
       filters: [
-        { name: 'wf-creator setting files', extensions: ['json', 'plist'] }
+        { name: 'Arvis setting files', extensions: ['json', 'plist'] }
       ]
     });
     preferenceWindow.webContents.send('open-wfconf-file-dialog-ret', {

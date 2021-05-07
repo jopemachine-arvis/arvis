@@ -3,9 +3,9 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useState } from 'react';
-import { Core } from 'wf-creator-core';
+import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
-import { StoreType } from 'wf-creator-core/dist/types/storeType';
+import { StoreType } from 'arvis-core/dist/types/storeType';
 import useKey from '../../use-key-capture/src';
 
 type IndexInfo = {

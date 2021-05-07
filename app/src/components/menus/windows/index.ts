@@ -59,15 +59,13 @@ export default (mainWindow: BrowserWindow) => [
       {
         label: 'Documentation',
         click() {
-          shell.openExternal('https://github.com/jopemachine/wf-creator-gui/');
+          shell.openExternal('https://github.com/jopemachine/arvis/');
         }
       },
       {
         label: 'Search Issues',
         click() {
-          shell.openExternal(
-            'https://github.com/jopemachine/wf-creator-gui/issues'
-          );
+          shell.openExternal('https://github.com/jopemachine/arvis/issues');
         }
       }
     ]

@@ -44,6 +44,7 @@ export const Header = styled.div`
   justify-content: flex-start;
   align-items: center;
   font-size: 20px;
+  user-select: none;
 `;
 
 export const WorkflowListViewFooter = styled.div`

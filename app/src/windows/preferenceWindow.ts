@@ -20,7 +20,7 @@ const createPreferenceWindow = ({
   }
 
   let preferenceWindow: BrowserWindow | null = new BrowserWindow({
-    title: 'wf-creator-gui',
+    title: 'Arvis',
     show: false,
     skipTaskbar: true,
     width: constants.preferenceWindowWidth,
