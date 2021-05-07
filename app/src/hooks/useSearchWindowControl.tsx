@@ -38,51 +38,11 @@ const useSearchWindowControl = ({
     ? (inputRef.current! as HTMLInputElement).value
     : '';
 
-  const setInputStr = (str: string) => {
-    if (inputRef && inputRef.current) {
-      (inputRef.current! as HTMLInputElement).value = str;
-    }
-  };
-
   const clearIndexInfo = () => {
     setIndexInfo({
       itemStartIdx: 0,
       selectedItemIdx: 0
     });
-  };
-
-  const handleReturn = async ({
-    selectedItemIdx,
-    modifiers
-  }: {
-    selectedItemIdx: number;
-    modifiers: any;
-  }) => {
-    const selectedItem = items[selectedItemIdx];
-    if (selectedItem.type === 'scriptfilter') {
-      setInputStr(selectedItem.command);
-      const { running_subtext: runningSubText } = items[selectedItemIdx];
-
-      workManager.setRunningText({
-        itemArr: items,
-        index: selectedItemIdx,
-        runningSubText
-      });
-
-      Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
-    } else {
-      await workManager
-        .commandExcute(selectedItem, inputStr, modifiers)
-        .catch((err: any) => {
-          console.error('Error occured in commandExecute!', err);
-        });
-
-      // Fix me!! - clearInput should be called here
-      // clearInput();
-    }
-
-    // May or may not be needed.. case by case
-    // clearInput();
   };
 
   const handleUpArrow = () => {
@@ -140,36 +100,35 @@ const useSearchWindowControl = ({
     pressedKey: string;
     updatedInput: string;
   }) => {
+    // auto script filter executing should be started from first item
+    if (itemArr.length === 0) return;
+    const firstItem = itemArr[0];
+    if (firstItem.type !== 'scriptfilter') return;
+
     let commandOnStackIsEmpty;
 
     // Assume withspace's default value is true
     // When script filter is not running (and should be running)
-    if (itemArr.length > 0) {
-      // auto script filter executing should be started from first item
-      const firstItem = itemArr[0];
+    const goScriptFilterWithSpace =
+      firstItem.withspace === true &&
+      updatedInput.includes(firstItem.command) &&
+      pressedKey !== ' ';
 
-      const goScriptFilterWithSpace =
-        firstItem.withspace === true &&
-        updatedInput.includes(firstItem.command) &&
-        pressedKey !== ' ';
+    const goScriptFilterWithoutSpace =
+      firstItem.withspace === false && updatedInput.includes(firstItem.command);
 
-      const goScriptFilterWithoutSpace =
-        firstItem.withspace === false &&
-        updatedInput.includes(firstItem.command);
+    if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
+      // eslint-disable-next-line prefer-destructuring
+      commandOnStackIsEmpty = firstItem;
 
-      if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
-        // eslint-disable-next-line prefer-destructuring
-        commandOnStackIsEmpty = firstItem;
+      const { running_subtext: runningSubText } = firstItem;
+      workManager.setRunningText({
+        itemArr,
+        index: 0,
+        runningSubText
+      });
 
-        const { running_subtext: runningSubText } = firstItem;
-        workManager.setRunningText({
-          itemArr,
-          index: 0,
-          runningSubText
-        });
-
-        Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
-      }
+      Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
     }
   };
 
@@ -207,6 +166,47 @@ const useSearchWindowControl = ({
     }
 
     clearIndexInfo();
+  };
+
+  const setInputStr = (str: string) => {
+    if (inputRef && inputRef.current) {
+      (inputRef.current! as HTMLInputElement).value = str;
+    }
+    handleNormalInput('', str);
+  };
+
+  const handleReturn = async ({
+    selectedItemIdx,
+    modifiers
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    const selectedItem = items[selectedItemIdx];
+    if (selectedItem.type === 'scriptfilter') {
+      setInputStr(selectedItem.command);
+      const { running_subtext: runningSubText } = items[selectedItemIdx];
+
+      workManager.setRunningText({
+        itemArr: items,
+        index: selectedItemIdx,
+        runningSubText
+      });
+
+      Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
+    } else {
+      await workManager
+        .commandExcute(selectedItem, inputStr, modifiers)
+        .catch((err: any) => {
+          console.error('Error occured in commandExecute!', err);
+        });
+
+      // Fix me!! - clearInput should be called here
+      // clearInput();
+    }
+
+    // May or may not be needed.. case by case
+    // clearInput();
   };
 
   const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {

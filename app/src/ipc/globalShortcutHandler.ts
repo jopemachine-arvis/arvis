@@ -2,13 +2,13 @@
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/always-return */
 /* eslint-disable no-restricted-syntax */
-import { BrowserWindow, globalShortcut } from 'electron';
+import { BrowserWindow, globalShortcut, Notification } from 'electron';
 import ioHook from 'iohook';
 import { Core } from 'wf-creator-core';
 import { StoreType } from 'wf-creator-core/dist/types/storeType';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
-const ioHookEventHandler = {
+const doubleKeyPressHandler = {
   shift: () => {},
   alt: () => {},
   ctrl: () => {},
@@ -22,30 +22,70 @@ const doubleKeyPressedTimers = {
   meta: 0
 };
 
+const handleGUICustomActions = (hotKeyAction: any, actionTypes: string[]) => {
+  // handle custom actions
+  if (actionTypes.includes('notification')) {
+    // Assume action count is 1
+    const targetAction = hotKeyAction.action.filter(
+      (item: any) => item.type === 'notification'
+    )[0];
+
+    new Notification({
+      title: targetAction.title,
+      body: targetAction.text
+    }).show();
+  }
+};
+
+const handleHotKeyAction = (
+  searchWindow: BrowserWindow,
+  hotKeyAction: any,
+  actionTypes: string[]
+) => {
+  if (actionTypes.includes('keyword') || actionTypes.includes('scriptfilter')) {
+    const targetAction = hotKeyAction.action.filter(
+      (item: any) => item.type === 'keyword' || item.type === 'scriptfilter'
+    )[0];
+
+    searchWindow.show();
+
+    const newStr = targetAction.keyword
+      ? targetAction.keyword
+      : targetAction.scriptfilter;
+
+    searchWindow.webContents.send('set-searchbar-input', {
+      str: newStr
+    });
+  }
+
+  // handle custom actions
+  handleGUICustomActions(hotKeyAction, actionTypes);
+};
+
 const getWorkflowHotkeyPressHandler = ({
   searchWindow,
-  action
+  hotKeyAction
 }: {
   searchWindow: BrowserWindow;
-  action: any;
+  hotKeyAction: any;
 }) => {
   // The workManager instance obtained in the main process is a different object
   // from the Singleton object in the renderer process.
-  // So, methods like onInputShouldBeUpdate cannot be used here.
+  // So, methods like onInputShouldBeUpdate cannot be used here
+  // and GUI custom actions (notifications) should be handled here
   const mainProcWorkManager = Core.WorkManager.getInstance();
 
   mainProcWorkManager.handleAction({
-    actions: [action],
+    actions: [hotKeyAction],
     queryArgs: {},
     modifiersInput: {}
   });
 
-  const actionTypes: string[] = action.action.map((item: any) => item.type);
+  const actionTypes: string[] = hotKeyAction.action.map(
+    (item: any) => item.type
+  );
 
-  if (actionTypes.includes('keyword')) {
-    searchWindow.show();
-    // ipc를 통해 input을 업데이트할 것.
-  }
+  handleHotKeyAction(searchWindow, hotKeyAction, actionTypes);
 };
 
 const registerShortcut = (shortcut: string, action: Function) => {
@@ -54,7 +94,7 @@ const registerShortcut = (shortcut: string, action: Function) => {
     // eslint-disable-next-line prefer-destructuring
     shortcut = shortcut.split('Double ')[1];
 
-    ioHookEventHandler[shortcut] = () => {
+    doubleKeyPressHandler[shortcut] = () => {
       if (Date.now() - doubleKeyPressedTimers[shortcut] < 200) {
         action();
       } else {
@@ -68,7 +108,7 @@ const registerShortcut = (shortcut: string, action: Function) => {
   }
 };
 
-const workflowHotkeyRegistrar = ({
+const registerWorkflowHotkeys = ({
   searchWindow
 }: {
   searchWindow: BrowserWindow;
@@ -79,7 +119,7 @@ const workflowHotkeyRegistrar = ({
       const cb = () => {
         getWorkflowHotkeyPressHandler({
           searchWindow,
-          action: workflowHotkeys[hotkey]
+          hotKeyAction: workflowHotkeys[hotkey]
         });
       };
 
@@ -98,7 +138,7 @@ export default ({
   callbackTable: any;
 }) => {
   const shortcuts = Object.keys(callbackTable);
-  workflowHotkeyRegistrar({ searchWindow });
+  registerWorkflowHotkeys({ searchWindow });
 
   for (const shortcut of shortcuts) {
     // Case of double key type
@@ -112,13 +152,13 @@ export default ({
 
   ioHook.on('keydown', e => {
     if (e.shiftKey) {
-      ioHookEventHandler.shift();
+      doubleKeyPressHandler.shift();
     } else if (e.altKey) {
-      ioHookEventHandler.alt();
+      doubleKeyPressHandler.alt();
     } else if (e.ctrlKey) {
-      ioHookEventHandler.ctrl();
+      doubleKeyPressHandler.ctrl();
     } else if (e.metaKey) {
-      ioHookEventHandler.cmd();
+      doubleKeyPressHandler.cmd();
     }
   });
   ioHook.start();

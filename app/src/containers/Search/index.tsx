@@ -91,6 +91,13 @@ export default function SearchWindow() {
         dispatch(makeActionCreator(actionType, 'arg')(args));
       }
     );
+
+    ipcRenderer.on(
+      'set-searchbar-input',
+      (evt: IpcRendererEvent, { str }: { str: string }) => {
+        setInputStr(str);
+      }
+    );
   };
 
   useEffect(() => {
