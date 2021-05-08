@@ -21,6 +21,27 @@ export const initIPCHandler = ({
   preferenceWindow: BrowserWindow;
 }) => {
   // Used to select wfconf file
+  ipcMain.on('show-error-dialog', (evt: IpcMainEvent, { title, content }) => {
+    dialog.showErrorBox(title, content);
+  });
+
+  // Used to select file to save
+  ipcMain.on(
+    'save-file',
+    async (evt: IpcMainEvent, { title, message, defaultPath }) => {
+      const file = await dialog.showSaveDialog({
+        title,
+        defaultPath,
+        message: message ?? 'Select the path your file will be saved'
+      });
+
+      preferenceWindow.webContents.send('save-file-ret', {
+        file
+      });
+    }
+  );
+
+  // Used to select wfconf file
   ipcMain.on('open-wfconf-file-dialog', async (evt: IpcMainEvent) => {
     const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
       properties: ['openFile'],

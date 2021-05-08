@@ -5,7 +5,7 @@
 import { BrowserWindow, globalShortcut, Notification } from 'electron';
 import ioHook from 'iohook';
 import { Core } from 'arvis-core';
-import { StoreType } from 'arvis-core/dist/types/storeType';
+
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
 const doubleKeyPressHandler = {
@@ -113,7 +113,7 @@ const registerWorkflowHotkeys = ({
 }: {
   searchWindow: BrowserWindow;
 }) => {
-  Core.findHotkeys(StoreType.Electron).then(workflowHotkeys => {
+  Core.findHotkeys().then(workflowHotkeys => {
     const hotkeys = Object.keys(workflowHotkeys);
     for (const hotkey of hotkeys) {
       const cb = () => {

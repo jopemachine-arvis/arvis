@@ -100,7 +100,12 @@ export default function SearchWindow() {
     );
   };
 
+  const renewWorkflows = () => {
+    Core.renewWorkflows();
+  };
+
   useEffect(() => {
+    renewWorkflows();
     registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();

@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
-import { StoreType } from 'arvis-core/dist/types/storeType';
 import useKey from '../../use-key-capture/src';
 
 type IndexInfo = {
@@ -134,18 +133,13 @@ const useSearchWindowControl = ({
 
   const handleNormalInput = (pressedKey: string, updatedInput: string) => {
     const searchCommands = () => {
-      Core.findCommands(StoreType.Electron, updatedInput)
-        .then((result: any) => {
-          setItems(result);
-          handleScriptFilterAutoExecute({
-            itemArr: result,
-            pressedKey,
-            updatedInput
-          });
-        })
-        .catch((error: any) => {
-          throw new Error(`findCommands throws Error\n ${error}`);
-        });
+      const itemArr = Core.findCommands(updatedInput);
+      setItems(itemArr);
+      handleScriptFilterAutoExecute({
+        itemArr,
+        pressedKey,
+        updatedInput
+      });
     };
 
     // Search workflow commands, builtInCommands

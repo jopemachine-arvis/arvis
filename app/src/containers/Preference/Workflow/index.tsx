@@ -1,9 +1,11 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable dot-notation */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
-import { StoreType } from 'arvis-core/dist/types/storeType';
+
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
@@ -18,6 +20,7 @@ import { BiExport } from 'react-icons/bi';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
+import { homedir } from 'os';
 import {
   // EmptyListContainer,
   // EmptyListDesc,
@@ -66,13 +69,11 @@ export default function Workflow() {
   const [spinning, setSpinning] = useContext(ScreenCoverContext) as any;
 
   const fetchWorkflows = () => {
-    Core.getWorkflowList(StoreType.Electron)
-      .then((workflowsToSet: object) => {
-        setWorkflows(workflowsToSet);
-        setSpinning(false);
-        return null;
-      })
-      .catch((err: any) => console.error(err));
+    const workflowsToSet = Core.getWorkflowList();
+
+    setWorkflows(workflowsToSet);
+    setSpinning(false);
+    return null;
   };
 
   useEffect(() => {
@@ -177,9 +178,19 @@ export default function Workflow() {
         if (fileInfo.file.filePaths[0]) {
           const wfConfigFilePath = fileInfo.file.filePaths[0];
 
-          Core.install(StoreType.Electron, wfConfigFilePath).then(() => {
-            fetchWorkflows();
-          });
+          Core.install(wfConfigFilePath)
+            .then(() => {
+              fetchWorkflows();
+            })
+            .catch(err => {
+              ipcRenderer.send('show-error-dialog', {
+                title: 'Installer file is invalid',
+                content: err.message
+              });
+            })
+            .finally(() => {
+              setSpinning(false);
+            });
         } else {
           setSpinning(false);
         }
@@ -188,11 +199,37 @@ export default function Workflow() {
   };
 
   const saveWorkflow = () => {
+    const targetPath = Core.path.getWorkflowConfigJsonPath(workflowBundleId);
+    fse.readJson(targetPath).then(async json => {
+      json['bundleId'] = workflowBundleId;
+      json['category'] = workflowCategory;
+      json['creator'] = workflowCreator;
+      json['description'] = workflowDescription;
+      json['name'] = workflowName;
+      json['version'] = workflowVersion;
+      json['webaddress'] = workflowWebsite;
 
+      await fse.writeJson(targetPath, json, { encoding: 'utf8' });
+      Core.renewWorkflows();
+    });
   };
 
   const exportWorkflow = () => {
+    const defaultPath = `${homedir()}${path.sep}Desktop${
+      path.sep
+    }${workflowBundleId}.arvisworkflow`;
 
+    ipcRenderer.send('save-file', {
+      title: 'Select path to save',
+      defaultPath
+    });
+
+    ipcRenderer.on(
+      'save-file-ret',
+      (evt: Electron.IpcRendererEvent, { file }) => {
+        Core.exportWorkflow(workflowBundleId, file.filePath);
+      }
+    );
   };
 
   const deleteSelectedWorkflow = (workflowList: any, idxToRemove: number) => {
@@ -202,7 +239,6 @@ export default function Workflow() {
     setSpinning(true);
 
     Core.unInstall({
-      storeType: StoreType.Electron,
       bundleId: workflowList[workflowBundleIds[idxToRemove]].bundleId
     }).then(() => {
       const temp = workflowList;
@@ -311,7 +347,7 @@ export default function Workflow() {
             <Label checked style={labelStyle}>
               <Input
                 type="checkbox"
-                checked={workflowEnabled}
+                defaultChecked={workflowEnabled}
                 onChange={() => {
                   setWorkflowEnabled(!workflowEnabled);
                 }}

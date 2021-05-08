@@ -60,11 +60,19 @@ export default function General() {
     dispatch(GlobalConfigActions.setGlobalFont(font));
   };
 
+  const setFont = (
+    e: Electron.IpcRendererEvent,
+    { fonts }: { fonts: string[] }
+  ) => {
+    setFontList(fonts);
+  };
+
   useEffect(() => {
     ipcRenderer.send('get-system-fonts');
-    ipcRenderer.on('get-system-fonts-ret', (e, { fonts }) => {
-      setFontList(fonts);
-    });
+    ipcRenderer.on('get-system-fonts-ret', setFont);
+    return () => {
+      ipcRenderer.off('get-system-fonts-ret', setFont);
+    };
   }, []);
 
   useEffect(() => {

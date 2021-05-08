@@ -10,8 +10,8 @@
  */
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
+import ElectronStore from 'electron-store';
 import TrayBuilder from './src/components/tray';
-import ElectronStore from '../node_modules/arvis-core/node_modules/electron-store/index.js';
 
 import { createPreferenceWindow } from './src/windows/preferenceWindow';
 import { createSearchWindow } from './src/windows/searchWindow';
