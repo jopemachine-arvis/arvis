@@ -10,10 +10,10 @@ export const actionTypes = {
 
 export const setLaunchAtLogin = makeActionCreator(
   actionTypes.SET_LAUNCH_AT_LOGIN,
-  'bool'
+  'arg'
 );
 
-export const setHotkey = makeActionCreator(actionTypes.SET_HOT_KEY, 'hotkey');
+export const setHotkey = makeActionCreator(actionTypes.SET_HOT_KEY, 'arg');
 
 export const setMaxItemCountToSearch = makeActionCreator(
   actionTypes.SET_MAX_ITEM_COUNT_TO_SEARCH,

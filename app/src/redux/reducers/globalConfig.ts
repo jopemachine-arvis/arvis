@@ -8,12 +8,12 @@ export default (state = {}, action: any) => {
     case GlobalConfigActionTypes.SET_HOT_KEY:
       return {
         ...state,
-        hotkey: payload.hotkey
+        hotkey: payload.arg
       };
     case GlobalConfigActionTypes.SET_LAUNCH_AT_LOGIN:
       return {
         ...state,
-        launch_at_login: payload.bool
+        launch_at_login: payload.arg
       };
     case GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SHOW:
       return {
