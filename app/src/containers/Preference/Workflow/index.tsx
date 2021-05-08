@@ -76,6 +76,53 @@ export default function Workflow() {
     return null;
   };
 
+  const ipcCallbackTbl = {
+    saveFileRet: (evt: Electron.IpcRendererEvent, { file }: { file: any }) => {
+      Core.exportWorkflow(workflowBundleId, file.filePath);
+    },
+
+    openWfConfFileDialogRet: (
+      evt: Electron.IpcRendererEvent,
+      fileInfo: any
+    ) => {
+      if (fileInfo.file.filePaths[0]) {
+        const wfConfigFilePath = fileInfo.file.filePaths[0];
+
+        Core.install(wfConfigFilePath)
+          .then(() => {
+            fetchWorkflows();
+          })
+          .catch(err => {
+            ipcRenderer.send('show-error-dialog', {
+              title: 'Installer file is invalid',
+              content: err.message
+            });
+          })
+          .finally(() => {
+            setSpinning(false);
+          });
+      } else {
+        setSpinning(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    ipcRenderer.on('save-file-ret', ipcCallbackTbl.saveFileRet);
+    ipcRenderer.on(
+      'open-wfconf-file-dialog-ret',
+      ipcCallbackTbl.openWfConfFileDialogRet
+    );
+
+    return () => {
+      ipcRenderer.off('save-file-ret', ipcCallbackTbl.saveFileRet);
+      ipcRenderer.off(
+        'open-wfconf-file-dialog-ret',
+        ipcCallbackTbl.openWfConfFileDialogRet
+      );
+    };
+  }, []);
+
   useEffect(() => {
     const workflowBundleIds = Object.keys(workflows);
 
@@ -171,31 +218,6 @@ export default function Workflow() {
   const addNewWorkflow = () => {
     ipcRenderer.send('open-wfconf-file-dialog');
     setSpinning(true);
-
-    ipcRenderer.on(
-      'open-wfconf-file-dialog-ret',
-      (evt: Electron.IpcRendererEvent, fileInfo: any) => {
-        if (fileInfo.file.filePaths[0]) {
-          const wfConfigFilePath = fileInfo.file.filePaths[0];
-
-          Core.install(wfConfigFilePath)
-            .then(() => {
-              fetchWorkflows();
-            })
-            .catch(err => {
-              ipcRenderer.send('show-error-dialog', {
-                title: 'Installer file is invalid',
-                content: err.message
-              });
-            })
-            .finally(() => {
-              setSpinning(false);
-            });
-        } else {
-          setSpinning(false);
-        }
-      }
-    );
   };
 
   const saveWorkflow = () => {
@@ -223,13 +245,6 @@ export default function Workflow() {
       title: 'Select path to save',
       defaultPath
     });
-
-    ipcRenderer.on(
-      'save-file-ret',
-      (evt: Electron.IpcRendererEvent, { file }) => {
-        Core.exportWorkflow(workflowBundleId, file.filePath);
-      }
-    );
   };
 
   const deleteSelectedWorkflow = (workflowList: any, idxToRemove: number) => {
@@ -393,9 +408,11 @@ export default function Workflow() {
             <Label style={labelStyle}>Bundle Id</Label>
             <StyledInput
               type="text"
+              disabled
               value={workflowBundleId}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowBundleId(e.currentTarget.value);
+                // Prevent editing workflow bundle id
+                e.preventDefault();
               }}
             />
           </FormGroup>

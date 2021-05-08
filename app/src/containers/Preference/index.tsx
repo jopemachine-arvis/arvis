@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useSelector } from 'react-redux';
 import { Core } from 'arvis-core';
 import Sidebar from './Sidebar';
@@ -54,9 +54,23 @@ export default function PreferenceWindow() {
     Core.renewWorkflows();
   };
 
+  const ipcCallbackTbl = {
+    renewWorkflow: (
+      evt: IpcRendererEvent,
+      { bundleId }: { bundleId: string }
+    ) => {
+      Core.renewWorkflows(bundleId);
+    }
+  };
+
   useEffect(() => {
     renewWorkflows();
     registerAllGlobalHotkey();
+
+    ipcRenderer.on('renew-workflow', ipcCallbackTbl.renewWorkflow);
+    return () => {
+      ipcRenderer.off('renew-workflow', ipcCallbackTbl.renewWorkflow);
+    };
   }, []);
 
   useEffect(() => {

@@ -66,7 +66,7 @@ const createPreferenceWindow = ({
 
   // eslint-disable-next-line
   new AppUpdater();
-  startFileWatcher();
+  startFileWatcher({ searchWindow, preferenceWindow });
 
   return preferenceWindow;
 };

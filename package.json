@@ -35,7 +35,8 @@
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.ts",
     "test-watch": "yarn test --watch",
     "rebuild": "rm -rf node_modules && yarn",
-    "replace-core": "rm -rf node_modules/arvis-core && cp -R ../arvis-core node_modules/arvis-core"
+    "replace-core": "rm -rf node_modules/arvis-core && cp -R ../arvis-core node_modules/arvis-core",
+    "replace-conv": "rm -rf node_modules/arvis-plist-converter && cp -R ../arvis-plist-converter node_modules/arvis-plist-converter"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

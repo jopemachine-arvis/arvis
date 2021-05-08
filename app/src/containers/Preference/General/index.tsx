@@ -22,36 +22,24 @@ import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 import { StyledInput } from '../../../components';
 import useKey from '../../../../use-key-capture/src';
+import { actionTypes as GlobalConfigActionTypes } from '../../../redux/actions/globalConfig';
+import { createGlobalConfigChangeHandler } from '../../../utils';
 
 export default function General() {
   const { keyData } = useKey();
-
   const {
-    launch_at_login: isAutoLaunchAtLogin,
-    global_font: globalFont
+    hotkey,
+    max_item_count_to_search,
+    max_item_count_to_show,
+    launch_at_login,
+    global_font
   } = useSelector((state: StateType) => state.globalConfig);
 
-  const dispatch = useDispatch();
-
-  const [hotkey, setHotkey] = useState<string>(
-    useSelector((state: StateType) => state.globalConfig.hotkey)
-  );
-
-  const [maxItemCountToShow, setMaxItemCountToShow] = useState<number>(
-    useSelector((state: StateType) => state.globalConfig.max_item_count_to_show)
-  );
-
-  const [maxItemCountToSearch, setMaxItemCountToSearch] = useState<number>(
-    useSelector(
-      (state: StateType) => state.globalConfig.max_item_count_to_search
-    )
-  );
-
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
-
   const [fontList, setFontList] = useState<string[]>([]);
-
   const [fontListDrawerOpen, setFontListDrawerOpen] = useState(false);
+
+  const dispatch = useDispatch();
 
   const toggleFontListDrawerOpen = () =>
     setFontListDrawerOpen(prevState => !prevState);
@@ -60,34 +48,24 @@ export default function General() {
     dispatch(GlobalConfigActions.setGlobalFont(font));
   };
 
-  const setFont = (
-    e: Electron.IpcRendererEvent,
-    { fonts }: { fonts: string[] }
-  ) => {
-    setFontList(fonts);
+  const ipcCallbackTbl = {
+    setFont: (e: Electron.IpcRendererEvent, { fonts }: { fonts: string[] }) => {
+      setFontList(fonts);
+    }
   };
+
+  const configChangeHandler = createGlobalConfigChangeHandler({
+    destWindow: 'searchWindow',
+    dispatch
+  });
 
   useEffect(() => {
     ipcRenderer.send('get-system-fonts');
-    ipcRenderer.on('get-system-fonts-ret', setFont);
+    ipcRenderer.on('get-system-fonts-ret', ipcCallbackTbl.setFont);
     return () => {
-      ipcRenderer.off('get-system-fonts-ret', setFont);
+      ipcRenderer.off('get-system-fonts-ret', ipcCallbackTbl.setFont);
     };
   }, []);
-
-  useEffect(() => {
-    if (hotkey !== '') {
-      dispatch(GlobalConfigActions.setHotkey(hotkey));
-    }
-  }, [hotkey]);
-
-  useEffect(() => {
-    dispatch(GlobalConfigActions.setMaxItemCountToShow(maxItemCountToShow));
-  }, [maxItemCountToShow]);
-
-  useEffect(() => {
-    dispatch(GlobalConfigActions.setMaxItemCountToSearch(maxItemCountToSearch));
-  }, [maxItemCountToSearch]);
 
   useEffect(() => {
     if (hotkeyFormFocused) {
@@ -128,12 +106,19 @@ export default function General() {
 
       const doubledStr = keyData.doubleKeyPressed ? 'Double ' : '';
 
-      setHotkey(doubledStr + result);
+      configChangeHandler(
+        {
+          currentTarget: {
+            value: doubledStr + result
+          }
+        } as React.FormEvent<HTMLInputElement>,
+        GlobalConfigActionTypes.SET_HOT_KEY
+      );
     }
   }, [keyData]);
 
   const toggleAutoLaunchAtLogin = () => {
-    dispatch(GlobalConfigActions.setLaunchAtLogin(!isAutoLaunchAtLogin));
+    dispatch(GlobalConfigActions.setLaunchAtLogin(!launch_at_login));
   };
 
   return (
@@ -143,7 +128,7 @@ export default function General() {
           <Label checked style={labelStyle}>
             <Input
               type="checkbox"
-              checked={isAutoLaunchAtLogin}
+              checked={launch_at_login}
               onChange={() => toggleAutoLaunchAtLogin()}
             />
             Launch at login
@@ -162,9 +147,10 @@ export default function General() {
             value={hotkey}
             onFocus={() => setHotkeyFormFocused(true)}
             onBlur={() => setHotkeyFormFocused(false)}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              e.preventDefault()
-            }
+            onChange={(e: React.FormEvent<HTMLInputElement>) => {
+              e.preventDefault();
+              configChangeHandler(e, GlobalConfigActionTypes.SET_HOT_KEY);
+            }}
           />
         </FormGroup>
 
@@ -174,9 +160,12 @@ export default function General() {
           </Label>
           <StyledInput
             type="select"
-            value={maxItemCountToShow}
+            value={max_item_count_to_show}
             onChange={(e: React.FormEvent<HTMLInputElement>) => {
-              setMaxItemCountToShow(Number(e.currentTarget.value));
+              configChangeHandler(
+                e,
+                GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SHOW
+              );
             }}
           >
             <option>1</option>
@@ -195,9 +184,12 @@ export default function General() {
           <Label style={labelStyle}>Max item count to search</Label>
           <StyledInput
             type="number"
-            value={maxItemCountToSearch}
+            value={max_item_count_to_search}
             onChange={(e: React.FormEvent<HTMLInputElement>) => {
-              setMaxItemCountToSearch(Number(e.currentTarget.value));
+              configChangeHandler(
+                e,
+                GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SEARCH
+              );
             }}
           />
         </FormGroup>
@@ -216,7 +208,7 @@ export default function General() {
               }}
               caret
             >
-              {globalFont}
+              {global_font}
             </DropdownToggle>
             <DropdownMenu
               style={{

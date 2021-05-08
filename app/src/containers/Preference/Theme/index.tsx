@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
 import { IoMdColorPalette } from 'react-icons/io';
-import { ipcRenderer } from 'electron';
 import { StateType } from '../../../redux/reducers/types';
 import './index.global.css';
 
@@ -17,7 +16,10 @@ import {
 
 import { SearchBar, SearchResultView, StyledInput } from '../../../components';
 import { actionTypes as UIActionTypes } from '../../../redux/actions/uiConfig';
-import { isNumeric, getRandomColor, makeActionCreator } from '../../../utils';
+import {
+  createGlobalConfigChangeHandler,
+  getRandomColor
+} from '../../../utils';
 import {
   descriptionContainerStyle,
   formGroupStyle,
@@ -69,21 +71,10 @@ export default function Theme() {
     '#000000'
   );
 
-  const configChangeHandler = (
-    e: React.FormEvent<HTMLInputElement>,
-    actionType: string
-  ) => {
-    const target: string | number = isNumeric(e.currentTarget.value)
-      ? Number(e.currentTarget.value)
-      : e.currentTarget.value;
-
-    dispatch(makeActionCreator(actionType, 'arg')(target));
-    ipcRenderer.send('dispatch-action', {
-      destWindow: 'searchWindow',
-      actionType,
-      args: target
-    });
-  };
+  const configChangeHandler = createGlobalConfigChangeHandler({
+    destWindow: 'searchWindow',
+    dispatch
+  });
 
   const changeBackgroundColor = () => {
     setPreviewBackgroundColor(getRandomColor());
