@@ -1,35 +1,5 @@
 /*! arch. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
-/*!
- * content-disposition
- * Copyright(c) 2014-2017 Douglas Christopher Wilson
- * MIT Licensed
- */
-
-/**
- * @file Tests if ES6 Symbol is supported.
- * @version 1.4.2
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module has-symbol-support-x
- */
-
-/**
- * @file Tests if ES6 @@toStringTag is supported.
- * @see {@link http://www.ecma-international.org/ecma-262/6.0/#sec-@@tostringtag|26.3.1 @@toStringTag}
- * @version 1.4.1
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module has-to-string-tag-x
- */
-
-/*!
- * is-natural-number.js | MIT (c) Shinnosuke Watanabe
- * https://github.com/shinnn/is-natural-number.js
-*/
-
 /**
  * @license
  * Lodash <https://lodash.com/>
@@ -40,24 +10,47 @@
  */
 
 /*!
- * mime-db
- * Copyright(c) 2014 Jonathan Ong
- * MIT Licensed
+ * fill-range <https://github.com/jonschlinkert/fill-range>
+ *
+ * Copyright (c) 2014-present, Jon Schlinkert.
+ * Licensed under the MIT License.
  */
 
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+/*!
+ * is-number <https://github.com/jonschlinkert/is-number>
+ *
+ * Copyright (c) 2014-present, Jon Schlinkert.
+ * Released under the MIT License.
+ */
 
 /*!
- * strip-dirs | MIT (c) Shinnosuke Watanabe
- * https://github.com/shinnn/node-strip-dirs
-*/
+ * to-regex-range <https://github.com/micromatch/to-regex-range>
+ *
+ * Copyright (c) 2015-present, Jon Schlinkert.
+ * Released under the MIT License.
+ */
 
-/** @license URI.js v4.4.1 (c) 2011 Gary Court. License: http://github.com/garycourt/uri-js */
+/*!
+ * is-extglob <https://github.com/jonschlinkert/is-extglob>
+ *
+ * Copyright (c) 2014-2016, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-glob <https://github.com/jonschlinkert/is-glob>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * normalize-path <https://github.com/jonschlinkert/normalize-path>
+ *
+ * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
 
 /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+
+/** @license URI.js v4.2.1 (c) 2011 Gary Court. License: http://github.com/garycourt/uri-js */

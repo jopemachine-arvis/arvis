@@ -83,16 +83,16 @@ export default function SearchWindow() {
   const ipcCallbackTbl = {
     // Used to receive dispatched action from different window
     fetchAction: (
-      evt: IpcRendererEvent,
+      e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
       dispatch(makeActionCreator(actionType, 'arg')(args));
     },
-    setSearchbarInput: (evt: IpcRendererEvent, { str }: { str: string }) => {
+    setSearchbarInput: (e: IpcRendererEvent, { str }: { str: string }) => {
       setInputStr(str);
     },
     renewWorkflow: (
-      evt: IpcRendererEvent,
+      e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
       Core.renewWorkflows(bundleId);

@@ -77,14 +77,11 @@ export default function Workflow() {
   };
 
   const ipcCallbackTbl = {
-    saveFileRet: (evt: Electron.IpcRendererEvent, { file }: { file: any }) => {
+    saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
       Core.exportWorkflow(workflowBundleId, file.filePath);
     },
 
-    openWfConfFileDialogRet: (
-      evt: Electron.IpcRendererEvent,
-      fileInfo: any
-    ) => {
+    openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
       if (fileInfo.file.filePaths[0]) {
         const wfConfigFilePath = fileInfo.file.filePaths[0];
 

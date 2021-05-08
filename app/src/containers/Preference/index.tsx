@@ -56,7 +56,7 @@ export default function PreferenceWindow() {
 
   const ipcCallbackTbl = {
     renewWorkflow: (
-      evt: IpcRendererEvent,
+      e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
       Core.renewWorkflows(bundleId);

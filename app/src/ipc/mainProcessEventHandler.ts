@@ -21,14 +21,14 @@ export const initIPCHandler = ({
   preferenceWindow: BrowserWindow;
 }) => {
   // Used to select wfconf file
-  ipcMain.on('show-error-dialog', (evt: IpcMainEvent, { title, content }) => {
+  ipcMain.on('show-error-dialog', (e: IpcMainEvent, { title, content }) => {
     dialog.showErrorBox(title, content);
   });
 
   // Used to select file to save
   ipcMain.on(
     'save-file',
-    async (evt: IpcMainEvent, { title, message, defaultPath }) => {
+    async (e: IpcMainEvent, { title, message, defaultPath }) => {
       const file = await dialog.showSaveDialog({
         title,
         defaultPath,
@@ -42,7 +42,7 @@ export const initIPCHandler = ({
   );
 
   // Used to select wfconf file
-  ipcMain.on('open-wfconf-file-dialog', async (evt: IpcMainEvent) => {
+  ipcMain.on('open-wfconf-file-dialog', async (e: IpcMainEvent) => {
     const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
       properties: ['openFile'],
       filters: [
@@ -60,10 +60,7 @@ export const initIPCHandler = ({
   // Used to open yesno modal box
   ipcMain.on(
     'open-yesno-dialog',
-    async (
-      evt: IpcMainEvent,
-      { msg, icon }: { msg: string; icon?: string }
-    ) => {
+    async (e: IpcMainEvent, { msg, icon }: { msg: string; icon?: string }) => {
       const ret: Electron.MessageBoxReturnValue = await dialog.showMessageBox({
         type: 'info',
         buttons: ['ok', 'cancel'],
@@ -81,7 +78,7 @@ export const initIPCHandler = ({
   // Used to show notification
   ipcMain.on(
     'show-notification',
-    (evt: IpcMainEvent, { title, body }: { title: string; body: string }) => {
+    (e: IpcMainEvent, { title, body }: { title: string; body: string }) => {
       // https://www.electronjs.org/docs/tutorial/notifications
       const notification = {
         title,
@@ -92,7 +89,7 @@ export const initIPCHandler = ({
   );
 
   // Used to get all system fonts
-  ipcMain.on('get-system-fonts', async (evt: IpcMainEvent) => {
+  ipcMain.on('get-system-fonts', async (e: IpcMainEvent) => {
     const fonts = await getFonts({ disableQuoting: true });
     preferenceWindow.webContents.send('get-system-fonts-ret', { fonts });
   });
@@ -101,7 +98,7 @@ export const initIPCHandler = ({
   ipcMain.on(
     'resize-searchwindow-height',
     (
-      evt: IpcMainEvent,
+      e: IpcMainEvent,
       {
         itemCount,
         maxItemCount,
@@ -128,14 +125,14 @@ export const initIPCHandler = ({
   );
 
   // Used to hide search window with avoiding afterimage
-  ipcMain.on('hide-search-window', (evt: IpcMainEvent) => {
+  ipcMain.on('hide-search-window', (e: IpcMainEvent) => {
     searchWindow.hide();
   });
 
   // Used to register global shortcuts
   ipcMain.on(
     'set-global-shortcut',
-    (evt: IpcMainEvent, { callbackTable }: { callbackTable: any }) => {
+    (e: IpcMainEvent, { callbackTable }: { callbackTable: any }) => {
       globalShortcutHandler({ callbackTable, preferenceWindow, searchWindow });
     }
   );
@@ -143,7 +140,7 @@ export const initIPCHandler = ({
   // Used to popup context menu
   ipcMain.on(
     'popup-workflowItem-menu',
-    (evt: IpcMainEvent, { path }: { path: string }) => {
+    (e: IpcMainEvent, { path }: { path: string }) => {
       new WorkflowItemMenu({ path }).popup();
     }
   );
@@ -153,7 +150,7 @@ export const initIPCHandler = ({
   ipcMain.on(
     'dispatch-action',
     (
-      evt: IpcMainEvent,
+      e: IpcMainEvent,
       {
         destWindow,
         actionType,

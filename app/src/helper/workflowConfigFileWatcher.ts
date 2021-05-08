@@ -23,7 +23,7 @@ export const startFileWatcher = ({
       }
     )
     .on('change', (filePath: string) => {
-      console.log(`"${filePath}" changed. renew workflows..`);
+      console.log(`"${filePath}" changed. Reload workflows settings..`);
       const pathArrs = filePath.split(path.sep);
       pathArrs.pop();
       const bundleId = pathArrs.pop();

@@ -6,6 +6,7 @@ import { BrowserWindow, globalShortcut, Notification } from 'electron';
 import ioHook from 'iohook';
 import { Core } from 'arvis-core';
 
+import * as RawKeyTbl from '../utils/iohook/libuihookTable';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 
 const doubleKeyPressHandler = {
@@ -150,6 +151,7 @@ export default ({
     );
   }
 
+  // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
   ioHook.on('keydown', e => {
     if (e.shiftKey) {
       doubleKeyPressHandler.shift();
