@@ -18,7 +18,9 @@
     "arvis"
   ],
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "fsevents": "^2.3.2"
+  },
   "devDependencies": {
     "@types/jquery": "^3.5.5"
   }

@@ -10,16 +10,17 @@ import useForceUpdate from 'use-force-update';
 import {
   AiOutlineAppstoreAdd,
   AiOutlineDelete,
-  AiOutlineFileAdd,
+  AiOutlineSave,
   AiOutlineBranches
 } from 'react-icons/ai';
-import { CgSmileNone } from 'react-icons/cg';
+import { BiExport } from 'react-icons/bi';
+// import { CgSmileNone } from 'react-icons/cg';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import {
-  EmptyListContainer,
-  EmptyListDesc,
+  // EmptyListContainer,
+  // EmptyListDesc,
   Header,
   OuterContainer,
   WorkflowDescContainer,
@@ -38,7 +39,7 @@ import {
   bottomFixedBarIconStyle,
   checkboxStyle,
   descriptionContainerStyle,
-  emptyListIconStyle,
+  // emptyListIconStyle,
   formGroupStyle,
   iconStyle,
   labelStyle
@@ -108,7 +109,7 @@ export default function Workflow() {
   };
 
   const getDefaultIcon = (bundleId: string) => {
-    const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${bundleId}`;
+    const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
 
     if (fse.existsSync(workflowDefaultIconPath)) {
@@ -122,7 +123,7 @@ export default function Workflow() {
     bundleId: string
   ) => {
     e.preventDefault();
-    const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${bundleId}`;
+    const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     ipcRenderer.send('popup-workflowItem-menu', { path: workflowRootPath });
   };
 
@@ -166,7 +167,7 @@ export default function Workflow() {
     );
   };
 
-  const addNewWorkflowByFile = () => {
+  const addNewWorkflow = () => {
     ipcRenderer.send('open-wfconf-file-dialog');
     setSpinning(true);
 
@@ -186,8 +187,12 @@ export default function Workflow() {
     );
   };
 
-  const addNewWorkflow = () => {
-    // Add new workflow through npm or git
+  const saveWorkflow = () => {
+
+  };
+
+  const exportWorkflow = () => {
+
   };
 
   const deleteSelectedWorkflow = (workflowList: any, idxToRemove: number) => {
@@ -271,15 +276,20 @@ export default function Workflow() {
           />
         </WorkflowListOrderedList>
         <WorkflowListViewFooter>
-          <AiOutlineFileAdd
-            className="workflow-page-buttons"
-            style={bottomFixedBarIconStyle}
-            onClick={() => addNewWorkflowByFile()}
-          />
           <AiOutlineAppstoreAdd
             className="workflow-page-buttons"
             style={bottomFixedBarIconStyle}
             onClick={() => addNewWorkflow()}
+          />
+          <AiOutlineSave
+            className="workflow-page-buttons"
+            style={bottomFixedBarIconStyle}
+            onClick={() => saveWorkflow()}
+          />
+          <BiExport
+            className="workflow-page-buttons"
+            style={bottomFixedBarIconStyle}
+            onClick={() => exportWorkflow()}
           />
           <AiOutlineDelete
             className="workflow-page-buttons"
@@ -302,7 +312,9 @@ export default function Workflow() {
               <Input
                 type="checkbox"
                 checked={workflowEnabled}
-                onChange={() => {}}
+                onChange={() => {
+                  setWorkflowEnabled(!workflowEnabled);
+                }}
               />
               Enabled
             </Label>
@@ -310,7 +322,13 @@ export default function Workflow() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Name</Label>
-            <StyledInput type="text" value={workflowName} onChange={() => {}} />
+            <StyledInput
+              type="text"
+              value={workflowName}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowName(e.currentTarget.value);
+              }}
+            />
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
@@ -318,7 +336,9 @@ export default function Workflow() {
             <StyledInput
               type="text"
               value={workflowVersion}
-              onChange={() => {}}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowVersion(e.currentTarget.value);
+              }}
             />
           </FormGroup>
 
@@ -327,7 +347,9 @@ export default function Workflow() {
             <StyledInput
               type="text"
               value={workflowCreator}
-              onChange={() => {}}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowCreator(e.currentTarget.value);
+              }}
             />
           </FormGroup>
 
@@ -336,7 +358,9 @@ export default function Workflow() {
             <StyledInput
               type="text"
               value={workflowBundleId}
-              onChange={() => {}}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowBundleId(e.currentTarget.value);
+              }}
             />
           </FormGroup>
 
@@ -345,7 +369,9 @@ export default function Workflow() {
             <StyledInput
               type="text"
               value={workflowCategory}
-              onChange={() => {}}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowCategory(e.currentTarget.value);
+              }}
             />
           </FormGroup>
 
@@ -354,7 +380,9 @@ export default function Workflow() {
             <StyledInput
               type="textarea"
               value={workflowDescription}
-              onChange={() => {}}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowDescription(e.currentTarget.value);
+              }}
             />
           </FormGroup>
 
@@ -363,7 +391,9 @@ export default function Workflow() {
             <StyledInput
               type="url"
               value={workflowWebsite}
-              onChange={() => {}}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowWebsite(e.currentTarget.value);
+              }}
             />
           </FormGroup>
         </Form>

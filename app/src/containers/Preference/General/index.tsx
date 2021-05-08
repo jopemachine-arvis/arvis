@@ -107,7 +107,13 @@ export default function General() {
         } else {
           result += normalKey;
         }
-      } else {
+      }
+      // Modifier key without normal key is not allowed
+      else if (!normalKey && !keyData.doubleKeyPressed) {
+        return;
+      }
+      // Double modifier key
+      else {
         // remove last ' + '
         result = result.substring(0, result.length - 3);
       }

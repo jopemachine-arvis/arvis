@@ -35,7 +35,7 @@
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.ts",
     "test-watch": "yarn test --watch",
     "rebuild": "rm -rf node_modules && yarn",
-    "replace-core": "rm -rf node_modules/arvis && cp -R ../arvis node_modules/arvis-core"
+    "replace-core": "rm -rf node_modules/arvis-core && cp -R ../arvis-core node_modules/arvis-core"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -54,7 +54,7 @@
   },
   "build": {
     "productName": "Arvis",
-    "appId": "org.wfcreatorgui",
+    "appId": "org.arvis",
     "files": [
       "dist/",
       "node_modules/",
@@ -245,8 +245,11 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@hot-loader/react-dom": "^16.13.0",
+    "arvis-core": "../arvis-core",
+    "arvis-plist-converter": "../arvis-plist-converter",
     "auto-launch": "^5.0.5",
     "bootstrap": "^4.6.0",
+    "chokidar": "^3.5.1",
     "clipboardy": "^2.3.0",
     "connected-react-router": "^6.8.0",
     "core-js": "^3.6.5",
@@ -277,8 +280,7 @@
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.16",
     "styled-components": "^5.2.1",
-    "use-force-update": "^1.0.7",
-    "arvis-core": "../arvis-core"
+    "use-force-update": "^1.0.7"
   },
   "devEngines": {
     "node": ">=12.x",

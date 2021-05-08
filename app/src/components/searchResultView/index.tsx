@@ -65,7 +65,7 @@ const searchResultView = (props: IProps) => {
   const determineIconPath = async (
     command: any
   ): Promise<string | undefined> => {
-    const workflowRootPath = `${Core.path.workflowInstallPath}${path.sep}installed${path.sep}${command.bundleId}`;
+    const workflowRootPath = Core.path.getWorkflowInstalledPath(command.bundleId);
     const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
 
     let iconPath;

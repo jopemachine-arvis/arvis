@@ -5,8 +5,7 @@ import {
   Menu,
   MenuItem,
   SidebarHeader,
-  SidebarContent,
-  SidebarFooter
+  SidebarContent
 } from 'react-pro-sidebar';
 import {
   AiOutlineSetting,
@@ -83,9 +82,6 @@ export default function Sidebar(props: IProps) {
             </MenuItem>
           </Menu>
         </SidebarContent>
-        <SidebarFooter>
-          <div>Footer</div>
-        </SidebarFooter>
       </ProSidebar>
     </OuterContainer>
   );

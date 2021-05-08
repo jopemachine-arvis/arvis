@@ -4,6 +4,7 @@ import constants from '../constants';
 import MenuBuilder from '../components/menus';
 import AppUpdater from '../config/appUpdater';
 import installExtensions from '../config/extensionInstaller';
+import { startFileWatcher } from '../helper/workflowConfigFileWatcher';
 
 const createPreferenceWindow = ({
   trayBuilder,
@@ -65,6 +66,7 @@ const createPreferenceWindow = ({
 
   // eslint-disable-next-line
   new AppUpdater();
+  startFileWatcher();
 
   return preferenceWindow;
 };
