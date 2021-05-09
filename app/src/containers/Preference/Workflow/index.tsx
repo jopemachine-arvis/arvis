@@ -47,6 +47,8 @@ import {
   iconStyle,
   labelStyle
 } from './style';
+import { sleep } from '../../../utils';
+import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -65,8 +67,8 @@ export default function Workflow() {
   const [workflowEnabled, setWorkflowEnabled] = useState<boolean>(false);
 
   const forceUpdate = useForceUpdate();
-
   const [spinning, setSpinning] = useContext(ScreenCoverContext) as any;
+  const deleteWorkflowEventHandler = useRef<any>();
 
   const fetchWorkflows = () => {
     const workflowsToSet = Core.getWorkflowList();
@@ -88,9 +90,12 @@ export default function Workflow() {
         Core.install(wfConfigFilePath)
           .then(() => {
             fetchWorkflows();
+            ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+              destWindow: 'searchWindow'
+            });
           })
           .catch(err => {
-            ipcRenderer.send('show-error-dialog', {
+            ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
               title: 'Installer file is invalid',
               content: err.message
             });
@@ -101,21 +106,38 @@ export default function Workflow() {
       } else {
         setSpinning(false);
       }
+    },
+
+    openYesnoDialogRet: (
+      e: Electron.IpcRendererEvent,
+      { yesPressed }: { yesPressed: boolean }
+    ) => {
+      if (yesPressed) {
+        deleteWorkflowEventHandler.current();
+      }
     }
   };
 
   useEffect(() => {
-    ipcRenderer.on('save-file-ret', ipcCallbackTbl.saveFileRet);
+    ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
     ipcRenderer.on(
-      'open-wfconf-file-dialog-ret',
+      IPCMainEnum.openWfConfFileDialogRet,
       ipcCallbackTbl.openWfConfFileDialogRet
+    );
+    ipcRenderer.on(
+      IPCMainEnum.openYesnoDialogRet,
+      ipcCallbackTbl.openYesnoDialogRet
     );
 
     return () => {
-      ipcRenderer.off('save-file-ret', ipcCallbackTbl.saveFileRet);
+      ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
       ipcRenderer.off(
-        'open-wfconf-file-dialog-ret',
+        IPCMainEnum.openWfConfFileDialogRet,
         ipcCallbackTbl.openWfConfFileDialogRet
+      );
+      ipcRenderer.off(
+        IPCMainEnum.openYesnoDialogRet,
+        ipcCallbackTbl.openYesnoDialogRet
       );
     };
   }, []);
@@ -147,8 +169,6 @@ export default function Workflow() {
     }
   }, [selectedWorkflowIdx, Object.keys(workflows).length]);
 
-  const deleteWorkflowEventHandler = useRef<any>();
-
   const itemClickHandler = (idx: number) => {
     setSelectedWorkflowIdx(idx);
   };
@@ -169,7 +189,9 @@ export default function Workflow() {
   ) => {
     e.preventDefault();
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
-    ipcRenderer.send('popup-workflowItem-menu', { path: workflowRootPath });
+    ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
+      path: workflowRootPath
+    });
   };
 
   const renderItem = (itemBundleId: string, idx: number) => {
@@ -212,8 +234,8 @@ export default function Workflow() {
     );
   };
 
-  const addNewWorkflow = () => {
-    ipcRenderer.send('open-wfconf-file-dialog');
+  const requestAddNewWorkflow = () => {
+    ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog);
     setSpinning(true);
   };
 
@@ -222,7 +244,7 @@ export default function Workflow() {
     fse.readJson(targetPath).then(async json => {
       json['bundleId'] = workflowBundleId;
       json['category'] = workflowCategory;
-      json['creator'] = workflowCreator;
+      json['createdby'] = workflowCreator;
       json['description'] = workflowDescription;
       json['name'] = workflowName;
       json['version'] = workflowVersion;
@@ -238,7 +260,7 @@ export default function Workflow() {
       path.sep
     }${workflowBundleId}.arvisworkflow`;
 
-    ipcRenderer.send('save-file', {
+    ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to save',
       defaultPath
     });
@@ -250,11 +272,14 @@ export default function Workflow() {
 
     setSpinning(true);
 
+    const targetBundleId =
+      workflowList[workflowBundleIds[idxToRemove]].bundleId;
+
     Core.unInstall({
-      bundleId: workflowList[workflowBundleIds[idxToRemove]].bundleId
-    }).then(() => {
+      bundleId: targetBundleId
+    }).then(async () => {
       const temp = workflowList;
-      delete temp[workflowList[workflowBundleIds[idxToRemove]].bundleId];
+      delete temp[targetBundleId];
       setWorkflows(temp);
 
       if (idxToRemove !== 0) {
@@ -263,6 +288,11 @@ export default function Workflow() {
         forceUpdate();
       }
       setSpinning(false);
+
+      await sleep(100);
+      ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+        destWindow: 'searchWindow'
+      });
     });
   };
 
@@ -285,14 +315,9 @@ export default function Workflow() {
     const workflowBundleIds = Object.keys(workflows);
     if (workflowBundleIds.length === 0) return;
 
-    ipcRenderer.send('open-yesno-dialog', {
+    ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
       msg: `Are you sure you want to delete '${workflowBundleId}'?`,
       icon: getDefaultIcon(workflowBundleId)
-    });
-    ipcRenderer.on('open-yesno-dialog-ret', (e, { yesPressed }) => {
-      if (yesPressed) {
-        deleteWorkflowEventHandler.current();
-      }
     });
   };
 
@@ -327,7 +352,7 @@ export default function Workflow() {
           <AiOutlineAppstoreAdd
             className="workflow-page-buttons"
             style={bottomFixedBarIconStyle}
-            onClick={() => addNewWorkflow()}
+            onClick={() => requestAddNewWorkflow()}
           />
           <AiOutlineSave
             className="workflow-page-buttons"

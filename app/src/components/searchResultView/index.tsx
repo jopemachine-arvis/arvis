@@ -9,6 +9,7 @@ import _ from 'lodash';
 import SearchResultItem from '../searchResultItem';
 import { checkFileExists, isSupportedImageFormat } from '../../utils';
 import { InnerContainer, OuterContainer } from './components';
+import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 type IProps = {
   demo: boolean;
@@ -92,8 +93,14 @@ const searchResultView = (props: IProps) => {
   };
 
   useEffect(() => {
+    return () => {
+      setContents(<></>);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!demo) {
-      ipcRenderer.send('resize-searchwindow-height', {
+      ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
         itemCount: searchResult.length,
         maxItemCount,
         itemHeight,

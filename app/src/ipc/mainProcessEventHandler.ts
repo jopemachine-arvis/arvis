@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-else-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ipcMain,
@@ -12,6 +14,7 @@ import { getFonts } from 'font-list';
 import WorkflowItemMenu from '../components/contextMenus/workflow';
 import globalShortcutHandler from './globalShortcutHandler';
 import resizeEventHandler from './resizeEventHandler';
+import { IPCRendererEnum, IPCMainEnum } from './ipcEventEnum';
 
 export const initIPCHandler = ({
   searchWindow,
@@ -20,14 +23,27 @@ export const initIPCHandler = ({
   searchWindow: BrowserWindow;
   preferenceWindow: BrowserWindow;
 }) => {
+  const getDestWindow = (windowName: string) => {
+    if (windowName === 'searchWindow') {
+      return searchWindow;
+    } else if (windowName === 'preferenceWindow') {
+      return preferenceWindow;
+    } else {
+      throw new Error(`Window name is not properly set up:\n${windowName}`);
+    }
+  };
+
   // Used to select wfconf file
-  ipcMain.on('show-error-dialog', (e: IpcMainEvent, { title, content }) => {
-    dialog.showErrorBox(title, content);
-  });
+  ipcMain.on(
+    IPCRendererEnum.showErrorDialog,
+    (e: IpcMainEvent, { title, content }) => {
+      dialog.showErrorBox(title, content);
+    }
+  );
 
   // Used to select file to save
   ipcMain.on(
-    'save-file',
+    IPCRendererEnum.saveFile,
     async (e: IpcMainEvent, { title, message, defaultPath }) => {
       const file = await dialog.showSaveDialog({
         title,
@@ -35,14 +51,14 @@ export const initIPCHandler = ({
         message: message ?? 'Select the path your file will be saved'
       });
 
-      preferenceWindow.webContents.send('save-file-ret', {
+      preferenceWindow.webContents.send(IPCMainEnum.saveFileRet, {
         file
       });
     }
   );
 
   // Used to select wfconf file
-  ipcMain.on('open-wfconf-file-dialog', async (e: IpcMainEvent) => {
+  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, async (e: IpcMainEvent) => {
     const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
       properties: ['openFile'],
       filters: [
@@ -52,14 +68,14 @@ export const initIPCHandler = ({
         }
       ]
     });
-    preferenceWindow.webContents.send('open-wfconf-file-dialog-ret', {
+    preferenceWindow.webContents.send(IPCMainEnum.openWfConfFileDialogRet, {
       file
     });
   });
 
   // Used to open yesno modal box
   ipcMain.on(
-    'open-yesno-dialog',
+    IPCRendererEnum.openYesnoDialog,
     async (e: IpcMainEvent, { msg, icon }: { msg: string; icon?: string }) => {
       const ret: Electron.MessageBoxReturnValue = await dialog.showMessageBox({
         type: 'info',
@@ -69,7 +85,7 @@ export const initIPCHandler = ({
       });
 
       const yesPressed = ret.response === 0;
-      preferenceWindow.webContents.send('open-yesno-dialog-ret', {
+      preferenceWindow.webContents.send(IPCMainEnum.openYesnoDialogRet, {
         yesPressed
       });
     }
@@ -77,7 +93,7 @@ export const initIPCHandler = ({
 
   // Used to show notification
   ipcMain.on(
-    'show-notification',
+    IPCRendererEnum.showNotification,
     (e: IpcMainEvent, { title, body }: { title: string; body: string }) => {
       // https://www.electronjs.org/docs/tutorial/notifications
       const notification = {
@@ -89,14 +105,14 @@ export const initIPCHandler = ({
   );
 
   // Used to get all system fonts
-  ipcMain.on('get-system-fonts', async (e: IpcMainEvent) => {
+  ipcMain.on(IPCRendererEnum.getSystemFont, async (e: IpcMainEvent) => {
     const fonts = await getFonts({ disableQuoting: true });
-    preferenceWindow.webContents.send('get-system-fonts-ret', { fonts });
+    preferenceWindow.webContents.send(IPCMainEnum.getSystemFontRet, { fonts });
   });
 
   // Used to automatically change the height of searchWindow
   ipcMain.on(
-    'resize-searchwindow-height',
+    IPCRendererEnum.resizeSearchWindowHeight,
     (
       e: IpcMainEvent,
       {
@@ -125,13 +141,26 @@ export const initIPCHandler = ({
   );
 
   // Used to hide search window with avoiding afterimage
-  ipcMain.on('hide-search-window', (e: IpcMainEvent) => {
+  ipcMain.on(IPCRendererEnum.hideSearchWindow, (e: IpcMainEvent) => {
     searchWindow.hide();
   });
 
+  // Used to hide search window with avoiding afterimage
+  ipcMain.on(
+    IPCRendererEnum.renewWorkflow,
+    (
+      e: IpcMainEvent,
+      { destWindow, bundleId }: { destWindow: string; bundleId?: string }
+    ) => {
+      getDestWindow(destWindow).webContents.send(IPCMainEnum.renewWorkflow, {
+        bundleId
+      });
+    }
+  );
+
   // Used to register global shortcuts
   ipcMain.on(
-    'set-global-shortcut',
+    IPCRendererEnum.setGlobalShortcut,
     (e: IpcMainEvent, { callbackTable }: { callbackTable: any }) => {
       globalShortcutHandler({ callbackTable, preferenceWindow, searchWindow });
     }
@@ -139,7 +168,7 @@ export const initIPCHandler = ({
 
   // Used to popup context menu
   ipcMain.on(
-    'popup-workflowItem-menu',
+    IPCRendererEnum.popupWorkflowItemMenu,
     (e: IpcMainEvent, { path }: { path: string }) => {
       new WorkflowItemMenu({ path }).popup();
     }
@@ -148,7 +177,7 @@ export const initIPCHandler = ({
   // When some action is dispatched from some window, the action is not dispatched to other windows.
   // So, therefore, this function should be used to dispatch to target windows via ipc.
   ipcMain.on(
-    'dispatch-action',
+    IPCRendererEnum.dispatchAction,
     (
       e: IpcMainEvent,
       {
@@ -161,13 +190,10 @@ export const initIPCHandler = ({
         args: any;
       }
     ) => {
-      if (destWindow === 'searchWindow') {
-        searchWindow.webContents.send('fetch-action', { actionType, args });
-      } else if (destWindow === 'preferenceWindow') {
-        preferenceWindow.webContents.send('fetch-action', { actionType, args });
-      } else {
-        throw new Error(`Window name is not properly set up:\n${destWindow}`);
-      }
+      getDestWindow(destWindow).webContents.send(IPCMainEnum.fetchAction, {
+        actionType,
+        args
+      });
     }
   );
 };

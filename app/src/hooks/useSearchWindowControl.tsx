@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
 import useKey from '../../use-key-capture/src';
+import { IPCMainEnum, IPCRendererEnum } from '../ipc/ipcEventEnum';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -331,7 +332,7 @@ const useSearchWindowControl = ({
   };
 
   useEffect(() => {
-    ipcRenderer.on('hide-search-window-by-blur-event', () => {
+    ipcRenderer.on(IPCMainEnum.hideSearchWindowByBlurEvent, () => {
       cleanUpBeforeHide();
     });
 
@@ -352,7 +353,7 @@ const useSearchWindowControl = ({
     if (shouldBeHided === true && items.length === 0) {
       // Give some time to remove Afterimage
       setTimeout(() => {
-        ipcRenderer.send('hide-search-window');
+        ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
       }, 10);
       setShouldBeHided(false);
     }

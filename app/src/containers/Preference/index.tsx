@@ -13,6 +13,7 @@ import AdvancedPage from './Advanced';
 import { StateType } from '../../redux/reducers/types';
 import { ScreenCoverContext } from './screenCoverContext';
 import { ScreenCover } from '../../components';
+import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 const INITIAL_PAGE = PreferencePage.General;
 
@@ -45,7 +46,7 @@ export default function PreferenceWindow() {
       [hotkey]: 'toggleSearchWindow'
     };
 
-    ipcRenderer.send('set-global-shortcut', {
+    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
       callbackTable: globalShortcutCallbackTable
     });
   };
@@ -67,9 +68,9 @@ export default function PreferenceWindow() {
     renewWorkflows();
     registerAllGlobalHotkey();
 
-    ipcRenderer.on('renew-workflow', ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     return () => {
-      ipcRenderer.off('renew-workflow', ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     };
   }, []);
 

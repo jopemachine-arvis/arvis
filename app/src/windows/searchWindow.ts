@@ -1,6 +1,7 @@
 import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
+import { IPCMainEnum } from '../ipc/ipcEventEnum';
 
 const createSearchWindow = () => {
   const searchWindow = new BrowserWindow({
@@ -41,7 +42,7 @@ const createSearchWindow = () => {
   });
 
   searchWindow.on('blur', () => {
-    searchWindow.webContents.send('hide-search-window-by-blur-event');
+    searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
   });
 
   return searchWindow;

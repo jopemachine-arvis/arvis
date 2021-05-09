@@ -9,6 +9,7 @@ import { StateType } from '../../../redux/reducers/types';
 import { makeActionCreator } from '../../../utils';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
+import { IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function Advanced() {
   const {
@@ -22,7 +23,7 @@ export default function Advanced() {
   const toggleState = (actionType: string, bool: boolean) => {
     dispatch(makeActionCreator(actionType, 'arg')(!bool));
 
-    ipcRenderer.send('dispatch-action', {
+    ipcRenderer.send(IPCRendererEnum.dispatchAction, {
       destWindow: 'searchWindow',
       actionType,
       args: !bool

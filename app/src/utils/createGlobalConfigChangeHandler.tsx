@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 import { Dispatch } from 'react';
 import makeActionCreator from './makeActionCreator';
 import { isNumeric } from './isNumeric';
+import { IPCRendererEnum } from '../ipc/ipcEventEnum';
 
 export const createGlobalConfigChangeHandler = ({
   destWindow,
@@ -15,7 +16,7 @@ export const createGlobalConfigChangeHandler = ({
     : e.currentTarget.value;
 
   dispatch(makeActionCreator(actionType, 'arg')(target));
-  ipcRenderer.send('dispatch-action', {
+  ipcRenderer.send(IPCRendererEnum.dispatchAction, {
     destWindow,
     actionType,
     args: target

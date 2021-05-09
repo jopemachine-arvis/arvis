@@ -2,6 +2,7 @@ import chokidar from 'chokidar';
 import { Core } from 'arvis-core';
 import path from 'path';
 import { BrowserWindow } from 'electron';
+import { IPCMainEnum } from '../ipc/ipcEventEnum';
 
 export const startFileWatcher = ({
   searchWindow,
@@ -29,7 +30,9 @@ export const startFileWatcher = ({
       const bundleId = pathArrs.pop();
 
       // Update singleton for each Windows
-      preferenceWindow.webContents.send('renew-workflow', { bundleId });
-      searchWindow.webContents.send('renew-workflow', { bundleId });
+      preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
+        bundleId
+      });
+      searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
     });
 };

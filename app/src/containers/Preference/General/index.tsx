@@ -24,6 +24,7 @@ import { StyledInput } from '../../../components';
 import useKey from '../../../../use-key-capture/src';
 import { actionTypes as GlobalConfigActionTypes } from '../../../redux/actions/globalConfig';
 import { createGlobalConfigChangeHandler } from '../../../utils';
+import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function General() {
   const { keyData } = useKey();
@@ -60,10 +61,10 @@ export default function General() {
   });
 
   useEffect(() => {
-    ipcRenderer.send('get-system-fonts');
-    ipcRenderer.on('get-system-fonts-ret', ipcCallbackTbl.setFont);
+    ipcRenderer.send(IPCRendererEnum.getSystemFont);
+    ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     return () => {
-      ipcRenderer.off('get-system-fonts-ret', ipcCallbackTbl.setFont);
+      ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     };
   }, []);
 

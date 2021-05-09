@@ -6,9 +6,11 @@ import { checkFileExists } from './checkFileExists';
 import { isSupportedImageFormat } from './isSupportedImage';
 import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
+import { sleep } from './sleep';
 
 export {
   createGlobalConfigChangeHandler,
+  sleep,
   isNumeric,
   makeActionCreator,
   checkFileExists,

@@ -8,6 +8,7 @@ import { Core } from 'arvis-core';
 
 import * as RawKeyTbl from '../utils/iohook/libuihookTable';
 import shortcutCallbackTbl from './shortcutCallbackTable';
+import { IPCMainEnum } from './ipcEventEnum';
 
 const doubleKeyPressHandler = {
   shift: () => {},
@@ -54,7 +55,7 @@ const handleHotKeyAction = (
       ? targetAction.keyword
       : targetAction.scriptfilter;
 
-    searchWindow.webContents.send('set-searchbar-input', {
+    searchWindow.webContents.send(IPCMainEnum.setSearchbarInput, {
       str: newStr
     });
   }

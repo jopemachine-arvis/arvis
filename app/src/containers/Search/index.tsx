@@ -8,6 +8,7 @@ import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
 import { OuterContainer } from './components';
 import { makeActionCreator } from '../../utils';
+import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 export default function SearchWindow() {
   const {
@@ -73,7 +74,7 @@ export default function SearchWindow() {
 
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
-      ipcRenderer.send('show-notification', {
+      ipcRenderer.send(IPCRendererEnum.showNotification, {
         title: action.title,
         body: action.text
       });
@@ -100,23 +101,25 @@ export default function SearchWindow() {
   };
 
   const initilizeSearchWindowIPCHandler = () => {
-    ipcRenderer.on('fetch-action', ipcCallbackTbl.fetchAction);
-    ipcRenderer.on('set-searchbar-input', ipcCallbackTbl.setSearchbarInput);
-    ipcRenderer.on('renew-workflow', ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+    ipcRenderer.on(
+      IPCMainEnum.setSearchbarInput,
+      ipcCallbackTbl.setSearchbarInput
+    );
+    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
 
     return () => {
-      ipcRenderer.off('fetch-action', ipcCallbackTbl.fetchAction);
-      ipcRenderer.off('set-searchbar-input', ipcCallbackTbl.setSearchbarInput);
-      ipcRenderer.off('renew-workflow', ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+      ipcRenderer.off(
+        IPCMainEnum.setSearchbarInput,
+        ipcCallbackTbl.setSearchbarInput
+      );
+      ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     };
   };
 
-  const renewWorkflows = () => {
-    Core.renewWorkflows();
-  };
-
   useEffect(() => {
-    renewWorkflows();
+    Core.renewWorkflows();
     registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
