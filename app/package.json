@@ -20,19 +20,21 @@
   "license": "MIT",
   "dependencies": {
     "archiver": "^5.3.0",
-    "fsevents": "^2.3.2",
     "iohook": "^0.9.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.5"
   },
   "iohook": {
     "targets": [
-      "node-72",
       "electron-75"
     ],
     "platforms": [
-      "darwin"
+      "darwin",
+      "win32"
     ],
     "arches": [
       "x64",

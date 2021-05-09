@@ -4,10 +4,21 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import { dependencies as externals } from '../app/package.json';
+import { dependencies as baseExternals } from '../app/package.json';
+
+let externals = [...Object.keys(baseExternals || {})];
+
+const optionalDependenciesOnMac = ['fsevents'];
+
+// fsevents is only applied on macOS
+if (process.platform === 'darwin') {
+  externals = [...externals, ...optionalDependenciesOnMac];
+}
+
+console.log('Applied external packages depending on platform', externals);
 
 export default {
-  externals: [...Object.keys(externals || {})],
+  externals,
 
   module: {
     rules: [
