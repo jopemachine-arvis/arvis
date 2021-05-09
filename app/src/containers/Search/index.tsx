@@ -102,19 +102,19 @@ export default function SearchWindow() {
 
   const initilizeSearchWindowIPCHandler = () => {
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
     );
-    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
 
     return () => {
       ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+      ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
       ipcRenderer.off(
         IPCMainEnum.setSearchbarInput,
         ipcCallbackTbl.setSearchbarInput
       );
-      ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     };
   };
 

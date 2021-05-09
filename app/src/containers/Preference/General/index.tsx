@@ -63,6 +63,7 @@ export default function General() {
   useEffect(() => {
     ipcRenderer.send(IPCRendererEnum.getSystemFont);
     ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
+
     return () => {
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     };

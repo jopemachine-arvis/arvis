@@ -13,19 +13,8 @@ Packages directly related to this package.
 
 ### Build from sources
 
-```
-// Install packages
-$ yarn
-
-// Build main js, renderer
-$ yarn build
-
-// Run after source build in dev mode
-$ yarn dev
-
-// Run after source build in prod mode
-$ yarn start
-```
+* [Macos](./documents/build-macos.md)
+* [Windows](./documents/build-windows.md)
 
 ### iohook config
 

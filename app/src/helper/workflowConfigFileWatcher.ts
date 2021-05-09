@@ -30,9 +30,9 @@ export const startFileWatcher = ({
       const bundleId = pathArrs.pop();
 
       // Update singleton for each Windows
+      searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
       preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
         bundleId
       });
-      searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
     });
 };
