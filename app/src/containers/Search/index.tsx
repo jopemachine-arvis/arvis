@@ -96,7 +96,7 @@ export default function SearchWindow() {
       dispatch(makeActionCreator(actionType, 'arg')(args));
     },
     setSearchbarInput: (e: IpcRendererEvent, { str }: { str: string }) => {
-      setInputStr(str);
+      setInputStr({ str, needItemsUpdate: true });
     },
     renewWorkflow: (
       e: IpcRendererEvent,

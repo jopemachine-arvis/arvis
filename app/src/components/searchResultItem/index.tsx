@@ -124,6 +124,7 @@ const searchResultItem = (props: IProps) => {
           paddingLeft: iconRightMargin
         }}
       >
+        {/* If there is no Title or Subtitle, the other item appears in the center */}
         <Title
           style={{
             fontSize: titleFontSize,
@@ -139,7 +140,7 @@ const searchResultItem = (props: IProps) => {
             color: selected ? selectedItemFontColor : itemFontColor
           }}
         >
-          {subtitle}
+          {subtitle !== '(none)' ? subtitle : ' '}
         </SubTitle>
       </InnerContainer>
       <OffsetText

@@ -109,15 +109,15 @@ const useSearchWindowControl = ({
 
     // Assume withspace's default value is true
     // When script filter is not running (and should be running)
-    const goScriptFilterWithSpace =
+    const execScriptFilterWithSpace =
       firstItem.withspace === true &&
       updatedInput.includes(firstItem.command) &&
       pressedKey !== ' ';
 
-    const goScriptFilterWithoutSpace =
+    const execScriptFilterWithoutSpace =
       firstItem.withspace === false && updatedInput.includes(firstItem.command);
 
-    if (goScriptFilterWithSpace || goScriptFilterWithoutSpace) {
+    if (execScriptFilterWithSpace || execScriptFilterWithoutSpace) {
       // eslint-disable-next-line prefer-destructuring
       commandOnStackIsEmpty = firstItem;
 
@@ -163,11 +163,19 @@ const useSearchWindowControl = ({
     clearIndexInfo();
   };
 
-  const setInputStr = (str: string) => {
+  const setInputStr = ({
+    str,
+    needItemsUpdate
+  }: {
+    str: string;
+    needItemsUpdate: boolean;
+  }) => {
     if (inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
-    handleNormalInput('', str);
+    if (needItemsUpdate) {
+      handleNormalInput('', str);
+    }
   };
 
   const handleReturn = async ({
@@ -179,7 +187,7 @@ const useSearchWindowControl = ({
   }) => {
     const selectedItem = items[selectedItemIdx];
     if (selectedItem.type === 'scriptfilter') {
-      setInputStr(selectedItem.command);
+      setInputStr({ str: selectedItem.command, needItemsUpdate: false });
       const { running_subtext: runningSubText } = items[selectedItemIdx];
 
       workManager.setRunningText({
@@ -277,7 +285,7 @@ const useSearchWindowControl = ({
       'Shift',
       'CapsLock',
       'Tab',
-      'Esc'
+      'Escape'
     ];
 
     if (!exceptionKeys.includes(e.key)) {
@@ -308,7 +316,7 @@ const useSearchWindowControl = ({
     } else if (keyData.isArrowUp) {
       handleUpArrow();
     } else if (keyData.isEscape) {
-      cleanUpBeforeHide();
+      workManager.popWork();
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
     }
@@ -327,8 +335,14 @@ const useSearchWindowControl = ({
     setShouldBeHided(true);
   };
 
-  const onInputShouldBeUpdate = (str: string) => {
-    setInputStr(str);
+  const onInputShouldBeUpdate = ({
+    str,
+    needItemsUpdate
+  }: {
+    str: string;
+    needItemsUpdate: boolean;
+  }) => {
+    setInputStr({ str, needItemsUpdate });
   };
 
   useEffect(() => {
