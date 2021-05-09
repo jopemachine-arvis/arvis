@@ -26,6 +26,8 @@ export default {
   advancedConfig: {
     debugging_workflow_output: true,
     debugging_workstack: false,
-    debugging_action_type: true
+    debugging_action_type: true,
+    debugging_args: false,
+    debugging_scriptfilter: false
   }
 };

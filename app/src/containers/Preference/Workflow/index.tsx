@@ -452,6 +452,7 @@ export default function Workflow() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Description</Label>
+            {/* To do :: make description input auto height */}
             <StyledInput
               type="textarea"
               value={workflowDescription}

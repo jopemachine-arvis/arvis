@@ -3,6 +3,7 @@
   "productName": "Arvis",
   "version": "0.0.1",
   "description": "demo version",
+  "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -39,6 +40,10 @@
     "replace-conv": "rm -rf node_modules/arvis-plist-converter && cp -R ../arvis-plist-converter node_modules/arvis-plist-converter",
     "replace-iohook-prebuilt": "node prebuilt-replace.js"
   },
+  "keywords": [
+    "arvis",
+    "cross-platform"
+  ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "cross-env NODE_ENV=development eslint --cache"
@@ -107,6 +112,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jopemachine/arvis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jopemachine/arvis/issues"
   },
   "license": "MIT",
   "jest": {

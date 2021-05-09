@@ -18,8 +18,6 @@ Packages directly related to this package.
 
 ### iohook config
 
-This package uses `iohook` which depending on the version of the electron and node, has different binaries.
-
-https://github.com/electron/releases
+This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.
 
 So, If node or electron version is updated, the config should be updated as well.

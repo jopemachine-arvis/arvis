@@ -40,10 +40,16 @@ export default function SearchWindow() {
 
   const workManager = Core.WorkManager.getInstance();
 
-  useEffect(() => {
+  const setDebuggingOptions = () => {
     workManager.printActionType = debuggingConfig.debugging_action_type;
     workManager.printWorkStack = debuggingConfig.debugging_workstack;
     workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
+    workManager.printArgs = debuggingConfig.debugging_args;
+    workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
+  };
+
+  useEffect(() => {
+    setDebuggingOptions();
   }, [debuggingConfig]);
 
   const dispatch = useDispatch();

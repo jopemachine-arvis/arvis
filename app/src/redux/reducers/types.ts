@@ -29,6 +29,8 @@ export type StateType = {
     debugging_workflow_output: boolean;
     debugging_workstack: boolean;
     debugging_action_type: boolean;
+    debugging_args: boolean;
+    debugging_scriptfilter: boolean;
   };
 };
 
