@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/always-return */
 /* eslint-disable react/no-array-index-key */
@@ -33,7 +34,7 @@ type IProps = {
   titleFontSize: number;
 };
 
-const searchResultView = (props: IProps) => {
+const searchResultView = React.memo((props: IProps) => {
   const {
     demo,
     footerHeight,
@@ -105,6 +106,7 @@ const searchResultView = (props: IProps) => {
             <SearchResultItem
               offset={offset}
               selected={itemIdx === selectedItemIdx}
+              // To do :: Fix me!!
               title={command.title ? command.title : command.command}
               subtitle={command.subtitle}
               arg={command.arg}
@@ -131,6 +133,6 @@ const searchResultView = (props: IProps) => {
       })}
     </OuterContainer>
   );
-};
+});
 
 export default searchResultView;

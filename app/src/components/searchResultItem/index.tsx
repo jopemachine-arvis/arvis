@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+/* eslint-disable react/display-name */
+import React, { useCallback, useMemo } from 'react';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
-import useKey from '../../../use-key-capture/src';
 import {
   InnerContainer,
   OuterContainer,
@@ -10,8 +10,6 @@ import {
   IconImg,
   OffsetText
 } from './components';
-
-const clipboardy = require('clipboardy');
 
 type IProps = {
   title: string;
@@ -38,7 +36,7 @@ type IProps = {
   offset: number;
 };
 
-const searchResultItem = (props: IProps) => {
+const searchResultItem = React.memo((props: IProps) => {
   const {
     offset,
     selected,
@@ -63,22 +61,6 @@ const searchResultItem = (props: IProps) => {
     subtitleFontSize,
     titleFontSize
   } = props;
-
-  const { keyData } = useKey();
-
-  const copyHandler = () => {
-    clipboardy.write(title);
-  };
-
-  useEffect(() => {
-    // if (selected) {
-    //   if (keyData.isWithMeta || keyData.isWithCtrl) {
-    //     if (keyData.key.toLowerCase() === 'c') {
-    //       copyHandler();
-    //     }
-    //   }
-    // }
-  }, [keyData]);
 
   const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
 
@@ -159,6 +141,6 @@ const searchResultItem = (props: IProps) => {
       </OffsetText>
     </OuterContainer>
   );
-};
+});
 
 export default searchResultItem;

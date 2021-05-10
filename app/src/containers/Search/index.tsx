@@ -1,5 +1,5 @@
 /* eslint-disable promise/always-return */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -71,12 +71,12 @@ export default function SearchWindow() {
     maxItemCount: max_item_count_to_show
   });
 
-  const registerWindowUpdater = () => {
+  const registerWindowUpdater = useCallback(() => {
     workManager.onItemPressHandler = onItemPressHandler;
     workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
     workManager.onWorkEndHandler = onWorkEndHandler;
     workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
-  };
+  }, []);
 
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
@@ -106,29 +106,30 @@ export default function SearchWindow() {
     }
   };
 
-  const initilizeSearchWindowIPCHandler = () => {
+  const initilizeSearchWindowIPCHandler = useCallback(() => {
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
     );
+  }, []);
 
-    return () => {
-      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-      ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
-      ipcRenderer.off(
-        IPCMainEnum.setSearchbarInput,
-        ipcCallbackTbl.setSearchbarInput
-      );
-    };
-  };
+  const unsubscribe = useCallback(() => {
+    ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+    ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.off(
+      IPCMainEnum.setSearchbarInput,
+      ipcCallbackTbl.setSearchbarInput
+    );
+  }, []);
 
   useEffect(() => {
     Core.renewWorkflows();
     registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
+    return unsubscribe;
   }, []);
 
   return (
