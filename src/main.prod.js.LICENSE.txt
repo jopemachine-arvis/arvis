@@ -1,0 +1,350 @@
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * arr-diff <https://github.com/jonschlinkert/arr-diff>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * arr-flatten <https://github.com/jonschlinkert/arr-flatten>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * array-unique <https://github.com/jonschlinkert/array-unique>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * assign-symbols <https://github.com/jonschlinkert/assign-symbols>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * collection-visit <https://github.com/jonschlinkert/collection-visit>
+ *
+ * Copyright (c) 2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * copy-descriptor <https://github.com/jonschlinkert/copy-descriptor>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * define-property <https://github.com/jonschlinkert/define-property>
+ *
+ * Copyright (c) 2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * define-property <https://github.com/jonschlinkert/define-property>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * define-property <https://github.com/jonschlinkert/define-property>
+ *
+ * Copyright (c) 2015-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * fill-range <https://github.com/jonschlinkert/fill-range>
+ *
+ * Copyright (c) 2014-2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * for-in <https://github.com/jonschlinkert/for-in>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * fragment-cache <https://github.com/jonschlinkert/fragment-cache>
+ *
+ * Copyright (c) 2016-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * get-value <https://github.com/jonschlinkert/get-value>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * has-value <https://github.com/jonschlinkert/has-value>
+ *
+ * Copyright (c) 2014-2016, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * has-value <https://github.com/jonschlinkert/has-value>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * has-values <https://github.com/jonschlinkert/has-values>
+ *
+ * Copyright (c) 2014-2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * has-values <https://github.com/jonschlinkert/has-values>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-accessor-descriptor <https://github.com/jonschlinkert/is-accessor-descriptor>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-accessor-descriptor <https://github.com/jonschlinkert/is-accessor-descriptor>
+ *
+ * Copyright (c) 2015-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * is-data-descriptor <https://github.com/jonschlinkert/is-data-descriptor>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-data-descriptor <https://github.com/jonschlinkert/is-data-descriptor>
+ *
+ * Copyright (c) 2015-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * is-descriptor <https://github.com/jonschlinkert/is-descriptor>
+ *
+ * Copyright (c) 2015-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * is-extendable <https://github.com/jonschlinkert/is-extendable>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-extendable <https://github.com/jonschlinkert/is-extendable>
+ *
+ * Copyright (c) 2015-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * is-extglob <https://github.com/jonschlinkert/is-extglob>
+ *
+ * Copyright (c) 2014-2016, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-glob <https://github.com/jonschlinkert/is-glob>
+ *
+ * Copyright (c) 2014-2016, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-glob <https://github.com/jonschlinkert/is-glob>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * is-number <https://github.com/jonschlinkert/is-number>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * is-windows <https://github.com/jonschlinkert/is-windows>
+ *
+ * Copyright © 2015-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * map-cache <https://github.com/jonschlinkert/map-cache>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * normalize-path <https://github.com/jonschlinkert/normalize-path>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * normalize-path <https://github.com/jonschlinkert/normalize-path>
+ *
+ * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * object-visit <https://github.com/jonschlinkert/object-visit>
+ *
+ * Copyright (c) 2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * object.pick <https://github.com/jonschlinkert/object.pick>
+ *
+ * Copyright (c) 2014-2015 Jon Schlinkert, contributors.
+ * Licensed under the MIT License
+ */
+
+/*!
+ * pascalcase <https://github.com/jonschlinkert/pascalcase>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * repeat-element <https://github.com/jonschlinkert/repeat-element>
+ *
+ * Copyright (c) 2015-present, Jon Schlinkert.
+ * Licensed under the MIT license.
+ */
+
+/*!
+ * repeat-string <https://github.com/jonschlinkert/repeat-string>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * set-value <https://github.com/jonschlinkert/set-value>
+ *
+ * Copyright (c) 2014-2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * split-string <https://github.com/jonschlinkert/split-string>
+ *
+ * Copyright (c) 2015-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * static-extend <https://github.com/jonschlinkert/static-extend>
+ *
+ * Copyright (c) 2016, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * to-object-path <https://github.com/jonschlinkert/to-object-path>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*!
+ * to-regex-range <https://github.com/jonschlinkert/to-regex-range>
+ *
+ * Copyright (c) 2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * unset-value <https://github.com/jonschlinkert/unset-value>
+ *
+ * Copyright (c) 2015, 2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
+ * use <https://github.com/jonschlinkert/use>
+ *
+ * Copyright (c) 2015-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*! arch. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+
+/**
+ * @license
+ * Lodash <https://lodash.com/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** @license URI.js v4.4.0 (c) 2011 Gary Court. License: http://github.com/garycourt/uri-js */

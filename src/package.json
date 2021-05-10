@@ -1,0 +1,44 @@
+{
+  "name": "arvis",
+  "productName": "Arvis",
+  "version": "0.0.1",
+  "description": "demo version",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "jopemachine",
+    "email": "jopemachine@gmail.com",
+    "url": "https://github.com/jopemachine/Arvis"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "keywords": [
+    "electron",
+    "arvis"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "archiver": "^5.3.0",
+    "iohook": "^0.9.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.5"
+  },
+  "iohook": {
+    "targets": [
+      "electron-85"
+    ],
+    "platforms": [
+      "darwin",
+      "win32"
+    ],
+    "arches": [
+      "x64",
+      "ia32"
+    ]
+  }
+}
