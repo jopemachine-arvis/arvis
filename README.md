@@ -21,6 +21,7 @@
     - [5.2 Other packages](#)
     - [5.3 Build from sources](#)
     - [5.4 iohook config](#)
+    - [5.5 config file pathes](#)
 
 ## What is Arvis?
 
@@ -58,7 +59,19 @@ I started making `Arvis` because I wanted to use useful alfred-workflows in othe
 
 ### Program Install
 
+* [Macos]()
+* [Windows]()
+* [Linux]()
+
 ### Workflow Install
+
+```
+Right click tray icon 
+-> Click Open Preference Window 
+-> Click Workflow icon on sidebar 
+-> Click the + icon in the bar below 
+-> Click on the file in the arvisworkflow or alfredworkflow file
+```
 
 ### Plugin Install
 
@@ -66,11 +79,27 @@ I started making `Arvis` because I wanted to use useful alfred-workflows in othe
 
 ### How to use workflow
 
+`Workflow` is a set of `Command` that can be executed.
+
+Each `Action` of `Command` can be executed by `keyword`, `scriptfilter`, and `hotkey`.
+
+`Keyword` is to link an action to a command.
+
+`Scriptfilter` connects script to a command.
+
+and the items returned by the script appear in searchWindow, and the action is executed by clicking on them.
+
+`Hotkey` binds a specific key combination to a particular action.
+
+Arvis also supports double modifier key combinations (e.g. double cmd, double ctrl..)
+
 ### How to use plugin
 
 ## How to write new workflows, plugins
 
 ### How to write new workflows
+
+
 
 ### How to write new plugins
 
@@ -97,3 +126,15 @@ Packages directly related to this package.
 This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.
 
 So, If node or electron version is updated, the config should be updated as well.
+
+### config file pathes
+
+#### log files
+
+* on Linux: `~/.config/Arvis/logs/{process type}.log`
+* on macOS: `~/Library/Logs/Arvis/{process type}.log`
+* on Windows: `%USERPROFILE%\AppData\Roaming\Arvis\logs\{process type}.log`
+
+#### workflow, plugin files
+
+The storage path for all installed workflow files is stored in the `data` path of the [env-paths](https://github.com/sindresorhus/env-paths).
