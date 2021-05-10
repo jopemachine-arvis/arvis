@@ -11,12 +11,13 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import ElectronStore from 'electron-store';
+import { Core } from 'arvis-core';
 import TrayBuilder from './src/components/tray';
-
 import { createPreferenceWindow } from './src/windows/preferenceWindow';
 import { createSearchWindow } from './src/windows/searchWindow';
-
 import { initIPCHandler } from './src/ipc/mainProcessEventHandler';
+import { startFileWatcher } from './src/helper/workflowConfigFileWatcher';
+import installExtensions from './src/config/extensionInstaller';
 
 let preferenceWindow: BrowserWindow | null = null;
 let searchWindow: BrowserWindow | null = null;
@@ -58,22 +59,21 @@ app.on('before-quit', () => {
   }
 });
 
-app.on('ready', () => {
-  const onReadyHandler = () => {
-    searchWindow = createSearchWindow();
-    preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
+app.on('ready', async () => {
+  searchWindow = createSearchWindow();
+  preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
-    // Open debugging tool by 'undocked'
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
-      searchWindow.webContents.openDevTools({ mode: 'undocked' });
-    }
-    initIPCHandler({ searchWindow, preferenceWindow });
-  };
+  // Open debugging tool by 'undocked'
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    installExtensions();
+    searchWindow.webContents.openDevTools({ mode: 'undocked' });
+  }
 
-  onReadyHandler();
+  startFileWatcher({ searchWindow, preferenceWindow });
+  initIPCHandler({ searchWindow, preferenceWindow });
 
   // setTimeout(() => {
   //   //* Transparent window hack (Not working)

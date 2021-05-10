@@ -3,8 +3,6 @@ import { BrowserWindow } from 'electron';
 import constants from '../constants';
 import MenuBuilder from '../components/menus';
 import AppUpdater from '../config/appUpdater';
-import installExtensions from '../config/extensionInstaller';
-import { startFileWatcher } from '../helper/workflowConfigFileWatcher';
 
 const createPreferenceWindow = ({
   trayBuilder,
@@ -13,13 +11,6 @@ const createPreferenceWindow = ({
   trayBuilder: any;
   searchWindow: BrowserWindow;
 }) => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    installExtensions();
-  }
-
   let preferenceWindow: BrowserWindow | null = new BrowserWindow({
     title: 'Arvis',
     show: false,
@@ -66,7 +57,6 @@ const createPreferenceWindow = ({
 
   // eslint-disable-next-line
   new AppUpdater();
-  startFileWatcher({ searchWindow, preferenceWindow });
 
   return preferenceWindow;
 };

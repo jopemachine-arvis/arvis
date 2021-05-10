@@ -124,8 +124,12 @@ export default function SearchWindow() {
     );
   }, []);
 
-  useEffect(() => {
+  const loadWorkflowsInfo = useCallback(() => {
     Core.renewWorkflows();
+  }, []);
+
+  useEffect(() => {
+    loadWorkflowsInfo();
     registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();

@@ -161,8 +161,19 @@ export const initIPCHandler = ({
   // Used to register global shortcuts
   ipcMain.on(
     IPCRendererEnum.setGlobalShortcut,
-    (e: IpcMainEvent, { callbackTable }: { callbackTable: any }) => {
-      globalShortcutHandler({ callbackTable, preferenceWindow, searchWindow });
+    (
+      e: IpcMainEvent,
+      {
+        callbackTable,
+        workflowHotkeyTbl
+      }: { callbackTable: any; workflowHotkeyTbl: string }
+    ) => {
+      globalShortcutHandler({
+        searchWindow,
+        preferenceWindow,
+        callbackTable,
+        workflowHotkeyTbl: JSON.parse(workflowHotkeyTbl)
+      });
     }
   );
 

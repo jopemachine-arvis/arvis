@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useSelector } from 'react-redux';
@@ -41,19 +43,23 @@ export default function PreferenceWindow() {
     (state: StateType) => state.globalConfig
   );
 
+  // To do :: Move below logics to RootRouter
   const registerAllGlobalHotkey = () => {
-    const globalShortcutCallbackTable = {
-      [hotkey]: 'toggleSearchWindow'
-    };
+    Core.findHotkeys().then(hotkeys => {
+      const globalShortcutCallbackTable = {
+        [hotkey]: 'toggleSearchWindow'
+      };
 
-    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-      callbackTable: globalShortcutCallbackTable
+      ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+        callbackTable: globalShortcutCallbackTable,
+        workflowHotkeyTbl: JSON.stringify(hotkeys)
+      });
     });
   };
 
-  const renewWorkflows = () => {
-    Core.renewWorkflows();
-  };
+  const loadWorkflowsInfo = useCallback(() => {
+    return Core.renewWorkflows();
+  }, []);
 
   const ipcCallbackTbl = {
     renewWorkflow: (
@@ -65,8 +71,9 @@ export default function PreferenceWindow() {
   };
 
   useEffect(() => {
-    renewWorkflows();
-    registerAllGlobalHotkey();
+    loadWorkflowsInfo().then(() => {
+      registerAllGlobalHotkey();
+    });
 
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     return () => {

@@ -5,8 +5,6 @@
 import { BrowserWindow, globalShortcut, Notification } from 'electron';
 import ioHook from 'iohook';
 import { Core } from 'arvis-core';
-
-import * as RawKeyTbl from '../utils/iohook/libuihookTable';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
 
@@ -51,12 +49,10 @@ const handleHotKeyAction = (
 
     searchWindow.show();
 
-    const newStr = targetAction.keyword
-      ? targetAction.keyword
-      : targetAction.scriptfilter;
+    const newInput = targetAction.command;
 
     searchWindow.webContents.send(IPCMainEnum.setSearchbarInput, {
-      str: newStr
+      str: newInput
     });
   }
 
@@ -90,7 +86,9 @@ const getWorkflowHotkeyPressHandler = ({
   handleHotKeyAction(searchWindow, hotKeyAction, actionTypes);
 };
 
-const registerShortcut = (shortcut: string, action: Function) => {
+const registerShortcut = (shortcut: string, callback: Function) => {
+  console.log(`Shortcut registered.. '${shortcut}'`);
+
   // Case of double key type
   if (shortcut.includes('Double')) {
     // eslint-disable-next-line prefer-destructuring
@@ -98,7 +96,7 @@ const registerShortcut = (shortcut: string, action: Function) => {
 
     doubleKeyPressHandler[shortcut] = () => {
       if (Date.now() - doubleKeyPressedTimers[shortcut] < 200) {
-        action();
+        callback();
       } else {
         doubleKeyPressedTimers[shortcut] = new Date();
       }
@@ -106,41 +104,43 @@ const registerShortcut = (shortcut: string, action: Function) => {
   }
   // Single key (normal shortcut)
   else {
-    globalShortcut.register(shortcut, action as () => void);
+    globalShortcut.register(shortcut, callback as () => void);
   }
 };
 
 const registerWorkflowHotkeys = ({
-  searchWindow
+  searchWindow,
+  workflowHotkeyTbl
 }: {
   searchWindow: BrowserWindow;
+  workflowHotkeyTbl: any;
 }) => {
-  Core.findHotkeys().then(workflowHotkeys => {
-    const hotkeys = Object.keys(workflowHotkeys);
-    for (const hotkey of hotkeys) {
-      const cb = () => {
-        getWorkflowHotkeyPressHandler({
-          searchWindow,
-          hotKeyAction: workflowHotkeys[hotkey]
-        });
-      };
+  const hotkeys = Object.keys(workflowHotkeyTbl);
+  for (const hotkey of hotkeys) {
+    const cb = () => {
+      getWorkflowHotkeyPressHandler({
+        searchWindow,
+        hotKeyAction: workflowHotkeyTbl[hotkey]
+      });
+    };
 
-      registerShortcut(hotkey, cb);
-    }
-  });
+    registerShortcut(hotkey, cb);
+  }
 };
 
 export default ({
   preferenceWindow,
   searchWindow,
-  callbackTable
+  callbackTable,
+  workflowHotkeyTbl
 }: {
   preferenceWindow: BrowserWindow;
   searchWindow: BrowserWindow;
   callbackTable: any;
+  workflowHotkeyTbl: any;
 }) => {
   const shortcuts = Object.keys(callbackTable);
-  registerWorkflowHotkeys({ searchWindow });
+  registerWorkflowHotkeys({ searchWindow, workflowHotkeyTbl });
 
   for (const shortcut of shortcuts) {
     // Case of double key type
