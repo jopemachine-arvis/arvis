@@ -36,7 +36,7 @@ I started making `Arvis` because I wanted to use useful alfred-workflows in othe
 
 * Arvis is written on cross-platform (Tested on `Windows 10`, `Macos Bigsur`, and `Ubuntu`).
 
-* Note that any workflows or plug-ins that can be installed work on that platform. (Especially careful when using Alfred workflow in platforms other than `MacOS`.)
+* First, make sure your workflow (or plugins) works on your platform. (Especially careful when using Alfred workflow in platforms other than `MacOS`.)
 
 ### Alfred-workflow Compatibility
 
@@ -46,7 +46,7 @@ I started making `Arvis` because I wanted to use useful alfred-workflows in othe
 
 * Since alfred-workflow is mostly written assuming that it will run on Macos, operation on other platform is not guaranteed.
 
-* Basically, it is compatible with `alfy`, but npm install command not install those workflows on `Arvis`. Until now, The only way to install workflow is installing `arvisworkflow` files in preference window.
+* Basically, it is compatible with [alfy](https://github.com/sindresorhus/alfy), but npm install command not install those workflows on `Arvis`. Until now, The only way to install workflow is installing `arvisworkflow` files in preference window.
 
 ### Differences between plugins and workflows
 

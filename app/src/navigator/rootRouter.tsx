@@ -6,6 +6,7 @@ import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { Switch, Route } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
+import { functions as loggerFunctions } from 'electron-log';
 import { Store } from '../redux/reducers/types';
 import {
   Preference as PreferenceContainer,
@@ -13,6 +14,8 @@ import {
 } from '../containers';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
+
+Object.assign(console, loggerFunctions);
 
 type IProps = {
   store: Store;
