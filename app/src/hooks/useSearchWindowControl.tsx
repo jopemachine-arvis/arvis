@@ -203,13 +203,7 @@ const useSearchWindowControl = ({
         .catch((err: any) => {
           console.error('Error occured in commandExecute!', err);
         });
-
-      // Fix me!! - clearInput should be called here
-      // clearInput();
     }
-
-    // May or may not be needed.. case by case
-    // clearInput();
   };
 
   const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {

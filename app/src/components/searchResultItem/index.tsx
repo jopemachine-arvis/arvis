@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
 import useKey from '../../../use-key-capture/src';
@@ -80,7 +80,7 @@ const searchResultItem = (props: IProps) => {
     // }
   }, [keyData]);
 
-  const iconSize = itemHeight - 20;
+  const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
 
   const iconStyle: React.CSSProperties = useMemo(() => {
     return {
@@ -90,20 +90,26 @@ const searchResultItem = (props: IProps) => {
     };
   }, [iconRightMargin]);
 
-  let iconElem;
-  if (icon) {
-    iconElem = <IconImg style={iconStyle} src={icon} />;
-  } else if (valid === false) {
-    iconElem = <BiErrorAlt style={iconStyle} />;
-  } else {
-    iconElem = <BsApp style={iconStyle} />;
-  }
+  const getIconElement = useCallback(() => {
+    let iconElem;
+    if (valid === false) {
+      iconElem = <BiErrorAlt style={iconStyle} />;
+      return iconElem;
+    }
 
-  const getOffsetText = () => {
+    if (icon) {
+      iconElem = <IconImg style={iconStyle} src={icon} />;
+    } else {
+      iconElem = <BsApp style={iconStyle} />;
+    }
+    return iconElem;
+  }, [valid, icon]);
+
+  const getOffsetText = useCallback(() => {
     return process.platform === 'darwin'
       ? `⌘${offset + 1}`
       : `Ctrl ${offset + 1}`;
-  };
+  }, []);
 
   return (
     <OuterContainer
@@ -118,7 +124,7 @@ const searchResultItem = (props: IProps) => {
       onMouseOver={() => onMouseoverHandler()}
       onDoubleClick={() => onDoubleClickHandler()}
     >
-      {iconElem}
+      {getIconElement()}
       <InnerContainer
         style={{
           paddingLeft: iconRightMargin

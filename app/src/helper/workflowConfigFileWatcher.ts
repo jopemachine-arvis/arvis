@@ -11,6 +11,20 @@ export const startFileWatcher = ({
   searchWindow: BrowserWindow;
   preferenceWindow: BrowserWindow;
 }) => {
+  const requestRenewWorkflows = (bundleId?: string) => {
+    // Update singleton for each Windows
+    searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
+    preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
+      bundleId
+    });
+  };
+
+  const getBundleIdFromFilePath = (arvisWorkflowConfigFilePath: string) => {
+    const pathArrs = arvisWorkflowConfigFilePath.split(path.sep);
+    pathArrs.pop();
+    return pathArrs.pop();
+  };
+
   // Initialize watcher.
   // It detects workflow config file change and
   // loads new workflow config file if it detects a change.
@@ -25,14 +39,12 @@ export const startFileWatcher = ({
     )
     .on('change', (filePath: string) => {
       console.log(`"${filePath}" changed. Reload workflows settings..`);
-      const pathArrs = filePath.split(path.sep);
-      pathArrs.pop();
-      const bundleId = pathArrs.pop();
-
-      // Update singleton for each Windows
-      searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
-      preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
-        bundleId
-      });
+      requestRenewWorkflows(getBundleIdFromFilePath(filePath));
+    })
+    .on('unlink', (filePath: string) => {
+      requestRenewWorkflows();
+    })
+    .on('add', (filePath: string) => {
+      requestRenewWorkflows();
     });
 };

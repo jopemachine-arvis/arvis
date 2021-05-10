@@ -1,13 +1,13 @@
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/always-return */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { ipcRenderer } from 'electron';
 import path from 'path';
 import { Core } from 'arvis-core';
 import _ from 'lodash';
 import SearchResultItem from '../searchResultItem';
-import { checkFileExists, isSupportedImageFormat } from '../../utils';
+import { isSupportedImageFormat } from '../../utils';
 import { InnerContainer, OuterContainer } from './components';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
@@ -56,20 +56,15 @@ const searchResultView = (props: IProps) => {
     titleFontSize
   } = props;
 
-  const [contents, setContents] = useState<any>();
-
-  const resultToRenders = useMemo(
+  const resultToRenders: any[] = useMemo(
     () => searchResult.slice(startIdx, startIdx + maxItemCount),
     [props]
   );
 
-  const determineIconPath = async (
-    command: any
-  ): Promise<string | undefined> => {
-    const workflowRootPath = Core.path.getWorkflowInstalledPath(
+  const determineIconPath = useCallback((command: any): string | undefined => {
+    const workflowRootPath: string = Core.path.getWorkflowInstalledPath(
       command.bundleId
     );
-    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
 
     let iconPath;
     if (command.icon) {
@@ -82,20 +77,9 @@ const searchResultView = (props: IProps) => {
           iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
         }
       }
-    } else if (
-      command.bundleId &&
-      (await checkFileExists(workflowDefaultIconPath))
-    ) {
-      iconPath = workflowDefaultIconPath;
     }
 
     return iconPath;
-  };
-
-  useEffect(() => {
-    return () => {
-      setContents(<></>);
-    };
   }, []);
 
   useEffect(() => {
@@ -110,11 +94,11 @@ const searchResultView = (props: IProps) => {
     }
   }, [searchResult]);
 
-  useEffect(() => {
-    Promise.all(
-      _.map(resultToRenders, async (command: any, offset: number) => {
-        const itemIdx = startIdx + offset;
-        const iconPath = await determineIconPath(command);
+  return (
+    <OuterContainer>
+      {_.map(resultToRenders, (command: any, offset: number) => {
+        const itemIdx: number = startIdx + offset;
+        const iconPath: string | undefined = determineIconPath(command);
 
         return (
           <InnerContainer key={`searchResultViewItem-${offset}`}>
@@ -144,13 +128,9 @@ const searchResultView = (props: IProps) => {
             />
           </InnerContainer>
         );
-      })
-    ).then((result: any) => {
-      setContents(result);
-    });
-  }, [resultToRenders]);
-
-  return <OuterContainer>{contents}</OuterContainer>;
+      })}
+    </OuterContainer>
+  );
 };
 
 export default searchResultView;
