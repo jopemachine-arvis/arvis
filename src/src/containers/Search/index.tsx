@@ -134,13 +134,15 @@ export default function SearchWindow() {
     registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
+    return unsubscribe;
+  }, []);
 
+  useEffect(() => {
     document.body.style.background = applyAlphaColor(
       item_background_color,
       search_window_transparency
     );
-    return unsubscribe;
-  }, []);
+  }, [search_window_transparency]);
 
   return (
     <OuterContainer

@@ -6,13 +6,12 @@
     - [1.1 Cross-platform](#)
     - [1.2 Alfred-workflow Compatibility](#)
     - [1.3 Differences between plugins and workflows](#)
-- [2. How to install](#)
-    - [2.1 Program Install](#)
-    - [2.2 Workflow Install](#)
-    - [2.3 Plugin Install](#)
-- [3. How to use](#)
-    - [3.1 How to use workflow](#)
-    - [3.2 How to use plugin](#)
+- [2. What is workflow, plugin?](#)
+    - [2.1 How to use workflow](#)
+    - [2.2 How to use plugin](#)
+- [3. How to install workflow, plugin on Arvis](#)
+    - [3.1 Workflow Install](#)
+    - [3.2 Plugin Install](#)
 - [4. How to write new workflows, plugins](#)
     - [4.1 How to write new workflows](#)
     - [4.2 How to write new plugins](#)
@@ -55,13 +54,7 @@ I started making `Arvis` because I wanted to use useful alfred-workflows in othe
 
 * Workflows can be written in any language, but the plug-in is supported only with JavaScript.
 
-## How to install
-
-### Program Install
-
-* [Macos]()
-* [Windows]()
-* [Linux]()
+## How to install workflow, plugin on Arvis
 
 ### Workflow Install
 
@@ -75,7 +68,7 @@ Right click tray icon
 
 ### Plugin Install
 
-## How to use
+## What is workflow, plugin?
 
 ### How to use workflow
 
@@ -125,7 +118,7 @@ Packages directly related to this package.
 
 This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.
 
-So, If node or electron version is updated, the config should be updated as well.
+So, If `node` or `electron` version is updated, the iohook config of package.json should be updated as well.
 
 ### config file pathes
 
@@ -138,3 +131,7 @@ So, If node or electron version is updated, the config should be updated as well
 #### workflow, plugin files
 
 The storage path for all installed workflow files is stored in the `data` path of the [env-paths](https://github.com/sindresorhus/env-paths).
+
+* on Linux: `~/.local/share/arvis-core-nodejs` (or `$XDG_DATA_HOME/arvis-core-nodejs`)
+* on macOS: `~/Library/Application Support/arvis-core-nodejs`
+* on Windows: `%LOCALAPPDATA%\arvis-core-nodejs\Data` (for example, `C:\Users\USERNAME\AppData\Local\arvis-core-nodejs\Data`)

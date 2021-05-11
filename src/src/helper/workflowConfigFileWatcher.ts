@@ -11,23 +11,32 @@ export const startFileWatcher = ({
   searchWindow: BrowserWindow;
   preferenceWindow: BrowserWindow;
 }) => {
+
+  /**
+   * @param  {string} bundleId?
+   * @summary Update singleton for each Windows
+   */
   const requestRenewWorkflows = (bundleId?: string) => {
-    // Update singleton for each Windows
     searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
     preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
       bundleId
     });
   };
 
+  /**
+   * @param  {string} arvisWorkflowConfigFilePath
+   */
   const getBundleIdFromFilePath = (arvisWorkflowConfigFilePath: string) => {
     const pathArrs = arvisWorkflowConfigFilePath.split(path.sep);
     pathArrs.pop();
     return pathArrs.pop();
   };
 
-  // Initialize watcher.
-  // It detects workflow config file change and
-  // loads new workflow config file if it detects a change.
+  /**
+   * @summary Initialize watcher.
+   *          It detects workflow config file change and
+   *          loads new workflow config file if it detects a change.
+   */
   chokidar
     .watch(
       `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`,

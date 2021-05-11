@@ -63,7 +63,7 @@ export default function Theme() {
     selected_item_background_color,
     selected_item_font_color,
     subtitle_font_size,
-    title_font_size
+    title_font_size,
   } = useSelector((state: StateType) => state.uiConfig);
 
   const dispatch = useDispatch();
@@ -112,6 +112,7 @@ export default function Theme() {
             searchbarHeight={searchbar_height}
             alwaysFocus={false}
             setInputStr={() => {}}
+            searchWindowTransparency={search_window_transparency}
           />
           <SearchResultView
             demo
@@ -133,6 +134,7 @@ export default function Theme() {
             selectedItemFontColor={selected_item_font_color}
             subtitleFontSize={subtitle_font_size}
             titleFontSize={title_font_size}
+            searchWindowTransparency={search_window_transparency}
           />
         </PreviewMainContainer>
       </PreviewContainer>
@@ -167,7 +169,9 @@ export default function Theme() {
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Window Transparency</Label>
             <StyledInput
-              type="number"
+              type="text"
+              pattern="[a-fA-F\d]+"
+              maxLength={2}
               value={search_window_transparency}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(

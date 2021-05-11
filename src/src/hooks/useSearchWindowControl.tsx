@@ -13,6 +13,11 @@ type IndexInfo = {
   itemStartIdx: number;
 };
 
+/**
+ * @param  {any[]} items
+ * @param  {Function} setItems
+ * @param  {number} maxItemCount
+ */
 const useSearchWindowControl = ({
   items,
   setItems,

@@ -22,8 +22,12 @@ const doubleKeyPressedTimers = {
   meta: 0
 };
 
+/**
+ * @param  {any} hotKeyAction
+ * @param  {string[]} actionTypes
+ * @summary handle custom actions
+ */
 const handleGUICustomActions = (hotKeyAction: any, actionTypes: string[]) => {
-  // handle custom actions
   if (actionTypes.includes('notification')) {
     // Assume action count is 1
     const targetAction = hotKeyAction.action.filter(
@@ -37,6 +41,11 @@ const handleGUICustomActions = (hotKeyAction: any, actionTypes: string[]) => {
   }
 };
 
+/**
+ * @param  {BrowserWindow} searchWindow
+ * @param  {any} hotKeyAction
+ * @param  {string[]} actionTypes
+ */
 const handleHotKeyAction = (
   searchWindow: BrowserWindow,
   hotKeyAction: any,
@@ -60,6 +69,10 @@ const handleHotKeyAction = (
   handleGUICustomActions(hotKeyAction, actionTypes);
 };
 
+/**
+ * @param  {BrowserWindow} searchWindow
+ * @param  {any} hotKeyAction
+ */
 const getWorkflowHotkeyPressHandler = ({
   searchWindow,
   hotKeyAction
@@ -86,6 +99,10 @@ const getWorkflowHotkeyPressHandler = ({
   handleHotKeyAction(searchWindow, hotKeyAction, actionTypes);
 };
 
+/**
+ * @param  {string} shortcut
+ * @param  {Function} callback
+ */
 const registerShortcut = (shortcut: string, callback: Function) => {
   console.log(`Shortcut registered.. '${shortcut}'`);
 
@@ -108,6 +125,10 @@ const registerShortcut = (shortcut: string, callback: Function) => {
   }
 };
 
+/**
+ * @param  {BrowserWindow} searchWindow
+ * @param  {any} workflowHotkeyTbl
+ */
 const registerWorkflowHotkeys = ({
   searchWindow,
   workflowHotkeyTbl
