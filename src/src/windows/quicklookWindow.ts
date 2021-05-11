@@ -7,7 +7,7 @@ const createQuicklookWindow = () => {
   const quicklookWindow = new BrowserWindow({
     title: 'Quicklook',
     center: true,
-    show: true,
+    show: false,
     frame: true,
     resizable: false,
     disableAutoHideCursor: true,

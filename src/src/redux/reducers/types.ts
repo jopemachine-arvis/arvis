@@ -1,14 +1,14 @@
 import { Dispatch as ReduxDispatch, Store as ReduxStore, Action } from 'redux';
 
 export type StateType = {
-  globalConfig: {
+  global_config: {
     hotkey: string;
     launch_at_login: boolean;
     max_item_count_to_show: number;
     max_item_count_to_search: number;
     global_font: string;
   };
-  uiConfig: {
+  ui_config: {
     icon_right_margin: number;
     item_background_color: string;
     item_font_color: string;
@@ -26,7 +26,7 @@ export type StateType = {
     subtitle_font_size: number;
     title_font_size: number;
   };
-  advancedConfig: {
+  advanced_config: {
     debugging_workflow_output: boolean;
     debugging_workstack: boolean;
     debugging_action_type: boolean;

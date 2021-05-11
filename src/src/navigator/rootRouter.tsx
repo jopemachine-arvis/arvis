@@ -22,7 +22,7 @@ type IProps = {
   windowName: string;
 };
 
-const rootRoute = (windowName: string) => {
+const windowRoute = (windowName: string) => {
   switch (windowName) {
     case 'preferenceWindow':
       return (
@@ -44,7 +44,7 @@ const RootRouter = ({ store, persistor, history, windowName }: IProps) => {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ConnectedRouter history={history}>
-          {rootRoute(windowName)}
+          {windowRoute(windowName)}
         </ConnectedRouter>
       </PersistGate>
     </ReduxProvider>

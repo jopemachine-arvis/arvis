@@ -132,6 +132,18 @@ So, If `node` or `electron` version is updated, the iohook config of package.jso
 
 The storage path for all installed workflow files is stored in the `data` path of the [env-paths](https://github.com/sindresorhus/env-paths).
 
-* on Linux: `~/.local/share/arvis-core-nodejs` (or `$XDG_DATA_HOME/arvis-core-nodejs`)
-* on macOS: `~/Library/Application Support/arvis-core-nodejs`
-* on Windows: `%LOCALAPPDATA%\arvis-core-nodejs\Data` (for example, `C:\Users\USERNAME\AppData\Local\arvis-core-nodejs\Data`)
+* on Linux: `~/.local/share/arvis-nodejs` (or `$XDG_DATA_HOME/arvis-nodejs`)
+* on macOS: `~/Library/Application Support/arvis-nodejs`
+* on Windows: `%LOCALAPPDATA%\arvis-nodejs\Data` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Data`)
+
+#### preference file
+
+* on Linux: `~/.local/share/arvis-nodejs/arvis-gui-config.json` (or `$XDG_DATA_HOME/arvis-nodejs/arvis-gui-config.json`)
+* on macOS: `~/Library/Application Support/arvis-nodejs/arvis-gui-config.json`
+* on Windows: `%LOCALAPPDATA%\arvis-nodejs\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Data\arvis-gui-config.json`)
+
+However, in a development environment, it is stored in the path below because appName is considered as `Electron`
+
+* on Linux: `~/.local/share/Electron/arvis-gui-config.json` (or `$XDG_DATA_HOME/Electron/arvis-gui-config.json`)
+* on macOS: `~/Library/Application Support/Electron/arvis-gui-config.json`
+* on Windows: `%LOCALAPPDATA%\Electron\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\Electron\Data\arvis-gui-config.json`)

@@ -62,7 +62,7 @@ export default function Theme() {
     selected_item_font_color,
     subtitle_font_size,
     title_font_size,
-  } = useSelector((state: StateType) => state.uiConfig);
+  } = useSelector((state: StateType) => state.ui_config);
 
   const dispatch = useDispatch();
 
@@ -110,7 +110,6 @@ export default function Theme() {
             searchbarFontSize={searchbar_font_size}
             searchbarHeight={searchbar_height}
             searchWindowTransparency={search_window_transparency}
-            setInputStr={() => {}}
           />
           <SearchResultView
             demo

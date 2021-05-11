@@ -1,12 +1,12 @@
 export default {
-  globalConfig: {
+  global_config: {
     hotkey: 'Ctrl+Space',
     launch_at_login: true,
     max_item_count_to_show: 9,
     max_item_count_to_search: 100,
     global_font: 'Arial',
   },
-  uiConfig: {
+  ui_config: {
     icon_right_margin: 15,
     item_background_color: '#444444',
     item_font_color: '#cccccc',
@@ -24,7 +24,7 @@ export default {
     subtitle_font_size: 12,
     title_font_size: 17,
   },
-  advancedConfig: {
+  advanced_config: {
     debugging_workflow_output: true,
     debugging_workstack: false,
     debugging_action_type: true,

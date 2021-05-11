@@ -42,7 +42,7 @@ export default function PreferenceWindow() {
   const screenCoverState = useState<boolean>();
 
   const { hotkey, global_font } = useSelector(
-    (state: StateType) => state.globalConfig
+    (state: StateType) => state.global_config
   );
 
   // To do :: Move below logics to RootRouter

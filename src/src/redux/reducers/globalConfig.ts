@@ -36,21 +36,21 @@ export default (state = {}, action: any) => {
 };
 
 export function getHotkey(state: any) {
-  return state.globalConfig.hotkey;
+  return state.global_config.hotkey;
 }
 
 export function getItemMaxCountToShow(state: any) {
-  return state.globalConfig.max_item_count_to_show;
+  return state.global_config.max_item_count_to_show;
 }
 
 export function getItemMaxCountToSearch(state: any) {
-  return state.globalConfig.max_item_count_to_search;
+  return state.global_config.max_item_count_to_search;
 }
 
 export function isAutoLaunchAtLogin(state: any) {
-  return state.globalConfig.launch_at_login;
+  return state.global_config.launch_at_login;
 }
 
 export function getGlobalFont(state: any) {
-  return state.globalConfig.global_font;
+  return state.global_config.global_font;
 }

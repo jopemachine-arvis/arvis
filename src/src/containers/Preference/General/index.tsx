@@ -31,7 +31,7 @@ export default function General() {
     max_item_count_to_show,
     launch_at_login,
     global_font,
-  } = useSelector((state: StateType) => state.globalConfig);
+  } = useSelector((state: StateType) => state.global_config);
 
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
   const [fontList, setFontList] = useState<string[]>([]);

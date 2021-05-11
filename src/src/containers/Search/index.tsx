@@ -27,14 +27,14 @@ export default function SearchWindow() {
     selected_item_font_color,
     subtitle_font_size,
     title_font_size,
-  } = useSelector((state: StateType) => state.uiConfig);
+  } = useSelector((state: StateType) => state.ui_config);
 
   const { max_item_count_to_show, global_font } = useSelector(
-    (state: StateType) => state.globalConfig
+    (state: StateType) => state.global_config
   );
 
   const debuggingConfig = useSelector(
-    (state: StateType) => state.advancedConfig
+    (state: StateType) => state.advanced_config
   );
 
   const [items, setItems] = useState<any>([]);

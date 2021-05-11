@@ -9,8 +9,8 @@ import AdvancedConfigReducer from './advancedConfig';
 export default function createRootReducer(history: History) {
   return combineReducers({
     router: connectRouter(history),
-    globalConfig: GlobalConfigReducer,
-    advancedConfig: AdvancedConfigReducer,
-    uiConfig: UIConfigReducer,
+    global_config: GlobalConfigReducer,
+    advanced_config: AdvancedConfigReducer,
+    ui_config: UIConfigReducer,
   });
 }

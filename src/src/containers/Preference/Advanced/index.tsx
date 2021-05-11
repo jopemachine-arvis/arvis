@@ -17,7 +17,7 @@ export default function Advanced() {
     debugging_workstack,
     debugging_args,
     debugging_scriptfilter
-  } = useSelector((state: StateType) => state.advancedConfig);
+  } = useSelector((state: StateType) => state.advanced_config);
 
   const dispatch = useDispatch();
 

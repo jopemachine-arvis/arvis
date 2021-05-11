@@ -37,21 +37,21 @@ export default (state = {}, action: any) => {
 };
 
 export function getIsOnDebuggingActionType(state: StateType) {
-  return state.advancedConfig.debugging_action_type;
+  return state.advanced_config.debugging_action_type;
 }
 
 export function getIsOnDebuggingWorkflowOutput(state: StateType) {
-  return state.advancedConfig.debugging_workflow_output;
+  return state.advanced_config.debugging_workflow_output;
 }
 
 export function getIsOnDebuggingWorkflowStack(state: StateType) {
-  return state.advancedConfig.debugging_workstack;
+  return state.advanced_config.debugging_workstack;
 }
 
 export function getIsOnDebuggingArgs(state: StateType) {
-  return state.advancedConfig.debugging_args;
+  return state.advanced_config.debugging_args;
 }
 
 export function getIsOnDebuggingScriptfilter(state: StateType) {
-  return state.advancedConfig.debugging_scriptfilter;
+  return state.advanced_config.debugging_scriptfilter;
 }
