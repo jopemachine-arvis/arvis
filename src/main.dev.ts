@@ -12,21 +12,27 @@ import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
-import TrayBuilder from './src/components/tray';
+import TrayBuilder from './app/components/tray';
 import {
   createPreferenceWindow,
   createQuicklookWindow,
   createSearchWindow,
-} from './src/windows';
-import { initIPCHandler } from './src/ipc/mainProcessEventHandler';
-import { startFileWatcher } from './src/helper/workflowConfigFileWatcher';
-import installExtensions from './src/config/extensionInstaller';
+} from './app/windows';
+import { initIPCHandler } from './app/ipc/mainProcessEventHandler';
+import { startFileWatcher } from './app/helper/workflowConfigFileWatcher';
+import installExtensions from './app/config/extensionInstaller';
 
 let preferenceWindow: BrowserWindow | null = null;
 let searchWindow: BrowserWindow | null = null;
 let quicklookWindow: BrowserWindow | null = null;
 
-const trayIconPath = path.join(__dirname, 'resources', 'icons', '24x24.png');
+const trayIconPath = path.join(
+  __dirname,
+  '../',
+  'assets',
+  'icons',
+  '24x24.png'
+);
 const trayBuilder = new TrayBuilder(trayIconPath);
 trayBuilder.buildTray();
 

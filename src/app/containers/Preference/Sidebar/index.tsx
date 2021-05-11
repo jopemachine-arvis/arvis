@@ -16,7 +16,7 @@ import {
 import './index.global.css';
 import './sidebar.global.css';
 import styled from 'styled-components';
-import sidebarBg from '../../../../resources/images/sidebar_bg.jpg';
+import sidebarBg from '../../../../../assets/images/sidebar_bg.jpg';
 import SidebarTitle from './sidebarTitle';
 import { PreferencePage } from '../preferencePageEnum';
 

@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
 import { IconContext } from 'react-icons';
-import RootRouter from './src/navigator/rootRouter';
-import { configureStore, history } from './src/store/configureStore';
-import initialState from './src/config/initialState';
+import RootRouter from './app/navigator/rootRouter';
+import { configureStore, history } from './app/store/configureStore';
+import initialState from './app/config/initialState';
 import './app.global.css';
 
 const { store, persistor } = configureStore(initialState);
