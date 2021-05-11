@@ -2,25 +2,26 @@
 
 **Table of Contents**
 
-- [1. What is Arvis?](#)
-    - [1.1 Cross-platform](#)
-    - [1.2 Alfred-workflow Compatibility](#)
-    - [1.3 Differences between plugins and workflows](#)
-- [2. What is workflow, plugin?](#)
-    - [2.1 How to use workflow](#)
-    - [2.2 How to use plugin](#)
-- [3. How to install workflow, plugin on Arvis](#)
-    - [3.1 Workflow Install](#)
-    - [3.2 Plugin Install](#)
-- [4. How to write new workflows, plugins](#)
-    - [4.1 How to write new workflows](#)
-    - [4.2 How to write new plugins](#)
-- [5. Build and development](#)
-    - [5.1 Template](#)
-    - [5.2 Other packages](#)
-    - [5.3 Build from sources](#)
-    - [5.4 iohook config](#)
-    - [5.5 config file pathes](#)
+- [1. What is Arvis?](#what-is-arvis?)
+    - [1.1 Cross-platform](#cross-platform)
+    - [1.2 Alfred-workflow Compatibility](#alfred-workflow)
+    - [1.3 Differences between plugins and workflows](#differences-between-plugins-and-workflows)
+- [2. What is workflow, plugin?](#what-is-workflow,-plugins?)
+    - [2.1 How to use workflow](#how-to-use-workflow)
+    - [2.2 How to use plugin](#how-to-use-plugin)
+- [3. How to install workflow, plugin on Arvis](#how-to-install-workflow,-plugin-on-arvis)
+    - [3.1 Workflow Install](#workflow-install)
+    - [3.2 Plugin Install](#plugin-install)
+- [4. How to write new workflows, plugins](#how-to-write-new-workflows,-plugins)
+    - [4.1 How to write new workflows](#how-to-write-new-workflows)
+    - [4.2 How to write new plugins](#how-to-write-new-plugins)
+    - [4.3 Update your workflow, plugin](#update-your-workflow,-plugin)
+- [5. Build and development](#build-and-development)
+    - [5.1 Template](#template)
+    - [5.2 Other packages](#other-packages)
+    - [5.3 Build from sources](#build-from-sources)
+    - [5.4 iohook config](#iohook-config)
+    - [5.5 config file pathes](#config-file-pathes)
 
 ## What is Arvis?
 
@@ -90,11 +91,17 @@ Arvis also supports double modifier key combinations (e.g. double cmd, double ct
 
 ## How to write new workflows, plugins
 
+* By default, all changes to workflow files are being watched and reflected as soon as changes are made.
+
+* In the case of hotkeys, they are registered and applied only when `Arvis` is turned on for the first time, so if there is a change in the hotkeys, `Arvis` must be turned off and on to renew hotkey settings.
+
 ### How to write new workflows
 
-
-
 ### How to write new plugins
+
+### Update your workflow, plugin
+
+
 
 ## Build and development
 
