@@ -1,5 +1,3 @@
-/* eslint-disable default-case */
-/* eslint-disable import/no-webpack-loader-syntax */
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
@@ -36,8 +34,9 @@ const rootRoute = (windowName: string) => {
       return <SearchContainer />;
     case 'quicklookWindow':
       return <QuicklookContainer />;
+    default:
+      throw new Error(`windowName is not proper: ${windowName}`);
   }
-  throw new Error(`windowName is not proper: ${windowName}`);
 };
 
 const RootRouter = ({ store, persistor, history, windowName }: IProps) => {

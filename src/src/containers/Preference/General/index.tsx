@@ -1,8 +1,5 @@
-/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable promise/catch-or-return */
-/* eslint-disable promise/always-return */
-/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect, useState } from 'react';
 import {
   Form,
@@ -12,7 +9,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
@@ -33,7 +30,7 @@ export default function General() {
     max_item_count_to_search,
     max_item_count_to_show,
     launch_at_login,
-    global_font
+    global_font,
   } = useSelector((state: StateType) => state.globalConfig);
 
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
@@ -43,7 +40,7 @@ export default function General() {
   const dispatch = useDispatch();
 
   const toggleFontListDrawerOpen = () =>
-    setFontListDrawerOpen(prevState => !prevState);
+    setFontListDrawerOpen((prevState) => !prevState);
 
   const fontSelectEventHandler = (font: string) => {
     dispatch(GlobalConfigActions.setGlobalFont(font));
@@ -52,12 +49,12 @@ export default function General() {
   const ipcCallbackTbl = {
     setFont: (e: Electron.IpcRendererEvent, { fonts }: { fonts: string[] }) => {
       setFontList(fonts);
-    }
+    },
   };
 
   const configChangeHandler = createGlobalConfigChangeHandler({
     destWindow: 'searchWindow',
-    dispatch
+    dispatch,
   });
 
   useEffect(() => {
@@ -79,7 +76,7 @@ export default function General() {
         cmd: keyData.isWithMeta,
         ctrl: keyData.isWithCtrl,
         shift: keyData.isWithShift,
-        alt: keyData.isWithAlt
+        alt: keyData.isWithAlt,
       };
 
       for (const modifier in modifiers) {
@@ -111,8 +108,8 @@ export default function General() {
       configChangeHandler(
         {
           currentTarget: {
-            value: doubledStr + result
-          }
+            value: doubledStr + result,
+          },
         } as React.FormEvent<HTMLInputElement>,
         GlobalConfigActionTypes.SET_HOT_KEY
       );
@@ -143,7 +140,7 @@ export default function General() {
             style={{
               textTransform: 'capitalize',
               color: 'transparent',
-              textShadow: '0px 0px 0px #fff'
+              textShadow: '0px 0px 0px #fff',
             }}
             type="text"
             value={hotkey}
@@ -206,7 +203,7 @@ export default function General() {
               style={{
                 width: '100%',
                 backgroundColor: '#1F2227',
-                borderColor: '#2F323B'
+                borderColor: '#2F323B',
               }}
               caret
             >
@@ -216,7 +213,7 @@ export default function General() {
               style={{
                 overflowY: 'auto',
                 maxHeight: 300,
-                backgroundColor: '#1F2227'
+                backgroundColor: '#1F2227',
               }}
             >
               {fontList.map((font: string, idx: number) => {
@@ -226,7 +223,7 @@ export default function General() {
                     style={{
                       fontFamily: font,
                       backgroundColor: '#1F2227',
-                      color: '#fff'
+                      color: '#fff',
                     }}
                     onClick={() => fontSelectEventHandler(font)}
                   >

@@ -24,7 +24,7 @@ export const actionTypes = {
   SET_SEARCHBAR_FONTSIZE: '@uiConfig/SET_SEARCHBAR_FONTSIZE',
   SET_SEARCHBAR_FONTCOLOR: '@uiConfig/SET_SEARCHBAR_FONTCOLOR',
 
-  SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN'
+  SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN',
 };
 
 export const setSearchBarFontSize = makeActionCreator(

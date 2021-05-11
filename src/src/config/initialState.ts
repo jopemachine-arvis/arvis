@@ -4,7 +4,7 @@ export default {
     launch_at_login: true,
     max_item_count_to_show: 9,
     max_item_count_to_search: 100,
-    global_font: 'Arial'
+    global_font: 'Arial',
   },
   uiConfig: {
     icon_right_margin: 15,
@@ -29,6 +29,6 @@ export default {
     debugging_workstack: false,
     debugging_action_type: true,
     debugging_args: false,
-    debugging_scriptfilter: false
-  }
+    debugging_scriptfilter: false,
+  },
 };

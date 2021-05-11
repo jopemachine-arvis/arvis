@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import { Container, Input } from './components';
 import './index.global.css';
@@ -7,7 +5,7 @@ import { applyAlphaColor } from '../../utils';
 
 type IProps = {
   alwaysFocus: boolean;
-  setInputStr: Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   getInputProps?: Function;
   itemBackgroundColor: string;
   itemLeftPadding: number;
@@ -17,7 +15,7 @@ type IProps = {
   searchWindowTransparency: number;
 };
 
-const searchBar = (props: IProps) => {
+const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
     getInputProps,
@@ -26,7 +24,7 @@ const searchBar = (props: IProps) => {
     searchbarFontColor,
     searchbarFontSize,
     searchbarHeight,
-    searchWindowTransparency
+    searchWindowTransparency,
   } = props;
 
   const { ref: inputRef, type, originalRef } = getInputProps
@@ -34,7 +32,7 @@ const searchBar = (props: IProps) => {
     : {
         ref: null,
         originalRef: null,
-        type: ''
+        type: '',
       };
 
   const preventUpAndDownArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -45,6 +43,7 @@ const searchBar = (props: IProps) => {
 
   const preventBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     originalRef && originalRef.current && originalRef.current.focus();
   };
 
@@ -80,4 +79,8 @@ const searchBar = (props: IProps) => {
   );
 };
 
-export default searchBar;
+SearchBar.defaultProps = {
+  getInputProps: null,
+};
+
+export default SearchBar;

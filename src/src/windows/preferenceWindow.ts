@@ -6,7 +6,7 @@ import AppUpdater from '../config/appUpdater';
 
 const createPreferenceWindow = ({
   trayBuilder,
-  searchWindow
+  searchWindow,
 }: {
   trayBuilder: any;
   searchWindow: BrowserWindow;
@@ -21,8 +21,8 @@ const createPreferenceWindow = ({
     minWidth: constants.preferenceMinWindowWidth,
     minHeight: constants.preferenceMinWindowHeight,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   const filePath =
@@ -31,7 +31,7 @@ const createPreferenceWindow = ({
       : path.join(__dirname, 'app.html');
 
   preferenceWindow.loadFile(filePath, {
-    query: { window: 'preferenceWindow' }
+    query: { window: 'preferenceWindow' },
   });
 
   preferenceWindow.webContents.on('did-finish-load', () => {
@@ -56,7 +56,6 @@ const createPreferenceWindow = ({
   const menuBuilder = new MenuBuilder(preferenceWindow);
   menuBuilder.buildMenu();
 
-  // eslint-disable-next-line
   new AppUpdater();
 
   return preferenceWindow;

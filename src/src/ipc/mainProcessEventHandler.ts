@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-else-return */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ipcMain,
   dialog,
@@ -30,11 +27,11 @@ export const initIPCHandler = ({
   const getDestWindow = (windowName: string): BrowserWindow => {
     if (windowName === 'searchWindow') {
       return searchWindow;
-    } else if (windowName === 'preferenceWindow') {
-      return preferenceWindow;
-    } else {
-      throw new Error(`Window name is not properly set up:\n${windowName}`);
     }
+    if (windowName === 'preferenceWindow') {
+      return preferenceWindow;
+    }
+    throw new Error(`Window name is not properly set up:\n${windowName}`);
   };
 
   /**

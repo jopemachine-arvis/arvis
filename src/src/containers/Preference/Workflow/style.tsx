@@ -1,12 +1,12 @@
 export const bottomFixedBarIconStyle: React.CSSProperties = {
   width: 22,
   height: 22,
-  marginLeft: 24
+  marginLeft: 24,
 };
 
 export const emptyListIconStyle: React.CSSProperties = {
   width: 35,
-  height: 35
+  height: 35,
 };
 
 export const formGroupStyle: React.CSSProperties = {
@@ -15,20 +15,20 @@ export const formGroupStyle: React.CSSProperties = {
   flexDirection: 'row',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
 };
 
 export const checkboxStyle: React.CSSProperties = {
   marginBottom: 15,
   left: '13%',
-  alignSelf: 'flex-start'
+  alignSelf: 'flex-start',
 };
 
 export const labelStyle: React.CSSProperties = {
   fontSize: 14,
   color: '#ffffff',
   width: 150,
-  marginRight: 15
+  marginRight: 15,
 };
 
 export const descriptionContainerStyle: React.CSSProperties = {
@@ -42,7 +42,7 @@ export const descriptionContainerStyle: React.CSSProperties = {
   borderRadius: 10,
   marginLeft: 20,
   marginRight: 60,
-  userSelect: 'none'
+  userSelect: 'none',
 };
 
 export const iconStyle: React.CSSProperties = {
@@ -51,5 +51,5 @@ export const iconStyle: React.CSSProperties = {
   height: 40,
   top: 14,
   left: 15,
-  userSelect: 'none'
+  userSelect: 'none',
 };

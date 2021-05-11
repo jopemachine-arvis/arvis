@@ -11,9 +11,9 @@ export default (mainWindow: BrowserWindow) => [
           if (mainWindow && !mainWindow.isDestroyed()) {
             mainWindow.close();
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: '&View',
@@ -26,22 +26,22 @@ export default (mainWindow: BrowserWindow) => [
               accelerator: 'Ctrl+R',
               click: () => {
                 mainWindow.webContents.reload();
-              }
+              },
             },
             {
               label: 'Toggle &Full Screen',
               accelerator: 'F11',
               click: () => {
                 mainWindow.setFullScreen(!mainWindow.isFullScreen());
-              }
+              },
             },
             {
               label: 'Toggle &Developer Tools',
               accelerator: 'Alt+Ctrl+I',
               click: () => {
                 mainWindow.webContents.toggleDevTools();
-              }
-            }
+              },
+            },
           ]
         : [
             {
@@ -49,9 +49,9 @@ export default (mainWindow: BrowserWindow) => [
               accelerator: 'F11',
               click: () => {
                 mainWindow.setFullScreen(!mainWindow.isFullScreen());
-              }
-            }
-          ]
+              },
+            },
+          ],
   },
   {
     label: 'Help',
@@ -60,14 +60,14 @@ export default (mainWindow: BrowserWindow) => [
         label: 'Documentation',
         click() {
           shell.openExternal('https://github.com/jopemachine/arvis/');
-        }
+        },
       },
       {
         label: 'Search Issues',
         click() {
           shell.openExternal('https://github.com/jopemachine/arvis/issues');
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ];

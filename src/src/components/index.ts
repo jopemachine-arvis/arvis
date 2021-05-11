@@ -15,5 +15,5 @@ export {
   SearchResultItem,
   SearchResultView,
   Spinner,
-  ScreenCover
+  ScreenCover,
 };

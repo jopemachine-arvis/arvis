@@ -6,7 +6,7 @@ export default ({
   maxItemCount,
   itemHeight,
   searchbarHeight,
-  footerHeight
+  footerHeight,
 }: {
   searchWindow: BrowserWindow;
   itemCount: number;

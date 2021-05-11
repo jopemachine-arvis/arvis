@@ -11,7 +11,7 @@ export enum IPCRendererEnum {
   saveFile = '@ipcRenderer/saveFile',
   setGlobalShortcut = '@ipcRenderer/setGlobalShortcut',
   showErrorDialog = '@ipcRenderer/showErrorDialog',
-  showNotification = '@ipcRenderer/showNotification'
+  showNotification = '@ipcRenderer/showNotification',
 }
 
 // Events sent from main process to renderer process
@@ -23,5 +23,5 @@ export enum IPCMainEnum {
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
   renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',
-  setSearchbarInput = '@ipcMain/setSearchbarInput'
+  setSearchbarInput = '@ipcMain/setSearchbarInput',
 }

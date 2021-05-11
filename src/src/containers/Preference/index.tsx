@@ -1,6 +1,5 @@
 /* eslint-disable import/no-webpack-loader-syntax */
-/* eslint-disable promise/always-return */
-/* eslint-disable promise/catch-or-return */
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -48,16 +47,19 @@ export default function PreferenceWindow() {
 
   // To do :: Move below logics to RootRouter
   const registerAllGlobalHotkey = () => {
-    Core.findHotkeys().then(hotkeys => {
-      const globalShortcutCallbackTable = {
-        [hotkey]: 'toggleSearchWindow'
-      };
+    Core.findHotkeys()
+      .then((hotkeys) => {
+        const globalShortcutCallbackTable = {
+          [hotkey]: 'toggleSearchWindow',
+        };
 
-      ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-        callbackTable: globalShortcutCallbackTable,
-        workflowHotkeyTbl: JSON.stringify(hotkeys)
-      });
-    });
+        ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+          callbackTable: globalShortcutCallbackTable,
+          workflowHotkeyTbl: JSON.stringify(hotkeys),
+        });
+        return null;
+      })
+      .catch(console.error);
   };
 
   const loadWorkflowsInfo = useCallback(() => {
@@ -70,13 +72,16 @@ export default function PreferenceWindow() {
       { bundleId }: { bundleId: string }
     ) => {
       Core.renewWorkflows(bundleId);
-    }
+    },
   };
 
   useEffect(() => {
-    loadWorkflowsInfo().then(() => {
-      registerAllGlobalHotkey();
-    });
+    loadWorkflowsInfo()
+      .then(() => {
+        registerAllGlobalHotkey();
+        return null;
+      })
+      .catch(console.error);
 
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     return () => {
@@ -117,7 +122,7 @@ export default function PreferenceWindow() {
   return (
     <OuterContainer
       style={{
-        fontFamily: global_font
+        fontFamily: global_font,
       }}
     >
       {screenCoverState[0] && <ScreenCover />}

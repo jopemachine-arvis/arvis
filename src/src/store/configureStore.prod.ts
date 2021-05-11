@@ -13,7 +13,7 @@ const rootReducer = createRootReducer(history);
 
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage()
+  storage: createElectronStorage(),
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -27,7 +27,7 @@ function configureStore(initialState?: StateType): any {
 
   return {
     store,
-    persistor
+    persistor,
   };
 }
 

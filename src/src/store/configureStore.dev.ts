@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
@@ -28,7 +29,7 @@ const rootReducer = createRootReducer(history);
 
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage()
+  storage: createElectronStorage(),
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -44,7 +45,7 @@ const configureStore = (initialState?: StateType) => {
   // Logging Middleware
   const logger = createLogger({
     level: 'info',
-    collapsed: true
+    collapsed: true,
   });
 
   // Skip redux logs in console during the tests
@@ -58,14 +59,14 @@ const configureStore = (initialState?: StateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...routerActions
+    ...routerActions,
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
         // Options: http://extension.remotedev.io/docs/API/Arguments.html
-        actionCreators
+        actionCreators,
       })
     : compose;
   /* eslint-enable no-underscore-dangle */
@@ -90,7 +91,7 @@ const configureStore = (initialState?: StateType) => {
 
   return {
     store,
-    persistor
+    persistor,
   };
 };
 

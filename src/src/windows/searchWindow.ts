@@ -19,8 +19,8 @@ const createSearchWindow = () => {
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   const filePath =
@@ -29,10 +29,10 @@ const createSearchWindow = () => {
       : path.join(__dirname, 'app.html');
 
   searchWindow.loadFile(filePath, {
-    query: { window: 'searchWindow' }
+    query: { window: 'searchWindow' },
   });
 
-  searchWindow.on('close', e => {
+  searchWindow.on('close', (e) => {
     e.preventDefault();
     if (searchWindow) {
       searchWindow.hide();

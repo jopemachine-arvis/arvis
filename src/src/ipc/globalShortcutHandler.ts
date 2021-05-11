@@ -1,6 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable promise/catch-or-return */
-/* eslint-disable promise/always-return */
 /* eslint-disable no-restricted-syntax */
 import { BrowserWindow, globalShortcut, Notification } from 'electron';
 import ioHook from 'iohook';
@@ -12,14 +9,14 @@ const doubleKeyPressHandler = {
   shift: () => {},
   alt: () => {},
   ctrl: () => {},
-  cmd: () => {}
+  cmd: () => {},
 };
 
 const doubleKeyPressedTimers = {
   shift: 0,
   alf: 0,
   ctrl: 0,
-  meta: 0
+  meta: 0,
 };
 
 /**
@@ -36,7 +33,7 @@ const handleGUICustomActions = (hotKeyAction: any, actionTypes: string[]) => {
 
     new Notification({
       title: targetAction.title,
-      body: targetAction.text
+      body: targetAction.text,
     }).show();
   }
 };
@@ -61,7 +58,7 @@ const handleHotKeyAction = (
     const newInput = targetAction.command;
 
     searchWindow.webContents.send(IPCMainEnum.setSearchbarInput, {
-      str: newInput
+      str: newInput,
     });
   }
 
@@ -75,7 +72,7 @@ const handleHotKeyAction = (
  */
 const getWorkflowHotkeyPressHandler = ({
   searchWindow,
-  hotKeyAction
+  hotKeyAction,
 }: {
   searchWindow: BrowserWindow;
   hotKeyAction: any;
@@ -89,7 +86,7 @@ const getWorkflowHotkeyPressHandler = ({
   mainProcWorkManager.handleAction({
     actions: [hotKeyAction],
     queryArgs: {},
-    modifiersInput: {}
+    modifiersInput: {},
   });
 
   const actionTypes: string[] = hotKeyAction.action.map(
@@ -101,14 +98,13 @@ const getWorkflowHotkeyPressHandler = ({
 
 /**
  * @param  {string} shortcut
- * @param  {Function} callback
+ * @param  {() => void} callback
  */
-const registerShortcut = (shortcut: string, callback: Function) => {
+const registerShortcut = (shortcut: string, callback: () => void) => {
   console.log(`Shortcut registered.. '${shortcut}'`);
 
   // Case of double key type
   if (shortcut.includes('Double')) {
-    // eslint-disable-next-line prefer-destructuring
     shortcut = shortcut.split('Double ')[1];
 
     doubleKeyPressHandler[shortcut] = () => {
@@ -131,7 +127,7 @@ const registerShortcut = (shortcut: string, callback: Function) => {
  */
 const registerWorkflowHotkeys = ({
   searchWindow,
-  workflowHotkeyTbl
+  workflowHotkeyTbl,
 }: {
   searchWindow: BrowserWindow;
   workflowHotkeyTbl: any;
@@ -141,7 +137,7 @@ const registerWorkflowHotkeys = ({
     const cb = () => {
       getWorkflowHotkeyPressHandler({
         searchWindow,
-        hotKeyAction: workflowHotkeyTbl[hotkey]
+        hotKeyAction: workflowHotkeyTbl[hotkey],
       });
     };
 
@@ -153,7 +149,7 @@ export default ({
   preferenceWindow,
   searchWindow,
   callbackTable,
-  workflowHotkeyTbl
+  workflowHotkeyTbl,
 }: {
   preferenceWindow: BrowserWindow;
   searchWindow: BrowserWindow;
@@ -174,7 +170,7 @@ export default ({
   }
 
   // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
-  ioHook.on('keydown', e => {
+  ioHook.on('keydown', (e) => {
     if (e.shiftKey) {
       doubleKeyPressHandler.shift();
     } else if (e.altKey) {

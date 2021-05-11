@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-curly-newline */
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';

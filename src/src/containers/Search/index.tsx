@@ -1,4 +1,4 @@
-/* eslint-disable promise/always-return */
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,15 +18,15 @@ export default function SearchWindow() {
     item_height,
     item_left_padding,
     item_title_subtitle_margin,
-    search_window_transparency,
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
     search_window_footer_height,
+    search_window_transparency,
     selected_item_background_color,
     selected_item_font_color,
     subtitle_font_size,
-    title_font_size
+    title_font_size,
   } = useSelector((state: StateType) => state.uiConfig);
 
   const { max_item_count_to_show, global_font } = useSelector(
@@ -43,10 +43,10 @@ export default function SearchWindow() {
 
   const setDebuggingOptions = () => {
     workManager.printActionType = debuggingConfig.debugging_action_type;
-    workManager.printWorkStack = debuggingConfig.debugging_workstack;
-    workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
     workManager.printArgs = debuggingConfig.debugging_args;
     workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
+    workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
+    workManager.printWorkStack = debuggingConfig.debugging_workstack;
   };
 
   useEffect(() => {
@@ -65,31 +65,33 @@ export default function SearchWindow() {
     onItemPressHandler,
     onItemShouldBeUpdate,
     onWorkEndHandler,
-    onInputShouldBeUpdate
+    onInputShouldBeUpdate,
   } = useSearchWindowControl({
     items,
     setItems,
-    maxItemCount: max_item_count_to_show
+    maxItemCount: max_item_count_to_show,
   });
 
   const registerWindowUpdater = useCallback(() => {
+    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
     workManager.onItemPressHandler = onItemPressHandler;
     workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
     workManager.onWorkEndHandler = onWorkEndHandler;
-    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
   }, []);
 
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
       ipcRenderer.send(IPCRendererEnum.showNotification, {
         title: action.title,
-        body: action.text
+        body: action.text,
       });
     });
   };
 
+  /**
+   * @summary Used to receive dispatched action from different window
+   */
   const ipcCallbackTbl = {
-    // Used to receive dispatched action from different window
     fetchAction: (
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
@@ -104,7 +106,7 @@ export default function SearchWindow() {
       { bundleId }: { bundleId: string }
     ) => {
       Core.renewWorkflows(bundleId);
-    }
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
@@ -158,36 +160,36 @@ export default function SearchWindow() {
     >
       <SearchBar
         alwaysFocus
-        setInputStr={setInputStr}
         getInputProps={getInputProps}
         itemBackgroundColor={item_background_color}
         itemLeftPadding={item_left_padding}
+        searchbarFontColor={searchbar_font_color}
         searchbarFontSize={searchbar_font_size}
         searchbarHeight={searchbar_height}
-        searchbarFontColor={searchbar_font_color}
         searchWindowTransparency={search_window_transparency}
+        setInputStr={setInputStr}
       />
       <SearchResultView
         demo={false}
-        searchResult={items}
-        startIdx={indexInfo.itemStartIdx}
-        selectedItemIdx={indexInfo.selectedItemIdx}
-        onDoubleClickHandler={onDoubleClickHandler}
-        onMouseoverHandler={onMouseoverHandler}
-        itemHeight={item_height}
         footerHeight={search_window_footer_height}
-        searchbarHeight={searchbar_height}
-        maxItemCount={max_item_count_to_show}
         iconRightMargin={icon_right_margin}
         itemBackgroundColor={item_background_color}
         itemFontColor={item_font_color}
+        itemHeight={item_height}
         itemLeftPadding={item_left_padding}
         itemTitleSubtitleMargin={item_title_subtitle_margin}
+        maxItemCount={max_item_count_to_show}
+        onDoubleClickHandler={onDoubleClickHandler}
+        onMouseoverHandler={onMouseoverHandler}
+        searchbarHeight={searchbar_height}
+        searchResult={items}
+        searchWindowTransparency={search_window_transparency}
         selectedItemBackgroundColor={selected_item_background_color}
         selectedItemFontColor={selected_item_font_color}
+        selectedItemIdx={indexInfo.selectedItemIdx}
+        startIdx={indexInfo.itemStartIdx}
         subtitleFontSize={subtitle_font_size}
         titleFontSize={title_font_size}
-        searchWindowTransparency={search_window_transparency}
       />
     </OuterContainer>
   );

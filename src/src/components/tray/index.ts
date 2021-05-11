@@ -1,6 +1,3 @@
-/* eslint-disable no-else-return */
-/* eslint-disable promise/always-return */
-/* eslint-disable promise/catch-or-return */
 import {
   app,
   Menu,
@@ -8,7 +5,7 @@ import {
   nativeImage,
   BrowserWindow,
   MenuItemConstructorOptions,
-  MenuItem
+  MenuItem,
 } from 'electron';
 
 import { createPreferenceWindow } from '../../windows/preferenceWindow';
@@ -33,13 +30,13 @@ export default class TrayBuilder {
           this.setPreferenceWindow(
             createPreferenceWindow({
               trayBuilder: this,
-              searchWindow: this.searchWindow!
+              searchWindow: this.searchWindow!,
             })
           );
         }
         this.preferenceWindow.show();
         this.preferenceWindow.focus();
-      }
+      },
     },
     {
       label: 'Show Workflow Debugging Window',
@@ -48,18 +45,18 @@ export default class TrayBuilder {
         if (this.searchWindow) {
           this.searchWindow.webContents.toggleDevTools();
         }
-      }
+      },
     },
     {
-      type: 'separator'
+      type: 'separator',
     },
     {
       label: 'Quit app',
       type: 'normal',
       click: () => {
         app.quit();
-      }
-    }
+      },
+    },
   ];
 
   constructor(trayFilePath: string) {
@@ -69,11 +66,15 @@ export default class TrayBuilder {
   buildTray() {
     const nimage = nativeImage.createFromPath(this.trayFilePath);
 
-    app.whenReady().then(() => {
-      this.tray = new Tray(nimage);
-      const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
-      this.tray.setContextMenu(contextMenu);
-    });
+    app
+      .whenReady()
+      .then(() => {
+        this.tray = new Tray(nimage);
+        const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
+        this.tray.setContextMenu(contextMenu);
+        return null;
+      })
+      .catch(console.error);
   }
 
   setPreferenceWindow(preferenceWindow: BrowserWindow) {

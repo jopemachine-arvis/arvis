@@ -1,6 +1,5 @@
-// https://github.com/kwhat/libuiohook/blob/master/include/uiohook.h
-
 /* eslint-disable no-bitwise */
+// https://github.com/kwhat/libuiohook/blob/master/include/uiohook.h
 
 /* Begin Virtual Key Codes */
 export const VC_ESCAPE = 0x0001;

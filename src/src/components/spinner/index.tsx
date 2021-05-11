@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 // https://projects.lukehaas.me/css-loaders/
 
 import React from 'react';
@@ -11,7 +10,8 @@ type IProps = {
 };
 
 export default function Spinner(props: IProps) {
-  let { style, center } = props;
+  let { style } = props;
+  const { center } = props;
 
   if (center) {
     style = {
@@ -22,7 +22,7 @@ export default function Spinner(props: IProps) {
       right: 0,
       top: 0,
       bottom: 0,
-      textAlign: 'center'
+      textAlign: 'center',
     };
   }
 
@@ -32,3 +32,8 @@ export default function Spinner(props: IProps) {
     </div>
   );
 }
+
+Spinner.defaultProps = {
+  style: undefined,
+  center: false,
+};

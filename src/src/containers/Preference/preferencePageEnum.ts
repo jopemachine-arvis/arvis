@@ -3,5 +3,5 @@ export enum PreferencePage {
   Workflow = 'Workflows',
   Theme = 'Theme',
   Plugin = 'Plugins',
-  Advanced = 'Advanced'
+  Advanced = 'Advanced',
 }

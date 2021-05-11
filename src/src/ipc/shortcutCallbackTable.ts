@@ -6,7 +6,7 @@ import { BrowserWindow } from 'electron';
 export default {
   toggleSearchWindow: ({
     preferenceWindow,
-    searchWindow
+    searchWindow,
   }: {
     preferenceWindow: BrowserWindow;
     searchWindow: BrowserWindow;
@@ -21,5 +21,5 @@ export default {
       searchWindow.show();
       searchWindow.focus();
     }
-  }
+  },
 };

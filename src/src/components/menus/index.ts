@@ -38,8 +38,8 @@ export default class MenuBuilder {
           label: 'Inspect element',
           click: () => {
             this.preferenceWindow.webContents.inspectElement(x, y);
-          }
-        }
+          },
+        },
       ]).popup({ window: this.preferenceWindow });
     });
   }

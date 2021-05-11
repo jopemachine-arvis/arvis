@@ -1,4 +1,3 @@
-/* eslint-disable constructor-super */
 import { Menu, MenuItem } from 'electron';
 import open from 'open';
 
@@ -20,7 +19,7 @@ class WorkflowItemContextMenu extends Menu {
           'Opens the installation path of the selected workflow with Explorer',
         click() {
           open(path);
-        }
+        },
       })
     );
     super.append(new MenuItem({ type: 'separator' }));

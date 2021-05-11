@@ -11,6 +11,6 @@ export default function createRootReducer(history: History) {
     router: connectRouter(history),
     globalConfig: GlobalConfigReducer,
     advancedConfig: AdvancedConfigReducer,
-    uiConfig: UIConfigReducer
+    uiConfig: UIConfigReducer,
   });
 }

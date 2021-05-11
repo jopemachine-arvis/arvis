@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable promise/always-return */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
@@ -15,16 +12,16 @@ type IndexInfo = {
 
 /**
  * @param  {any[]} items
- * @param  {Function} setItems
+ * @param  {(items: any[]) => void} setItems
  * @param  {number} maxItemCount
  */
 const useSearchWindowControl = ({
   items,
   setItems,
-  maxItemCount
+  maxItemCount,
 }: {
   items: any[];
-  setItems: Function;
+  setItems: (items: any[]) => void;
   maxItemCount: number;
 }) => {
   const workManager = Core.WorkManager.getInstance();
@@ -36,7 +33,7 @@ const useSearchWindowControl = ({
 
   const [indexInfo, setIndexInfo] = useState<IndexInfo>({
     itemStartIdx: 0,
-    selectedItemIdx: 0
+    selectedItemIdx: 0,
   });
 
   const inputStr = inputRef.current
@@ -46,7 +43,7 @@ const useSearchWindowControl = ({
   const clearIndexInfo = () => {
     setIndexInfo({
       itemStartIdx: 0,
-      selectedItemIdx: 0
+      selectedItemIdx: 0,
     });
   };
 
@@ -58,19 +55,19 @@ const useSearchWindowControl = ({
     if (selectedItemIdx === items.length - 1 && items.length !== 1) {
       setIndexInfo({
         itemStartIdx: items.length - maxItemCount,
-        selectedItemIdx: items.length - 1
+        selectedItemIdx: items.length - 1,
       });
     }
     // Select up
     else if (indexInfo.itemStartIdx > selectedItemIdx) {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx - 1,
-        selectedItemIdx
+        selectedItemIdx,
       });
     } else {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx,
-        selectedItemIdx
+        selectedItemIdx,
       });
     }
   };
@@ -86,12 +83,12 @@ const useSearchWindowControl = ({
     else if (indexInfo.itemStartIdx + maxItemCount <= selectedItemIdx) {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx + 1,
-        selectedItemIdx
+        selectedItemIdx,
       });
     } else {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx,
-        selectedItemIdx
+        selectedItemIdx,
       });
     }
   };
@@ -99,7 +96,7 @@ const useSearchWindowControl = ({
   const handleScriptFilterAutoExecute = ({
     itemArr,
     pressedKey,
-    updatedInput
+    updatedInput,
   }: {
     itemArr: any[];
     pressedKey: string;
@@ -123,14 +120,13 @@ const useSearchWindowControl = ({
       firstItem.withspace === false && updatedInput.includes(firstItem.command);
 
     if (execScriptFilterWithSpace || execScriptFilterWithoutSpace) {
-      // eslint-disable-next-line prefer-destructuring
       commandOnStackIsEmpty = firstItem;
 
       const { running_subtext: runningSubText } = firstItem;
       workManager.setRunningText({
         itemArr,
         index: 0,
-        runningSubText
+        runningSubText,
       });
 
       Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
@@ -144,7 +140,7 @@ const useSearchWindowControl = ({
       handleScriptFilterAutoExecute({
         itemArr,
         pressedKey,
-        updatedInput
+        updatedInput,
       });
     };
 
@@ -170,7 +166,7 @@ const useSearchWindowControl = ({
 
   const setInputStr = ({
     str,
-    needItemsUpdate
+    needItemsUpdate,
   }: {
     str: string;
     needItemsUpdate: boolean;
@@ -185,7 +181,7 @@ const useSearchWindowControl = ({
 
   const handleReturn = async ({
     selectedItemIdx,
-    modifiers
+    modifiers,
   }: {
     selectedItemIdx: number;
     modifiers: any;
@@ -198,7 +194,7 @@ const useSearchWindowControl = ({
       workManager.setRunningText({
         itemArr: items,
         index: selectedItemIdx,
-        runningSubText
+        runningSubText,
       });
 
       Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
@@ -216,14 +212,14 @@ const useSearchWindowControl = ({
       if (indexInfo.itemStartIdx + maxItemCount < items.length) {
         setIndexInfo({
           itemStartIdx: indexInfo.itemStartIdx + 1,
-          selectedItemIdx: indexInfo.selectedItemIdx
+          selectedItemIdx: indexInfo.selectedItemIdx,
         });
       }
     } else {
       if (indexInfo.itemStartIdx > 0) {
         setIndexInfo({
           itemStartIdx: indexInfo.itemStartIdx - 1,
-          selectedItemIdx: indexInfo.selectedItemIdx
+          selectedItemIdx: indexInfo.selectedItemIdx,
         });
       }
     }
@@ -232,7 +228,7 @@ const useSearchWindowControl = ({
   const onMouseoverHandler = (index: number) => {
     setIndexInfo({
       itemStartIdx: indexInfo.itemStartIdx,
-      selectedItemIdx: index
+      selectedItemIdx: index,
     });
   };
 
@@ -243,8 +239,8 @@ const useSearchWindowControl = ({
         cmd: keyData.isWithMeta,
         ctrl: keyData.isWithCtrl,
         shift: keyData.isWithShift,
-        alt: keyData.isWithAlt
-      }
+        alt: keyData.isWithAlt,
+      },
     });
   };
 
@@ -267,8 +263,8 @@ const useSearchWindowControl = ({
         cmd: false,
         ctrl: false,
         shift: false,
-        alt: false
-      }
+        alt: false,
+      },
     });
   };
 
@@ -284,7 +280,7 @@ const useSearchWindowControl = ({
       'Shift',
       'CapsLock',
       'Tab',
-      'Escape'
+      'Escape',
     ];
 
     if (!exceptionKeys.includes(e.key)) {
@@ -300,7 +296,7 @@ const useSearchWindowControl = ({
       cmd: keyData.isWithMeta,
       ctrl: keyData.isWithCtrl,
       shift: keyData.isWithShift,
-      alt: keyData.isWithAlt
+      alt: keyData.isWithAlt,
     };
 
     if (keyData.isNumber && (modifiers.cmd || modifiers.ctrl)) {
@@ -308,7 +304,7 @@ const useSearchWindowControl = ({
     } else if (keyData.isEnter) {
       await handleReturn({
         selectedItemIdx: indexInfo.selectedItemIdx,
-        modifiers
+        modifiers,
       });
     } else if (keyData.isArrowDown) {
       handleDownArrow();
@@ -336,7 +332,7 @@ const useSearchWindowControl = ({
 
   const onInputShouldBeUpdate = ({
     str,
-    needItemsUpdate
+    needItemsUpdate,
   }: {
     str: string;
     needItemsUpdate: boolean;
@@ -382,7 +378,7 @@ const useSearchWindowControl = ({
     onItemShouldBeUpdate,
     onWorkEndHandler,
     onInputShouldBeUpdate,
-    getInputProps: getTargetProps
+    getInputProps: getTargetProps,
   };
 };
 

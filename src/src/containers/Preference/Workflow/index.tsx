@@ -1,11 +1,6 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable dot-notation */
-/* eslint-disable react/jsx-curly-newline */
-/* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
-
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
@@ -13,17 +8,14 @@ import {
   AiOutlineAppstoreAdd,
   AiOutlineDelete,
   AiOutlineSave,
-  AiOutlineBranches
+  AiOutlineBranches,
 } from 'react-icons/ai';
 import { BiExport } from 'react-icons/bi';
-// import { CgSmileNone } from 'react-icons/cg';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import {
-  // EmptyListContainer,
-  // EmptyListDesc,
   Header,
   OuterContainer,
   WorkflowDescContainer,
@@ -33,7 +25,7 @@ import {
   WorkflowItemTitle,
   WorkflowListOrderedList,
   WorkflowListView,
-  WorkflowListViewFooter
+  WorkflowListViewFooter,
 } from './components';
 import { StyledInput, Spinner } from '../../../components';
 import { ScreenCoverContext } from '../screenCoverContext';
@@ -42,10 +34,9 @@ import {
   bottomFixedBarIconStyle,
   checkboxStyle,
   descriptionContainerStyle,
-  // emptyListIconStyle,
   formGroupStyle,
   iconStyle,
-  labelStyle
+  labelStyle,
 } from './style';
 import { sleep } from '../../../utils';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
@@ -85,19 +76,20 @@ export default function Workflow() {
 
     openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
       if (fileInfo.file.filePaths[0]) {
-        const wfConfigFilePath = fileInfo.file.filePaths[0];
+        const alvisWorkflowFilePath = fileInfo.file.filePaths[0];
 
-        Core.install(wfConfigFilePath)
+        Core.install(alvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
             ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
-              destWindow: 'searchWindow'
+              destWindow: 'searchWindow',
             });
+            return null;
           })
-          .catch(err => {
+          .catch((err) => {
             ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
               title: 'Installer file is invalid',
-              content: err.message
+              content: err.message,
             });
           })
           .finally(() => {
@@ -115,7 +107,7 @@ export default function Workflow() {
       if (yesPressed) {
         deleteWorkflowEventHandler.current();
       }
-    }
+    },
   };
 
   useEffect(() => {
@@ -155,7 +147,7 @@ export default function Workflow() {
         webaddress,
         description,
         category,
-        enabled
+        enabled,
       } = info;
 
       setWorkflowEnabled(enabled);
@@ -190,7 +182,7 @@ export default function Workflow() {
     e.preventDefault();
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
-      path: workflowRootPath
+      path: workflowRootPath,
     });
   };
 
@@ -214,7 +206,7 @@ export default function Workflow() {
         borderRadius: 10,
         // Fix me! Not working!
         borderWidth: 1,
-        borderColor: '#565A65'
+        borderColor: '#565A65',
       };
     }
 
@@ -241,18 +233,22 @@ export default function Workflow() {
 
   const saveWorkflow = () => {
     const targetPath = Core.path.getWorkflowConfigJsonPath(workflowBundleId);
-    fse.readJson(targetPath).then(async json => {
-      json['bundleId'] = workflowBundleId;
-      json['category'] = workflowCategory;
-      json['createdby'] = workflowCreator;
-      json['description'] = workflowDescription;
-      json['name'] = workflowName;
-      json['version'] = workflowVersion;
-      json['webaddress'] = workflowWebsite;
+    fse
+      .readJson(targetPath)
+      .then(async (json) => {
+        json.bundleId = workflowBundleId;
+        json.category = workflowCategory;
+        json.createdby = workflowCreator;
+        json.description = workflowDescription;
+        json.name = workflowName;
+        json.version = workflowVersion;
+        json.webaddress = workflowWebsite;
 
-      await fse.writeJson(targetPath, json, { encoding: 'utf8' });
-      Core.renewWorkflows();
-    });
+        await fse.writeJson(targetPath, json, { encoding: 'utf8' });
+        Core.renewWorkflows();
+        return null;
+      })
+      .catch(console.error);
   };
 
   const exportWorkflow = () => {
@@ -262,7 +258,7 @@ export default function Workflow() {
 
     ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to save',
-      defaultPath
+      defaultPath,
     });
   };
 
@@ -276,24 +272,27 @@ export default function Workflow() {
       workflowList[workflowBundleIds[idxToRemove]].bundleId;
 
     Core.unInstall({
-      bundleId: targetBundleId
-    }).then(async () => {
-      const temp = workflowList;
-      delete temp[targetBundleId];
-      setWorkflows(temp);
+      bundleId: targetBundleId,
+    })
+      .then(async () => {
+        const temp = workflowList;
+        delete temp[targetBundleId];
+        setWorkflows(temp);
 
-      if (idxToRemove !== 0) {
-        setSelectedWorkflowIdx(idxToRemove - 1);
-      } else {
-        forceUpdate();
-      }
-      setSpinning(false);
+        if (idxToRemove !== 0) {
+          setSelectedWorkflowIdx(idxToRemove - 1);
+        } else {
+          forceUpdate();
+        }
+        setSpinning(false);
 
-      await sleep(100);
-      ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
-        destWindow: 'searchWindow'
-      });
-    });
+        await sleep(100);
+        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+          destWindow: 'searchWindow',
+        });
+        return null;
+      })
+      .catch(console.error);
   };
 
   useEffect(() => {
@@ -317,7 +316,7 @@ export default function Workflow() {
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
       msg: `Are you sure you want to delete '${workflowBundleId}'?`,
-      icon: getDefaultIcon(workflowBundleId)
+      icon: getDefaultIcon(workflowBundleId),
     });
   };
 
@@ -336,7 +335,7 @@ export default function Workflow() {
       <WorkflowListView>
         <Header
           style={{
-            marginLeft: 40
+            marginLeft: 40,
           }}
         >
           Installed Workflows
@@ -374,7 +373,7 @@ export default function Workflow() {
       <WorkflowDescContainer>
         <Header
           style={{
-            marginLeft: 20
+            marginLeft: 20,
           }}
         >
           Workflow config

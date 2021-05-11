@@ -8,27 +8,27 @@ export default (state = {}, action: any) => {
     case GlobalConfigActionTypes.SET_HOT_KEY:
       return {
         ...state,
-        hotkey: payload.arg
+        hotkey: payload.arg,
       };
     case GlobalConfigActionTypes.SET_LAUNCH_AT_LOGIN:
       return {
         ...state,
-        launch_at_login: payload.arg
+        launch_at_login: payload.arg,
       };
     case GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SHOW:
       return {
         ...state,
-        max_item_count_to_show: payload.arg
+        max_item_count_to_show: payload.arg,
       };
     case GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SEARCH:
       return {
         ...state,
-        max_item_count_to_search: payload.arg
+        max_item_count_to_search: payload.arg,
       };
     case GlobalConfigActionTypes.SET_GLOBAL_FONT:
       return {
         ...state,
-        global_font: payload.arg
+        global_font: payload.arg,
       };
     default:
       return state;

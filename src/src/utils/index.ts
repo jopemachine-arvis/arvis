@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import makeActionCreator from './makeActionCreator';
 import { isNumeric } from './isNumeric';
 import extractJson from './extractJSON';
@@ -18,5 +17,5 @@ export {
   checkFileExists,
   extractJson,
   isSupportedImageFormat,
-  getRandomColor
+  getRandomColor,
 };

@@ -1,6 +1,6 @@
 const objectFlip = (obj: object) => {
   const ret = {};
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     ret[obj[key]] = key;
   });
   return ret;
@@ -113,7 +113,7 @@ export const keyCodeToString = {
   57419: '←',
   57416: '↑',
   57424: '↓',
-  57421: '→'
+  57421: '→',
 };
 
 export const stringToKeyCode = objectFlip(keyCodeToString);

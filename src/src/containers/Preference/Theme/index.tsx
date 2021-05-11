@@ -1,49 +1,47 @@
-/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
 import { IoMdColorPalette } from 'react-icons/io';
 import { StateType } from '../../../redux/reducers/types';
 import './index.global.css';
-
 import {
   OuterContainer,
   ConfigContainer,
   Header,
   PreviewContainer,
-  PreviewMainContainer
+  PreviewMainContainer,
 } from './components';
-
 import { SearchBar, SearchResultView, StyledInput } from '../../../components';
 import { actionTypes as UIActionTypes } from '../../../redux/actions/uiConfig';
 import {
   createGlobalConfigChangeHandler,
-  getRandomColor
+  getRandomColor,
 } from '../../../utils';
 import {
   descriptionContainerStyle,
   formGroupStyle,
   labelStyle,
-  iconStyle
+  iconStyle,
 } from './style';
 
 const mockItems = [
   {
     title: 'Selected Item',
-    subtitle: 'Subtitle'
+    subtitle: 'Subtitle',
   },
   {
     title: 'Normal Item',
-    subtitle: 'Subtitle'
+    subtitle: 'Subtitle',
   },
   {
     title: 'Normal Item',
-    subtitle: 'Subtitle'
+    subtitle: 'Subtitle',
   },
   {
     title: 'Normal Item',
-    subtitle: 'Subtitle'
-  }
+    subtitle: 'Subtitle',
+  },
 ];
 
 export default function Theme() {
@@ -74,7 +72,7 @@ export default function Theme() {
 
   const configChangeHandler = createGlobalConfigChangeHandler({
     destWindow: 'searchWindow',
-    dispatch
+    dispatch,
   });
 
   const changeBackgroundColor = () => {
@@ -90,7 +88,7 @@ export default function Theme() {
       />
       <PreviewContainer
         style={{
-          backgroundColor: previewBackgroundColor
+          backgroundColor: previewBackgroundColor,
         }}
       >
         <PreviewMainContainer
@@ -100,41 +98,41 @@ export default function Theme() {
             height:
               item_height * mockItems.length +
               searchbar_height +
-              search_window_footer_height
+              search_window_footer_height,
           }}
           onWheel={() => {}}
         >
           <SearchBar
+            alwaysFocus={false}
             itemBackgroundColor={item_background_color}
             itemLeftPadding={item_left_padding}
             searchbarFontColor={searchbar_font_color}
             searchbarFontSize={searchbar_font_size}
             searchbarHeight={searchbar_height}
-            alwaysFocus={false}
-            setInputStr={() => {}}
             searchWindowTransparency={search_window_transparency}
+            setInputStr={() => {}}
           />
           <SearchResultView
             demo
-            startIdx={0}
-            selectedItemIdx={0}
-            maxItemCount={mockItems.length}
-            searchResult={mockItems}
-            onDoubleClickHandler={() => {}}
-            onMouseoverHandler={() => {}}
-            itemHeight={item_height}
-            searchbarHeight={searchbar_height}
             footerHeight={search_window_footer_height}
             iconRightMargin={icon_right_margin}
             itemBackgroundColor={item_background_color}
             itemFontColor={item_font_color}
+            itemHeight={item_height}
             itemLeftPadding={item_left_padding}
             itemTitleSubtitleMargin={item_title_subtitle_margin}
+            maxItemCount={mockItems.length}
+            onDoubleClickHandler={() => {}}
+            onMouseoverHandler={() => {}}
+            searchbarHeight={searchbar_height}
+            searchResult={mockItems}
+            searchWindowTransparency={search_window_transparency}
             selectedItemBackgroundColor={selected_item_background_color}
             selectedItemFontColor={selected_item_font_color}
+            selectedItemIdx={0}
+            startIdx={0}
             subtitleFontSize={subtitle_font_size}
             titleFontSize={title_font_size}
-            searchWindowTransparency={search_window_transparency}
           />
         </PreviewMainContainer>
       </PreviewContainer>

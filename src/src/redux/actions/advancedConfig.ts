@@ -6,7 +6,7 @@ export const actionTypes = {
     '@advancedConfig/SET_DEBUGGING_WORKFLOW_OUTPUT',
   SET_DEBUGGING_WORKSTACK: '@advancedConfig/SET_DEBUGGING_WORKSTACK',
   SET_DEBUGGING_ARGS: '@advancedConfig/SET_DEBUGGING_ARGS',
-  SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER'
+  SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER',
 };
 
 export const setDebuggingActionType = makeActionCreator(

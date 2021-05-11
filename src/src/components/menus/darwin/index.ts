@@ -3,7 +3,7 @@ import {
   Menu,
   shell,
   BrowserWindow,
-  MenuItemConstructorOptions
+  MenuItemConstructorOptions,
 } from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -17,7 +17,7 @@ export default (mainWindow: BrowserWindow) => {
     submenu: [
       {
         label: 'About Arvis',
-        selector: 'orderFrontStandardAboutPanel:'
+        selector: 'orderFrontStandardAboutPanel:',
       },
       { type: 'separator' },
       { label: 'Services', submenu: [] },
@@ -25,12 +25,12 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'Hide Arvis',
         accelerator: 'Command+H',
-        selector: 'hide:'
+        selector: 'hide:',
       },
       {
         label: 'Hide Others',
         accelerator: 'Command+Shift+H',
-        selector: 'hideOtherApplications:'
+        selector: 'hideOtherApplications:',
       },
       { label: 'Show All', selector: 'unhideAllApplications:' },
       { type: 'separator' },
@@ -39,9 +39,9 @@ export default (mainWindow: BrowserWindow) => {
         accelerator: 'Command+Q',
         click: () => {
           app.quit();
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   const subMenuViewDev: MenuItemConstructorOptions = {
@@ -52,23 +52,23 @@ export default (mainWindow: BrowserWindow) => {
         accelerator: 'Command+R',
         click: () => {
           mainWindow.webContents.reload();
-        }
+        },
       },
       {
         label: 'Toggle Full Screen',
         accelerator: 'Ctrl+Command+F',
         click: () => {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
+        },
       },
       {
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
         click: () => {
           mainWindow.webContents.toggleDevTools();
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
   const subMenuViewProd: MenuItemConstructorOptions = {
     label: 'View',
@@ -78,9 +78,9 @@ export default (mainWindow: BrowserWindow) => {
         accelerator: 'Ctrl+Command+F',
         click: () => {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
   const subMenuWindow: DarwinMenuItemConstructorOptions = {
     label: 'Window',
@@ -88,12 +88,12 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'Minimize',
         accelerator: 'Command+M',
-        selector: 'performMiniaturize:'
+        selector: 'performMiniaturize:',
       },
       { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
       { type: 'separator' },
-      { label: 'Bring All to Front', selector: 'arrangeInFront:' }
-    ]
+      { label: 'Bring All to Front', selector: 'arrangeInFront:' },
+    ],
   };
   const subMenuHelp: MenuItemConstructorOptions = {
     label: 'Help',
@@ -102,15 +102,15 @@ export default (mainWindow: BrowserWindow) => {
         label: 'Documentation',
         click() {
           shell.openExternal('https://github.com/jopemachine/arvis/');
-        }
+        },
       },
       {
         label: 'Search Issues',
         click() {
           shell.openExternal('https://github.com/jopemachine/arvis/issues');
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   const subMenuEdit: DarwinMenuItemConstructorOptions = {
@@ -119,37 +119,37 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'Undo',
         accelerator: 'CmdOrCtrl+Z',
-        selector: 'undo:'
+        selector: 'undo:',
       },
       {
         label: 'Redo',
         accelerator: 'Shift+CmdOrCtrl+Z',
-        selector: 'redo:'
+        selector: 'redo:',
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Cut',
         accelerator: 'CmdOrCtrl+X',
-        selector: 'cut:'
+        selector: 'cut:',
       },
       {
         label: 'Copy',
         accelerator: 'CmdOrCtrl+C',
-        selector: 'copy:'
+        selector: 'copy:',
       },
       {
         label: 'Paste',
         accelerator: 'CmdOrCtrl+V',
-        selector: 'paste:'
+        selector: 'paste:',
       },
       {
         label: 'Select All',
         accelerator: 'CmdOrCtrl+A',
-        selector: 'selectAll:'
-      }
-    ]
+        selector: 'selectAll:',
+      },
+    ],
   };
 
   const subMenuView =

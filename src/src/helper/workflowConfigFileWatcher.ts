@@ -6,12 +6,11 @@ import { IPCMainEnum } from '../ipc/ipcEventEnum';
 
 export const startFileWatcher = ({
   searchWindow,
-  preferenceWindow
+  preferenceWindow,
 }: {
   searchWindow: BrowserWindow;
   preferenceWindow: BrowserWindow;
 }) => {
-
   /**
    * @param  {string} bundleId?
    * @summary Update singleton for each Windows
@@ -19,7 +18,7 @@ export const startFileWatcher = ({
   const requestRenewWorkflows = (bundleId?: string) => {
     searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
     preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
-      bundleId
+      bundleId,
     });
   };
 
@@ -43,7 +42,7 @@ export const startFileWatcher = ({
       {
         persistent: true,
         ignoreInitial: true,
-        followSymlinks: false
+        followSymlinks: false,
       }
     )
     .on('change', (filePath: string) => {

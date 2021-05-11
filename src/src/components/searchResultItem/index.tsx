@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useMemo } from 'react';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
@@ -8,7 +9,7 @@ import {
   SubTitle,
   Title,
   IconImg,
-  OffsetText
+  OffsetText,
 } from './components';
 import { applyAlphaColor } from '../../utils';
 
@@ -22,8 +23,8 @@ type IProps = {
   autocomplete?: string;
   variables?: any;
   valid?: boolean;
-  onMouseoverHandler: Function;
-  onDoubleClickHandler: Function;
+  onMouseoverHandler: () => void;
+  onDoubleClickHandler: () => void;
   itemBackgroundColor: string;
   itemFontColor: string;
   itemHeight: number;
@@ -38,7 +39,7 @@ type IProps = {
   searchWindowTransparency: number;
 };
 
-const searchResultItem = React.memo((props: IProps) => {
+const SearchResultItem = (props: IProps) => {
   const {
     offset,
     selected,
@@ -62,7 +63,7 @@ const searchResultItem = React.memo((props: IProps) => {
     selectedItemFontColor,
     subtitleFontSize,
     titleFontSize,
-    searchWindowTransparency
+    searchWindowTransparency,
   } = props;
 
   const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
@@ -71,7 +72,7 @@ const searchResultItem = React.memo((props: IProps) => {
     return {
       width: iconSize,
       height: iconSize,
-      marginRight: iconRightMargin
+      marginRight: iconRightMargin,
     };
   }, [iconRightMargin]);
 
@@ -147,6 +148,15 @@ const searchResultItem = React.memo((props: IProps) => {
       </OffsetText>
     </OuterContainer>
   );
-});
+};
 
-export default searchResultItem;
+SearchResultItem.defaultProps = {
+  icon: undefined,
+  arg: undefined,
+  text: undefined,
+  autocomplete: undefined,
+  variables: undefined,
+  valid: true,
+};
+
+export default React.memo(SearchResultItem);

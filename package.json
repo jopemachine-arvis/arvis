@@ -97,7 +97,7 @@
     "publish": {
       "provider": "github",
       "owner": "jopemachine",
-      "repo": "Arvis"
+      "repo": "arvis"
     }
   },
   "author": {
@@ -171,6 +171,7 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-test-renderer": "^16.9.3",
+    "@types/redux-logger": "^3.0.8",
     "@types/styled-components": "^5.1.9",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
@@ -212,6 +213,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-snakecasejs": "^2.2.0",
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",

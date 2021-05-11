@@ -1,18 +1,17 @@
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
   ProSidebar,
   Menu,
   MenuItem,
   SidebarHeader,
-  SidebarContent
+  SidebarContent,
 } from 'react-pro-sidebar';
 import {
   AiOutlineSetting,
   AiOutlineFormatPainter,
   AiOutlineTool,
   AiOutlineAppstore,
-  AiTwotoneThunderbolt
+  AiTwotoneThunderbolt,
 } from 'react-icons/ai';
 import './index.global.css';
 import './sidebar.global.css';
@@ -23,7 +22,7 @@ import { PreferencePage } from '../preferencePageEnum';
 
 type IProps = {
   page: PreferencePage;
-  setPage: Function;
+  setPage: (page: PreferencePage) => void;
 };
 
 const OuterContainer = styled.div`

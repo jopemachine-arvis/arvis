@@ -1,7 +1,3 @@
-/* eslint-disable react/display-name */
-/* eslint-disable promise/catch-or-return */
-/* eslint-disable promise/always-return */
-/* eslint-disable react/no-array-index-key */
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { ipcRenderer } from 'electron';
 import path from 'path';
@@ -22,8 +18,8 @@ type IProps = {
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
   maxItemCount: number;
-  onDoubleClickHandler: Function;
-  onMouseoverHandler: Function;
+  onDoubleClickHandler: (clickedItemIdx: number) => void;
+  onMouseoverHandler: (itemIdx: number) => void;
   searchbarHeight: number;
   searchResult: any[];
   selectedItemBackgroundColor: string;
@@ -35,7 +31,7 @@ type IProps = {
   searchWindowTransparency: number;
 };
 
-const searchResultView = React.memo((props: IProps) => {
+const SearchResultView = (props: IProps) => {
   const {
     demo,
     footerHeight,
@@ -56,7 +52,7 @@ const searchResultView = React.memo((props: IProps) => {
     startIdx,
     subtitleFontSize,
     titleFontSize,
-    searchWindowTransparency
+    searchWindowTransparency,
   } = props;
 
   const resultToRenders: any[] = useMemo(
@@ -92,7 +88,7 @@ const searchResultView = React.memo((props: IProps) => {
         maxItemCount,
         itemHeight,
         searchbarHeight,
-        footerHeight
+        footerHeight,
       });
     }
   }, [searchResult]);
@@ -136,6 +132,6 @@ const searchResultView = React.memo((props: IProps) => {
       })}
     </OuterContainer>
   );
-});
+};
 
-export default searchResultView;
+export default React.memo(SearchResultView);

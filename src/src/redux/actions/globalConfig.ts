@@ -5,7 +5,7 @@ export const actionTypes = {
   SET_HOT_KEY: '@globalConfig/SET_HOT_KEY',
   SET_MAX_ITEM_COUNT_TO_SEARCH: '@globalConfig/SET_MAX_ITEM_COUNT_TO_SEARCH',
   SET_MAX_ITEM_COUNT_TO_SHOW: '@globalConfig/SET_MAX_ITEM_COUNT_TO_SHOW',
-  SET_GLOBAL_FONT: '@globalConfig/SET_GLOBAL_FONT'
+  SET_GLOBAL_FONT: '@globalConfig/SET_GLOBAL_FONT',
 };
 
 export const setLaunchAtLogin = makeActionCreator(

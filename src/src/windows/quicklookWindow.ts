@@ -17,8 +17,8 @@ const createQuicklookWindow = () => {
     width: constants.quicklookWindowWidth,
     height: constants.quicklookWindowHeight,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   const filePath =
@@ -27,19 +27,19 @@ const createQuicklookWindow = () => {
       : path.join(__dirname, 'app.html');
 
   quicklookWindow.loadFile(filePath, {
-    query: { window: 'quicklookWindow' }
+    query: { window: 'quicklookWindow' },
   });
 
-//   searchWindow.on('close', e => {
-//     e.preventDefault();
-//     if (searchWindow) {
-//       searchWindow.hide();
-//     }
-//   });
+  //   searchWindow.on('close', e => {
+  //     e.preventDefault();
+  //     if (searchWindow) {
+  //       searchWindow.hide();
+  //     }
+  //   });
 
-//   searchWindow.on('blur', () => {
-//     searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
-//   });
+  //   searchWindow.on('blur', () => {
+  //     searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
+  //   });
 
   return quicklookWindow;
 };

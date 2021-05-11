@@ -1,5 +1,3 @@
-/* eslint-disable prefer-template */
-/* eslint-disable no-restricted-syntax */
 const fse = require('fs-extra');
 const path = require('path');
 const rimraf = require('rimraf');
