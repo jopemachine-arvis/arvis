@@ -66,8 +66,8 @@ app.on('before-quit', () => {
 app.on('ready', async () => {
   const onReadyHandler = () => {
     searchWindow = createSearchWindow();
-    preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
     quicklookWindow = createQuicklookWindow();
+    preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
     // Open debugging tool by 'undocked'
     if (
@@ -83,7 +83,6 @@ app.on('ready', async () => {
   };
 
   setTimeout(() => {
-    //* Transparent window hack (Not working)
     onReadyHandler();
   }, 300);
 });

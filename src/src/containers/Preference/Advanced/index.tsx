@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +17,7 @@ export default function Advanced() {
     debugging_workflow_output,
     debugging_workstack,
     debugging_args,
-    debugging_scriptfilter
+    debugging_scriptfilter,
   } = useSelector((state: StateType) => state.advanced_config);
 
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Advanced() {
     ipcRenderer.send(IPCRendererEnum.dispatchAction, {
       destWindow: 'searchWindow',
       actionType,
-      args: !bool
+      args: !bool,
     });
   };
 

@@ -4,9 +4,8 @@ import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
 import { IconContext } from 'react-icons';
 import RootRouter from './src/navigator/rootRouter';
 import { configureStore, history } from './src/store/configureStore';
-import './app.global.css';
-
 import initialState from './src/config/initialState';
+import './app.global.css';
 
 const { store, persistor } = configureStore(initialState);
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
@@ -32,5 +31,5 @@ if (windowName) {
     )
   );
 } else {
-  throw new Error('windowName is not set!!');
+  throw new Error('windowName is not set!');
 }

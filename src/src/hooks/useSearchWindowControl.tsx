@@ -11,9 +11,9 @@ type IndexInfo = {
 };
 
 /**
- * @param  {any[]} items
- * @param  {(items: any[]) => void} setItems
- * @param  {number} maxItemCount
+ * @param {any[]} items
+ * @param {(items: any[]) => void} setItems
+ * @param {number} maxItemCount
  */
 const useSearchWindowControl = ({
   items,
@@ -40,6 +40,9 @@ const useSearchWindowControl = ({
     ? (inputRef.current! as HTMLInputElement).value
     : '';
 
+  /**
+   * @summary
+   */
   const clearIndexInfo = () => {
     setIndexInfo({
       itemStartIdx: 0,
@@ -47,6 +50,9 @@ const useSearchWindowControl = ({
     });
   };
 
+  /**
+   * @summary
+   */
   const handleUpArrow = () => {
     const selectedItemIdx =
       (indexInfo.selectedItemIdx - 1 + items.length) % items.length;
@@ -72,6 +78,9 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @summary
+   */
   const handleDownArrow = () => {
     const selectedItemIdx = (indexInfo.selectedItemIdx + 1) % items.length;
 
@@ -93,6 +102,11 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @param {any[]} itemArr
+   * @param {string} pressedKey
+   * @param {string} updatedInput
+   */
   const handleScriptFilterAutoExecute = ({
     itemArr,
     pressedKey,
@@ -133,6 +147,10 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @param {string} pressedKey
+   * @param {string} updatedInput
+   */
   const handleNormalInput = (pressedKey: string, updatedInput: string) => {
     const searchCommands = () => {
       const itemArr = Core.findCommands(updatedInput);
@@ -164,6 +182,10 @@ const useSearchWindowControl = ({
     clearIndexInfo();
   };
 
+  /**
+   * @param  {string} str
+   * @param  {needItemsUpdate} boolean
+   */
   const setInputStr = ({
     str,
     needItemsUpdate,
@@ -179,6 +201,10 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @param {number} selectedItemIdx
+   * @param {any} modifiers Selected modifier keys
+   */
   const handleReturn = async ({
     selectedItemIdx,
     modifiers,
@@ -207,6 +233,10 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @param {React.WheelEvent<HTMLInputElement>} e
+   * @summary mouse wheel event handler
+   */
   const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
     if (e.deltaY > 0) {
       if (indexInfo.itemStartIdx + maxItemCount < items.length) {
@@ -225,6 +255,9 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @param {number} index
+   */
   const onMouseoverHandler = (index: number) => {
     setIndexInfo({
       itemStartIdx: indexInfo.itemStartIdx,
@@ -232,6 +265,9 @@ const useSearchWindowControl = ({
     });
   };
 
+  /**
+   * @param {number} index
+   */
   const onDoubleClickHandler = (index: number) => {
     handleReturn({
       selectedItemIdx: indexInfo.selectedItemIdx,
@@ -244,6 +280,9 @@ const useSearchWindowControl = ({
     });
   };
 
+  /**
+   * @summary
+   */
   const cleanUpBeforeHide = () => {
     setItems([]);
     clearInput();
@@ -252,6 +291,9 @@ const useSearchWindowControl = ({
     setShouldBeHided(true);
   };
 
+  /**
+   * @param {number} selectedItemIdx
+   */
   const onHandleReturnByNumberKey = async (selectedItemIdx: number) => {
     if (selectedItemIdx === 0 || selectedItemIdx >= items.length) {
       return;
@@ -268,6 +310,9 @@ const useSearchWindowControl = ({
     });
   };
 
+  /**
+   * @param {KeyboardEvent} e
+   */
   const onKeyupHandler = (e: KeyboardEvent) => {
     const exceptionKeys = [
       'ArrowUp',
@@ -288,6 +333,9 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @summary
+   */
   const onKeydownHandler = async () => {
     const input = keyData.key;
 
@@ -317,19 +365,32 @@ const useSearchWindowControl = ({
     }
   };
 
+  /**
+   * @param {any[]} itemsToSet
+   */
   const onItemShouldBeUpdate = (itemsToSet: any[]) => {
     setItems(itemsToSet);
     clearIndexInfo();
   };
 
+  /**
+   * @summary
+   */
   const onItemPressHandler = () => {
     clearIndexInfo();
   };
 
+  /**
+   * @summary
+   */
   const onWorkEndHandler = () => {
     setShouldBeHided(true);
   };
 
+  /**
+   * @param {string} str
+   * @param {boolean} needItemsUpdate
+   */
   const onInputShouldBeUpdate = ({
     str,
     needItemsUpdate,

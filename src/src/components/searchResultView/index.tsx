@@ -18,17 +18,17 @@ type IProps = {
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
   maxItemCount: number;
-  onDoubleClickHandler: (clickedItemIdx: number) => void;
-  onMouseoverHandler: (itemIdx: number) => void;
   searchbarHeight: number;
   searchResult: any[];
+  searchWindowTransparency: number;
   selectedItemBackgroundColor: string;
   selectedItemFontColor: string;
   selectedItemIdx: number;
   startIdx: number;
   subtitleFontSize: number;
   titleFontSize: number;
-  searchWindowTransparency: number;
+  onDoubleClickHandler: (clickedItemIdx: number) => void;
+  onMouseoverHandler: (itemIdx: number) => void;
 };
 
 const SearchResultView = (props: IProps) => {
@@ -42,17 +42,17 @@ const SearchResultView = (props: IProps) => {
     itemLeftPadding,
     itemTitleSubtitleMargin,
     maxItemCount,
-    onDoubleClickHandler,
-    onMouseoverHandler,
     searchbarHeight,
     searchResult,
+    searchWindowTransparency,
     selectedItemBackgroundColor,
     selectedItemFontColor,
     selectedItemIdx,
     startIdx,
     subtitleFontSize,
     titleFontSize,
-    searchWindowTransparency,
+    onDoubleClickHandler,
+    onMouseoverHandler,
   } = props;
 
   const resultToRenders: any[] = useMemo(

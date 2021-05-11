@@ -13,6 +13,11 @@ import globalShortcutHandler from './globalShortcutHandler';
 import resizeEventHandler from './resizeEventHandler';
 import { IPCRendererEnum, IPCMainEnum } from './ipcEventEnum';
 
+/**
+ * @param {BrowserWindow} searchWindow
+ * @param {BrowserWindow} preferenceWindow
+ * @summary Register ipc callbacks
+ */
 export const initIPCHandler = ({
   searchWindow,
   preferenceWindow,

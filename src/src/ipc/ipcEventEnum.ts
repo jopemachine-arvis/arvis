@@ -1,4 +1,6 @@
-// Events sent from renderer process to main process
+/**
+ * @summary Events sent from renderer process to main process
+ */
 export enum IPCRendererEnum {
   dispatchAction = '@ipcRenderer/dispatchAction',
   getSystemFont = '@ipcRenderer/getSystemFont',
@@ -14,7 +16,9 @@ export enum IPCRendererEnum {
   showNotification = '@ipcRenderer/showNotification',
 }
 
-// Events sent from main process to renderer process
+/**
+ * @summary Events sent from main process to renderer process
+ */
 export enum IPCMainEnum {
   fetchAction = '@ipcMain/fetchAction',
   getSystemFontRet = '@ipcMain/getSystemFontRet',

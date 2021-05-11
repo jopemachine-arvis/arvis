@@ -1,5 +1,13 @@
 import { BrowserWindow } from 'electron';
 
+/**
+ * @param  {BrowserWindow} searchWindow
+ * @param  {number} itemCount
+ * @param  {number} maxItemCount
+ * @param  {number} itemHeight
+ * @param  {number} searchbarHeight
+ * @param  {number} footerHeight
+ */
 export default ({
   searchWindow,
   itemCount,

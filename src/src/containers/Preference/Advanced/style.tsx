@@ -1,7 +1,7 @@
 export const formGroupStyle = {
-  marginBottom: 35
+  marginBottom: 35,
 };
 
 export const labelStyle = {
-  color: '#ffffff'
+  color: '#ffffff',
 };

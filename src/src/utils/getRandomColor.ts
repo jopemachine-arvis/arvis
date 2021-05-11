@@ -1,4 +1,8 @@
 /* eslint-disable no-plusplus */
+
+/**
+ * @param  {}
+ */
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';

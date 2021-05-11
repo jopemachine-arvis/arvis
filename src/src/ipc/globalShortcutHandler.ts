@@ -105,13 +105,13 @@ const registerShortcut = (shortcut: string, callback: () => void) => {
 
   // Case of double key type
   if (shortcut.includes('Double')) {
-    shortcut = shortcut.split('Double ')[1];
+    const doubledShortcut = shortcut.split('Double ')[1];
 
-    doubleKeyPressHandler[shortcut] = () => {
-      if (Date.now() - doubleKeyPressedTimers[shortcut] < 200) {
+    doubleKeyPressHandler[doubledShortcut] = () => {
+      if (Date.now() - doubleKeyPressedTimers[doubledShortcut] < 200) {
         callback();
       } else {
-        doubleKeyPressedTimers[shortcut] = new Date();
+        doubleKeyPressedTimers[doubledShortcut] = new Date();
       }
     };
   }
@@ -145,6 +145,12 @@ const registerWorkflowHotkeys = ({
   }
 };
 
+/**
+ * @param  {BrowserWindow} preferenceWindow
+ * @param  {BrowserWindow} searchWindow
+ * @param  {any} callbackTable
+ * @param  {any} workflowHotkeyTbl
+ */
 export default ({
   preferenceWindow,
   searchWindow,

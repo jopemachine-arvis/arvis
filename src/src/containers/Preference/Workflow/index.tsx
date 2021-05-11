@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
@@ -76,9 +77,9 @@ export default function Workflow() {
 
     openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
       if (fileInfo.file.filePaths[0]) {
-        const alvisWorkflowFilePath = fileInfo.file.filePaths[0];
+        const arvisWorkflowFilePath = fileInfo.file.filePaths[0];
 
-        Core.install(alvisWorkflowFilePath)
+        Core.install(arvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
             ipcRenderer.send(IPCRendererEnum.renewWorkflow, {

@@ -13,7 +13,7 @@ export const startFileWatcher = ({
 }) => {
   /**
    * @param  {string} bundleId?
-   * @summary Update singleton for each Windows
+   * @summary Update singletons for each renderer processes
    */
   const requestRenewWorkflows = (bundleId?: string) => {
     searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });

@@ -22,6 +22,9 @@ type IProps = {
   windowName: string;
 };
 
+/**
+ * @param  {string} windowName
+ */
 const windowRoute = (windowName: string) => {
   switch (windowName) {
     case 'preferenceWindow':
@@ -39,6 +42,12 @@ const windowRoute = (windowName: string) => {
   }
 };
 
+/**
+ * @param  {Store} store
+ * @param  {any} persistor
+ * @param  {History} history
+ * @param  {string} windowName
+ */
 const RootRouter = ({ store, persistor, history, windowName }: IProps) => {
   return (
     <ReduxProvider store={store}>

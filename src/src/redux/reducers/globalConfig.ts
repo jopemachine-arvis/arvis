@@ -1,4 +1,5 @@
 import { GlobalConfigActions } from '../actions';
+import { StateType } from './types';
 
 const { actionTypes: GlobalConfigActionTypes } = GlobalConfigActions;
 
@@ -35,22 +36,22 @@ export default (state = {}, action: any) => {
   }
 };
 
-export function getHotkey(state: any) {
+export function getHotkey(state: StateType) {
   return state.global_config.hotkey;
 }
 
-export function getItemMaxCountToShow(state: any) {
+export function getItemMaxCountToShow(state: StateType) {
   return state.global_config.max_item_count_to_show;
 }
 
-export function getItemMaxCountToSearch(state: any) {
+export function getItemMaxCountToSearch(state: StateType) {
   return state.global_config.max_item_count_to_search;
 }
 
-export function isAutoLaunchAtLogin(state: any) {
+export function isAutoLaunchAtLogin(state: StateType) {
   return state.global_config.launch_at_login;
 }
 
-export function getGlobalFont(state: any) {
+export function getGlobalFont(state: StateType) {
   return state.global_config.global_font;
 }

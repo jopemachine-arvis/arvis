@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 import path from 'path';
 import { BrowserWindow } from 'electron';
 import constants from '../constants';

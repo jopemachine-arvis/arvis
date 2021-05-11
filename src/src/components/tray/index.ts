@@ -7,7 +7,6 @@ import {
   MenuItemConstructorOptions,
   MenuItem,
 } from 'electron';
-
 import { createPreferenceWindow } from '../../windows/preferenceWindow';
 
 export default class TrayBuilder {
@@ -64,12 +63,10 @@ export default class TrayBuilder {
   }
 
   buildTray() {
-    const nimage = nativeImage.createFromPath(this.trayFilePath);
-
     app
       .whenReady()
       .then(() => {
-        this.tray = new Tray(nimage);
+        this.tray = new Tray(nativeImage.createFromPath(this.trayFilePath));
         const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
         this.tray.setContextMenu(contextMenu);
         return null;

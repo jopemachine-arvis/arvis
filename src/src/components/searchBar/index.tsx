@@ -9,9 +9,9 @@ type IProps = {
   getInputProps?: Function;
   itemBackgroundColor: string;
   itemLeftPadding: number;
+  searchbarFontColor: string;
   searchbarFontSize: number;
   searchbarHeight: number;
-  searchbarFontColor: string;
   searchWindowTransparency: number;
 };
 
@@ -80,7 +80,7 @@ const SearchBar = (props: IProps) => {
 };
 
 SearchBar.defaultProps = {
-  getInputProps: null,
+  getInputProps: undefined,
 };
 
 export default SearchBar;

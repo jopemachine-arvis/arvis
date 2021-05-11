@@ -14,56 +14,56 @@ import {
 import { applyAlphaColor } from '../../utils';
 
 type IProps = {
-  title: string;
-  subtitle: string;
-  selected: boolean;
-  icon?: string;
   arg?: any;
-  text?: any;
   autocomplete?: string;
-  variables?: any;
-  valid?: boolean;
-  onMouseoverHandler: () => void;
-  onDoubleClickHandler: () => void;
+  icon?: string;
+  iconRightMargin: number;
   itemBackgroundColor: string;
   itemFontColor: string;
   itemHeight: number;
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
-  iconRightMargin: number;
-  selectedItemBackgroundColor: string;
-  selectedItemFontColor: string;
-  subtitleFontSize: number;
-  titleFontSize: number;
   offset: number;
   searchWindowTransparency: number;
+  selected: boolean;
+  selectedItemBackgroundColor: string;
+  selectedItemFontColor: string;
+  subtitle: string;
+  subtitleFontSize: number;
+  text?: any;
+  title: string;
+  titleFontSize: number;
+  valid?: boolean;
+  variables?: any;
+  onMouseoverHandler: () => void;
+  onDoubleClickHandler: () => void;
 };
 
 const SearchResultItem = (props: IProps) => {
   const {
-    offset,
-    selected,
-    title,
-    subtitle,
-    onMouseoverHandler,
-    onDoubleClickHandler,
     arg,
-    icon,
     autocomplete,
-    text,
-    variables,
-    valid,
+    icon,
     iconRightMargin,
     itemBackgroundColor,
     itemFontColor,
     itemHeight,
     itemLeftPadding,
     itemTitleSubtitleMargin,
+    offset,
+    searchWindowTransparency,
+    selected,
     selectedItemBackgroundColor,
     selectedItemFontColor,
+    subtitle,
     subtitleFontSize,
+    text,
+    title,
     titleFontSize,
-    searchWindowTransparency,
+    valid,
+    variables,
+    onMouseoverHandler,
+    onDoubleClickHandler,
   } = props;
 
   const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
@@ -151,12 +151,12 @@ const SearchResultItem = (props: IProps) => {
 };
 
 SearchResultItem.defaultProps = {
-  icon: undefined,
   arg: undefined,
-  text: undefined,
   autocomplete: undefined,
-  variables: undefined,
+  icon: undefined,
+  text: undefined,
   valid: true,
+  variables: undefined,
 };
 
 export default React.memo(SearchResultItem);
