@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { Container, Input } from './components';
 import './index.global.css';
+import { applyAlphaColor } from '../../utils';
 
 type IProps = {
   alwaysFocus: boolean;
@@ -13,6 +14,7 @@ type IProps = {
   searchbarFontSize: number;
   searchbarHeight: number;
   searchbarFontColor: string;
+  searchWindowTransparency: number;
 };
 
 const searchBar = (props: IProps) => {
@@ -23,7 +25,8 @@ const searchBar = (props: IProps) => {
     itemLeftPadding,
     searchbarFontColor,
     searchbarFontSize,
-    searchbarHeight
+    searchbarHeight,
+    searchWindowTransparency
   } = props;
 
   const { ref: inputRef, type, originalRef } = getInputProps
@@ -54,16 +57,19 @@ const searchBar = (props: IProps) => {
   return (
     <Container
       style={{
-        height: searchbarHeight
+        height: searchbarHeight,
       }}
     >
       <Input
         className="searchBar"
         style={{
-          backgroundColor: itemBackgroundColor,
+          backgroundColor: applyAlphaColor(
+            itemBackgroundColor,
+            searchWindowTransparency
+          ),
           color: searchbarFontColor,
           fontSize: searchbarFontSize,
-          paddingLeft: itemLeftPadding
+          paddingLeft: itemLeftPadding,
         }}
         ref={inputRef}
         type={type}

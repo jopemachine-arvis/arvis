@@ -7,7 +7,7 @@ import { SearchBar, SearchResultView } from '../../components';
 import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
 import { OuterContainer } from './components';
-import { makeActionCreator } from '../../utils';
+import { applyAlphaColor, makeActionCreator } from '../../utils';
 import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 export default function SearchWindow() {
@@ -18,6 +18,7 @@ export default function SearchWindow() {
     item_height,
     item_left_padding,
     item_title_subtitle_margin,
+    search_window_transparency,
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
@@ -133,14 +134,23 @@ export default function SearchWindow() {
     registerWindowUpdater();
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
+
+    document.body.style.background = applyAlphaColor(
+      item_background_color,
+      search_window_transparency
+    );
     return unsubscribe;
   }, []);
 
   return (
     <OuterContainer
       style={{
-        backgroundColor: item_background_color,
-        fontFamily: global_font
+        fontFamily: global_font,
+        background: 'transparent',
+        backgroundColor: applyAlphaColor(
+          item_background_color,
+          search_window_transparency
+        ),
       }}
       onWheel={onWheelHandler}
     >
@@ -153,6 +163,7 @@ export default function SearchWindow() {
         searchbarFontSize={searchbar_font_size}
         searchbarHeight={searchbar_height}
         searchbarFontColor={searchbar_font_color}
+        searchWindowTransparency={search_window_transparency}
       />
       <SearchResultView
         demo={false}
@@ -174,6 +185,7 @@ export default function SearchWindow() {
         selectedItemFontColor={selected_item_font_color}
         subtitleFontSize={subtitle_font_size}
         titleFontSize={title_font_size}
+        searchWindowTransparency={search_window_transparency}
       />
     </OuterContainer>
   );

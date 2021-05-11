@@ -17,11 +17,12 @@ export default {
     searchbar_font_size: 20,
     searchbar_height: 60,
     search_window_footer_height: 10,
+    search_window_transparency: 55,
     search_window_width: 900,
     selected_item_background_color: '#222222',
     selected_item_font_color: '#ffffff',
     subtitle_font_size: 12,
-    title_font_size: 17
+    title_font_size: 17,
   },
   advancedConfig: {
     debugging_workflow_output: true,

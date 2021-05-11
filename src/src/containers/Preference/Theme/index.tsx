@@ -58,6 +58,7 @@ export default function Theme() {
     searchbar_font_size,
     searchbar_height,
     search_window_footer_height,
+    search_window_transparency,
     search_window_width,
     selected_item_background_color,
     selected_item_font_color,
@@ -158,6 +159,20 @@ export default function Theme() {
                 configChangeHandler(
                   e,
                   UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
+                )
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Window Transparency</Label>
+            <StyledInput
+              type="number"
+              value={search_window_transparency}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY
                 )
               }
             />

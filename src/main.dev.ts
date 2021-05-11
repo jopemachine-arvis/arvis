@@ -13,14 +13,18 @@ import { app, BrowserWindow } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
 import TrayBuilder from './src/components/tray';
-import { createPreferenceWindow } from './src/windows/preferenceWindow';
-import { createSearchWindow } from './src/windows/searchWindow';
+import {
+  createPreferenceWindow,
+  createQuicklookWindow,
+  createSearchWindow,
+} from './src/windows';
 import { initIPCHandler } from './src/ipc/mainProcessEventHandler';
 import { startFileWatcher } from './src/helper/workflowConfigFileWatcher';
 import installExtensions from './src/config/extensionInstaller';
 
 let preferenceWindow: BrowserWindow | null = null;
 let searchWindow: BrowserWindow | null = null;
+let quicklookWindow: BrowserWindow | null = null;
 
 const trayIconPath = path.join(__dirname, 'resources', 'icons', '24x24.png');
 const trayBuilder = new TrayBuilder(trayIconPath);
@@ -60,25 +64,28 @@ app.on('before-quit', () => {
 });
 
 app.on('ready', async () => {
-  searchWindow = createSearchWindow();
-  preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
+  const onReadyHandler = () => {
+    searchWindow = createSearchWindow();
+    preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
+    quicklookWindow = createQuicklookWindow();
 
-  // Open debugging tool by 'undocked'
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    installExtensions();
-    searchWindow.webContents.openDevTools({ mode: 'undocked' });
-  }
+    // Open debugging tool by 'undocked'
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
+      installExtensions();
+      searchWindow.webContents.openDevTools({ mode: 'undocked' });
+    }
 
-  startFileWatcher({ searchWindow, preferenceWindow });
-  initIPCHandler({ searchWindow, preferenceWindow });
+    startFileWatcher({ searchWindow, preferenceWindow });
+    initIPCHandler({ searchWindow, preferenceWindow });
+  };
 
-  // setTimeout(() => {
-  //   //* Transparent window hack (Not working)
-  //   onReadyHandler();
-  // }, 300);
+  setTimeout(() => {
+    //* Transparent window hack (Not working)
+    onReadyHandler();
+  }, 300);
 });
 
 app.on('activate', () => {

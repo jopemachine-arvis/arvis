@@ -7,8 +7,10 @@ import { isSupportedImageFormat } from './isSupportedImage';
 import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 import { sleep } from './sleep';
+import { applyAlphaColor } from './applyAlphaColor';
 
 export {
+  applyAlphaColor,
   createGlobalConfigChangeHandler,
   sleep,
   isNumeric,

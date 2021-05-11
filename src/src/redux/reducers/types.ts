@@ -19,6 +19,7 @@ export type StateType = {
     searchbar_font_size: number;
     searchbar_height: number;
     search_window_footer_height: number;
+    search_window_transparency: number;
     search_window_width: number;
     selected_item_background_color: string;
     selected_item_font_color: string;

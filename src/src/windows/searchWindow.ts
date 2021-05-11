@@ -9,9 +9,7 @@ const createSearchWindow = () => {
     center: true,
     show: false,
     frame: false,
-    // To do:: Fix me! 'transparent' window is not working.
     transparent: true,
-    // backgroundColor: '#00ffffff',
     resizable: false,
     disableAutoHideCursor: true,
     skipTaskbar: true,

@@ -42,9 +42,11 @@ export const startFileWatcher = ({
       requestRenewWorkflows(getBundleIdFromFilePath(filePath));
     })
     .on('unlink', (filePath: string) => {
+      console.log(`"${filePath}" unlinked. Reload workflows settings..`);
       requestRenewWorkflows();
     })
     .on('add', (filePath: string) => {
+      console.log(`"${filePath}" added. Reload workflows settings..`);
       requestRenewWorkflows();
     });
 };

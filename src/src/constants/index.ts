@@ -7,5 +7,9 @@ export default {
 
   // Initial search window size
   searchWindowWidth: 900,
-  searchWindowHeight: 400
+  searchWindowHeight: 400,
+
+  // Initial quicklook window size
+  quicklookWindowWidth: 1600,
+  quicklookWindowHeight: 900,
 };

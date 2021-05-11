@@ -10,6 +10,7 @@ import {
   IconImg,
   OffsetText
 } from './components';
+import { applyAlphaColor } from '../../utils';
 
 type IProps = {
   title: string;
@@ -34,6 +35,7 @@ type IProps = {
   subtitleFontSize: number;
   titleFontSize: number;
   offset: number;
+  searchWindowTransparency: number;
 };
 
 const searchResultItem = React.memo((props: IProps) => {
@@ -59,7 +61,8 @@ const searchResultItem = React.memo((props: IProps) => {
     selectedItemBackgroundColor,
     selectedItemFontColor,
     subtitleFontSize,
-    titleFontSize
+    titleFontSize,
+    searchWindowTransparency
   } = props;
 
   const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
@@ -99,8 +102,11 @@ const searchResultItem = React.memo((props: IProps) => {
         height: itemHeight,
         paddingLeft: itemLeftPadding,
         backgroundColor: selected
-          ? selectedItemBackgroundColor
-          : itemBackgroundColor
+          ? applyAlphaColor(
+              selectedItemBackgroundColor,
+              searchWindowTransparency
+            )
+          : applyAlphaColor(itemBackgroundColor, searchWindowTransparency),
       }}
       onFocus={() => {}}
       onMouseOver={() => onMouseoverHandler()}
@@ -109,14 +115,14 @@ const searchResultItem = React.memo((props: IProps) => {
       {getIconElement()}
       <InnerContainer
         style={{
-          paddingLeft: iconRightMargin
+          paddingLeft: iconRightMargin,
         }}
       >
         {/* If there is no Title or Subtitle, the other item appears in the center */}
         <Title
           style={{
             fontSize: titleFontSize,
-            color: selected ? selectedItemFontColor : itemFontColor
+            color: selected ? selectedItemFontColor : itemFontColor,
           }}
         >
           {title}
@@ -125,7 +131,7 @@ const searchResultItem = React.memo((props: IProps) => {
           style={{
             fontSize: subtitleFontSize,
             marginTop: itemTitleSubtitleMargin,
-            color: selected ? selectedItemFontColor : itemFontColor
+            color: selected ? selectedItemFontColor : itemFontColor,
           }}
         >
           {subtitle !== '(none)' ? subtitle : ' '}
@@ -134,7 +140,7 @@ const searchResultItem = React.memo((props: IProps) => {
       <OffsetText
         style={{
           fontSize: titleFontSize,
-          color: selected ? selectedItemFontColor : itemFontColor
+          color: selected ? selectedItemFontColor : itemFontColor,
         }}
       >
         {getOffsetText()}

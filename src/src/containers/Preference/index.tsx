@@ -1,3 +1,4 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { useCallback, useEffect, useState } from 'react';
@@ -16,6 +17,8 @@ import { StateType } from '../../redux/reducers/types';
 import { ScreenCoverContext } from './screenCoverContext';
 import { ScreenCover } from '../../components';
 import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
+
+import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
 const INITIAL_PAGE = PreferencePage.General;
 

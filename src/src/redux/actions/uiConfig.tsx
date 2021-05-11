@@ -3,6 +3,7 @@ import makeActionCreator from '../../utils/makeActionCreator';
 export const actionTypes = {
   SET_SEARCH_WINDOW_WIDTH: '@uiConfig/SET_SEARCH_WINDOW_WIDTH',
   SET_SEARCH_WINDOW_FOOTER_HEIGHT: '@uiConfig/SET_SEARCH_WINDOW_FOOTER_HEIGHT',
+  SET_SEARCH_WINDOW_TRANSPARENCY: '@uiConfig/SET_SEARCH_WINDOW_TRANSPARENCY',
 
   SET_ITEM_HEIGHT: '@uiConfig/SET_ITEM_HEIGHT',
 
@@ -43,6 +44,11 @@ export const setSearchWindowWidth = makeActionCreator(
 
 export const setSearchWindowFooterHeight = makeActionCreator(
   actionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT,
+  'arg'
+);
+
+export const setSearchWindowTransparency = makeActionCreator(
+  actionTypes.SET_SEARCH_WINDOW_TRANSPARENCY,
   'arg'
 );
 

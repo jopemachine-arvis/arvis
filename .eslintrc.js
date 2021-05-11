@@ -6,6 +6,13 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-console': 'off',
     '@typescript-eslint/camelcase': 'off',
+    'global-require': 'off',
+    'import/no-dynamic-require': 'off',
+    camelcase: 'off',
+    '@typescript-eslint/naming-convention': [
+      'error',
+      { selector: 'variableLike', format: ['camelCase', 'snakeCase'] },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,

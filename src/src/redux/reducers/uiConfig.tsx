@@ -80,6 +80,11 @@ export default (state = {}, action: any) => {
         ...state,
         icon_right_margin: payload.arg
       };
+    case UIConfigActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY:
+      return {
+        ...state,
+        search_window_transparency: payload.arg
+      };
     default:
       return state;
   }

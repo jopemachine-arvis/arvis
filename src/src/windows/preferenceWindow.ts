@@ -15,6 +15,7 @@ const createPreferenceWindow = ({
     title: 'Arvis',
     show: false,
     skipTaskbar: true,
+    transparent: false,
     width: constants.preferenceWindowWidth,
     height: constants.preferenceWindowHeight,
     minWidth: constants.preferenceMinWindowWidth,

@@ -32,6 +32,7 @@ type IProps = {
   startIdx: number;
   subtitleFontSize: number;
   titleFontSize: number;
+  searchWindowTransparency: number;
 };
 
 const searchResultView = React.memo((props: IProps) => {
@@ -54,7 +55,8 @@ const searchResultView = React.memo((props: IProps) => {
     selectedItemIdx,
     startIdx,
     subtitleFontSize,
-    titleFontSize
+    titleFontSize,
+    searchWindowTransparency
   } = props;
 
   const resultToRenders: any[] = useMemo(
@@ -127,6 +129,7 @@ const searchResultView = React.memo((props: IProps) => {
               selectedItemFontColor={selectedItemFontColor}
               subtitleFontSize={subtitleFontSize}
               titleFontSize={titleFontSize}
+              searchWindowTransparency={searchWindowTransparency}
             />
           </InnerContainer>
         );
