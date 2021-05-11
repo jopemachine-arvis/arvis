@@ -3,5 +3,5 @@
  * @param  {number} alpha
  */
 export const applyAlphaColor = (color: string, alpha: number) => {
-  return color + alpha.toString();
+  return color + alpha.toString(16);
 };

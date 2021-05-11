@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
@@ -167,7 +168,6 @@ export default function SearchWindow() {
         searchbarFontSize={searchbar_font_size}
         searchbarHeight={searchbar_height}
         searchWindowTransparency={search_window_transparency}
-        setInputStr={setInputStr}
       />
       <SearchResultView
         demo={false}

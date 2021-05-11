@@ -138,7 +138,7 @@ export default function Workflow() {
   useEffect(() => {
     const workflowBundleIds = Object.keys(workflows);
 
-    if (workflowBundleIds.length >= 1) {
+    if (workflowBundleIds.length) {
       const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
       const {
         createdby,

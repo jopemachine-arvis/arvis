@@ -62,13 +62,13 @@ const SearchBar = (props: IProps) => {
       <Input
         className="searchBar"
         style={{
+          color: searchbarFontColor,
+          fontSize: searchbarFontSize,
+          paddingLeft: itemLeftPadding,
           backgroundColor: applyAlphaColor(
             itemBackgroundColor,
             searchWindowTransparency
           ),
-          color: searchbarFontColor,
-          fontSize: searchbarFontSize,
-          paddingLeft: itemLeftPadding,
         }}
         ref={inputRef}
         type={type}

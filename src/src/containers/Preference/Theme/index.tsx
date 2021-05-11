@@ -166,9 +166,10 @@ export default function Theme() {
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Window Transparency</Label>
             <StyledInput
-              type="text"
-              pattern="[a-fA-F\d]+"
-              maxLength={2}
+              type="number"
+              min={0}
+              max={255}
+              maxLength={3}
               value={search_window_transparency}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
