@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -151,14 +152,14 @@ export default function Workflow() {
         enabled,
       } = info;
 
-      setWorkflowEnabled(enabled);
-      setWorkflowName(name);
-      setWorkflowCreator(createdby);
-      setWorkflowBundleId(bundleId);
-      setWorkflowCategory(category);
-      setWorkflowDescription(description);
-      setWorkflowVersion(version);
-      setWorkflowWebsite(webaddress);
+      enabled && setWorkflowEnabled(enabled);
+      name && setWorkflowName(name);
+      createdby && setWorkflowCreator(createdby);
+      bundleId && setWorkflowBundleId(bundleId);
+      category && setWorkflowCategory(category);
+      description && setWorkflowDescription(description);
+      version && setWorkflowVersion(version);
+      webaddress && setWorkflowWebsite(webaddress);
     }
   }, [selectedWorkflowIdx, Object.keys(workflows).length]);
 
