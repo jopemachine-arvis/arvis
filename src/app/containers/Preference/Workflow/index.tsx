@@ -41,7 +41,6 @@ import {
   iconStyle,
   labelStyle,
 } from './style';
-import { sleep } from '../../../utils';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function Workflow() {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
@@ -51,17 +52,19 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * @return {number} changed selectedItemIdx
    * @summary
    */
   const handleUpArrow = () => {
-    const selectedItemIdx =
+    let selectedItemIdx =
       (indexInfo.selectedItemIdx - 1 + items.length) % items.length;
 
     // Select most bottom item
     if (selectedItemIdx === items.length - 1 && items.length !== 1) {
+      selectedItemIdx = items.length - 1;
       setIndexInfo({
         itemStartIdx: items.length - maxItemCount,
-        selectedItemIdx: items.length - 1,
+        selectedItemIdx,
       });
     }
     // Select up
@@ -76,9 +79,12 @@ const useSearchWindowControl = ({
         selectedItemIdx,
       });
     }
+
+    return selectedItemIdx;
   };
 
   /**
+   * @return {number} changed selectedItemIdx
    * @summary
    */
   const handleDownArrow = () => {
@@ -100,6 +106,8 @@ const useSearchWindowControl = ({
         selectedItemIdx,
       });
     }
+
+    return selectedItemIdx;
   };
 
   /**
@@ -331,6 +339,8 @@ const useSearchWindowControl = ({
     if (!exceptionKeys.includes(e.key)) {
       handleNormalInput(e.key, (inputRef.current! as HTMLInputElement).value);
     }
+
+    workManager.clearModifierOnScriptFilterItem();
   };
 
   /**
@@ -347,30 +357,45 @@ const useSearchWindowControl = ({
       alt: keyData.isWithAlt,
     };
 
+    let { selectedItemIdx } = indexInfo;
+
     if (keyData.isNumber && (modifiers.cmd || modifiers.ctrl)) {
       await onHandleReturnByNumberKey(Number(input));
     } else if (keyData.isEnter) {
       await handleReturn({
-        selectedItemIdx: indexInfo.selectedItemIdx,
+        selectedItemIdx,
         modifiers,
       });
     } else if (keyData.isArrowDown) {
-      handleDownArrow();
+      selectedItemIdx = handleDownArrow();
     } else if (keyData.isArrowUp) {
-      handleUpArrow();
+      selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
       workManager.popWork();
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
+    }
+
+    if (modifiers.alt || modifiers.cmd || modifiers.ctrl || modifiers.shift) {
+      workManager.setModifierOnScriptFilterItem(selectedItemIdx, modifiers);
     }
   };
 
   /**
    * @param {any[]} itemsToSet
    */
-  const onItemShouldBeUpdate = (itemsToSet: any[]) => {
-    setItems(itemsToSet);
-    clearIndexInfo();
+  const onItemShouldBeUpdate = ({
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    items,
+    needIndexInfoClear,
+  }: {
+    items: any[];
+    needIndexInfoClear: boolean;
+  }) => {
+    setItems(items);
+    if (needIndexInfoClear) {
+      clearIndexInfo();
+    }
   };
 
   /**
