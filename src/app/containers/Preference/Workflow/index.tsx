@@ -237,6 +237,7 @@ export default function Workflow() {
     fse
       .readJson(targetPath)
       .then(async (json) => {
+        json.enabled = workflowEnabled;
         json.bundleId = workflowBundleId;
         json.category = workflowCategory;
         json.createdby = workflowCreator;
@@ -245,7 +246,7 @@ export default function Workflow() {
         json.version = workflowVersion;
         json.webaddress = workflowWebsite;
 
-        await fse.writeJson(targetPath, json, { encoding: 'utf8' });
+        await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
         return null;
       })
       .catch(console.error);
