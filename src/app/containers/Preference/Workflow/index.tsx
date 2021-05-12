@@ -167,7 +167,8 @@ export default function Workflow() {
 
   const getDefaultIcon = (bundleId: string) => {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
-    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}icon.png`;
+    const { defaultIcon } = Core.getWorkflowList()[bundleId];
+    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}${defaultIcon}`;
 
     if (fse.existsSync(workflowDefaultIconPath)) {
       return workflowDefaultIconPath;
@@ -368,7 +369,7 @@ export default function Workflow() {
             <Label checked style={labelStyle}>
               <Input
                 type="checkbox"
-                defaultChecked={workflowEnabled}
+                checked={workflowEnabled}
                 onChange={() => {
                   setWorkflowEnabled(!workflowEnabled);
                 }}
