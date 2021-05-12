@@ -23,6 +23,8 @@ export default ({
   searchbarHeight: number;
   footerHeight: number;
 }) => {
+  if (searchWindow.isDestroyed()) return;
+
   let heightToSet;
 
   if (itemCount === 0) {
