@@ -3,6 +3,7 @@ import { Core } from 'arvis-core';
 import path from 'path';
 import { BrowserWindow } from 'electron';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
+import { sleep } from '../utils';
 
 export const startFileWatcher = ({
   searchWindow,
@@ -35,6 +36,10 @@ export const startFileWatcher = ({
    * @summary Initialize watcher.
    *          It detects workflow config file change and
    *          loads new workflow config file if it detects a change.
+   *
+   * @description Even if there is a proper file event,
+   *              should send a renew request for a second after
+   *              because the change should be reflected in the in-memory store.
    */
   chokidar
     .watch(
@@ -45,16 +50,19 @@ export const startFileWatcher = ({
         followSymlinks: false,
       }
     )
-    .on('change', (filePath: string) => {
+    .on('change', async (filePath: string) => {
       console.log(`"${filePath}" changed. Reload workflows settings..`);
+      await sleep(1000);
       requestRenewWorkflows(getBundleIdFromFilePath(filePath));
     })
-    .on('unlink', (filePath: string) => {
+    .on('unlink', async (filePath: string) => {
       console.log(`"${filePath}" unlinked. Reload workflows settings..`);
+      await sleep(1000);
       requestRenewWorkflows();
     })
-    .on('add', (filePath: string) => {
+    .on('add', async (filePath: string) => {
       console.log(`"${filePath}" added. Reload workflows settings..`);
+      await sleep(1000);
       requestRenewWorkflows();
     });
 };

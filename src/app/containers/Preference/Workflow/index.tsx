@@ -1,3 +1,4 @@
+/* eslint-disable promise/no-nesting */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
@@ -83,12 +84,10 @@ export default function Workflow() {
         Core.install(arvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
-            ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
-              destWindow: 'searchWindow',
-            });
             return null;
           })
           .catch((err) => {
+            console.error(err);
             ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
               title: 'Installer file is invalid',
               content: err.message,
@@ -161,7 +160,7 @@ export default function Workflow() {
       version && setWorkflowVersion(version);
       webaddress && setWorkflowWebsite(webaddress);
     }
-  }, [selectedWorkflowIdx, Object.keys(workflows).length]);
+  }, [selectedWorkflowIdx, workflows]);
 
   const itemClickHandler = (idx: number) => {
     setSelectedWorkflowIdx(idx);
@@ -247,7 +246,6 @@ export default function Workflow() {
         json.webaddress = workflowWebsite;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8' });
-        Core.renewWorkflows();
         return null;
       })
       .catch(console.error);
@@ -287,11 +285,6 @@ export default function Workflow() {
           forceUpdate();
         }
         setSpinning(false);
-
-        await sleep(100);
-        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
-          destWindow: 'searchWindow',
-        });
         return null;
       })
       .catch(console.error);
@@ -321,15 +314,6 @@ export default function Workflow() {
       icon: getDefaultIcon(workflowBundleId),
     });
   };
-
-  // const renderEmptyList = () => {
-  //   return (
-  //     <EmptyListContainer>
-  //       <CgSmileNone style={emptyListIconStyle} />
-  //       <EmptyListDesc>There is no workflow to show.</EmptyListDesc>
-  //     </EmptyListContainer>
-  //   );
-  // };
 
   return (
     <OuterContainer>
