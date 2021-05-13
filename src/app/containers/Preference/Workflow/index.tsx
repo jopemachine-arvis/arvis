@@ -167,8 +167,7 @@ export default function Workflow() {
 
   const getDefaultIcon = (bundleId: string) => {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
-    if (!Core.getWorkflowList()[bundleId]) return undefined;
-    const { defaultIcon } = Core.getWorkflowList()[bundleId];
+    const { defaultIcon } = workflows[bundleId];
     const workflowDefaultIconPath = `${workflowRootPath}${path.sep}${defaultIcon}`;
 
     if (fse.existsSync(workflowDefaultIconPath)) {
