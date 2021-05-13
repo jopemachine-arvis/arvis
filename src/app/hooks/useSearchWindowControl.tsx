@@ -221,6 +221,15 @@ const useSearchWindowControl = ({
     modifiers: any;
   }) => {
     const selectedItem = items[selectedItemIdx];
+
+    if (selectedItem.arg_type === 'required') {
+      const [command, querys] = inputStr.split(selectedItem.command);
+      if (querys.length < 2) {
+        setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
+        return;
+      }
+    }
+
     if (selectedItem.type === 'scriptfilter') {
       setInputStr({ str: selectedItem.command, needItemsUpdate: false });
       const { running_subtext: runningSubText } = items[selectedItemIdx];

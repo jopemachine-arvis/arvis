@@ -37,6 +37,7 @@ const trayBuilder = new TrayBuilder(trayIconPath);
 trayBuilder.buildTray();
 
 ElectronStore.initRenderer();
+Core.path.initializePath();
 
 // If run a specific script with Electron, app name would be Electron. (Not Arvis)
 // To do:: In production, The storage location of the setup file should be Arvis, not Electron.

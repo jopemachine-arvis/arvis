@@ -140,24 +140,24 @@ export default function Workflow() {
     if (workflowBundleIds.length) {
       const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
       const {
-        createdby,
-        name,
-        bundleId,
-        version,
-        webaddress,
-        description,
-        category,
-        enabled,
+        createdby = '',
+        name = '',
+        bundleId = '',
+        version = '',
+        webaddress = '',
+        description = '',
+        category = '',
+        enabled = false,
       } = info;
 
-      enabled && setWorkflowEnabled(enabled);
-      name && setWorkflowName(name);
-      createdby && setWorkflowCreator(createdby);
-      bundleId && setWorkflowBundleId(bundleId);
-      category && setWorkflowCategory(category);
-      description && setWorkflowDescription(description);
-      version && setWorkflowVersion(version);
-      webaddress && setWorkflowWebsite(webaddress);
+      setWorkflowEnabled(enabled);
+      setWorkflowName(name);
+      setWorkflowCreator(createdby);
+      setWorkflowBundleId(bundleId);
+      setWorkflowCategory(category);
+      setWorkflowDescription(description);
+      setWorkflowVersion(version);
+      setWorkflowWebsite(webaddress);
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -167,6 +167,7 @@ export default function Workflow() {
 
   const getDefaultIcon = (bundleId: string) => {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
+    if (!Core.getWorkflowList()[bundleId]) return undefined;
     const { defaultIcon } = Core.getWorkflowList()[bundleId];
     const workflowDefaultIconPath = `${workflowRootPath}${path.sep}${defaultIcon}`;
 
