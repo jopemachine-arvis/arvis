@@ -39,7 +39,8 @@ const createSearchWindow = () => {
     }
   });
 
-  searchWindow.on('blur', () => {
+  searchWindow.on('blur', (e: any) => {
+    e.preventDefault();
     searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
   });
 
