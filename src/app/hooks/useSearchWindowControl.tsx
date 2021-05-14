@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lonely-if */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
 import useKey from '../../use-key-capture/src';
@@ -40,6 +40,10 @@ const useSearchWindowControl = ({
   const inputStr = inputRef.current
     ? (inputRef.current! as HTMLInputElement).value
     : '';
+
+  const alreadyCleared = false;
+  const hideSearchWindowByBlurCbRef = useRef<any>();
+  const alreadyClearedRef = useRef<boolean>(alreadyCleared);
 
   /**
    * @summary
@@ -298,11 +302,16 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * @param {boolean} alreadyCleanedUp
+   * @description To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @summary
    */
-  const cleanUpBeforeHide = () => {
+  const cleanUpBeforeHide = (alreadyCleanedUp: boolean) => {
+    // clearInput();
+
+    if (alreadyCleanedUp) return;
+    alreadyClearedRef.current = true;
     setItems([]);
-    clearInput();
     clearIndexInfo();
     workManager.clearWorkStack();
     setShouldBeHided(true);
@@ -381,6 +390,7 @@ const useSearchWindowControl = ({
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
       workManager.popWork();
+      alreadyClearedRef.current = true;
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
     }
@@ -436,13 +446,22 @@ const useSearchWindowControl = ({
   };
 
   useEffect(() => {
-    ipcRenderer.on(IPCMainEnum.hideSearchWindowByBlurEvent, () => {
-      cleanUpBeforeHide();
-    });
+    hideSearchWindowByBlurCbRef.current = () => {
+      cleanUpBeforeHide(alreadyClearedRef.current);
+    };
 
     if (inputRef.current) {
       (inputRef.current! as HTMLInputElement).onkeyup = onKeyupHandler;
     }
+
+    ipcRenderer.on(IPCMainEnum.searchWindowShowCallback, () => {
+      alreadyClearedRef.current = false;
+      setShouldBeHided(false);
+    });
+
+    ipcRenderer.on(IPCMainEnum.hideSearchWindowByBlurEvent, () => {
+      hideSearchWindowByBlurCbRef.current();
+    });
   }, []);
 
   useEffect(() => {
@@ -455,11 +474,13 @@ const useSearchWindowControl = ({
   useEffect(() => {
     // After cleanUp
     if (shouldBeHided === true && items.length === 0) {
+      console.log('clean');
+      (document.getElementById('searchBar') as HTMLInputElement).value = '';
+
       // Give some time to remove Afterimage
       setTimeout(() => {
         ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
       }, 10);
-      setShouldBeHided(false);
     }
   }, [shouldBeHided, items]);
 

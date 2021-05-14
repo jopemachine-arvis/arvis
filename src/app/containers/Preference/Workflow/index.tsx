@@ -140,22 +140,22 @@ export default function Workflow() {
     if (workflowBundleIds.length) {
       const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
       const {
-        createdby = '',
-        name = '',
         bundleId = '',
+        category = '',
+        createdby = '',
+        description = '',
+        enabled = false,
+        name = '',
         version = '',
         webaddress = '',
-        description = '',
-        category = '',
-        enabled = false,
       } = info;
 
-      setWorkflowEnabled(enabled);
-      setWorkflowName(name);
-      setWorkflowCreator(createdby);
       setWorkflowBundleId(bundleId);
       setWorkflowCategory(category);
+      setWorkflowCreator(createdby);
       setWorkflowDescription(description);
+      setWorkflowEnabled(enabled);
+      setWorkflowName(name);
       setWorkflowVersion(version);
       setWorkflowWebsite(webaddress);
     }
@@ -237,11 +237,11 @@ export default function Workflow() {
     fse
       .readJson(targetPath)
       .then(async (json) => {
-        json.enabled = workflowEnabled;
         json.bundleId = workflowBundleId;
         json.category = workflowCategory;
         json.createdby = workflowCreator;
         json.description = workflowDescription;
+        json.enabled = workflowEnabled;
         json.name = workflowName;
         json.version = workflowVersion;
         json.webaddress = workflowWebsite;
@@ -265,7 +265,7 @@ export default function Workflow() {
 
   const deleteSelectedWorkflow = (workflowList: any, idxToRemove: number) => {
     const workflowBundleIds = Object.keys(workflowList);
-    if (workflowBundleIds.length === 0) return;
+    if (!workflowBundleIds.length) return;
 
     setSpinning(true);
 
@@ -308,7 +308,7 @@ export default function Workflow() {
 
   const callDeleteWorkflowConfModal = () => {
     const workflowBundleIds = Object.keys(workflows);
-    if (workflowBundleIds.length === 0) return;
+    if (!workflowBundleIds.length) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
       msg: `Are you sure you want to delete '${workflowBundleId}'?`,

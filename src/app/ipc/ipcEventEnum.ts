@@ -28,4 +28,5 @@ export enum IPCMainEnum {
   renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',
   setSearchbarInput = '@ipcMain/setSearchbarInput',
+  searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
 }

@@ -44,6 +44,10 @@ const createSearchWindow = () => {
     searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
   });
 
+  searchWindow.on('show', () => {
+    searchWindow.webContents.send(IPCMainEnum.searchWindowShowCallback);
+  });
+
   return searchWindow;
 };
 

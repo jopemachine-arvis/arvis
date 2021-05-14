@@ -60,6 +60,7 @@ const SearchBar = (props: IProps) => {
       }}
     >
       <Input
+        id="searchBar"
         className="searchBar"
         style={{
           color: searchbarFontColor,
