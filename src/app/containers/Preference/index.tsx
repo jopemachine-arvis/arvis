@@ -67,6 +67,9 @@ export default function PreferenceWindow() {
     return Core.renewWorkflows();
   }, []);
 
+  /**
+   * @summary Used to receive dispatched action from different window
+   */
   const ipcCallbackTbl = {
     renewWorkflow: (
       e: IpcRendererEvent,

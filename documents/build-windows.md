@@ -8,7 +8,7 @@
 
 3. `yarn build`
 
-4. Before `yarn dev`, Run the command below
+4. Before `yarn start`, Run the command below
 
 ```shell
 $ yarn replace-iohook-prebuilt
@@ -16,7 +16,7 @@ $ yarn replace-iohook-prebuilt
 
 If having trouble with the above step, download or build the [iohook](https://github.com/wilix-team/iohook) prebuilt binary file.
 
-5. `yarn dev` to start on development mode or `yarn start` to start on prod mode.
+5. `yarn start`
 
 ### python 2.7 not found issue
 

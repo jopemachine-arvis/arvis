@@ -46,6 +46,9 @@ export default function General() {
     dispatch(GlobalConfigActions.setGlobalFont(font));
   };
 
+  /**
+   * @summary Used to receive dispatched action from different window
+   */
   const ipcCallbackTbl = {
     setFont: (e: Electron.IpcRendererEvent, { fonts }: { fonts: string[] }) => {
       setFontList(fonts);

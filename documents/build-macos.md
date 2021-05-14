@@ -8,5 +8,5 @@
 
 3. `yarn build`
 
-4. `yarn dev` to start on development mode or `yarn start` to start on prod mode.
+4. `yarn start`
 

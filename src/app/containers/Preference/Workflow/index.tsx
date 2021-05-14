@@ -71,6 +71,9 @@ export default function Workflow() {
     return null;
   };
 
+  /**
+   * @summary Used to receive dispatched action from different window
+   */
   const ipcCallbackTbl = {
     saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
       Core.exportWorkflow(workflowBundleId, file.filePath);

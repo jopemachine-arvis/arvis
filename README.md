@@ -97,6 +97,8 @@ Arvis also supports double modifier key combinations (e.g. double cmd, double ct
 
 ### How to write new workflows
 
+* [arvis-workflow-tools]()
+
 ### How to write new plugins
 
 ### Update your workflow, plugin
@@ -145,12 +147,8 @@ The storage path for all installed workflow files is stored in the `data` path o
 
 #### preference file
 
+In a development environment, `arvis-nodejs` is replaced with `Electron` in the below pathes.
+
 * on Linux: `~/.local/share/arvis-nodejs/arvis-gui-config.json` (or `$XDG_DATA_HOME/arvis-nodejs/arvis-gui-config.json`)
 * on macOS: `~/Library/Application Support/arvis-nodejs/arvis-gui-config.json`
 * on Windows: `%LOCALAPPDATA%\arvis-nodejs\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Data\arvis-gui-config.json`)
-
-However, in a development environment, it is stored in the path below because appName is considered as `Electron`
-
-* on Linux: `~/.local/share/Electron/arvis-gui-config.json` (or `$XDG_DATA_HOME/Electron/arvis-gui-config.json`)
-* on macOS: `~/Library/Application Support/Electron/arvis-gui-config.json`
-* on Windows: `%LOCALAPPDATA%\Electron\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\Electron\Data\arvis-gui-config.json`)
