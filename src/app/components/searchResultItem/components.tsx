@@ -28,7 +28,9 @@ export const SubTitle = styled.div`
   user-select: none;
 `;
 
-export const IconImg = styled.img``;
+export const IconImg = styled.img`
+  object-fit: scale-down;
+`;
 
 export const OffsetText = styled.div`
   display: flex;
