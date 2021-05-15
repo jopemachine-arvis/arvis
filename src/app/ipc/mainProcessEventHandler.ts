@@ -236,9 +236,16 @@ export const initIPCHandler = ({
    */
   const popupWorkflowItemMenu = (
     e: IpcMainEvent,
-    { path }: { path: string }
+    {
+      workflowPath,
+      workflowEnabled,
+    }: { workflowPath: string; workflowEnabled: boolean }
   ) => {
-    new WorkflowItemMenu({ path }).popup();
+    new WorkflowItemMenu({
+      workflowPath,
+      workflowEnabled,
+      preferenceWindow,
+    }).popup();
   };
 
   /**

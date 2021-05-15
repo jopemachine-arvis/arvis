@@ -52,4 +52,10 @@ export const iconStyle: React.CSSProperties = {
   top: 14,
   left: 15,
   userSelect: 'none',
+  objectFit: 'scale-down',
+};
+
+export const disabledIconStyle: React.CSSProperties = {
+  ...iconStyle,
+  opacity: 0.25,
 };

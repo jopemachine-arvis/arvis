@@ -14,7 +14,7 @@ import {
   AiOutlineBranches,
 } from 'react-icons/ai';
 import { BiExport } from 'react-icons/bi';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
@@ -35,15 +35,16 @@ import { ScreenCoverContext } from '../screenCoverContext';
 import './index.global.css';
 import {
   bottomFixedBarIconStyle,
-  checkboxStyle,
   descriptionContainerStyle,
   formGroupStyle,
   iconStyle,
+  disabledIconStyle,
   labelStyle,
 } from './style';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 import { useSelector } from 'react-redux';
 import { StateType } from '../../../redux/reducers/types';
+import useKey from '../../../../use-key-capture/src';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -61,6 +62,8 @@ export default function Workflow() {
   const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
   const [workflowEnabled, setWorkflowEnabled] = useState<boolean>(false);
 
+  const { keyData } = useKey();
+
   const { can_install_alfredworkflow } = useSelector(
     (state: StateType) => state.advanced_config
   );
@@ -76,6 +79,17 @@ export default function Workflow() {
     setSpinning(false);
     return null;
   };
+
+  useEffect(() => {
+    if (
+      keyData.isArrowDown &&
+      selectedWorkflowIdx < Object.keys(workflows).length - 1
+    ) {
+      setSelectedWorkflowIdx(selectedWorkflowIdx + 1);
+    } else if (keyData.isArrowUp && selectedWorkflowIdx > 0) {
+      setSelectedWorkflowIdx(selectedWorkflowIdx - 1);
+    }
+  }, [keyData]);
 
   /**
    * @summary Used to receive dispatched action from different window
@@ -117,6 +131,28 @@ export default function Workflow() {
         deleteWorkflowEventHandler.current();
       }
     },
+
+    toggleWorkflowEnabled: (
+      e: Electron.IpcRendererEvent,
+      {
+        bundleId,
+        workflowEnabled,
+      }: { bundleId: string; workflowEnabled: string }
+    ) => {
+      const targetPath = Core.path.getWorkflowConfigJsonPath(bundleId);
+      fse
+        .readJson(targetPath)
+        .then(async (json) => {
+          json.enabled = !workflowEnabled;
+
+          await fse.writeJson(targetPath, json, {
+            encoding: 'utf8',
+            spaces: 4,
+          });
+          return null;
+        })
+        .catch(console.error);
+    },
   };
 
   useEffect(() => {
@@ -129,6 +165,10 @@ export default function Workflow() {
       IPCMainEnum.openYesnoDialogRet,
       ipcCallbackTbl.openYesnoDialogRet
     );
+    ipcRenderer.on(
+      IPCMainEnum.toggleWorkflowEnabled,
+      ipcCallbackTbl.toggleWorkflowEnabled
+    );
 
     return () => {
       ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
@@ -139,6 +179,10 @@ export default function Workflow() {
       ipcRenderer.off(
         IPCMainEnum.openYesnoDialogRet,
         ipcCallbackTbl.openYesnoDialogRet
+      );
+      ipcRenderer.off(
+        IPCMainEnum.toggleWorkflowEnabled,
+        ipcCallbackTbl.toggleWorkflowEnabled
       );
     };
   }, []);
@@ -192,21 +236,24 @@ export default function Workflow() {
     e.preventDefault();
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
-      path: workflowRootPath,
+      workflowPath: workflowRootPath,
+      workflowEnabled,
     });
   };
 
   const renderItem = (itemBundleId: string, idx: number) => {
     const info = workflows[itemBundleId];
     if (!info) return <></>;
-    const { createdby, name } = info;
+    const { createdby, name, enabled } = info;
 
     let icon;
     const defaultIconPath = getDefaultIcon(itemBundleId);
+    const iconSty = enabled ? iconStyle : disabledIconStyle;
+
     if (defaultIconPath) {
-      icon = <WorkflowImg style={iconStyle} src={defaultIconPath} />;
+      icon = <WorkflowImg style={iconSty} src={defaultIconPath} />;
     } else {
-      icon = <AiOutlineBranches style={iconStyle} />;
+      icon = <AiOutlineBranches style={iconSty} />;
     }
 
     let optionalStyle = {};
@@ -230,8 +277,20 @@ export default function Workflow() {
         }
       >
         {icon}
-        <WorkflowItemTitle>{name}</WorkflowItemTitle>
-        <WorkflowItemCreatorText>{createdby}</WorkflowItemCreatorText>
+        <WorkflowItemTitle
+          style={{
+            opacity: enabled ? 1 : 0.25,
+          }}
+        >
+          {name}
+        </WorkflowItemTitle>
+        <WorkflowItemCreatorText
+          style={{
+            opacity: enabled ? 1 : 0.25,
+          }}
+        >
+          {createdby}
+        </WorkflowItemCreatorText>
       </WorkflowItemContainer>
     );
   };
@@ -252,7 +311,6 @@ export default function Workflow() {
         json.category = workflowCategory;
         json.createdby = workflowCreator;
         json.description = workflowDescription;
-        json.enabled = workflowEnabled;
         json.name = workflowName;
         json.version = workflowVersion;
         json.webaddress = workflowWebsite;
@@ -377,19 +435,6 @@ export default function Workflow() {
           Workflow config
         </Header>
         <Form style={descriptionContainerStyle}>
-          <FormGroup check style={checkboxStyle}>
-            <Label checked style={labelStyle}>
-              <Input
-                type="checkbox"
-                checked={workflowEnabled}
-                onChange={() => {
-                  setWorkflowEnabled(!workflowEnabled);
-                }}
-              />
-              Enabled
-            </Label>
-          </FormGroup>
-
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Name</Label>
             <StyledInput
@@ -449,9 +494,11 @@ export default function Workflow() {
 
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Description</Label>
-            {/* To do :: make description input auto height */}
             <StyledInput
               type="textarea"
+              style={{
+                height: 240,
+              }}
               value={workflowDescription}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowDescription(e.currentTarget.value);
