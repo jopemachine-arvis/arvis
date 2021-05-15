@@ -147,13 +147,6 @@ export default function SearchWindow() {
     });
   }, [search_window_width]);
 
-  useEffect(() => {
-    document.body.style.background = applyAlphaColor(
-      item_background_color,
-      search_window_transparency
-    );
-  }, [search_window_transparency]);
-
   return (
     <OuterContainer
       style={{
