@@ -18,6 +18,10 @@ export default {
     if (searchWindow.isVisible()) {
       searchWindow.hide();
     } else {
+      // Center the window and set y position.
+      searchWindow.center();
+      const [x] = searchWindow.getPosition();
+      searchWindow.setPosition(x, 150);
       searchWindow.show();
       searchWindow.focus();
     }

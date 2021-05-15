@@ -6,7 +6,6 @@ import { IPCMainEnum } from '../ipc/ipcEventEnum';
 const createSearchWindow = () => {
   const searchWindow = new BrowserWindow({
     title: 'Arvis',
-    center: true,
     show: false,
     frame: false,
     transparent: true,
@@ -16,10 +15,20 @@ const createSearchWindow = () => {
     movable: true,
     hasShadow: true,
     fullscreenable: false,
+    acceptFirstMouse: false,
+    alwaysOnTop: true,
+    enableLargerThanScreen: false,
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences: {
+      accessibleTitle: 'arvis-searchwindow',
+      devTools: true,
+      experimentalFeatures: false,
       nodeIntegration: true,
+      plugins: false,
+      scrollBounce: false,
+      spellcheck: false,
+      webviewTag: false,
     },
   });
 
