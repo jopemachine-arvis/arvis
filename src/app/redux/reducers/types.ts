@@ -2,11 +2,11 @@ import { Dispatch as ReduxDispatch, Store as ReduxStore, Action } from 'redux';
 
 export type StateType = {
   global_config: {
-    hotkey: string;
-    launch_at_login: boolean;
-    max_item_count_to_show: number;
-    max_item_count_to_search: number;
     global_font: string;
+    launch_at_login: boolean;
+    max_item_count_to_search: number;
+    max_item_count_to_show: number;
+    toggle_search_window_hotkey: string;
   };
   ui_config: {
     icon_right_margin: number;
@@ -29,11 +29,11 @@ export type StateType = {
   };
   advanced_config: {
     can_install_alfredworkflow: boolean;
-    debugging_workflow_output: boolean;
-    debugging_workstack: boolean;
     debugging_action_type: boolean;
     debugging_args: boolean;
     debugging_scriptfilter: boolean;
+    debugging_workflow_output: boolean;
+    debugging_workstack: boolean;
   };
 };
 

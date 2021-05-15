@@ -42,9 +42,10 @@ export default function PreferenceWindow() {
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
   const screenCoverState = useState<boolean>();
 
-  const { hotkey: toggleSearchWindowHotkey, global_font } = useSelector(
-    (state: StateType) => state.global_config
-  );
+  const {
+    global_font,
+    toggle_search_window_hotkey,
+  } = useSelector((state: StateType) => state.global_config);
 
   // To do :: Move below logics to RootRouter
   const registerAllGlobalHotkey = () => {
@@ -52,7 +53,7 @@ export default function PreferenceWindow() {
       .then((hotkeys) => {
         ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
           callbackTable: {
-            [toggleSearchWindowHotkey]: 'toggleSearchWindow',
+            [toggle_search_window_hotkey]: 'toggleSearchWindow',
           },
           workflowHotkeyTbl: JSON.stringify(hotkeys),
         });

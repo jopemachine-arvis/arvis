@@ -1,10 +1,10 @@
 export default {
   global_config: {
-    hotkey: 'Ctrl+Space',
-    launch_at_login: true,
-    max_item_count_to_show: 9,
-    max_item_count_to_search: 100,
     global_font: 'Arial',
+    launch_at_login: true,
+    max_item_count_to_search: 100,
+    max_item_count_to_show: 9,
+    toggle_search_window_hotkey: 'Ctrl+Space',
   },
   ui_config: {
     icon_right_margin: 15,
@@ -27,10 +27,10 @@ export default {
   },
   advanced_config: {
     can_install_alfredworkflow: false,
-    debugging_workflow_output: true,
-    debugging_workstack: false,
     debugging_action_type: true,
     debugging_args: false,
     debugging_scriptfilter: false,
+    debugging_workflow_output: true,
+    debugging_workstack: false,
   },
 };

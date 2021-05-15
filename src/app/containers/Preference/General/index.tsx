@@ -27,11 +27,11 @@ import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 export default function General() {
   const { keyData } = useKey();
   const {
-    hotkey,
+    global_font,
+    launch_at_login,
     max_item_count_to_search,
     max_item_count_to_show,
-    launch_at_login,
-    global_font,
+    toggle_search_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
 
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
@@ -115,7 +115,7 @@ export default function General() {
             value: doubledStr + result,
           },
         } as React.FormEvent<HTMLInputElement>,
-        GlobalConfigActionTypes.SET_HOT_KEY
+        GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
       );
     }
   }, [keyData]);
@@ -147,12 +147,12 @@ export default function General() {
               textShadow: '0px 0px 0px #fff',
             }}
             type="text"
-            value={hotkey}
+            value={toggle_search_window_hotkey}
             onFocus={() => setHotkeyFormFocused(true)}
             onBlur={() => setHotkeyFormFocused(false)}
             onChange={(e: React.FormEvent<HTMLInputElement>) => {
               e.preventDefault();
-              configChangeHandler(e, GlobalConfigActionTypes.SET_HOT_KEY);
+              configChangeHandler(e, GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY);
             }}
           />
         </FormGroup>

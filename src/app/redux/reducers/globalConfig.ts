@@ -6,10 +6,10 @@ const { actionTypes: GlobalConfigActionTypes } = GlobalConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case GlobalConfigActionTypes.SET_HOT_KEY:
+    case GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY:
       return {
         ...state,
-        hotkey: payload.arg,
+        toggle_search_window_hotkey: payload.arg,
       };
     case GlobalConfigActionTypes.SET_LAUNCH_AT_LOGIN:
       return {
@@ -36,8 +36,8 @@ export default (state = {}, action: any) => {
   }
 };
 
-export function getHotkey(state: StateType) {
-  return state.global_config.hotkey;
+export function getToggleSearchWindowHotkey(state: StateType) {
+  return state.global_config.toggle_search_window_hotkey;
 }
 
 export function getItemMaxCountToShow(state: StateType) {
