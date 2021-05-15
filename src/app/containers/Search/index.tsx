@@ -22,6 +22,7 @@ export default function SearchWindow() {
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
+    search_window_border_radius,
     search_window_footer_height,
     search_window_transparency,
     search_window_width,
@@ -150,6 +151,7 @@ export default function SearchWindow() {
   return (
     <OuterContainer
       style={{
+        borderRadius: search_window_border_radius,
         fontFamily: global_font,
         background: 'transparent',
         backgroundColor: applyAlphaColor(
@@ -162,12 +164,10 @@ export default function SearchWindow() {
       <SearchBar
         alwaysFocus
         getInputProps={getInputProps}
-        itemBackgroundColor={item_background_color}
         itemLeftPadding={item_left_padding}
         searchbarFontColor={searchbar_font_color}
         searchbarFontSize={searchbar_font_size}
         searchbarHeight={searchbar_height}
-        searchWindowTransparency={search_window_transparency}
       />
       <SearchResultView
         demo={false}

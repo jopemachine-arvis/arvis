@@ -5,6 +5,11 @@ const { actionTypes: UIConfigActionTypes } = UIConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
+    case UIConfigActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS:
+      return {
+        ...state,
+        search_window_border_radius: payload.arg,
+      };
     case UIConfigActionTypes.SET_ITEM_BACKGROUND_COLOR:
       return {
         ...state,

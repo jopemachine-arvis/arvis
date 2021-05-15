@@ -55,6 +55,7 @@ export default function Theme() {
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
+    search_window_border_radius,
     search_window_footer_height,
     search_window_transparency,
     search_window_width,
@@ -93,6 +94,7 @@ export default function Theme() {
       >
         <PreviewMainContainer
           style={{
+            borderRadius: search_window_border_radius,
             backgroundColor: item_background_color,
             width: search_window_width,
             height:
@@ -104,12 +106,10 @@ export default function Theme() {
         >
           <SearchBar
             alwaysFocus={false}
-            itemBackgroundColor={item_background_color}
             itemLeftPadding={item_left_padding}
             searchbarFontColor={searchbar_font_color}
             searchbarFontSize={searchbar_font_size}
             searchbarHeight={searchbar_height}
-            searchWindowTransparency={search_window_transparency}
           />
           <SearchResultView
             demo
@@ -158,6 +158,20 @@ export default function Theme() {
                 configChangeHandler(
                   e,
                   UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
+                )
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Window border radius</Label>
+            <StyledInput
+              type="number"
+              value={search_window_border_radius}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS
                 )
               }
             />

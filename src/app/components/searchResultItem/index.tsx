@@ -107,7 +107,7 @@ const SearchResultItem = (props: IProps) => {
               selectedItemBackgroundColor,
               searchWindowTransparency
             )
-          : applyAlphaColor(itemBackgroundColor, searchWindowTransparency),
+          : 'transparent',
       }}
       onFocus={() => {}}
       onMouseOver={() => onMouseoverHandler()}

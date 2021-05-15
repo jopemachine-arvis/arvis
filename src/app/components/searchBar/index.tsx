@@ -1,30 +1,24 @@
 import React, { useEffect } from 'react';
-import { Container, Input } from './components';
-import './index.global.css';
-import { applyAlphaColor } from '../../utils';
+import { OuterContainer, Input } from './components';
 
 type IProps = {
   alwaysFocus: boolean;
   // eslint-disable-next-line @typescript-eslint/ban-types
   getInputProps?: Function;
-  itemBackgroundColor: string;
   itemLeftPadding: number;
   searchbarFontColor: string;
   searchbarFontSize: number;
   searchbarHeight: number;
-  searchWindowTransparency: number;
 };
 
 const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
     getInputProps,
-    itemBackgroundColor,
     itemLeftPadding,
     searchbarFontColor,
     searchbarFontSize,
     searchbarHeight,
-    searchWindowTransparency,
   } = props;
 
   const { ref: inputRef, type, originalRef } = getInputProps
@@ -54,7 +48,7 @@ const SearchBar = (props: IProps) => {
   }, [originalRef]);
 
   return (
-    <Container
+    <OuterContainer
       style={{
         height: searchbarHeight,
       }}
@@ -63,20 +57,18 @@ const SearchBar = (props: IProps) => {
         id="searchBar"
         className="searchBar"
         style={{
+          backgroundColor: 'transparent',
           color: searchbarFontColor,
           fontSize: searchbarFontSize,
+          outline: 'none',
           paddingLeft: itemLeftPadding,
-          backgroundColor: applyAlphaColor(
-            itemBackgroundColor,
-            searchWindowTransparency
-          ),
         }}
         ref={inputRef}
         type={type}
         onKeyDown={preventUpAndDownArrow}
         onBlur={alwaysFocus ? preventBlur : () => {}}
       />
-    </Container>
+    </OuterContainer>
   );
 };
 

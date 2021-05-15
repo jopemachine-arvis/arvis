@@ -16,6 +16,7 @@ export default {
     searchbar_font_color: '#ffffff',
     searchbar_font_size: 20,
     searchbar_height: 60,
+    search_window_border_radius: 10,
     search_window_footer_height: 10,
     search_window_transparency: 0xbb,
     search_window_width: 900,

@@ -4,6 +4,7 @@ export const actionTypes = {
   SET_SEARCH_WINDOW_WIDTH: '@uiConfig/SET_SEARCH_WINDOW_WIDTH',
   SET_SEARCH_WINDOW_FOOTER_HEIGHT: '@uiConfig/SET_SEARCH_WINDOW_FOOTER_HEIGHT',
   SET_SEARCH_WINDOW_TRANSPARENCY: '@uiConfig/SET_SEARCH_WINDOW_TRANSPARENCY',
+  SET_SEARCH_WINDOW_BORDER_RADIUS: '@uiConfig/SET_SEARCH_WINDOW_BORDER_RADIUS',
 
   SET_ITEM_HEIGHT: '@uiConfig/SET_ITEM_HEIGHT',
 
@@ -26,6 +27,11 @@ export const actionTypes = {
 
   SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN',
 };
+
+export const setSearchWindowBorderRadius = makeActionCreator(
+  actionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS,
+  'arg'
+);
 
 export const setSearchBarFontSize = makeActionCreator(
   actionTypes.SET_SEARCHBAR_FONTSIZE,
