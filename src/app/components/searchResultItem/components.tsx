@@ -33,6 +33,7 @@ export const IconImg = styled.img``;
 export const OffsetText = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 15px;
+  margin-right: ${process.platform === 'darwin' ? 15 : 20}px;
+  white-space: nowrap;
   user-select: none;
 `;

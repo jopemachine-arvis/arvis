@@ -94,7 +94,7 @@ const SearchResultItem = (props: IProps) => {
   const getOffsetText = useCallback(() => {
     return process.platform === 'darwin'
       ? `⌘${offset + 1}`
-      : `Ctrl ${offset + 1}`;
+      : `ctl ${offset + 1}`;
   }, []);
 
   return (
