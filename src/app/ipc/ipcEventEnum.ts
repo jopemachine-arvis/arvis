@@ -12,6 +12,7 @@ export enum IPCRendererEnum {
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',
   saveFile = '@ipcRenderer/saveFile',
   setGlobalShortcut = '@ipcRenderer/setGlobalShortcut',
+  setSearchWindowWidth = '@ipcRenderer/setSearchWindowWidth',
   showErrorDialog = '@ipcRenderer/showErrorDialog',
   showNotification = '@ipcRenderer/showNotification',
 }

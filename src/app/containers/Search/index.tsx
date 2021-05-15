@@ -24,6 +24,7 @@ export default function SearchWindow() {
     searchbar_height,
     search_window_footer_height,
     search_window_transparency,
+    search_window_width,
     selected_item_background_color,
     selected_item_font_color,
     subtitle_font_size,
@@ -139,6 +140,12 @@ export default function SearchWindow() {
     initilizeSearchWindowIPCHandler();
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.send(IPCRendererEnum.setSearchWindowWidth, {
+      width: search_window_width,
+    });
+  }, [search_window_width]);
 
   useEffect(() => {
     document.body.style.background = applyAlphaColor(

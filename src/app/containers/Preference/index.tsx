@@ -42,7 +42,7 @@ export default function PreferenceWindow() {
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
   const screenCoverState = useState<boolean>();
 
-  const { hotkey, global_font } = useSelector(
+  const { hotkey: toggleSearchWindowHotkey, global_font } = useSelector(
     (state: StateType) => state.global_config
   );
 
@@ -50,12 +50,10 @@ export default function PreferenceWindow() {
   const registerAllGlobalHotkey = () => {
     Core.findHotkeys()
       .then((hotkeys) => {
-        const globalShortcutCallbackTable = {
-          [hotkey]: 'toggleSearchWindow',
-        };
-
         ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-          callbackTable: globalShortcutCallbackTable,
+          callbackTable: {
+            [toggleSearchWindowHotkey]: 'toggleSearchWindow',
+          },
           workflowHotkeyTbl: JSON.stringify(hotkeys),
         });
         return null;

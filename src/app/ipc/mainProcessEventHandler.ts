@@ -195,6 +195,16 @@ export const initIPCHandler = ({
   };
 
   /**
+   * @param  {number} width
+   */
+  const setSearchWindowWidth = (
+    e: IpcMainEvent,
+    { width }: { width: number }
+  ) => {
+    searchWindow.setSize(width, searchWindow.getSize()[1]);
+  };
+
+  /**
    * @param  {string} callbackTable
    * @param  {string} workflowHotkeyTbl?
    * @summary Used to register global shortcuts
@@ -250,6 +260,7 @@ export const initIPCHandler = ({
     });
   };
 
+  ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
