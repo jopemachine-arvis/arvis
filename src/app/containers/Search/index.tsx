@@ -134,7 +134,12 @@ export default function SearchWindow() {
     Core.renewWorkflows();
   }, []);
 
+  const loadPluginsInfo = useCallback(() => {
+    Core.renewPlugins({ initializePluginWorkspace: true });
+  }, []);
+
   useEffect(() => {
+    loadPluginsInfo();
     loadWorkflowsInfo();
     registerWindowUpdater();
     initializeCustomActions();

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect, useState } from 'react';
@@ -83,7 +84,7 @@ export default function General() {
       };
 
       for (const modifier in modifiers) {
-        if (modifiers[modifier]) {
+        if ((modifiers as any)[modifier]) {
           result += `${modifier} + `;
         }
       }
