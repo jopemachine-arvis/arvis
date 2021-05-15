@@ -79,13 +79,19 @@ export const initIPCHandler = ({
   /**
    * @summary Used to select wfconf file
    */
-  const openWfConfFileDialog = async (e: IpcMainEvent) => {
+  const openWfConfFileDialog = async (
+    e: IpcMainEvent,
+    { canInstallAlfredWorkflow }: { canInstallAlfredWorkflow: boolean }
+  ) => {
+    const extensions = ['arvisworkflow'];
+    if (canInstallAlfredWorkflow) extensions.push('alfredworkflow');
+
     const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
       properties: ['openFile'],
       filters: [
         {
           name: 'Arvis workflow install files',
-          extensions: ['arvisworkflow', 'alfredworkflow'],
+          extensions,
         },
       ],
     });

@@ -28,6 +28,7 @@ export type StateType = {
     title_font_size: number;
   };
   advanced_config: {
+    can_install_alfredworkflow: boolean;
     debugging_workflow_output: boolean;
     debugging_workstack: boolean;
     debugging_action_type: boolean;

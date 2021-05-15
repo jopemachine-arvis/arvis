@@ -42,6 +42,8 @@ import {
   labelStyle,
 } from './style';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
+import { useSelector } from 'react-redux';
+import { StateType } from '../../../redux/reducers/types';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -58,6 +60,10 @@ export default function Workflow() {
   const [workflowDescription, setWorkflowDescription] = useState<string>('');
   const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
   const [workflowEnabled, setWorkflowEnabled] = useState<boolean>(false);
+
+  const { can_install_alfredworkflow } = useSelector(
+    (state: StateType) => state.advanced_config
+  );
 
   const forceUpdate = useForceUpdate();
   const [spinning, setSpinning] = useContext(ScreenCoverContext) as any;
@@ -231,7 +237,9 @@ export default function Workflow() {
   };
 
   const requestAddNewWorkflow = () => {
-    ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog);
+    ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog, {
+      canInstallAlfredWorkflow: can_install_alfredworkflow,
+    });
     setSpinning(true);
   };
 

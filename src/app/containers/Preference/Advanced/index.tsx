@@ -13,6 +13,7 @@ import { IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function Advanced() {
   const {
+    can_install_alfredworkflow,
     debugging_action_type,
     debugging_workflow_output,
     debugging_workstack,
@@ -50,6 +51,7 @@ export default function Advanced() {
             Debugging action types
           </Label>
         </FormGroup>
+
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
             <Input
@@ -65,6 +67,7 @@ export default function Advanced() {
             Debugging workflow output
           </Label>
         </FormGroup>
+
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
             <Input
@@ -80,6 +83,7 @@ export default function Advanced() {
             Debugging workstack
           </Label>
         </FormGroup>
+
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
             <Input
@@ -95,6 +99,7 @@ export default function Advanced() {
             Debugging scriptfilter
           </Label>
         </FormGroup>
+
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
             <Input
@@ -108,6 +113,22 @@ export default function Advanced() {
               }
             />
             Debugging arguments, query, variables
+          </Label>
+        </FormGroup>
+
+        <FormGroup check style={formGroupStyle}>
+          <Label checked style={labelStyle}>
+            <Input
+              type="checkbox"
+              checked={can_install_alfredworkflow}
+              onChange={() =>
+                toggleState(
+                  AdvancedActionTypes.SET_INSTALL_ALFRED_WORKFLOW,
+                  can_install_alfredworkflow
+                )
+              }
+            />
+            Install alfred-workflow file directly (Not recommended for use for purposes other than development)
           </Label>
         </FormGroup>
 
