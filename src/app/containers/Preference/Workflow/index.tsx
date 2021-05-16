@@ -75,19 +75,6 @@ export default function Workflow() {
     return null;
   };
 
-  const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
-    if (e.deltaY > 0) {
-      if (selectedWorkflowIdx < Object.keys(workflows).length - 1) {
-        setSelectedWorkflowIdx(selectedWorkflowIdx + 1);
-      }
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (selectedWorkflowIdx > 0) {
-        setSelectedWorkflowIdx(selectedWorkflowIdx - 1);
-      }
-    }
-  };
-
   /**
    * @summary Used to receive dispatched action from different window
    */
@@ -372,7 +359,7 @@ export default function Workflow() {
   }, []);
 
   return (
-    <OuterContainer onWheel={onWheelHandler}>
+    <OuterContainer>
       <WorkflowListView>
         <Header
           style={{

@@ -50,7 +50,7 @@ export const Header = styled.div`
 export const WorkflowListViewFooter = styled.div`
   overflow-y: auto;
   width: 100vh;
-  height: 65px;
+  height: 7%;
   background-color: #222222;
   position: fixed;
   bottom: 0;
@@ -68,6 +68,8 @@ export const WorkflowListOrderedList = styled.ol`
   padding-bottom: 20px;
   padding-right: 30px;
   padding-top: 20px;
+  overflow: auto;
+  height: 78%;
 `;
 
 export const WorkflowItemContainer = styled.div`

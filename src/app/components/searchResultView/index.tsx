@@ -68,8 +68,14 @@ const SearchResultView = (props: IProps) => {
 
     let iconPath;
     if (command.icon) {
-      const iconExt = command.icon.path.split('.').pop();
+      // command.icon is string
+      if (command.icon.length) {
+        command.icon = {
+          path: command.icon,
+        };
+      }
 
+      const iconExt = command.icon.path.split('.').pop();
       if (isSupportedImageFormat(iconExt)) {
         if (path.isAbsolute(command.icon.path)) {
           iconPath = command.icon.path;
