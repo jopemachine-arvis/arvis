@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { ipcRenderer } from 'electron';
 import path from 'path';

@@ -13,7 +13,7 @@ export const OuterContainer = styled.div`
 `;
 
 export const FormDescription = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: #777777;
   text-align: center;
   margin-top: 10px;

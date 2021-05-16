@@ -32,9 +32,11 @@ export default function SearchWindow() {
     title_font_size,
   } = useSelector((state: StateType) => state.ui_config);
 
-  const { max_item_count_to_show, global_font } = useSelector(
-    (state: StateType) => state.global_config
-  );
+  const {
+    max_item_count_to_show,
+    max_item_count_to_search,
+    global_font,
+  } = useSelector((state: StateType) => state.global_config);
 
   const debuggingConfig = useSelector(
     (state: StateType) => state.advanced_config
@@ -73,6 +75,7 @@ export default function SearchWindow() {
     items,
     setItems,
     maxItemCount: max_item_count_to_show,
+    maxRetrieveCount: max_item_count_to_search,
   });
 
   const registerWindowUpdater = useCallback(() => {

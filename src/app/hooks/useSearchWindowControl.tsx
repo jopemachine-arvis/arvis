@@ -20,10 +20,12 @@ const useSearchWindowControl = ({
   items,
   setItems,
   maxItemCount,
+  maxRetrieveCount,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
   maxItemCount: number;
+  maxRetrieveCount: number;
 }) => {
   const workManager = Core.WorkManager.getInstance();
 
@@ -42,8 +44,8 @@ const useSearchWindowControl = ({
     : '';
 
   const alreadyCleared = false;
-  const hideSearchWindowByBlurCbRef = useRef<any>();
   const alreadyClearedRef = useRef<boolean>(alreadyCleared);
+  const hideSearchWindowByBlurCbRef = useRef<any>();
 
   /**
    * @summary
@@ -166,7 +168,7 @@ const useSearchWindowControl = ({
   const handleNormalInput = (pressedKey: string, updatedInput: string) => {
     const searchCommands = () => {
       const itemArr = Core.findCommands(updatedInput);
-      setItems(itemArr);
+      setItems(itemArr.slice(0, maxRetrieveCount));
       handleScriptFilterAutoExecute({
         itemArr,
         pressedKey,
@@ -307,8 +309,6 @@ const useSearchWindowControl = ({
    * @summary
    */
   const cleanUpBeforeHide = (alreadyCleanedUp: boolean) => {
-    // clearInput();
-
     if (alreadyCleanedUp) return;
     alreadyClearedRef.current = true;
     setItems([]);
@@ -411,7 +411,7 @@ const useSearchWindowControl = ({
     items: any[];
     needIndexInfoClear: boolean;
   }) => {
-    setItems(items);
+    setItems(items.slice(0, maxRetrieveCount));
     if (needIndexInfoClear) {
       clearIndexInfo();
     }
@@ -474,7 +474,6 @@ const useSearchWindowControl = ({
   useEffect(() => {
     // After cleanUp
     if (shouldBeHided === true && items.length === 0) {
-      console.log('clean');
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
 
       // Give some time to remove Afterimage
