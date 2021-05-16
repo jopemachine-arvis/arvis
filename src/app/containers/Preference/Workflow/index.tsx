@@ -402,6 +402,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Name</Label>
             <StyledInput
               type="text"
+              placeholder="Name"
               value={workflowName}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowName(e.currentTarget.value);
@@ -413,6 +414,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Version</Label>
             <StyledInput
               type="text"
+              placeholder="Version"
               value={workflowVersion}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowVersion(e.currentTarget.value);
@@ -424,6 +426,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Creator</Label>
             <StyledInput
               type="text"
+              placeholder="Creator"
               value={workflowCreator}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowCreator(e.currentTarget.value);
@@ -448,6 +451,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Category</Label>
             <StyledInput
               type="text"
+              placeholder="Category"
               value={workflowCategory}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowCategory(e.currentTarget.value);
@@ -459,6 +463,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Description</Label>
             <StyledInput
               type="textarea"
+              placeholder="Description"
               style={{
                 height: 240,
               }}
@@ -473,6 +478,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Web site</Label>
             <StyledInput
               type="url"
+              placeholder="Web site"
               value={workflowWebsite}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowWebsite(e.currentTarget.value);
