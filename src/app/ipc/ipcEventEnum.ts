@@ -27,6 +27,7 @@ export enum IPCMainEnum {
   openWfConfFileDialogRet = '@ipcMain/openWfConfFileDialogRet',
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
   renewWorkflow = '@ipcMain/renewWorkflow',
+  renewPlugin = '@ipcMain/renewPlugin',
   saveFileRet = '@ipcMain/saveFileRet',
   searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
   setSearchbarInput = '@ipcMain/setSearchbarInput',

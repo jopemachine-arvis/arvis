@@ -39,8 +39,7 @@ import './index.global.css';
 import * as style from './style';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 import { StateType } from '../../../redux/reducers/types';
-import useKey from '../../../../use-key-capture/src';
-import { useReserveForceUpdate } from '../../../hooks/useReserveForceUpdate';
+import { useReserveForceUpdate } from '../../../hooks';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -61,8 +60,6 @@ export default function Workflow() {
     StoreAvailabilityContext
   ) as any;
 
-  const { keyData } = useKey();
-
   const { can_install_alfredworkflow } = useSelector(
     (state: StateType) => state.advanced_config
   );
@@ -78,16 +75,18 @@ export default function Workflow() {
     return null;
   };
 
-  useEffect(() => {
-    if (
-      keyData.isArrowDown &&
-      selectedWorkflowIdx < Object.keys(workflows).length - 1
-    ) {
-      setSelectedWorkflowIdx(selectedWorkflowIdx + 1);
-    } else if (keyData.isArrowUp && selectedWorkflowIdx > 0) {
-      setSelectedWorkflowIdx(selectedWorkflowIdx - 1);
+  const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
+    if (e.deltaY > 0) {
+      if (selectedWorkflowIdx < Object.keys(workflows).length - 1) {
+        setSelectedWorkflowIdx(selectedWorkflowIdx + 1);
+      }
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (selectedWorkflowIdx > 0) {
+        setSelectedWorkflowIdx(selectedWorkflowIdx - 1);
+      }
     }
-  }, [keyData]);
+  };
 
   /**
    * @summary Used to receive dispatched action from different window
@@ -98,8 +97,8 @@ export default function Workflow() {
     },
 
     openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
-      setStoreAvailable(false);
       if (fileInfo.file.filePaths[0]) {
+        setStoreAvailable(false);
         const arvisWorkflowFilePath = fileInfo.file.filePaths[0];
 
         Core.install(arvisWorkflowFilePath)
@@ -298,6 +297,7 @@ export default function Workflow() {
         json.webaddress = workflowWebsite;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
+        reserveForceUpdate([1000, 2000, 3000]);
         return null;
       })
       .catch((err) => {
@@ -346,6 +346,16 @@ export default function Workflow() {
       });
   };
 
+  const callDeleteWorkflowConfModal = () => {
+    const workflowBundleIds = Object.keys(workflows);
+    if (!workflowBundleIds.length) return;
+
+    ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
+      msg: `Are you sure you want to delete '${workflowBundleId}'?`,
+      icon: getDefaultIcon(workflowBundleId),
+    });
+  };
+
   useEffect(() => {
     workflowsRef.current = workflows;
     selectedWorkflowIdxRef.current = selectedWorkflowIdx;
@@ -361,18 +371,8 @@ export default function Workflow() {
     };
   }, []);
 
-  const callDeleteWorkflowConfModal = () => {
-    const workflowBundleIds = Object.keys(workflows);
-    if (!workflowBundleIds.length) return;
-
-    ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
-      msg: `Are you sure you want to delete '${workflowBundleId}'?`,
-      icon: getDefaultIcon(workflowBundleId),
-    });
-  };
-
   return (
-    <OuterContainer>
+    <OuterContainer onWheel={onWheelHandler}>
       <WorkflowListView>
         <Header
           style={{

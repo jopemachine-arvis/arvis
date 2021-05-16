@@ -110,11 +110,15 @@ export default function SearchWindow() {
     ) => {
       Core.renewWorkflows(bundleId);
     },
+    renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
+      Core.renewPlugins({ initializePluginWorkspace: false, bundleId });
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
@@ -124,6 +128,7 @@ export default function SearchWindow() {
   const unsubscribe = useCallback(() => {
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.off(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput

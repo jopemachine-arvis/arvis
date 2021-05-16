@@ -79,6 +79,10 @@ export default function PreferenceWindow() {
     ) => {
       Core.renewWorkflows(bundleId);
     },
+
+    renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
+      Core.renewPlugins({ initializePluginWorkspace: false, bundleId });
+    },
   };
 
   useEffect(() => {
@@ -92,8 +96,11 @@ export default function PreferenceWindow() {
       .catch(console.error);
 
     loadPluginsInfo();
+
+    ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     return () => {
+      ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
       ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     };
   }, []);
