@@ -8,6 +8,7 @@ export enum IPCRendererEnum {
   openWfConfFileDialog = '@ipcRenderer/openWfConfFileDialog',
   openYesnoDialog = '@ipcRenderer/openYesnoDialog',
   popupSearchbarItemMenu = '@ipcRenderer/popupSearchbarItemMenu',
+  popupPluginItemMenu = '@ipcRenderer/popupPluginItemMenu',
   popupWorkflowItemMenu = '@ipcRenderer/popupWorkflowItemMenu',
   renewWorkflow = '@ipcRenderer/renewWorkflow',
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',
@@ -33,5 +34,6 @@ export enum IPCMainEnum {
   saveFileRet = '@ipcMain/saveFileRet',
   searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
   setSearchbarInput = '@ipcMain/setSearchbarInput',
+  togglePluginEnabled = '@ipcMain/togglePluginEnabled',
   toggleWorkflowEnabled = '@ipcMain/toggleWorkflowEnabled',
 }

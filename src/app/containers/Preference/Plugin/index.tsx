@@ -1,18 +1,493 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable promise/no-nesting */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable promise/catch-or-return */
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Core } from 'arvis-core';
+import FlatList from 'flatlist-react';
+import { ipcRenderer } from 'electron';
+import useForceUpdate from 'use-force-update';
+import {
+  AiOutlineAppstoreAdd,
+  AiOutlineSave,
+  AiOutlineBranches,
+  AiOutlineDelete,
+} from 'react-icons/ai';
+import { BiExport } from 'react-icons/bi';
+import { Form, FormGroup, Label } from 'reactstrap';
+import path from 'path';
+import fse from 'fs-extra';
+import { homedir } from 'os';
+import { useSelector } from 'react-redux';
+import {
+  Header,
+  OuterContainer,
+  PluginDescContainer,
+  PluginImg,
+  PluginItemContainer,
+  PluginItemCreatorText,
+  PluginItemTitle,
+  PluginListOrderedList,
+  PluginListView,
+  PluginListViewFooter,
+} from './components';
+import { StyledInput } from '../../../components';
+import { StoreAvailabilityContext } from '../storeAvailabilityContext';
+import './index.global.css';
+import * as style from './style';
+import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
+import { StateType } from '../../../redux/reducers/types';
+import { useReserveForceUpdate } from '../../../hooks';
 
-const OuterContainer = styled.div`
-  height: 100vh;
-  width: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  background-color: #12151a;
-`;
+export default function Plugin() {
+  // object with bundleId as key and workflow info in value
+  const [plugins, setPlugins] = useState<any>({});
+  const pluginsRef = useRef<any>();
+  const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(0);
+  const selectedPluginIdxRef = useRef<any>();
 
-export default function Advanced() {
+  const [pluginName, setPluginName] = useState<string>('');
+  const [pluginVersion, setPluginVersion] = useState<string>('');
+  const [pluginCreator, setPluginCreator] = useState<string>('');
+  const [pluginBundleId, setPluginBundleId] = useState<string>('');
+  const [pluginCategory, setPluginCategory] = useState<string>('');
+  const [pluginDescription, setPluginDescription] = useState<string>('');
+  const [pluginWebsite, setPluginWebsite] = useState<string>('');
+
+  const [storeAvailable, setStoreAvailable] = useContext(
+    StoreAvailabilityContext
+  ) as any;
+
+  const forceUpdate = useForceUpdate();
+  const reserveForceUpdate = useReserveForceUpdate();
+  const deletePluginEventHandler = useRef<any>();
+
+  const fetchPlugins = () => {
+    const pluginsToSet = Core.getPluginList();
+
+    setPlugins(pluginsToSet);
+    return null;
+  };
+
+  /**
+   * @summary Used to receive dispatched action from different window
+   */
+  const ipcCallbackTbl = {
+    saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
+      Core.exportPlugin(pluginBundleId, file.filePath);
+    },
+
+    openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
+      if (fileInfo.file.filePaths[0]) {
+        setStoreAvailable(false);
+        const arvisPluginFilePath = fileInfo.file.filePaths[0];
+
+        Core.install(arvisPluginFilePath)
+          .then(() => {
+            fetchPlugins();
+            return null;
+          })
+          .catch((err) => {
+            console.error(err);
+            ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+              title: 'Installer file is invalid',
+              content: err.message,
+            });
+            setStoreAvailable(true);
+          });
+      }
+    },
+
+    openYesnoDialogRet: (
+      e: Electron.IpcRendererEvent,
+      { yesPressed }: { yesPressed: boolean }
+    ) => {
+      if (yesPressed) {
+        deletePluginEventHandler.current();
+      }
+    },
+
+    togglePluginEnabled: (
+      e: Electron.IpcRendererEvent,
+      { bundleId, enabled }: { bundleId: string; enabled: string }
+    ) => {
+      // 'setStoreAvailable(true)' is fired in arvis-core when async operations are done.
+      setStoreAvailable(false);
+      const targetPath = Core.path.getPluginInstalledPath(bundleId);
+      fse
+        .readJson(targetPath)
+        .then(async (json) => {
+          json.enabled = !enabled;
+
+          await fse.writeJson(targetPath, json, {
+            encoding: 'utf8',
+            spaces: 4,
+          });
+
+          reserveForceUpdate([1000, 2000, 3000]);
+          return null;
+        })
+        .catch((err) => {
+          setStoreAvailable(true);
+          console.error(err);
+        });
+    },
+  };
+
+  useEffect(() => {
+    ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
+    ipcRenderer.on(
+      IPCMainEnum.openWfConfFileDialogRet,
+      ipcCallbackTbl.openWfConfFileDialogRet
+    );
+    ipcRenderer.on(
+      IPCMainEnum.openYesnoDialogRet,
+      ipcCallbackTbl.openYesnoDialogRet
+    );
+    ipcRenderer.on(
+      IPCMainEnum.togglePluginEnabled,
+      ipcCallbackTbl.togglePluginEnabled
+    );
+
+    return () => {
+      ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
+      ipcRenderer.off(
+        IPCMainEnum.openWfConfFileDialogRet,
+        ipcCallbackTbl.openWfConfFileDialogRet
+      );
+      ipcRenderer.off(
+        IPCMainEnum.openYesnoDialogRet,
+        ipcCallbackTbl.openYesnoDialogRet
+      );
+      ipcRenderer.off(
+        IPCMainEnum.togglePluginEnabled,
+        ipcCallbackTbl.togglePluginEnabled
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    const workflowBundleIds = Object.keys(plugins);
+
+    if (workflowBundleIds.length) {
+      const info = plugins[workflowBundleIds[selectedPluginIdx]];
+      const {
+        bundleId = '',
+        category = '',
+        createdby = '',
+        description = '',
+        name = '',
+        version = '',
+        webaddress = '',
+      } = info;
+
+      setPluginBundleId(bundleId);
+      setPluginCategory(category);
+      setPluginCreator(createdby);
+      setPluginDescription(description);
+      setPluginName(name);
+      setPluginVersion(version);
+      setPluginWebsite(webaddress);
+    }
+  }, [selectedPluginIdx, plugins]);
+
+  const itemClickHandler = (idx: number) => {
+    setSelectedPluginIdx(idx);
+  };
+
+  const getDefaultIcon = (bundleId: string) => {
+    const workflowRootPath = Core.path.getPluginInstalledPath(bundleId);
+    const { defaultIcon } = plugins[bundleId];
+    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}${defaultIcon}`;
+
+    if (fse.existsSync(workflowDefaultIconPath)) {
+      return workflowDefaultIconPath;
+    }
+    return undefined;
+  };
+
+  const workflowItemRightClickHandler = (
+    e: React.MouseEvent<HTMLInputElement>,
+    bundleId: string
+  ) => {
+    e.preventDefault();
+    const pluginRootPath = Core.path.getPluginConfigJsonPath(bundleId);
+    ipcRenderer.send(IPCRendererEnum.popupPluginItemMenu, {
+      workflowPath: pluginRootPath,
+      workflowEnabled: plugins[bundleId].enabled,
+    });
+  };
+
+  const renderItem = (plugin: any, idx: number) => {
+    const itemBundleId = plugin.bundleId;
+    const info = plugins[itemBundleId];
+    if (!info) return <></>;
+    const { createdby, name, enabled } = info;
+
+    const applyDisabledStyle = enabled ? {} : style.disabledStyle;
+    const pluginItemStyle =
+      selectedPluginIdx === idx ? style.selectedItemStyle : {};
+
+    let icon;
+    const defaultIconPath = getDefaultIcon(itemBundleId);
+    if (defaultIconPath) {
+      icon = <PluginImg style={applyDisabledStyle} src={defaultIconPath} />;
+    } else {
+      icon = <AiOutlineBranches style={applyDisabledStyle} />;
+    }
+
+    return (
+      <PluginItemContainer
+        style={pluginItemStyle}
+        key={`workflowItem-${idx}`}
+        onClick={() => itemClickHandler(idx)}
+        onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
+          setSelectedPluginIdx(idx);
+          const selectedItemBundleId = Object.keys(plugins)[idx];
+          console.log('Selected workflow bundleId: ', selectedItemBundleId);
+          workflowItemRightClickHandler(e, selectedItemBundleId);
+        }}
+      >
+        {icon}
+        <PluginItemTitle style={applyDisabledStyle}>{name}</PluginItemTitle>
+        <PluginItemCreatorText style={applyDisabledStyle}>
+          {createdby}
+        </PluginItemCreatorText>
+      </PluginItemContainer>
+    );
+  };
+
+  const requestAddNewPlugin = () => {
+    // ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog, {
+    // });
+  };
+
+  const editPlugin = () => {
+    setStoreAvailable(false);
+    const targetPath = Core.path.getPluginConfigJsonPath(pluginBundleId);
+    fse
+      .readJson(targetPath)
+      .then(async (json) => {
+        json.bundleId = pluginBundleId;
+        json.category = pluginCategory;
+        json.createdby = pluginCreator;
+        json.description = pluginDescription;
+        json.name = pluginName;
+        json.version = pluginVersion;
+        json.webaddress = pluginWebsite;
+
+        await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
+        reserveForceUpdate([1000, 2000, 3000]);
+        return null;
+      })
+      .catch((err) => {
+        setStoreAvailable(true);
+        console.error(err);
+      });
+  };
+
+  const exportPlugin = () => {
+    const defaultPath = `${homedir()}${path.sep}Desktop${
+      path.sep
+    }${pluginBundleId}.arvisworkflow`;
+
+    ipcRenderer.send(IPCRendererEnum.saveFile, {
+      title: 'Select path to save',
+      defaultPath,
+    });
+  };
+
+  const deleteSelectedPlugin = (workflowList: any, idxToRemove: number) => {
+    const pluginBundleIds = Object.keys(workflowList);
+    if (!pluginBundleIds.length) return;
+
+    const targetBundleId = workflowList[pluginBundleIds[idxToRemove]].bundleId;
+
+    setStoreAvailable(false);
+    Core.unInstall({
+      bundleId: targetBundleId,
+    })
+      .then(async () => {
+        const temp = workflowList;
+        delete temp[targetBundleId];
+        setPlugins(temp);
+
+        if (idxToRemove !== 0) {
+          setSelectedPluginIdx(idxToRemove - 1);
+        } else {
+          forceUpdate();
+        }
+        return null;
+      })
+      .catch((err) => {
+        console.error(err);
+        setStoreAvailable(true);
+      });
+  };
+
+  const callDeletePluginConfModal = () => {
+    const pluginBundleIds = Object.keys(plugins);
+    if (!pluginBundleIds.length) return;
+
+    ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
+      msg: `Are you sure you want to delete '${pluginBundleId}'?`,
+      icon: getDefaultIcon(pluginBundleId),
+    });
+  };
+
+  useEffect(() => {
+    pluginsRef.current = plugins;
+    selectedPluginIdxRef.current = selectedPluginIdx;
+  });
+
+  useEffect(() => {
+    fetchPlugins();
+    deletePluginEventHandler.current = () => {
+      deleteSelectedPlugin(pluginsRef.current, selectedPluginIdxRef.current);
+    };
+  }, []);
+
   return (
     <OuterContainer>
+      <PluginListView>
+        <Header
+          style={{
+            marginLeft: 40,
+          }}
+        >
+          Installed Plugins
+        </Header>
+        <PluginListOrderedList>
+          <FlatList
+            list={plugins}
+            renderItem={renderItem}
+            renderWhenEmpty={() => <></>}
+          />
+        </PluginListOrderedList>
+      </PluginListView>
+      <PluginDescContainer>
+        <Header
+          style={{
+            marginLeft: 20,
+          }}
+        >
+          Plugin config
+        </Header>
+        <Form style={style.descriptionContainerStyle}>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Name</Label>
+            <StyledInput
+              type="text"
+              placeholder="Name"
+              value={pluginName}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginName(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Version</Label>
+            <StyledInput
+              type="text"
+              placeholder="Version"
+              value={pluginVersion}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginVersion(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Creator</Label>
+            <StyledInput
+              type="text"
+              placeholder="Creator"
+              value={pluginCreator}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginCreator(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Bundle Id</Label>
+            <StyledInput
+              type="text"
+              disabled
+              value={pluginBundleId}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                // Prevent editing workflow bundle id
+                e.preventDefault();
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Category</Label>
+            <StyledInput
+              type="text"
+              placeholder="Category"
+              value={pluginCategory}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginCategory(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Description</Label>
+            <StyledInput
+              type="textarea"
+              placeholder="Description"
+              style={{
+                height: 240,
+              }}
+              value={pluginDescription}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginDescription(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Web site</Label>
+            <StyledInput
+              type="url"
+              placeholder="Web site"
+              value={pluginWebsite}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginWebsite(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+        </Form>
+      </PluginDescContainer>
+
+      <PluginListViewFooter>
+        <AiOutlineAppstoreAdd
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => requestAddNewPlugin()}
+        />
+        <AiOutlineSave
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => editPlugin()}
+        />
+        <BiExport
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => exportPlugin()}
+        />
+        <AiOutlineDelete
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => callDeletePluginConfModal()}
+        />
+      </PluginListViewFooter>
     </OuterContainer>
   );
 }
