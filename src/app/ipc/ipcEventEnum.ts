@@ -7,6 +7,7 @@ export enum IPCRendererEnum {
   hideSearchWindow = '@ipcRenderer/hideSearchWindow',
   openWfConfFileDialog = '@ipcRenderer/openWfConfFileDialog',
   openYesnoDialog = '@ipcRenderer/openYesnoDialog',
+  popupSearchbarItemMenu = '@ipcRenderer/popupSearchbarItemMenu',
   popupWorkflowItemMenu = '@ipcRenderer/popupWorkflowItemMenu',
   renewWorkflow = '@ipcRenderer/renewWorkflow',
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',

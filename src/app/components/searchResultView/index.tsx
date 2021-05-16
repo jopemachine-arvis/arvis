@@ -75,13 +75,17 @@ const SearchResultView = (props: IProps) => {
         };
       }
 
-      const iconExt = command.icon.path.split('.').pop();
-      if (isSupportedImageFormat(iconExt)) {
-        if (path.isAbsolute(command.icon.path)) {
-          iconPath = command.icon.path;
-        } else {
-          iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+      if (command.icon.path.includes('.')) {
+        const iconExt = command.icon.path.split('.').pop();
+        if (isSupportedImageFormat(iconExt)) {
+          if (path.isAbsolute(command.icon.path)) {
+            iconPath = command.icon.path;
+          } else {
+            iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+          }
         }
+      } else {
+        // Give icon to undefined
       }
     }
 

@@ -1,4 +1,6 @@
+import { ipcRenderer } from 'electron';
 import React, { useEffect } from 'react';
+import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input } from './components';
 
 type IProps = {
@@ -47,6 +49,11 @@ const SearchBar = (props: IProps) => {
     }
   }, [originalRef]);
 
+  const rightClickHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu);
+  };
+
   return (
     <OuterContainer
       style={{
@@ -66,6 +73,7 @@ const SearchBar = (props: IProps) => {
         ref={inputRef}
         type={type}
         onKeyDown={preventUpAndDownArrow}
+        onContextMenu={rightClickHandler}
         onBlur={alwaysFocus ? preventBlur : () => {}}
       />
     </OuterContainer>

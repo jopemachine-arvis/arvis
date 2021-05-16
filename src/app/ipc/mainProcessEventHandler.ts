@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ipcMain,
   dialog,
@@ -8,7 +9,10 @@ import {
 } from 'electron';
 
 import { getFonts } from 'font-list';
-import WorkflowItemMenu from '../components/contextMenus/workflow';
+import {
+  WorkflowItemContextMenu,
+  SearchbarContextMenu,
+} from '../components/contextMenus';
 import globalShortcutHandler from './globalShortcutHandler';
 import resizeEventHandler from './resizeEventHandler';
 import { IPCRendererEnum, IPCMainEnum } from './ipcEventEnum';
@@ -241,11 +245,19 @@ export const initIPCHandler = ({
       workflowEnabled,
     }: { workflowPath: string; workflowEnabled: boolean }
   ) => {
-    new WorkflowItemMenu({
+    new WorkflowItemContextMenu({
       workflowPath,
       workflowEnabled,
       preferenceWindow,
     }).popup();
+  };
+
+  /**
+   * @param  {string} path
+   * @summary Used to popup context menu
+   */
+  const popupSearchbarItemMenu = (e: IpcMainEvent) => {
+    new SearchbarContextMenu({ preferenceWindow }).popup();
   };
 
   /**
@@ -283,6 +295,7 @@ export const initIPCHandler = ({
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
   ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
   ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
+  ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(
