@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -16,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import { StateType } from '../../../redux/reducers/types';
 import { GlobalConfigActions } from '../../../redux/actions';
-import { OuterContainer } from './components';
+import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 import { StyledInput } from '../../../components';
 import useKey from '../../../../use-key-capture/src';
@@ -139,7 +140,7 @@ export default function General() {
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Hotkey</Label>
+          <Label style={labelStyle}>Arvis Hotkey</Label>
           <StyledInput
             style={{
               textTransform: 'capitalize',
@@ -152,9 +153,17 @@ export default function General() {
             onBlur={() => setHotkeyFormFocused(false)}
             onChange={(e: React.FormEvent<HTMLInputElement>) => {
               e.preventDefault();
-              configChangeHandler(e, GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY);
+              configChangeHandler(
+                e,
+                GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
+              );
             }}
           />
+          <FormDescription>
+            Select the form and type the hotkey
+            <br />
+            you would like to use to show Arvis
+          </FormDescription>
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
@@ -181,6 +190,11 @@ export default function General() {
             <option>8</option>
             <option>9</option>
           </StyledInput>
+          <FormDescription>
+            Number of search items result
+            <br />
+            that can appear on search window
+          </FormDescription>
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
@@ -195,6 +209,11 @@ export default function General() {
               );
             }}
           />
+          <FormDescription>
+            Limits the number of search results
+            <br />
+            in workflows, plugins
+          </FormDescription>
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
@@ -237,6 +256,7 @@ export default function General() {
               })}
             </DropdownMenu>
           </Dropdown>
+          <FormDescription>Overall fonts</FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>
