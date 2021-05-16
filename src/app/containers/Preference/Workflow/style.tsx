@@ -48,9 +48,6 @@ export const descriptionContainerStyle: React.CSSProperties = {
 export const selectedItemStyle: React.CSSProperties = {
   backgroundColor: '#656C7B',
   borderRadius: 10,
-  // Fix me! Not working!
-  borderWidth: 1,
-  borderColor: '#565A65',
 };
 
 export const disabledStyle: React.CSSProperties = {

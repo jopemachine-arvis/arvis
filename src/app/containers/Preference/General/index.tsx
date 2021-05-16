@@ -198,7 +198,7 @@ export default function General() {
         </FormGroup>
 
         <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Max item count to search</Label>
+          <Label style={labelStyle}>Max item count to retrieve</Label>
           <StyledInput
             type="number"
             value={max_item_count_to_search}

@@ -128,8 +128,9 @@ export default function Advanced() {
                 )
               }
             />
-            Install alfred-workflow file directly (Not recommended for use for
-            purposes other than development)
+            Install alfred-workflow file directly
+            <br />
+            (Not recommended for use for purposes other than development)
           </Label>
         </FormGroup>
 

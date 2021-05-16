@@ -4,4 +4,5 @@ export const formGroupStyle = {
 
 export const labelStyle = {
   color: '#ffffff',
+  marginBottom: 10,
 };

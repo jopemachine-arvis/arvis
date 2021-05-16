@@ -388,28 +388,6 @@ export default function Workflow() {
             renderWhenEmpty={() => <></>}
           />
         </WorkflowListOrderedList>
-        <WorkflowListViewFooter>
-          <AiOutlineAppstoreAdd
-            className="workflow-page-buttons"
-            style={style.bottomFixedBarIconStyle}
-            onClick={() => requestAddNewWorkflow()}
-          />
-          <AiOutlineSave
-            className="workflow-page-buttons"
-            style={style.bottomFixedBarIconStyle}
-            onClick={() => editWorkflow()}
-          />
-          <BiExport
-            className="workflow-page-buttons"
-            style={style.bottomFixedBarIconStyle}
-            onClick={() => exportWorkflow()}
-          />
-          <AiOutlineDelete
-            className="workflow-page-buttons"
-            style={style.bottomFixedBarIconStyle}
-            onClick={() => callDeleteWorkflowConfModal()}
-          />
-        </WorkflowListViewFooter>
       </WorkflowListView>
       <WorkflowDescContainer>
         <Header
@@ -503,6 +481,29 @@ export default function Workflow() {
           </FormGroup>
         </Form>
       </WorkflowDescContainer>
+
+      <WorkflowListViewFooter>
+        <AiOutlineAppstoreAdd
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => requestAddNewWorkflow()}
+        />
+        <AiOutlineSave
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => editWorkflow()}
+        />
+        <BiExport
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => exportWorkflow()}
+        />
+        <AiOutlineDelete
+          className="workflow-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => callDeleteWorkflowConfModal()}
+        />
+      </WorkflowListViewFooter>
     </OuterContainer>
   );
 }

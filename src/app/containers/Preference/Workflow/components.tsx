@@ -33,9 +33,7 @@ export const OuterContainer = styled.div`
 
 export const WorkflowListView = styled.div`
   overflow-y: auto;
-  min-width: 480px;
   min-height: 150px;
-  width: 35%;
 `;
 
 export const Header = styled.div`
@@ -64,11 +62,12 @@ export const WorkflowListViewFooter = styled.div`
 
 export const WorkflowListOrderedList = styled.ol`
   background-color: #1f2228;
+  border-radius: 10px;
   margin-left: 40px;
   margin-right: 25px;
-  border-radius: 10px;
-  padding-top: 20px;
   padding-bottom: 20px;
+  padding-right: 30px;
+  padding-top: 20px;
 `;
 
 export const WorkflowItemContainer = styled.div`
@@ -85,8 +84,9 @@ export const WorkflowItemContainer = styled.div`
 `;
 
 export const WorkflowDescContainer = styled.div`
-  width: 65%;
   padding-left: 15px;
+  margin-right: 10px;
+  flex-grow: 2;
 `;
 
 export const WorkflowImg = styled.img`
