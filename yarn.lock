@@ -1538,6 +1538,11 @@
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.0.tgz#14264692a9d6e2fa4db3df5e56e94b5e25647ac0"
   integrity sha512-iIgQNzCm0v7QMhhe4Jjn9uRh+I6GoPmt03CbEtwx3ao8/EfoQcmgtqH4vQ5Db/lxiIGaWDv6nwvunuh0RyX0+A==
 
+"@types/auto-launch@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@types/auto-launch/-/auto-launch-5.0.1.tgz#388a047edc0e754d8e8978cbd9ed4672b36be2c4"
+  integrity sha512-+KQ+/koZ7sJXnf5cnCANofY6yXAdYJNEoVZEuWcwJfuWbUp9u6l09I7KhwD+ivU+cdz7JId4V5ukxscWtHdSuw==
+
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.12"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.12.tgz#4d8e9e51eb265552a7e4f1ff2219ab6133bdfb2d"
@@ -2418,6 +2423,11 @@ app-builder-lib@22.10.5:
     semver "^7.3.4"
     temp-file "^3.3.7"
 
+applescript@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/applescript/-/applescript-1.0.0.tgz#bb87af568cad034a4e48c4bdaf6067a3a2701317"
+  integrity sha1-u4evVoytA0pOSMS9r2Bno6JwExc=
+
 aproba@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
@@ -2744,6 +2754,17 @@ atomically@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/atomically/-/atomically-1.7.0.tgz#c07a0458432ea6dbc9a3506fffa424b48bccaafe"
   integrity sha512-Xcz9l0z7y9yQ9rdDaxlmaI4uJHf/T8g9hOEzJcsEqX2SjCj4J20uK7+ldkDHMbpJDK76wF7xEIgxc/vSlsfw5w==
+
+auto-launch@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/auto-launch/-/auto-launch-5.0.5.tgz#d14bd002b1ef642f85e991a6195ff5300c8ad3c0"
+  integrity sha512-ppdF4mihhYzMYLuCcx9H/c5TUOCev8uM7en53zWVQhyYAJrurd2bFZx3qQVeJKF2jrc7rsPRNN5cD+i23l6PdA==
+  dependencies:
+    applescript "^1.0.0"
+    mkdirp "^0.5.1"
+    path-is-absolute "^1.0.0"
+    untildify "^3.0.2"
+    winreg "1.2.4"
 
 aws-sign2@~0.7.0:
   version "0.7.0"
@@ -12510,6 +12531,11 @@ unset-value@^1.0.0:
     has-value "^0.3.1"
     isobject "^3.0.0"
 
+untildify@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/untildify/-/untildify-3.0.3.tgz#1e7b42b140bcfd922b22e70ca1265bfe3634c7c9"
+  integrity sha512-iSk/J8efr8uPT/Z4eSUywnqyrQU7DSdMfdqK4iWEaUVVmcP5JcnpRqmVMwcwcnmI1ATFNgC5V90u09tBynNFKA==
+
 unzip-crx-3@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/unzip-crx-3/-/unzip-crx-3-0.2.0.tgz#d5324147b104a8aed9ae8639c95521f6f7cda292"
@@ -13026,6 +13052,11 @@ wildcard@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.0.tgz#a77d20e5200c6faaac979e4b3aadc7b3dd7f8fec"
   integrity sha512-JcKqAHLPxcdb9KM49dufGXn2x3ssnfjbcaQdLlfZsL9rH9wgDQjUtDxbo8NE0F6SFvydeu1VhZe7hZuHsB2/pw==
+
+winreg@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/winreg/-/winreg-1.2.4.tgz#ba065629b7a925130e15779108cf540990e98d1b"
+  integrity sha1-ugZWKbepJRMOFXeRCM9UCZDpjRs=
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"

@@ -7,7 +7,6 @@ import {
   Notification,
   IpcMainEvent,
 } from 'electron';
-
 import { getFonts } from 'font-list';
 import {
   WorkflowItemContextMenu,
@@ -16,6 +15,7 @@ import {
 import globalShortcutHandler from './globalShortcutHandler';
 import resizeEventHandler from './resizeEventHandler';
 import { IPCRendererEnum, IPCMainEnum } from './ipcEventEnum';
+import autoLauncher from '../config/autoLaunch';
 
 /**
  * @param {BrowserWindow} searchWindow
@@ -147,7 +147,9 @@ export const initIPCHandler = ({
    */
   const getSystemFont = async (e: IpcMainEvent) => {
     const fonts = await getFonts({ disableQuoting: true });
-    preferenceWindow.webContents.send(IPCMainEnum.getSystemFontRet, { fonts });
+    preferenceWindow.webContents.send(IPCMainEnum.getSystemFontRet, {
+      fonts,
+    });
   };
 
   /**
@@ -261,6 +263,21 @@ export const initIPCHandler = ({
   };
 
   /**
+   * @param  {boolean} autoLaunch
+   * @summary Used to set autolaunch
+   */
+  const setAutoLaunch = (
+    e: IpcMainEvent,
+    { autoLaunch }: { autoLaunch: boolean }
+  ) => {
+    if (autoLaunch) {
+      autoLauncher.enable();
+    } else {
+      autoLauncher.disable();
+    }
+  };
+
+  /**
    * @param  {string} destWindow
    * @param  {string} actionType
    * @param  {any} args
@@ -285,19 +302,20 @@ export const initIPCHandler = ({
     });
   };
 
-  ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
-  ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
-  ipcMain.on(IPCRendererEnum.saveFile, saveFile);
-  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
-  ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
-  ipcMain.on(IPCRendererEnum.showNotification, showNotification);
+  ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
-  ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
-  ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
+  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
+  ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
-  ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
+  ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
+  ipcMain.on(IPCRendererEnum.saveFile, saveFile);
+  ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);
+  ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
+  ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
+  ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
+  ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(
     IPCRendererEnum.resizeSearchWindowHeight,
     resizeSearchWindowHeight

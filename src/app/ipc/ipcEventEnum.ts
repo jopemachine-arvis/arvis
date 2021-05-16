@@ -12,6 +12,7 @@ export enum IPCRendererEnum {
   renewWorkflow = '@ipcRenderer/renewWorkflow',
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',
   saveFile = '@ipcRenderer/saveFile',
+  setAutoLaunch = '@ipcRenderer/setAutoLaunch',
   setGlobalShortcut = '@ipcRenderer/setGlobalShortcut',
   setSearchWindowWidth = '@ipcRenderer/setSearchWindowWidth',
   showErrorDialog = '@ipcRenderer/showErrorDialog',
