@@ -30,6 +30,11 @@ export default {
           },
         },
       },
+      {
+        test: /\.(js|jsx|tsx|ts)?$/,
+        include: /node_modules/,
+        use: ['react-hot-loader/webpack'],
+      },
     ],
   },
 
