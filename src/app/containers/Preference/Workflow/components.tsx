@@ -33,7 +33,9 @@ export const OuterContainer = styled.div`
 
 export const WorkflowListView = styled.div`
   overflow-y: auto;
-  width: 50%;
+  min-width: 480px;
+  min-height: 150px;
+  width: 35%;
 `;
 
 export const Header = styled.div`
@@ -83,10 +85,16 @@ export const WorkflowItemContainer = styled.div`
 `;
 
 export const WorkflowDescContainer = styled.div`
-  width: 50%;
+  width: 65%;
   padding-left: 15px;
 `;
 
 export const WorkflowImg = styled.img`
   user-select: none;
+  object-fit: scale-down;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 14px;
+  left: 15px;
 `;

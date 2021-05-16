@@ -19,14 +19,14 @@ class WorkflowItemContextMenu extends Menu {
     super.append(
       new MenuItem({
         type: 'normal',
-        label: workflowEnabled ? `Disable workflow` : 'Enable workflow',
+        label: workflowEnabled ? `Disable` : 'Enable',
         toolTip: workflowEnabled
           ? 'Disable selected workflow'
           : 'Enable workflow',
         click() {
           preferenceWindow.webContents.send(IPCMainEnum.toggleWorkflowEnabled, {
             bundleId,
-            workflowEnabled,
+            enabled: workflowEnabled,
           });
         },
       })
@@ -35,7 +35,7 @@ class WorkflowItemContextMenu extends Menu {
     super.append(
       new MenuItem({
         type: 'normal',
-        label: `Uninstall workflow`,
+        label: `Delete`,
         toolTip: 'Uninstall selected workflow',
         click() {
           dialog
@@ -52,14 +52,17 @@ class WorkflowItemContextMenu extends Menu {
                   yesPressed,
                 }
               );
-            });
+              return null;
+            })
+            .catch(console.error);
         },
       })
     );
     super.append(
       new MenuItem({
         type: 'normal',
-        label: `Open workflow's directory`,
+        label:
+          process.platform === 'darwin' ? 'Open in Finder' : `Open in Explorer`,
         toolTip:
           'Opens the installation path of the selected workflow with Explorer',
         click() {

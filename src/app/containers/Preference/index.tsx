@@ -14,8 +14,8 @@ import ThemePage from './Theme';
 import PluginPage from './Plugin';
 import AdvancedPage from './Advanced';
 import { StateType } from '../../redux/reducers/types';
-import { ScreenCoverContext } from './screenCoverContext';
-import { ScreenCover } from '../../components';
+import { StoreAvailabilityContext } from './storeAvailabilityContext';
+import { ScreenCover, Spinner } from '../../components';
 import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
@@ -40,12 +40,11 @@ const MainContainer = styled.div`
 export default function PreferenceWindow() {
   const [page, setPage] = useState<PreferencePage>(INITIAL_PAGE);
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
-  const screenCoverState = useState<boolean>();
+  const [storeAvailable, setStoreAvailable] = useState<boolean>();
 
-  const {
-    global_font,
-    toggle_search_window_hotkey,
-  } = useSelector((state: StateType) => state.global_config);
+  const { global_font, toggle_search_window_hotkey } = useSelector(
+    (state: StateType) => state.global_config
+  );
 
   // To do :: Move below logics to RootRouter
   const registerAllGlobalHotkey = () => {
@@ -83,6 +82,8 @@ export default function PreferenceWindow() {
   };
 
   useEffect(() => {
+    Core.setStoreAvailabiltyChecker(setStoreAvailable);
+
     loadWorkflowsInfo()
       .then(() => {
         registerAllGlobalHotkey();
@@ -133,11 +134,14 @@ export default function PreferenceWindow() {
         fontFamily: global_font,
       }}
     >
-      {screenCoverState[0] && <ScreenCover />}
-      <ScreenCoverContext.Provider value={screenCoverState}>
+      {!storeAvailable && <ScreenCover />}
+      {!storeAvailable && <Spinner center />}
+      <StoreAvailabilityContext.Provider
+        value={[storeAvailable, setStoreAvailable]}
+      >
         <Sidebar page={page} setPage={setPage} />
         {renderMain()}
-      </ScreenCoverContext.Provider>
+      </StoreAvailabilityContext.Provider>
     </OuterContainer>
   );
 }

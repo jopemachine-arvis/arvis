@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable promise/no-nesting */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -9,15 +11,16 @@ import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {
   AiOutlineAppstoreAdd,
-  AiOutlineDelete,
   AiOutlineSave,
   AiOutlineBranches,
+  AiOutlineDelete,
 } from 'react-icons/ai';
 import { BiExport } from 'react-icons/bi';
 import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
+import { useSelector } from 'react-redux';
 import {
   Header,
   OuterContainer,
@@ -30,21 +33,14 @@ import {
   WorkflowListView,
   WorkflowListViewFooter,
 } from './components';
-import { StyledInput, Spinner } from '../../../components';
-import { ScreenCoverContext } from '../screenCoverContext';
+import { StyledInput } from '../../../components';
+import { StoreAvailabilityContext } from '../storeAvailabilityContext';
 import './index.global.css';
-import {
-  bottomFixedBarIconStyle,
-  descriptionContainerStyle,
-  formGroupStyle,
-  iconStyle,
-  disabledIconStyle,
-  labelStyle,
-} from './style';
+import * as style from './style';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
-import { useSelector } from 'react-redux';
 import { StateType } from '../../../redux/reducers/types';
 import useKey from '../../../../use-key-capture/src';
+import { useReserveForceUpdate } from '../../../hooks/useReserveForceUpdate';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -60,7 +56,10 @@ export default function Workflow() {
   const [workflowCategory, setWorkflowCategory] = useState<string>('');
   const [workflowDescription, setWorkflowDescription] = useState<string>('');
   const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
-  const [workflowEnabled, setWorkflowEnabled] = useState<boolean>(false);
+
+  const [storeAvailable, setStoreAvailable] = useContext(
+    StoreAvailabilityContext
+  ) as any;
 
   const { keyData } = useKey();
 
@@ -69,14 +68,13 @@ export default function Workflow() {
   );
 
   const forceUpdate = useForceUpdate();
-  const [spinning, setSpinning] = useContext(ScreenCoverContext) as any;
+  const reserveForceUpdate = useReserveForceUpdate();
   const deleteWorkflowEventHandler = useRef<any>();
 
   const fetchWorkflows = () => {
     const workflowsToSet = Core.getWorkflowList();
 
     setWorkflows(workflowsToSet);
-    setSpinning(false);
     return null;
   };
 
@@ -100,6 +98,7 @@ export default function Workflow() {
     },
 
     openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
+      setStoreAvailable(false);
       if (fileInfo.file.filePaths[0]) {
         const arvisWorkflowFilePath = fileInfo.file.filePaths[0];
 
@@ -114,12 +113,8 @@ export default function Workflow() {
               title: 'Installer file is invalid',
               content: err.message,
             });
-          })
-          .finally(() => {
-            setSpinning(false);
+            setStoreAvailable(true);
           });
-      } else {
-        setSpinning(false);
       }
     },
 
@@ -134,24 +129,28 @@ export default function Workflow() {
 
     toggleWorkflowEnabled: (
       e: Electron.IpcRendererEvent,
-      {
-        bundleId,
-        workflowEnabled,
-      }: { bundleId: string; workflowEnabled: string }
+      { bundleId, enabled }: { bundleId: string; enabled: string }
     ) => {
+      // 'setStoreAvailable(true)' is fired in arvis-core when async operations are done.
+      setStoreAvailable(false);
       const targetPath = Core.path.getWorkflowConfigJsonPath(bundleId);
       fse
         .readJson(targetPath)
         .then(async (json) => {
-          json.enabled = !workflowEnabled;
+          json.enabled = !enabled;
 
           await fse.writeJson(targetPath, json, {
             encoding: 'utf8',
             spaces: 4,
           });
+
+          reserveForceUpdate([1000, 2000, 3000]);
           return null;
         })
-        .catch(console.error);
+        .catch((err) => {
+          setStoreAvailable(true);
+          console.error(err);
+        });
     },
   };
 
@@ -197,7 +196,6 @@ export default function Workflow() {
         category = '',
         createdby = '',
         description = '',
-        enabled = false,
         name = '',
         version = '',
         webaddress = '',
@@ -207,7 +205,6 @@ export default function Workflow() {
       setWorkflowCategory(category);
       setWorkflowCreator(createdby);
       setWorkflowDescription(description);
-      setWorkflowEnabled(enabled);
       setWorkflowName(name);
       setWorkflowVersion(version);
       setWorkflowWebsite(webaddress);
@@ -237,58 +234,43 @@ export default function Workflow() {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
       workflowPath: workflowRootPath,
-      workflowEnabled,
+      workflowEnabled: workflows[bundleId].enabled,
     });
   };
 
-  const renderItem = (itemBundleId: string, idx: number) => {
+  const renderItem = (workflow: any, idx: number) => {
+    const itemBundleId = workflow.bundleId;
     const info = workflows[itemBundleId];
     if (!info) return <></>;
     const { createdby, name, enabled } = info;
 
+    const applyDisabledStyle = enabled ? {} : style.disabledStyle;
+    const workflowItemStyle =
+      selectedWorkflowIdx === idx ? style.selectedItemStyle : {};
+
     let icon;
     const defaultIconPath = getDefaultIcon(itemBundleId);
-    const iconSty = enabled ? iconStyle : disabledIconStyle;
-
     if (defaultIconPath) {
-      icon = <WorkflowImg style={iconSty} src={defaultIconPath} />;
+      icon = <WorkflowImg style={applyDisabledStyle} src={defaultIconPath} />;
     } else {
-      icon = <AiOutlineBranches style={iconSty} />;
-    }
-
-    let optionalStyle = {};
-    if (selectedWorkflowIdx === idx) {
-      optionalStyle = {
-        backgroundColor: '#656C7B',
-        borderRadius: 10,
-        // Fix me! Not working!
-        borderWidth: 1,
-        borderColor: '#565A65',
-      };
+      icon = <AiOutlineBranches style={applyDisabledStyle} />;
     }
 
     return (
       <WorkflowItemContainer
-        style={optionalStyle}
+        style={workflowItemStyle}
         key={`workflowItem-${idx}`}
         onClick={() => itemClickHandler(idx)}
-        onContextMenu={(e: React.MouseEvent<HTMLInputElement>) =>
-          workflowItemRightClickHandler(e, itemBundleId)
-        }
+        onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
+          setSelectedWorkflowIdx(idx);
+          const selectedItemBundleId = Object.keys(workflows)[idx];
+          console.log('Selected workflow bundleId: ', selectedItemBundleId);
+          workflowItemRightClickHandler(e, selectedItemBundleId);
+        }}
       >
         {icon}
-        <WorkflowItemTitle
-          style={{
-            opacity: enabled ? 1 : 0.25,
-          }}
-        >
-          {name}
-        </WorkflowItemTitle>
-        <WorkflowItemCreatorText
-          style={{
-            opacity: enabled ? 1 : 0.25,
-          }}
-        >
+        <WorkflowItemTitle style={applyDisabledStyle}>{name}</WorkflowItemTitle>
+        <WorkflowItemCreatorText style={applyDisabledStyle}>
           {createdby}
         </WorkflowItemCreatorText>
       </WorkflowItemContainer>
@@ -299,10 +281,10 @@ export default function Workflow() {
     ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog, {
       canInstallAlfredWorkflow: can_install_alfredworkflow,
     });
-    setSpinning(true);
   };
 
-  const saveWorkflow = () => {
+  const editWorkflow = () => {
+    setStoreAvailable(false);
     const targetPath = Core.path.getWorkflowConfigJsonPath(workflowBundleId);
     fse
       .readJson(targetPath)
@@ -318,7 +300,10 @@ export default function Workflow() {
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
         return null;
       })
-      .catch(console.error);
+      .catch((err) => {
+        setStoreAvailable(true);
+        console.error(err);
+      });
   };
 
   const exportWorkflow = () => {
@@ -336,11 +321,10 @@ export default function Workflow() {
     const workflowBundleIds = Object.keys(workflowList);
     if (!workflowBundleIds.length) return;
 
-    setSpinning(true);
-
     const targetBundleId =
       workflowList[workflowBundleIds[idxToRemove]].bundleId;
 
+    setStoreAvailable(false);
     Core.unInstall({
       bundleId: targetBundleId,
     })
@@ -354,10 +338,12 @@ export default function Workflow() {
         } else {
           forceUpdate();
         }
-        setSpinning(false);
         return null;
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err);
+        setStoreAvailable(true);
+      });
   };
 
   useEffect(() => {
@@ -387,7 +373,6 @@ export default function Workflow() {
 
   return (
     <OuterContainer>
-      {spinning && <Spinner center />}
       <WorkflowListView>
         <Header
           style={{
@@ -398,7 +383,7 @@ export default function Workflow() {
         </Header>
         <WorkflowListOrderedList>
           <FlatList
-            list={Object.keys(workflows)}
+            list={workflows}
             renderItem={renderItem}
             renderWhenEmpty={() => <></>}
           />
@@ -406,22 +391,22 @@ export default function Workflow() {
         <WorkflowListViewFooter>
           <AiOutlineAppstoreAdd
             className="workflow-page-buttons"
-            style={bottomFixedBarIconStyle}
+            style={style.bottomFixedBarIconStyle}
             onClick={() => requestAddNewWorkflow()}
           />
           <AiOutlineSave
             className="workflow-page-buttons"
-            style={bottomFixedBarIconStyle}
-            onClick={() => saveWorkflow()}
+            style={style.bottomFixedBarIconStyle}
+            onClick={() => editWorkflow()}
           />
           <BiExport
             className="workflow-page-buttons"
-            style={bottomFixedBarIconStyle}
+            style={style.bottomFixedBarIconStyle}
             onClick={() => exportWorkflow()}
           />
           <AiOutlineDelete
             className="workflow-page-buttons"
-            style={bottomFixedBarIconStyle}
+            style={style.bottomFixedBarIconStyle}
             onClick={() => callDeleteWorkflowConfModal()}
           />
         </WorkflowListViewFooter>
@@ -434,9 +419,9 @@ export default function Workflow() {
         >
           Workflow config
         </Header>
-        <Form style={descriptionContainerStyle}>
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Name</Label>
+        <Form style={style.descriptionContainerStyle}>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Name</Label>
             <StyledInput
               type="text"
               value={workflowName}
@@ -446,8 +431,8 @@ export default function Workflow() {
             />
           </FormGroup>
 
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Version</Label>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Version</Label>
             <StyledInput
               type="text"
               value={workflowVersion}
@@ -457,8 +442,8 @@ export default function Workflow() {
             />
           </FormGroup>
 
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Creator</Label>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Creator</Label>
             <StyledInput
               type="text"
               value={workflowCreator}
@@ -468,8 +453,8 @@ export default function Workflow() {
             />
           </FormGroup>
 
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Bundle Id</Label>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Bundle Id</Label>
             <StyledInput
               type="text"
               disabled
@@ -481,8 +466,8 @@ export default function Workflow() {
             />
           </FormGroup>
 
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Category</Label>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Category</Label>
             <StyledInput
               type="text"
               value={workflowCategory}
@@ -492,8 +477,8 @@ export default function Workflow() {
             />
           </FormGroup>
 
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Description</Label>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Description</Label>
             <StyledInput
               type="textarea"
               style={{
@@ -506,8 +491,8 @@ export default function Workflow() {
             />
           </FormGroup>
 
-          <FormGroup style={formGroupStyle}>
-            <Label style={labelStyle}>Web site</Label>
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Web site</Label>
             <StyledInput
               type="url"
               value={workflowWebsite}

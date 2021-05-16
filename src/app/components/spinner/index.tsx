@@ -23,6 +23,7 @@ export default function Spinner(props: IProps) {
       top: 0,
       bottom: 0,
       textAlign: 'center',
+      zIndex: 100,
     };
   }
 

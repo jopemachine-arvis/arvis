@@ -45,17 +45,14 @@ export const descriptionContainerStyle: React.CSSProperties = {
   userSelect: 'none',
 };
 
-export const iconStyle: React.CSSProperties = {
-  position: 'absolute',
-  width: 40,
-  height: 40,
-  top: 14,
-  left: 15,
-  userSelect: 'none',
-  objectFit: 'scale-down',
+export const selectedItemStyle: React.CSSProperties = {
+  backgroundColor: '#656C7B',
+  borderRadius: 10,
+  // Fix me! Not working!
+  borderWidth: 1,
+  borderColor: '#565A65',
 };
 
-export const disabledIconStyle: React.CSSProperties = {
-  ...iconStyle,
+export const disabledStyle: React.CSSProperties = {
   opacity: 0.25,
 };
