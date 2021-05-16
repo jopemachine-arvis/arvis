@@ -10,7 +10,7 @@ import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
 import WorkflowPage from './Workflow';
-import ThemePage from './Theme';
+import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
 import AdvancedPage from './Advanced';
 import { StateType } from '../../redux/reducers/types';
@@ -118,8 +118,8 @@ export default function PreferenceWindow() {
       case PreferencePage.Advanced:
         main = <AdvancedPage />;
         break;
-      case PreferencePage.Theme:
-        main = <ThemePage />;
+      case PreferencePage.Appearance:
+        main = <AppearancePage />;
         break;
       case PreferencePage.Plugin:
         main = <PluginPage />;

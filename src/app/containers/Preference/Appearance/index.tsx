@@ -44,7 +44,7 @@ const mockItems = [
   },
 ];
 
-export default function Theme() {
+export default function Appearance() {
   const {
     icon_right_margin,
     item_background_color,

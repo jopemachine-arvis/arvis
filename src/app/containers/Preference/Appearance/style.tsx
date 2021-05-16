@@ -4,14 +4,14 @@ export const formGroupStyle: React.CSSProperties = {
   flexDirection: 'row',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
 };
 
 export const labelStyle: React.CSSProperties = {
   fontSize: 13,
   color: '#ffffff',
   width: 400,
-  marginRight: 15
+  marginRight: 15,
 };
 
 export const descriptionContainerStyle: React.CSSProperties = {
@@ -24,7 +24,7 @@ export const descriptionContainerStyle: React.CSSProperties = {
   paddingBottom: 10,
   borderRadius: 10,
   marginLeft: 20,
-  marginRight: 20
+  marginRight: 20,
 };
 
 export const iconStyle: React.CSSProperties = {
@@ -32,5 +32,5 @@ export const iconStyle: React.CSSProperties = {
   height: 30,
   position: 'absolute',
   bottom: 30,
-  left: 300
+  left: 300,
 };

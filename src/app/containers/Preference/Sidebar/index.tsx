@@ -66,11 +66,11 @@ export default function Sidebar(props: IProps) {
               Plugins
             </MenuItem>
             <MenuItem
-              onClick={() => setPage(PreferencePage.Theme)}
+              onClick={() => setPage(PreferencePage.Appearance)}
               icon={<AiOutlineFormatPainter />}
-              active={page === PreferencePage.Theme}
+              active={page === PreferencePage.Appearance}
             >
-              Theme
+              Appearance
             </MenuItem>
             <MenuItem
               onClick={() => setPage(PreferencePage.Advanced)}

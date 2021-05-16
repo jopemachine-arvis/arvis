@@ -84,8 +84,6 @@ const SearchResultView = (props: IProps) => {
             iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
           }
         }
-      } else {
-        // Give icon to undefined
       }
     }
 
