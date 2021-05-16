@@ -1,5 +1,3 @@
-// https://projects.lukehaas.me/css-loaders/
-
 import React from 'react';
 
 import './index.global.css';
@@ -9,6 +7,9 @@ type IProps = {
   center?: boolean;
 };
 
+/**
+ * @description Ref: https://projects.lukehaas.me/css-loaders/
+ */
 export default function Spinner(props: IProps) {
   let { style } = props;
   const { center } = props;
