@@ -14,11 +14,6 @@
     - [4.4 Update your workflow, plugin](#update-your-workflow-plugin)
     - [4.5 Convert alfredworkflow to arvisworkflow](#convert-alfredworkflow-to-arvisworkflow)
 - [5. Build and development](#build-and-development)
-    - [5.1 Template](#template)
-    - [5.2 Other packages](#other-packages)
-    - [5.3 Build from sources](#build-from-sources)
-    - [5.4 iohook config](#iohook-config)
-    - [5.5 config file pathes](#config-file-pathes)
 
 ## What is Arvis?
 
@@ -92,7 +87,9 @@ You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/ma
 4. Change the zip file's extension to `.arvisplugin`
 
 
-### [Debugging workflow, plugin](./documents/debugging-description.md)
+### Debugging workflow, plugin
+
+[How to debug workflow, plugin](./documents/debugging-description.md)
 
 ### Update your workflow, plugin
 
@@ -110,27 +107,4 @@ Convert alfred's info.plist using [arvis-plist-converter](https://github.com/jop
 
 ## Build and development
 
-### Template
-
-This package is builded on [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
-
-### Other packages
-
-* [arvis-core](https://github.com/jopemachine/arvis-core)
-
-Arvis module not directly related to electron, renderer
-
-### Build from sources
-
-* [Macos](./documents/build-macos.md)
-* [Windows](./documents/build-windows.md)
-
-### iohook config
-
-This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.
-
-So, If `node` or `electron` version is updated, the iohook config of package.json should be updated as well.
-
-### config file pathes
-
-[Click to view config file pathes](./documents/config-file-pathes.md)
+[Build and development](./documents/develop-arvis.md)
