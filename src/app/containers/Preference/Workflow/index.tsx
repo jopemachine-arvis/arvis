@@ -287,9 +287,9 @@ export default function Workflow() {
         json.createdby = workflowCreator;
         json.description = workflowDescription;
         json.name = workflowName;
+        json.readme = workflowReadme;
         json.version = workflowVersion;
         json.webaddress = workflowWebsite;
-        json.readme = workflowReadme;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
         reserveForceUpdate([1000, 2000, 3000]);

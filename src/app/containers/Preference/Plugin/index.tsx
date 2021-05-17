@@ -283,9 +283,9 @@ export default function Plugin() {
         json.createdby = pluginCreator;
         json.description = pluginDescription;
         json.name = pluginName;
+        json.readme = pluginReadme;
         json.version = pluginVersion;
         json.webaddress = pluginWebsite;
-        json.readme = pluginReadme;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
         reserveForceUpdate([1000, 2000, 3000]);

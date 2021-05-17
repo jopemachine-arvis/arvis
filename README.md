@@ -10,12 +10,13 @@
     - [2.1 How to use workflow](#how-to-use-workflow)
     - [2.2 How to use plugin](#how-to-use-plugin)
 - [3. How to install workflow, plugin on Arvis](#how-to-install-workflow-plugin-on-arvis)
-    - [3.1 Workflow Install](#workflow-install)
-    - [3.2 Plugin Install](#plugin-install)
+    - [3.1 Workflow, Plugin Install](#workflow-plugin-install)
 - [4. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
     - [4.1 How to write new workflows](#how-to-write-new-workflows)
     - [4.2 How to write new plugins](#how-to-write-new-plugins)
-    - [4.3 Update your workflow, plugin](#update-your-workflow-plugin)
+    - [4.3 Debugging workflow, plugin](#debugging-workflow-plugin)
+    - [4.4 Update your workflow, plugin](#update-your-workflow-plugin)
+    - [4.5 Convert alfredworkflow to arvisworkflow](#convert-alfredworkflow-to-arvisworkflow)
 - [5. Build and development](#build-and-development)
     - [5.1 Template](#template)
     - [5.2 Other packages](#other-packages)
@@ -35,39 +36,38 @@ I started making `Arvis` because I wanted to use useful alfred-workflows in othe
 
 ### Cross-platform
 
-* Arvis is written on cross-platform (Tested on `Windows 10`, `Macos Bigsur`, and `Ubuntu`).
-
-* First, make sure your workflow (or plugins) works on your platform. (Especially careful when using Alfred workflow in platforms other than `MacOS`.)
+* Arvis works on cross-platform (Tested on `Windows 10`, `Macos Bigsur`, and `Ubuntu`).
 
 ### Alfred-workflow Compatibility
 
-* By default, `Arvis` is compatible with alfred-workflow and can be installed by importing `alfredworkflow` files.
+* I started to creating Arvis to use alfred-workflow in other platform, So basically, `Arvis` use same [scriptfilter format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
 
-* However, during the conversion process (process of converting `info.plist` of Alfred workflow to arvis workflow config file), information on the workflow might be lost and is not fully compatible. (Supporting full compatibility with alfred-workflow is not goal of `Arvis`).
+* This means you can easily change the alfred-workflow to arvis-workflow.
 
-* Since alfred-workflow is mostly written assuming that it will run on Macos, operation on other platform is not guaranteed.
-
-* Basically, it is compatible with [alfy](https://github.com/sindresorhus/alfy), but npm install command not install those workflows on `Arvis`. Until now, The only way to install workflow is installing `arvisworkflow` files in preference window.
 
 ### Differences between plugins and workflows
 
-* The biggest difference between plugins with workflows is plugins do not have separate items to start a script, such as a keyword or script filter.
+* The biggest difference between `plugin` with `workflow` is `plugin` do not have separate items to start a script, such as a keyword or script filter.
 
-* Workflows can be written in any language, but the plug-in is supported only with JavaScript.
+* `workflow` can be written in any language, but the `plugin` can be written only in `JavaScript`.
+
+* Because `plugin` is loaded when Arvis window shows up, `plugin` is much faster than `workflow`.
+
+* `plugin` has cannot define `action` in json file unlike `workflow`
 
 ## How to install workflow, plugin on Arvis
 
-### Workflow Install
+### Workflow, Plugin Install
+
+You can download `arvisworkflow`, `arvisplugin` files to install them.
 
 ```
-Right click tray icon 
--> Click Open Preference Window 
--> Click Workflow icon on sidebar 
--> Click the + icon in the bar below 
+Right click tray icon
+-> Click Open Preference Window
+-> Click Workflow or Plugin icon on sidebar
+-> Click the + icon in the bar below
 -> Click on the file in the arvisworkflow or alfredworkflow file
 ```
-
-### Plugin Install
 
 ## What is workflow, plugin?
 
@@ -97,11 +97,51 @@ Arvis also supports double modifier key combinations (e.g. double cmd, double ct
 
 ### How to write new workflows
 
-* [arvis-workflow-tools]()
+1. Create `arvis-workflow.json`.
+
+You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) to create workflow easily.
+
+2. Write some scripts to use in your workflow.
+
+If you are familiar with `Alfy`, you can try [arvis-workflow-tools](https://github.com/jopemachine/arvis-workflow-tools).
+
+3. Compacts the binaries, modules, and scripts used by the workflow into a zip file with the `arvis-workflow.json` file.
+
+4. Change the zip file's extension to `.arvisworkflow`
 
 ### How to write new plugins
 
+1. Create `arvis-plugin.json`.
+
+You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) to create plugin easily.
+
+2. Write some scripts to use in your plugin.
+
+3. Compacts the scripts used in the plugin into a zip file with the `arvis-plugin.json` file.
+
+4. Change the zip file's extension to `.arvisplugin`
+
+
+### Debugging workflow, plugin
+
+1. You can debug your query, workflow, plugin's behaviors through chrome debugger.
+
+2. You can activate and unactivate log types to focus on your debugging on `Advanced` page.
+
+
 ### Update your workflow, plugin
+
+* Installing a package with the same bundle ID removes all existing files. So, reinstall to update the `workflow` or `plugin`
+
+* In workflow, plugin development, updating `arvis-workflow.json`, `arvis-plugin.json` is detected and reloaded by file-watcher.
+
+(Hotload not yet supported for `hotkey` of workflow)
+
+### Convert alfredworkflow to arvisworkflow
+
+Convert alfred's info.plist using [arvis-plist-converter](https://github.com/jopemachine/arvis-plist-converter) 
+
+(Or just install `alfredworkflow` file. converter will create arvis-workflow.json on its own)
 
 
 
@@ -113,10 +153,9 @@ This package is builded on [electron-react-boilerplate](https://github.com/elect
 
 ### Other packages
 
-Packages directly related to this package.
+* [arvis-core](https://github.com/jopemachine/arvis-core)
 
-* [arvis-core]()
-* [arvis-plist-converter]()
+Arvis module not directly related to electron, renderer
 
 ### Build from sources
 
@@ -131,24 +170,4 @@ So, If `node` or `electron` version is updated, the iohook config of package.jso
 
 ### config file pathes
 
-#### log files
-
-* on Linux: `~/.config/Arvis/logs/{process type}.log`
-* on macOS: `~/Library/Logs/Arvis/{process type}.log`
-* on Windows: `%USERPROFILE%\AppData\Roaming\Arvis\logs\{process type}.log`
-
-#### workflow, plugin files
-
-The storage path for all installed workflow files is stored in the `data` path of the [env-paths](https://github.com/sindresorhus/env-paths).
-
-* on Linux: `~/.local/share/arvis-nodejs` (or `$XDG_DATA_HOME/arvis-nodejs`)
-* on macOS: `~/Library/Application Support/arvis-nodejs`
-* on Windows: `%LOCALAPPDATA%\arvis-nodejs\Data` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Data`)
-
-#### preference file
-
-In a development environment, `arvis-nodejs` is replaced with `Electron` in the below pathes.
-
-* on Linux: `~/.local/share/arvis-nodejs/arvis-gui-config.json` (or `$XDG_DATA_HOME/arvis-nodejs/arvis-gui-config.json`)
-* on macOS: `~/Library/Application Support/arvis-nodejs/arvis-gui-config.json`
-* on Windows: `%LOCALAPPDATA%\arvis-nodejs\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Data\arvis-gui-config.json`)
+[Click to view config file pathes](./documents/config-file-pathes.md)
