@@ -26,7 +26,9 @@ The path to the data used by the workflow is stored below.
 
 #### workflow cache files
 
-
+* on Linux: `~/.cache/arvis-nodejs/workflow-cache` (or `$XDG_CACHE_HOME/arvis-nodejs/workflow-cache`)
+* on macOS: `~/Library/Caches/arvis-nodejs/workflow-cache`
+* on Windows: `%LOCALAPPDATA%\arvis-nodejs\Cache\workflow-cache` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Cache\workflow-cache`)
 
 #### preference files
 
