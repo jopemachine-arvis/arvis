@@ -13,12 +13,18 @@ export const EmptyListContainer = styled.div`
 
 export const PluginItemTitle = styled.div`
   color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const PluginItemCreatorText = styled.div`
   margin-top: 5px;
   font-size: 12px;
   color: #cccccc;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const OuterContainer = styled.div`
@@ -33,7 +39,6 @@ export const OuterContainer = styled.div`
 
 export const PluginListView = styled.div`
   overflow-y: auto;
-  min-height: 150px;
 `;
 
 export const Header = styled.div`
@@ -73,13 +78,14 @@ export const PluginListOrderedList = styled.ol`
 `;
 
 export const PluginItemContainer = styled.div`
-  width: 300px;
   height: 65px;
+  max-width: 325px;
   justify-content: center;
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 68px;
+  padding-right: 35px;
   margin-bottom: 7px;
   user-select: none;
   position: relative;
