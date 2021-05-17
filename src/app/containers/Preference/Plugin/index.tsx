@@ -54,6 +54,7 @@ export default function Plugin() {
   const [pluginCategory, setPluginCategory] = useState<string>('');
   const [pluginDescription, setPluginDescription] = useState<string>('');
   const [pluginWebsite, setPluginWebsite] = useState<string>('');
+  const [pluginReadme, setPluginReadme] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -183,6 +184,7 @@ export default function Plugin() {
         name = '',
         version = '',
         webaddress = '',
+        readme = '',
       } = info;
 
       setPluginBundleId(bundleId);
@@ -192,6 +194,7 @@ export default function Plugin() {
       setPluginName(name);
       setPluginVersion(version);
       setPluginWebsite(webaddress);
+      setPluginReadme(readme);
     }
   }, [selectedPluginIdx, plugins]);
 
@@ -282,6 +285,7 @@ export default function Plugin() {
         json.name = pluginName;
         json.version = pluginVersion;
         json.webaddress = pluginWebsite;
+        json.readme = pluginReadme;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
         reserveForceUpdate([1000, 2000, 3000]);
@@ -422,6 +426,7 @@ export default function Plugin() {
             <StyledInput
               type="text"
               disabled
+              placeholder="Bundle Id"
               value={pluginBundleId}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 // Prevent editing plugin bundle id
@@ -445,14 +450,26 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Description</Label>
             <StyledInput
-              type="textarea"
+              type="text"
               placeholder="Description"
-              style={{
-                height: 240,
-              }}
               value={pluginDescription}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setPluginDescription(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Read me</Label>
+            <StyledInput
+              type="textarea"
+              placeholder="Read me"
+              style={{
+                height: 260,
+              }}
+              value={pluginDescription}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginReadme(e.currentTarget.value);
               }}
             />
           </FormGroup>

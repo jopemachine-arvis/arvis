@@ -36,7 +36,6 @@ export const descriptionContainerStyle: React.CSSProperties = {
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '#1f2228',
   paddingTop: 10,
   paddingBottom: 10,
   borderRadius: 10,

@@ -55,6 +55,7 @@ export default function Workflow() {
   const [workflowCategory, setWorkflowCategory] = useState<string>('');
   const [workflowDescription, setWorkflowDescription] = useState<string>('');
   const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
+  const [workflowReadme, setWorkflowReadme] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -185,6 +186,7 @@ export default function Workflow() {
         name = '',
         version = '',
         webaddress = '',
+        readme = '',
       } = info;
 
       setWorkflowBundleId(bundleId);
@@ -194,6 +196,7 @@ export default function Workflow() {
       setWorkflowName(name);
       setWorkflowVersion(version);
       setWorkflowWebsite(webaddress);
+      setWorkflowReadme(readme);
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -286,6 +289,7 @@ export default function Workflow() {
         json.name = workflowName;
         json.version = workflowVersion;
         json.webaddress = workflowWebsite;
+        json.readme = workflowReadme;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
         reserveForceUpdate([1000, 2000, 3000]);
@@ -430,6 +434,7 @@ export default function Workflow() {
             <StyledInput
               type="text"
               disabled
+              placeholder="Bundle Id"
               value={workflowBundleId}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 // Prevent editing workflow bundle id
@@ -453,14 +458,26 @@ export default function Workflow() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Description</Label>
             <StyledInput
-              type="textarea"
+              type="text"
               placeholder="Description"
-              style={{
-                height: 240,
-              }}
               value={workflowDescription}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowDescription(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Read me</Label>
+            <StyledInput
+              type="textarea"
+              placeholder="Read me"
+              style={{
+                height: 260,
+              }}
+              value={workflowReadme}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowReadme(e.currentTarget.value);
               }}
             />
           </FormGroup>
