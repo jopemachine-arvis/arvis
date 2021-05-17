@@ -30,26 +30,26 @@
 
 (For example, if you press the Cmd key twice with the appropriate workflow installation, the Chrome History search window might appear or something like that.)
 
-I started making `Arvis` because I wanted to use useful alfred-workflows in other OSs.
+I started to work on this because I wanted to try to cross-platform alfred-workflows.
 
-`Arvis` also provides a "frame" to help create such workflows (or plugins).
+`Arvis` also provides a "frame" to help create such `workflow`, `plugin`.
 
 ### Cross-platform
 
-* Arvis works on cross-platform (Tested on `Windows 10`, `Macos Bigsur`, and `Ubuntu`).
+* `Arvis` works on cross-platform (Tested on `Windows 10`, `Macos Bigsur`, and `Ubuntu`).
 
 ### Alfred-workflow Compatibility
 
-* I started to creating Arvis to use alfred-workflow in other platform, So basically, `Arvis` use same [scriptfilter format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
+* Basically, `Arvis` use same [scriptfilter format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
 
 * This means you can easily change the alfred-workflow to arvis-workflow.
 
 
 ### Differences between plugins and workflows
 
-* The biggest difference between `plugin` with `workflow` is `plugin` do not have separate items to start a script, such as a keyword or script filter.
+* The biggest difference between `plugin` with `workflow` is `plugin` do not have triggering items, such as a keyword or script filter.
 
-* `workflow` can be written in any language, but the `plugin` can be written only in `JavaScript`.
+* `workflow` can be written in any programming language, but `plugin` can be written only in `JavaScript`.
 
 * Because `plugin` is loaded when Arvis window shows up, `plugin` is much faster than `workflow`.
 
@@ -85,7 +85,7 @@ and the items returned by the script appear in searchWindow, and the action is e
 
 `Hotkey` binds a specific key combination to a particular action.
 
-Arvis also supports double modifier key combinations (e.g. double cmd, double ctrl..)
+Arvis also supports "double" modifier key combinations (e.g. double cmd, double ctrl..)
 
 ### How to use plugin
 
