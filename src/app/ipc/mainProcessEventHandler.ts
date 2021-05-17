@@ -11,6 +11,7 @@ import { getFonts } from 'font-list';
 import {
   WorkflowItemContextMenu,
   SearchbarContextMenu,
+  PluginItemContextMenu,
 } from '../components/contextMenus';
 import globalShortcutHandler from './globalShortcutHandler';
 import resizeEventHandler from './resizeEventHandler';
@@ -102,6 +103,29 @@ export const initIPCHandler = ({
     preferenceWindow.webContents.send(IPCMainEnum.openWfConfFileDialogRet, {
       file,
     });
+  };
+
+  /**
+   * @summary Used to select plugin installer file
+   */
+  const openPluginInstallFileDialog = async (e: IpcMainEvent) => {
+    const extensions = ['arvisplugin'];
+
+    const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        {
+          name: 'Arvis workflow install files',
+          extensions,
+        },
+      ],
+    });
+    preferenceWindow.webContents.send(
+      IPCMainEnum.openPluginInstallFileDialogRet,
+      {
+        file,
+      }
+    );
   };
 
   /**
@@ -263,6 +287,24 @@ export const initIPCHandler = ({
   };
 
   /**
+   * @param  {string} path
+   * @summary Used to popup context menu
+   */
+  const popupPluginItemMenu = (
+    e: IpcMainEvent,
+    {
+      pluginPath,
+      pluginEnabled,
+    }: { pluginPath: string; pluginEnabled: boolean }
+  ) => {
+    new PluginItemContextMenu({
+      pluginPath,
+      pluginEnabled,
+      preferenceWindow,
+    }).popup();
+  };
+
+  /**
    * @param  {boolean} autoLaunch
    * @summary Used to set autolaunch
    */
@@ -305,8 +347,8 @@ export const initIPCHandler = ({
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
-  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
   ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
+  ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
@@ -316,6 +358,11 @@ export const initIPCHandler = ({
   ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
+  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
+  ipcMain.on(
+    IPCRendererEnum.openPluginInstallFileDialog,
+    openPluginInstallFileDialog
+  );
   ipcMain.on(
     IPCRendererEnum.resizeSearchWindowHeight,
     resizeSearchWindowHeight

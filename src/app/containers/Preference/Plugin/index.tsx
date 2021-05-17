@@ -42,7 +42,6 @@ import { StateType } from '../../../redux/reducers/types';
 import { useReserveForceUpdate } from '../../../hooks';
 
 export default function Plugin() {
-  // object with bundleId as key and workflow info in value
   const [plugins, setPlugins] = useState<any>({});
   const pluginsRef = useRef<any>();
   const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(0);
@@ -72,19 +71,22 @@ export default function Plugin() {
   };
 
   /**
-   * @summary Used to receive dispatched action from different window
+   * @summary
    */
   const ipcCallbackTbl = {
     saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
       Core.exportPlugin(pluginBundleId, file.filePath);
     },
 
-    openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
+    openPluginInstallFileDialogRet: (
+      e: Electron.IpcRendererEvent,
+      fileInfo: any
+    ) => {
       if (fileInfo.file.filePaths[0]) {
         setStoreAvailable(false);
         const arvisPluginFilePath = fileInfo.file.filePaths[0];
 
-        Core.install(arvisPluginFilePath)
+        Core.installPlugin(arvisPluginFilePath)
           .then(() => {
             fetchPlugins();
             return null;
@@ -139,8 +141,8 @@ export default function Plugin() {
   useEffect(() => {
     ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
     ipcRenderer.on(
-      IPCMainEnum.openWfConfFileDialogRet,
-      ipcCallbackTbl.openWfConfFileDialogRet
+      IPCMainEnum.openPluginInstallFileDialogRet,
+      ipcCallbackTbl.openPluginInstallFileDialogRet
     );
     ipcRenderer.on(
       IPCMainEnum.openYesnoDialogRet,
@@ -154,8 +156,8 @@ export default function Plugin() {
     return () => {
       ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
       ipcRenderer.off(
-        IPCMainEnum.openWfConfFileDialogRet,
-        ipcCallbackTbl.openWfConfFileDialogRet
+        IPCMainEnum.openPluginInstallFileDialogRet,
+        ipcCallbackTbl.openPluginInstallFileDialogRet
       );
       ipcRenderer.off(
         IPCMainEnum.openYesnoDialogRet,
@@ -169,10 +171,10 @@ export default function Plugin() {
   }, []);
 
   useEffect(() => {
-    const workflowBundleIds = Object.keys(plugins);
+    const pluginBundleIds = Object.keys(plugins);
 
-    if (workflowBundleIds.length) {
-      const info = plugins[workflowBundleIds[selectedPluginIdx]];
+    if (pluginBundleIds.length) {
+      const info = plugins[pluginBundleIds[selectedPluginIdx]];
       const {
         bundleId = '',
         category = '',
@@ -198,25 +200,25 @@ export default function Plugin() {
   };
 
   const getDefaultIcon = (bundleId: string) => {
-    const workflowRootPath = Core.path.getPluginInstalledPath(bundleId);
+    const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
     const { defaultIcon } = plugins[bundleId];
-    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}${defaultIcon}`;
+    const pluginDefaultIconPath = `${pluginRootPath}${path.sep}${defaultIcon}`;
 
-    if (fse.existsSync(workflowDefaultIconPath)) {
-      return workflowDefaultIconPath;
+    if (fse.existsSync(pluginDefaultIconPath)) {
+      return pluginDefaultIconPath;
     }
     return undefined;
   };
 
-  const workflowItemRightClickHandler = (
+  const pluginItemRightClickHandler = (
     e: React.MouseEvent<HTMLInputElement>,
     bundleId: string
   ) => {
     e.preventDefault();
-    const pluginRootPath = Core.path.getPluginConfigJsonPath(bundleId);
+    const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
     ipcRenderer.send(IPCRendererEnum.popupPluginItemMenu, {
-      workflowPath: pluginRootPath,
-      workflowEnabled: plugins[bundleId].enabled,
+      pluginPath: pluginRootPath,
+      pluginEnabled: plugins[bundleId].enabled,
     });
   };
 
@@ -235,19 +237,23 @@ export default function Plugin() {
     if (defaultIconPath) {
       icon = <PluginImg style={applyDisabledStyle} src={defaultIconPath} />;
     } else {
-      icon = <AiOutlineBranches style={applyDisabledStyle} />;
+      icon = (
+        <AiOutlineBranches
+          style={{ ...applyDisabledStyle, ...style.defaultIconStyle }}
+        />
+      );
     }
 
     return (
       <PluginItemContainer
         style={pluginItemStyle}
-        key={`workflowItem-${idx}`}
+        key={`pluginItem-${idx}`}
         onClick={() => itemClickHandler(idx)}
         onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
           setSelectedPluginIdx(idx);
           const selectedItemBundleId = Object.keys(plugins)[idx];
-          console.log('Selected workflow bundleId: ', selectedItemBundleId);
-          workflowItemRightClickHandler(e, selectedItemBundleId);
+          console.log('Selected plugin bundleId: ', selectedItemBundleId);
+          pluginItemRightClickHandler(e, selectedItemBundleId);
         }}
       >
         {icon}
@@ -260,8 +266,7 @@ export default function Plugin() {
   };
 
   const requestAddNewPlugin = () => {
-    // ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog, {
-    // });
+    ipcRenderer.send(IPCRendererEnum.openPluginInstallFileDialog);
   };
 
   const editPlugin = () => {
@@ -291,7 +296,7 @@ export default function Plugin() {
   const exportPlugin = () => {
     const defaultPath = `${homedir()}${path.sep}Desktop${
       path.sep
-    }${pluginBundleId}.arvisworkflow`;
+    }${pluginBundleId}.arvisplugin`;
 
     ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to save',
@@ -299,18 +304,18 @@ export default function Plugin() {
     });
   };
 
-  const deleteSelectedPlugin = (workflowList: any, idxToRemove: number) => {
-    const pluginBundleIds = Object.keys(workflowList);
+  const deleteSelectedPlugin = (pluginList: any, idxToRemove: number) => {
+    const pluginBundleIds = Object.keys(pluginList);
     if (!pluginBundleIds.length) return;
 
-    const targetBundleId = workflowList[pluginBundleIds[idxToRemove]].bundleId;
+    const targetBundleId = pluginList[pluginBundleIds[idxToRemove]].bundleId;
 
     setStoreAvailable(false);
-    Core.unInstall({
+    Core.uninstallPlugin({
       bundleId: targetBundleId,
     })
       .then(async () => {
-        const temp = workflowList;
+        const temp = pluginList;
         delete temp[targetBundleId];
         setPlugins(temp);
 
@@ -419,7 +424,7 @@ export default function Plugin() {
               disabled
               value={pluginBundleId}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                // Prevent editing workflow bundle id
+                // Prevent editing plugin bundle id
                 e.preventDefault();
               }}
             />
@@ -468,22 +473,22 @@ export default function Plugin() {
 
       <PluginListViewFooter>
         <AiOutlineAppstoreAdd
-          className="workflow-page-buttons"
+          className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewPlugin()}
         />
         <AiOutlineSave
-          className="workflow-page-buttons"
+          className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => editPlugin()}
         />
         <BiExport
-          className="workflow-page-buttons"
+          className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => exportPlugin()}
         />
         <AiOutlineDelete
-          className="workflow-page-buttons"
+          className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => callDeletePluginConfModal()}
         />

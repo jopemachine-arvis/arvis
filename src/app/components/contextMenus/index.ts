@@ -1,4 +1,5 @@
 import SearchbarContextMenu from './searchbar';
+import PluginItemContextMenu from './pluginItem';
 import WorkflowItemContextMenu from './workflow';
 
-export { SearchbarContextMenu, WorkflowItemContextMenu };
+export { SearchbarContextMenu, PluginItemContextMenu, WorkflowItemContextMenu };

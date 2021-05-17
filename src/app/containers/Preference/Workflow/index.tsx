@@ -76,7 +76,7 @@ export default function Workflow() {
   };
 
   /**
-   * @summary Used to receive dispatched action from different window
+   * @summary
    */
   const ipcCallbackTbl = {
     saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
@@ -88,7 +88,7 @@ export default function Workflow() {
         setStoreAvailable(false);
         const arvisWorkflowFilePath = fileInfo.file.filePaths[0];
 
-        Core.install(arvisWorkflowFilePath)
+        Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
             return null;
@@ -239,7 +239,11 @@ export default function Workflow() {
     if (defaultIconPath) {
       icon = <WorkflowImg style={applyDisabledStyle} src={defaultIconPath} />;
     } else {
-      icon = <AiOutlineBranches style={applyDisabledStyle} />;
+      icon = (
+        <AiOutlineBranches
+          style={{ ...applyDisabledStyle, ...style.defaultIconStyle }}
+        />
+      );
     }
 
     return (
@@ -312,7 +316,7 @@ export default function Workflow() {
       workflowList[workflowBundleIds[idxToRemove]].bundleId;
 
     setStoreAvailable(false);
-    Core.unInstall({
+    Core.uninstallWorkflow({
       bundleId: targetBundleId,
     })
       .then(async () => {

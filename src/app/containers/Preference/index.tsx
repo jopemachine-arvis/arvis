@@ -66,7 +66,7 @@ export default function PreferenceWindow() {
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
-    Core.renewPlugins({ initializePluginWorkspace: false });
+    return Core.renewPlugins({ initializePluginWorkspace: false });
   }, []);
 
   /**
@@ -95,7 +95,7 @@ export default function PreferenceWindow() {
       })
       .catch(console.error);
 
-    loadPluginsInfo();
+    loadPluginsInfo().catch(console.error);
 
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);

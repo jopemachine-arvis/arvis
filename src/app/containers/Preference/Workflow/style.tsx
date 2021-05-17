@@ -53,3 +53,13 @@ export const selectedItemStyle: React.CSSProperties = {
 export const disabledStyle: React.CSSProperties = {
   opacity: 0.25,
 };
+
+export const defaultIconStyle: React.CSSProperties = {
+  userSelect: 'none',
+  objectFit: 'scale-down',
+  position: 'absolute',
+  width: 40,
+  height: 40,
+  top: 14,
+  left: 15,
+};

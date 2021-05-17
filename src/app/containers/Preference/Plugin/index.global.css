@@ -1,4 +1,4 @@
-.workflow-page-buttons:hover {
+.plugin-page-buttons:hover {
   transform: scale(1.5);
   transition: transform 0.2s;
 }
