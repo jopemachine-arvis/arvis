@@ -126,7 +126,7 @@ You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/ma
 
 1. You can debug your query, workflow, plugin's behaviors through chrome debugger.
 
-2. You can activate and unactivate log types to focus on your debugging on `Advanced` page.
+2. You can activate or unactivate log types to focus on your debugging on `Advanced` page.
 
 
 ### Update your workflow, plugin
