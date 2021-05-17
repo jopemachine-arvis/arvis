@@ -12,6 +12,7 @@ export const EmptyListContainer = styled.div`
 `;
 
 export const WorkflowItemTitle = styled.div`
+  font-size: 14px;
   color: #ffffff;
   overflow: hidden;
   white-space: nowrap;
@@ -58,7 +59,7 @@ export const WorkflowListViewFooter = styled.div`
   height: 7%;
   background-color: #222222;
   position: fixed;
-  bottom: 0;
+  bottom: 0px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -75,11 +76,12 @@ export const WorkflowListOrderedList = styled.ol`
   padding-top: 20px;
   overflow: auto;
   height: 78%;
+  min-width: 380px;
+  max-width: 380px;
 `;
 
 export const WorkflowItemContainer = styled.div`
   height: 65px;
-  max-width: 325px;
   justify-content: center;
   align-items: center;
   padding-top: 10px;
