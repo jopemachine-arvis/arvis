@@ -5,12 +5,8 @@
 - [1. What is Arvis?](#what-is-arvis)
     - [1.1 Cross-platform](#cross-platform)
     - [1.2 Alfred-workflow Compatibility](#alfred-workflow-compatibility)
-    - [1.3 Differences between plugins and workflows](#differences-between-plugins-and-workflows)
 - [2. What is workflow, plugin?](#what-is-workflow-plugins)
-    - [2.1 How to use workflow](#how-to-use-workflow)
-    - [2.2 How to use plugin](#how-to-use-plugin)
 - [3. How to install workflow, plugin on Arvis](#how-to-install-workflow-plugin-on-arvis)
-    - [3.1 Workflow, Plugin Install](#workflow-plugin-install)
 - [4. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
     - [4.1 How to write new workflows](#how-to-write-new-workflows)
     - [4.2 How to write new plugins](#how-to-write-new-plugins)
@@ -45,19 +41,7 @@ I started to work on this because I wanted to try to cross-platform alfred-workf
 * This means you can easily change the alfred-workflow to arvis-workflow.
 
 
-### Differences between plugins and workflows
-
-* The biggest difference between `plugin` with `workflow` is `plugin` do not have triggering items, such as a keyword or script filter.
-
-* `workflow` can be written in any programming language, but `plugin` can be written only in `JavaScript`.
-
-* Because `plugin` is loaded when Arvis window shows up, `plugin` is much faster than `workflow`.
-
-* `plugin` has cannot define `action` in json file unlike `workflow`
-
 ## How to install workflow, plugin on Arvis
-
-### Workflow, Plugin Install
 
 You can download `arvisworkflow`, `arvisplugin` files to install them.
 
@@ -71,23 +55,9 @@ Right click tray icon
 
 ## What is workflow, plugin?
 
-### How to use workflow
+* [What is workflow?](./documents/workflow-intro.md)
 
-`Workflow` is a set of `Command` that can be executed.
-
-Each `Action` of `Command` can be executed by `keyword`, `scriptfilter`, and `hotkey`.
-
-`Keyword` is to link an action to a command.
-
-`Scriptfilter` connects script to a command.
-
-and the items returned by the script appear in searchWindow, and the action is executed by clicking on them.
-
-`Hotkey` binds a specific key combination to a particular action.
-
-Arvis also supports "double" modifier key combinations (e.g. double cmd, double ctrl..)
-
-### How to use plugin
+* [What is plugin?](./documents/plugin-intro.md)
 
 ## How to write new workflows, plugins
 
@@ -122,12 +92,7 @@ You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/ma
 4. Change the zip file's extension to `.arvisplugin`
 
 
-### Debugging workflow, plugin
-
-1. You can debug your query, workflow, plugin's behaviors through chrome debugger.
-
-2. You can activate or unactivate log types to focus on your debugging on `Advanced` page.
-
+### [Debugging workflow, plugin](./documents/debugging-description.md)
 
 ### Update your workflow, plugin
 
@@ -142,8 +107,6 @@ You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/ma
 Convert alfred's info.plist using [arvis-plist-converter](https://github.com/jopemachine/arvis-plist-converter) 
 
 (Or just install `alfredworkflow` file. converter will create arvis-workflow.json on its own)
-
-
 
 ## Build and development
 
