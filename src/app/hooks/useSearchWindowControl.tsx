@@ -362,6 +362,20 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * @param {any} item
+   */
+  const autoCompleteHandler = (item: any) => {
+    if (workManager.hasEmptyWorkStk() && item.command) {
+      setInputStr({ str: item.command, needItemsUpdate: true });
+    } else if (
+      workManager.getTopWork().type === 'scriptfilter' &&
+      item.autocomplete
+    ) {
+      setInputStr({ str: item.autocomplete, needItemsUpdate: true });
+    }
+  };
+
+  /**
    * @summary
    */
   const onKeydownHandler = async () => {
@@ -391,6 +405,8 @@ const useSearchWindowControl = ({
     } else if (keyData.isEscape) {
       workManager.popWork();
       alreadyClearedRef.current = true;
+    } else if (keyData.isTab) {
+      autoCompleteHandler(items[selectedItemIdx]);
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
     }
