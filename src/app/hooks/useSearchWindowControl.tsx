@@ -376,6 +376,21 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * @param {any} item
+   */
+  const quicklookHandler = (item: any) => {
+    if (
+      !workManager.hasEmptyWorkStk() &&
+      workManager.getTopWork().type === 'scriptfilter' &&
+      item.quicklookurl
+    ) {
+      ipcRenderer.send(IPCRendererEnum.showQuicklookWindow, {
+        url: item.quicklookurl,
+      });
+    }
+  };
+
+  /**
    * @summary
    */
   const onKeydownHandler = async () => {
@@ -407,6 +422,8 @@ const useSearchWindowControl = ({
       alreadyClearedRef.current = true;
     } else if (keyData.isTab) {
       autoCompleteHandler(items[selectedItemIdx]);
+    } else if (keyData.isShift && !keyData.key) {
+      quicklookHandler(items[selectedItemIdx]);
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
     }

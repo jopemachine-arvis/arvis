@@ -5,11 +5,12 @@ export enum IPCRendererEnum {
   dispatchAction = '@ipcRenderer/dispatchAction',
   getSystemFont = '@ipcRenderer/getSystemFont',
   hideSearchWindow = '@ipcRenderer/hideSearchWindow',
-  openWfConfFileDialog = '@ipcRenderer/openWfConfFileDialog',
+  importTheme = '@ipcRenderer/importTheme',
   openPluginInstallFileDialog = '@ipcRenderer/openPluginInstallFileDialog',
+  openWfConfFileDialog = '@ipcRenderer/openWfConfFileDialog',
   openYesnoDialog = '@ipcRenderer/openYesnoDialog',
-  popupSearchbarItemMenu = '@ipcRenderer/popupSearchbarItemMenu',
   popupPluginItemMenu = '@ipcRenderer/popupPluginItemMenu',
+  popupSearchbarItemMenu = '@ipcRenderer/popupSearchbarItemMenu',
   popupWorkflowItemMenu = '@ipcRenderer/popupWorkflowItemMenu',
   renewWorkflow = '@ipcRenderer/renewWorkflow',
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',
@@ -19,7 +20,8 @@ export enum IPCRendererEnum {
   setSearchWindowWidth = '@ipcRenderer/setSearchWindowWidth',
   showErrorDialog = '@ipcRenderer/showErrorDialog',
   showNotification = '@ipcRenderer/showNotification',
-  importTheme = '@ipcRenderer/importTheme',
+  showQuicklookWindow = '@ipcRenderer/showQuicklookWindow',
+  hideQuicklookWindow = '@ipcRenderer/hideQuicklookWindow',
 }
 
 /**
@@ -27,6 +29,7 @@ export enum IPCRendererEnum {
  */
 export enum IPCMainEnum {
   fetchAction = '@ipcMain/fetchAction',
+  forwardQuicklookWindowUrl = '@ipcMain/forwardQuicklookWindowUrl',
   getSystemFontRet = '@ipcMain/getSystemFontRet',
   hideSearchWindowByBlurEvent = '@ipcMain/hideSearchWindowByBlurEvent',
   importThemeRet = '@ipcMain/importThemeRet',

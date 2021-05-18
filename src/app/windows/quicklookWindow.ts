@@ -1,7 +1,6 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, remote } from 'electron';
 import path from 'path';
 import constants from '../constants';
-import { IPCMainEnum } from '../ipc/ipcEventEnum';
 
 const createQuicklookWindow = () => {
   const quicklookWindow = new BrowserWindow({
@@ -18,6 +17,8 @@ const createQuicklookWindow = () => {
     height: constants.quicklookWindowHeight,
     webPreferences: {
       nodeIntegration: true,
+      webviewTag: true,
+      enableRemoteModule: true,
     },
   });
 
@@ -30,16 +31,16 @@ const createQuicklookWindow = () => {
     query: { window: 'quicklookWindow' },
   });
 
-  //   searchWindow.on('close', e => {
-  //     e.preventDefault();
-  //     if (searchWindow) {
-  //       searchWindow.hide();
-  //     }
-  //   });
+  quicklookWindow.on('close', (e) => {
+    e.preventDefault();
+    if (quicklookWindow) {
+      quicklookWindow.hide();
+    }
+  });
 
-  //   searchWindow.on('blur', () => {
-  //     searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
-  //   });
+  quicklookWindow.on('blur', () => {
+    quicklookWindow.hide();
+  });
 
   return quicklookWindow;
 };

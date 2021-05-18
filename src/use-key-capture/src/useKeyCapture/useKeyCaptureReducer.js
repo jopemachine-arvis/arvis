@@ -122,6 +122,14 @@ export default function keyReducer(state, action) {
       };
     }
 
+    case useKeyActionTypes.SHIFT: {
+      return {
+        ...initialState,
+        isShift: true,
+        ...action.payload
+      };
+    }
+
     default:
       return { ...initialState };
   }

@@ -3,7 +3,11 @@ import path from 'path';
 import constants from '../constants';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 
-const createSearchWindow = () => {
+const createSearchWindow = ({
+  quicklookWindow,
+}: {
+  quicklookWindow: BrowserWindow;
+}) => {
   const searchWindow = new BrowserWindow({
     title: 'Arvis',
     show: false,
@@ -16,7 +20,7 @@ const createSearchWindow = () => {
     hasShadow: true,
     fullscreenable: false,
     acceptFirstMouse: false,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     enableLargerThanScreen: false,
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
@@ -50,7 +54,9 @@ const createSearchWindow = () => {
 
   searchWindow.on('blur', (e: any) => {
     e.preventDefault();
-    searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
+    if (!quicklookWindow.isFocused()) {
+      searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
+    }
   });
 
   searchWindow.on('show', () => {

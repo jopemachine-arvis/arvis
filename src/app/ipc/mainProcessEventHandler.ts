@@ -26,9 +26,11 @@ import autoLauncher from '../config/autoLaunch';
 export const initIPCHandler = ({
   searchWindow,
   preferenceWindow,
+  quicklookWindow,
 }: {
   searchWindow: BrowserWindow;
   preferenceWindow: BrowserWindow;
+  quicklookWindow: BrowserWindow;
 }) => {
   /**
    * @param  {string} windowName
@@ -364,7 +366,34 @@ export const initIPCHandler = ({
     });
   };
 
+  /**
+   * @summary
+   */
+  const showQuicklookWindow = (
+    e: IpcMainEvent,
+    {
+      url,
+    }: {
+      url: string;
+    }
+  ) => {
+    quicklookWindow.center();
+    quicklookWindow.show();
+    quicklookWindow.focus();
+    quicklookWindow.webContents.send(IPCMainEnum.forwardQuicklookWindowUrl, {
+      url,
+    });
+  };
+
+  /**
+   * @summary
+   */
+  const hideQuicklookWindow = (e: IpcMainEvent) => {
+    quicklookWindow.hide();
+  };
+
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
+  ipcMain.on(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
   ipcMain.on(IPCRendererEnum.importTheme, importTheme);
@@ -380,6 +409,7 @@ export const initIPCHandler = ({
   ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
+  ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
   ipcMain.on(
     IPCRendererEnum.openPluginInstallFileDialog,
     openPluginInstallFileDialog

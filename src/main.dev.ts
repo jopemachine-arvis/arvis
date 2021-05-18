@@ -72,8 +72,8 @@ app.on('before-quit', () => {
 
 app.on('ready', async () => {
   const onReadyHandler = () => {
-    searchWindow = createSearchWindow();
     quicklookWindow = createQuicklookWindow();
+    searchWindow = createSearchWindow({ quicklookWindow });
     preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
     // Open debugging tool by 'undocked'
@@ -86,7 +86,7 @@ app.on('ready', async () => {
     }
 
     startFileWatcher({ searchWindow, preferenceWindow });
-    initIPCHandler({ searchWindow, preferenceWindow });
+    initIPCHandler({ searchWindow, quicklookWindow, preferenceWindow });
   };
 
   setTimeout(() => {

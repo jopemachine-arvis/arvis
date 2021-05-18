@@ -38,6 +38,7 @@ const initialState = {
   isControl: false,
   isAlt: false,
   isMeta: false,
+  isShift: false,
 
   // For special character
   isSpecialCharacter: false,
