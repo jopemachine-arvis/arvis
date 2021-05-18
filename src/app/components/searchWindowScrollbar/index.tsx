@@ -37,7 +37,7 @@ const SearchWindowScrollbar = (props: IProps) => {
 
   const searchWindowHeight =
     maxShow * itemHeight + footerHeight + searchbarHeight;
-  let scrollbarHeight = searchWindowHeight - (itemLength - maxShow) * 5 - 20;
+  let scrollbarHeight = searchWindowHeight - (itemLength - maxShow) * 13 - 20;
 
   const minScrollbarHeight = 20;
   if (scrollbarHeight < minScrollbarHeight) {

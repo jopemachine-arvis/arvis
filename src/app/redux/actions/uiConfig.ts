@@ -25,8 +25,23 @@ export const actionTypes = {
   SET_SEARCHBAR_FONTSIZE: '@uiConfig/SET_SEARCHBAR_FONTSIZE',
   SET_SEARCHBAR_FONTCOLOR: '@uiConfig/SET_SEARCHBAR_FONTCOLOR',
 
+  SET_SEARCHWINDOW_SCROLLBAR_COLOR:
+    '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_COLOR',
+  SET_SEARCHWINDOW_SCROLLBAR_WIDTH:
+    '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_WIDTH',
+
   SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN',
 };
+
+export const setSearchWindowScrollbarColor = makeActionCreator(
+  actionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR,
+  'arg'
+);
+
+export const setSearchWindowScrollbarWidth = makeActionCreator(
+  actionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH,
+  'arg'
+);
 
 export const setSearchWindowBorderRadius = makeActionCreator(
   actionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS,

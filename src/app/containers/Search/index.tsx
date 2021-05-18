@@ -28,6 +28,8 @@ export default function SearchWindow() {
     searchbar_height,
     search_window_border_radius,
     search_window_footer_height,
+    search_window_scrollbar_color,
+    search_window_scrollbar_width,
     search_window_transparency,
     search_window_width,
     selected_item_background_color,
@@ -213,8 +215,8 @@ export default function SearchWindow() {
         itemHeight={item_height}
         itemLength={items.length}
         maxShow={max_item_count_to_show}
-        scrollbarColor="#ffffff"
-        scrollbarWidth={2}
+        scrollbarColor={search_window_scrollbar_color}
+        scrollbarWidth={search_window_scrollbar_width}
         searchbarHeight={searchbar_height}
         startItemIdx={indexInfo.itemStartIdx}
       />

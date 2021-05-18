@@ -66,6 +66,8 @@ export default function Appearance() {
     searchbar_height,
     search_window_border_radius,
     search_window_footer_height,
+    search_window_scrollbar_color,
+    search_window_scrollbar_width,
     search_window_transparency,
     search_window_width,
     selected_item_background_color,
@@ -98,9 +100,11 @@ export default function Appearance() {
   };
 
   const importTheme = (themePath: string) => {
+    console.log('e');
     fse
       .readJson(themePath)
       .then((themeJson) => {
+        console.log('d');
         configChangeHandler(
           createFormEvent(themeJson.icon_right_margin),
           UIActionTypes.SET_ICON_RIGHT_MARGIN
@@ -191,6 +195,16 @@ export default function Appearance() {
           UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
         );
 
+        configChangeHandler(
+          createFormEvent(themeJson.search_window_scrollbar_color),
+          UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.search_window_scrollbar_width),
+          UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
+        );
+
         return null;
       })
       .catch(console.error);
@@ -203,8 +217,8 @@ export default function Appearance() {
       }
     },
     importThemeRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
-      if (file.filePath) {
-        importTheme(file.filePath);
+      if (file.filePaths) {
+        importTheme(file.filePaths[0]);
       }
     },
   };
@@ -510,6 +524,34 @@ export default function Appearance() {
               value={searchbar_font_size}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONTSIZE)
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Search window scrollbar color</Label>
+            <StyledInput
+              type="color"
+              value={search_window_scrollbar_color}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR
+                )
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Search window scrollbar width</Label>
+            <StyledInput
+              type="number"
+              value={search_window_scrollbar_width}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
+                )
               }
             />
           </FormGroup>

@@ -20,6 +20,8 @@ export type StateType = {
     searchbar_height: number;
     search_window_border_radius: number;
     search_window_footer_height: number;
+    search_window_scrollbar_color: string;
+    search_window_scrollbar_width: number;
     search_window_transparency: number;
     search_window_width: number;
     selected_item_background_color: string;

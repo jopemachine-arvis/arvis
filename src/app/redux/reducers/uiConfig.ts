@@ -5,6 +5,16 @@ const { actionTypes: UIConfigActionTypes } = UIConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
+    case UIConfigActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR:
+      return {
+        ...state,
+        search_window_scrollbar_color: payload.arg,
+      };
+    case UIConfigActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH:
+      return {
+        ...state,
+        search_window_scrollbar_width: payload.arg,
+      };
     case UIConfigActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS:
       return {
         ...state,

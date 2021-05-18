@@ -18,6 +18,8 @@ export default {
     searchbar_height: 60,
     search_window_border_radius: 6,
     search_window_footer_height: 10,
+    search_window_scrollbar_color: '#FFFFFF',
+    search_window_scrollbar_width: 2,
     search_window_transparency: 240,
     search_window_width: 900,
     selected_item_background_color: '#111113',
