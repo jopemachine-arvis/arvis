@@ -48,14 +48,14 @@ export default function Workflow() {
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(0);
   const selectedWorkflowIdxRef = useRef<any>();
 
-  const [workflowName, setWorkflowName] = useState<string>('');
-  const [workflowVersion, setWorkflowVersion] = useState<string>('');
-  const [workflowCreator, setWorkflowCreator] = useState<string>('');
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
   const [workflowCategory, setWorkflowCategory] = useState<string>('');
+  const [workflowCreator, setWorkflowCreator] = useState<string>('');
   const [workflowDescription, setWorkflowDescription] = useState<string>('');
-  const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
+  const [workflowName, setWorkflowName] = useState<string>('');
   const [workflowReadme, setWorkflowReadme] = useState<string>('');
+  const [workflowVersion, setWorkflowVersion] = useState<string>('');
+  const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -184,9 +184,9 @@ export default function Workflow() {
         createdby = '',
         description = '',
         name = '',
+        readme = '',
         version = '',
         webaddress = '',
-        readme = '',
       } = info;
 
       setWorkflowBundleId(bundleId);
@@ -194,9 +194,9 @@ export default function Workflow() {
       setWorkflowCreator(createdby);
       setWorkflowDescription(description);
       setWorkflowName(name);
+      setWorkflowReadme(readme);
       setWorkflowVersion(version);
       setWorkflowWebsite(webaddress);
-      setWorkflowReadme(readme);
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -468,10 +468,10 @@ export default function Workflow() {
           </FormGroup>
 
           <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Read me</Label>
+            <Label style={style.labelStyle}>Read Me</Label>
             <StyledInput
               type="textarea"
-              placeholder="Read me"
+              placeholder="Read Me"
               style={{
                 height: 260,
               }}
@@ -483,10 +483,10 @@ export default function Workflow() {
           </FormGroup>
 
           <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Web site</Label>
+            <Label style={style.labelStyle}>Web Site</Label>
             <StyledInput
               type="url"
-              placeholder="Web site"
+              placeholder="Web Site"
               value={workflowWebsite}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowWebsite(e.currentTarget.value);

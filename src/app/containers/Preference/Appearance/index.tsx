@@ -327,6 +327,7 @@ export default function Appearance() {
             <Label style={labelStyle}>Window Width</Label>
             <StyledInput
               type="number"
+              min={100}
               value={search_window_width}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIActionTypes.SET_SEARCH_WINDOW_WIDTH)
@@ -338,6 +339,7 @@ export default function Appearance() {
             <Label style={labelStyle}>Window Footer Height</Label>
             <StyledInput
               type="number"
+              min={0}
               value={search_window_footer_height}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
@@ -351,6 +353,7 @@ export default function Appearance() {
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Window border radius</Label>
             <StyledInput
+              min={0}
               type="number"
               value={search_window_border_radius}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
@@ -382,6 +385,7 @@ export default function Appearance() {
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item Height</Label>
             <StyledInput
+              min={10}
               type="number"
               value={item_height}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>

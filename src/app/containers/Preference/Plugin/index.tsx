@@ -20,7 +20,6 @@ import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
-import { useSelector } from 'react-redux';
 import {
   Header,
   OuterContainer,
@@ -38,7 +37,6 @@ import { StoreAvailabilityContext } from '../storeAvailabilityContext';
 import './index.global.css';
 import * as style from './style';
 import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
-import { StateType } from '../../../redux/reducers/types';
 import { useReserveForceUpdate } from '../../../hooks';
 
 export default function Plugin() {
@@ -47,14 +45,14 @@ export default function Plugin() {
   const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(0);
   const selectedPluginIdxRef = useRef<any>();
 
-  const [pluginName, setPluginName] = useState<string>('');
-  const [pluginVersion, setPluginVersion] = useState<string>('');
-  const [pluginCreator, setPluginCreator] = useState<string>('');
   const [pluginBundleId, setPluginBundleId] = useState<string>('');
   const [pluginCategory, setPluginCategory] = useState<string>('');
+  const [pluginCreator, setPluginCreator] = useState<string>('');
   const [pluginDescription, setPluginDescription] = useState<string>('');
-  const [pluginWebsite, setPluginWebsite] = useState<string>('');
+  const [pluginName, setPluginName] = useState<string>('');
   const [pluginReadme, setPluginReadme] = useState<string>('');
+  const [pluginVersion, setPluginVersion] = useState<string>('');
+  const [pluginWebsite, setPluginWebsite] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -182,9 +180,9 @@ export default function Plugin() {
         createdby = '',
         description = '',
         name = '',
+        readme = '',
         version = '',
         webaddress = '',
-        readme = '',
       } = info;
 
       setPluginBundleId(bundleId);
@@ -192,9 +190,9 @@ export default function Plugin() {
       setPluginCreator(createdby);
       setPluginDescription(description);
       setPluginName(name);
+      setPluginReadme(readme);
       setPluginVersion(version);
       setPluginWebsite(webaddress);
-      setPluginReadme(readme);
     }
   }, [selectedPluginIdx, plugins]);
 
@@ -460,10 +458,10 @@ export default function Plugin() {
           </FormGroup>
 
           <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Read me</Label>
+            <Label style={style.labelStyle}>Read Me</Label>
             <StyledInput
               type="textarea"
-              placeholder="Read me"
+              placeholder="Read Me"
               style={{
                 height: 260,
               }}
@@ -475,10 +473,10 @@ export default function Plugin() {
           </FormGroup>
 
           <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Web site</Label>
+            <Label style={style.labelStyle}>Web Site</Label>
             <StyledInput
               type="url"
-              placeholder="Web site"
+              placeholder="Web Site"
               value={pluginWebsite}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setPluginWebsite(e.currentTarget.value);

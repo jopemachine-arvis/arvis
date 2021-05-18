@@ -79,7 +79,10 @@ export const startFileWatcher = ({
 
   chokidar
     .watch(
-      `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
+      [
+        `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
+        `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
+      ],
       {
         persistent: true,
         ignoreInitial: true,

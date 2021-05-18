@@ -120,7 +120,7 @@ export default function SearchWindow() {
       Core.renewWorkflows(bundleId);
     },
     renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
-      Core.renewPlugins({ initializePluginWorkspace: false, bundleId });
+      Core.renewPlugins({ initializePluginWorkspace: true, bundleId });
     },
   };
 
