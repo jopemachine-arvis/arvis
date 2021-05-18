@@ -344,9 +344,31 @@ export const initIPCHandler = ({
     });
   };
 
+  /**
+   * @summary
+   */
+  const importTheme = async (e: IpcMainEvent) => {
+    const extensions = ['arvistheme'];
+
+    const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        {
+          name: 'Arvis theme config files',
+          extensions,
+        },
+      ],
+    });
+    preferenceWindow.webContents.send(IPCMainEnum.importThemeRet, {
+      file,
+    });
+  };
+
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
+  ipcMain.on(IPCRendererEnum.importTheme, importTheme);
+  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
   ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
@@ -358,7 +380,6 @@ export const initIPCHandler = ({
   ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
-  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
   ipcMain.on(
     IPCRendererEnum.openPluginInstallFileDialog,
     openPluginInstallFileDialog

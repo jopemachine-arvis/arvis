@@ -1,8 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
 import { IoMdColorPalette } from 'react-icons/io';
+import { BiExport, BiImport } from 'react-icons/bi';
+import { ipcRenderer } from 'electron';
+import fse from 'fs-extra';
+import { homedir } from 'os';
+import path from 'path';
 import { StateType } from '../../../redux/reducers/types';
 import './index.global.css';
 import {
@@ -24,6 +31,7 @@ import {
   labelStyle,
   iconStyle,
 } from './style';
+import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 const mockItems = [
   {
@@ -45,6 +53,7 @@ const mockItems = [
 ];
 
 export default function Appearance() {
+  const theme = useSelector((state: StateType) => state.ui_config);
   const {
     icon_right_margin,
     item_background_color,
@@ -63,7 +72,7 @@ export default function Appearance() {
     selected_item_font_color,
     subtitle_font_size,
     title_font_size,
-  } = useSelector((state: StateType) => state.ui_config);
+  } = theme;
 
   const dispatch = useDispatch();
 
@@ -76,8 +85,160 @@ export default function Appearance() {
     dispatch,
   });
 
+  const createFormEvent = (value: any) => {
+    return {
+      currentTarget: {
+        value,
+      },
+    } as React.FormEvent<HTMLInputElement>;
+  };
+
+  const exportTheme = (out: string) => {
+    fse.writeJSON(out, theme, { encoding: 'utf8', spaces: 4 });
+  };
+
+  const importTheme = (themePath: string) => {
+    fse
+      .readJson(themePath)
+      .then((themeJson) => {
+        configChangeHandler(
+          createFormEvent(themeJson.icon_right_margin),
+          UIActionTypes.SET_ICON_RIGHT_MARGIN
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.item_background_color),
+          UIActionTypes.SET_ITEM_BACKGROUND_COLOR
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.item_font_color),
+          UIActionTypes.SET_ITEM_FONTCOLOR
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.item_height),
+          UIActionTypes.SET_ITEM_HEIGHT
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.item_left_padding),
+          UIActionTypes.SET_ITEM_LEFT_PADDING
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.item_title_subtitle_margin),
+          UIActionTypes.SET_TITLE_SUBTITLE_MARGIN
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.searchbar_font_color),
+          UIActionTypes.SET_SEARCHBAR_FONTCOLOR
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.searchbar_font_size),
+          UIActionTypes.SET_SEARCHBAR_FONTSIZE
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.searchbar_height),
+          UIActionTypes.SET_SEARCHBAR_HEIGHT
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.search_window_border_radius),
+          UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.search_window_footer_height),
+          UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.search_window_transparency),
+          UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.search_window_width),
+          UIActionTypes.SET_SEARCH_WINDOW_WIDTH
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.selected_item_background_color),
+          UIActionTypes.SET_SELECTED_ITEM_BACKGROUND_COLOR
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.selected_item_font_color),
+          UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.subtitle_font_size),
+          UIActionTypes.SET_SUBTITLE_FONTSIZE
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.title_font_size),
+          UIActionTypes.SET_TITLE_FONTSIZE
+        );
+
+        configChangeHandler(
+          createFormEvent(themeJson.selected_item_font_color),
+          UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
+        );
+
+        return null;
+      })
+      .catch(console.error);
+  };
+
+  const ipcCallbackTbl = {
+    saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
+      if (file.filePath) {
+        exportTheme(file.filePath);
+      }
+    },
+    importThemeRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
+      if (file.filePath) {
+        importTheme(file.filePath);
+      }
+    },
+  };
+
+  useEffect(() => {
+    ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
+    ipcRenderer.on(IPCMainEnum.importThemeRet, ipcCallbackTbl.importThemeRet);
+
+    return () => {
+      ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
+      ipcRenderer.off(
+        IPCMainEnum.importThemeRet,
+        ipcCallbackTbl.importThemeRet
+      );
+    };
+  }, []);
+
   const changeBackgroundColor = () => {
     setPreviewBackgroundColor(getRandomColor());
+  };
+
+  const requestExportTheme = () => {
+    const defaultPath = `${homedir()}${path.sep}Desktop${
+      path.sep
+    }theme.arvistheme`;
+
+    ipcRenderer.send(IPCRendererEnum.saveFile, {
+      title: 'Select path to export arvistheme',
+      defaultPath,
+    });
+  };
+
+  const requestImportTheme = () => {
+    ipcRenderer.send(IPCRendererEnum.importTheme);
   };
 
   return (
@@ -86,6 +247,16 @@ export default function Appearance() {
         className="theme-page-buttons"
         style={iconStyle}
         onClick={() => changeBackgroundColor()}
+      />
+      <BiExport
+        className="theme-page-buttons"
+        style={{ ...iconStyle, left: Number(iconStyle.left!) + 60 }}
+        onClick={() => requestExportTheme()}
+      />
+      <BiImport
+        className="theme-page-buttons"
+        style={{ ...iconStyle, left: Number(iconStyle.left!) + 120 }}
+        onClick={() => requestImportTheme()}
       />
       <PreviewContainer
         style={{

@@ -11,11 +11,11 @@ import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {
   AiOutlineAppstoreAdd,
-  AiOutlineSave,
+  AiOutlineEdit,
   AiOutlineBranches,
   AiOutlineDelete,
+  AiOutlineExport,
 } from 'react-icons/ai';
-import { BiExport } from 'react-icons/bi';
 import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
@@ -502,12 +502,12 @@ export default function Workflow() {
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewWorkflow()}
         />
-        <AiOutlineSave
+        <AiOutlineEdit
           className="workflow-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => editWorkflow()}
         />
-        <BiExport
+        <AiOutlineExport
           className="workflow-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => exportWorkflow()}

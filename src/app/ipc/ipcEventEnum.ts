@@ -19,6 +19,7 @@ export enum IPCRendererEnum {
   setSearchWindowWidth = '@ipcRenderer/setSearchWindowWidth',
   showErrorDialog = '@ipcRenderer/showErrorDialog',
   showNotification = '@ipcRenderer/showNotification',
+  importTheme = '@ipcRenderer/importTheme',
 }
 
 /**
@@ -28,11 +29,12 @@ export enum IPCMainEnum {
   fetchAction = '@ipcMain/fetchAction',
   getSystemFontRet = '@ipcMain/getSystemFontRet',
   hideSearchWindowByBlurEvent = '@ipcMain/hideSearchWindowByBlurEvent',
-  openWfConfFileDialogRet = '@ipcMain/openWfConfFileDialogRet',
+  importThemeRet = '@ipcMain/importThemeRet',
   openPluginInstallFileDialogRet = '@ipcMain/openPluginInstallFileDialogRet',
+  openWfConfFileDialogRet = '@ipcMain/openWfConfFileDialogRet',
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
-  renewWorkflow = '@ipcMain/renewWorkflow',
   renewPlugin = '@ipcMain/renewPlugin',
+  renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',
   searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
   setSearchbarInput = '@ipcMain/setSearchbarInput',
