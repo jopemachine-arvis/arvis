@@ -12,4 +12,8 @@ export default {
   // Initial quicklook window size
   quicklookWindowWidth: 1600,
   quicklookWindowHeight: 900,
+
+  // Initial largetext window size
+  largeTextWindowWidth: 1200,
+  largeTextWindowHeight: 900,
 };

@@ -27,10 +27,12 @@ export const initIPCHandler = ({
   searchWindow,
   preferenceWindow,
   quicklookWindow,
+  largeTextWindow,
 }: {
   searchWindow: BrowserWindow;
   preferenceWindow: BrowserWindow;
   quicklookWindow: BrowserWindow;
+  largeTextWindow: BrowserWindow;
 }) => {
   /**
    * @param  {string} windowName
@@ -388,13 +390,40 @@ export const initIPCHandler = ({
   /**
    * @summary
    */
+  const showLargeTextWindow = (
+    e: IpcMainEvent,
+    {
+      text,
+    }: {
+      text: string;
+    }
+  ) => {
+    largeTextWindow.center();
+    largeTextWindow.show();
+    largeTextWindow.focus();
+    largeTextWindow.webContents.send(IPCMainEnum.forwardLargeText, {
+      text,
+    });
+  };
+
+  /**
+   * @summary
+   */
   const hideQuicklookWindow = (e: IpcMainEvent) => {
     quicklookWindow.hide();
   };
 
+  /**
+   * @summary
+   */
+  const hideLargeTextWindow = (e: IpcMainEvent) => {
+    largeTextWindow.hide();
+  };
+
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
-  ipcMain.on(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
+  ipcMain.on(IPCRendererEnum.hideLargeTextWindow, hideLargeTextWindow);
+  ipcMain.on(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
   ipcMain.on(IPCRendererEnum.importTheme, importTheme);
   ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
@@ -408,6 +437,7 @@ export const initIPCHandler = ({
   ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
   ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
+  ipcMain.on(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
   ipcMain.on(

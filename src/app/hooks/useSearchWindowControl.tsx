@@ -2,7 +2,7 @@
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, clipboard } from 'electron';
 import useKey from '../../use-key-capture/src';
 import { IPCMainEnum, IPCRendererEnum } from '../ipc/ipcEventEnum';
 
@@ -391,10 +391,38 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * @param {any} item
+   */
+  const showTextLargeTypeHandler = (item: any) => {
+    if (
+      !workManager.hasEmptyWorkStk() &&
+      workManager.getTopWork().type === 'scriptfilter'
+    ) {
+      const text =
+        item.text && item.text.largetype ? item.text.largetype : item.title;
+      ipcRenderer.send(IPCRendererEnum.showLargeTextWindow, {
+        text,
+      });
+    }
+  };
+
+  /**
+   * @param {any} item
+   */
+  const itemCopyHandler = (item: any) => {
+    if (
+      !workManager.hasEmptyWorkStk() &&
+      workManager.getTopWork().type === 'scriptfilter'
+    ) {
+      clipboard.writeText(item.title);
+    }
+  };
+
+  /**
    * @summary
    */
   const onKeydownHandler = async () => {
-    const input = keyData.key;
+    const input: string | undefined | null = keyData.key;
 
     const modifiers = {
       // On mac, cmd key is handled by meta;
@@ -424,6 +452,10 @@ const useSearchWindowControl = ({
       autoCompleteHandler(items[selectedItemIdx]);
     } else if (keyData.isShift && !keyData.key) {
       quicklookHandler(items[selectedItemIdx]);
+    } else if (keyData.isWithCtrl && input && input.toUpperCase() === 'L') {
+      showTextLargeTypeHandler(items[selectedItemIdx]);
+    } else if (keyData.isWithCtrl && input && input.toUpperCase() === 'C') {
+      itemCopyHandler(items[selectedItemIdx]);
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
     }

@@ -1,4 +1,4 @@
-import { BrowserWindow, remote } from 'electron';
+import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 

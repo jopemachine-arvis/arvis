@@ -11,6 +11,7 @@ import {
   Preference as PreferenceContainer,
   Search as SearchContainer,
   Quicklook as QuicklookContainer,
+  LargeText as LargeTextContainer,
 } from '../containers';
 
 Object.assign(console, loggerFunctions);
@@ -35,6 +36,8 @@ const windowRoute = (windowName: string) => {
       );
     case 'searchWindow':
       return <SearchContainer />;
+    case 'largeTextWindow':
+      return <LargeTextContainer />;
     case 'quicklookWindow':
       return <QuicklookContainer />;
     default:

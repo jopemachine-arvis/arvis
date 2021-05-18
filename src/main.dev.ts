@@ -17,6 +17,7 @@ import {
   createPreferenceWindow,
   createQuicklookWindow,
   createSearchWindow,
+  createLargeTextWindow,
 } from './app/windows';
 import { initIPCHandler } from './app/ipc/mainProcessEventHandler';
 import { startFileWatcher } from './app/helper/workflowConfigFileWatcher';
@@ -25,6 +26,7 @@ import installExtensions from './app/config/extensionInstaller';
 let preferenceWindow: BrowserWindow | null = null;
 let searchWindow: BrowserWindow | null = null;
 let quicklookWindow: BrowserWindow | null = null;
+let largeTextWindow: BrowserWindow | null = null;
 
 const trayIconPath = path.join(
   __dirname,
@@ -73,7 +75,8 @@ app.on('before-quit', () => {
 app.on('ready', async () => {
   const onReadyHandler = () => {
     quicklookWindow = createQuicklookWindow();
-    searchWindow = createSearchWindow({ quicklookWindow });
+    largeTextWindow = createLargeTextWindow();
+    searchWindow = createSearchWindow({ quicklookWindow, largeTextWindow });
     preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
 
     // Open debugging tool by 'undocked'
@@ -86,7 +89,12 @@ app.on('ready', async () => {
     }
 
     startFileWatcher({ searchWindow, preferenceWindow });
-    initIPCHandler({ searchWindow, quicklookWindow, preferenceWindow });
+    initIPCHandler({
+      searchWindow,
+      quicklookWindow,
+      preferenceWindow,
+      largeTextWindow,
+    });
   };
 
   setTimeout(() => {

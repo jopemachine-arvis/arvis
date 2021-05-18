@@ -4,6 +4,8 @@
 export enum IPCRendererEnum {
   dispatchAction = '@ipcRenderer/dispatchAction',
   getSystemFont = '@ipcRenderer/getSystemFont',
+  hideLargeTextWindow = '@ipcRenderer/hideLargeTextWindow',
+  hideQuicklookWindow = '@ipcRenderer/hideQuicklookWindow',
   hideSearchWindow = '@ipcRenderer/hideSearchWindow',
   importTheme = '@ipcRenderer/importTheme',
   openPluginInstallFileDialog = '@ipcRenderer/openPluginInstallFileDialog',
@@ -21,7 +23,7 @@ export enum IPCRendererEnum {
   showErrorDialog = '@ipcRenderer/showErrorDialog',
   showNotification = '@ipcRenderer/showNotification',
   showQuicklookWindow = '@ipcRenderer/showQuicklookWindow',
-  hideQuicklookWindow = '@ipcRenderer/hideQuicklookWindow',
+  showLargeTextWindow = '@ipcRenderer/showLargeTextWindow',
 }
 
 /**
@@ -29,6 +31,7 @@ export enum IPCRendererEnum {
  */
 export enum IPCMainEnum {
   fetchAction = '@ipcMain/fetchAction',
+  forwardLargeText = '@ipcRenderer/forwardLargeText',
   forwardQuicklookWindowUrl = '@ipcMain/forwardQuicklookWindowUrl',
   getSystemFontRet = '@ipcMain/getSystemFontRet',
   hideSearchWindowByBlurEvent = '@ipcMain/hideSearchWindowByBlurEvent',
