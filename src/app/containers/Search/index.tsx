@@ -4,7 +4,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import { SearchBar, SearchResultView } from '../../components';
+import {
+  SearchBar,
+  SearchResultView,
+  SearchWindowScrollbar,
+} from '../../components';
 import useSearchWindowControl from '../../hooks/useSearchWindowControl';
 import { StateType } from '../../redux/reducers/types';
 import { OuterContainer } from './components';
@@ -42,7 +46,7 @@ export default function SearchWindow() {
     (state: StateType) => state.advanced_config
   );
 
-  const [items, setItems] = useState<any>([]);
+  const [items, setItems] = useState<any[]>([]);
 
   const workManager = Core.WorkManager.getInstance();
 
@@ -203,6 +207,16 @@ export default function SearchWindow() {
         startIdx={indexInfo.itemStartIdx}
         subtitleFontSize={subtitle_font_size}
         titleFontSize={title_font_size}
+      />
+      <SearchWindowScrollbar
+        footerHeight={search_window_footer_height}
+        itemHeight={item_height}
+        itemLength={items.length}
+        maxShow={max_item_count_to_show}
+        scrollbarColor="#ffffff"
+        scrollbarWidth={2}
+        searchbarHeight={searchbar_height}
+        startItemIdx={indexInfo.itemStartIdx}
       />
     </OuterContainer>
   );

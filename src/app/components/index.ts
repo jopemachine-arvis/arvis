@@ -6,14 +6,16 @@ import SearchResultView from './searchResultView';
 import StyledInput from './styledInput';
 import Spinner from './spinner';
 import ScreenCover from './screenCover';
+import SearchWindowScrollbar from './searchWindowScrollbar';
 
 export {
   MenuBuilder,
-  TrayBuilder,
+  ScreenCover,
   SearchBar,
-  StyledInput,
   SearchResultItem,
   SearchResultView,
+  SearchWindowScrollbar,
   Spinner,
-  ScreenCover,
+  StyledInput,
+  TrayBuilder,
 };
