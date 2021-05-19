@@ -24,6 +24,8 @@ const createSearchWindow = ({
     acceptFirstMouse: false,
     alwaysOnTop: false,
     enableLargerThanScreen: false,
+    minimizable: false,
+    maximizable: false,
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences: {

@@ -9,6 +9,7 @@ import useKey from '../../../use-key-capture/src';
 
 const OuterContainer = styled.div`
   align-items: center;
+  background-color: #111111cc;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -16,10 +17,11 @@ const OuterContainer = styled.div`
   font-size: 32px;
   height: 100vh;
   justify-content: center;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   text-align: center;
   width: 100%;
-  background-color: #111111cc;
+  word-break: break-word;
 `;
 
 export default function LargeTextWindow() {
