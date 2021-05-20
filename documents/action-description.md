@@ -42,7 +42,7 @@ required: `true`
 
 type: `string`
 
-required: `false`
+required: `true`
 
 
 ## args
@@ -79,7 +79,7 @@ required: `true`
 
 Argument to select.
 
-## if
+## cond, if
 
 Example :
 
@@ -111,6 +111,16 @@ Example :
 ]
 
 ```
+
+### cond
+
+type: `string (code)`
+
+required: `true`
+
+`cond` codes will be evaluated runtime.
+
+Here you can inspect variable condition to branch out
 
 ### then
 

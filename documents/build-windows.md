@@ -1,6 +1,6 @@
-## How to build on Windows 10
+# How to build on Windows 10
 
-### how to build
+## how to build
 
 1. Clone this repository
 
@@ -18,7 +18,7 @@ If having trouble with the above step, download or build the [iohook](https://gi
 
 5. `yarn start`
 
-### python 2.7 not found issue
+## python 2.7 not found issue
 
 1. when `python 2.7 not found` issue occurs,
 

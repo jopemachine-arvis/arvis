@@ -1,4 +1,4 @@
-## Keyword
+# Keyword
 
 Example:
 
@@ -20,13 +20,13 @@ Example:
 },
 ```
 
-### type
+## type
 
 type: `string`
 
 required: `true`
 
-### command
+## command
 
 type: `string`
 
@@ -36,25 +36,25 @@ Command string used for searches.
 
 If `title` is not set, command will be `title`.
 
-### title
+## title
 
 type: `string`
 
 The biggest text in the item.
 
-### subtitle
+## subtitle
 
 type: `string`
 
 A additional description of the command to display in the search window.
 
-### withspace
+## withspace
 
 type: `boolean`
 
 Indicates if space is required after the command to execute it
 
-### arg_type
+## arg_type
 
 type: `string (enum)`
 
@@ -66,7 +66,7 @@ If `arg_type` is `no`, the action is triggered only when `arg` is not given.
 
 If `arg_type` is `optional`, the action is triggered with or without arg
 
-### action
+## action
 
 type: `Action (object)`
 
@@ -74,7 +74,7 @@ Action to be triggered by the keyword.
 
 [Click to view "action" type](./documents/action-description.md)
 
-### modifiers
+## modifiers
 
 type: `string (enum)`
 

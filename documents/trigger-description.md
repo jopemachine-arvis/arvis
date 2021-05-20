@@ -1,8 +1,8 @@
-## Trigger
+# Trigger
 
 You can use `keyword`, `scriptfilter`, `hotkey` to trigger commands.
 
-### Keyword
+## Keyword
 
 Command to invoke a specific command.
 
@@ -89,7 +89,7 @@ And action with `modifiers` key with other than `normal` is only triggered when 
 
 [Click me to check available attributes](./scriptfilter-description.md)
 
-### Hotkey
+## Hotkey
 
 You can register `hotkey` to run a specific action or scriptfilter.
 

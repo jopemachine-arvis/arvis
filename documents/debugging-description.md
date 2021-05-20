@@ -1,4 +1,4 @@
-### Debugging workflow, plugin
+# Debugging workflow, plugin
 
 1. You can debug your query, workflow, plugin's behaviors through chrome debugger.
 
