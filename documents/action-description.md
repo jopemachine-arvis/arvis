@@ -1,6 +1,6 @@
 # Action
 
-You can execute below predefined actions.
+You can use below predefined actions.
 
 ## script
 

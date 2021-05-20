@@ -12,7 +12,6 @@ Example:
 
 ```json
 {
-...
   "type": "keyword",
   "command": "ch > init",
   "text": "Init your config file",
@@ -27,7 +26,6 @@ Example:
     }
   ]
 }
-...
 ```
 
 In above example, you can see command with `ch > init`.
