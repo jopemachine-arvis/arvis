@@ -42,7 +42,7 @@ In above screen, your pressing enter event trigger the 'Action', `script`.
 
 [Click me to check available attributes](./keyword-description.md)
 
-### Scriptfilter
+## Scriptfilter
 
 Unlike `Keyword` type don't have script, `scriptfilter` type has its `script_filter` on its own.
 

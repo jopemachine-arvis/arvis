@@ -9,3 +9,5 @@
 * Because `plugin` is loaded when Arvis window shows up, `plugin` is much faster than `workflow`.
 
 * `plugin` has cannot define `action` in json file unlike `workflow`
+
+* You can use async await statement in plugin, but do not recommend to put heavy asynchronous logic in the `plugin`.
