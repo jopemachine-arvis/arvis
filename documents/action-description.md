@@ -1,10 +1,12 @@
-## Action
+# Action
 
 You can execute below predefined actions.
 
-### script
+## script
 
-Example: 
+Execute script through [execa](https://github.com/sindresorhus/execa)
+
+Example :
 
 ```json
 "action": [
@@ -24,7 +26,30 @@ Example:
 ]
 ```
 
-### args
+### modifiers
+
+type: `string (enum)`
+
+required: `false`
+
+### type
+
+type: `string`
+
+required: `true`
+
+### script
+
+type: `string`
+
+required: `false`
+
+
+## args
+
+Extract selected `variable` to `query`
+
+Example :
 
 ```json
 "action": [
@@ -40,8 +65,23 @@ Example:
 ]
 ```
 
+### type
 
-### if
+type: `string`
+
+required: `true`
+
+### arg
+
+type: `string`
+
+required: `true`
+
+Argument to select.
+
+## if
+
+Example :
 
 ```json
 "action": [
@@ -69,12 +109,30 @@ Example:
     }
   }
 ]
+
 ```
 
+### then
 
-### open
+type: `object`
 
-Example: 
+required: `true`
+
+if `cond` is true, then `action` is executed.
+
+### else
+
+type: `object`
+
+required: `false`
+
+if `cond` is false, else `action` is executed.
+
+## open
+
+Open file path, web url by [open](https://github.com/sindresorhus/open)
+
+Example :
 
 ```json
 "action": [
@@ -86,19 +144,70 @@ Example:
 ]
 ```
 
-### notification
+### modifiers
+
+type: `string (enum)`
+
+required: `false`
+
+### type
+
+type: `string`
+
+required: `true`
+
+### target
+
+type: `string`
+
+required: `true`
+
+## notification
+
+Create notification with the notification feature of the OS.
+
+Example :
 
 ```json
 "action": [
   {
     "modifiers": "normal",
     "type": "notification",
-    "title": "Caching completed successfully"
+    "title": "Caching completed successfully",
+    "text": ""
   }
 ]
 ```
 
-### clipboard
+### modifiers
+
+type: `string (enum)`
+
+required: `false`
+
+### type
+
+type: `string`
+
+required: `true`
+
+### title
+
+type: `string`
+
+required: `true`
+
+### text
+
+type: `string`
+
+required: `false`
+
+## clipboard
+
+Copy `text` to clipboard
+
+Example :
 
 ```json
 "action": [
@@ -109,3 +218,21 @@ Example:
   }
 ]
 ```
+
+### modifiers
+
+type: `string (enum)`
+
+required: `false`
+
+### type
+
+type: `string`
+
+required: `true`
+
+### text
+
+type: `string`
+
+required: `false`

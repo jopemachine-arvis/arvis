@@ -32,7 +32,7 @@ type: `string`
 
 required: `true`
 
-Command to search for and execute commands.
+Command string used for searches.
 
 If `title` is not set, command will be `title`.
 
