@@ -5,6 +5,7 @@
 - [1. What is Arvis?](#what-is-arvis)
     - [1.1 Cross-platform](#cross-platform)
     - [1.2 Alfred-workflow Compatibility](#alfred-workflow-compatibility)
+    - [1.3 Change appearance](#change-appearance)
 - [2. What is workflow, plugin?](#what-is-workflow-plugins)
 - [3. How to install workflow, plugin on Arvis](#how-to-install-workflow-plugin-on-arvis)
 - [4. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
@@ -34,6 +35,12 @@ I started to work on this because I wanted to try to cross-platform alfred-workf
 * Basically, `Arvis` use same [scriptfilter format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
 
 * This means you can easily change the alfred-workflow to arvis-workflow.
+
+### Change appearance
+
+You can change Arvis search window's appearance to some extent.
+
+Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
 
 ## How to install workflow, plugin on Arvis

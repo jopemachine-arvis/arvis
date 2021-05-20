@@ -93,8 +93,7 @@ Example:
   {
     "modifiers": "normal",
     "type": "notification",
-    "title": "Caching completed successfully",
-    "text": ""
+    "title": "Caching completed successfully"
   }
 ]
 ```

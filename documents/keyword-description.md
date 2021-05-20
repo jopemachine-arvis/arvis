@@ -6,7 +6,7 @@ Example:
 {
   "type": "keyword",
   "command": "ch > init",
-  "text": "Init your config file",
+  "title": "Init your config file",
   "subtitle": "",
   "withspace": false,
   "arg_type": "no",
@@ -34,9 +34,13 @@ required: `true`
 
 Command to search for and execute commands.
 
-### text
+If `title` is not set, command will be `title`.
+
+### title
 
 type: `string`
+
+The biggest text in the item.
 
 ### subtitle
 
@@ -54,12 +58,26 @@ Indicates if space is required after the command to execute it
 
 type: `string (enum)`
 
+Possible values: `required`, `no`, `optional`.
+
+If `arg_type` is `required`, the action is triggered only when `arg` is given.
+
+If `arg_type` is `no`, the action is triggered only when `arg` is not given.
+
+If `arg_type` is `optional`, the action is triggered with or without arg
+
 ### action
 
 type: `Action (object)`
+
+Action to be triggered by the keyword.
+
+[Click to view "action" type](./documents/action-description.md)
 
 ### modifiers
 
 type: `string (enum)`
 
 Specific modifier key must be pressed to run
+
+[Click to view "modifiers"](./documents/modifiers-description.md)

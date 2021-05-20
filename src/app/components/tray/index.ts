@@ -38,7 +38,7 @@ export default class TrayBuilder {
       },
     },
     {
-      label: 'Show Workflow Debugging Window',
+      label: 'Show Debugging Window',
       type: 'normal',
       click: () => {
         if (this.searchWindow) {
