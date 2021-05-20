@@ -165,9 +165,12 @@ const useSearchWindowControl = ({
    * @param {string} pressedKey
    * @param {string} updatedInput
    */
-  const handleNormalInput = (pressedKey: string, updatedInput: string) => {
-    const searchCommands = () => {
-      const itemArr = Core.findCommands(updatedInput);
+  const handleNormalInput = async (
+    pressedKey: string,
+    updatedInput: string
+  ) => {
+    const searchCommands = async () => {
+      const itemArr = await Core.findCommands(updatedInput);
       setItems(itemArr.slice(0, maxRetrieveCount));
       handleScriptFilterAutoExecute({
         itemArr,
@@ -178,7 +181,7 @@ const useSearchWindowControl = ({
 
     // Search workflow commands, builtInCommands
     if (workManager.hasEmptyWorkStk()) {
-      searchCommands();
+      await searchCommands();
     }
     // Execute Script filter
     else if (workManager.getTopWork().type === 'scriptfilter') {
@@ -189,7 +192,7 @@ const useSearchWindowControl = ({
       // If the command changes, clear stack and search commands
       else {
         workManager.clearWorkStack();
-        searchCommands();
+        await searchCommands();
       }
     }
 

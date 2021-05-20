@@ -23,7 +23,7 @@
 
 I started to work on this because I wanted to try to cross-platform alfred-workflows.
 
-`Arvis` also provides a "frame" to help create such `workflow`, `plugin`.
+`Arvis` also aims to provide a "frame" or "library" to help create such `workflow`, `plugin` more easily.
 
 ### Cross-platform
 
@@ -64,11 +64,11 @@ Right click tray icon
 
 1. Create `arvis-workflow.json`.
 
-You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) to create workflow easily.
+You can use this workflow's [JSON Schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) to create workflow easily.
 
 2. Write some scripts to use in your workflow.
 
-If you are familiar with `Alfy`, you can try [arvis-workflow-tools](https://github.com/jopemachine/arvis-workflow-tools).
+If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).
 
 3. Compacts the binaries, modules, and scripts used by the workflow into a zip file with the `arvis-workflow.json` file.
 
@@ -78,7 +78,7 @@ If you are familiar with `Alfy`, you can try [arvis-workflow-tools](https://gith
 
 1. Create `arvis-plugin.json`.
 
-You can use [this json schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) to create plugin easily.
+You can use this plugin's [JSON Schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) to create plugin easily.
 
 2. Write some scripts to use in your plugin.
 
