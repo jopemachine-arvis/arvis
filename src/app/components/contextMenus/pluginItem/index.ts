@@ -68,6 +68,16 @@ class PluginContextMenu extends Menu {
         },
       })
     );
+    super.append(
+      new MenuItem({
+        type: 'normal',
+        label: 'Open arvis-plugin.json',
+        toolTip: 'Open arvis-plugin.json of the selected plugin',
+        click() {
+          open(`${pluginPath}${path.sep}arvis-plugin.json`);
+        },
+      })
+    );
   }
 }
 
