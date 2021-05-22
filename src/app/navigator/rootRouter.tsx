@@ -5,7 +5,9 @@ import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { Switch, Route } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-import { functions as loggerFunctions } from 'electron-log';
+import { functions as loggerFunctions, transports } from 'electron-log';
+import { Core } from 'arvis-core';
+import { LogType } from 'arvis-core/dist/config/logger';
 import { Store } from '../redux/reducers/types';
 import {
   Preference as PreferenceContainer,
@@ -46,12 +48,27 @@ const windowRoute = (windowName: string) => {
 };
 
 /**
+ * @summary
+ */
+const handleLoggerSetting = () => {
+  if (process.env.NODE_ENV === 'development') {
+    transports.file.level = 'debug';
+    Core.logger.setLogLevels([LogType.debug, LogType.error]);
+  } else {
+    transports.file.level = 'info';
+    Core.logger.setLogLevels([LogType.info, LogType.error]);
+  }
+};
+
+/**
  * @param  {Store} store
  * @param  {any} persistor
  * @param  {History} history
  * @param  {string} windowName
  */
 const RootRouter = ({ store, persistor, history, windowName }: IProps) => {
+  handleLoggerSetting();
+
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>

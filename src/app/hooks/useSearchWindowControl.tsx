@@ -5,6 +5,7 @@ import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';
 import useKey from '../../use-key-capture/src';
 import { IPCMainEnum, IPCRendererEnum } from '../ipc/ipcEventEnum';
+import { isWithCtrlOrCmd } from '../utils';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -437,6 +438,11 @@ const useSearchWindowControl = ({
 
     let { selectedItemIdx } = indexInfo;
 
+    const ctrlOrCmdKeyPressed = isWithCtrlOrCmd({
+      isWithCmd: keyData.isWithMeta,
+      isWithCtrl: keyData.isWithCtrl,
+    });
+
     if (keyData.isNumber && (modifiers.cmd || modifiers.ctrl)) {
       await onHandleReturnByNumberKey(Number(input));
     } else if (keyData.isEnter) {
@@ -455,10 +461,13 @@ const useSearchWindowControl = ({
       autoCompleteHandler(items[selectedItemIdx]);
     } else if (keyData.isShift && !keyData.key) {
       quicklookHandler(items[selectedItemIdx]);
-    } else if (keyData.isWithCtrl && input && input.toUpperCase() === 'L') {
+    } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'L') {
       showTextLargeTypeHandler(items[selectedItemIdx]);
-    } else if (keyData.isWithCtrl && input && input.toUpperCase() === 'C') {
+    } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'C') {
       itemCopyHandler(items[selectedItemIdx]);
+    } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
+      // To update items, trigger normal event
+      handleNormalInput('', clipboard.readText());
     } else if (keyData.isArrowLeft || keyData.isArrowRight) {
       // Skip
     }

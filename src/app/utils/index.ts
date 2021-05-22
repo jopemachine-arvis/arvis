@@ -7,6 +7,7 @@ import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 import { sleep } from './sleep';
 import { applyAlphaColor } from './applyAlphaColor';
+import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 
 export {
   applyAlphaColor,
@@ -17,5 +18,6 @@ export {
   checkFileExists,
   extractJson,
   isSupportedImageFormat,
+  isWithCtrlOrCmd,
   getRandomColor,
 };
