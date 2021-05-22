@@ -50,8 +50,8 @@ const configureStore = (initialState?: StateType) => {
     collapsed: true,
   });
 
-  // Skip redux logs in console during the tests
-  if (process.env.NODE_ENV !== 'test') {
+  // Redux logging only enabled in development
+  if (process.env.NODE_ENV === 'development') {
     middleware.push(logger);
   }
 

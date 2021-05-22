@@ -1,7 +1,13 @@
 import { BrowserWindow, Menu, MenuItem, app } from 'electron';
 
 class SearchbarContextMenu extends Menu {
-  constructor({ preferenceWindow }: { preferenceWindow: BrowserWindow }) {
+  constructor({
+    preferenceWindow,
+    searchWindow,
+  }: {
+    preferenceWindow: BrowserWindow;
+    searchWindow: BrowserWindow;
+  }) {
     super();
 
     super.append(
@@ -11,6 +17,16 @@ class SearchbarContextMenu extends Menu {
         toolTip: 'Open Preference window',
         click() {
           preferenceWindow.show();
+        },
+      })
+    );
+    super.append(
+      new MenuItem({
+        type: 'normal',
+        label: 'Open Debugger Window',
+        toolTip: 'Open Search window Debugger Window',
+        click() {
+          searchWindow.webContents.openDevTools();
         },
       })
     );
