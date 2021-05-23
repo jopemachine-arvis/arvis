@@ -100,11 +100,9 @@ export default function Appearance() {
   };
 
   const importTheme = (themePath: string) => {
-    console.log('e');
     fse
       .readJson(themePath)
       .then((themeJson) => {
-        console.log('d');
         configChangeHandler(
           createFormEvent(themeJson.icon_right_margin),
           UIActionTypes.SET_ICON_RIGHT_MARGIN
