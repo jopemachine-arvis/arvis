@@ -37,5 +37,5 @@ export default ({
 
   const [width] = searchWindow.getSize();
 
-  searchWindow.setSize(width, heightToSet);
+  searchWindow.setBounds({ width, height: heightToSet });
 };
