@@ -12,8 +12,10 @@ Arvis module not directly related to electron, renderer
 
 ## Build from sources
 
-* [Macos](./documents/build-macos.md)
 * [Windows](./documents/build-windows.md)
+* [Macos](./documents/build-macos.md)
+* [Linux](./documents/build-linux.md)
+
 
 ## iohook config
 

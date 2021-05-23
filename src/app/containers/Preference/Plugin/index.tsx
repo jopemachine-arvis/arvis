@@ -465,7 +465,7 @@ export default function Plugin() {
               style={{
                 height: 260,
               }}
-              value={pluginDescription}
+              value={pluginReadme}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setPluginReadme(e.currentTarget.value);
               }}
