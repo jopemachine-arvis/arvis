@@ -3,3 +3,7 @@
     border: 1px solid #585C67;
     box-shadow: 0 0 10px #585C67 !important;
 }
+
+.styledInput::placeholder {
+    font-size: 12px;
+}
