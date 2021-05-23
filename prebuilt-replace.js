@@ -9,7 +9,7 @@ const { sep } = path;
 const binarys = {
   darwin: ['electron-v85-darwin-x64'],
   win32: ['electron-v85-win32-ia32', 'electron-v85-win32-x64'],
-  linux: [],
+  linux: ['electron-v85-linux-x64'],
 };
 
 const sourcePath = `.${sep}iohook-prebuilts${sep}builds`;
