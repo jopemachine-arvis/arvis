@@ -3,8 +3,8 @@ import log from 'electron-log';
 
 export default class AppUpdater {
   constructor() {
-    log.transports.file.level = 'info';
     autoUpdater.logger = log;
+    console.log('Current version', autoUpdater.currentVersion);
     autoUpdater.checkForUpdatesAndNotify();
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 /* eslint global-require: off, no-console: off */
 
 /**
@@ -22,6 +23,7 @@ import {
 import { initIPCHandler } from './app/ipc/mainProcessEventHandler';
 import { startFileWatcher } from './app/helper/workflowConfigFileWatcher';
 import installExtensions from './app/config/extensionInstaller';
+import AppUpdater from './app/config/appUpdater';
 
 let preferenceWindow: BrowserWindow | null = null;
 let searchWindow: BrowserWindow | null = null;
@@ -86,6 +88,10 @@ app.on('ready', async () => {
     ) {
       installExtensions();
       searchWindow.webContents.openDevTools({ mode: 'undocked' });
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+      new AppUpdater();
     }
 
     startFileWatcher({ searchWindow, preferenceWindow });

@@ -1,9 +1,7 @@
-/* eslint-disable no-new */
 import path from 'path';
 import { BrowserWindow } from 'electron';
 import constants from '../constants';
 import MenuBuilder from '../components/menus';
-import AppUpdater from '../config/appUpdater';
 
 const createPreferenceWindow = ({
   trayBuilder,
@@ -56,8 +54,6 @@ const createPreferenceWindow = ({
 
   const menuBuilder = new MenuBuilder(preferenceWindow);
   menuBuilder.buildMenu();
-
-  new AppUpdater();
 
   return preferenceWindow;
 };
