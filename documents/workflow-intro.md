@@ -14,7 +14,7 @@ and the items returned by the script appear in searchWindow, and the `action` is
 
 `Hotkey` binds a specific key combination to a particular `action`.
 
-Arvis also supports "double" modifier key combinations (e.g. double cmd, double ctrl..)
+Arvis also supports "Double" modifier key combinations (e.g. `Double cmd`, `Double ctrl`..)
 
 ## Trigger
 
@@ -23,6 +23,12 @@ Arvis also supports "double" modifier key combinations (e.g. double cmd, double 
 ## Action
 
 [Click me to check Action](./action-description.md)
+
+## Scriptfilter JSON format
+
+Check the format of `scriptfilter` to use `scriptfilter` in `workflow`.
+
+[Click me to check Scriptfilter JSON format](./scriptfilter-json-format-description.md)
 
 ## Workflow links
 

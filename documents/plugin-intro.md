@@ -4,8 +4,7 @@ You can replace repetitive task with using `workflow`.
 
 However, `workflow` cannot create tasks such as fuzzy file search in the arvis search window without trigger.
 
-`plugin` allow you to customize features that are usually provided as `built-in features`.
-
+`plugin` allows you to customize features that are usually provided as `built-in features`.
 
 ## Differences between plugins and workflows
 
@@ -17,7 +16,10 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 
 * `plugin` has cannot define `action` in json file unlike `workflow`
 
-* You can use async await statement in plugin, but do not recommend to put heavy asynchronous logic in the `plugin`.
+* You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`. (it may slow down performance of Arvis)
+If you should do, consider replacing it with `workflow`
+
+* Each plugin item is treated like `keyword`.
 
 ## Plugin links
 

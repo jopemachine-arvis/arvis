@@ -52,7 +52,9 @@ A additional description of the command to display in the search window.
 
 type: `boolean`
 
-Indicates if space is required after the command to execute it
+Indicates if space is required after the command to execute it.
+
+If `withspace` is true, the action can only be run if space exists.
 
 ## arg_type
 

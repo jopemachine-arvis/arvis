@@ -20,7 +20,7 @@ export default class TrayBuilder {
 
   trayTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
     {
-      label: 'Open Preference Window',
+      label: 'Preference..',
       type: 'normal',
       click: () => {
         if (this.preferenceWindow === null) {
@@ -38,7 +38,7 @@ export default class TrayBuilder {
       },
     },
     {
-      label: 'Show Debugging Window',
+      label: 'Open Debugging Window',
       type: 'normal',
       click: () => {
         if (this.searchWindow) {
@@ -50,7 +50,7 @@ export default class TrayBuilder {
       type: 'separator',
     },
     {
-      label: 'Quit app',
+      label: 'Quit Arvis',
       type: 'normal',
       click: () => {
         app.quit();

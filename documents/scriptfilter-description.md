@@ -56,19 +56,21 @@ If `title` is not set, command will be `title`.
 
 type: `string`
 
-Each time a query changes, the script specified in script_filter is executed again to update the items.
+Each time a query changes, the script specified in `script_filter` is executed again to update the items.
 
 ## withspace
 
 type: `boolean`
 
-Indicates if space is required after the command to execute it
+Indicates if space is required after the command to execute it.
+
+If `withspace` is true, the action can only be run if space exists.
 
 ## running_subtext
 
 type: `string`
 
-Indicate `running_subtext` instead of `subtitle` while script_filter is running
+Indicate `running_subtext` instead of `subtitle` while specified `script_filter` is running.
 
 ## arg_type
 
