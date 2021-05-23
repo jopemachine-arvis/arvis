@@ -287,7 +287,7 @@ export const initIPCHandler = ({
    * @summary Used to popup context menu
    */
   const popupSearchbarItemMenu = (e: IpcMainEvent) => {
-    new SearchbarContextMenu({ preferenceWindow }).popup();
+    new SearchbarContextMenu({ preferenceWindow, searchWindow }).popup();
   };
 
   /**

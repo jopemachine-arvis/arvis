@@ -23,3 +23,13 @@ Arvis also supports "double" modifier key combinations (e.g. double cmd, double 
 ## Action
 
 [Click me to check Action](./action-description.md)
+
+## Workflow links
+
+[Click me to check arvis-workflows](./workflow-links.md)
+
+## Plugin
+
+If you want to put your script as javascript module, you can try to build `plugin`.
+
+[Click me to check Plugin](./plugin-intro.md)

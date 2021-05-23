@@ -70,6 +70,16 @@ class WorkflowItemContextMenu extends Menu {
         },
       })
     );
+    super.append(
+      new MenuItem({
+        type: 'normal',
+        label: 'Open arvis-workflow.json',
+        toolTip: 'Open arvis-workflow.json of the selected workflow',
+        click() {
+          open(`${workflowPath}${path.sep}arvis-workflow.json`);
+        },
+      })
+    );
   }
 }
 
