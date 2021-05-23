@@ -118,7 +118,6 @@ export default function Workflow() {
       e: Electron.IpcRendererEvent,
       { bundleId, enabled }: { bundleId: string; enabled: string }
     ) => {
-      // 'setStoreAvailable(true)' is fired in arvis-core when async operations are done.
       setStoreAvailable(false);
       const targetPath = Core.path.getWorkflowConfigJsonPath(bundleId);
       fse

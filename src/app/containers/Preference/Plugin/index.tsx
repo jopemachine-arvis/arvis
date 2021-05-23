@@ -114,9 +114,8 @@ export default function Plugin() {
       e: Electron.IpcRendererEvent,
       { bundleId, enabled }: { bundleId: string; enabled: string }
     ) => {
-      // 'setStoreAvailable(true)' is fired in arvis-core when async operations are done.
       setStoreAvailable(false);
-      const targetPath = Core.path.getPluginInstalledPath(bundleId);
+      const targetPath = Core.path.getPluginConfigJsonPath(bundleId);
       fse
         .readJson(targetPath)
         .then(async (json) => {
