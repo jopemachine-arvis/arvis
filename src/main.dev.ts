@@ -61,7 +61,7 @@ if (
   require('electron-debug')();
 } else {
   // The below code could also be used for testing in production if needed
-  // require('electron-debug')();
+  require('electron-debug')();
 }
 
 app.disableHardwareAcceleration();
@@ -87,7 +87,10 @@ app.on('ready', async () => {
       process.env.DEBUG_PROD === 'true'
     ) {
       installExtensions();
-      searchWindow.webContents.openDevTools({ mode: 'undocked' });
+      searchWindow.webContents.openDevTools({
+        mode: 'undocked',
+        activate: true,
+      });
     }
 
     if (process.env.NODE_ENV === 'production') {

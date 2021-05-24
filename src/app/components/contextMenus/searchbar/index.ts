@@ -26,7 +26,10 @@ class SearchbarContextMenu extends Menu {
         label: 'Open Debugger Window',
         toolTip: 'Open Search window Debugger Window',
         click() {
-          searchWindow.webContents.openDevTools();
+          searchWindow.webContents.openDevTools({
+            mode: 'undocked',
+            activate: true,
+          });
         },
       })
     );
