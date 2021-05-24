@@ -21,6 +21,28 @@ If you should do, consider replacing it with `workflow`
 
 * Each plugin item is treated like `keyword`.
 
+## arvis-plugin.json format
+
+`arvis-plugin.json` format is very similar with `arvis-workflow.json` format.
+
+The only difference is that there is `action` right away instead of `commands`.
+
+### Action
+
+[Click me to check Action](./action-description.md)
+
+## Available Environment variable
+
+Both `workflows` and `plugin` set environment variables when running scripts.
+
+You can use these variables in your script if needed.
+
+[Click me to check Environment variables](./extension-env-description.md)
+
+## Workflow
+
+[Click me to check Workflow](./workflow-intro.md)
+
 ## Plugin links
 
 [Click me to check arvis-plugins](./plugin-links.md)
