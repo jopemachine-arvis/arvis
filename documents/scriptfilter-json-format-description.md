@@ -82,7 +82,7 @@ type: `object`
 
 required: `false`
 
-You can change the title or subtitle to display a different string while the modifier key is pressed like below way.
+You can replace some attributes with different value while the modifier key is pressed like below way.
 
 ```js
 mods: {
@@ -102,3 +102,7 @@ mods: {
 type: `object`
 
 required: `false`
+
+The key-value pairs in the `variables` object are put in form of `{var:key} = value`.
+
+The difference with arg is that the key becomes `{var:key}`

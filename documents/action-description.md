@@ -2,6 +2,10 @@
 
 You can use below predefined actions.
 
+If there is one more action in `action array`, the actions are all executed sequentially.
+
+But don't put other actions together when you put `trigger` in `action`.
+
 ## script
 
 Execute script through [execa](https://github.com/sindresorhus/execa)
@@ -254,15 +258,124 @@ required: `false`
 Example :
 
 ```json
-
+{
+    "type": "scriptfilter",
+    "command": "enct",
+    "title": "enct",
+    "subtitle": "Select tag and enter note content to create.",
+    "script_filter": "./node_modules/.bin/run-node searchTag.js '{query}' --create",
+    "action": [
+        {
+            "modifiers": "normal",
+            "type": "keyword",
+            "title": "Create Note..",
+            "subtitle": "Please enter note content to create.",
+            "action": [
+                {
+                    "modifiers": "normal",
+                    "type": "script",
+                    "script": "./node_modules/.bin/run-node createNoteWithTag.js '{query}'",
+                    "action": [
+                      ...
+                    ]
+                }
+            ]
+        }
+    ]
+},
 ```
+
+### type
+
+type: `string`
+
+required: `true`
+
+### title
+
+type: `string`
+
+required: `true`
+
+The biggest text in the item.
+
+### subtitle
+
+type: `string`
+
+required: `false`
+
+A additional description of the command to display in the search window.
+
+### modifiers
+
+type: `string (enum)`
+
+required: `false`
+
+### withspace
+
+type: `boolean`
+
+required: `false`
+
+Indicates if space is required after the command to execute it.
+
+If `withspace` is true, the action can only be run if space exists.
+
+### arg_type
+
+type: `string (enum)`
+
+Possible values: `required`, `no`, `optional`.
+
+If `arg_type` is `required`, the action is triggered only when `arg` is given.
+
+If `arg_type` is `no`, the action is triggered only when `arg` is not given.
+
+If `arg_type` is `optional`, the action is triggered with or without `arg`
 
 ## scriptfilter
 
 `scriptfilter` is a trigger, but it can also be used as an `action`.
 
+Overlapping scriptfilter might be useful.
+
 Example :
 
 ```json
-
+{
+    "type": "scriptfilter",
+    "command": "chf",
+    "subtitle": "Search chrome bookmark folder",
+    "script_filter": "node src/fetchBookmarkFolder.js '{query}'",
+    "action": [
+        {
+            "modifiers": "normal",
+            "type": "args",
+            "arg": "{var:folder}",
+            "action": [
+                {
+                    "modifiers": "normal",
+                    "title": "",
+                    "type": "scriptfilter",
+                    "script_filter": "node src/fetchBookmark.js '{query}'",
+                    "action": [
+                      ...
+                    ]
+                }
+            ]
+        }
+    ]
+}
 ```
+
+### type
+
+### title
+
+### subtitle
+
+### action
+
+### modifiers
