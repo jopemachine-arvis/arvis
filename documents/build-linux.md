@@ -1,6 +1,6 @@
 # How to build on Linux
 
-## how to build
+## How to build
 
 1. Clone this repository
 

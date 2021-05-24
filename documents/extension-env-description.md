@@ -1,6 +1,6 @@
 # Extension environment variables
 
-## arvis extension environment variables
+## Arvis extension environment variables
 
 ### arvis_version
 

@@ -1,6 +1,6 @@
 # How to build on Macos
 
-## how to build
+## How to build
 
 1. Clone this repository
 
