@@ -81,9 +81,9 @@ const getWorkflowHotkeyPressHandler = ({
   // from the Singleton object in the renderer process.
   // So, methods like onInputShouldBeUpdate cannot be used here
   // and GUI custom actions (notifications) should be handled here
-  const mainProcWorkManager = Core.WorkManager.getInstance();
+  Core.WorkManager.getInstance();
 
-  mainProcWorkManager.handleAction({
+  Core.handleAction({
     actions: [hotKeyAction],
     queryArgs: {},
     modifiersInput: {},

@@ -11,6 +11,7 @@ const productionPlugins = [
   require('@babel/plugin-transform-react-constant-elements'),
   require('@babel/plugin-transform-react-inline-elements'),
   require('babel-plugin-transform-react-remove-prop-types'),
+  require('@babel/plugin-transform-runtime'),
 ];
 
 module.exports = (api) => {
@@ -21,7 +22,11 @@ module.exports = (api) => {
   return {
     presets: [
       // @babel/preset-env will automatically target our browserslist targets
-      require('@babel/preset-env'),
+      require('@babel/preset-env', {
+        targets: {
+          esmodules: true,
+        },
+      }),
       require('@babel/preset-typescript'),
       [require('@babel/preset-react'), { development }],
     ],
