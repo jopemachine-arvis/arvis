@@ -53,7 +53,7 @@ const windowRoute = (windowName: string) => {
 const handleLoggerSetting = () => {
   if (process.env.NODE_ENV === 'development') {
     transports.file.level = 'debug';
-    Core.logger.setLogLevels([LogType.debug, LogType.error]);
+    Core.logger.setLogLevels([LogType.debug, LogType.info, LogType.error]);
   } else {
     transports.file.level = 'info';
     Core.logger.setLogLevels([LogType.info, LogType.error]);
