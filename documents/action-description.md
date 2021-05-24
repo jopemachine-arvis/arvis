@@ -246,3 +246,23 @@ required: `true`
 type: `string`
 
 required: `false`
+
+## keyword
+
+`keyword` is a trigger, but it can also be used as an `action`.
+
+Example :
+
+```json
+
+```
+
+## scriptfilter
+
+`scriptfilter` is a trigger, but it can also be used as an `action`.
+
+Example :
+
+```json
+
+```

@@ -12,9 +12,9 @@ Arvis module not directly related to electron, renderer
 
 ## Build from sources
 
-* [Windows](./documents/build-windows.md)
-* [Macos](./documents/build-macos.md)
-* [Linux](./documents/build-linux.md)
+* [Windows](./build-windows.md)
+* [Macos](./build-macos.md)
+* [Linux](./build-linux.md)
 
 
 ## iohook config
@@ -25,4 +25,4 @@ So, If `node` or `electron` version is updated, the iohook config of package.jso
 
 ## config file pathes
 
-[Click to view config file pathes](./documents/config-file-pathes.md)
+[Click to view config file pathes](./config-file-pathes.md)

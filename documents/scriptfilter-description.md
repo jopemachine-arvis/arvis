@@ -88,9 +88,9 @@ If `arg_type` is `optional`, the action could be triggered with or without `arg`
 
 type: `Action (object)`
 
-Action to be triggered by the keyword.
+Action to be triggered by the `scriptfilter`.
 
-[Click to view "action" type](./documents/action-description.md)
+[Click to view "action" type](./action-description.md)
 
 ## modifiers
 
@@ -98,4 +98,4 @@ type: `string (enum)`
 
 Specific modifier key must be pressed to run
 
-[Click to view "modifiers"](./documents/modifiers-description.md)
+[Click to view "modifiers"](./modifiers-description.md)

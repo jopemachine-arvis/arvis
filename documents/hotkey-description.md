@@ -52,7 +52,7 @@ Hotkey to register action
 
 type: `Action (object)`
 
-Action to be triggered by the keyword.
+Action to be triggered by the `hotkey`.
 
 [Click to view "action" type](./documents/action-description.md)
 

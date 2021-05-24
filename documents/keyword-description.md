@@ -66,13 +66,13 @@ If `arg_type` is `required`, the action is triggered only when `arg` is given.
 
 If `arg_type` is `no`, the action is triggered only when `arg` is not given.
 
-If `arg_type` is `optional`, the action is triggered with or without arg
+If `arg_type` is `optional`, the action is triggered with or without `arg`
 
 ## action
 
 type: `Action (object)`
 
-Action to be triggered by the keyword.
+Action to be triggered by the `keyword`.
 
 [Click to view "action" type](./documents/action-description.md)
 
