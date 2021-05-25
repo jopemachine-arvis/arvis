@@ -43,7 +43,7 @@ const windowRoute = (windowName: string) => {
     case 'quicklookWindow':
       return <QuicklookContainer />;
     default:
-      throw new Error(`windowName is not proper: ${windowName}`);
+      throw new Error(`windowName is not proper: '${windowName}'`);
   }
 };
 
