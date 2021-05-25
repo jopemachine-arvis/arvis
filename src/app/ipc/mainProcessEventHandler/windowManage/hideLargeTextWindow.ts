@@ -4,6 +4,6 @@ import { WindowManager } from '../../../windows';
 /**
  * @summary
  */
-export const hideLargeTextWindow = async (e: IpcMainEvent) => {
+export const hideLargeTextWindow = (e: IpcMainEvent) => {
   WindowManager.getInstance().getLargeTextWindow().hide();
 };

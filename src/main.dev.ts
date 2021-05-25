@@ -1,3 +1,4 @@
+/* eslint-disable import/no-mutable-exports */
 /* eslint-disable no-new */
 /* eslint global-require: off, no-console: off */
 
@@ -13,6 +14,7 @@ import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
+import ioHook from 'iohook';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {
@@ -27,8 +29,8 @@ import MenuBuilder from './app/components/menus';
 ElectronStore.initRenderer();
 Core.path.initializePath();
 
-// Below tray variable should be here to exclude itself from the GC targets
-let tray;
+// Below tray variable should be here and be exported to exclude itself from the GC targets
+export let tray: Electron.Tray;
 
 // If run a specific script with Electron, app name would be Electron. (Not Arvis)
 // To do:: In production, The storage location of the setup file should be Arvis, not Electron.
@@ -55,11 +57,16 @@ app.disableHardwareAcceleration();
 app.on('before-quit', () => {
   WindowManager.getInstance().windowAllClose();
   cleanUpIPCHandlers();
+  ioHook.removeAllListeners();
+  ioHook.unload();
   app.exit();
 });
 
 app.on('ready', async () => {
   const onReadyHandler = () => {
+    const menuBuilder = new MenuBuilder();
+    menuBuilder.buildMenu();
+
     const trayIconPath = path.join(
       __dirname,
       '../',
@@ -69,15 +76,10 @@ app.on('ready', async () => {
     );
     const trayBuilder = new TrayBuilder(trayIconPath);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     tray = trayBuilder.buildTray();
-
-    const menuBuilder = new MenuBuilder();
-    menuBuilder.buildMenu();
 
     const windowManager = WindowManager.getInstance();
 
-    // Open debugging tool by 'undocked'
     if (
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'

@@ -4,6 +4,6 @@ import { WindowManager } from '../../../windows';
 /**
  * @summary
  */
-export const hideQuicklookWindow = async (e: IpcMainEvent) => {
+export const hideQuicklookWindow = (e: IpcMainEvent) => {
   WindowManager.getInstance().getQuicklookWindow().hide();
 };

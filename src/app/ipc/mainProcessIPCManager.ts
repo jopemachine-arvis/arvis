@@ -1,30 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ipcMain } from 'electron';
 import { IPCRendererEnum } from './ipcEventEnum';
-import {
-  dispatchAction,
-  getSystemFont,
-  hideLargeTextWindow,
-  hideQuicklookWindow,
-  hideSearchWindow,
-  importTheme,
-  openPluginInstallFileDialog,
-  openWfConfFileDialog,
-  openYesnoDialog,
-  popupPluginItemMenu,
-  popupSearchbarItemMenu,
-  popupWorkflowItemMenu,
-  renewWorkflow,
-  resizeSearchWindowHeight,
-  saveFile,
-  setAutoLaunch,
-  setGlobalShortcut,
-  setSearchWindowWidth,
-  showErrorDialog,
-  showLargeTextWindow,
-  showNotification,
-  showQuicklookWindow,
-} from './mainProcessEventHandler';
+
+// To prevent SIGSEV errors, each module should be imported directly not through index.ts
+import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
+import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
+import { hideQuicklookWindow } from './mainProcessEventHandler/windowManage/hideQuicklookWindow';
+import { resizeSearchWindowHeight } from './mainProcessEventHandler/windowManage/resizeSearchWindowHeight';
+import { setSearchWindowWidth } from './mainProcessEventHandler/windowManage/setSearchWindowWidth';
+import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/showLargeTextWindow';
+import { showQuicklookWindow } from './mainProcessEventHandler/windowManage/showQuicklookWindow';
+
+import { openPluginInstallFileDialog } from './mainProcessEventHandler/modal/openPluginInstallFileDialog';
+import { openWfConfFileDialog } from './mainProcessEventHandler/modal/openWfConfFIleDialog';
+import { openYesnoDialog } from './mainProcessEventHandler/modal/openYesnoDialog';
+import { saveFile } from './mainProcessEventHandler/modal/saveFile';
+import { showErrorDialog } from './mainProcessEventHandler/modal/showErrorDialog';
+
+import { dispatchAction } from './mainProcessEventHandler/config/dispatchAction';
+import { getSystemFont } from './mainProcessEventHandler/config/getSystemFont';
+import { importTheme } from './mainProcessEventHandler/config/importTheme';
+import { setAutoLaunch } from './mainProcessEventHandler/config/setAutoLaunch';
+import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalShortcut';
+
+import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
+import { showNotification } from './mainProcessEventHandler/showNotification';
+
+import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
+import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
+import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 
 /**
  * @summary Register ipc callbacks
@@ -44,7 +47,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);
-  ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
   ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
@@ -58,38 +60,13 @@ export const initIPCHandlers = () => {
     IPCRendererEnum.resizeSearchWindowHeight,
     resizeSearchWindowHeight
   );
+
+  ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
 };
 
 /**
  * @summary
  */
 export const cleanUpIPCHandlers = () => {
-  ipcMain.off(IPCRendererEnum.dispatchAction, dispatchAction);
-  ipcMain.off(IPCRendererEnum.getSystemFont, getSystemFont);
-  ipcMain.off(IPCRendererEnum.hideLargeTextWindow, hideLargeTextWindow);
-  ipcMain.off(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
-  ipcMain.off(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
-  ipcMain.off(IPCRendererEnum.importTheme, importTheme);
-  ipcMain.off(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
-  ipcMain.off(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
-  ipcMain.off(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
-  ipcMain.off(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
-  ipcMain.off(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
-  ipcMain.off(IPCRendererEnum.renewWorkflow, renewWorkflow);
-  ipcMain.off(IPCRendererEnum.saveFile, saveFile);
-  ipcMain.off(IPCRendererEnum.setAutoLaunch, setAutoLaunch);
-  ipcMain.off(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
-  ipcMain.off(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
-  ipcMain.off(IPCRendererEnum.showErrorDialog, showErrorDialog);
-  ipcMain.off(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
-  ipcMain.off(IPCRendererEnum.showNotification, showNotification);
-  ipcMain.off(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
-  ipcMain.off(
-    IPCRendererEnum.openPluginInstallFileDialog,
-    openPluginInstallFileDialog
-  );
-  ipcMain.off(
-    IPCRendererEnum.resizeSearchWindowHeight,
-    resizeSearchWindowHeight
-  );
+  ipcMain.removeAllListeners();
 };
