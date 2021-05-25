@@ -48,17 +48,13 @@ export default function PreferenceWindow() {
 
   // To do :: Move below logics to RootRouter
   const registerAllGlobalHotkey = () => {
-    Core.findHotkeys()
-      .then((hotkeys) => {
-        ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-          callbackTable: {
-            [toggle_search_window_hotkey]: 'toggleSearchWindow',
-          },
-          workflowHotkeyTbl: JSON.stringify(hotkeys),
-        });
-        return null;
-      })
-      .catch(console.error);
+    const hotkeys = Core.findHotkeys();
+    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+      callbackTable: {
+        [toggle_search_window_hotkey]: 'toggleSearchWindow',
+      },
+      workflowHotkeyTbl: JSON.stringify(hotkeys),
+    });
   };
 
   const loadWorkflowsInfo = useCallback(() => {
@@ -66,7 +62,9 @@ export default function PreferenceWindow() {
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
-    return Core.renewPlugins({ initializePluginWorkspace: false });
+    return Core.renewPlugins({
+      initializePluginWorkspace: false,
+    });
   }, []);
 
   /**
@@ -81,7 +79,10 @@ export default function PreferenceWindow() {
     },
 
     renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
-      Core.renewPlugins({ initializePluginWorkspace: false, bundleId });
+      Core.renewPlugins({
+        initializePluginWorkspace: false,
+        bundleId,
+      });
     },
   };
 

@@ -16,7 +16,9 @@ export default class TrayBuilder {
   trayTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
     {
       label: 'Preference..',
+      accelerator: `${process.platform === 'darwin' ? 'Cmd' : 'Ctrl'} + ,`,
       type: 'normal',
+      toolTip: 'Open Preference Window',
       click: () => {
         const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
         preferenceWindow.show();
@@ -26,6 +28,8 @@ export default class TrayBuilder {
     {
       label: 'Open Debugging Window',
       type: 'normal',
+      accelerator: 'F11',
+      toolTip: 'Open Debugging Window',
       click: () => {
         const searchWindow = WindowManager.getInstance().getSearchWindow();
         searchWindow.webContents.toggleDevTools();
@@ -37,6 +41,8 @@ export default class TrayBuilder {
     {
       label: 'Quit Arvis',
       type: 'normal',
+      accelerator: `${process.platform === 'darwin' ? 'Cmd' : 'Ctrl'} + Q`,
+      toolTip: 'Quit Arvis',
       click: () => {
         app.quit();
       },
