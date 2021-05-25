@@ -1,13 +1,8 @@
-import { BrowserWindow, Menu, MenuItem, app } from 'electron';
+import { Menu, MenuItem, app } from 'electron';
+import { WindowManager } from '../../../windows';
 
 class SearchbarContextMenu extends Menu {
-  constructor({
-    preferenceWindow,
-    searchWindow,
-  }: {
-    preferenceWindow: BrowserWindow;
-    searchWindow: BrowserWindow;
-  }) {
+  constructor() {
     super();
 
     super.append(
@@ -16,7 +11,7 @@ class SearchbarContextMenu extends Menu {
         label: 'Preferences..',
         toolTip: 'Open Preference window',
         click() {
-          preferenceWindow.show();
+          WindowManager.getInstance().getPreferenceWindow().show();
         },
       })
     );
@@ -26,10 +21,12 @@ class SearchbarContextMenu extends Menu {
         label: 'Open Debugger Window',
         toolTip: 'Open Search window Debugger Window',
         click() {
-          searchWindow.webContents.openDevTools({
-            mode: 'undocked',
-            activate: true,
-          });
+          WindowManager.getInstance()
+            .getSearchWindow()
+            .webContents.openDevTools({
+              mode: 'undocked',
+              activate: true,
+            });
         },
       })
     );

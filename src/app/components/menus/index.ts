@@ -1,15 +1,12 @@
-import { Menu, BrowserWindow } from 'electron';
+/* eslint-disable class-methods-use-this */
+import { Menu } from 'electron';
 
 import getWindowsTemplate from './windows';
 import getDarwinTemplate from './darwin';
 
+import { WindowManager } from '../../windows';
+
 export default class MenuBuilder {
-  preferenceWindow: BrowserWindow;
-
-  constructor(preferenceWindow: BrowserWindow) {
-    this.preferenceWindow = preferenceWindow;
-  }
-
   buildMenu() {
     if (
       process.env.NODE_ENV === 'development' ||
@@ -30,25 +27,28 @@ export default class MenuBuilder {
   }
 
   setupDevelopmentEnvironment() {
-    this.preferenceWindow.webContents.on('context-menu', (_, props) => {
+    const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
+    preferenceWindow.webContents.on('context-menu', (_, props) => {
       const { x, y } = props;
 
       Menu.buildFromTemplate([
         {
           label: 'Inspect element',
           click: () => {
-            this.preferenceWindow.webContents.inspectElement(x, y);
+            preferenceWindow.webContents.inspectElement(x, y);
           },
         },
-      ]).popup({ window: this.preferenceWindow });
+      ]).popup({ window: preferenceWindow });
     });
   }
 
   buildDarwinTemplate() {
-    return getDarwinTemplate(this.preferenceWindow);
+    return getDarwinTemplate(WindowManager.getInstance().getPreferenceWindow());
   }
 
   buildDefaultTemplate() {
-    return getWindowsTemplate(this.preferenceWindow);
+    return getWindowsTemplate(
+      WindowManager.getInstance().getPreferenceWindow()
+    );
   }
 }

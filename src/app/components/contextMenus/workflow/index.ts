@@ -1,17 +1,16 @@
-import { BrowserWindow, dialog, Menu, MenuItem } from 'electron';
+import { dialog, Menu, MenuItem } from 'electron';
 import open from 'open';
 import path from 'path';
 import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
+import { WindowManager } from '../../../windows';
 
 class WorkflowItemContextMenu extends Menu {
   constructor({
     workflowPath,
     workflowEnabled,
-    preferenceWindow,
   }: {
     workflowPath: string;
     workflowEnabled: boolean;
-    preferenceWindow: BrowserWindow;
   }) {
     super();
     const bundleId = workflowPath.split(path.sep).pop();
@@ -24,10 +23,12 @@ class WorkflowItemContextMenu extends Menu {
           ? 'Disable selected workflow'
           : 'Enable workflow',
         click() {
-          preferenceWindow.webContents.send(IPCMainEnum.toggleWorkflowEnabled, {
-            bundleId,
-            enabled: workflowEnabled,
-          });
+          WindowManager.getInstance()
+            .getPreferenceWindow()
+            .webContents.send(IPCMainEnum.toggleWorkflowEnabled, {
+              bundleId,
+              enabled: workflowEnabled,
+            });
         },
       })
     );
@@ -46,12 +47,11 @@ class WorkflowItemContextMenu extends Menu {
             })
             .then((ret) => {
               const yesPressed = ret.response === 0;
-              preferenceWindow.webContents.send(
-                IPCMainEnum.openYesnoDialogRet,
-                {
+              WindowManager.getInstance()
+                .getPreferenceWindow()
+                .webContents.send(IPCMainEnum.openYesnoDialogRet, {
                   yesPressed,
-                }
-              );
+                });
               return null;
             })
             .catch(console.error);

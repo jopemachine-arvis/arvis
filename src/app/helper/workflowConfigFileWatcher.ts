@@ -1,9 +1,9 @@
 import chokidar from 'chokidar';
 import { Core } from 'arvis-core';
 import path from 'path';
-import { BrowserWindow } from 'electron';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
+import { WindowManager } from '../windows';
 
 /**
  * @summary Initialize watcher.
@@ -14,22 +14,22 @@ import { sleep } from '../utils';
  *              should send a renew request for a second after
  *              because the change should be reflected in the in-memory store.
  */
-export const startFileWatcher = ({
-  searchWindow,
-  preferenceWindow,
-}: {
-  searchWindow: BrowserWindow;
-  preferenceWindow: BrowserWindow;
-}) => {
+export const startFileWatcher = () => {
   /**
    * @param  {string} bundleId?
    * @summary Update store of each singletons for each renderer processes
    */
   const requestRenewWorkflows = (bundleId?: string) => {
-    searchWindow.webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
-    preferenceWindow.webContents.send(IPCMainEnum.renewWorkflow, {
-      bundleId,
-    });
+    const windowManager = WindowManager.getInstance();
+    windowManager
+      .getSearchWindow()
+      .webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
+
+    windowManager
+      .getPreferenceWindow()
+      .webContents.send(IPCMainEnum.renewWorkflow, {
+        bundleId,
+      });
   };
 
   /**
@@ -37,10 +37,16 @@ export const startFileWatcher = ({
    * @summary Update store of each singletons for each renderer processes
    */
   const requestRenewPlugins = (bundleId?: string) => {
-    searchWindow.webContents.send(IPCMainEnum.renewPlugin, { bundleId });
-    preferenceWindow.webContents.send(IPCMainEnum.renewPlugin, {
-      bundleId,
-    });
+    const windowManager = WindowManager.getInstance();
+
+    windowManager
+      .getSearchWindow()
+      .webContents.send(IPCMainEnum.renewPlugin, { bundleId });
+    windowManager
+      .getPreferenceWindow()
+      .webContents.send(IPCMainEnum.renewPlugin, {
+        bundleId,
+      });
   };
 
   /**

@@ -1,19 +1,12 @@
-import { BrowserWindow, screen } from 'electron';
+import { screen } from 'electron';
+import { WindowManager } from '../windows';
 
 /**
  * @summary This is a table of callback functions that always require key binding, such as calling searchWindow.
  */
 export default {
-  toggleSearchWindow: ({
-    preferenceWindow,
-    searchWindow,
-  }: {
-    preferenceWindow: BrowserWindow;
-    searchWindow: BrowserWindow;
-  }) => () => {
-    if (!searchWindow) {
-      throw new Error('"searchWindow" is not defined');
-    }
+  toggleSearchWindow: () => () => {
+    const searchWindow = WindowManager.getInstance().getSearchWindow();
 
     if (searchWindow.isVisible()) {
       searchWindow.hide();

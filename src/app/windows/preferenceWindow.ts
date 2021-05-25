@@ -1,16 +1,13 @@
 import path from 'path';
 import { BrowserWindow } from 'electron';
 import constants from '../constants';
-import MenuBuilder from '../components/menus';
 
 const createPreferenceWindow = ({
-  trayBuilder,
   searchWindow,
 }: {
-  trayBuilder: any;
   searchWindow: BrowserWindow;
 }) => {
-  let preferenceWindow: BrowserWindow | null = new BrowserWindow({
+  const preferenceWindow: BrowserWindow = new BrowserWindow({
     title: 'Arvis',
     show: false,
     skipTaskbar: true,
@@ -33,6 +30,7 @@ const createPreferenceWindow = ({
     query: { window: 'preferenceWindow' },
   });
 
+  // To do:: remove below event handler
   preferenceWindow.webContents.on('did-finish-load', () => {
     if (!preferenceWindow) {
       throw new Error('"preferenceWindow" is not defined');
@@ -45,15 +43,12 @@ const createPreferenceWindow = ({
     }
   });
 
-  trayBuilder.setPreferenceWindow(preferenceWindow);
-  trayBuilder.setSearchWindow(searchWindow);
-
-  preferenceWindow.on('closed', () => {
-    preferenceWindow = null;
+  preferenceWindow.on('close', (e: any) => {
+    e.preventDefault();
+    if (preferenceWindow) {
+      preferenceWindow.hide();
+    }
   });
-
-  const menuBuilder = new MenuBuilder(preferenceWindow);
-  menuBuilder.buildMenu();
 
   return preferenceWindow;
 };

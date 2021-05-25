@@ -4,6 +4,7 @@ import ioHook from 'iohook';
 import { Core } from 'arvis-core';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
+import { WindowManager } from '../windows';
 
 const doubleKeyPressHandler = {
   shift: () => {},
@@ -122,16 +123,14 @@ const registerShortcut = (shortcut: string, callback: () => void) => {
 };
 
 /**
- * @param  {BrowserWindow} searchWindow
  * @param  {any} workflowHotkeyTbl
  */
 const registerWorkflowHotkeys = ({
-  searchWindow,
   workflowHotkeyTbl,
 }: {
-  searchWindow: BrowserWindow;
   workflowHotkeyTbl: any;
 }) => {
+  const searchWindow = WindowManager.getInstance().getSearchWindow();
   const hotkeys = Object.keys(workflowHotkeyTbl);
   for (const hotkey of hotkeys) {
     const cb = () => {
@@ -152,27 +151,21 @@ const registerWorkflowHotkeys = ({
  * @param  {any} workflowHotkeyTbl
  */
 export default ({
-  preferenceWindow,
-  searchWindow,
   callbackTable,
   workflowHotkeyTbl,
 }: {
-  preferenceWindow: BrowserWindow;
-  searchWindow: BrowserWindow;
   callbackTable: any;
   workflowHotkeyTbl: any;
 }) => {
   const shortcuts = Object.keys(callbackTable);
-  registerWorkflowHotkeys({ searchWindow, workflowHotkeyTbl });
+
+  registerWorkflowHotkeys({ workflowHotkeyTbl });
 
   for (const shortcut of shortcuts) {
     // Case of double key type
     const action = callbackTable[shortcut];
 
-    registerShortcut(
-      shortcut,
-      shortcutCallbackTbl[action]({ preferenceWindow, searchWindow })
-    );
+    registerShortcut(shortcut, shortcutCallbackTbl[action]());
   }
 
   // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized

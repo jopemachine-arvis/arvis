@@ -1,17 +1,16 @@
-import { BrowserWindow, dialog, Menu, MenuItem } from 'electron';
+import { dialog, Menu, MenuItem } from 'electron';
 import open from 'open';
 import path from 'path';
 import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
+import { WindowManager } from '../../../windows';
 
 class PluginContextMenu extends Menu {
   constructor({
     pluginPath,
     pluginEnabled,
-    preferenceWindow,
   }: {
     pluginPath: string;
     pluginEnabled: boolean;
-    preferenceWindow: BrowserWindow;
   }) {
     super();
     const bundleId = pluginPath.split(path.sep).pop();
@@ -22,10 +21,12 @@ class PluginContextMenu extends Menu {
         label: pluginEnabled ? `Disable` : 'Enable',
         toolTip: pluginEnabled ? 'Disable selected plugin' : 'Enable plugin',
         click() {
-          preferenceWindow.webContents.send(IPCMainEnum.togglePluginEnabled, {
-            bundleId,
-            enabled: pluginEnabled,
-          });
+          WindowManager.getInstance()
+            .getPreferenceWindow()
+            .webContents.send(IPCMainEnum.togglePluginEnabled, {
+              bundleId,
+              enabled: pluginEnabled,
+            });
         },
       })
     );
@@ -44,12 +45,11 @@ class PluginContextMenu extends Menu {
             })
             .then((ret) => {
               const yesPressed = ret.response === 0;
-              preferenceWindow.webContents.send(
-                IPCMainEnum.openYesnoDialogRet,
-                {
+              WindowManager.getInstance()
+                .getPreferenceWindow()
+                .webContents.send(IPCMainEnum.openYesnoDialogRet, {
                   yesPressed,
-                }
-              );
+                });
               return null;
             })
             .catch(console.error);

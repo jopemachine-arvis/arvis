@@ -12,7 +12,6 @@ import { StateType } from '../redux/reducers/types';
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: (
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       obj: Record<string, any>
     ) => Function;
   }

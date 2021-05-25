@@ -10,44 +10,30 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
 import TrayBuilder from './app/components/tray';
+import { WindowManager } from './app/windows';
 import {
-  createPreferenceWindow,
-  createQuicklookWindow,
-  createSearchWindow,
-  createLargeTextWindow,
-} from './app/windows';
-import { initIPCHandler } from './app/ipc/mainProcessEventHandler';
+  cleanUpIPCHandlers,
+  initIPCHandlers,
+} from './app/ipc/mainProcessIPCManager';
 import { startFileWatcher } from './app/helper/workflowConfigFileWatcher';
 import installExtensions from './app/config/extensionInstaller';
 import AppUpdater from './app/config/appUpdater';
-
-let preferenceWindow: BrowserWindow | null = null;
-let searchWindow: BrowserWindow | null = null;
-let quicklookWindow: BrowserWindow | null = null;
-let largeTextWindow: BrowserWindow | null = null;
-
-const trayIconPath = path.join(
-  __dirname,
-  '../',
-  'assets',
-  'icons',
-  '24x24.png'
-);
-const trayBuilder = new TrayBuilder(trayIconPath);
-trayBuilder.buildTray();
+import MenuBuilder from './app/components/menus';
 
 ElectronStore.initRenderer();
 Core.path.initializePath();
+
+// Below tray variable should be here to exclude itself from the GC targets
+let tray;
 
 // If run a specific script with Electron, app name would be Electron. (Not Arvis)
 // To do:: In production, The storage location of the setup file should be Arvis, not Electron.
 // In development env, setting file should be under /Users/me/Library/Application Support/Electron
 // because app.getPath('userData') return 'Electron' as App name.
-app.name = 'Arvis';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -67,19 +53,29 @@ if (
 app.disableHardwareAcceleration();
 
 app.on('before-quit', () => {
-  if (searchWindow && searchWindow.closable) {
-    searchWindow.close();
-    searchWindow = null;
-    app.exit();
-  }
+  WindowManager.getInstance().windowAllClose();
+  cleanUpIPCHandlers();
+  app.exit();
 });
 
 app.on('ready', async () => {
   const onReadyHandler = () => {
-    quicklookWindow = createQuicklookWindow();
-    largeTextWindow = createLargeTextWindow();
-    searchWindow = createSearchWindow({ quicklookWindow, largeTextWindow });
-    preferenceWindow = createPreferenceWindow({ trayBuilder, searchWindow });
+    const trayIconPath = path.join(
+      __dirname,
+      '../',
+      'assets',
+      'icons',
+      '24x24.png'
+    );
+    const trayBuilder = new TrayBuilder(trayIconPath);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    tray = trayBuilder.buildTray();
+
+    const menuBuilder = new MenuBuilder();
+    menuBuilder.buildMenu();
+
+    const windowManager = WindowManager.getInstance();
 
     // Open debugging tool by 'undocked'
     if (
@@ -87,7 +83,7 @@ app.on('ready', async () => {
       process.env.DEBUG_PROD === 'true'
     ) {
       installExtensions();
-      searchWindow.webContents.openDevTools({
+      windowManager.getSearchWindow().webContents.openDevTools({
         mode: 'undocked',
         activate: true,
       });
@@ -97,27 +93,11 @@ app.on('ready', async () => {
       new AppUpdater();
     }
 
-    startFileWatcher({ searchWindow, preferenceWindow });
-    initIPCHandler({
-      searchWindow,
-      quicklookWindow,
-      preferenceWindow,
-      largeTextWindow,
-    });
+    startFileWatcher();
+    initIPCHandlers();
   };
 
   setTimeout(() => {
     onReadyHandler();
   }, 300);
-});
-
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (preferenceWindow === null) {
-    preferenceWindow = createPreferenceWindow({
-      trayBuilder,
-      searchWindow: searchWindow!,
-    });
-  }
 });

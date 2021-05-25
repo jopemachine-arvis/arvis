@@ -3,47 +3,32 @@ import {
   Menu,
   Tray,
   nativeImage,
-  BrowserWindow,
   MenuItemConstructorOptions,
   MenuItem,
 } from 'electron';
-import { createPreferenceWindow } from '../../windows/preferenceWindow';
+import { WindowManager } from '../../windows';
 
 export default class TrayBuilder {
   trayFilePath: string;
 
   tray: Tray | null = null;
 
-  preferenceWindow: BrowserWindow | null = null;
-
-  searchWindow: BrowserWindow | null = null;
-
   trayTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
     {
       label: 'Preference..',
       type: 'normal',
       click: () => {
-        if (this.preferenceWindow === null) {
-          throw new Error('Preference window is not linked.');
-        } else if (this.preferenceWindow.isDestroyed()) {
-          this.setPreferenceWindow(
-            createPreferenceWindow({
-              trayBuilder: this,
-              searchWindow: this.searchWindow!,
-            })
-          );
-        }
-        this.preferenceWindow.show();
-        this.preferenceWindow.focus();
+        const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
+        preferenceWindow.show();
+        preferenceWindow.focus();
       },
     },
     {
       label: 'Open Debugging Window',
       type: 'normal',
       click: () => {
-        if (this.searchWindow) {
-          this.searchWindow.webContents.toggleDevTools();
-        }
+        const searchWindow = WindowManager.getInstance().getSearchWindow();
+        searchWindow.webContents.toggleDevTools();
       },
     },
     {
@@ -63,22 +48,9 @@ export default class TrayBuilder {
   }
 
   buildTray() {
-    app
-      .whenReady()
-      .then(() => {
-        this.tray = new Tray(nativeImage.createFromPath(this.trayFilePath));
-        const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
-        this.tray.setContextMenu(contextMenu);
-        return null;
-      })
-      .catch(console.error);
-  }
-
-  setPreferenceWindow(preferenceWindow: BrowserWindow) {
-    this.preferenceWindow = preferenceWindow;
-  }
-
-  setSearchWindow(searchWindow: BrowserWindow) {
-    this.searchWindow = searchWindow;
+    this.tray = new Tray(nativeImage.createFromPath(this.trayFilePath));
+    const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
+    this.tray.setContextMenu(contextMenu);
+    return this.tray;
   }
 }

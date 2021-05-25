@@ -13,7 +13,12 @@ const rootReducer = createRootReducer(history);
 
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage(),
+  storage: createElectronStorage({
+    electronStoreOpts: {
+      clearInvalidConfig: true,
+      name: 'arvis-gui-config',
+    },
+  }),
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
