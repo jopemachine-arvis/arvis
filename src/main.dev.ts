@@ -42,15 +42,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
-  require('electron-debug')();
-} else {
-  // The below code could also be used for testing in production if needed
-  require('electron-debug')();
-}
+require('electron-debug')();
 
 app.disableHardwareAcceleration();
 
@@ -62,7 +54,7 @@ app.on('before-quit', () => {
   app.exit();
 });
 
-app.on('ready', async () => {
+app.on('ready', () => {
   const onReadyHandler = () => {
     const menuBuilder = new MenuBuilder();
     menuBuilder.buildMenu();
@@ -75,7 +67,6 @@ app.on('ready', async () => {
       '24x24.png'
     );
     const trayBuilder = new TrayBuilder(trayIconPath);
-
     tray = trayBuilder.buildTray();
 
     const windowManager = WindowManager.getInstance();

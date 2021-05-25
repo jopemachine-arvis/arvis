@@ -16,10 +16,9 @@
     "start:main": "cross-env NODE_ENV=development electron -r ./.erb/scripts/BabelRegister ./src/main.dev.ts --enable-transparent-visuals --disable-gpu",
     "start:renderer": "cross-env NODE_ENV=development webpack serve --config ./.erb/configs/webpack.config.renderer.dev.babel.js",
     "test": "jest",
-    "reb": "rm -rf node_modules && yarn && npm run replace-iohook-prebuilt",
     "replace-core": "rm -rf node_modules/arvis-core && cp -R ../arvis-core node_modules/arvis-core",
     "replace-conv": "rm -rf node_modules/arvis-plist-converter && cp -R ../arvis-plist-converter node_modules/arvis-plist-converter",
-    "replace-iohook-prebuilt": "node prebuilt-replace.js"
+    "replace-iohook-prebuilt": "node iohook-prebuilt-replace.js"
   },
   "keywords": [
     "arvis",
@@ -42,11 +41,11 @@
   "build": {
     "productName": "Arvis",
     "appId": "org.arvis",
+    "copyright": "Copyright © 2021 jopemachine",
     "files": [
       "dist/",
       "node_modules/",
       "app.html",
-      "app.global.css",
       "main.prod.js",
       "main.prod.js.map",
       "package.json"
@@ -107,7 +106,6 @@
   },
   "license": "MIT",
   "repository": {
-    "type": "git",
     "url": "https://github.com/jopemachine/arvis"
   },
   "bugs": {

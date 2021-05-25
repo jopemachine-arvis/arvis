@@ -3,7 +3,7 @@ import globalShortcutHandler from '../../globalShortcutHandler';
 
 /**
  * @param  {string} callbackTable
- * @param  {string} workflowHotkeyTbl?
+ * @param  {string} workflowHotkeyTbl
  * @summary Used to register global shortcuts
  */
 export const setGlobalShortcut = (

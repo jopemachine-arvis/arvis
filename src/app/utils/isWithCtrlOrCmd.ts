@@ -1,5 +1,5 @@
 /**
- * @param  {} {isWithCmd
+ * @param  {} isWithCmd
  * @param  {} isWithCtrl
  */
 export const isWithCtrlOrCmd = ({
