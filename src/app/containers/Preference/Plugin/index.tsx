@@ -79,11 +79,11 @@ export default function Plugin() {
 
     openPluginInstallFileDialogRet: (
       e: Electron.IpcRendererEvent,
-      fileInfo: any
+      { file }: { file: any }
     ) => {
-      if (fileInfo.file.filePaths[0]) {
+      if (file.filePaths[0]) {
         setStoreAvailable(false);
-        const arvisPluginFilePath = fileInfo.file.filePaths[0];
+        const arvisPluginFilePath = file.filePaths[0];
 
         Core.installPlugin(arvisPluginFilePath)
           .then(() => {

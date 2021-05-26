@@ -43,6 +43,7 @@ export enum IPCMainEnum {
   renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',
   searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
+  setPreferencePage = '@ipcMain/setPreferencePage',
   setSearchbarInput = '@ipcMain/setSearchbarInput',
   togglePluginEnabled = '@ipcMain/togglePluginEnabled',
   toggleWorkflowEnabled = '@ipcMain/toggleWorkflowEnabled',

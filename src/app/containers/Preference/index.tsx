@@ -84,6 +84,13 @@ export default function PreferenceWindow() {
         bundleId,
       });
     },
+
+    setPreferencePage: (
+      e: IpcRendererEvent,
+      { pageToOpen }: { pageToOpen: string }
+    ) => {
+      setPage(pageToOpen as PreferencePage);
+    },
   };
 
   useEffect(() => {
@@ -100,9 +107,18 @@ export default function PreferenceWindow() {
 
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(
+      IPCMainEnum.setPreferencePage,
+      ipcCallbackTbl.setPreferencePage
+    );
+
     return () => {
       ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
       ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(
+        IPCMainEnum.setPreferencePage,
+        ipcCallbackTbl.setPreferencePage
+      );
     };
   }, []);
 

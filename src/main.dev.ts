@@ -1,3 +1,4 @@
+/* eslint-disable no-lonely-if */
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable no-new */
 /* eslint global-require: off, no-console: off */
@@ -25,12 +26,14 @@ import { startFileWatcher } from './app/helper/workflowConfigFileWatcher';
 import installExtensions from './app/config/extensionInstaller';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
+import { openArvisFile } from './app/helper/openArvisFileHandler';
 
 ElectronStore.initRenderer();
 Core.path.initializePath();
 
 // Below tray variable should be here and be exported to exclude itself from the GC targets
 export let tray: Electron.Tray;
+let openFile: string | undefined;
 
 // If run a specific script with Electron, app name would be Electron. (Not Arvis)
 // To do:: In production, The storage location of the setup file should be Arvis, not Electron.
@@ -52,6 +55,15 @@ app.on('before-quit', () => {
   ioHook.removeAllListeners();
   ioHook.unload();
   app.exit();
+});
+
+app.on('open-file', (event: Electron.Event, file: string) => {
+  if (!app.isReady()) {
+    openFile = file;
+  } else {
+    openArvisFile(file);
+  }
+  event.preventDefault();
 });
 
 app.on('ready', () => {
@@ -84,6 +96,10 @@ app.on('ready', () => {
 
     if (process.env.NODE_ENV === 'production') {
       new AppUpdater();
+    }
+
+    if (openFile) {
+      openArvisFile(openFile);
     }
 
     startFileWatcher();

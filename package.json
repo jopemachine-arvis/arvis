@@ -39,6 +39,29 @@
     ]
   },
   "build": {
+    "fileAssociations": [
+      {
+        "ext": [
+          "arvisworkflow"
+        ],
+        "name": "Arvis workflow installer file",
+        "role": "Config"
+      },
+      {
+        "ext": [
+          "arvisplugin"
+        ],
+        "name": "Arvis plugin installer file",
+        "role": "Config"
+      },
+      {
+        "ext": [
+          "arvistheme"
+        ],
+        "name": "Arvis appearance config file",
+        "role": "Config"
+      }
+    ],
     "productName": "Arvis",
     "appId": "org.arvis",
     "copyright": "Copyright © 2021 jopemachine",

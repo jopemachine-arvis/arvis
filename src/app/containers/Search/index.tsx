@@ -179,6 +179,8 @@ export default function SearchWindow() {
         ),
       }}
       onWheel={onWheelHandler}
+      // To do:: handle below event properly
+      onTouchMove={() => {}}
     >
       <SearchBar
         alwaysFocus

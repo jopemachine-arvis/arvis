@@ -84,10 +84,13 @@ export default function Workflow() {
       Core.exportWorkflow(workflowBundleId, file.filePath);
     },
 
-    openWfConfFileDialogRet: (e: Electron.IpcRendererEvent, fileInfo: any) => {
-      if (fileInfo.file.filePaths[0]) {
+    openWfConfFileDialogRet: (
+      e: Electron.IpcRendererEvent,
+      { file }: { file: any }
+    ) => {
+      if (file.filePaths[0]) {
         setStoreAvailable(false);
-        const arvisWorkflowFilePath = fileInfo.file.filePaths[0];
+        const arvisWorkflowFilePath = file.filePaths[0];
 
         Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
