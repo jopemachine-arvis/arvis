@@ -2,11 +2,7 @@
 
 1. Create `arvis-workflow.json`.
 
-You can use this workflow's [JSON Schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) to create workflow easily.
-
 2. Write some scripts to use in your workflow.
-
-If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).
 
 3. Compacts the binaries, modules, and scripts used by the workflow into a zip file with the `arvis-workflow.json` file.
 
@@ -14,13 +10,11 @@ If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/
 
 ## `arvis-workflow.json` format
 
-### Trigger
+[Click me to check arvis-workflow.json format](./workflow-config-format.md)
 
-[Click me to check Trigger](./trigger-description.md)
+## JSON Schema
 
-### Action
-
-[Click me to check Action](./action-description.md)
+Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) below when creating workflows
 
 ## Available Environment variable
 
@@ -39,3 +33,7 @@ Check the format of `scriptfilter` to use `scriptfilter` in your `workflow`, `pl
 ## Debugging workflow, plugin
 
 [How to debug workflow, plugin](./debugging-description.md)
+
+## Arvish
+
+If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).

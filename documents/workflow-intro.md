@@ -14,6 +14,14 @@ and the items returned by the script appear in searchWindow, and the `action` is
 
 `Hotkey` binds a specific key combination to a particular `action`.
 
+## Trigger
+
+[Click me to check Trigger](./trigger-description.md)
+
+## Action
+
+[Click me to check Action](./action-description.md)
+
 ## How to write workflow
 
 [Click me to check how to write new plugin](./workflow-develop.md)

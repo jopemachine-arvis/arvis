@@ -2,8 +2,6 @@
 
 1. Create `arvis-plugin.json`.
 
-You can use this plugin's [JSON Schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) to create plugin easily.
-
 2. Write some scripts to use in your plugin.
 
 3. Compacts the scripts used in the plugin into a zip file with the `arvis-plugin.json` file.
@@ -14,11 +12,46 @@ You can use this plugin's [JSON Schema](https://github.com/jopemachine/arvis-cor
 
 `arvis-plugin.json` format is very similar with `arvis-workflow.json` format.
 
-The only difference is that there is `action` right away instead of `commands`.
+The only difference are that there is `action` right away instead of `commands` and there is `main`.
 
 ### Action
 
 [Click me to check Action](./action-description.md)
+
+### Attribute `main`
+
+The js file specified in `main` is required and imported.
+
+This file should export below form's function to be imported by `Arvis`.
+
+
+```js
+module.exports = (inputStr, history) => {
+  ...
+ 
+  return {
+    items: []
+  }
+};
+```
+
+You can check [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
+
+#### inputStr
+
+type: `string`
+
+String entered by user
+
+#### history
+
+type: `array`
+
+[Click me to check history](./history.md)
+
+## JSON Schema
+
+Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) below when creating `plugin`
 
 ## Available Environment variable
 
@@ -31,3 +64,7 @@ You can use these variables in your script if needed.
 ## Debugging workflow, plugin
 
 [How to debug workflow, plugin](./debugging-description.md)
+
+## Arvish
+
+If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).

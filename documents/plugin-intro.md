@@ -21,6 +21,10 @@ If you should do, consider replacing it with `workflow`
 
 * Each plugin item is treated like `keyword`
 
+## Action
+
+[Click me to check Action](./action-description.md)
+
 ## How to write plugin
 
 [Click me to check how to write new plugin](./plugin-develop.md)
