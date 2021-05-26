@@ -11,9 +11,8 @@
 - [4. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
     - [4.1 How to write new workflows](#how-to-write-new-workflows)
     - [4.2 How to write new plugins](#how-to-write-new-plugins)
-    - [4.3 Debugging workflow, plugin](#debugging-workflow-plugin)
-    - [4.4 Update your workflow, plugin](#update-your-workflow-plugin)
-    - [4.5 Convert alfredworkflow to arvisworkflow](#convert-alfredworkflow-to-arvisworkflow)
+    - [4.3 Update your workflow, plugin](#update-your-workflow-plugin)
+    - [4.4 Convert alfredworkflow to arvisworkflow](#convert-alfredworkflow-to-arvisworkflow)
 - [5. Build and development](#build-and-development)
 
 ## What is Arvis?
@@ -42,18 +41,11 @@ You can change Arvis search window's appearance to some extent.
 
 Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
-
 ## How to install workflow, plugin on Arvis
 
-You can download `arvisworkflow`, `arvisplugin` files to install them.
+You can download `arvisworkflow`, `arvisplugin` files.
 
-```
-Right click tray icon
--> Click Open Preference Window
--> Click Workflow or Plugin icon on sidebar
--> Click the + icon in the bar below
--> Click on the file in the arvisworkflow or alfredworkflow file
-```
+They are installer files. Just double click on them to install them.
 
 ## What is workflow, plugin?
 
@@ -71,14 +63,9 @@ Right click tray icon
 
 * [Click me to check how to write new workflow](./documents/workflow-develop.md)
 
-
 ### How to write new plugins
 
 * [Click me to check how to write new plugin](./documents/plugin-develop.md)
-
-### Debugging workflow, plugin
-
-[How to debug workflow, plugin](./documents/debugging-description.md)
 
 ### Update your workflow, plugin
 
@@ -92,7 +79,7 @@ Right click tray icon
 
 Convert alfred's info.plist using [arvis-plist-converter](https://github.com/jopemachine/arvis-plist-converter) 
 
-(Or just install `alfredworkflow` file. converter will create arvis-workflow.json on its own)
+(Or just install `alfredworkflow` file. This converter will create `arvis-workflow.json` on its own)
 
 ## Build and development
 

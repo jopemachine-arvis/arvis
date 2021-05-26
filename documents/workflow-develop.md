@@ -1,12 +1,12 @@
 # How to write workflow
 
-1. Create `arvis-workflow.json`.
+1. Write proper `arvis-workflow.json`.
 
 2. Write some scripts to use in your workflow.
 
-3. Compacts the binaries, modules, and scripts used by the workflow into a zip file with the `arvis-workflow.json` file.
+3. Compress the binaries, modules, and scripts used in the `workflow` into a plain `.zip` file with the `arvis-workflow.json`.
 
-4. Change the zip file's extension to `.arvisworkflow`
+4. Change the `.zip` file's extension to `.arvisworkflow`
 
 ## `arvis-workflow.json` format
 

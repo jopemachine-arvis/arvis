@@ -8,18 +8,17 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 
 ## Differences between plugins and workflows
 
-* The biggest difference between `plugin` with `workflow` is `plugin` do not have triggering items, such as a keyword or script filter.
+* The biggest difference between `plugin` with `workflow` is `plugin` do not have `Trigger`
+
+* Each plugin item is treated like `keyword`
 
 * `workflow` can be written in any programming language, but `plugin` can be written only in `JavaScript`.
 
-* Because `plugin` is loaded when Arvis window shows up, `plugin` is much faster than `workflow`.
-
-* `plugin` has cannot define `action` in json file unlike `workflow`
+* Because `plugin` is loaded in advance, `plugin` is much faster than `workflow` using process-communication.
 
 * You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`. (it may slow down performance of Arvis)
 If you should do, consider replacing it with `workflow`
 
-* Each plugin item is treated like `keyword`
 
 ## Action
 

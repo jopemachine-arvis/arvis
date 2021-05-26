@@ -1,29 +1,30 @@
 # How to write plugin
 
-1. Create `arvis-plugin.json`.
+1. Write proper `arvis-plugin.json`.
 
-2. Write some scripts to use in your plugin.
+2. Write some scripts to use in your `plugin`.
 
-3. Compacts the scripts used in the plugin into a zip file with the `arvis-plugin.json` file.
+3. Compress the scripts used in the `plugin` into a `.zip` file with the `arvis-plugin.json`.
 
-4. Change the zip file's extension to `.arvisplugin`
+4. Change the `.zip` file's extension to `.arvisplugin`
 
 ## `arvis-plugin.json` format
 
 `arvis-plugin.json` format is very similar with `arvis-workflow.json` format.
 
-The only difference are that there is `action` right away instead of `commands` and there is `main`.
+The only differences are that there is `action` right away instead of `commands` and there is `main`.
 
 ### Action
 
 [Click me to check Action](./action-description.md)
 
-### Attribute `main`
+### Entry point of plugin
 
-The js file specified in `main` is required and imported.
+The js file specified in `main` is entry point of the `plugin`, which means this is imported by `Arvis` in runtime.
 
-This file should export below form's function to be imported by `Arvis`.
+This file should export below form's function to be properly imported.
 
+You can also use `async-await` syntax to this to handle some async operation.
 
 ```js
 module.exports = (inputStr, history) => {
