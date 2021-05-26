@@ -21,7 +21,7 @@ Arvis module not directly related to electron, renderer
 
 This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.
 
-So, If `node` or `electron` version is updated, the iohook config of package.json should be updated as well.
+So, If `node` or `electron` version is updated, the `iohook` config of `package.json` should be updated as well.
 
 ## config file pathes
 

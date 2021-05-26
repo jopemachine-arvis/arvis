@@ -82,4 +82,6 @@ type: `string (enum)`
 
 Specific modifier key must be pressed to run
 
-[Click to view "modifiers"](./documents/modifiers-description.md)
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.

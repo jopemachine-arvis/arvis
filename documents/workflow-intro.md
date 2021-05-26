@@ -10,11 +10,9 @@ Each `Action` of `command` can be executed by `trigger` (`keyword`, `scriptfilte
 
 `Scriptfilter` connects `script` to a command.
 
-and the items returned by the script appear in searchWindow, and the `action` is executed by clicking on them.
+and the items returned by the script appear in searchWindow, and the `action` is executed by double clicking on them (or press enter).
 
 `Hotkey` binds a specific key combination to a particular `action`.
-
-Arvis also supports "Double" modifier key combinations (e.g. `Double cmd`, `Double ctrl`..)
 
 ## arvis-workflow.json format
 
@@ -42,7 +40,7 @@ Check the format of `scriptfilter` to use `scriptfilter` in your `workflow`.
 
 ## Workflow links
 
-[Click me to check arvis-workflows](./workflow-links.md)
+[Click me to check available arvis-workflows](./workflow-links.md)
 
 ## Plugin
 

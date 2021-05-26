@@ -45,4 +45,4 @@ You can use these variables in your script if needed.
 
 ## Plugin links
 
-[Click me to check arvis-plugins](./plugin-links.md)
+[Click me to check available arvis-plugins](./plugin-links.md)

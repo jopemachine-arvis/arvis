@@ -36,6 +36,12 @@ type: `string (enum)`
 
 required: `false`
 
+Specific modifier key must be pressed to run
+
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
+
 ### type
 
 type: `string`
@@ -164,6 +170,12 @@ type: `string (enum)`
 
 required: `false`
 
+Specific modifier key must be pressed to run
+
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
+
 ### type
 
 type: `string`
@@ -198,6 +210,12 @@ Example :
 type: `string (enum)`
 
 required: `false`
+
+Specific modifier key must be pressed to run
+
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
 ### type
 
@@ -238,6 +256,12 @@ Example :
 type: `string (enum)`
 
 required: `false`
+
+Specific modifier key must be pressed to run
+
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
 ### type
 
@@ -313,6 +337,12 @@ type: `string (enum)`
 
 required: `false`
 
+Specific modifier key must be pressed to run
+
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
+
 ### withspace
 
 type: `boolean`
@@ -372,10 +402,34 @@ Example :
 
 ### type
 
+type: `string`
+
+required: `true`
+
 ### title
+
+type: `string`
+
+required: `true`
+
+The biggest text in the item.
 
 ### subtitle
 
-### action
+type: `string`
+
+required: `false`
+
+A additional description of the command to display in the search window.
 
 ### modifiers
+
+type: `string (enum)`
+
+required: `false`
+
+Specific modifier key must be pressed to run
+
+If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+
+Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.

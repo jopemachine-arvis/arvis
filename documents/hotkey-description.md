@@ -46,7 +46,17 @@ type: `string`
 
 required: `true`
 
-Hotkey to register action
+Hotkey to register action.
+
+Possible Modifiers used in `hotkey`: `cmd`, `win`, `option`, `ctrl`, `alt`, `shift`
+
+So, `cmd + a`, `option + c`.. keys are available. 
+
+And you can prepend `Double` to Possible modifiers.
+
+So, `Double cmd`, `Double wid`, `Double option`... keys are available.
+
+But `Double cmd + a` is not available.
 
 ## action
 
@@ -55,11 +65,3 @@ type: `Action (object)`
 Action to be triggered by the `hotkey`.
 
 [Click to view "action" type](./documents/action-description.md)
-
-## modifiers
-
-type: `string (enum)`
-
-Specific modifier key must be pressed to run
-
-[Click to view "modifiers"](./documents/modifiers-description.md)

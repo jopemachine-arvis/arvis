@@ -83,13 +83,13 @@ And result of the scripts shows in the search window, you can select and press t
 
 When you pressing the enter key on your selected item, `action` is triggered.
 
-And action with `modifiers` key with other than `normal` is only triggered when you press the modifier key together.
+And `action` with `modifiers` key with other than `normal` is only triggered when you press the modifier key together.
 
 [Click me to check available attributes](./scriptfilter-description.md)
 
 ## Hotkey
 
-You can register `hotkey` to run a specific action or scriptfilter.
+You can register `hotkey` to run a specific `action`.
 
 Example:
 
