@@ -14,35 +14,15 @@ and the items returned by the script appear in searchWindow, and the `action` is
 
 `Hotkey` binds a specific key combination to a particular `action`.
 
-## arvis-workflow.json format
+## How to write workflow
 
-### Trigger
-
-[Click me to check Trigger](./trigger-description.md)
-
-### Action
-
-[Click me to check Action](./action-description.md)
-
-## Available Environment variable
-
-Both `workflows` and `plugin` set environment variables when running scripts.
-
-You can use these variables in your script if needed.
-
-[Click me to check Environment variables](./extension-env-description.md)
-
-## Scriptfilter JSON format
-
-Check the format of `scriptfilter` to use `scriptfilter` in your `workflow`.
-
-[Click me to check Scriptfilter JSON format](./scriptfilter-json-format-description.md)
+[Click me to check how to write new plugin](./workflow-develop.md)
 
 ## Workflow links
 
 [Click me to check available arvis-workflows](./workflow-links.md)
 
-## Plugin
+## About Plugin
 
 If you want to put your script as javascript module, you can try to build `plugin`.
 

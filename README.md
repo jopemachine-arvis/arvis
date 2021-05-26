@@ -65,34 +65,16 @@ Right click tray icon
 
 * By default, all changes to workflow files are being watched and reflected as soon as changes are made.
 
-* In the case of hotkeys, they are registered and applied only when `Arvis` is turned on for the first time, so if there is a change in the hotkeys, `Arvis` must be turned off and on to renew hotkey settings.
+* In the case of `hotkeys`, they are registered and applied only when `Arvis` is turned on for the first time, so if there is a change in the hotkeys, `Arvis` must be turned off and on to renew hotkey settings.
 
 ### How to write new workflows
 
-1. Create `arvis-workflow.json`.
+* [Click me to check how to write new workflow](./documents/workflow-develop.md)
 
-You can use this workflow's [JSON Schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) to create workflow easily.
-
-2. Write some scripts to use in your workflow.
-
-If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).
-
-3. Compacts the binaries, modules, and scripts used by the workflow into a zip file with the `arvis-workflow.json` file.
-
-4. Change the zip file's extension to `.arvisworkflow`
 
 ### How to write new plugins
 
-1. Create `arvis-plugin.json`.
-
-You can use this plugin's [JSON Schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) to create plugin easily.
-
-2. Write some scripts to use in your plugin.
-
-3. Compacts the scripts used in the plugin into a zip file with the `arvis-plugin.json` file.
-
-4. Change the zip file's extension to `.arvisplugin`
-
+* [Click me to check how to write new plugin](./documents/plugin-develop.md)
 
 ### Debugging workflow, plugin
 

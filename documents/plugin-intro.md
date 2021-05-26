@@ -19,27 +19,13 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 * You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`. (it may slow down performance of Arvis)
 If you should do, consider replacing it with `workflow`
 
-* Each plugin item is treated like `keyword`.
+* Each plugin item is treated like `keyword`
 
-## arvis-plugin.json format
+## How to write plugin
 
-`arvis-plugin.json` format is very similar with `arvis-workflow.json` format.
+[Click me to check how to write new plugin](./plugin-develop.md)
 
-The only difference is that there is `action` right away instead of `commands`.
-
-### Action
-
-[Click me to check Action](./action-description.md)
-
-## Available Environment variable
-
-Both `workflows` and `plugin` set environment variables when running scripts.
-
-You can use these variables in your script if needed.
-
-[Click me to check Environment variables](./extension-env-description.md)
-
-## Workflow
+## About Workflow
 
 [Click me to check Workflow](./workflow-intro.md)
 
