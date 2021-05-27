@@ -2,9 +2,10 @@
 /* eslint-disable no-restricted-syntax */
 import { globalShortcut, dialog } from 'electron';
 import ioHook from 'iohook';
-import shortcutCallbackTbl from './shortcutCallbackTable';
+import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
 import { WindowManager } from '../windows';
+import toggleSearchWindow from './toggleSearchWindow';
 
 const doubleKeyPressElapse = 200;
 
@@ -32,16 +33,19 @@ const getWorkflowHotkeyPressHandler = ({
   );
 
   if (actionTypes.includes('keyword') || actionTypes.includes('scriptfilter')) {
-    searchWindow.show();
+    toggleSearchWindow({ showsUp: true });
   }
 
-  searchWindow.webContents.send(IPCMainEnum.executeAction, {
-    action: hotKeyAction.action.map((item: any) => {
-      item.bundleId = hotKeyAction.bundleId;
-      return item;
-    }),
-    bundleId: hotKeyAction.bundleId,
-  });
+  // Force action to be executed after window shows up
+  setTimeout(() => {
+    searchWindow.webContents.send(IPCMainEnum.executeAction, {
+      action: hotKeyAction.action.map((item: any) => {
+        item.bundleId = hotKeyAction.bundleId;
+        return item;
+      }),
+      bundleId: hotKeyAction.bundleId,
+    });
+  }, 100);
 };
 
 /**
@@ -161,7 +165,7 @@ export default ({
     // Case of double key type
     const action = callbackTable[shortcut];
 
-    if (!registerShortcut(shortcut, shortcutCallbackTbl[action]())) {
+    if (!registerShortcut(shortcut, defaultShortcutCallbackTbl[action]())) {
       dialog.showErrorBox(
         'Duplicated shortcut found',
         `'${shortcut}' duplicated. Please reassign this hotkey`
