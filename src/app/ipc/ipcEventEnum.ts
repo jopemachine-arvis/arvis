@@ -30,6 +30,7 @@ export enum IPCRendererEnum {
  * @summary Events sent from main process to renderer process
  */
 export enum IPCMainEnum {
+  executeAction = '@ipcMain/executeAction',
   fetchAction = '@ipcMain/fetchAction',
   forwardLargeText = '@ipcRenderer/forwardLargeText',
   forwardQuicklookWindowUrl = '@ipcMain/forwardQuicklookWindowUrl',

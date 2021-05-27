@@ -208,14 +208,14 @@ const useSearchWindowControl = ({
     str,
     needItemsUpdate,
   }: {
-    str: string;
+    str: string | undefined;
     needItemsUpdate: boolean;
   }) => {
-    if (inputRef && inputRef.current) {
+    if (str && inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
     if (needItemsUpdate) {
-      handleNormalInput('', str);
+      handleNormalInput('', str ?? '');
     }
   };
 
@@ -231,6 +231,7 @@ const useSearchWindowControl = ({
     modifiers: any;
   }) => {
     const selectedItem = items[selectedItemIdx];
+    if (!selectedItem) return;
 
     if (selectedItem.arg_type === 'required') {
       const [command, querys] = inputStr.split(selectedItem.command);
@@ -253,7 +254,7 @@ const useSearchWindowControl = ({
       Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
     } else {
       await workManager
-        .commandExcute(selectedItem, inputStr, modifiers)
+        .handleItemPressEvent(selectedItem, inputStr, modifiers)
         .catch((err: any) => {
           console.error('Error occured in commandExecute!', err);
         });
@@ -359,7 +360,11 @@ const useSearchWindowControl = ({
     ];
 
     if (!exceptionKeys.includes(e.key)) {
-      handleNormalInput(e.key, (inputRef.current! as HTMLInputElement).value);
+      const txt = (inputRef.current! as HTMLInputElement).value!
+        ? (inputRef.current! as HTMLInputElement).value
+        : '';
+
+      handleNormalInput(e.key, txt);
     }
 
     workManager.clearModifierOnScriptFilterItem();

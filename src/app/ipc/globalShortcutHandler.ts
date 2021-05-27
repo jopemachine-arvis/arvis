@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-restricted-syntax */
-import { BrowserWindow, globalShortcut, Notification, dialog } from 'electron';
+import { globalShortcut, dialog } from 'electron';
 import ioHook from 'iohook';
-import { Core } from 'arvis-core';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
 import { WindowManager } from '../windows';
@@ -12,92 +11,37 @@ const doubleKeyPressElapse = 200;
 const doubleKeyPressedTimers = {};
 
 const doubleKeyPressHandler: {
-  shift: (() => void) | undefined;
-  alt: (() => void) | undefined;
-  ctrl: (() => void) | undefined;
-  cmd: (() => void) | undefined;
-} = {
-  shift: undefined,
-  alt: undefined,
-  ctrl: undefined,
-  cmd: undefined,
-};
-
-/**
- * @param  {any} hotKeyAction
- * @param  {string[]} actionTypes
- * @summary handle custom actions
- */
-const handleGUICustomActions = (hotKeyAction: any, actionTypes: string[]) => {
-  if (actionTypes.includes('notification')) {
-    // Assume action count is 1
-    const targetAction = hotKeyAction.action.filter(
-      (item: any) => item.type === 'notification'
-    )[0];
-
-    new Notification({
-      title: targetAction.title,
-      body: targetAction.text,
-    }).show();
-  }
-};
-
-/**
- * @param  {BrowserWindow} searchWindow
- * @param  {any} hotKeyAction
- * @param  {string[]} actionTypes
- */
-const handleHotKeyAction = (
-  searchWindow: BrowserWindow,
-  hotKeyAction: any,
-  actionTypes: string[]
-) => {
-  if (actionTypes.includes('keyword') || actionTypes.includes('scriptfilter')) {
-    const targetAction = hotKeyAction.action.filter(
-      (item: any) => item.type === 'keyword' || item.type === 'scriptfilter'
-    )[0];
-
-    searchWindow.show();
-
-    const newInput = targetAction.command;
-
-    searchWindow.webContents.send(IPCMainEnum.setSearchbarInput, {
-      str: newInput,
-    });
-  }
-
-  // handle custom actions
-  handleGUICustomActions(hotKeyAction, actionTypes);
-};
+  shift?: () => void;
+  alt?: () => void;
+  ctrl?: () => void;
+  cmd?: () => void;
+} = {};
 
 /**
  * @param  {BrowserWindow} searchWindow
  * @param  {any} hotKeyAction
  */
 const getWorkflowHotkeyPressHandler = ({
-  searchWindow,
   hotKeyAction,
 }: {
-  searchWindow: BrowserWindow;
   hotKeyAction: any;
 }) => {
-  // The workManager instance obtained in the main process is a different object
-  // from the Singleton object in the renderer process.
-  // So, methods like onInputShouldBeUpdate cannot be used here
-  // and GUI custom actions (notifications) should be handled here
-  Core.WorkManager.getInstance();
-
-  Core.handleAction({
-    actions: [hotKeyAction],
-    queryArgs: {},
-    modifiersInput: {},
-  });
-
+  const searchWindow = WindowManager.getInstance().getSearchWindow();
   const actionTypes: string[] = hotKeyAction.action.map(
     (item: any) => item.type
   );
 
-  handleHotKeyAction(searchWindow, hotKeyAction, actionTypes);
+  if (actionTypes.includes('keyword') || actionTypes.includes('scriptfilter')) {
+    searchWindow.show();
+  }
+
+  searchWindow.webContents.send(IPCMainEnum.executeAction, {
+    action: hotKeyAction.action.map((item: any) => {
+      item.bundleId = hotKeyAction.bundleId;
+      return item;
+    }),
+    bundleId: hotKeyAction.bundleId,
+  });
 };
 
 /**
@@ -179,12 +123,10 @@ const registerWorkflowHotkeys = ({
 }: {
   workflowHotkeyTbl: any;
 }) => {
-  const searchWindow = WindowManager.getInstance().getSearchWindow();
   const hotkeys = Object.keys(workflowHotkeyTbl);
   for (const hotkey of hotkeys) {
     const cb = () => {
       getWorkflowHotkeyPressHandler({
-        searchWindow,
         hotKeyAction: workflowHotkeyTbl[hotkey],
       });
     };

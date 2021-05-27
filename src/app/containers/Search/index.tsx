@@ -110,17 +110,36 @@ export default function SearchWindow() {
     ) => {
       dispatch(makeActionCreator(actionType, 'arg')(args));
     },
+
     setSearchbarInput: (e: IpcRendererEvent, { str }: { str: string }) => {
       setInputStr({ str, needItemsUpdate: true });
     },
+
     renewWorkflow: (
       e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
       Core.renewWorkflows(bundleId);
     },
+
     renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
       Core.renewPlugins({ initializePluginWorkspace: true, bundleId });
+    },
+
+    executeAction: (
+      e: IpcRendererEvent,
+      { bundleId, action }: { bundleId: string; action: any }
+    ) => {
+      workManager.commandExcute(
+        {
+          type: 'hotkey',
+          title: '',
+          action,
+          bundleId,
+        },
+        '',
+        {}
+      );
     },
   };
 
@@ -128,6 +147,7 @@ export default function SearchWindow() {
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
+    ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.on(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
@@ -138,6 +158,7 @@ export default function SearchWindow() {
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
+    ipcRenderer.off(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.off(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
