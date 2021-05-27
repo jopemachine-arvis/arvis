@@ -1,23 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-restricted-syntax */
-import { BrowserWindow, globalShortcut, Notification } from 'electron';
+import { BrowserWindow, globalShortcut, Notification, dialog } from 'electron';
 import ioHook from 'iohook';
 import { Core } from 'arvis-core';
 import shortcutCallbackTbl from './shortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
 import { WindowManager } from '../windows';
 
-const doubleKeyPressHandler = {
-  shift: () => {},
-  alt: () => {},
-  ctrl: () => {},
-  cmd: () => {},
-};
+const doubleKeyPressElapse = 200;
 
-const doubleKeyPressedTimers = {
-  shift: 0,
-  alf: 0,
-  ctrl: 0,
-  meta: 0,
+const doubleKeyPressedTimers = {};
+
+const doubleKeyPressHandler: {
+  shift: (() => void) | undefined;
+  alt: (() => void) | undefined;
+  ctrl: (() => void) | undefined;
+  cmd: (() => void) | undefined;
+} = {
+  shift: undefined,
+  alt: undefined,
+  ctrl: undefined,
+  cmd: undefined,
 };
 
 /**
@@ -99,27 +102,73 @@ const getWorkflowHotkeyPressHandler = ({
 
 /**
  * @param  {string} shortcut
+ */
+const extractShortcutName = (shortcut: string): string => {
+  const target = shortcut.replaceAll('+', ' ').toLowerCase().trim();
+
+  switch (target) {
+    case 'option':
+    case 'opt':
+    case 'alt':
+      return 'alt';
+
+    case 'shift':
+      return 'shift';
+
+    case 'cmd':
+    case 'command':
+    case 'meta':
+      return 'cmd';
+
+    case 'control':
+    case 'ctl':
+    case 'ctrl':
+      return 'ctrl';
+
+    default:
+      console.error(`${shortcut} is not valid shortcut`);
+  }
+
+  throw new Error('Not valid operation occurs in convertShortcutName');
+};
+
+/**
+ * @param  {string} shortcut
  * @param  {() => void} callback
  */
-const registerShortcut = (shortcut: string, callback: () => void) => {
+const registerShortcut = (shortcut: string, callback: () => void): boolean => {
   console.log(`Shortcut registered.. '${shortcut}'`);
 
-  // Case of double key type
+  // Double modifier shortcut
   if (shortcut.includes('Double')) {
-    const doubledShortcut = shortcut.split('Double ')[1];
+    const doubledKeyModifier = extractShortcutName(shortcut.split('Double')[1]);
 
-    doubleKeyPressHandler[doubledShortcut] = () => {
-      if (Date.now() - doubleKeyPressedTimers[doubledShortcut] < 200) {
+    // Already used shortcut
+    if (doubleKeyPressHandler[doubledKeyModifier]) {
+      return false;
+    }
+
+    doubleKeyPressHandler[doubledKeyModifier] = () => {
+      if (
+        doubleKeyPressedTimers[doubledKeyModifier] &&
+        Date.now() - doubleKeyPressedTimers[doubledKeyModifier] <
+          doubleKeyPressElapse
+      ) {
         callback();
       } else {
-        doubleKeyPressedTimers[doubledShortcut] = new Date();
+        doubleKeyPressedTimers[doubledKeyModifier] = new Date();
       }
     };
   }
-  // Single key (normal shortcut)
+  // Normal modifier shortcut
   else {
+    if (globalShortcut.isRegistered(shortcut)) {
+      return false;
+    }
     globalShortcut.register(shortcut, callback as () => void);
   }
+
+  return true;
 };
 
 /**
@@ -140,7 +189,12 @@ const registerWorkflowHotkeys = ({
       });
     };
 
-    registerShortcut(hotkey, cb);
+    if (!registerShortcut(hotkey, cb)) {
+      dialog.showErrorBox(
+        'Duplicated shortcut found',
+        `'${hotkey}' duplicated. Please reassign this hotkey`
+      );
+    }
   }
 };
 
@@ -165,19 +219,24 @@ export default ({
     // Case of double key type
     const action = callbackTable[shortcut];
 
-    registerShortcut(shortcut, shortcutCallbackTbl[action]());
+    if (!registerShortcut(shortcut, shortcutCallbackTbl[action]())) {
+      dialog.showErrorBox(
+        'Duplicated shortcut found',
+        `'${shortcut}' duplicated. Please reassign this hotkey`
+      );
+    }
   }
 
   // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
   ioHook.on('keydown', (e) => {
     if (e.shiftKey) {
-      doubleKeyPressHandler.shift();
+      doubleKeyPressHandler.shift && doubleKeyPressHandler.shift();
     } else if (e.altKey) {
-      doubleKeyPressHandler.alt();
+      doubleKeyPressHandler.alt && doubleKeyPressHandler.alt();
     } else if (e.ctrlKey) {
-      doubleKeyPressHandler.ctrl();
+      doubleKeyPressHandler.ctrl && doubleKeyPressHandler.ctrl();
     } else if (e.metaKey) {
-      doubleKeyPressHandler.cmd();
+      doubleKeyPressHandler.cmd && doubleKeyPressHandler.cmd();
     }
   });
   ioHook.start();
