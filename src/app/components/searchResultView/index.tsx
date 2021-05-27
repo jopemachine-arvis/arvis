@@ -72,24 +72,28 @@ const SearchResultView = (props: IProps) => {
     );
 
     let iconPath;
-    if (command.icon) {
-      // command.icon is string
-      if (command.icon.length) {
-        command.icon = {
-          path: command.icon,
-        };
-      }
+    try {
+      if (command.icon) {
+        // In case of 'icon' is string
+        if (command.icon.length) {
+          command.icon = {
+            path: command.icon,
+          };
+        }
 
-      if (command.icon.path.includes('.')) {
-        const iconExt = command.icon.path.split('.').pop();
-        if (isSupportedImageFormat(iconExt)) {
-          if (path.isAbsolute(command.icon.path)) {
-            iconPath = command.icon.path;
-          } else {
-            iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+        if (command.icon.path.includes('.')) {
+          const iconExt = command.icon.path.split('.').pop();
+          if (isSupportedImageFormat(iconExt)) {
+            if (path.isAbsolute(command.icon.path)) {
+              iconPath = command.icon.path;
+            } else {
+              iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+            }
           }
         }
       }
+    } catch (err) {
+      // Assume command.icon.path is undefined
     }
 
     return iconPath;
