@@ -84,8 +84,6 @@ export const startFileWatcher = () => {
       await sleep(1000);
       requestRenewWorkflows();
     });
-  
-  console.log('abc', `${Core.path.pluginInstallPath}`);
 
   const pluginWatchPath =
     process.platform === 'win32'

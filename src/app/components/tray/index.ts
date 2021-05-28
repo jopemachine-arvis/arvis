@@ -7,6 +7,7 @@ import {
   MenuItem,
 } from 'electron';
 import { WindowManager } from '../../windows';
+import toggleSearchWindow from '../../ipc/toggleSearchWindow';
 
 export default class TrayBuilder {
   trayFilePath: string;
@@ -57,6 +58,16 @@ export default class TrayBuilder {
     this.tray = new Tray(nativeImage.createFromPath(this.trayFilePath));
     const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
     this.tray.setContextMenu(contextMenu);
+
+    this.tray.on('click', () => {
+      toggleSearchWindow({ showsUp: true });
+    });
+
+    this.tray.on('double-click', () => {
+      const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
+      preferenceWindow.show();
+      preferenceWindow.focus();
+    });
     return this.tray;
   }
 }
