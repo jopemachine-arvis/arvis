@@ -101,13 +101,25 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'Documentation',
         click() {
-          shell.openExternal('https://github.com/jopemachine/arvis/');
+          shell.openExternal('https://github.com/jopemachine/arvis/blob/master/README.md');
         },
       },
       {
         label: 'Search Issues',
         click() {
           shell.openExternal('https://github.com/jopemachine/arvis/issues');
+        },
+      },
+      {
+        label: 'Search available workflows',
+        click() {
+          shell.openExternal('https://github.com/jopemachine/arvis/blob/master/documents/workflow-links.md');
+        },
+      },
+      {
+        label: 'Search available plugins',
+        click() {
+          shell.openExternal('https://github.com/jopemachine/arvis/blob/master/documents/plugin-links.md');
         },
       },
     ],
