@@ -21,6 +21,11 @@ import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import { useSelector } from 'react-redux';
+import { StyledInput } from '@components/index';
+import './index.global.css';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { StateType } from '@redux/reducers/types';
+import { useReserveForceUpdate } from '@hooks/index';
 import {
   Header,
   OuterContainer,
@@ -33,13 +38,8 @@ import {
   WorkflowListView,
   WorkflowListViewFooter,
 } from './components';
-import { StyledInput } from '../../../components';
-import { StoreAvailabilityContext } from '../storeAvailabilityContext';
-import './index.global.css';
 import * as style from './style';
-import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
-import { StateType } from '../../../redux/reducers/types';
-import { useReserveForceUpdate } from '../../../hooks';
+import { StoreAvailabilityContext } from '../storeAvailabilityContext';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value

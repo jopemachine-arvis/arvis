@@ -50,6 +50,22 @@ export default {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [path.join(__dirname, '../../src'), 'node_modules'],
+    // Currently, module alias is only available in renderer processes
+    // To do:: Fix issue that module alias is not applied on main process
+    alias: {
+      '@components': 'app/components',
+      '@config': 'app/config',
+      '@constants': 'app/constants',
+      '@containers': 'app/containers',
+      '@helper': 'app/helper',
+      '@hooks': 'app/hooks',
+      '@ipc': 'app/ipc',
+      '@navigator': 'app/navigator',
+      '@redux': 'app/redux',
+      '@store': 'app/store',
+      '@utils': 'app/utils',
+      '@windows': 'app/windows',
+    }
   },
 
   plugins: [

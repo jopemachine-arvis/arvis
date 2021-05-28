@@ -4,7 +4,7 @@
 import { ipcRenderer, IpcRendererEvent, remote } from 'electron';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import useKey from '../../../use-key-capture/src';
 
 const OuterContainer = styled.div`

@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useSelector } from 'react-redux';
 import { Core } from 'arvis-core';
+import { StateType } from '@redux/reducers/types';
+import { ScreenCover, Spinner } from '@components/index';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -13,10 +16,7 @@ import WorkflowPage from './Workflow';
 import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
 import AdvancedPage from './Advanced';
-import { StateType } from '../../redux/reducers/types';
 import { StoreAvailabilityContext } from './storeAvailabilityContext';
-import { ScreenCover, Spinner } from '../../components';
-import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 

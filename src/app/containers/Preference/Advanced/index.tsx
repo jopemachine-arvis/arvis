@@ -3,13 +3,13 @@ import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
-import StyledInput from '../../../components/styledInput';
-import { actionTypes as AdvancedActionTypes } from '../../../redux/actions/advancedConfig';
-import { StateType } from '../../../redux/reducers/types';
-import { makeActionCreator } from '../../../utils';
+import StyledInput from '@components/styledInput';
+import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
+import { StateType } from '@redux/reducers/types';
+import { makeActionCreator } from '@utils/index';
+import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
-import { IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function Advanced() {
   const {

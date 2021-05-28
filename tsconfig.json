@@ -1,5 +1,19 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["app/components/*"],
+      "@constants/*": ["app/constants/*"],
+      "@containers/*": ["app/containers/*"],
+      "@helper/*": ["app/helper/*"],
+      "@hooks/*": ["app/hooks/*"],
+      "@ipc/*": ["app/ipc/*"],
+      "@navigator/*": ["app/navigator/*"],
+      "@redux/*": ["app/redux/*"],
+      "@store/*": ["app/store/*"],
+      "@utils/*": ["app/utils/*"],
+      "@windows/*": ["app/windows/*"],
+    },
     "target": "ES2018",
     "module": "CommonJS",
     "lib": ["dom", "esnext"],

@@ -3,9 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { isWithCtrlOrCmd } from '@utils/index';
 import useKey from '../../use-key-capture/src';
-import { IPCMainEnum, IPCRendererEnum } from '../ipc/ipcEventEnum';
-import { isWithCtrlOrCmd } from '../utils';
 
 type IndexInfo = {
   selectedItemIdx: number;

@@ -8,12 +8,12 @@ import {
   SearchBar,
   SearchResultView,
   SearchWindowScrollbar,
-} from '../../components';
-import useSearchWindowControl from '../../hooks/useSearchWindowControl';
-import { StateType } from '../../redux/reducers/types';
+} from '@components/index';
+import useSearchWindowControl from '@hooks/useSearchWindowControl';
+import { StateType } from '@redux/reducers/types';
+import { applyAlphaColor, makeActionCreator } from '@utils/index';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer } from './components';
-import { applyAlphaColor, makeActionCreator } from '../../utils';
-import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 export default function SearchWindow() {
   const {

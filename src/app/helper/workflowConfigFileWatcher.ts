@@ -59,9 +59,9 @@ export const startFileWatcher = () => {
   };
 
   const workflowWatchPath =
-    process.platform === 'win32'
-      ? `${Core.path.workflowInstallPath}`
-      : `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`;
+    process.platform === 'darwin'
+      ? `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`
+      : `${Core.path.workflowInstallPath}`;
 
   chokidar
     .watch(workflowWatchPath, {
@@ -86,22 +86,19 @@ export const startFileWatcher = () => {
     });
 
   const pluginWatchPath =
-    process.platform === 'win32'
-      ? `${Core.path.pluginInstallPath}`
-      : [
-        `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
-        `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
-      ];
+    process.platform === 'darwin'
+      ? [
+          `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
+          `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
+        ]
+      : `${Core.path.pluginInstallPath}`;
 
   chokidar
-    .watch(
-      pluginWatchPath,
-      {
-        persistent: true,
-        ignoreInitial: true,
-        followSymlinks: false,
-      }
-    )
+    .watch(pluginWatchPath, {
+      persistent: true,
+      ignoreInitial: true,
+      followSymlinks: false,
+    })
     .on('change', async (filePath: string) => {
       console.log(`"${filePath}" changed. Reload plugins settings..`);
       await sleep(1000);

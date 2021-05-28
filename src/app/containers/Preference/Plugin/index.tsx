@@ -20,6 +20,9 @@ import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
+import { StyledInput } from '@components/index';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { useReserveForceUpdate } from '@hooks/index';
 import {
   Header,
   OuterContainer,
@@ -32,12 +35,9 @@ import {
   PluginListView,
   PluginListViewFooter,
 } from './components';
-import { StyledInput } from '../../../components';
 import { StoreAvailabilityContext } from '../storeAvailabilityContext';
 import './index.global.css';
 import * as style from './style';
-import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
-import { useReserveForceUpdate } from '../../../hooks';
 
 export default function Plugin() {
   const [plugins, setPlugins] = useState<any>({});

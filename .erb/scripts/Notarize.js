@@ -1,5 +1,9 @@
+// To turn off notarize in development, put and execute below code 
+// export CSC_IDENTITY_AUTO_DISCOVERY=false
+
 const { notarize } = require('electron-notarize');
 const { build } = require('../../package.json');
+require('dotenv').config();
 
 exports.default = async function notarizeMacos(context) {
   const { electronPlatformName, appOutDir } = context;

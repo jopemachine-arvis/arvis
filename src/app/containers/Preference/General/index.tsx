@@ -15,15 +15,15 @@ import {
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
-import { StateType } from '../../../redux/reducers/types';
-import { GlobalConfigActions } from '../../../redux/actions';
+import { StateType } from '@redux/reducers/types';
+import { GlobalConfigActions } from '@redux/actions';
+import { StyledInput } from '@components/index';
+import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
+import { createGlobalConfigChangeHandler } from '@utils/index';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
-import { StyledInput } from '../../../components';
 import useKey from '../../../../use-key-capture/src';
-import { actionTypes as GlobalConfigActionTypes } from '../../../redux/actions/globalConfig';
-import { createGlobalConfigChangeHandler } from '../../../utils';
-import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 export default function General() {
   const { keyData } = useKey();

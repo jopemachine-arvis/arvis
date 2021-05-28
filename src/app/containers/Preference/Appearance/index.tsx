@@ -10,8 +10,12 @@ import { ipcRenderer } from 'electron';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import path from 'path';
-import { StateType } from '../../../redux/reducers/types';
+import { StateType } from '@redux/reducers/types';
 import './index.global.css';
+import { SearchBar, SearchResultView, StyledInput } from '@components/index';
+import { actionTypes as UIActionTypes } from '@redux/actions/uiConfig';
+import { createGlobalConfigChangeHandler, getRandomColor } from '@utils/index';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import {
   OuterContainer,
   ConfigContainer,
@@ -19,19 +23,12 @@ import {
   PreviewContainer,
   PreviewMainContainer,
 } from './components';
-import { SearchBar, SearchResultView, StyledInput } from '../../../components';
-import { actionTypes as UIActionTypes } from '../../../redux/actions/uiConfig';
-import {
-  createGlobalConfigChangeHandler,
-  getRandomColor,
-} from '../../../utils';
 import {
   descriptionContainerStyle,
   formGroupStyle,
   labelStyle,
   iconStyle,
 } from './style';
-import { IPCMainEnum, IPCRendererEnum } from '../../../ipc/ipcEventEnum';
 
 const mockItems = [
   {
