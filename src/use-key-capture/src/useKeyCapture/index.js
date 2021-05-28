@@ -14,7 +14,7 @@ import {
 
 const doubleKeyRecognitionInterval = 200;
 
-const doubleKeyRecognizer = ['Meta', 'Control', 'Alt', 'Shift', 'Backspace'];
+const doubleKeyRecognizer = ['Meta', 'Control', 'Alt', 'Shift'];
 
 function useKeys() {
   const [keyData, dispatch] = useReducer(
@@ -42,7 +42,6 @@ function useKeys() {
       let ret = false;
       // eslint-disable-next-line no-restricted-syntax
       for (const key of doubleKeyRecognizer) {
-        if (event.key === ' ' && prevKeyRef.current['isBackspace']) ret = true;
         if (event.key === key && prevKeyRef.current[`is${key}`]) ret = true;
       }
       return ret;

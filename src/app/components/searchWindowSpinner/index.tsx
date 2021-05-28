@@ -1,6 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react/prefer-stateless-function */
 import * as React from 'react';
 import './index.global.css';
 
@@ -15,7 +13,7 @@ const Spinner = (props: any) => {
         top: '40%',
         ...props.style,
       }}
-    ></div>
+    />
   );
 };
 
