@@ -41,23 +41,17 @@
   "build": {
     "fileAssociations": [
       {
-        "ext": [
-          "arvisworkflow"
-        ],
+        "ext": "arvisworkflow",
         "name": "Arvis workflow installer file",
         "role": "Config"
       },
       {
-        "ext": [
-          "arvisplugin"
-        ],
+        "ext": "arvisplugin",
         "name": "Arvis plugin installer file",
         "role": "Config"
       },
       {
-        "ext": [
-          "arvistheme"
-        ],
+        "ext": "arvistheme",
         "name": "Arvis appearance config file",
         "role": "Config"
       }

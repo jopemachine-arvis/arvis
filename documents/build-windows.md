@@ -8,13 +8,7 @@
 
 3. `yarn build`
 
-4. Before `yarn start`, Run the command below
-
-```shell
-$ yarn replace-iohook-prebuilt
-```
-
-If having trouble with the above step, download or build the [iohook](https://github.com/wilix-team/iohook) prebuilt binary file.
+4. Download prebuilt file on [here](https://github.com/wilix-team/iohook) and replace it properly.
 
 5. `yarn start`
 

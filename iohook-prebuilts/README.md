@@ -2,7 +2,6 @@
 
 1. Each binary files are managed by compressing it into a `zip` format.
 
-2. Zip compression must be done on the corresponding platform.
-(`electron-v85-darwin-x64` file must be compressed in `macos`.)
+2. Do not upload binaries other than `zip` files.
 
-3. Do not upload binaries other than `zip` files.
+3. Do not upload windows binary (not work)
