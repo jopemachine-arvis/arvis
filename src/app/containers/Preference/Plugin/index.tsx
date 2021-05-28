@@ -23,6 +23,7 @@ import { homedir } from 'os';
 import { StyledInput } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { useReserveForceUpdate } from '@hooks/index';
+import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import {
   Header,
   OuterContainer,
@@ -35,7 +36,6 @@ import {
   PluginListView,
   PluginListViewFooter,
 } from './components';
-import { StoreAvailabilityContext } from '../storeAvailabilityContext';
 import './index.global.css';
 import * as style from './style';
 

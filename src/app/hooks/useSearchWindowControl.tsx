@@ -22,11 +22,13 @@ const useSearchWindowControl = ({
   setItems,
   maxItemCount,
   maxRetrieveCount,
+  storeAvailable,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
   maxItemCount: number;
   maxRetrieveCount: number;
+  storeAvailable: boolean;
 }) => {
   const workManager = Core.WorkManager.getInstance();
 
@@ -211,6 +213,8 @@ const useSearchWindowControl = ({
     str: string | undefined;
     needItemsUpdate: boolean;
   }) => {
+    if (!storeAvailable) return;
+
     if (str && inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
@@ -326,6 +330,7 @@ const useSearchWindowControl = ({
    * @param {number} selectedItemIdx
    */
   const onHandleReturnByNumberKey = async (selectedItemIdx: number) => {
+    if (!storeAvailable) return;
     if (selectedItemIdx === 0 || selectedItemIdx >= items.length) {
       return;
     }
@@ -431,6 +436,8 @@ const useSearchWindowControl = ({
    * @summary
    */
   const onKeydownHandler = async () => {
+    console.log('abc', storeAvailable);
+    if (!storeAvailable) return;
     const input: string | undefined | null = keyData.key;
 
     const modifiers = {

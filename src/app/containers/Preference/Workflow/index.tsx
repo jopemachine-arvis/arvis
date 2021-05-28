@@ -26,6 +26,7 @@ import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StateType } from '@redux/reducers/types';
 import { useReserveForceUpdate } from '@hooks/index';
+import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import {
   Header,
   OuterContainer,
@@ -39,7 +40,6 @@ import {
   WorkflowListViewFooter,
 } from './components';
 import * as style from './style';
-import { StoreAvailabilityContext } from '../storeAvailabilityContext';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value

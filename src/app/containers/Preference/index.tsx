@@ -9,6 +9,7 @@ import { Core } from 'arvis-core';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -16,7 +17,6 @@ import WorkflowPage from './Workflow';
 import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
 import AdvancedPage from './Advanced';
-import { StoreAvailabilityContext } from './storeAvailabilityContext';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 

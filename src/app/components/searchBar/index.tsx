@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron';
 import React, { useEffect } from 'react';
+import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input } from './components';
 
@@ -11,6 +12,7 @@ type IProps = {
   searchbarFontColor: string;
   searchbarFontSize: number;
   searchbarHeight: number;
+  spinning?: boolean;
 };
 
 const SearchBar = (props: IProps) => {
@@ -21,6 +23,7 @@ const SearchBar = (props: IProps) => {
     searchbarFontColor,
     searchbarFontSize,
     searchbarHeight,
+    spinning,
   } = props;
 
   const { ref: inputRef, type, originalRef } = getInputProps
@@ -60,6 +63,7 @@ const SearchBar = (props: IProps) => {
         height: searchbarHeight,
       }}
     >
+      {spinning && <SearchWindowSpinner />}
       <Input
         id="searchBar"
         className="searchBar"
@@ -82,6 +86,7 @@ const SearchBar = (props: IProps) => {
 
 SearchBar.defaultProps = {
   getInputProps: undefined,
+  spinning: false,
 };
 
 export default SearchBar;

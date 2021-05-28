@@ -7,6 +7,7 @@ import StyledInput from './styledInput';
 import Spinner from './spinner';
 import ScreenCover from './screenCover';
 import SearchWindowScrollbar from './searchWindowScrollbar';
+import SearchWindowSpinner from './searchWindowSpinner';
 
 export {
   MenuBuilder,
@@ -15,6 +16,7 @@ export {
   SearchResultItem,
   SearchResultView,
   SearchWindowScrollbar,
+  SearchWindowSpinner,
   Spinner,
   StyledInput,
   TrayBuilder,

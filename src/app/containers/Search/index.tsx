@@ -13,6 +13,7 @@ import useSearchWindowControl from '@hooks/useSearchWindowControl';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -48,6 +49,8 @@ export default function SearchWindow() {
     (state: StateType) => state.advanced_config
   );
 
+  const [storeAvailable, setStoreAvailable] = useState<boolean>(false);
+
   const [items, setItems] = useState<any[]>([]);
 
   const workManager = Core.WorkManager.getInstance();
@@ -82,9 +85,12 @@ export default function SearchWindow() {
     setItems,
     maxItemCount: max_item_count_to_show,
     maxRetrieveCount: max_item_count_to_search,
+    storeAvailable,
   });
 
   const registerWindowUpdater = useCallback(() => {
+    Core.setStoreAvailabiltyChecker(setStoreAvailable);
+
     workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
     workManager.onItemPressHandler = onItemPressHandler;
     workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
@@ -200,49 +206,54 @@ export default function SearchWindow() {
         ),
       }}
       onWheel={onWheelHandler}
-      // To do:: handle below event properly
+      // to do:: handle below event properly
       onTouchMove={() => {}}
     >
-      <SearchBar
-        alwaysFocus
-        getInputProps={getInputProps}
-        itemLeftPadding={item_left_padding}
-        searchbarFontColor={searchbar_font_color}
-        searchbarFontSize={searchbar_font_size}
-        searchbarHeight={searchbar_height}
-      />
-      <SearchResultView
-        demo={false}
-        footerHeight={search_window_footer_height}
-        iconRightMargin={icon_right_margin}
-        itemBackgroundColor={item_background_color}
-        itemFontColor={item_font_color}
-        itemHeight={item_height}
-        itemLeftPadding={item_left_padding}
-        itemTitleSubtitleMargin={item_title_subtitle_margin}
-        maxItemCount={max_item_count_to_show}
-        onDoubleClickHandler={onDoubleClickHandler}
-        onMouseoverHandler={onMouseoverHandler}
-        searchbarHeight={searchbar_height}
-        searchResult={items}
-        searchWindowTransparency={search_window_transparency}
-        selectedItemBackgroundColor={selected_item_background_color}
-        selectedItemFontColor={selected_item_font_color}
-        selectedItemIdx={indexInfo.selectedItemIdx}
-        startIdx={indexInfo.itemStartIdx}
-        subtitleFontSize={subtitle_font_size}
-        titleFontSize={title_font_size}
-      />
-      <SearchWindowScrollbar
-        footerHeight={search_window_footer_height}
-        itemHeight={item_height}
-        itemLength={items.length}
-        maxShow={max_item_count_to_show}
-        scrollbarColor={search_window_scrollbar_color}
-        scrollbarWidth={search_window_scrollbar_width}
-        searchbarHeight={searchbar_height}
-        startItemIdx={indexInfo.itemStartIdx}
-      />
+      <StoreAvailabilityContext.Provider
+        value={[storeAvailable, setStoreAvailable]}
+      >
+        <SearchBar
+          alwaysFocus
+          getInputProps={getInputProps}
+          itemLeftPadding={item_left_padding}
+          searchbarFontColor={searchbar_font_color}
+          searchbarFontSize={searchbar_font_size}
+          searchbarHeight={searchbar_height}
+          spinning={!storeAvailable}
+        />
+        <SearchResultView
+          demo={false}
+          footerHeight={search_window_footer_height}
+          iconRightMargin={icon_right_margin}
+          itemBackgroundColor={item_background_color}
+          itemFontColor={item_font_color}
+          itemHeight={item_height}
+          itemLeftPadding={item_left_padding}
+          itemTitleSubtitleMargin={item_title_subtitle_margin}
+          maxItemCount={max_item_count_to_show}
+          onDoubleClickHandler={onDoubleClickHandler}
+          onMouseoverHandler={onMouseoverHandler}
+          searchbarHeight={searchbar_height}
+          searchResult={items}
+          searchWindowTransparency={search_window_transparency}
+          selectedItemBackgroundColor={selected_item_background_color}
+          selectedItemFontColor={selected_item_font_color}
+          selectedItemIdx={indexInfo.selectedItemIdx}
+          startIdx={indexInfo.itemStartIdx}
+          subtitleFontSize={subtitle_font_size}
+          titleFontSize={title_font_size}
+        />
+        <SearchWindowScrollbar
+          footerHeight={search_window_footer_height}
+          itemHeight={item_height}
+          itemLength={items.length}
+          maxShow={max_item_count_to_show}
+          scrollbarColor={search_window_scrollbar_color}
+          scrollbarWidth={search_window_scrollbar_width}
+          searchbarHeight={searchbar_height}
+          startItemIdx={indexInfo.itemStartIdx}
+        />
+      </StoreAvailabilityContext.Provider>
     </OuterContainer>
   );
 }

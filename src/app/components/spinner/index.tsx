@@ -29,7 +29,7 @@ export default function Spinner(props: IProps) {
   }
 
   return (
-    <div style={style} className="loader">
+    <div style={style} className="preference-window-spinner">
       Loading...
     </div>
   );
