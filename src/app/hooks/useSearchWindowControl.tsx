@@ -254,7 +254,7 @@ const useSearchWindowControl = ({
       await workManager
         .handleItemPressEvent(selectedItem, inputStr, modifiers)
         .catch((err: any) => {
-          console.error('Error occured in commandExecute!', err);
+          console.error('Error occured in handleItemPressEvent!', err);
         });
     }
   };
@@ -294,14 +294,18 @@ const useSearchWindowControl = ({
   /**
    * @param {number} index
    */
-  const onDoubleClickHandler = (index: number) => {
+  const onDoubleClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
     handleReturn({
       selectedItemIdx: indexInfo.selectedItemIdx,
       modifiers: {
-        cmd: keyData.isWithMeta,
-        ctrl: keyData.isWithCtrl,
-        shift: keyData.isWithShift,
-        alt: keyData.isWithAlt,
+        cmd: e.metaKey,
+        ctrl: e.ctrlKey,
+        shift: e.shiftKey,
+        alt: e.altKey,
       },
     });
   };
@@ -432,7 +436,6 @@ const useSearchWindowControl = ({
    * @summary
    */
   const onKeydownHandler = async () => {
-    console.log('abc', storeAvailable);
     if (!storeAvailable) return;
     const input: string | undefined | null = keyData.key;
 

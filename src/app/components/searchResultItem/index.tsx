@@ -36,7 +36,9 @@ type IProps = {
   valid?: boolean;
   variables?: any;
   onMouseoverHandler: () => void;
-  onDoubleClickHandler: () => void;
+  onDoubleClickHandler: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void;
 };
 
 const SearchResultItem = (props: IProps) => {
@@ -110,8 +112,10 @@ const SearchResultItem = (props: IProps) => {
           : 'transparent',
       }}
       onFocus={() => {}}
-      onMouseOver={() => onMouseoverHandler()}
-      onDoubleClick={() => onDoubleClickHandler()}
+      onMouseOver={onMouseoverHandler}
+      onDoubleClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        onDoubleClickHandler(e);
+      }}
     >
       {getIconElement()}
       <InnerContainer

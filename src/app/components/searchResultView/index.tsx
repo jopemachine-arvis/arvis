@@ -28,7 +28,9 @@ type IProps = {
   startIdx: number;
   subtitleFontSize: number;
   titleFontSize: number;
-  onDoubleClickHandler: (clickedItemIdx: number) => void;
+  onDoubleClickHandler: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void;
   onMouseoverHandler: (itemIdx: number) => void;
 };
 
@@ -132,7 +134,7 @@ const SearchResultView = (props: IProps) => {
               autocomplete={command.autocomplete}
               variables={command.variables}
               onMouseoverHandler={() => onMouseoverHandler(itemIdx)}
-              onDoubleClickHandler={() => onDoubleClickHandler(itemIdx)}
+              onDoubleClickHandler={onDoubleClickHandler}
               iconRightMargin={iconRightMargin}
               itemBackgroundColor={itemBackgroundColor}
               itemFontColor={itemFontColor}
