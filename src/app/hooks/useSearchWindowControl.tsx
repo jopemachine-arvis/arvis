@@ -379,6 +379,7 @@ const useSearchWindowControl = ({
    * @param {any} item
    */
   const autoCompleteHandler = (item: any) => {
+    if (!item) return;
     if (workManager.hasEmptyWorkStk() && item.command) {
       setInputStr({ str: item.command, needItemsUpdate: true });
     } else if (
@@ -393,6 +394,7 @@ const useSearchWindowControl = ({
    * @param {any} item
    */
   const quicklookHandler = (item: any) => {
+    if (!item) return;
     if (
       !workManager.hasEmptyWorkStk() &&
       workManager.getTopWork().type === 'scriptfilter' &&

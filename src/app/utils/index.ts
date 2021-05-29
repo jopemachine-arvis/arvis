@@ -6,18 +6,20 @@ import { isSupportedImageFormat } from './isSupportedImage';
 import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 import { sleep } from './sleep';
+import { range } from './range';
 import { applyAlphaColor } from './applyAlphaColor';
 import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 
 export {
   applyAlphaColor,
-  createGlobalConfigChangeHandler,
-  sleep,
-  isNumeric,
-  makeActionCreator,
   checkFileExists,
+  createGlobalConfigChangeHandler,
   extractJson,
+  getRandomColor,
+  isNumeric,
   isSupportedImageFormat,
   isWithCtrlOrCmd,
-  getRandomColor,
+  makeActionCreator,
+  range,
+  sleep,
 };

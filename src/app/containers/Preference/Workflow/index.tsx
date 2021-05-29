@@ -25,8 +25,8 @@ import { StyledInput } from '@components/index';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StateType } from '@redux/reducers/types';
-import { useReserveForceUpdate } from '@hooks/index';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { isWithCtrlOrCmd, range } from '@utils/index';
 import {
   Header,
   OuterContainer,
@@ -48,6 +48,10 @@ export default function Workflow() {
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(0);
   const selectedWorkflowIdxRef = useRef<any>();
 
+  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(
+    new Set([selectedWorkflowIdx])
+  );
+
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
   const [workflowCategory, setWorkflowCategory] = useState<string>('');
   const [workflowCreator, setWorkflowCreator] = useState<string>('');
@@ -66,13 +70,12 @@ export default function Workflow() {
   );
 
   const forceUpdate = useForceUpdate();
-  const reserveForceUpdate = useReserveForceUpdate();
   const deleteWorkflowEventHandler = useRef<any>();
 
   const fetchWorkflows = () => {
-    const workflowsToSet = Core.getWorkflowList();
-
-    setWorkflows(workflowsToSet);
+    // Set workflows object to Core's workflow list.
+    // If there is any update, Automatically updates from Core
+    setWorkflows(Core.getWorkflowList());
     return null;
   };
 
@@ -133,7 +136,6 @@ export default function Workflow() {
             spaces: 4,
           });
 
-          reserveForceUpdate([1000, 2000, 3000]);
           return null;
         })
         .catch((err) => {
@@ -202,8 +204,29 @@ export default function Workflow() {
     }
   }, [selectedWorkflowIdx, workflows]);
 
-  const itemClickHandler = (idx: number) => {
-    setSelectedWorkflowIdx(idx);
+  const itemClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    const swap = new Set(selectedIdxs);
+    if (e.shiftKey) {
+      const from = selectedWorkflowIdx > idx ? idx : selectedWorkflowIdx;
+      const to = selectedWorkflowIdx < idx ? idx : selectedWorkflowIdx;
+      setSelectedIdxs(new Set(range(from, to, 1)));
+    } else if (
+      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey })
+    ) {
+      if (selectedIdxs.has(idx)) {
+        swap.delete(idx);
+      } else {
+        swap.add(idx);
+      }
+      setSelectedIdxs(swap);
+    } else {
+      setSelectedIdxs(new Set([idx]));
+      setSelectedWorkflowIdx(idx);
+    }
+    forceUpdate();
   };
 
   const getDefaultIcon = (bundleId: string) => {
@@ -219,14 +242,34 @@ export default function Workflow() {
 
   const workflowItemRightClickHandler = (
     e: React.MouseEvent<HTMLInputElement>,
-    bundleId: string
+    clickedIdx: number
   ) => {
     e.preventDefault();
-    const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
+    let targetIdxs;
+
+    if (selectedIdxs.has(clickedIdx)) {
+      targetIdxs = new Set(selectedIdxs);
+      targetIdxs.add(clickedIdx);
+    } else {
+      targetIdxs = new Set([clickedIdx]);
+    }
+
+    setSelectedIdxs(targetIdxs);
+    const selectedItemInfos = [];
+
+    for (const idx of targetIdxs) {
+      const bundleId = Object.keys(workflows)[idx];
+      selectedItemInfos.push({
+        workflowPath: Core.path.getWorkflowInstalledPath(bundleId),
+        workflowEnabled: workflows[bundleId].enabled,
+      });
+    }
+
     ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
-      workflowPath: workflowRootPath,
-      workflowEnabled: workflows[bundleId].enabled,
+      items: JSON.stringify(selectedItemInfos),
     });
+
+    forceUpdate();
   };
 
   const renderItem = (workflow: any, idx: number) => {
@@ -236,8 +279,9 @@ export default function Workflow() {
     const { createdby, name, enabled } = info;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
-    const workflowItemStyle =
-      selectedWorkflowIdx === idx ? style.selectedItemStyle : {};
+    const workflowItemStyle = selectedIdxs.has(idx)
+      ? style.selectedItemStyle
+      : {};
 
     let icon;
     const defaultIconPath = getDefaultIcon(itemBundleId);
@@ -255,12 +299,9 @@ export default function Workflow() {
       <WorkflowItemContainer
         style={workflowItemStyle}
         key={`workflowItem-${idx}`}
-        onClick={() => itemClickHandler(idx)}
+        onClick={(e) => itemClickHandler(e, idx)}
         onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
-          setSelectedWorkflowIdx(idx);
-          const selectedItemBundleId = Object.keys(workflows)[idx];
-          console.log('Selected workflow bundleId: ', selectedItemBundleId);
-          workflowItemRightClickHandler(e, selectedItemBundleId);
+          workflowItemRightClickHandler(e, idx);
         }}
       >
         {icon}
@@ -294,7 +335,6 @@ export default function Workflow() {
         json.webaddress = workflowWebsite;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
-        reserveForceUpdate([1000, 2000, 3000]);
         return null;
       })
       .catch((err) => {
@@ -359,6 +399,10 @@ export default function Workflow() {
   });
 
   useEffect(() => {
+    Core.Store.onStoreUpdate = () => {
+      forceUpdate();
+    };
+
     fetchWorkflows();
     deleteWorkflowEventHandler.current = () => {
       deleteSelectedWorkflow(
@@ -473,6 +517,7 @@ export default function Workflow() {
             <Label style={style.labelStyle}>Read Me</Label>
             <StyledInput
               type="textarea"
+              className="workflow-page-textarea"
               placeholder="Read Me"
               style={{
                 height: 260,

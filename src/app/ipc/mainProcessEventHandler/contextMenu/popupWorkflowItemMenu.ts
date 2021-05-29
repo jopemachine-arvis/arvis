@@ -1,19 +1,18 @@
 import { IpcMainEvent } from 'electron';
 import { WorkflowItemContextMenu } from '../../../components/contextMenus';
 
+type WorkflowItem = {
+  workflowPath: string;
+  workflowEnabled: boolean;
+};
+
 /**
  * @param  {string} path
  * @summary Used to popup context menu
  */
 export const popupWorkflowItemMenu = (
   e: IpcMainEvent,
-  {
-    workflowPath,
-    workflowEnabled,
-  }: { workflowPath: string; workflowEnabled: boolean }
+  { items }: { items: string }
 ) => {
-  new WorkflowItemContextMenu({
-    workflowPath,
-    workflowEnabled,
-  }).popup();
+  new WorkflowItemContextMenu(JSON.parse(items) as WorkflowItem[]).popup();
 };

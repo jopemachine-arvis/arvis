@@ -2,3 +2,15 @@
   transform: scale(1.5);
   transition: transform 0.2s;
 }
+
+.workflow-page-textarea::-webkit-scrollbar-corner { background: rgba(18, 21, 26, 0.5); }
+
+.workflow-page-textarea::-webkit-resizer {
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent gray gray transparent;
+}
+
+.workflow-page-textarea::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(32, 32, 32, 0.3);
+}

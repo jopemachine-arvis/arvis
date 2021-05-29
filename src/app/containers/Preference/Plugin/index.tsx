@@ -22,8 +22,8 @@ import fse from 'fs-extra';
 import { homedir } from 'os';
 import { StyledInput } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { useReserveForceUpdate } from '@hooks/index';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { isWithCtrlOrCmd, range } from '@utils/index';
 import {
   Header,
   OuterContainer,
@@ -58,14 +58,17 @@ export default function Plugin() {
     StoreAvailabilityContext
   ) as any;
 
+  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(
+    new Set([selectedPluginIdx])
+  );
+
   const forceUpdate = useForceUpdate();
-  const reserveForceUpdate = useReserveForceUpdate();
   const deletePluginEventHandler = useRef<any>();
 
   const fetchPlugins = () => {
-    const pluginsToSet = Core.getPluginList();
-
-    setPlugins(pluginsToSet);
+    // Set plugins object to Core's plugin list.
+    // If there is any update, Automatically updates from Core
+    setPlugins(Core.getPluginList());
     return null;
   };
 
@@ -126,7 +129,6 @@ export default function Plugin() {
             spaces: 4,
           });
 
-          reserveForceUpdate([1000, 2000, 3000]);
           return null;
         })
         .catch((err) => {
@@ -195,8 +197,29 @@ export default function Plugin() {
     }
   }, [selectedPluginIdx, plugins]);
 
-  const itemClickHandler = (idx: number) => {
-    setSelectedPluginIdx(idx);
+  const itemClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    const swap = new Set(selectedIdxs);
+    if (e.shiftKey) {
+      const from = selectedPluginIdx > idx ? idx : selectedPluginIdx;
+      const to = selectedPluginIdx < idx ? idx : selectedPluginIdx;
+      setSelectedIdxs(new Set(range(from, to, 1)));
+    } else if (
+      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey })
+    ) {
+      if (selectedIdxs.has(idx)) {
+        swap.delete(idx);
+      } else {
+        swap.add(idx);
+      }
+      setSelectedIdxs(swap);
+    } else {
+      setSelectedIdxs(new Set([idx]));
+      setSelectedPluginIdx(idx);
+    }
+    forceUpdate();
   };
 
   const getDefaultIcon = (bundleId: string) => {
@@ -212,14 +235,34 @@ export default function Plugin() {
 
   const pluginItemRightClickHandler = (
     e: React.MouseEvent<HTMLInputElement>,
-    bundleId: string
+    clickedIdx: number
   ) => {
     e.preventDefault();
-    const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
+    let targetIdxs;
+
+    if (selectedIdxs.has(clickedIdx)) {
+      targetIdxs = new Set(selectedIdxs);
+      targetIdxs.add(clickedIdx);
+    } else {
+      targetIdxs = new Set([clickedIdx]);
+    }
+
+    setSelectedIdxs(targetIdxs);
+    const selectedItemInfos = [];
+
+    for (const idx of targetIdxs) {
+      const bundleId = Object.keys(plugins)[idx];
+      selectedItemInfos.push({
+        pluginPath: Core.path.getPluginInstalledPath(bundleId),
+        pluginEnabled: plugins[bundleId].enabled,
+      });
+    }
+
     ipcRenderer.send(IPCRendererEnum.popupPluginItemMenu, {
-      pluginPath: pluginRootPath,
-      pluginEnabled: plugins[bundleId].enabled,
+      items: JSON.stringify(selectedItemInfos),
     });
+
+    forceUpdate();
   };
 
   const renderItem = (plugin: any, idx: number) => {
@@ -229,8 +272,9 @@ export default function Plugin() {
     const { createdby, name, enabled } = info;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
-    const pluginItemStyle =
-      selectedPluginIdx === idx ? style.selectedItemStyle : {};
+    const pluginItemStyle = selectedIdxs.has(idx)
+      ? style.selectedItemStyle
+      : {};
 
     let icon;
     const defaultIconPath = getDefaultIcon(itemBundleId);
@@ -248,12 +292,9 @@ export default function Plugin() {
       <PluginItemContainer
         style={pluginItemStyle}
         key={`pluginItem-${idx}`}
-        onClick={() => itemClickHandler(idx)}
+        onClick={(e) => itemClickHandler(e, idx)}
         onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
-          setSelectedPluginIdx(idx);
-          const selectedItemBundleId = Object.keys(plugins)[idx];
-          console.log('Selected plugin bundleId: ', selectedItemBundleId);
-          pluginItemRightClickHandler(e, selectedItemBundleId);
+          pluginItemRightClickHandler(e, idx);
         }}
       >
         {icon}
@@ -285,7 +326,6 @@ export default function Plugin() {
         json.webaddress = pluginWebsite;
 
         await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
-        reserveForceUpdate([1000, 2000, 3000]);
         return null;
       })
       .catch((err) => {
@@ -349,6 +389,10 @@ export default function Plugin() {
   });
 
   useEffect(() => {
+    Core.Store.onStoreUpdate = () => {
+      forceUpdate();
+    };
+
     fetchPlugins();
     deletePluginEventHandler.current = () => {
       deleteSelectedPlugin(pluginsRef.current, selectedPluginIdxRef.current);
@@ -460,6 +504,7 @@ export default function Plugin() {
             <Label style={style.labelStyle}>Read Me</Label>
             <StyledInput
               type="textarea"
+              className="plugin-page-textarea"
               placeholder="Read Me"
               style={{
                 height: 260,
