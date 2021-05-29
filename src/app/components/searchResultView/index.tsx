@@ -122,7 +122,7 @@ const SearchResultView = (props: IProps) => {
             <SearchResultItem
               offset={offset}
               selected={itemIdx === selectedItemIdx}
-              // To do :: Fix me!!
+              // If there is no title, shows command
               title={command.title ? command.title : command.command}
               subtitle={command.subtitle}
               arg={command.arg}

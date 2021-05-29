@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 /**
  * @param  {string} file
  */

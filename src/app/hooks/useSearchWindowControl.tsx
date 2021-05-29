@@ -153,11 +153,8 @@ const useSearchWindowControl = ({
     if (execScriptFilterWithSpace || execScriptFilterWithoutSpace) {
       commandOnStackIsEmpty = firstItem;
 
-      const { running_subtext: runningSubText } = firstItem;
       workManager.setRunningText({
-        itemArr,
-        index: 0,
-        runningSubText,
+        selectedItem: itemArr[0],
       });
 
       Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
@@ -247,12 +244,9 @@ const useSearchWindowControl = ({
 
     if (selectedItem.type === 'scriptfilter') {
       setInputStr({ str: selectedItem.command, needItemsUpdate: false });
-      const { running_subtext: runningSubText } = items[selectedItemIdx];
 
       workManager.setRunningText({
-        itemArr: items,
-        index: selectedItemIdx,
-        runningSubText,
+        selectedItem: items[selectedItemIdx],
       });
 
       Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
