@@ -4,6 +4,7 @@ import path from 'path';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
+import chalk from 'chalk';
 
 /**
  * @summary Initialize watcher.
@@ -70,17 +71,23 @@ export const startFileWatcher = () => {
       followSymlinks: false,
     })
     .on('change', async (filePath: string) => {
-      console.log(`"${filePath}" changed. Reload workflows settings..`);
+      console.log(
+        chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
+      );
       await sleep(1000);
       requestRenewWorkflows(getBundleIdFromFilePath(filePath));
     })
     .on('unlink', async (filePath: string) => {
-      console.log(`"${filePath}" unlinked. Reload workflows settings..`);
+      console.log(
+        chalk.greenBright(`"${filePath}" unlinked. Reload workflows settings..`)
+      );
       await sleep(1000);
       requestRenewWorkflows();
     })
     .on('add', async (filePath: string) => {
-      console.log(`"${filePath}" added. Reload workflows settings..`);
+      console.log(
+        chalk.greenBright(`"${filePath}" added. Reload workflows settings..`)
+      );
       await sleep(1000);
       requestRenewWorkflows();
     });
@@ -100,17 +107,23 @@ export const startFileWatcher = () => {
       followSymlinks: false,
     })
     .on('change', async (filePath: string) => {
-      console.log(`"${filePath}" changed. Reload plugins settings..`);
+      console.log(
+        chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
+      );
       await sleep(1000);
       requestRenewPlugins(getBundleIdFromFilePath(filePath));
     })
     .on('unlink', async (filePath: string) => {
-      console.log(`"${filePath}" unlinked. Reload plugins settings..`);
+      console.log(
+        chalk.greenBright(`"${filePath}" unlinked. Reload plugins settings..`)
+      );
       await sleep(1000);
       requestRenewPlugins();
     })
     .on('add', async (filePath: string) => {
-      console.log(`"${filePath}" added. Reload plugins settings..`);
+      console.log(
+        chalk.greenBright(`"${filePath}" added. Reload plugins settings..`)
+      );
       await sleep(1000);
       requestRenewPlugins();
     });

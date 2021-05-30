@@ -82,6 +82,7 @@ const keyCodeMapper = {
   Backspace: useKeyActionTypes.BACKSPACE,
   Control: useKeyActionTypes.CONTROL,
   META: useKeyActionTypes.META,
+  ALT: useKeyActionTypes.ALT,
   // eslint-disable-next-line no-useless-computed-key
   [' ']: useKeyActionTypes.SPACE
 };
@@ -135,7 +136,12 @@ const getAction = eventDetails => {
     throw new Error('Event called with no details');
   }
 
-  let { key } = eventDetails;
+  let { key, keyCode } = eventDetails;
+
+  // Handle Mac os alt key issue
+  if (process.platform === 'darwin' && eventDetails.altKey) {
+    key = String.fromCharCode(keyCode);
+  }
 
   if (key.includes('Arrow')) {
     return {

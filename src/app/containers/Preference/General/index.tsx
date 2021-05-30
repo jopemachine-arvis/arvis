@@ -84,6 +84,15 @@ export default function General() {
         alt: keyData.isWithAlt,
       };
 
+      if (
+        !modifiers.cmd &&
+        !modifiers.ctrl &&
+        !modifiers.shift &&
+        !modifiers.alt
+      ) {
+        return;
+      }
+
       for (const modifier in modifiers) {
         if ((modifiers as any)[modifier]) {
           result += `${modifier} + `;
@@ -151,7 +160,8 @@ export default function General() {
             value={toggle_search_window_hotkey}
             onFocus={() => setHotkeyFormFocused(true)}
             onBlur={() => setHotkeyFormFocused(false)}
-            onChange={(e: React.FormEvent<HTMLInputElement>) => {
+            onChange={() => {}}
+            onKeyDown={(e: React.FormEvent<HTMLInputElement>) => {
               e.preventDefault();
               configChangeHandler(
                 e,

@@ -6,6 +6,7 @@ import { IPCMainEnum } from './ipcEventEnum';
 import { WindowManager } from '../windows';
 import toggleSearchWindow from './toggleSearchWindow';
 import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
+import chalk from 'chalk';
 
 /**
  * @param  {BrowserWindow} searchWindow
@@ -74,7 +75,7 @@ const extractShortcutName = (shortcut: string): string => {
  * @param  {() => void} callback
  */
 const registerShortcut = (shortcut: string, callback: () => void): boolean => {
-  console.log(`Shortcut registered.. '${shortcut}'`);
+  console.log(chalk.cyanBright(`Shortcut registered.. '${shortcut}'`));
 
   // Double modifier shortcut
   if (shortcut.includes('Double')) {

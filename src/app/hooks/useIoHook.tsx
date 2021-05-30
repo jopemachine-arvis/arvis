@@ -15,7 +15,6 @@ export default () => {
       Date.now() - (doubleKeyPressedTimers as any)[doubledKeyModifier] <
         doubleKeyPressElapse
     ) {
-      console.log('double key pressed!', doubledKeyModifier);
       ipcRenderer.send(IPCRendererEnum.triggerDoubleModifierKey, {
         modifier: doubledKeyModifier,
       });
