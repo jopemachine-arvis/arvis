@@ -99,6 +99,10 @@ export default function SearchWindow() {
 
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
+      if (workManager.printActionType) {
+        console.log('[Action: notification] ', action);
+      }
+
       ipcRenderer.send(IPCRendererEnum.showNotification, {
         title: action.title,
         body: action.text,
@@ -138,10 +142,10 @@ export default function SearchWindow() {
     ) => {
       workManager.commandExcute(
         {
-          type: 'hotkey',
-          title: '',
           action,
           bundleId,
+          type: 'hotkey',
+          title: '',
         },
         '',
         {}

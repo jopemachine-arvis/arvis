@@ -21,9 +21,10 @@ export enum IPCRendererEnum {
   setGlobalShortcut = '@ipcRenderer/setGlobalShortcut',
   setSearchWindowWidth = '@ipcRenderer/setSearchWindowWidth',
   showErrorDialog = '@ipcRenderer/showErrorDialog',
+  showLargeTextWindow = '@ipcRenderer/showLargeTextWindow',
   showNotification = '@ipcRenderer/showNotification',
   showQuicklookWindow = '@ipcRenderer/showQuicklookWindow',
-  showLargeTextWindow = '@ipcRenderer/showLargeTextWindow',
+  triggerDoubleModifierKey = '@ipcRenderer/triggerDoubleModifierKey',
 }
 
 /**

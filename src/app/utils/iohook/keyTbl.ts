@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-types
 const objectFlip = (obj: object) => {
   const ret = {};
   Object.keys(obj).forEach((key) => {

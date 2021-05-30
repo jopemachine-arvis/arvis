@@ -15,7 +15,6 @@ import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
-import ioHook from 'iohook';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {
@@ -48,12 +47,12 @@ if (process.env.NODE_ENV === 'production') {
 require('electron-debug')();
 
 app.disableHardwareAcceleration();
+// For using iohook in renderer process
+app.allowRendererProcessReuse = true;
 
 app.on('before-quit', () => {
   WindowManager.getInstance().windowAllClose();
   cleanUpIPCHandlers();
-  ioHook.removeAllListeners();
-  ioHook.unload();
   app.exit();
 });
 

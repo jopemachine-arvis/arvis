@@ -10,6 +10,7 @@ import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { useIoHook } from '@hooks/index';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -41,6 +42,7 @@ export default function PreferenceWindow() {
   const [page, setPage] = useState<PreferencePage>(INITIAL_PAGE);
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
   const [storeAvailable, setStoreAvailable] = useState<boolean>();
+  useIoHook();
 
   const { global_font, toggle_search_window_hotkey } = useSelector(
     (state: StateType) => state.global_config

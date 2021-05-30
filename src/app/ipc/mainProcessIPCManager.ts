@@ -24,6 +24,7 @@ import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalSho
 
 import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
+import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
@@ -52,6 +53,10 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
+  ipcMain.on(
+    IPCRendererEnum.triggerDoubleModifierKey,
+    triggerDoubleModifierKey
+  );
   ipcMain.on(
     IPCRendererEnum.openPluginInstallFileDialog,
     openPluginInstallFileDialog

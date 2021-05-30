@@ -24,6 +24,7 @@ import { showQuicklookWindow } from './windowManage/showQuicklookWindow';
 
 import { renewWorkflow } from './renewWorkflow';
 import { showNotification } from './showNotification';
+import { triggerDoubleModifierKey } from './triggerDoubleModifierKey';
 
 export {
   dispatchAction,
@@ -48,4 +49,5 @@ export {
   showLargeTextWindow,
   showNotification,
   showQuicklookWindow,
+  triggerDoubleModifierKey,
 };

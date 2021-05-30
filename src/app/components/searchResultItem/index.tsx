@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
+import { applyAlphaColor } from '@utils/index';
 import {
   InnerContainer,
   OuterContainer,
@@ -11,7 +12,6 @@ import {
   IconImg,
   OffsetText,
 } from './components';
-import { applyAlphaColor } from '../../utils';
 
 type IProps = {
   arg?: any;

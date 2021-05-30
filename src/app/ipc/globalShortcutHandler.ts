@@ -1,22 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-restricted-syntax */
 import { globalShortcut, dialog } from 'electron';
-import ioHook from 'iohook';
 import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
 import { WindowManager } from '../windows';
 import toggleSearchWindow from './toggleSearchWindow';
-
-const doubleKeyPressElapse = 200;
-
-const doubleKeyPressedTimers = {};
-
-const doubleKeyPressHandler: {
-  shift?: () => void;
-  alt?: () => void;
-  ctrl?: () => void;
-  cmd?: () => void;
-} = {};
+import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
 
 /**
  * @param  {BrowserWindow} searchWindow
@@ -92,21 +81,13 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
     const doubledKeyModifier = extractShortcutName(shortcut.split('Double')[1]);
 
     // Already used shortcut
-    if (doubleKeyPressHandler[doubledKeyModifier]) {
+    if ((doubleKeyPressHandler as any)[doubledKeyModifier]) {
       return false;
     }
 
-    doubleKeyPressHandler[doubledKeyModifier] = () => {
-      if (
-        doubleKeyPressedTimers[doubledKeyModifier] &&
-        Date.now() - doubleKeyPressedTimers[doubledKeyModifier] <
-          doubleKeyPressElapse
-      ) {
-        callback();
-      } else {
-        doubleKeyPressedTimers[doubledKeyModifier] = new Date();
-      }
-    };
+    doubleKeyPressHandler[
+      doubledKeyModifier as 'shift' | 'alt' | 'cmd' | 'ctrl'
+    ] = callback;
   }
   // Normal modifier shortcut
   else {
@@ -165,25 +146,13 @@ export default ({
     // Case of double key type
     const action = callbackTable[shortcut];
 
-    if (!registerShortcut(shortcut, defaultShortcutCallbackTbl[action]())) {
+    if (
+      !registerShortcut(shortcut, (defaultShortcutCallbackTbl as any)[action]())
+    ) {
       dialog.showErrorBox(
         'Duplicated shortcut found',
         `'${shortcut}' duplicated. Please reassign this hotkey`
       );
     }
   }
-
-  // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
-  ioHook.on('keydown', (e) => {
-    if (e.shiftKey) {
-      doubleKeyPressHandler.shift && doubleKeyPressHandler.shift();
-    } else if (e.altKey) {
-      doubleKeyPressHandler.alt && doubleKeyPressHandler.alt();
-    } else if (e.ctrlKey) {
-      doubleKeyPressHandler.ctrl && doubleKeyPressHandler.ctrl();
-    } else if (e.metaKey) {
-      doubleKeyPressHandler.cmd && doubleKeyPressHandler.cmd();
-    }
-  });
-  ioHook.start();
 };

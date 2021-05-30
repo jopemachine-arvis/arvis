@@ -4,10 +4,10 @@ import { ipcRenderer } from 'electron';
 import path from 'path';
 import { Core } from 'arvis-core';
 import _ from 'lodash';
+import { isSupportedImageFormat } from '@utils/index';
+import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import SearchResultItem from '../searchResultItem';
-import { isSupportedImageFormat } from '../../utils';
 import { InnerContainer, OuterContainer } from './components';
-import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 type IProps = {
   demo: boolean;
