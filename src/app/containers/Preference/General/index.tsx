@@ -62,16 +62,7 @@ export default function General() {
     dispatch,
   });
 
-  useEffect(() => {
-    ipcRenderer.send(IPCRendererEnum.getSystemFont);
-    ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
-
-    return () => {
-      ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
-    };
-  }, []);
-
-  useEffect(() => {
+  const hotkeyChangedEventHandler = () => {
     if (hotkeyFormFocused) {
       console.log('Recorded keyData', keyData);
 
@@ -128,10 +119,27 @@ export default function General() {
         GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
       );
     }
+  };
+
+  useEffect(() => {
+    ipcRenderer.send(IPCRendererEnum.getSystemFont);
+    ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
+
+    return () => {
+      ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
+    };
+  }, []);
+
+  useEffect(() => {
+    hotkeyChangedEventHandler();
   }, [keyData]);
 
   const toggleAutoLaunchAtLogin = () => {
     dispatch(GlobalConfigActions.setLaunchAtLogin(!launch_at_login));
+
+    ipcRenderer.send(IPCRendererEnum.setAutoLaunch, {
+      autoLaunch: !launch_at_login,
+    });
   };
 
   return (

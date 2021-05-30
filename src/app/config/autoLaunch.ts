@@ -5,4 +5,5 @@ import AutoLaunch from 'auto-launch';
  */
 export default new AutoLaunch({
   name: 'Arvis',
+  isHidden: true,
 });
