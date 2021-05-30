@@ -48,7 +48,8 @@ require('electron-debug')();
 
 app.disableHardwareAcceleration();
 // For using iohook in renderer process
-app.allowRendererProcessReuse = true;
+// To do:: It is deprecated and removed in Electron 14. Find other solution to handle this
+app.allowRendererProcessReuse = false;
 
 app.on('before-quit', () => {
   WindowManager.getInstance().windowAllClose();

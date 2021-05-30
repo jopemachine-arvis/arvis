@@ -17,6 +17,7 @@ const createLargeTextWindow = () => {
     height: constants.largeTextWindowHeight,
     transparent: true,
     webPreferences: {
+      contextIsolation: false,
       nodeIntegration: true,
     },
   });

@@ -17,6 +17,7 @@ const createPreferenceWindow = ({
     minWidth: constants.preferenceMinWindowWidth,
     minHeight: constants.preferenceMinWindowHeight,
     webPreferences: {
+      contextIsolation: false,
       nodeIntegration: true,
     },
   });

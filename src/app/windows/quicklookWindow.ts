@@ -16,9 +16,10 @@ const createQuicklookWindow = () => {
     width: constants.quicklookWindowWidth,
     height: constants.quicklookWindowHeight,
     webPreferences: {
+      contextIsolation: false,
+      enableRemoteModule: true,
       nodeIntegration: true,
       webviewTag: true,
-      enableRemoteModule: true,
     },
   });
 
