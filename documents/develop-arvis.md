@@ -16,7 +16,6 @@ Arvis module not directly related to electron, renderer
 * [Macos](./build-macos.md)
 * [Linux](./build-linux.md)
 
-
 ## iohook config
 
 This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.
@@ -25,4 +24,4 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 
 ## config file pathes
 
-[Click to view config file pathes](./config-file-pathes.md)
+[Click to view config file pathes](./config-file-paths.md)

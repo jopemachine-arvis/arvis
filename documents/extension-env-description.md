@@ -8,12 +8,24 @@ Version of arvis
 
 ### arvis_extension_bundleid
 
-BundleId of extension
+`bundleId` of extension
+
+### arvis_extension_name
+
+`name` of the extension
+
+### arvis_extension_version
+
+`version` of the extension
 
 ### arvis_extension_data
 
-[Data path](./config-file-pathes.md) of the extension
+[Data path](./config-file-paths.md) of the extension
 
 ### arvis_extension_cache
 
-[Cache path](./config-file-pathes.md) of the extension
+[Cache path](./config-file-paths.md) of the extension
+
+### arvis_extension_history
+
+[History file](./history.md) path of the Arvis
