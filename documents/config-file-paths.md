@@ -1,6 +1,6 @@
 # Config file pathes
 
-## history file
+## History file
 
 The Arvis history log the action logs and query logs in the path below.
 

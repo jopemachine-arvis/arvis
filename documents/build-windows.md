@@ -8,7 +8,7 @@
 
 3. `yarn build`
 
-4. Download prebuilt file on [here](https://github.com/wilix-team/iohook) and replace it properly.
+4. Download prebuilt binary files on [here](https://github.com/wilix-team/iohook) and replace it with `src/node_modules/iohook/builds`.
 
 5. `yarn start`
 

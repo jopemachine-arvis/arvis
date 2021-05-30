@@ -25,3 +25,10 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 ## config file pathes
 
 [Click to view config file pathes](./config-file-paths.md)
+
+## [use-key-capture](https://github.com/pranesh239/use-key-capture)
+
+Arvis edits and uses some libraries for Arvis' own usage.
+
+These codes are separated from `src/app`.
+
