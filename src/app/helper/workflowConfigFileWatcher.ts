@@ -1,10 +1,10 @@
 import chokidar from 'chokidar';
 import { Core } from 'arvis-core';
 import path from 'path';
+import chalk from 'chalk';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
-import chalk from 'chalk';
 
 /**
  * @summary Initialize watcher.
