@@ -36,6 +36,11 @@ export default (state = {}, action: any) => {
         ...state,
         debugging_scriptfilter: payload.arg,
       };
+    case AdvancedConfigActionTypes.SET_DEBUGGING_PLUGIN:
+      return {
+        ...state,
+        debugging_plugin: payload.arg,
+      };
     default:
       return state;
   }
@@ -59,6 +64,10 @@ export function getIsOnDebuggingWorkflowStack(state: StateType) {
 
 export function getIsOnDebuggingArgs(state: StateType) {
   return state.advanced_config.debugging_args;
+}
+
+export function getIsOnDebuggingPlugin(state: StateType) {
+  return state.advanced_config.debugging_plugin;
 }
 
 export function getIsOnDebuggingScriptfilter(state: StateType) {

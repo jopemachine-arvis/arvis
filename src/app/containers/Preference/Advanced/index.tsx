@@ -19,6 +19,7 @@ export default function Advanced() {
     debugging_workstack,
     debugging_args,
     debugging_scriptfilter,
+    debugging_plugin,
   } = useSelector((state: StateType) => state.advanced_config);
 
   const dispatch = useDispatch();
@@ -113,6 +114,22 @@ export default function Advanced() {
               }
             />
             Debugging arguments, query, variables
+          </Label>
+        </FormGroup>
+
+        <FormGroup check style={formGroupStyle}>
+          <Label checked style={labelStyle}>
+            <Input
+              type="checkbox"
+              checked={debugging_plugin}
+              onChange={() =>
+                toggleState(
+                  AdvancedActionTypes.SET_DEBUGGING_PLUGIN,
+                  debugging_plugin
+                )
+              }
+            />
+            Debugging plugins
           </Label>
         </FormGroup>
 

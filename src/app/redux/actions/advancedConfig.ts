@@ -5,6 +5,7 @@ export const actionTypes = {
   SET_DEBUGGING_WORKSTACK: '@advancedConfig/SET_DEBUGGING_WORKSTACK',
   SET_DEBUGGING_ARGS: '@advancedConfig/SET_DEBUGGING_ARGS',
   SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER',
+  SET_DEBUGGING_PLUGIN: '@advancedConfig/SET_DEBUGGING_PLUGIN',
   SET_INSTALL_ALFRED_WORKFLOW: '@advancedConfig/SET_INSTALL_ALFRED_WORKFLOW',
   SET_DEBUGGING_WORKFLOW_OUTPUT:
     '@advancedConfig/SET_DEBUGGING_WORKFLOW_OUTPUT',
@@ -12,6 +13,11 @@ export const actionTypes = {
 
 export const setAlfredWorkflowDirectly = makeActionCreator(
   actionTypes.SET_INSTALL_ALFRED_WORKFLOW,
+  'arg'
+);
+
+export const setDebuggingPlugin = makeActionCreator(
+  actionTypes.SET_DEBUGGING_PLUGIN,
   'arg'
 );
 

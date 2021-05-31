@@ -58,6 +58,7 @@ export default function SearchWindow() {
     workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
     workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
     workManager.printWorkStack = debuggingConfig.debugging_workstack;
+    workManager.printPluginItems = debuggingConfig.debugging_plugin;
   };
 
   useEffect(() => {

@@ -34,5 +34,6 @@ export default {
     debugging_scriptfilter: false,
     debugging_workflow_output: true,
     debugging_workstack: false,
+    debugging_plugin: false,
   },
 };
