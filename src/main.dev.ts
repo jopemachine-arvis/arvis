@@ -102,7 +102,8 @@ app.on('ready', () => {
       openArvisFile(openFile);
     }
 
-    windowManager.getPreferenceWindow().webContents.openDevTools();
+    // * For debugging
+    // windowManager.getPreferenceWindow().webContents.openDevTools();
 
     startFileWatcher();
     initIPCHandlers();

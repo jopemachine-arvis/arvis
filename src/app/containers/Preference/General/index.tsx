@@ -19,7 +19,10 @@ import { StateType } from '@redux/reducers/types';
 import { GlobalConfigActions } from '@redux/actions';
 import { StyledInput } from '@components/index';
 import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
-import { createGlobalConfigChangeHandler } from '@utils/index';
+import {
+  createGlobalConfigChangeHandler,
+  getHotkeyNameOnThisPlatform,
+} from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
@@ -165,7 +168,7 @@ export default function General() {
               textShadow: '0px 0px 0px #fff',
             }}
             type="text"
-            value={toggle_search_window_hotkey}
+            value={getHotkeyNameOnThisPlatform(toggle_search_window_hotkey)}
             onFocus={() => setHotkeyFormFocused(true)}
             onBlur={() => setHotkeyFormFocused(false)}
             onChange={() => {}}

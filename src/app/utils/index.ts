@@ -9,6 +9,7 @@ import { sleep } from './sleep';
 import { range } from './range';
 import { applyAlphaColor } from './applyAlphaColor';
 import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
+import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
 
 export {
   applyAlphaColor,
@@ -20,6 +21,7 @@ export {
   isSupportedImageFormat,
   isWithCtrlOrCmd,
   makeActionCreator,
+  getHotkeyNameOnThisPlatform,
   range,
   sleep,
 };
