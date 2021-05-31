@@ -9,5 +9,5 @@ export const setSearchWindowWidth = (
   { width }: { width: number }
 ) => {
   const searchWindow = WindowManager.getInstance().getSearchWindow();
-  searchWindow.setSize(width, searchWindow.getSize()[1]);
+  searchWindow.setBounds({ width, height: searchWindow.getSize()[1] });
 };
