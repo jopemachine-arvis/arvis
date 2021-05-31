@@ -71,8 +71,12 @@ const useSearchWindowControl = ({
     // Select most bottom item
     if (selectedItemIdx === items.length - 1 && items.length !== 1) {
       selectedItemIdx = items.length - 1;
+
+      const itemStartIdx =
+        items.length - maxItemCount >= 0 ? items.length - maxItemCount : 0;
+
       setIndexInfo({
-        itemStartIdx: items.length - maxItemCount,
+        itemStartIdx,
         selectedItemIdx,
       });
     }
