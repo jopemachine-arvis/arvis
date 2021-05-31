@@ -67,7 +67,8 @@
       "main.prod.js",
       "main.prod.js.map",
       "package.json",
-      "fontlist"
+      "fontlist",
+      "fonts.vbs"
     ],
     "afterSign": ".erb/scripts/Notarize.js",
     "mac": {
