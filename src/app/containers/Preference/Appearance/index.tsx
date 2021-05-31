@@ -79,9 +79,8 @@ export default function Appearance() {
 
   const dispatch = useDispatch();
 
-  const [previewBackgroundColor, setPreviewBackgroundColor] = useState<string>(
-    '#000000'
-  );
+  const [previewBackgroundColor, setPreviewBackgroundColor] =
+    useState<string>('#000000');
 
   const configChangeHandler = createGlobalConfigChangeHandler({
     destWindow: 'searchWindow',
@@ -254,6 +253,27 @@ export default function Appearance() {
     ipcRenderer.send(IPCRendererEnum.importTheme);
   };
 
+  const onNumberChangeHandler = (
+    e: React.FormEvent<HTMLInputElement>,
+    { min, max, actionType }: { min: number; max: number; actionType: string }
+  ) => {
+    const mockEvent = {
+      currentTarget: {
+        value: e.currentTarget.value,
+      },
+    } as unknown as React.FormEvent<HTMLInputElement>;
+
+    if (Number(e.currentTarget.value) < min) {
+      e.currentTarget.value = min.toString();
+      mockEvent.currentTarget.value = min.toString();
+    } else if (Number(e.currentTarget.value) > max) {
+      e.currentTarget.value = max.toString();
+      mockEvent.currentTarget.value = max.toString();
+    }
+
+    configChangeHandler(mockEvent, actionType);
+  };
+
   return (
     <OuterContainer>
       <IoMdColorPalette
@@ -316,6 +336,7 @@ export default function Appearance() {
             startIdx={0}
             subtitleFontSize={subtitle_font_size}
             titleFontSize={title_font_size}
+            searchWindowWidth={search_window_width}
           />
         </PreviewMainContainer>
       </PreviewContainer>
@@ -326,10 +347,14 @@ export default function Appearance() {
             <Label style={labelStyle}>Window Width</Label>
             <StyledInput
               type="number"
-              min={100}
-              value={search_window_width}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_SEARCH_WINDOW_WIDTH)
+              min={400}
+              defaultValue={search_window_width}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 400,
+                  max: 2000,
+                  actionType: UIActionTypes.SET_SEARCH_WINDOW_WIDTH,
+                })
               }
             />
           </FormGroup>
@@ -339,12 +364,14 @@ export default function Appearance() {
             <StyledInput
               type="number"
               min={0}
-              value={search_window_footer_height}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
-                  e,
-                  UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
-                )
+              max={100}
+              defaultValue={search_window_footer_height}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 100,
+                  actionType: UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT,
+                })
               }
             />
           </FormGroup>
@@ -353,13 +380,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Window border radius</Label>
             <StyledInput
               min={0}
+              max={30}
               type="number"
-              value={search_window_border_radius}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
-                  e,
-                  UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS
-                )
+              defaultValue={search_window_border_radius}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 30,
+                  actionType: UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS,
+                })
               }
             />
           </FormGroup>
@@ -371,12 +400,13 @@ export default function Appearance() {
               min={0}
               max={255}
               maxLength={3}
-              value={search_window_transparency}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
-                  e,
-                  UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY
-                )
+              defaultValue={search_window_transparency}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 255,
+                  actionType: UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY,
+                })
               }
             />
           </FormGroup>
@@ -384,11 +414,16 @@ export default function Appearance() {
           <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Item Height</Label>
             <StyledInput
-              min={10}
               type="number"
-              value={item_height}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_ITEM_HEIGHT)
+              min={10}
+              max={150}
+              defaultValue={item_height}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 10,
+                  max: 150,
+                  actionType: UIActionTypes.SET_ITEM_HEIGHT,
+                })
               }
             />
           </FormGroup>
@@ -422,9 +457,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Title font size</Label>
             <StyledInput
               type="number"
-              value={title_font_size}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_TITLE_FONTSIZE)
+              min={8}
+              max={50}
+              defaultValue={title_font_size}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 8,
+                  max: 50,
+                  actionType: UIActionTypes.SET_TITLE_FONTSIZE,
+                })
               }
             />
           </FormGroup>
@@ -433,9 +474,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Subtitle font size</Label>
             <StyledInput
               type="number"
-              value={subtitle_font_size}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_SUBTITLE_FONTSIZE)
+              min={8}
+              max={50}
+              defaultValue={subtitle_font_size}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 8,
+                  max: 50,
+                  actionType: UIActionTypes.SET_SUBTITLE_FONTSIZE,
+                })
               }
             />
           </FormGroup>
@@ -480,9 +527,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Item left padding</Label>
             <StyledInput
               type="number"
-              value={item_left_padding}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_ITEM_LEFT_PADDING)
+              min={0}
+              max={30}
+              defaultValue={item_left_padding}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 30,
+                  actionType: UIActionTypes.SET_ITEM_LEFT_PADDING,
+                })
               }
             />
           </FormGroup>
@@ -491,9 +544,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Margin between title and subtitle</Label>
             <StyledInput
               type="number"
-              value={item_title_subtitle_margin}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_TITLE_SUBTITLE_MARGIN)
+              min={0}
+              max={30}
+              defaultValue={item_title_subtitle_margin}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 30,
+                  actionType: UIActionTypes.SET_TITLE_SUBTITLE_MARGIN,
+                })
               }
             />
           </FormGroup>
@@ -502,9 +561,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Search bar Height</Label>
             <StyledInput
               type="number"
-              value={searchbar_height}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_HEIGHT)
+              min={40}
+              max={180}
+              defaultValue={searchbar_height}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 40,
+                  max: 180,
+                  actionType: UIActionTypes.SET_SEARCHBAR_HEIGHT,
+                })
               }
             />
           </FormGroup>
@@ -513,9 +578,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Icon right margin</Label>
             <StyledInput
               type="number"
-              value={icon_right_margin}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_ICON_RIGHT_MARGIN)
+              min={0}
+              max={30}
+              defaultValue={icon_right_margin}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 30,
+                  actionType: UIActionTypes.SET_ICON_RIGHT_MARGIN,
+                })
               }
             />
           </FormGroup>
@@ -524,9 +595,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Search bar Font size</Label>
             <StyledInput
               type="number"
-              value={searchbar_font_size}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONTSIZE)
+              min={8}
+              max={30}
+              defaultValue={searchbar_font_size}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 8,
+                  max: 30,
+                  actionType: UIActionTypes.SET_SEARCHBAR_FONTSIZE,
+                })
               }
             />
           </FormGroup>
@@ -549,12 +626,15 @@ export default function Appearance() {
             <Label style={labelStyle}>Search window scrollbar width</Label>
             <StyledInput
               type="number"
-              value={search_window_scrollbar_width}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
-                  e,
-                  UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
-                )
+              min={0}
+              max={8}
+              defaultValue={search_window_scrollbar_width}
+              onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+                onNumberChangeHandler(e, {
+                  min: 0,
+                  max: 8,
+                  actionType: UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH,
+                })
               }
             />
           </FormGroup>
