@@ -9,7 +9,7 @@ import {
   SearchResultView,
   SearchWindowScrollbar,
 } from '@components/index';
-import useSearchWindowControl from '@hooks/useSearchWindowControl';
+import { useSearchWindowControl, useIoHook } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -39,11 +39,8 @@ export default function SearchWindow() {
     title_font_size,
   } = useSelector((state: StateType) => state.ui_config);
 
-  const {
-    max_item_count_to_show,
-    max_item_count_to_search,
-    global_font,
-  } = useSelector((state: StateType) => state.global_config);
+  const { max_item_count_to_show, max_item_count_to_search, global_font } =
+    useSelector((state: StateType) => state.global_config);
 
   const debuggingConfig = useSelector(
     (state: StateType) => state.advanced_config
@@ -68,6 +65,8 @@ export default function SearchWindow() {
   }, [debuggingConfig]);
 
   const dispatch = useDispatch();
+
+  useIoHook();
 
   const {
     setInputStr,

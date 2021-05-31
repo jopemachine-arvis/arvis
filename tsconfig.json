@@ -47,6 +47,7 @@
     "dll",
     "src/main.js",
     "src/main.js.map",
-    "src/use-key-capture"
+    "src/use-key-capture",
+    "src/font-list"
   ]
 }

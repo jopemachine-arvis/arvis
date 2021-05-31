@@ -274,7 +274,7 @@ export default function General() {
               })}
             </DropdownMenu>
           </Dropdown>
-          <FormDescription>Overall fonts</FormDescription>
+          <FormDescription>Available fonts</FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>
