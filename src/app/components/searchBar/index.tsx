@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input } from './components';
+import './index.global.css';
 
 type IProps = {
   alwaysFocus: boolean;
@@ -26,7 +27,11 @@ const SearchBar = (props: IProps) => {
     spinning,
   } = props;
 
-  const { ref: inputRef, type, originalRef } = getInputProps
+  const {
+    ref: inputRef,
+    type,
+    originalRef,
+  } = getInputProps
     ? getInputProps()
     : {
         ref: null,

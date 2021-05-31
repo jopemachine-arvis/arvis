@@ -1,0 +1,4 @@
+.searchBar::selection {
+  color: white;
+  background: #888888;
+}

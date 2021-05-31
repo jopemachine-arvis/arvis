@@ -24,6 +24,7 @@ type IProps = {
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
   offset: number;
+  searchWindowWidth: number;
   searchWindowTransparency: number;
   selected: boolean;
   selectedItemBackgroundColor: string;
@@ -53,6 +54,7 @@ const SearchResultItem = (props: IProps) => {
     itemLeftPadding,
     itemTitleSubtitleMargin,
     offset,
+    searchWindowWidth,
     searchWindowTransparency,
     selected,
     selectedItemBackgroundColor,
@@ -96,7 +98,7 @@ const SearchResultItem = (props: IProps) => {
   const getOffsetText = useCallback(() => {
     return process.platform === 'darwin'
       ? `⌘${offset + 1}`
-      : `ctl ${offset + 1}`;
+      : `Ctl + ${offset + 1}`;
   }, []);
 
   return (
@@ -142,14 +144,16 @@ const SearchResultItem = (props: IProps) => {
           {subtitle !== '(none)' ? subtitle : ' '}
         </SubTitle>
       </InnerContainer>
-      <OffsetText
-        style={{
-          fontSize: titleFontSize,
-          color: selected ? selectedItemFontColor : itemFontColor,
-        }}
-      >
-        {getOffsetText()}
-      </OffsetText>
+      {/* Small screen does not display OffsetText. */}
+      {searchWindowWidth >= 850 && (
+        <OffsetText
+          style={{
+            color: selected ? selectedItemFontColor : itemFontColor,
+          }}
+        >
+          {getOffsetText()}
+        </OffsetText>
+      )}
     </OuterContainer>
   );
 };

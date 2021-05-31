@@ -238,6 +238,7 @@ export default function SearchWindow() {
           onMouseoverHandler={onMouseoverHandler}
           searchbarHeight={searchbar_height}
           searchResult={items}
+          searchWindowWidth={search_window_width}
           searchWindowTransparency={search_window_transparency}
           selectedItemBackgroundColor={selected_item_background_color}
           selectedItemFontColor={selected_item_font_color}

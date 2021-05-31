@@ -11,7 +11,7 @@ export const OuterContainer = styled.div`
 
 export const InnerContainer = styled.div`
   flex-direction: column;
-  width: 90%;
+  width: 85%;
 `;
 
 export const Title = styled.div`
@@ -34,7 +34,10 @@ export const IconImg = styled.img`
 
 export const OffsetText = styled.div`
   display: flex;
+  justify-content: flex-end;
+  width: 15%;
   align-items: center;
+  font-size: 12px;
   margin-right: ${process.platform === 'darwin' ? 20 : 25}px;
   white-space: nowrap;
   user-select: none;

@@ -21,6 +21,7 @@ type IProps = {
   maxItemCount: number;
   searchbarHeight: number;
   searchResult: any[];
+  searchWindowWidth: number;
   searchWindowTransparency: number;
   selectedItemBackgroundColor: string;
   selectedItemFontColor: string;
@@ -47,6 +48,7 @@ const SearchResultView = (props: IProps) => {
     maxItemCount,
     searchbarHeight,
     searchResult,
+    searchWindowWidth,
     searchWindowTransparency,
     selectedItemBackgroundColor,
     selectedItemFontColor,
@@ -145,6 +147,7 @@ const SearchResultView = (props: IProps) => {
               selectedItemFontColor={selectedItemFontColor}
               subtitleFontSize={subtitleFontSize}
               titleFontSize={titleFontSize}
+              searchWindowWidth={searchWindowWidth}
               searchWindowTransparency={searchWindowTransparency}
             />
           </InnerContainer>
