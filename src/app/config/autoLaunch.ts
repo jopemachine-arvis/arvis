@@ -1,4 +1,4 @@
-import AutoLaunch from 'auto-launch';
+import AutoLaunch from 'easy-auto-launch';
 
 /**
  * @description Ref: https://www.npmjs.com/package/auto-launch
