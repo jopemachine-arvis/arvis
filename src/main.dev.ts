@@ -21,7 +21,7 @@ import {
   cleanUpIPCHandlers,
   initIPCHandlers,
 } from './app/ipc/mainProcessIPCManager';
-import { startFileWatcher } from './app/helper/workflowConfigFileWatcher';
+import { startFileWatcher } from './app/helper/fileWatcher';
 import installExtensions from './app/config/extensionInstaller';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
