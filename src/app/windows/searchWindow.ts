@@ -19,7 +19,7 @@ const createSearchWindow = ({
     disableAutoHideCursor: true,
     skipTaskbar: true,
     movable: true,
-    hasShadow: true,
+    hasShadow: false,
     fullscreenable: false,
     acceptFirstMouse: false,
     alwaysOnTop: false,
