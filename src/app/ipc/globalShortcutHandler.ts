@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-restricted-syntax */
 import { globalShortcut, dialog } from 'electron';
+import chalk from 'chalk';
 import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
 import { IPCMainEnum } from './ipcEventEnum';
 import { WindowManager } from '../windows';
 import toggleSearchWindow from './toggleSearchWindow';
 import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
-import chalk from 'chalk';
 
 /**
  * @param  {BrowserWindow} searchWindow
@@ -144,7 +144,6 @@ export default ({
   registerWorkflowHotkeys({ workflowHotkeyTbl });
 
   for (const shortcut of shortcuts) {
-    // Case of double key type
     const action = callbackTable[shortcut];
 
     if (

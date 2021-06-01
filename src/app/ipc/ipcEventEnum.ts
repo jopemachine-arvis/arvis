@@ -14,6 +14,7 @@ export enum IPCRendererEnum {
   popupPluginItemMenu = '@ipcRenderer/popupPluginItemMenu',
   popupSearchbarItemMenu = '@ipcRenderer/popupSearchbarItemMenu',
   popupWorkflowItemMenu = '@ipcRenderer/popupWorkflowItemMenu',
+  registerAllShortcuts = '@ipcRenderer/registerAllShortcuts',
   renewWorkflow = '@ipcRenderer/renewWorkflow',
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',
   resumeFileWatch = '@ipcRenderer/resumeFileWatch',
@@ -27,6 +28,7 @@ export enum IPCRendererEnum {
   showQuicklookWindow = '@ipcRenderer/showQuicklookWindow',
   stopFileWatch = '@ipcRenderer/stopFileWatch',
   triggerDoubleModifierKey = '@ipcRenderer/triggerDoubleModifierKey',
+  unregisterAllShortcuts = '@ipcRenderer/unregisterAllShortcuts',
 }
 
 /**
@@ -43,6 +45,7 @@ export enum IPCMainEnum {
   openPluginInstallFileDialogRet = '@ipcMain/openPluginInstallFileDialogRet',
   openWfConfFileDialogRet = '@ipcMain/openWfConfFileDialogRet',
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
+  registerAllShortcuts = '@ipcRenderer/registerAllShortcuts',
   renewPlugin = '@ipcMain/renewPlugin',
   renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',

@@ -145,6 +145,14 @@ export default function General() {
     });
   };
 
+  const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    configChangeHandler(
+      e,
+      GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
+    );
+  };
+
   return (
     <OuterContainer>
       <Form>
@@ -168,17 +176,11 @@ export default function General() {
               textShadow: '0px 0px 0px #fff',
             }}
             type="text"
-            value={getHotkeyNameOnThisPlatform(toggle_search_window_hotkey)}
-            onFocus={() => setHotkeyFormFocused(true)}
             onBlur={() => setHotkeyFormFocused(false)}
             onChange={() => {}}
-            onKeyDown={(e: React.FormEvent<HTMLInputElement>) => {
-              e.preventDefault();
-              configChangeHandler(
-                e,
-                GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
-              );
-            }}
+            onFocus={() => setHotkeyFormFocused(true)}
+            onKeyDown={hotkeyChangeHandler}
+            value={getHotkeyNameOnThisPlatform(toggle_search_window_hotkey)}
           />
           <FormDescription>
             Select the form and type the hotkey

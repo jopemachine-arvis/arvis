@@ -57,8 +57,6 @@ They are installer files. Just double click on them to install them.
 
 * By default, all changes to workflow files are being watched and reflected as soon as changes are made.
 
-* In the case of `hotkeys`, they are registered and applied only when `Arvis` is turned on for the first time, so if there is a change in the hotkeys, `Arvis` must be turned off and on to renew hotkey settings.
-
 ### How to write new workflows
 
 * [Click me to check how to write new workflow](./documents/workflow-develop.md)
@@ -71,9 +69,7 @@ They are installer files. Just double click on them to install them.
 
 * Installing a package with the same bundle ID removes all existing files. So, reinstall to update the `workflow` or `plugin`
 
-* In workflow, plugin development, updating `arvis-workflow.json`, `arvis-plugin.json` is detected and reloaded by file-watcher.
-
-(Hotload not yet supported for `hotkey` of workflow)
+* In workflow, plugin development, updating `arvis-workflow.json`, `arvis-plugin.json (and its js files)` is detected and reloaded by [chokidar](https://github.com/paulmillr/chokidar).
 
 ### Convert alfredworkflow to arvisworkflow
 

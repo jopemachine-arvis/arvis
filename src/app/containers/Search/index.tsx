@@ -39,8 +39,12 @@ export default function SearchWindow() {
     title_font_size,
   } = useSelector((state: StateType) => state.ui_config);
 
-  const { max_item_count_to_show, max_item_count_to_search, global_font } =
-    useSelector((state: StateType) => state.global_config);
+  const {
+    global_font,
+    max_item_count_to_search,
+    max_item_count_to_show,
+    toggle_search_window_hotkey,
+  } = useSelector((state: StateType) => state.global_config);
 
   const debuggingConfig = useSelector(
     (state: StateType) => state.advanced_config
@@ -55,10 +59,10 @@ export default function SearchWindow() {
   const setDebuggingOptions = () => {
     workManager.printActionType = debuggingConfig.debugging_action_type;
     workManager.printArgs = debuggingConfig.debugging_args;
+    workManager.printPluginItems = debuggingConfig.debugging_plugin;
     workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
     workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
     workManager.printWorkStack = debuggingConfig.debugging_workstack;
-    workManager.printPluginItems = debuggingConfig.debugging_plugin;
   };
 
   useEffect(() => {
@@ -70,16 +74,16 @@ export default function SearchWindow() {
   useIoHook();
 
   const {
-    setInputStr,
-    indexInfo,
     getInputProps,
-    onWheelHandler,
-    onMouseoverHandler,
+    indexInfo,
     onDoubleClickHandler,
+    onInputShouldBeUpdate,
     onItemPressHandler,
     onItemShouldBeUpdate,
+    onMouseoverHandler,
+    onWheelHandler,
     onWorkEndHandler,
-    onInputShouldBeUpdate,
+    setInputStr,
   } = useSearchWindowControl({
     items,
     setItems,
@@ -110,6 +114,22 @@ export default function SearchWindow() {
     });
   };
 
+  const registerAllGlobalHotkey = () => {
+    const hotkeys = Core.findHotkeys();
+
+    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+      callbackTable: {
+        [toggle_search_window_hotkey]: 'toggleSearchWindow',
+      },
+      workflowHotkeyTbl: JSON.stringify(hotkeys),
+    });
+  };
+
+  const renewHotkeys = () => {
+    ipcRenderer.send(IPCRendererEnum.unregisterAllShortcuts);
+    registerAllGlobalHotkey();
+  };
+
   /**
    * @summary Used to receive dispatched action from different window
    */
@@ -129,11 +149,18 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
-      Core.renewWorkflows(bundleId);
+      Core.renewWorkflows(bundleId)
+        .then(() => {
+          renewHotkeys();
+          return null;
+        })
+        .catch(console.error);
     },
 
     renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
-      Core.renewPlugins({ initializePluginWorkspace: true, bundleId });
+      Core.renewPlugins({ initializePluginWorkspace: true, bundleId }).catch(
+        console.error
+      );
     },
 
     executeAction: (
@@ -151,13 +178,21 @@ export default function SearchWindow() {
         {}
       );
     },
+
+    registerAllShortcuts: (e: IpcRendererEvent) => {
+      registerAllGlobalHotkey();
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
-    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
-    ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
+    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+    ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
+    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(
+      IPCMainEnum.registerAllShortcuts,
+      ipcCallbackTbl.registerAllShortcuts
+    );
     ipcRenderer.on(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
@@ -165,10 +200,14 @@ export default function SearchWindow() {
   }, []);
 
   const unsubscribe = useCallback(() => {
-    ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-    ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
-    ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.off(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
+    ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+    ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
+    ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.off(
+      IPCMainEnum.registerAllShortcuts,
+      ipcCallbackTbl.registerAllShortcuts
+    );
     ipcRenderer.off(
       IPCMainEnum.setSearchbarInput,
       ipcCallbackTbl.setSearchbarInput
@@ -176,19 +215,24 @@ export default function SearchWindow() {
   }, []);
 
   const loadWorkflowsInfo = useCallback(() => {
-    Core.renewWorkflows();
+    Core.renewWorkflows()
+      .then(() => {
+        registerAllGlobalHotkey();
+        return null;
+      })
+      .catch(console.error);
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
-    Core.renewPlugins({ initializePluginWorkspace: true });
+    Core.renewPlugins({ initializePluginWorkspace: true }).catch(console.error);
   }, []);
 
   useEffect(() => {
+    initializeCustomActions();
+    initilizeSearchWindowIPCHandler();
     loadPluginsInfo();
     loadWorkflowsInfo();
     registerWindowUpdater();
-    initializeCustomActions();
-    initilizeSearchWindowIPCHandler();
     return unsubscribe;
   }, []);
 
@@ -197,6 +241,13 @@ export default function SearchWindow() {
       width: search_window_width,
     });
   }, [search_window_width]);
+
+  useEffect(() => {
+    if (!storeAvailable) return;
+    if (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') {
+      renewHotkeys();
+    }
+  }, [toggle_search_window_hotkey]);
 
   return (
     <OuterContainer

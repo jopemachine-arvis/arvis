@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { Core } from 'arvis-core';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
-import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { IPCMainEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
@@ -42,29 +42,18 @@ export default function PreferenceWindow() {
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
   const [storeAvailable, setStoreAvailable] = useState<boolean>();
 
-  const { global_font, toggle_search_window_hotkey } = useSelector(
+  const { global_font } = useSelector(
     (state: StateType) => state.global_config
   );
 
-  // To do :: Move below logics to RootRouter
-  const registerAllGlobalHotkey = () => {
-    const hotkeys = Core.findHotkeys();
-    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-      callbackTable: {
-        [toggle_search_window_hotkey]: 'toggleSearchWindow',
-      },
-      workflowHotkeyTbl: JSON.stringify(hotkeys),
-    });
-  };
-
   const loadWorkflowsInfo = useCallback(() => {
-    return Core.renewWorkflows();
+    return Core.renewWorkflows().catch(console.error);
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
     return Core.renewPlugins({
       initializePluginWorkspace: false,
-    });
+    }).catch(console.error);
   }, []);
 
   /**
@@ -96,14 +85,8 @@ export default function PreferenceWindow() {
   useEffect(() => {
     Core.setStoreAvailabiltyChecker(setStoreAvailable);
 
-    loadWorkflowsInfo()
-      .then(() => {
-        registerAllGlobalHotkey();
-        return null;
-      })
-      .catch(console.error);
-
-    loadPluginsInfo().catch(console.error);
+    loadWorkflowsInfo();
+    loadPluginsInfo();
 
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);

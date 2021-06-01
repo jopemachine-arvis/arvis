@@ -19,10 +19,12 @@ import { showErrorDialog } from './mainProcessEventHandler/modal/showErrorDialog
 import { dispatchAction } from './mainProcessEventHandler/config/dispatchAction';
 import { getSystemFont } from './mainProcessEventHandler/config/getSystemFont';
 import { importTheme } from './mainProcessEventHandler/config/importTheme';
+import { registerAllShortcuts } from './mainProcessEventHandler/config/registerAllShortcuts';
+import { resumeFileWatch } from './mainProcessEventHandler/config/resumeFileWatch';
 import { setAutoLaunch } from './mainProcessEventHandler/config/setAutoLaunch';
 import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalShortcut';
 import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
-import { resumeFileWatch } from './mainProcessEventHandler/config/resumeFileWatch';
+import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 
 import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
@@ -48,15 +50,19 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
+  ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);
+  ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
   ipcMain.on(IPCRendererEnum.setSearchWindowWidth, setSearchWindowWidth);
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
   ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
-  ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
+  ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
+  ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+
   ipcMain.on(
     IPCRendererEnum.triggerDoubleModifierKey,
     triggerDoubleModifierKey
@@ -69,8 +75,6 @@ export const initIPCHandlers = () => {
     IPCRendererEnum.resizeSearchWindowHeight,
     resizeSearchWindowHeight
   );
-
-  ipcMain.on(IPCRendererEnum.setGlobalShortcut, setGlobalShortcut);
 };
 
 /**
