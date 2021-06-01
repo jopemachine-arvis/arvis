@@ -356,6 +356,8 @@ export default function Plugin() {
 
     const targetBundleId = pluginList[pluginBundleIds[idxToRemove]].bundleId;
 
+    ipcRenderer.send(IPCRendererEnum.stopFileWatch);
+
     setStoreAvailable(false);
     Core.uninstallPlugin({
       bundleId: targetBundleId,
@@ -374,7 +376,10 @@ export default function Plugin() {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
         setStoreAvailable(true);
+        ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
       });
   };
 

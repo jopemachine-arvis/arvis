@@ -366,6 +366,8 @@ export default function Workflow() {
     const targetBundleId =
       workflowList[workflowBundleIds[idxToRemove]].bundleId;
 
+    ipcRenderer.send(IPCRendererEnum.stopFileWatch);
+
     setStoreAvailable(false);
     Core.uninstallWorkflow({
       bundleId: targetBundleId,
@@ -384,7 +386,10 @@ export default function Workflow() {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
         setStoreAvailable(true);
+        ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
       });
   };
 
