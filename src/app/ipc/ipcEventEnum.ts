@@ -16,6 +16,7 @@ export enum IPCRendererEnum {
   popupWorkflowItemMenu = '@ipcRenderer/popupWorkflowItemMenu',
   renewWorkflow = '@ipcRenderer/renewWorkflow',
   resizeSearchWindowHeight = '@ipcRenderer/resizeSearchWindowHeight',
+  resumeFileWatch = '@ipcRenderer/resumeFileWatch',
   saveFile = '@ipcRenderer/saveFile',
   setAutoLaunch = '@ipcRenderer/setAutoLaunch',
   setGlobalShortcut = '@ipcRenderer/setGlobalShortcut',
@@ -24,6 +25,7 @@ export enum IPCRendererEnum {
   showLargeTextWindow = '@ipcRenderer/showLargeTextWindow',
   showNotification = '@ipcRenderer/showNotification',
   showQuicklookWindow = '@ipcRenderer/showQuicklookWindow',
+  stopFileWatch = '@ipcRenderer/stopFileWatch',
   triggerDoubleModifierKey = '@ipcRenderer/triggerDoubleModifierKey',
 }
 

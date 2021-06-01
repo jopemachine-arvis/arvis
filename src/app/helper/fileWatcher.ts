@@ -1,10 +1,69 @@
-import chokidar from 'chokidar';
+import chokidar, { FSWatcher } from 'chokidar';
 import { Core } from 'arvis-core';
 import path from 'path';
 import chalk from 'chalk';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
+
+const workflowWatchPath = `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`;
+
+const pluginWatchPath = [
+  `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
+  `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
+];
+
+let workspaceWatcher: FSWatcher | null;
+let pluginWatcher: FSWatcher | null;
+
+/**
+ * @param  {string} bundleId?
+ * @summary Update store of each singletons for each renderer processes
+ */
+const requestRenewWorkflows = (bundleId?: string) => {
+  const windowManager = WindowManager.getInstance();
+  windowManager
+    .getSearchWindow()
+    .webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
+
+  windowManager
+    .getPreferenceWindow()
+    .webContents.send(IPCMainEnum.renewWorkflow, {
+      bundleId,
+    });
+};
+
+/**
+ * @param  {string} bundleId?
+ * @summary Update store of each singletons for each renderer processes
+ */
+const requestRenewPlugins = (bundleId?: string) => {
+  const windowManager = WindowManager.getInstance();
+
+  windowManager
+    .getSearchWindow()
+    .webContents.send(IPCMainEnum.renewPlugin, { bundleId });
+  windowManager
+    .getPreferenceWindow()
+    .webContents.send(IPCMainEnum.renewPlugin, {
+      bundleId,
+    });
+};
+
+/**
+ * @summary
+ */
+export const stopFileWatcher = () => {
+  if (!workspaceWatcher || !pluginWatcher) {
+    console.error('workspaceWatcher is not running');
+    return;
+  }
+
+  console.log(chalk.whiteBright('File watching is paused...'));
+
+  workspaceWatcher.close();
+  pluginWatcher.close();
+};
 
 /**
  * @summary Initialize watcher.
@@ -16,39 +75,7 @@ import { WindowManager } from '../windows';
  *              because the change should be reflected in the in-memory store.
  */
 export const startFileWatcher = () => {
-  /**
-   * @param  {string} bundleId?
-   * @summary Update store of each singletons for each renderer processes
-   */
-  const requestRenewWorkflows = (bundleId?: string) => {
-    const windowManager = WindowManager.getInstance();
-    windowManager
-      .getSearchWindow()
-      .webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
-
-    windowManager
-      .getPreferenceWindow()
-      .webContents.send(IPCMainEnum.renewWorkflow, {
-        bundleId,
-      });
-  };
-
-  /**
-   * @param  {string} bundleId?
-   * @summary Update store of each singletons for each renderer processes
-   */
-  const requestRenewPlugins = (bundleId?: string) => {
-    const windowManager = WindowManager.getInstance();
-
-    windowManager
-      .getSearchWindow()
-      .webContents.send(IPCMainEnum.renewPlugin, { bundleId });
-    windowManager
-      .getPreferenceWindow()
-      .webContents.send(IPCMainEnum.renewPlugin, {
-        bundleId,
-      });
-  };
+  console.log(chalk.whiteBright('Start file watching...'));
 
   /**
    * @param  {string} arvisWorkflowConfigFilePath
@@ -59,9 +86,7 @@ export const startFileWatcher = () => {
     return pathArrs.pop();
   };
 
-  const workflowWatchPath = `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`;
-
-  chokidar
+  workspaceWatcher = chokidar
     .watch(workflowWatchPath, {
       cwd: Core.path.workflowInstallPath,
       persistent: true,
@@ -94,12 +119,7 @@ export const startFileWatcher = () => {
       requestRenewWorkflows();
     });
 
-  const pluginWatchPath = [
-    `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
-    `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
-  ];
-
-  chokidar
+  pluginWatcher = chokidar
     .watch(pluginWatchPath, {
       cwd: Core.path.pluginInstallPath,
       persistent: true,

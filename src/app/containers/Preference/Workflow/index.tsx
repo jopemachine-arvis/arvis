@@ -95,6 +95,8 @@ export default function Workflow() {
         setStoreAvailable(false);
         const arvisWorkflowFilePath = file.filePaths[0];
 
+        ipcRenderer.send(IPCRendererEnum.stopFileWatch);
+
         Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
@@ -106,7 +108,10 @@ export default function Workflow() {
               title: 'Installer file is invalid',
               content: err.message,
             });
+          })
+          .finally(() => {
             setStoreAvailable(true);
+            ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
           });
       }
     },

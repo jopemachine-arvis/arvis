@@ -88,6 +88,8 @@ export default function Plugin() {
         setStoreAvailable(false);
         const arvisPluginFilePath = file.filePaths[0];
 
+        ipcRenderer.send(IPCRendererEnum.stopFileWatch);
+
         Core.installPlugin(arvisPluginFilePath)
           .then(() => {
             fetchPlugins();
@@ -99,7 +101,10 @@ export default function Plugin() {
               title: 'Installer file is invalid',
               content: err.message,
             });
+          })
+          .finally(() => {
             setStoreAvailable(true);
+            ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
           });
       }
     },

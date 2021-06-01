@@ -21,6 +21,8 @@ import { getSystemFont } from './mainProcessEventHandler/config/getSystemFont';
 import { importTheme } from './mainProcessEventHandler/config/importTheme';
 import { setAutoLaunch } from './mainProcessEventHandler/config/setAutoLaunch';
 import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalShortcut';
+import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
+import { resumeFileWatch } from './mainProcessEventHandler/config/resumeFileWatch';
 
 import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
@@ -53,6 +55,8 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
+  ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
+  ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(
     IPCRendererEnum.triggerDoubleModifierKey,
     triggerDoubleModifierKey

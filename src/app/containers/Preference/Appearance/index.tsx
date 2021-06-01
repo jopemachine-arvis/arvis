@@ -330,13 +330,13 @@ export default function Appearance() {
             searchbarHeight={searchbar_height}
             searchResult={mockItems}
             searchWindowTransparency={search_window_transparency}
+            searchWindowWidth={search_window_width}
             selectedItemBackgroundColor={selected_item_background_color}
             selectedItemFontColor={selected_item_font_color}
             selectedItemIdx={0}
             startIdx={0}
             subtitleFontSize={subtitle_font_size}
             titleFontSize={title_font_size}
-            searchWindowWidth={search_window_width}
           />
         </PreviewMainContainer>
       </PreviewContainer>
