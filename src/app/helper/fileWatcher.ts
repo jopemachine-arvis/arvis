@@ -6,9 +6,11 @@ import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
 
-const workflowWatchPath = `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`;
+const workflowWatchPaths = [
+  `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`,
+];
 
-const pluginWatchPath = [
+const pluginWatchPaths = [
   `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
   `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
 ];
@@ -87,7 +89,6 @@ export const startFileWatcher = () => {
   };
 
   const watchOpts = {
-    cwd: Core.path.workflowInstallPath,
     disableGlobbing: false,
     followSymlinks: true,
     ignoreInitial: true,
@@ -99,7 +100,10 @@ export const startFileWatcher = () => {
   };
 
   workspaceWatcher = chokidar
-    .watch(workflowWatchPath, watchOpts)
+    .watch(workflowWatchPaths, {
+      cwd: Core.path.workflowInstallPath,
+      ...watchOpts,
+    })
     .on('change', async (filePath: string) => {
       console.log(
         chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
@@ -123,7 +127,10 @@ export const startFileWatcher = () => {
     });
 
   pluginWatcher = chokidar
-    .watch(pluginWatchPath, watchOpts)
+    .watch(pluginWatchPaths, {
+      cwd: Core.path.pluginInstallPath,
+      ...watchOpts,
+    })
     .on('change', async (filePath: string) => {
       console.log(
         chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
