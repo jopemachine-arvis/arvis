@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { ipcRenderer } from 'electron';
 import path from 'path';
-import { Core } from 'arvis-core';
+import { Core } from '@jopemachine/arvis-core';
 import _ from 'lodash';
 import { isSupportedImageFormat } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';

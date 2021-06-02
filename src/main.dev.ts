@@ -14,7 +14,7 @@
 import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
-import { Core } from 'arvis-core';
+import { Core } from '@jopemachine/arvis-core';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {

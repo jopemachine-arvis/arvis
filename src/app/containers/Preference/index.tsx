@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useSelector } from 'react-redux';
-import { Core } from 'arvis-core';
+import { Core } from '@jopemachine/arvis-core';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';

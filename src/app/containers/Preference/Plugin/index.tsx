@@ -5,7 +5,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Core } from 'arvis-core';
+import { Core } from '@jopemachine/arvis-core';
 import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';

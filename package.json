@@ -19,6 +19,7 @@
     "test": "jest",
     "replace-core": "rm -rf node_modules/arvis-core && cp -R ../arvis-core node_modules/arvis-core",
     "replace-conv": "rm -rf node_modules/arvis-plist-converter && cp -R ../arvis-plist-converter node_modules/arvis-plist-converter",
+    "replace-node-modules": "rm -rf node_modules && yarn",
     "replace-iohook-prebuilt": "node iohook-prebuilt-replace.js"
   },
   "keywords": [
@@ -196,7 +197,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "@jopemachine/arvis-core": "^0.0.3",
+    "@jopemachine/arvis-core": "^0.0.6",
     "@jopemachine/arvis-plist-converter": "^0.0.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",

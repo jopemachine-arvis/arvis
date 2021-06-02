@@ -6,8 +6,8 @@ import { History } from 'history';
 import { Switch, Route } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { functions as loggerFunctions, transports } from 'electron-log';
-import { Core } from 'arvis-core';
-import { LogType } from 'arvis-core/dist/config/logger';
+import { Core } from '@jopemachine/arvis-core';
+import { LogType } from '@jopemachine/arvis-core/dist/config/logger';
 import { Store } from '../redux/reducers/types';
 import {
   Preference as PreferenceContainer,
