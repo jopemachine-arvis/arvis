@@ -27,6 +27,12 @@ import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
 
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+}
+
 ElectronStore.initRenderer();
 Core.path.initializePath();
 
