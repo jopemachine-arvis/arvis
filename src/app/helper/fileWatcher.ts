@@ -86,17 +86,20 @@ export const startFileWatcher = () => {
     return pathArrs.pop();
   };
 
+  const watchOpts = {
+    cwd: Core.path.workflowInstallPath,
+    disableGlobbing: false,
+    followSymlinks: true,
+    ignoreInitial: true,
+    persistent: true,
+    // awaitWriteFinish: {
+    //   pollInterval: 100,
+    //   stabilityThreshold: 2000,
+    // },
+  };
+
   workspaceWatcher = chokidar
-    .watch(workflowWatchPath, {
-      cwd: Core.path.workflowInstallPath,
-      persistent: true,
-      ignoreInitial: true,
-      followSymlinks: false,
-      // awaitWriteFinish: {
-      //   pollInterval: 100,
-      //   stabilityThreshold: 2000,
-      // },
-    })
+    .watch(workflowWatchPath, watchOpts)
     .on('change', async (filePath: string) => {
       console.log(
         chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
@@ -120,16 +123,7 @@ export const startFileWatcher = () => {
     });
 
   pluginWatcher = chokidar
-    .watch(pluginWatchPath, {
-      cwd: Core.path.pluginInstallPath,
-      persistent: true,
-      ignoreInitial: true,
-      followSymlinks: false,
-      // awaitWriteFinish: {
-      //   pollInterval: 100,
-      //   stabilityThreshold: 2000,
-      // },
-    })
+    .watch(pluginWatchPath, watchOpts)
     .on('change', async (filePath: string) => {
       console.log(
         chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
