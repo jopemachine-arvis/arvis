@@ -8,8 +8,10 @@ import { useSelector } from 'react-redux';
 import { Core } from '@jopemachine/arvis-core';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
-import { IPCMainEnum } from '@ipc/ipcEventEnum';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { sleep } from '@utils/index';
+import _ from 'lodash';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -82,11 +84,36 @@ export default function PreferenceWindow() {
     },
   };
 
+  const checkExtensionsUpdate = () => {
+    Promise.all([
+      Core.checkUpdatableExtensions('workflow'),
+      Core.checkUpdatableExtensions('plugin'),
+    ])
+      .then(async (result) => {
+        await sleep(100);
+        const updatable: any[] = _.flatten(result);
+
+        const updatableTexts = _.map(
+          updatable,
+          (item) => `${item.name}: ${item.current} → ${item.latest}.`
+        ).join('\n');
+
+        if (updatable.length > 0) {
+          ipcRenderer.send(IPCRendererEnum.showNotification, {
+            title: `${updatable.length} extension is updatable`,
+            body: updatableTexts,
+          });
+        }
+        return null;
+      })
+      .catch(console.error);
+  };
+
   useEffect(() => {
     Core.setStoreAvailabiltyChecker(setStoreAvailable);
-
     loadWorkflowsInfo();
     loadPluginsInfo();
+    checkExtensionsUpdate();
 
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);

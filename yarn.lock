@@ -1431,10 +1431,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.0.6.tgz#7f6e3f4e9b424462ad1e83c0c68e5b88d13e9a16"
-  integrity sha512-BRgQroHV73RFqHy1F6ioUCQRE/L8LQcHoTb+Agh+NvfwNa0iTAKgGGuMPuk9k29dWOEbaPEXiV5VtNnBEVYkdQ==
+"@jopemachine/arvis-core@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.0.10.tgz#18b23e2043c637f80075f3616d4c3f3cf2598ab3"
+  integrity sha512-iYy5u6r6azAQ/mZ+acgHmY/E/GtQhSGvaX4PQ1WWGOAEv8Kx/jps2Wft7VK2DjW9Zdx0nI4jd9VHGYtLD7Uqcw==
   dependencies:
     "@jopemachine/arvis-plist-converter" "^0.0.4"
     archiver "^5.3.0"
@@ -1447,8 +1447,10 @@
     lodash "^4.17.21"
     meow "^9.0.0"
     open "^8.0.4"
+    readdirp "^3.6.0"
     recursive-readdir "^2.2.2"
     rimraf "^3.0.2"
+    semver "^7.3.5"
     unzipper "^0.10.11"
     uuid "^8.3.2"
     xml-js "^1.6.11"
@@ -10373,6 +10375,13 @@ readdirp@^2.2.1:
     graceful-fs "^4.1.11"
     micromatch "^3.1.10"
     readable-stream "^2.0.2"
+
+readdirp@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-3.6.0.tgz#74a370bd857116e245b29cc97340cd431a02a6c7"
+  integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
+  dependencies:
+    picomatch "^2.2.1"
 
 rechoir@^0.7.0:
   version "0.7.0"

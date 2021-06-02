@@ -9,9 +9,10 @@ export const showNotification = (
   e: IpcMainEvent,
   { title, body }: { title: string; body: string }
 ) => {
-  const notification = {
+  const notification = new Notification({
     title,
     body,
-  };
-  new Notification(notification).show();
+  });
+
+  notification.show();
 };
