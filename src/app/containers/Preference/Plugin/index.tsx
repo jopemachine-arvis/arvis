@@ -93,6 +93,10 @@ export default function Plugin() {
         Core.installPlugin(arvisPluginFilePath)
           .then(() => {
             fetchPlugins();
+
+            ipcRenderer.send(IPCRendererEnum.renewPlugin, {
+              destWindow: 'searchWindow',
+            });
             return null;
           })
           .catch((err) => {
@@ -366,6 +370,10 @@ export default function Plugin() {
         const temp = pluginList;
         delete temp[targetBundleId];
         setPlugins(temp);
+
+        ipcRenderer.send(IPCRendererEnum.renewPlugin, {
+          destWindow: 'searchWindow',
+        });
 
         if (idxToRemove !== 0) {
           setSelectedPluginIdx(idxToRemove - 1);

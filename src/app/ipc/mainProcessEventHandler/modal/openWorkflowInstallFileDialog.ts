@@ -5,7 +5,7 @@ import { WindowManager } from '../../../windows';
 /**
  * @summary Used to select wfconf file
  */
-export const openWfConfFileDialog = async (
+export const openWorkflowInstallFileDialog = async (
   e: IpcMainEvent,
   { canInstallAlfredWorkflow }: { canInstallAlfredWorkflow: boolean }
 ) => {
@@ -24,7 +24,7 @@ export const openWfConfFileDialog = async (
 
   WindowManager.getInstance()
     .getPreferenceWindow()
-    .webContents.send(IPCMainEnum.openWfConfFileDialogRet, {
+    .webContents.send(IPCMainEnum.openWorkflowInstallFileDialogRet, {
       file,
     });
 };

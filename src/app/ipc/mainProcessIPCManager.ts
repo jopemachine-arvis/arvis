@@ -11,7 +11,7 @@ import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/show
 import { showQuicklookWindow } from './mainProcessEventHandler/windowManage/showQuicklookWindow';
 
 import { openPluginInstallFileDialog } from './mainProcessEventHandler/modal/openPluginInstallFileDialog';
-import { openWfConfFileDialog } from './mainProcessEventHandler/modal/openWfConfFIleDialog';
+import { openWorkflowInstallFileDialog } from './mainProcessEventHandler/modal/openWorkflowInstallFileDialog';
 import { openYesnoDialog } from './mainProcessEventHandler/modal/openYesnoDialog';
 import { saveFile } from './mainProcessEventHandler/modal/saveFile';
 import { showErrorDialog } from './mainProcessEventHandler/modal/showErrorDialog';
@@ -27,6 +27,7 @@ import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
 import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 
 import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
+import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
 
@@ -44,12 +45,12 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
   ipcMain.on(IPCRendererEnum.importTheme, importTheme);
-  ipcMain.on(IPCRendererEnum.openWfConfFileDialog, openWfConfFileDialog);
   ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
+  ipcMain.on(IPCRendererEnum.renewPlugin, renewPlugin);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);
@@ -63,6 +64,10 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
 
+  ipcMain.on(
+    IPCRendererEnum.openWorkflowInstallFileDialog,
+    openWorkflowInstallFileDialog
+  );
   ipcMain.on(
     IPCRendererEnum.triggerDoubleModifierKey,
     triggerDoubleModifierKey

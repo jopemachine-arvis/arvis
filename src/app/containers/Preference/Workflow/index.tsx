@@ -87,7 +87,7 @@ export default function Workflow() {
       Core.exportWorkflow(workflowBundleId, file.filePath);
     },
 
-    openWfConfFileDialogRet: (
+    openWorkflowInstallFileDialogRet: (
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
     ) => {
@@ -100,6 +100,9 @@ export default function Workflow() {
         Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
+            ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+              destWindow: 'searchWindow',
+            });
             return null;
           })
           .catch((err) => {
@@ -153,8 +156,8 @@ export default function Workflow() {
   useEffect(() => {
     ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
     ipcRenderer.on(
-      IPCMainEnum.openWfConfFileDialogRet,
-      ipcCallbackTbl.openWfConfFileDialogRet
+      IPCMainEnum.openWorkflowInstallFileDialogRet,
+      ipcCallbackTbl.openWorkflowInstallFileDialogRet
     );
     ipcRenderer.on(
       IPCMainEnum.openYesnoDialogRet,
@@ -168,8 +171,8 @@ export default function Workflow() {
     return () => {
       ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
       ipcRenderer.off(
-        IPCMainEnum.openWfConfFileDialogRet,
-        ipcCallbackTbl.openWfConfFileDialogRet
+        IPCMainEnum.openWorkflowInstallFileDialogRet,
+        ipcCallbackTbl.openWorkflowInstallFileDialogRet
       );
       ipcRenderer.off(
         IPCMainEnum.openYesnoDialogRet,
@@ -319,7 +322,7 @@ export default function Workflow() {
   };
 
   const requestAddNewWorkflow = () => {
-    ipcRenderer.send(IPCRendererEnum.openWfConfFileDialog, {
+    ipcRenderer.send(IPCRendererEnum.openWorkflowInstallFileDialog, {
       canInstallAlfredWorkflow: can_install_alfredworkflow,
     });
   };
@@ -376,6 +379,10 @@ export default function Workflow() {
         const temp = workflowList;
         delete temp[targetBundleId];
         setWorkflows(temp);
+
+        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+          destWindow: 'searchWindow',
+        });
 
         if (idxToRemove !== 0) {
           setSelectedWorkflowIdx(idxToRemove - 1);

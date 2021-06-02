@@ -9,7 +9,7 @@ import { popupWorkflowItemMenu } from './contextMenu/popupWorkflowItemMenu';
 import { popupSearchbarItemMenu } from './contextMenu/popupSearchbarItemMenu';
 
 import { openPluginInstallFileDialog } from './modal/openPluginInstallFileDialog';
-import { openWfConfFileDialog } from './modal/openWfConfFIleDialog';
+import { openWorkflowInstallFileDialog } from './modal/openWorkflowInstallFileDialog';
 import { openYesnoDialog } from './modal/openYesnoDialog';
 import { saveFile } from './modal/saveFile';
 import { showErrorDialog } from './modal/showErrorDialog';
@@ -34,7 +34,7 @@ export {
   hideSearchWindow,
   importTheme,
   openPluginInstallFileDialog,
-  openWfConfFileDialog,
+  openWorkflowInstallFileDialog,
   openYesnoDialog,
   popupPluginItemMenu,
   popupSearchbarItemMenu,

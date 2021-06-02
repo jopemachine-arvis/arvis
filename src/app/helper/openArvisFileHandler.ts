@@ -15,11 +15,14 @@ export const openArvisFile = (file: string) => {
     });
 
     setTimeout(() => {
-      preferenceWindow.webContents.send(IPCMainEnum.openWfConfFileDialogRet, {
-        file: {
-          filePaths: [file],
-        },
-      });
+      preferenceWindow.webContents.send(
+        IPCMainEnum.openWorkflowInstallFileDialogRet,
+        {
+          file: {
+            filePaths: [file],
+          },
+        }
+      );
     }, 100);
   } else if (file.endsWith('arvisplugin')) {
     preferenceWindow.webContents.send(IPCMainEnum.setPreferencePage, {
