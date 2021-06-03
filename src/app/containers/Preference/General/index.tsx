@@ -23,12 +23,17 @@ import {
   createGlobalConfigChangeHandler,
   getHotkeyNameOnThisPlatform,
 } from '@utils/index';
-import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 import useKey from '../../../../use-key-capture/src';
 
-export default function General() {
+type IProps = {
+  fontList: any[];
+};
+
+export default function General(props: IProps) {
+  const { fontList } = props;
   const { keyData } = useKey();
   const {
     global_font,
@@ -39,7 +44,6 @@ export default function General() {
   } = useSelector((state: StateType) => state.global_config);
 
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
-  const [fontList, setFontList] = useState<string[]>([]);
   const [fontListDrawerOpen, setFontListDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -49,15 +53,6 @@ export default function General() {
 
   const fontSelectEventHandler = (font: string) => {
     dispatch(GlobalConfigActions.setGlobalFont(font));
-  };
-
-  /**
-   * @summary Used to receive dispatched action from different window
-   */
-  const ipcCallbackTbl = {
-    setFont: (e: Electron.IpcRendererEvent, { fonts }: { fonts: string[] }) => {
-      setFontList(fonts);
-    },
   };
 
   const configChangeHandler = createGlobalConfigChangeHandler({
@@ -123,15 +118,6 @@ export default function General() {
       );
     }
   };
-
-  useEffect(() => {
-    ipcRenderer.send(IPCRendererEnum.getSystemFont);
-    ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
-
-    return () => {
-      ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
-    };
-  }, []);
 
   useEffect(() => {
     hotkeyChangedEventHandler();

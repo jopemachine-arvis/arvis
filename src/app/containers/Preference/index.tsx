@@ -44,6 +44,8 @@ export default function PreferenceWindow() {
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
   const [storeAvailable, setStoreAvailable] = useState<boolean>();
 
+  const [fontList, setFontList] = useState<string[]>([]);
+
   const { global_font } = useSelector(
     (state: StateType) => state.global_config
   );
@@ -82,6 +84,10 @@ export default function PreferenceWindow() {
     ) => {
       setPage(pageToOpen as PreferencePage);
     },
+
+    setFont: (e: Electron.IpcRendererEvent, { fonts }: { fonts: string[] }) => {
+      setFontList(fonts);
+    },
   };
 
   const checkExtensionsUpdate = () => {
@@ -115,6 +121,9 @@ export default function PreferenceWindow() {
     loadPluginsInfo();
     checkExtensionsUpdate();
 
+    ipcRenderer.send(IPCRendererEnum.getSystemFont);
+
+    ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(
@@ -123,6 +132,7 @@ export default function PreferenceWindow() {
     );
 
     return () => {
+      ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
       ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
       ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
       ipcRenderer.off(
@@ -137,7 +147,7 @@ export default function PreferenceWindow() {
 
     switch (page) {
       case PreferencePage.General:
-        main = <GeneralPage />;
+        main = <GeneralPage fontList={fontList} />;
         break;
       case PreferencePage.Workflow:
         main = <WorkflowPage />;
