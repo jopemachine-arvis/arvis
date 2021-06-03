@@ -51,6 +51,7 @@ export default function SearchWindow() {
   );
 
   const [storeAvailable, setStoreAvailable] = useState<boolean>(false);
+  const [isPinned, setIsPinned] = useState<boolean>(false);
 
   const [items, setItems] = useState<any[]>([]);
 
@@ -89,6 +90,7 @@ export default function SearchWindow() {
     setItems,
     maxItemCount: max_item_count_to_show,
     maxRetrieveCount: max_item_count_to_search,
+    isPinned,
     storeAvailable,
   });
 
@@ -182,6 +184,10 @@ export default function SearchWindow() {
     registerAllShortcuts: (e: IpcRendererEvent) => {
       registerAllGlobalHotkey();
     },
+
+    pinSearchWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
+      setIsPinned(bool);
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
@@ -189,6 +195,7 @@ export default function SearchWindow() {
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(IPCMainEnum.pinSearchWindow, ipcCallbackTbl.pinSearchWindow);
     ipcRenderer.on(
       IPCMainEnum.registerAllShortcuts,
       ipcCallbackTbl.registerAllShortcuts
@@ -204,6 +211,10 @@ export default function SearchWindow() {
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.off(
+      IPCMainEnum.pinSearchWindow,
+      ipcCallbackTbl.pinSearchWindow
+    );
     ipcRenderer.off(
       IPCMainEnum.registerAllShortcuts,
       ipcCallbackTbl.registerAllShortcuts
@@ -269,6 +280,7 @@ export default function SearchWindow() {
       >
         <SearchBar
           alwaysFocus
+          isPinned={isPinned}
           getInputProps={getInputProps}
           itemLeftPadding={item_left_padding}
           searchbarFontColor={searchbar_font_color}

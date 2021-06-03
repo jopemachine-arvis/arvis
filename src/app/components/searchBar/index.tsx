@@ -9,6 +9,7 @@ type IProps = {
   alwaysFocus: boolean;
   // eslint-disable-next-line @typescript-eslint/ban-types
   getInputProps?: Function;
+  isPinned?: boolean;
   itemLeftPadding: number;
   searchbarFontColor: string;
   searchbarFontSize: number;
@@ -20,6 +21,7 @@ const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
     getInputProps,
+    isPinned,
     itemLeftPadding,
     searchbarFontColor,
     searchbarFontSize,
@@ -59,7 +61,7 @@ const SearchBar = (props: IProps) => {
 
   const rightClickHandler = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
-    ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu);
+    ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu, { isPinned });
   };
 
   return (
@@ -91,6 +93,7 @@ const SearchBar = (props: IProps) => {
 
 SearchBar.defaultProps = {
   getInputProps: undefined,
+  isPinned: false,
   spinning: false,
 };
 

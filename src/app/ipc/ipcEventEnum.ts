@@ -46,6 +46,7 @@ export enum IPCMainEnum {
   openPluginInstallFileDialogRet = '@ipcMain/openPluginInstallFileDialogRet',
   openWorkflowInstallFileDialogRet = '@ipcMain/openWorkflowInstallFileDialogRet',
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
+  pinSearchWindow = '@ipcMain/pinSearchWindow',
   registerAllShortcuts = '@ipcRenderer/registerAllShortcuts',
   renewPlugin = '@ipcMain/renewPlugin',
   renewWorkflow = '@ipcMain/renewWorkflow',

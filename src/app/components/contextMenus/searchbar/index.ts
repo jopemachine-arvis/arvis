@@ -1,10 +1,26 @@
 import { Menu, MenuItem, app } from 'electron';
+import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
 class SearchbarContextMenu extends Menu {
-  constructor() {
+  constructor({ isPinned }: { isPinned: boolean }) {
     super();
 
+    super.append(
+      new MenuItem({
+        type: 'checkbox',
+        label: 'Pin window',
+        toolTip: 'Pin search window',
+        checked: isPinned,
+        click() {
+          WindowManager.getInstance()
+            .getSearchWindow()
+            .webContents.send(IPCMainEnum.pinSearchWindow, {
+              bool: !isPinned,
+            });
+        },
+      })
+    );
     super.append(
       new MenuItem({
         type: 'normal',

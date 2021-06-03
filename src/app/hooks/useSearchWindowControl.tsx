@@ -22,12 +22,14 @@ const useSearchWindowControl = ({
   setItems,
   maxItemCount,
   maxRetrieveCount,
+  isPinned,
   storeAvailable,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
   maxItemCount: number;
   maxRetrieveCount: number;
+  isPinned: boolean;
   storeAvailable: boolean;
 }) => {
   const workManager = Core.WorkManager.getInstance();
@@ -564,6 +566,8 @@ const useSearchWindowControl = ({
   }, [keyData]);
 
   useEffect(() => {
+    if (isPinned) return;
+
     // After cleanUp
     if (shouldBeHided === true && items.length === 0) {
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
