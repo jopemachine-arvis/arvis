@@ -8,12 +8,6 @@ type: `string`
 
 required: `false`
 
-## bundleId
-
-type: `string`
-
-required: `true`
-
 ## category
 
 type: `string`

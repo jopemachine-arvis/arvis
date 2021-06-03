@@ -1431,12 +1431,12 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.0.10.tgz#18b23e2043c637f80075f3616d4c3f3cf2598ab3"
-  integrity sha512-iYy5u6r6azAQ/mZ+acgHmY/E/GtQhSGvaX4PQ1WWGOAEv8Kx/jps2Wft7VK2DjW9Zdx0nI4jd9VHGYtLD7Uqcw==
+"@jopemachine/arvis-core@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.6.tgz#1b580597c2b657660a48a06200c7d197ef897bea"
+  integrity sha512-C/XVDSGztcfruGlMf7q3uatb1S3ty3bsqaoNeUs3rCnvJxjjbS6XX/eBGGaIctIsw7yFnq04wzjwJV0LGIPkXA==
   dependencies:
-    "@jopemachine/arvis-plist-converter" "^0.0.4"
+    "@jopemachine/arvis-plist-converter" "^0.1.1"
     archiver "^5.3.0"
     chalk "^4.1.0"
     chmodr "^1.2.0"
@@ -1455,10 +1455,10 @@
     uuid "^8.3.2"
     xml-js "^1.6.11"
 
-"@jopemachine/arvis-plist-converter@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-plist-converter/-/arvis-plist-converter-0.0.4.tgz#955bd072e351cf2ca6293ca511fe06b105b72303"
-  integrity sha512-5KzI/DdnRy2wAcgIymyXTfcASzRmxM9c+TgniTRjXfwc3lYqRcnbpAmAInvnFBkm8XmeBQx3Uo0QC4KeBmMbqw==
+"@jopemachine/arvis-plist-converter@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-plist-converter/-/arvis-plist-converter-0.1.1.tgz#df7c789d9d22ead97052fbd0a92b8ef904d4bd11"
+  integrity sha512-e8f7StRtzjY4bcT/YLm4DaS5Ssq2YNUJOCCVBzxvXi6w3MBMa56f3iNgRKm6YrPetYOVLjZSNKsQGh1ZpUZ/Cw==
   dependencies:
     chalk "^4.1.0"
     fs-extra "^9.1.0"
@@ -5824,14 +5824,6 @@ flat-cache@^3.0.4:
   dependencies:
     flatted "^3.1.0"
     rimraf "^3.0.2"
-
-flatlist-react@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/flatlist-react/-/flatlist-react-1.5.0.tgz#96985790a3cf3dd534050bb05c0ed2a1ad39a87a"
-  integrity sha512-Ux0Pnp679sNcq+v0o+mU5pJgPBFdaOWDzxGknftZw1G4uBrwyAFRJN++gyveiEXc5bPvRL0wsE2B6OYSmdUmKg==
-  dependencies:
-    prop-types "^15.7.2"
-    warning "^4.0.3"
 
 flatted@^3.1.0:
   version "3.1.1"

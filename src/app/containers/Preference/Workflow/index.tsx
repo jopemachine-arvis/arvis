@@ -5,8 +5,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
 import { Core } from '@jopemachine/arvis-core';
-import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {
@@ -95,8 +95,6 @@ export default function Workflow() {
         setStoreAvailable(false);
         const arvisWorkflowFilePath = file.filePaths[0];
 
-        ipcRenderer.send(IPCRendererEnum.stopFileWatch);
-
         Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
             fetchWorkflows();
@@ -114,7 +112,6 @@ export default function Workflow() {
           })
           .finally(() => {
             setStoreAvailable(true);
-            ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
           });
       }
     },
@@ -191,7 +188,6 @@ export default function Workflow() {
     if (workflowBundleIds.length) {
       const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
       const {
-        bundleId = '',
         category = '',
         createdby = '',
         description = '',
@@ -200,6 +196,8 @@ export default function Workflow() {
         version = '',
         webaddress = '',
       } = info;
+
+      const bundleId = Core.getBundleId(createdby, name);
 
       setWorkflowBundleId(bundleId);
       setWorkflowCategory(category);
@@ -283,7 +281,7 @@ export default function Workflow() {
   const renderItem = (workflow: any, idx: number) => {
     const itemBundleId = workflow.bundleId;
     const info = workflows[itemBundleId];
-    if (!info) return <></>;
+    if (!info) return <React.Fragment key={`workflowItem-${idx}`} />;
     const { createdby, name, enabled } = info;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
@@ -333,11 +331,8 @@ export default function Workflow() {
     fse
       .readJson(targetPath)
       .then(async (json) => {
-        json.bundleId = workflowBundleId;
         json.category = workflowCategory;
-        json.createdby = workflowCreator;
         json.description = workflowDescription;
-        json.name = workflowName;
         json.readme = workflowReadme;
         json.version = workflowVersion;
         json.webaddress = workflowWebsite;
@@ -369,8 +364,6 @@ export default function Workflow() {
     const targetBundleId =
       workflowList[workflowBundleIds[idxToRemove]].bundleId;
 
-    ipcRenderer.send(IPCRendererEnum.stopFileWatch);
-
     setStoreAvailable(false);
     Core.uninstallWorkflow({
       bundleId: targetBundleId,
@@ -396,7 +389,6 @@ export default function Workflow() {
       })
       .finally(() => {
         setStoreAvailable(true);
-        ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
       });
   };
 
@@ -440,11 +432,9 @@ export default function Workflow() {
           Installed Workflows
         </Header>
         <WorkflowListOrderedList>
-          <FlatList
-            list={workflows}
-            renderItem={renderItem}
-            renderWhenEmpty={() => <></>}
-          />
+          {_.map(Object.keys(workflows), (workflow, idx) => {
+            return renderItem(workflows[workflow], idx);
+          })}
         </WorkflowListOrderedList>
       </WorkflowListView>
       <WorkflowDescContainer>
@@ -459,11 +449,25 @@ export default function Workflow() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Name</Label>
             <StyledInput
+              disabled
               type="text"
               placeholder="Name"
               value={workflowName}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowName(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Creator</Label>
+            <StyledInput
+              disabled
+              type="text"
+              placeholder="Creator"
+              value={workflowCreator}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setWorkflowCreator(e.currentTarget.value);
               }}
             />
           </FormGroup>
@@ -476,32 +480,6 @@ export default function Workflow() {
               value={workflowVersion}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setWorkflowVersion(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Creator</Label>
-            <StyledInput
-              type="text"
-              placeholder="Creator"
-              value={workflowCreator}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowCreator(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Bundle Id</Label>
-            <StyledInput
-              type="text"
-              disabled
-              placeholder="Bundle Id"
-              value={workflowBundleId}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                // Prevent editing workflow bundle id
-                e.preventDefault();
               }}
             />
           </FormGroup>

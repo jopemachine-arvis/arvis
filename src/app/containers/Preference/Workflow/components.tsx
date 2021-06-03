@@ -66,13 +66,14 @@ export const WorkflowListViewFooter = styled.div`
   align-items: center;
 `;
 
-export const WorkflowListOrderedList = styled.ol`
+export const WorkflowListOrderedList = styled.div`
   background-color: #1f2228;
   border-radius: 10px;
   margin-left: 40px;
   margin-right: 25px;
   padding-bottom: 20px;
   padding-right: 30px;
+  padding-left: 30px;
   padding-top: 20px;
   overflow: auto;
   height: 78%;

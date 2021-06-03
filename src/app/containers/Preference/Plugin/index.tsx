@@ -5,8 +5,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
 import { Core } from '@jopemachine/arvis-core';
-import FlatList from 'flatlist-react';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {
@@ -88,8 +88,6 @@ export default function Plugin() {
         setStoreAvailable(false);
         const arvisPluginFilePath = file.filePaths[0];
 
-        ipcRenderer.send(IPCRendererEnum.stopFileWatch);
-
         Core.installPlugin(arvisPluginFilePath)
           .then(() => {
             fetchPlugins();
@@ -97,6 +95,7 @@ export default function Plugin() {
             ipcRenderer.send(IPCRendererEnum.renewPlugin, {
               destWindow: 'searchWindow',
             });
+
             return null;
           })
           .catch((err) => {
@@ -108,7 +107,6 @@ export default function Plugin() {
           })
           .finally(() => {
             setStoreAvailable(true);
-            ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
           });
       }
     },
@@ -185,7 +183,6 @@ export default function Plugin() {
     if (pluginBundleIds.length) {
       const info = plugins[pluginBundleIds[selectedPluginIdx]];
       const {
-        bundleId = '',
         category = '',
         createdby = '',
         description = '',
@@ -194,6 +191,8 @@ export default function Plugin() {
         version = '',
         webaddress = '',
       } = info;
+
+      const bundleId = Core.getBundleId(createdby, name);
 
       setPluginBundleId(bundleId);
       setPluginCategory(category);
@@ -277,7 +276,7 @@ export default function Plugin() {
   const renderItem = (plugin: any, idx: number) => {
     const itemBundleId = plugin.bundleId;
     const info = plugins[itemBundleId];
-    if (!info) return <></>;
+    if (!info) return <React.Fragment key={`pluginItem-${idx}`} />;
     const { createdby, name, enabled } = info;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
@@ -325,11 +324,8 @@ export default function Plugin() {
     fse
       .readJson(targetPath)
       .then(async (json) => {
-        json.bundleId = pluginBundleId;
         json.category = pluginCategory;
-        json.createdby = pluginCreator;
         json.description = pluginDescription;
-        json.name = pluginName;
         json.readme = pluginReadme;
         json.version = pluginVersion;
         json.webaddress = pluginWebsite;
@@ -360,8 +356,6 @@ export default function Plugin() {
 
     const targetBundleId = pluginList[pluginBundleIds[idxToRemove]].bundleId;
 
-    ipcRenderer.send(IPCRendererEnum.stopFileWatch);
-
     setStoreAvailable(false);
     Core.uninstallPlugin({
       bundleId: targetBundleId,
@@ -387,7 +381,6 @@ export default function Plugin() {
       })
       .finally(() => {
         setStoreAvailable(true);
-        ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
       });
   };
 
@@ -428,11 +421,9 @@ export default function Plugin() {
           Installed Plugins
         </Header>
         <PluginListOrderedList>
-          <FlatList
-            list={plugins}
-            renderItem={renderItem}
-            renderWhenEmpty={() => <></>}
-          />
+          {_.map(Object.keys(plugins), (plugin, idx) => {
+            return renderItem(plugins[plugin], idx);
+          })}
         </PluginListOrderedList>
       </PluginListView>
       <PluginDescContainer>
@@ -447,11 +438,25 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Name</Label>
             <StyledInput
+              disabled
               type="text"
               placeholder="Name"
               value={pluginName}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setPluginName(e.currentTarget.value);
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup style={style.formGroupStyle}>
+            <Label style={style.labelStyle}>Creator</Label>
+            <StyledInput
+              disabled
+              type="text"
+              placeholder="Creator"
+              value={pluginCreator}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setPluginCreator(e.currentTarget.value);
               }}
             />
           </FormGroup>
@@ -464,32 +469,6 @@ export default function Plugin() {
               value={pluginVersion}
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setPluginVersion(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Creator</Label>
-            <StyledInput
-              type="text"
-              placeholder="Creator"
-              value={pluginCreator}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginCreator(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Bundle Id</Label>
-            <StyledInput
-              type="text"
-              disabled
-              placeholder="Bundle Id"
-              value={pluginBundleId}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                // Prevent editing plugin bundle id
-                e.preventDefault();
               }}
             />
           </FormGroup>
