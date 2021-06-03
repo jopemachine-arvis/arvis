@@ -34,7 +34,7 @@ const useSearchWindowControl = ({
 }) => {
   const workManager = Core.WorkManager.getInstance();
 
-  const { keyData, getTargetProps, resetKeyData: clearInput } = useKey();
+  const { keyData, getTargetProps } = useKey();
   const { originalRef: inputRef } = getTargetProps();
 
   const [shouldBeHided, setShouldBeHided] = useState<boolean>(false);
@@ -51,6 +51,12 @@ const useSearchWindowControl = ({
   const alreadyCleared = false;
   const alreadyClearedRef = useRef<boolean>(alreadyCleared);
   const hideSearchWindowByBlurCbRef = useRef<any>();
+
+  const isPinnedRef = useRef<boolean>(isPinned);
+
+  useEffect(() => {
+    isPinnedRef.current = isPinned;
+  }, [isPinned]);
 
   /**
    * @summary
@@ -321,8 +327,14 @@ const useSearchWindowControl = ({
    * @description To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @summary
    */
-  const cleanUpBeforeHide = (alreadyCleanedUp: boolean) => {
-    if (alreadyCleanedUp) return;
+  const cleanUpBeforeHide = ({
+    alreadyCleanedUp,
+    searchWindowIsPinned,
+  }: {
+    alreadyCleanedUp: boolean;
+    searchWindowIsPinned: boolean;
+  }) => {
+    if (alreadyCleanedUp || searchWindowIsPinned) return;
     alreadyClearedRef.current = true;
     setItems([]);
     clearIndexInfo();
@@ -541,7 +553,10 @@ const useSearchWindowControl = ({
 
   useEffect(() => {
     hideSearchWindowByBlurCbRef.current = () => {
-      cleanUpBeforeHide(alreadyClearedRef.current);
+      cleanUpBeforeHide({
+        alreadyCleanedUp: alreadyClearedRef.current,
+        searchWindowIsPinned: isPinnedRef.current,
+      });
     };
 
     if (inputRef.current) {

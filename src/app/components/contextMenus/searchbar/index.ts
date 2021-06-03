@@ -13,6 +13,14 @@ class SearchbarContextMenu extends Menu {
         toolTip: 'Pin search window',
         checked: isPinned,
         click() {
+          if (!isPinned === true) {
+            WindowManager.getInstance()
+              .getSearchWindow()
+              .setAlwaysOnTop(true, 'floating');
+          } else {
+            WindowManager.getInstance().getSearchWindow().setAlwaysOnTop(false);
+          }
+
           WindowManager.getInstance()
             .getSearchWindow()
             .webContents.send(IPCMainEnum.pinSearchWindow, {
