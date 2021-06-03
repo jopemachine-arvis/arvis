@@ -39,11 +39,12 @@ export const OuterContainer = styled.div`
 `;
 
 export const PluginListView = styled.div`
+  margin-top: 95px;
   overflow-y: auto;
 `;
 
 export const Header = styled.div`
-  width: 50%;
+  position: absolute;
   margin-top: 25px;
   height: 70px;
   color: #ffffff;
@@ -95,8 +96,7 @@ export const PluginItemContainer = styled.div`
 `;
 
 export const PluginDescContainer = styled.div`
-  padding-left: 15px;
-  margin-right: 10px;
+  margin-top: 95px;
   flex-grow: 2;
 `;
 

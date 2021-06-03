@@ -40,10 +40,11 @@ export const OuterContainer = styled.div`
 
 export const WorkflowListView = styled.div`
   overflow-y: auto;
+  margin-top: 95px;
 `;
 
 export const Header = styled.div`
-  width: 50%;
+  position: absolute;
   margin-top: 25px;
   height: 70px;
   color: #ffffff;
@@ -95,9 +96,8 @@ export const WorkflowItemContainer = styled.div`
 `;
 
 export const WorkflowDescContainer = styled.div`
-  padding-left: 15px;
-  margin-right: 10px;
-  flex-grow: 2;
+  margin-top: 95px;
+  flex-grow: 1;
 `;
 
 export const WorkflowImg = styled.img`

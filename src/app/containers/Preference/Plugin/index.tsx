@@ -412,14 +412,14 @@ export default function Plugin() {
 
   return (
     <OuterContainer>
+      <Header
+        style={{
+          marginLeft: 40,
+        }}
+      >
+        Installed Plugins
+      </Header>
       <PluginListView>
-        <Header
-          style={{
-            marginLeft: 40,
-          }}
-        >
-          Installed Plugins
-        </Header>
         <PluginListOrderedList>
           {_.map(Object.keys(plugins), (plugin, idx) => {
             return renderItem(plugins[plugin], idx);
@@ -427,13 +427,6 @@ export default function Plugin() {
         </PluginListOrderedList>
       </PluginListView>
       <PluginDescContainer>
-        <Header
-          style={{
-            marginLeft: 20,
-          }}
-        >
-          Plugin config
-        </Header>
         <Form style={style.descriptionContainerStyle}>
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Name</Label>

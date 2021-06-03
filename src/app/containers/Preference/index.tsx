@@ -30,6 +30,7 @@ const OuterContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
+  overflow-x: hidden;
 `;
 
 const MainContainer = styled.div`

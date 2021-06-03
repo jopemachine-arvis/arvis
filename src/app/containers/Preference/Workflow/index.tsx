@@ -423,14 +423,14 @@ export default function Workflow() {
 
   return (
     <OuterContainer>
+      <Header
+        style={{
+          marginLeft: 40,
+        }}
+      >
+        Installed Workflows
+      </Header>
       <WorkflowListView>
-        <Header
-          style={{
-            marginLeft: 40,
-          }}
-        >
-          Installed Workflows
-        </Header>
         <WorkflowListOrderedList>
           {_.map(Object.keys(workflows), (workflow, idx) => {
             return renderItem(workflows[workflow], idx);
@@ -438,13 +438,6 @@ export default function Workflow() {
         </WorkflowListOrderedList>
       </WorkflowListView>
       <WorkflowDescContainer>
-        <Header
-          style={{
-            marginLeft: 20,
-          }}
-        >
-          Workflow config
-        </Header>
         <Form style={style.descriptionContainerStyle}>
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Name</Label>
@@ -513,7 +506,7 @@ export default function Workflow() {
             <StyledInput
               type="textarea"
               className="workflow-page-textarea"
-              placeholder="Read Me"
+              placeholder="README"
               style={{
                 height: 260,
               }}

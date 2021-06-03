@@ -8,7 +8,7 @@
 .workflow-page-textarea::-webkit-resizer {
   border-width: 8px;
   border-style: solid;
-  border-color: transparent gray gray transparent;
+  border-color: transparent #5F676F #5F676F transparent;
 }
 
 .workflow-page-textarea::-webkit-scrollbar-track {
