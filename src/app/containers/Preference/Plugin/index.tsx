@@ -495,7 +495,7 @@ export default function Plugin() {
             <StyledInput
               type="textarea"
               className="plugin-page-textarea"
-              placeholder="Read Me"
+              placeholder="README"
               style={{
                 height: 260,
               }}

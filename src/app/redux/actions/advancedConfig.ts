@@ -9,7 +9,13 @@ export const actionTypes = {
   SET_INSTALL_ALFRED_WORKFLOW: '@advancedConfig/SET_INSTALL_ALFRED_WORKFLOW',
   SET_DEBUGGING_WORKFLOW_OUTPUT:
     '@advancedConfig/SET_DEBUGGING_WORKFLOW_OUTPUT',
+  SET_MAX_ACTION_LOG_COUNT: '@advancedConfig/SET_MAX_ACTION_LOG_COUNT',
 };
+
+export const setMaxActionLogCount = makeActionCreator(
+  actionTypes.SET_MAX_ACTION_LOG_COUNT,
+  'arg'
+);
 
 export const setAlfredWorkflowDirectly = makeActionCreator(
   actionTypes.SET_INSTALL_ALFRED_WORKFLOW,

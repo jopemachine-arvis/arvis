@@ -35,5 +35,6 @@ export default {
     debugging_workflow_output: true,
     debugging_workstack: false,
     debugging_plugin: false,
+    max_action_log_count: 500,
   },
 };

@@ -14,7 +14,11 @@ import { StateType } from '@redux/reducers/types';
 import './index.global.css';
 import { SearchBar, SearchResultView, StyledInput } from '@components/index';
 import { actionTypes as UIActionTypes } from '@redux/actions/uiConfig';
-import { createGlobalConfigChangeHandler, getRandomColor } from '@utils/index';
+import {
+  createGlobalConfigChangeHandler,
+  getRandomColor,
+  onNumberChangeHandler,
+} from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import {
   OuterContainer,
@@ -253,27 +257,6 @@ export default function Appearance() {
     ipcRenderer.send(IPCRendererEnum.importTheme);
   };
 
-  const onNumberChangeHandler = (
-    e: React.FormEvent<HTMLInputElement>,
-    { min, max, actionType }: { min: number; max: number; actionType: string }
-  ) => {
-    const mockEvent = {
-      currentTarget: {
-        value: e.currentTarget.value,
-      },
-    } as unknown as React.FormEvent<HTMLInputElement>;
-
-    if (Number(e.currentTarget.value) < min) {
-      e.currentTarget.value = min.toString();
-      mockEvent.currentTarget.value = min.toString();
-    } else if (Number(e.currentTarget.value) > max) {
-      e.currentTarget.value = max.toString();
-      mockEvent.currentTarget.value = max.toString();
-    }
-
-    configChangeHandler(mockEvent, actionType);
-  };
-
   return (
     <OuterContainer>
       <IoMdColorPalette
@@ -354,6 +337,7 @@ export default function Appearance() {
                   min: 400,
                   max: 2000,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_WIDTH,
+                  dispatch,
                 })
               }
             />
@@ -371,6 +355,7 @@ export default function Appearance() {
                   min: 0,
                   max: 100,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT,
+                  dispatch,
                 })
               }
             />
@@ -388,6 +373,7 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS,
+                  dispatch,
                 })
               }
             />
@@ -406,6 +392,7 @@ export default function Appearance() {
                   min: 0,
                   max: 255,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY,
+                  dispatch,
                 })
               }
             />
@@ -423,6 +410,7 @@ export default function Appearance() {
                   min: 10,
                   max: 150,
                   actionType: UIActionTypes.SET_ITEM_HEIGHT,
+                  dispatch,
                 })
               }
             />
@@ -465,6 +453,7 @@ export default function Appearance() {
                   min: 8,
                   max: 50,
                   actionType: UIActionTypes.SET_TITLE_FONTSIZE,
+                  dispatch,
                 })
               }
             />
@@ -482,6 +471,7 @@ export default function Appearance() {
                   min: 8,
                   max: 50,
                   actionType: UIActionTypes.SET_SUBTITLE_FONTSIZE,
+                  dispatch,
                 })
               }
             />
@@ -535,6 +525,7 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_ITEM_LEFT_PADDING,
+                  dispatch,
                 })
               }
             />
@@ -552,6 +543,7 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_TITLE_SUBTITLE_MARGIN,
+                  dispatch,
                 })
               }
             />
@@ -569,6 +561,7 @@ export default function Appearance() {
                   min: 40,
                   max: 180,
                   actionType: UIActionTypes.SET_SEARCHBAR_HEIGHT,
+                  dispatch,
                 })
               }
             />
@@ -586,6 +579,7 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_ICON_RIGHT_MARGIN,
+                  dispatch,
                 })
               }
             />
@@ -603,6 +597,7 @@ export default function Appearance() {
                   min: 8,
                   max: 30,
                   actionType: UIActionTypes.SET_SEARCHBAR_FONTSIZE,
+                  dispatch,
                 })
               }
             />
@@ -634,6 +629,7 @@ export default function Appearance() {
                   min: 0,
                   max: 8,
                   actionType: UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH,
+                  dispatch,
                 })
               }
             />

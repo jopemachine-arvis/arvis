@@ -41,10 +41,19 @@ export default (state = {}, action: any) => {
         ...state,
         debugging_plugin: payload.arg,
       };
+    case AdvancedConfigActionTypes.SET_MAX_ACTION_LOG_COUNT:
+      return {
+        ...state,
+        max_action_log_count: payload.arg,
+      };
     default:
       return state;
   }
 };
+
+export function getMaxActionLogCount(state: StateType) {
+  return state.advanced_config.max_action_log_count;
+}
 
 export function getCanAlfredWorkflowFileInstall(state: StateType) {
   return state.advanced_config.can_install_alfredworkflow;

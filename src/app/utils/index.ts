@@ -10,6 +10,8 @@ import { range } from './range';
 import { applyAlphaColor } from './applyAlphaColor';
 import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
+// eslint-disable-next-line import/no-cycle
+import { onNumberChangeHandler } from './onNumberChangeHandler';
 
 export {
   applyAlphaColor,
@@ -23,5 +25,6 @@ export {
   makeActionCreator,
   getHotkeyNameOnThisPlatform,
   range,
+  onNumberChangeHandler,
   sleep,
 };

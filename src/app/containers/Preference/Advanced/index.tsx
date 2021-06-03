@@ -6,7 +6,7 @@ import { Form, FormGroup, Input, Label } from 'reactstrap';
 import StyledInput from '@components/styledInput';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
 import { StateType } from '@redux/reducers/types';
-import { makeActionCreator } from '@utils/index';
+import { makeActionCreator, onNumberChangeHandler } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
@@ -20,6 +20,7 @@ export default function Advanced() {
     debugging_args,
     debugging_scriptfilter,
     debugging_plugin,
+    max_action_log_count,
   } = useSelector((state: StateType) => state.advanced_config);
 
   const dispatch = useDispatch();
@@ -154,6 +155,24 @@ export default function Advanced() {
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Workflow script executing timeout</Label>
           <StyledInput type="number" onChange={() => {}} />
+        </FormGroup>
+
+        <FormGroup style={formGroupStyle}>
+          <Label style={labelStyle}>Max action log count to save</Label>
+          <StyledInput
+            type="number"
+            min={0}
+            max={9999}
+            defaultValue={max_action_log_count}
+            onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+              onNumberChangeHandler(e, {
+                min: 0,
+                max: 9999,
+                actionType: AdvancedActionTypes.SET_MAX_ACTION_LOG_COUNT,
+                dispatch,
+              })
+            }
+          />
         </FormGroup>
       </Form>
     </OuterContainer>

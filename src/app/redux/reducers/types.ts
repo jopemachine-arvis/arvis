@@ -37,6 +37,7 @@ export type StateType = {
     debugging_workflow_output: boolean;
     debugging_workstack: boolean;
     debugging_plugin: boolean;
+    max_action_log_count: number;
   };
 };
 
