@@ -107,6 +107,7 @@ const SearchResultView = (props: IProps) => {
     if (!demo) {
       ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
         itemCount: searchResult.length,
+        windowWidth: searchWindowWidth,
         maxItemCount,
         itemHeight,
         searchbarHeight,

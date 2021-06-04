@@ -1,5 +1,4 @@
 import { IpcMainEvent } from 'electron';
-import { WindowManager } from '../../../windows';
 import resizeEventHandler from '../../resizeEventHandler';
 
 /**
@@ -13,12 +12,14 @@ import resizeEventHandler from '../../resizeEventHandler';
 export const resizeSearchWindowHeight = (
   e: IpcMainEvent,
   {
+    windowWidth,
     itemCount,
     maxItemCount,
     itemHeight,
     searchbarHeight,
     footerHeight,
   }: {
+    windowWidth: number;
     itemCount: number;
     maxItemCount: number;
     itemHeight: number;
@@ -27,11 +28,11 @@ export const resizeSearchWindowHeight = (
   }
 ) => {
   resizeEventHandler({
+    windowWidth,
     footerHeight,
     itemCount,
     itemHeight,
     maxItemCount,
     searchbarHeight,
-    searchWindow: WindowManager.getInstance().getSearchWindow(),
   });
 };

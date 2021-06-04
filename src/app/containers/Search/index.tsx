@@ -58,6 +58,7 @@ export default function SearchWindow() {
   const workManager = Core.WorkManager.getInstance();
 
   const setDebuggingOptions = () => {
+    workManager.loggerColorType = 'gui';
     workManager.printActionType = debuggingConfig.debugging_action_type;
     workManager.printArgs = debuggingConfig.debugging_args;
     workManager.printPluginItems = debuggingConfig.debugging_plugin;

@@ -16,7 +16,7 @@ import {
 type IProps = {
   arg?: any;
   autocomplete?: string;
-  icon?: string;
+  icon?: string | undefined;
   iconRightMargin: number;
   itemBackgroundColor: string;
   itemFontColor: string;

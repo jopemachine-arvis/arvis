@@ -1,7 +1,6 @@
-import { BrowserWindow } from 'electron';
+import { WindowManager } from '../windows/windowManager';
 
 /**
- * @param  {BrowserWindow} searchWindow
  * @param  {number} itemCount
  * @param  {number} maxItemCount
  * @param  {number} itemHeight
@@ -9,20 +8,22 @@ import { BrowserWindow } from 'electron';
  * @param  {number} footerHeight
  */
 export default ({
-  searchWindow,
+  windowWidth,
   itemCount,
   maxItemCount,
   itemHeight,
   searchbarHeight,
   footerHeight,
 }: {
-  searchWindow: BrowserWindow;
+  windowWidth: number;
   itemCount: number;
   maxItemCount: number;
   itemHeight: number;
   searchbarHeight: number;
   footerHeight: number;
 }) => {
+  const searchWindow = WindowManager.getInstance().getSearchWindow();
+
   if (searchWindow.isDestroyed()) return;
 
   let heightToSet;
@@ -35,7 +36,5 @@ export default ({
     heightToSet = itemCount * itemHeight + searchbarHeight + footerHeight;
   }
 
-  const [width] = searchWindow.getSize();
-
-  searchWindow.setBounds({ width, height: heightToSet });
+  searchWindow.setBounds({ width: windowWidth, height: heightToSet });
 };
