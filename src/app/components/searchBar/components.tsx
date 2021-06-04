@@ -9,6 +9,17 @@ export const Input = styled.input`
 
 export const OuterContainer = styled.div`
   width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Dragger = styled.img`
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  width: 18px;
+  height: 18px;
+  user-select: none;
+  -webkit-app-region: drag;
 `;

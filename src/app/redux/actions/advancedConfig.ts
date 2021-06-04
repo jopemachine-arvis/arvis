@@ -7,9 +7,9 @@ export const actionTypes = {
   SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER',
   SET_DEBUGGING_PLUGIN: '@advancedConfig/SET_DEBUGGING_PLUGIN',
   SET_INSTALL_ALFRED_WORKFLOW: '@advancedConfig/SET_INSTALL_ALFRED_WORKFLOW',
+  SET_MAX_ACTION_LOG_COUNT: '@advancedConfig/SET_MAX_ACTION_LOG_COUNT',
   SET_DEBUGGING_WORKFLOW_OUTPUT:
     '@advancedConfig/SET_DEBUGGING_WORKFLOW_OUTPUT',
-  SET_MAX_ACTION_LOG_COUNT: '@advancedConfig/SET_MAX_ACTION_LOG_COUNT',
 };
 
 export const setMaxActionLogCount = makeActionCreator(

@@ -6,5 +6,4 @@ export const OuterContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  -webkit-app-region: drag;
 `;

@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { ipcRenderer } from 'electron';
 import React, { useEffect } from 'react';
+import DraggerImg from '../../../../assets/images/drag.svg';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
-import { OuterContainer, Input } from './components';
+import { OuterContainer, Input, Dragger } from './components';
 import './index.global.css';
 
 type IProps = {
@@ -41,6 +43,12 @@ const SearchBar = (props: IProps) => {
         type: '',
       };
 
+  useEffect(() => {
+    if (originalRef && originalRef.current) {
+      originalRef.current.focus();
+    }
+  }, [originalRef]);
+
   const preventUpAndDownArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
@@ -52,12 +60,6 @@ const SearchBar = (props: IProps) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     originalRef && originalRef.current && originalRef.current.focus();
   };
-
-  useEffect(() => {
-    if (originalRef && originalRef.current) {
-      originalRef.current.focus();
-    }
-  }, [originalRef]);
 
   const rightClickHandler = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -87,6 +89,7 @@ const SearchBar = (props: IProps) => {
         onContextMenu={rightClickHandler}
         onBlur={alwaysFocus ? preventBlur : () => {}}
       />
+      <Dragger src={DraggerImg} />
     </OuterContainer>
   );
 };
