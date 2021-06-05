@@ -2,14 +2,13 @@ import makeActionCreator from '../../utils/makeActionCreator';
 
 export const actionTypes = {
   SET_DEBUGGING_ACTION_TYPE: '@advancedConfig/SET_DEBUGGING_ACTION_TYPE',
-  SET_DEBUGGING_WORKSTACK: '@advancedConfig/SET_DEBUGGING_WORKSTACK',
   SET_DEBUGGING_ARGS: '@advancedConfig/SET_DEBUGGING_ARGS',
-  SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER',
   SET_DEBUGGING_PLUGIN: '@advancedConfig/SET_DEBUGGING_PLUGIN',
+  SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER',
+  SET_DEBUGGING_SCRIPT_OUTPUT: '@advancedConfig/SET_DEBUGGING_SCRIPT_OUTPUT',
+  SET_DEBUGGING_WORKSTACK: '@advancedConfig/SET_DEBUGGING_WORKSTACK',
   SET_INSTALL_ALFRED_WORKFLOW: '@advancedConfig/SET_INSTALL_ALFRED_WORKFLOW',
   SET_MAX_ACTION_LOG_COUNT: '@advancedConfig/SET_MAX_ACTION_LOG_COUNT',
-  SET_DEBUGGING_WORKFLOW_OUTPUT:
-    '@advancedConfig/SET_DEBUGGING_WORKFLOW_OUTPUT',
 };
 
 export const setMaxActionLogCount = makeActionCreator(
@@ -32,8 +31,8 @@ export const setDebuggingActionType = makeActionCreator(
   'arg'
 );
 
-export const setDebuggingWorkflowOutput = makeActionCreator(
-  actionTypes.SET_DEBUGGING_WORKFLOW_OUTPUT,
+export const setDebuggingScriptOutput = makeActionCreator(
+  actionTypes.SET_DEBUGGING_SCRIPT_OUTPUT,
   'arg'
 );
 

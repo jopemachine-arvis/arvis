@@ -63,7 +63,7 @@ export default function SearchWindow() {
     workManager.printArgs = debuggingConfig.debugging_args;
     workManager.printPluginItems = debuggingConfig.debugging_plugin;
     workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
-    workManager.printWorkflowOutput = debuggingConfig.debugging_workflow_output;
+    workManager.printScriptOutput = debuggingConfig.debugging_script_output;
     workManager.printWorkStack = debuggingConfig.debugging_workstack;
   };
 

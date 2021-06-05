@@ -1,7 +1,7 @@
 export default {
   global_config: {
     global_font: 'Arial',
-    launch_at_login: true,
+    launch_at_login: false,
     max_item_count_to_search: 100,
     max_item_count_to_show: 9,
     toggle_search_window_hotkey: 'Ctrl+Space',

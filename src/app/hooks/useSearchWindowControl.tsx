@@ -153,12 +153,12 @@ const useSearchWindowControl = ({
     const firstItem = itemArr[0];
     if (firstItem.type !== 'scriptfilter') return;
 
-    const shouldBeExecuted = Core.shouldExecuteCommand({
+    const hasRequiredArg = Core.hasRequiredArg({
       item: firstItem,
       inputStr: updatedInput,
     });
 
-    if (updatedInput.includes(firstItem.command) && shouldBeExecuted) {
+    if (updatedInput.includes(firstItem.command) && hasRequiredArg) {
       const commandOnStackIsEmpty = firstItem;
 
       workManager.setRunningText({
@@ -242,7 +242,6 @@ const useSearchWindowControl = ({
     const selectedItem = items[selectedItemIdx];
     if (!selectedItem) return;
 
-    let shouldBeExecuted = true;
     let item;
     if (workManager.hasEmptyWorkStk()) {
       item = selectedItem;
@@ -250,14 +249,14 @@ const useSearchWindowControl = ({
       item = workManager.getTopWork().actionTrigger;
     }
 
-    shouldBeExecuted = item
-      ? Core.shouldExecuteCommand({
+    const hasRequiredArg = item
+      ? Core.hasRequiredArg({
           item,
           inputStr,
         })
       : true;
 
-    if (shouldBeExecuted) {
+    if (hasRequiredArg) {
       if (selectedItem.type === 'scriptfilter') {
         setInputStr({ str: selectedItem.command, needItemsUpdate: false });
 

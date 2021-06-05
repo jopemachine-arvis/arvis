@@ -16,7 +16,7 @@ export default function Advanced() {
   const {
     can_install_alfredworkflow,
     debugging_action_type,
-    debugging_workflow_output,
+    debugging_script_output,
     debugging_workstack,
     debugging_args,
     debugging_scriptfilter,
@@ -63,11 +63,11 @@ export default function Advanced() {
           <Label checked style={labelStyle}>
             <Input
               type="checkbox"
-              checked={debugging_workflow_output}
+              checked={debugging_script_output}
               onChange={() =>
                 toggleState(
-                  AdvancedActionTypes.SET_DEBUGGING_WORKFLOW_OUTPUT,
-                  debugging_workflow_output
+                  AdvancedActionTypes.SET_DEBUGGING_SCRIPT_OUTPUT,
+                  debugging_script_output
                 )
               }
             />

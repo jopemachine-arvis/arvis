@@ -331,6 +331,7 @@ export default function Appearance() {
             <StyledInput
               type="number"
               min={400}
+              max={2000}
               defaultValue={search_window_width}
               onBlur={(e: React.FormEvent<HTMLInputElement>) =>
                 onNumberChangeHandler(e, {
