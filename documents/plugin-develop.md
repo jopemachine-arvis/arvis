@@ -1,12 +1,24 @@
 # How to write plugin
 
+## Use [arvish](https://github.com/jopemachine/arvish)
+
+1. Write proper `arvis-plugin.json`
+
+2. Make your `plugin`
+
+3. type `arvish build`
+
+## Manual (not recommend)
+
+<details><summary>Manual (not recommend)</summary>
+<p>
+
 1. Write proper `arvis-plugin.json`.
-
 2. Write some scripts to use in your `plugin`.
-
 3. Compress the scripts used in the `plugin` into a `.zip` file with the `arvis-plugin.json`.
-
 4. Change the `.zip` file's extension to `.arvisplugin`
+</p>
+</details>
 
 ## `arvis-plugin.json` format
 
