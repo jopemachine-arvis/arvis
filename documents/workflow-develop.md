@@ -14,7 +14,7 @@
 
 ## JSON Schema
 
-Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-core/blob/master/workflow-schema.json) below when creating workflows
+Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extension-validator/blob/master/workflow-schema.json) below when creating workflows
 
 ## Available Environment variable
 

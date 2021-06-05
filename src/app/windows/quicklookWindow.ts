@@ -8,7 +8,7 @@ const createQuicklookWindow = () => {
     center: true,
     show: false,
     frame: true,
-    resizable: false,
+    resizable: true,
     disableAutoHideCursor: true,
     skipTaskbar: true,
     movable: true,

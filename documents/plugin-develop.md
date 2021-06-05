@@ -52,7 +52,7 @@ type: `array`
 
 ## JSON Schema
 
-Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-core/blob/master/plugin-schema.json) below when creating `plugin`
+Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extension-validator/blob/master/plugin-schema.json) below when creating `plugin`
 
 ## Available Environment variable
 
