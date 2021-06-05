@@ -21,22 +21,21 @@ const OuterContainer = styled.div`
 
 const SearchWindowScrollbar = (props: IProps) => {
   const {
+    footerHeight,
     itemHeight,
     itemLength,
     maxShow,
     scrollbarColor,
     scrollbarWidth,
-    startItemIdx,
-    footerHeight,
     searchbarHeight,
+    startItemIdx,
   } = props;
 
   if (itemLength <= maxShow) {
     return <></>;
   }
 
-  const searchWindowHeight =
-    maxShow * itemHeight + footerHeight + searchbarHeight;
+  const searchWindowHeight = maxShow * itemHeight + footerHeight;
   let scrollbarHeight = searchWindowHeight - (itemLength - maxShow) * 13 - 20;
 
   const minScrollbarHeight = 20;
@@ -52,7 +51,7 @@ const SearchWindowScrollbar = (props: IProps) => {
       style={{
         width: scrollbarWidth,
         height: scrollbarHeight,
-        top: startItemIdx * lenStep,
+        top: searchbarHeight + startItemIdx * lenStep,
         backgroundColor: scrollbarColor,
       }}
     ></OuterContainer>
