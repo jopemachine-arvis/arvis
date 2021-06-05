@@ -1,12 +1,24 @@
 # How to write workflow
 
+## Use [arvish](https://github.com/jopemachine/arvish)
+
+1. Write proper `arvis-workflow.json`
+
+2. Write some scripts to use in your `workflow`
+
+3. type `arvish build` on your project root.
+
+## Manual (not recommend)
+
+<details><summary>Manual (not recommend)</summary>
+<p>
+
 1. Write proper `arvis-workflow.json`.
-
-2. Write some scripts to use in your workflow.
-
+2. Write some scripts to use in your `workflow`.
 3. Compress the binaries, modules, and scripts used in the `workflow` into a plain `.zip` file with the `arvis-workflow.json`.
-
 4. Change the `.zip` file's extension to `.arvisworkflow`
+</p>
+</details>
 
 ## `arvis-workflow.json` format
 
@@ -36,4 +48,4 @@ Check the format of `scriptfilter` to use `scriptfilter` in your `workflow`, `pl
 
 ## Arvish
 
-If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).
+If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish) in your js scripts.

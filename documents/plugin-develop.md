@@ -4,9 +4,9 @@
 
 1. Write proper `arvis-plugin.json`
 
-2. Make your `plugin`
+2. Write some scripts to use in your `plugin`
 
-3. type `arvish build`
+3. type `arvish build` on your project root.
 
 ## Manual (not recommend)
 
@@ -39,7 +39,7 @@ This file should export below form's function to be properly imported.
 You can also use `async-await` syntax to this to handle some async operation.
 
 ```js
-module.exports = (inputStr, history) => {
+module.exports = ({ inputStr, history }) => {
   ...
  
   return {
@@ -80,4 +80,4 @@ You can use these variables in your script if needed.
 
 ## Arvish
 
-If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish).
+If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish) in your js scripts.
