@@ -107,7 +107,12 @@ export default function SearchWindow() {
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', (action: any) => {
       if (workManager.printActionType) {
-        console.log('[Action: notification] ', action);
+        console.log(
+          '%c[Action: notification]%c ',
+          'color: cyan',
+          'color: unset',
+          action
+        );
       }
 
       ipcRenderer.send(IPCRendererEnum.showNotification, {

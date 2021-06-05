@@ -8,7 +8,6 @@ Example:
   "command": "ch > init",
   "title": "Init your config file",
   "subtitle": "",
-  "withspace": false,
   "arg_type": "no",
   "action": [
     {
@@ -47,14 +46,6 @@ The biggest text in the item.
 type: `string`
 
 A additional description of the command to display in the search window.
-
-## withspace
-
-type: `boolean`
-
-Indicates if space is required after the command to execute it.
-
-If `withspace` is true, the action can only be run if space exists.
 
 ## arg_type
 

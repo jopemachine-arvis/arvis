@@ -1,4 +1,4 @@
-# `arvis-workflow-json` format
+# `arvis-plugin-json` format
 
 The json file consists of the following attributes.
 
@@ -8,7 +8,7 @@ type: `string`
 
 required: `true`
 
-Required of consisting of bundleId, so cannot change this `createdby` after install the workflow.
+Required of consisting of bundleId, so cannot change this `createdby` after install the plugin.
 
 ## name
 
@@ -16,9 +16,17 @@ type: `string`
 
 required: `true`
 
-Name of the workflow.
+Name of the plugin.
 
-Required of consisting of bundleId, so cannot change this `name` after install the workflow.
+Required of consisting of bundleId, so cannot change this `name` after install the plugin.
+
+## main
+
+type: `string`
+
+required: `true`
+
+Entry js file of the plugin.
 
 ## defaultIcon
 
@@ -26,7 +34,7 @@ type: `string`
 
 required: `false`
 
-Used to default icon in the workflow.
+Used to default icon in the plugin.
 
 ## category
 
@@ -64,21 +72,13 @@ type: `string`
 
 required: `true`
 
-If `enabled` is false, arvis exclude the workflow from the user search result.
+If `enabled` is false, arvis exclude the plugin from the user search result.
 
-## commands
+## action
 
-type: `array`
+type: `object (Action [])`
 
 required: `true`
-
-commands consist of `trigger-action` pairs.
-
-You can check both in below links.
-
-### Trigger
-
-[Click me to check Trigger](./trigger-description.md)
 
 ### Action
 

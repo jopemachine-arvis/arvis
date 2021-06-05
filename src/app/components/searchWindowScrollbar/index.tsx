@@ -31,7 +31,7 @@ const SearchWindowScrollbar = (props: IProps) => {
     searchbarHeight,
   } = props;
 
-  if (itemLength < maxShow) {
+  if (itemLength <= maxShow) {
     return <></>;
   }
 

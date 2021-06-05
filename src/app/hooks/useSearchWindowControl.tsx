@@ -135,6 +135,9 @@ const useSearchWindowControl = ({
    * @param {any[]} itemArr
    * @param {string} pressedKey
    * @param {string} updatedInput
+   * @summary scriptfilter must be able to run automatically when a command is entered
+   *          This function handle scriptfilter's auto run.
+   * @description Must be called when first script filter is triggered
    */
   const handleScriptFilterAutoExecute = ({
     itemArr,
@@ -150,20 +153,13 @@ const useSearchWindowControl = ({
     const firstItem = itemArr[0];
     if (firstItem.type !== 'scriptfilter') return;
 
-    let commandOnStackIsEmpty;
+    const shouldBeExecuted = Core.shouldExecuteCommand({
+      item: firstItem,
+      inputStr: updatedInput,
+    });
 
-    // Assume withspace's default value is true
-    // When script filter is not running (and should be running)
-    const execScriptFilterWithSpace =
-      firstItem.withspace === true &&
-      updatedInput.includes(firstItem.command) &&
-      pressedKey !== ' ';
-
-    const execScriptFilterWithoutSpace =
-      firstItem.withspace === false && updatedInput.includes(firstItem.command);
-
-    if (execScriptFilterWithSpace || execScriptFilterWithoutSpace) {
-      commandOnStackIsEmpty = firstItem;
+    if (updatedInput.includes(firstItem.command) && shouldBeExecuted) {
+      const commandOnStackIsEmpty = firstItem;
 
       workManager.setRunningText({
         selectedItem: itemArr[0],
@@ -246,28 +242,39 @@ const useSearchWindowControl = ({
     const selectedItem = items[selectedItemIdx];
     if (!selectedItem) return;
 
-    if (selectedItem.arg_type === 'required') {
-      const [command, querys] = inputStr.split(selectedItem.command);
-      if (querys.length < 2) {
-        setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
-        return;
-      }
+    let shouldBeExecuted = true;
+    let item;
+    if (workManager.hasEmptyWorkStk()) {
+      item = selectedItem;
+    } else if (workManager.getTopWork().type === 'scriptfilter') {
+      item = workManager.getTopWork().actionTrigger;
     }
 
-    if (selectedItem.type === 'scriptfilter') {
-      setInputStr({ str: selectedItem.command, needItemsUpdate: false });
+    shouldBeExecuted = item
+      ? Core.shouldExecuteCommand({
+          item,
+          inputStr,
+        })
+      : true;
 
-      workManager.setRunningText({
-        selectedItem: items[selectedItemIdx],
-      });
+    if (shouldBeExecuted) {
+      if (selectedItem.type === 'scriptfilter') {
+        setInputStr({ str: selectedItem.command, needItemsUpdate: false });
 
-      Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
-    } else {
-      await workManager
-        .handleItemPressEvent(selectedItem, inputStr, modifiers)
-        .catch((err: any) => {
-          console.error('Error occured in handleItemPressEvent!', err);
+        workManager.setRunningText({
+          selectedItem: items[selectedItemIdx],
         });
+
+        Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
+      } else {
+        await workManager
+          .handleItemPressEvent(selectedItem, inputStr, modifiers)
+          .catch((err: any) => {
+            console.error('Error occured in handleItemPressEvent!', err);
+          });
+      }
+    } else {
+      setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
     }
   };
 

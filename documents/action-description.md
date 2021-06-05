@@ -343,16 +343,6 @@ If you do not give any modifiers, it would be handled by `normal` which means th
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### withspace
-
-type: `boolean`
-
-required: `false`
-
-Indicates if space is required after the command to execute it.
-
-If `withspace` is true, the action can only be run if space exists.
-
 ### arg_type
 
 type: `string (enum)`

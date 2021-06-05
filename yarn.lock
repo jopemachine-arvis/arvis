@@ -1431,10 +1431,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.8.tgz#df3c09c40f0fb614aa2975137a365958439bf132"
-  integrity sha512-9gITwfOkMBB+tfA1aucy1k9QHaeZZJ1FmP1nYefY7tK4HsjDOIdcIV/3JW3hXOVitvWQ9ysx4onNP2VaUfT2Cw==
+"@jopemachine/arvis-core@^0.1.26":
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.26.tgz#a8a05970aca97910c13680ba83158859802c3f92"
+  integrity sha512-xneXxtGLdn+C80YAF7BTs8sYLEO19oeBhQnVDF1M/FT89kChw4IL/Jqz7D5/A0nkj6hvMZy38SqrOK3Qiig0Dg==
   dependencies:
     "@jopemachine/arvis-plist-converter" "^0.1.1"
     archiver "^5.3.0"
@@ -1447,6 +1447,7 @@
     lodash "^4.17.21"
     meow "^9.0.0"
     open "^8.0.4"
+    p-cancelable "^2.1.1"
     readdirp "^3.6.0"
     recursive-readdir "^2.2.2"
     rimraf "^3.0.2"
@@ -9156,7 +9157,7 @@ p-cancelable@^1.0.0:
   resolved "https://registry.yarnpkg.com/p-cancelable/-/p-cancelable-1.1.0.tgz#d078d15a3af409220c886f1d9a0ca2e441ab26cc"
   integrity sha512-s73XxOZ4zpt1edZYZzvhqFa6uvQc1vwUa0K0BdtIZgQMAJj9IbebH+JkgKZc9h+B05PKHLOTl4ajG1BmNrVZlw==
 
-p-cancelable@^2.0.0:
+p-cancelable@^2.0.0, p-cancelable@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/p-cancelable/-/p-cancelable-2.1.1.tgz#aab7fbd416582fa32a3db49859c122487c5ed2cf"
   integrity sha512-BZOr3nRQHOntUjTrH8+Lh54smKHoHyur8We1V8DSMVrl5A2malOOwuJRnKRDjSnkoeBh4at6BwEnb5I7Jl31wg==

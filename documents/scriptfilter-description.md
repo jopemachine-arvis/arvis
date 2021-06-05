@@ -62,9 +62,13 @@ Each time a query changes, the script specified in `script_filter` is executed a
 
 type: `boolean`
 
-Indicates if space is required after the command to execute it.
+default value: `true`
 
-If `withspace` is true, the action can only be run if space exists.
+If `withspace` is true, the command include the first white space.
+
+(So the first whitespace is excluded from the query)
+
+Set this value to false if you do not want to include first space in your query.
 
 ## running_subtext
 

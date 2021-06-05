@@ -16,7 +16,6 @@ Example:
   "command": "ch > init",
   "text": "Init your config file",
   "subtitle": "",
-  "withspace": false,
   "arg_type": "no",
   "action": [
     {
