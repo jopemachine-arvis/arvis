@@ -1,4 +1,4 @@
-import { IpcMainEvent } from 'electron';
+import { IpcMainEvent, screen } from 'electron';
 import { WindowManager } from '../../../windows';
 import { IPCMainEnum } from '../../ipcEventEnum';
 
@@ -13,7 +13,10 @@ export const showQuicklookWindow = (
     url: string;
   }
 ) => {
+  const { width, height } = screen.getPrimaryDisplay().size;
   const quicklookWindow = WindowManager.getInstance().getQuicklookWindow();
+
+  quicklookWindow.setBounds({ width: width * 0.6, height: height * 0.6 });
   quicklookWindow.center();
   quicklookWindow.show();
   quicklookWindow.focus();

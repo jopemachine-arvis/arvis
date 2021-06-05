@@ -1,4 +1,4 @@
-import { IpcMainEvent } from 'electron';
+import { IpcMainEvent, screen } from 'electron';
 import { WindowManager } from '../../../windows';
 import { IPCMainEnum } from '../../ipcEventEnum';
 
@@ -13,7 +13,10 @@ export const showLargeTextWindow = (
     text: string;
   }
 ) => {
+  const { width, height } = screen.getPrimaryDisplay().size;
   const largeTextWindow = WindowManager.getInstance().getLargeTextWindow();
+
+  largeTextWindow.setBounds({ width: width * 0.6, height: height * 0.6 });
   largeTextWindow.center();
   largeTextWindow.show();
   largeTextWindow.focus();
