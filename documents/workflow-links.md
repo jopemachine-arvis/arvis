@@ -13,4 +13,8 @@ You can find `arvis-workflow` here.
 | [arvis-chrome-control](https://github.com/jopemachine/arvis-chrome-control) | X | O | X | A JXA script and an Arvis Workflow for controlling Google Chrome |
 | [arvis-react-native](https://github.com/jopemachine/arvis-react-native) | O | O | O | Access the React Native Documentation from Arvis |
 | [arvis-loremipsum](https://github.com/jopemachine/arvis-loremipsum) | O | O | O | Lorem Ipsum generator in Arvis |
+| [arvis-vue](https://github.com/jopemachine/arvis-vue) | O | O | O | Search for Vue.js API references on vuejs.org |
+| [arvis-mac-lock](https://github.com/jopemachine/arvis-mac-lock) | X | O | X | Arvis workflow to lock your Mac |
+| [arvis-hl](https://github.com/jopemachine/arvis-hl) | O | O | O | 🔆 Syntax highlight code in the clipboard |
+| [arvis-mac-dark-mode](https://github.com/jopemachine/arvis-mac-dark-mode) | X | O | X | Arvis workflow to toggle the system dark mode |
 
