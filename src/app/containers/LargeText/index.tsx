@@ -5,6 +5,7 @@ import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { isWithCtrlOrCmd } from '@utils/index';
 import useKey from '../../../use-key-capture/src';
 
 const OuterContainer = styled.div`
@@ -51,7 +52,14 @@ export default function LargeTextWindow() {
   }, []);
 
   useEffect(() => {
-    if (keyData.isEscape) {
+    if (
+      keyData.isEscape ||
+      (isWithCtrlOrCmd({
+        isWithCtrl: keyData.isWithCtrl,
+        isWithCmd: keyData.isWithMeta,
+      }) &&
+        keyData.key.toUpperCase() === 'L')
+    ) {
       ipcRenderer.send(IPCRendererEnum.hideLargeTextWindow);
     }
   }, [keyData]);

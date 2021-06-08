@@ -44,7 +44,7 @@ export default function QuicklookWindow() {
       repeat: input.isAutoRepeat,
     });
 
-    if (ev.code === 'Escape') {
+    if (ev.code === 'Escape' || (ev.shiftKey && ev.key === ' ')) {
       ipcRenderer.send(IPCRendererEnum.hideQuicklookWindow);
     }
   };
