@@ -66,9 +66,12 @@ export default class TrayBuilder {
     });
 
     this.tray.on('double-click', () => {
-      const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
-      preferenceWindow.show();
-      preferenceWindow.focus();
+      if (process.platform !== 'darwin') {
+        const preferenceWindow =
+          WindowManager.getInstance().getPreferenceWindow();
+        preferenceWindow.show();
+        preferenceWindow.focus();
+      }
     });
     return this.tray;
   }
