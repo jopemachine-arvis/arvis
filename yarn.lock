@@ -1431,10 +1431,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.45":
-  version "0.1.45"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.45.tgz#b7cb0ecbc0e7509fb53734282587a0ac57f5ca33"
-  integrity sha512-/7LNa+A1pL7r7wcnxDwodlQ7Nrkh6Rmk5CKRtNX/mc83EsomkYBx5ei43wY9RTXMhyQ5xk528KLVX55ONikrVg==
+"@jopemachine/arvis-core@^0.1.53":
+  version "0.1.53"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.53.tgz#7518e7bd8241ab854dd4212a76c4c67bbe11bb9a"
+  integrity sha512-rQUWZd++yEg9RaxyY+/EHkq6C0v6AqI5P5J1LrhuhxM6i8JgwR2pZL7Nrvw7KY9BxZl8L/5xpeTn2EysQYDCTg==
   dependencies:
     "@jopemachine/arvis-extension-validator" "^0.0.1"
     "@jopemachine/arvis-plist-converter" "^0.1.1"
@@ -1466,10 +1466,10 @@
     jsonschema "^1.4.0"
     meow "^5.0.0"
 
-"@jopemachine/arvis-plist-converter@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-plist-converter/-/arvis-plist-converter-0.1.1.tgz#df7c789d9d22ead97052fbd0a92b8ef904d4bd11"
-  integrity sha512-e8f7StRtzjY4bcT/YLm4DaS5Ssq2YNUJOCCVBzxvXi6w3MBMa56f3iNgRKm6YrPetYOVLjZSNKsQGh1ZpUZ/Cw==
+"@jopemachine/arvis-plist-converter@^0.1.1", "@jopemachine/arvis-plist-converter@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-plist-converter/-/arvis-plist-converter-0.1.5.tgz#9c7e7c38bb8be016ef5685f546c9d538ff7ffe35"
+  integrity sha512-JxbJ6pJ6CZb20WzX5fMPE8qDMC1NjDQZhUNI+oP4Fy9wsVagu7/SCf675uki6quODmL/gQfUEjQXdunwBillKQ==
   dependencies:
     chalk "^4.1.0"
     fs-extra "^9.1.0"
