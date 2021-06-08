@@ -21,7 +21,7 @@ import {
   cleanUpIPCHandlers,
   initIPCHandlers,
 } from './app/ipc/mainProcessIPCManager';
-import { startFileWatcher } from './app/helper/fileWatcher';
+import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
 import installExtensions from './app/config/extensionInstaller';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
@@ -59,6 +59,7 @@ app.allowRendererProcessReuse = false;
 
 app.on('before-quit', () => {
   WindowManager.getInstance().windowAllClose();
+  stopFileWatcher();
   cleanUpIPCHandlers();
   app.exit();
 });
