@@ -20,6 +20,8 @@ You can find `arvis-workflow` here.
 
 ## Mac only
 
+|Name|Win|Mac|Linux|Description|
+|:--:|:--:|:--:|:--:|:--:|
 | [arvis-imagemin](https://github.com/jopemachine/arvis-imagemin) | X | O | X | Arvis workflow - Minify images with Imagemin |
 | [arvis-mac-lock](https://github.com/jopemachine/arvis-mac-lock) | X | O | X | Arvis workflow to lock your Mac |
 | [arvis-mac-dark-mode](https://github.com/jopemachine/arvis-mac-dark-mode) | X | O | X | Arvis workflow to toggle the system dark mode |
