@@ -53,6 +53,10 @@ const SearchBar = (props: IProps) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
     }
+    // For quicklook feature, prevent adding space when quicklook shortcut is pressed
+    if (e.key === ' ' && e.shiftKey) {
+      e.preventDefault();
+    }
   };
 
   const preventBlur = (e: React.FocusEvent<HTMLInputElement>) => {

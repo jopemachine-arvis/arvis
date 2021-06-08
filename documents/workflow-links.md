@@ -26,6 +26,7 @@ You can find `arvis-workflow` here.
 | [arvis-mac-lock](https://github.com/jopemachine/arvis-mac-lock) | X | O | X | Arvis workflow to lock your Mac |
 | [arvis-mac-dark-mode](https://github.com/jopemachine/arvis-mac-dark-mode) | X | O | X | Arvis workflow to toggle the system dark mode |
 | [arvis-chrome-control](https://github.com/jopemachine/arvis-chrome-control) | X | O | X | A JXA script and an Arvis Workflow for controlling Google Chrome |
+| [arvis-evernote-workflow](https://github.com/jopemachine/arvis-evernote-workflow) | X | O | X | Evernote workflow for Arvis |
 
 ## Windows only
 

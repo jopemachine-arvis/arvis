@@ -218,6 +218,7 @@ const useSearchWindowControl = ({
     str: string | undefined;
     needItemsUpdate: boolean;
   }) => {
+    // Resetinput 호출될 때 storeAvailability 동기화 문제로 빼놓음
     if (str && inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
@@ -384,6 +385,11 @@ const useSearchWindowControl = ({
       'Escape',
     ];
 
+    // For quicklook feature, prevent adding space when quicklook shortcut is pressed
+    if (e.shiftKey && e.key === ' ') {
+      return;
+    }
+
     if (!exceptionKeys.includes(e.key)) {
       const txt = (inputRef.current! as HTMLInputElement).value!
         ? (inputRef.current! as HTMLInputElement).value
@@ -492,7 +498,7 @@ const useSearchWindowControl = ({
       alreadyClearedRef.current = true;
     } else if (keyData.isTab) {
       autoCompleteHandler(items[selectedItemIdx]);
-    } else if (keyData.isShift && !keyData.key) {
+    } else if (keyData.isWithShift && keyData.isSpace) {
       quicklookHandler(items[selectedItemIdx]);
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'L') {
       showTextLargeTypeHandler(items[selectedItemIdx]);
