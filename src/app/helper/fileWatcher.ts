@@ -99,57 +99,53 @@ export const startFileWatcher = () => {
     // },
   };
 
-  workspaceWatcher = chokidar
-    .watch(workflowWatchPaths, {
-      cwd: Core.path.workflowInstallPath,
-      ...watchOpts,
-    })
-    .on('change', async (filePath: string) => {
+  const workflowChangeHandler = async (filePath: string) => {
+    if (filePath.endsWith('arvis-workflow.json')) {
       console.log(
         chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
       );
       await sleep(1000);
       requestRenewWorkflows(getBundleIdFromFilePath(filePath));
-    })
-    .on('unlink', async (filePath: string) => {
+    } else {
       console.log(
-        chalk.greenBright(`"${filePath}" unlinked. Reload workflows settings..`)
+        chalk.magenta(
+          `"${filePath}" change detected.. there might be wrong regexp in filewatcher..`
+        )
+      );
+    }
+  };
+
+  const pluginChangeHandler = async (filePath: string) => {
+    if (filePath.endsWith('arvis-plugin.json') || filePath.endsWith('.js')) {
+      console.log(
+        chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
       );
       await sleep(1000);
-      requestRenewWorkflows();
-    })
-    .on('add', async (filePath: string) => {
+      requestRenewPlugins(getBundleIdFromFilePath(filePath));
+    } else {
       console.log(
-        chalk.greenBright(`"${filePath}" added. Reload workflows settings..`)
+        chalk.magenta(
+          `"${filePath}" change detected.. there might be wrong regexp in filewatcher..`
+        )
       );
-      await sleep(1000);
-      requestRenewWorkflows();
-    });
+    }
+  };
+
+  workspaceWatcher = chokidar
+    .watch(workflowWatchPaths, {
+      cwd: Core.path.workflowInstallPath,
+      ...watchOpts,
+    })
+    .on('change', workflowChangeHandler)
+    .on('unlink', workflowChangeHandler)
+    .on('add', workflowChangeHandler);
 
   pluginWatcher = chokidar
     .watch(pluginWatchPaths, {
       cwd: Core.path.pluginInstallPath,
       ...watchOpts,
     })
-    .on('change', async (filePath: string) => {
-      console.log(
-        chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
-      );
-      await sleep(1000);
-      requestRenewPlugins(getBundleIdFromFilePath(filePath));
-    })
-    .on('unlink', async (filePath: string) => {
-      console.log(
-        chalk.greenBright(`"${filePath}" unlinked. Reload plugins settings..`)
-      );
-      await sleep(1000);
-      requestRenewPlugins();
-    })
-    .on('add', async (filePath: string) => {
-      console.log(
-        chalk.greenBright(`"${filePath}" added. Reload plugins settings..`)
-      );
-      await sleep(1000);
-      requestRenewPlugins();
-    });
+    .on('change', pluginChangeHandler)
+    .on('unlink', pluginChangeHandler)
+    .on('add', pluginChangeHandler);
 };
