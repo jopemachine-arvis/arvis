@@ -218,8 +218,6 @@ const useSearchWindowControl = ({
     str: string | undefined;
     needItemsUpdate: boolean;
   }) => {
-    if (!storeAvailable) return;
-
     if (str && inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
