@@ -31,3 +31,19 @@ Version of arvis
 ### arvis_extension_history
 
 [History file](./history.md) path of the Arvis
+
+### arvis_extension_type
+
+Depending on the extension type, this value is set by `workflow` or `plugin`
+
+## Alfred mock environment variables
+
+Arvis sets some environment variables that Alfred 4 sets.
+
+Do not use these environment variables. they are mock values, and could be deleted later.
+
+These variables are just set to help to convert Alfred workflow.
+
+## variables
+
+`variables` set in scripts in script filters or extension's setting json file are also applied to environment variables.

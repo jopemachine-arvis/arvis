@@ -28,7 +28,7 @@ Forward argument.
 
 If arg is `string`, replace `{query}` with forwared `arg`.
 
-If arg is `object`, enables the key value pairs to be used like variables
+If arg is `object`, enables the key value pairs to be used.
 
 ## icon
 
@@ -105,4 +105,10 @@ required: `false`
 
 The key-value pairs in the `variables` object are put in form of `{var:key} = value`.
 
-The difference with arg is that the key becomes `{var:key}`
+### Difference with arg 
+
+1. In, `variables`, the keys becomes `{var:key}`
+
+2. `variables` is saved in environment variables. So, you can use the variable values in your scripts too. (`arg` cannot be used).
+
+3. You can set `variables` in your config file too.

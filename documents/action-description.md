@@ -17,7 +17,7 @@ Example :
   {
     "modifiers": "normal",
     "type": "script",
-    "script": "./node_modules/.bin/run-node src/clearCache.js",
+    "script": "node src/clearCache.js",
     "action": [
       {
         "modifiers": "normal",
@@ -287,7 +287,7 @@ Example :
     "command": "enct",
     "title": "enct",
     "subtitle": "Select tag and enter note content to create.",
-    "script_filter": "./node_modules/.bin/run-node searchTag.js '{query}' --create",
+    "script_filter": "node searchTag.js '{query}' --create",
     "action": [
         {
             "modifiers": "normal",
@@ -298,7 +298,7 @@ Example :
                 {
                     "modifiers": "normal",
                     "type": "script",
-                    "script": "./node_modules/.bin/run-node createNoteWithTag.js '{query}'",
+                    "script": "node createNoteWithTag.js '{query}'",
                     "action": [
                       ...
                     ]

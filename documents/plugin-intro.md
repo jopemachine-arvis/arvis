@@ -16,9 +16,11 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 
 * Because `plugin` is loaded in advance, `plugin` is much faster than `workflow` using process-communication.
 
-* You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`. (it may slow down performance of Arvis)
-If you should do, consider replacing it with `workflow`
+* You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`.
 
+* If async plugin continues work after some specified time (100ms), the plugin async will be forcibly shut down to avoid slowing down arvis performance.
+
+* If you should put heavy operation, consider replacing it with `workflow`
 
 ## Action
 

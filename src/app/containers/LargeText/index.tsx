@@ -23,6 +23,8 @@ const OuterContainer = styled.div`
   text-align: center;
   width: 100%;
   word-break: break-word;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export default function LargeTextWindow() {

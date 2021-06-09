@@ -10,7 +10,7 @@ In `workflow`, you can access the history file's path with environment variable 
 
 [Config file paths](./config-file-paths.md)
 
-## History file composition
+## History json schema
 
 ### timestamp
 

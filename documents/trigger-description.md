@@ -100,14 +100,14 @@ Example:
     {
       "modifiers": "normal",
       "type": "scriptfilter",
-      "script_filter": "./node_modules/.bin/run-node src/selectProvider.js",
+      "script_filter": "node src/selectProvider.js",
       "running_subtext": "Selecting accounts..",
       "withspace": false,
       "action": [
         {
           "modifiers": "normal",
           "type": "scriptfilter",
-          "script_filter": "./node_modules/.bin/run-node src/fetchEmails.js 'UNSEEN' '{query}'",
+          "script_filter": "node src/fetchEmails.js 'UNSEEN' '{query}'",
           "running_subtext": "Fetching unread emails..",
           "withspace": false,
           "action": [

@@ -58,6 +58,8 @@ So, `Double cmd`, `Double wid`, `Double option`... keys are available.
 
 But `Double cmd + a` is not available.
 
+If there are duplicate hotkeys within user's workflow, user will be notified.
+
 ## action
 
 type: `Action (object)`

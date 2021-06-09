@@ -28,7 +28,6 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 
 ## [use-key-capture](https://github.com/pranesh239/use-key-capture)
 
-Arvis edits and uses some libraries for Arvis' own usage.
+Arvis edits and uses some libraries.
 
 These codes are separated from `src/app`.
-
