@@ -1,5 +1,9 @@
 # How to write plugin
 
+## Support hotload
+
+All changes in workflow, plugin folders's changes are being watched and reflected when they are created.
+
 ## Use [arvish](https://github.com/jopemachine/arvish)
 
 1. Write proper `arvis-plugin.json`

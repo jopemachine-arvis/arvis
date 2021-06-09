@@ -1,82 +1,66 @@
 # Arvis
 
+## 🚧🚧🚧  Note that it's alpha version yet. 🚧 🚧🚧
+
+Arvis is still in the construction and there could be lots of bugs.
+
+It would be very helpful if you could put bugs on the issue.
+
+* ⚠️ Currently has severe [performance issue]() on mac
+
 **Table of Contents**
 
-- [1. What is Arvis?](#what-is-arvis)
-    - [1.1 Cross-platform](#cross-platform)
-    - [1.2 Alfred-workflow Compatibility](#alfred-workflow-compatibility)
-    - [1.3 Change appearance](#change-appearance)
+- [1. What is Arvis?](#what-is-arvis-why-it-is-needed)
 - [2. What is workflow, plugin?](#what-is-workflow-plugins)
-- [3. How to install workflow, plugin on Arvis](#how-to-install-workflow-plugin-on-arvis)
-- [4. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
-    - [4.1 How to write new workflows](#how-to-write-new-workflows)
-    - [4.2 How to write new plugins](#how-to-write-new-plugins)
-    - [4.3 Update your workflow, plugin](#update-your-workflow-plugin)
-    - [4.4 Convert alfredworkflow to arvisworkflow](#convert-alfredworkflow-to-arvisworkflow)
-- [5. Build and development](#build-and-development)
+- [3. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
+- [4. Build and development](#build-and-development)
 
-## What is Arvis?
+## 💬 What is Arvis? why it is needed?
 
-`Arvis` helps you run any scripts or binarys of your choice for specific keyboard events.
+`Arvis` aims to help you run any scripts or binarys very simple.
 
-(For example, if you press the Cmd key twice with the appropriate workflow installation, the Chrome History search window might appear or something like that.)
-
-I started to work on this because I wanted to try to cross-platform alfred-workflows.
+I've thought many useful alfred-workflows can run in cross-platform So I started to work on this.
 
 `Arvis` also aims to provide a "frame" or "library" to help create such `workflow`, `plugin` more easily.
 
-### Cross-platform
+It is intentionally built similar to Alfred, but there could be some different points.
 
-* `Arvis` works on cross-platform (Tested on `Windows 10`, `Macos Bigsur`, and `Ubuntu`).
+### 📝 Alfred-workflow Compatibility
 
-### Alfred-workflow Compatibility
+* Basically, `Arvis` use same [JSON Scriptfilter Format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
 
-* Basically, `Arvis` use same [scriptfilter format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
+* This means you may easily change the alfred-workflow to arvis-workflow. 
 
-* This means you can easily change the alfred-workflow to arvis-workflow.
+* Especially if the workflow is builded on [alfy](https://github.com/sindresorhus/alfy), you can convert workflow more easily using [arvish](https://github.com/jopemachine/arvish), the clone version of alfy. 
 
-### Change appearance
+### ✨ Change appearance
 
 You can change Arvis search window's appearance to some extent.
 
 Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
-## How to install workflow, plugin on Arvis
-
-You can download `arvisworkflow`, `arvisplugin` files.
-
-They are installer files. Just double click on them to install them.
-
-## What is workflow, plugin?
+## 📓 What is workflow, plugin?
 
 * [What is workflow?](./documents/workflow-intro.md)
 
 * [What is plugin?](./documents/plugin-intro.md)
 
-## How to write new workflows, plugins
+## 🔨 How to write new extensions
 
-* By default, all changes to workflow files are being watched and reflected as soon as changes are made.
+* [Click me to check how to create new workflows](./documents/workflow-develop.md)
 
-### How to write new workflows
+* [Click me to check how to create new plugins](./documents/plugin-develop.md)
 
-* [Click me to check how to write new workflow](./documents/workflow-develop.md)
+### 🔖 Convert alfredworkflow to arvisworkflow
 
-### How to write new plugins
+Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [arvis-plist-converter](https://github.com/jopemachine/arvis-plist-converter) 
 
-* [Click me to check how to write new plugin](./documents/plugin-develop.md)
-
-### Update your workflow, plugin
-
-* Installing a package with the same bundle ID removes all existing files. So, reinstall to update the `workflow` or `plugin`
-
-* In workflow, plugin development, updating `arvis-workflow.json`, `arvis-plugin.json (and its js files)` is detected and reloaded by [chokidar](https://github.com/paulmillr/chokidar).
-
-### Convert alfredworkflow to arvisworkflow
-
-Convert alfred's info.plist using [arvis-plist-converter](https://github.com/jopemachine/arvis-plist-converter) 
-
-(Or just install `alfredworkflow` file. This converter will create `arvis-workflow.json` on its own)
-
-## Build and development
+## 🔧 Build and development
 
 [Build and development](./documents/develop-arvis.md)
+
+## Contribution
+
+* Arvis is alpha version, needs contributions to improve quality. Open to all kinds of contributions.
+
+* Please feel free to create `bug`, `feature request` or other things in issue.
