@@ -3,7 +3,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
-import { Switch, Route } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { functions as loggerFunctions, transports } from 'electron-log';
 import { Core } from '@jopemachine/arvis-core';
@@ -31,11 +30,7 @@ type IProps = {
 const windowRoute = (windowName: string) => {
   switch (windowName) {
     case 'preferenceWindow':
-      return (
-        <Switch>
-          <Route path="/" component={PreferenceContainer} />
-        </Switch>
-      );
+      return <PreferenceContainer />;
     case 'searchWindow':
       return <SearchContainer />;
     case 'largeTextWindow':

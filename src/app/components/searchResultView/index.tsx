@@ -91,7 +91,7 @@ const SearchResultView = (props: IProps) => {
             if (path.isAbsolute(command.icon.path)) {
               iconPath = command.icon.path;
             } else {
-              iconPath = `${workflowRootPath}${path.sep}${command.icon.path}`;
+              iconPath = path.resolve(workflowRootPath, command.icon.path);
             }
           }
         }

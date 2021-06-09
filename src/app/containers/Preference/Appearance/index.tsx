@@ -243,9 +243,7 @@ export default function Appearance() {
   };
 
   const requestExportTheme = () => {
-    const defaultPath = `${homedir()}${path.sep}Desktop${
-      path.sep
-    }theme.arvistheme`;
+    const defaultPath = path.resolve(homedir(), 'Desktop', `theme.arvistheme`);
 
     ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to export arvistheme',

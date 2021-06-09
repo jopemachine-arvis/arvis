@@ -26,7 +26,7 @@ import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StateType } from '@redux/reducers/types';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
-import { isWithCtrlOrCmd, range, sleep } from '@utils/index';
+import { isWithCtrlOrCmd, range } from '@utils/index';
 import {
   Header,
   OuterContainer,
@@ -147,13 +147,14 @@ export default function Workflow() {
 
       Promise.all(works)
         .then(async () => {
-          ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
           ipcRenderer.send(IPCRendererEnum.renewWorkflow);
-          setStoreAvailable(true);
           return null;
         })
         .catch((err) => {
           console.error(err);
+        })
+        .finally(() => {
+          ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
           setStoreAvailable(true);
         });
     },
@@ -250,7 +251,7 @@ export default function Workflow() {
   const getDefaultIcon = (bundleId: string) => {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     const { defaultIcon } = workflows[bundleId];
-    const workflowDefaultIconPath = `${workflowRootPath}${path.sep}${defaultIcon}`;
+    const workflowDefaultIconPath = path.resolve(workflowRootPath, defaultIcon);
 
     if (fse.existsSync(workflowDefaultIconPath)) {
       return workflowDefaultIconPath;

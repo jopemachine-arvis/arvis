@@ -81,7 +81,7 @@ class PluginContextMenu extends Menu {
           label: 'Open arvis-plugin.json',
           toolTip: 'Open arvis-plugin.json of the selected plugin',
           click() {
-            open(`${targetItem.pluginPath}${path.sep}arvis-plugin.json`);
+            open(path.resolve(targetItem.pluginPath, 'arvis-plugin.json'));
           },
         })
       );

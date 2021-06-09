@@ -140,15 +140,16 @@ export default function Plugin() {
       }
 
       Promise.all(works)
-        .then(async () => {
-          ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
+        .then(() => {
           ipcRenderer.send(IPCRendererEnum.renewPlugin);
-          setStoreAvailable(true);
           return null;
         })
         .catch((err) => {
           console.error(err);
+        })
+        .finally(() => {
           setStoreAvailable(true);
+          ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
         });
     },
   };
@@ -244,7 +245,7 @@ export default function Plugin() {
   const getDefaultIcon = (bundleId: string) => {
     const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
     const { defaultIcon } = plugins[bundleId];
-    const pluginDefaultIconPath = `${pluginRootPath}${path.sep}${defaultIcon}`;
+    const pluginDefaultIconPath = path.resolve(pluginRootPath, defaultIcon);
 
     if (fse.existsSync(pluginDefaultIconPath)) {
       return pluginDefaultIconPath;

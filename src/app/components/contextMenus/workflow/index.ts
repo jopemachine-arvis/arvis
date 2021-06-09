@@ -82,7 +82,7 @@ class WorkflowItemContextMenu extends Menu {
           label: 'Open arvis-workflow.json',
           toolTip: 'Open arvis-workflow.json of the selected workflow',
           click() {
-            open(`${targetItem.workflowPath}${path.sep}arvis-workflow.json`);
+            open(path.resolve(targetItem.workflowPath, 'arvis-workflow.json'));
           },
         })
       );
