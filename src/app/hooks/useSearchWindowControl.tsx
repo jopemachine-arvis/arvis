@@ -177,34 +177,43 @@ const useSearchWindowControl = ({
     pressedKey: string,
     updatedInput: string
   ) => {
-    const searchCommands = async () => {
-      const itemArr = await Core.findCommands(updatedInput);
-      setItems(itemArr.slice(0, maxRetrieveCount));
-      handleScriptFilterAutoExecute({
-        itemArr,
-        pressedKey,
-        updatedInput,
-      });
-    };
+    let timer: NodeJS.Timeout;
 
-    // Search workflow commands, builtInCommands
-    if (workManager.hasEmptyWorkStk()) {
-      await searchCommands();
-    }
-    // Execute Script filter
-    else if (workManager.getTopWork().type === 'scriptfilter') {
-      // Execute current command's script filter
-      if (updatedInput.startsWith(workManager.getTopWork().input)) {
-        Core.scriptFilterExcute(updatedInput);
-      }
-      // If the command changes, clear stack and search commands
-      else {
-        workManager.clearWorkStack();
+    const handler = async () => {
+      clearTimeout(timer);
+
+      const searchCommands = async () => {
+        const itemArr = await Core.findCommands(updatedInput);
+        setItems(itemArr.slice(0, maxRetrieveCount));
+        handleScriptFilterAutoExecute({
+          itemArr,
+          pressedKey,
+          updatedInput,
+        });
+      };
+
+      // Search workflow commands, builtInCommands
+      if (workManager.hasEmptyWorkStk()) {
         await searchCommands();
       }
-    }
+      // Execute Script filter
+      else if (workManager.getTopWork().type === 'scriptfilter') {
+        // Execute current command's script filter
+        if (updatedInput.startsWith(workManager.getTopWork().input)) {
+          Core.scriptFilterExcute(updatedInput);
+        }
+        // If the command changes, clear stack and search commands
+        else {
+          workManager.clearWorkStack();
+          await searchCommands();
+        }
+      }
 
-    clearIndexInfo();
+      clearIndexInfo();
+    };
+
+    // Wait a little longer than Spawn will uses (around 15ms).
+    timer = setTimeout(handler, 25);
   };
 
   /**
