@@ -99,10 +99,13 @@ class WorkflowItemContextMenu extends Menu {
         super.append(
           new MenuItem({
             type: 'normal',
-            label: allEnabled ? `Disable all` : 'Enable all',
+            label: allEnabled
+              ? `Disable ${items.length} items`
+              : `Enable ${items.length} items`,
+
             toolTip: allEnabled
-              ? 'Disable all workflows'
-              : 'Enable all workflows',
+              ? `Disable ${items.length} workflows`
+              : `Enable ${items.length} workflows`,
             click() {
               for (const targetItem of items) {
                 const bundleId = targetItem.workflowPath.split(path.sep).pop();

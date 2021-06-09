@@ -98,8 +98,12 @@ class PluginContextMenu extends Menu {
         super.append(
           new MenuItem({
             type: 'normal',
-            label: allEnabled ? `Disable all` : 'Enable all',
-            toolTip: allEnabled ? 'Disable all plugins' : 'Enable all plugins',
+            label: allEnabled
+              ? `Disable ${items.length}`
+              : `Enable ${items.length}`,
+            toolTip: allEnabled
+              ? `Disable ${items.length} plugins`
+              : `Enable ${items.length} plugins`,
             click() {
               for (const targetItem of items) {
                 const bundleId = targetItem.pluginPath.split(path.sep).pop();

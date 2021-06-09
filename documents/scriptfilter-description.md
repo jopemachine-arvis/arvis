@@ -8,7 +8,7 @@ Example:
   "command": "ch > conf",
   "title": "ch > conf",
   "subtitle": "Open config file",
-  "script_filter": "./node_modules/.bin/run-node src/openConf.js",
+  "script_filter": "node src/openConf.js",
   "running_subtext": "Waiting...",
   "withspace": false,
   "arg_type": "no",

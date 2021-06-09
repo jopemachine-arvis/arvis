@@ -13,7 +13,7 @@ Example:
     {
       "modifiers": "normal",
       "type": "script",
-      "script": "./node_modules/.bin/run-node src/init.js"
+      "script": "node src/init.js"
     }
   ]
 },

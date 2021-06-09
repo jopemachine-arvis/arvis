@@ -24,7 +24,7 @@ type: `string | object`
 
 required: `false`
 
-Forward argument.
+Forward argument to next action's `{query}`.
 
 If arg is `string`, replace `{query}` with forwared `arg`.
 

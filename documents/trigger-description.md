@@ -21,7 +21,7 @@ Example:
     {
       "modifiers": "normal",
       "type": "script",
-      "script": "./node_modules/.bin/run-node src/init.js"
+      "script": "node src/init.js"
     }
   ]
 }
@@ -53,7 +53,7 @@ Example:
   "command": "chb",
   "title": "chb",
   "subtitle": "Search chrome bookmark",
-  "script_filter": "./node_modules/.bin/run-node src/fetchBookmark.js '{query}'",
+  "script_filter": "node src/fetchBookmark.js '{query}'",
   "running_subtext": "Searching...",
   "withspace": true,
   "arg_type": "optional",
