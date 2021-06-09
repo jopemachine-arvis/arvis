@@ -25,12 +25,12 @@ class WorkflowItemContextMenu extends Menu {
           label: targetItem.workflowEnabled ? `Disable` : 'Enable',
           toolTip: targetItem.workflowEnabled
             ? 'Disable selected workflow'
-            : 'Enable workflow',
+            : 'Enable selected workflow',
           click() {
             WindowManager.getInstance()
               .getPreferenceWindow()
-              .webContents.send(IPCMainEnum.toggleWorkflowEnabled, {
-                bundleId,
+              .webContents.send(IPCMainEnum.toggleWorkflowsEnabled, {
+                bundleIds: JSON.stringify([bundleId]),
                 enabled: targetItem.workflowEnabled,
               });
           },
@@ -100,22 +100,23 @@ class WorkflowItemContextMenu extends Menu {
           new MenuItem({
             type: 'normal',
             label: allEnabled
-              ? `Disable ${items.length} items`
-              : `Enable ${items.length} items`,
+              ? `Disable ${items.length} workflows`
+              : `Enable ${items.length} workflows`,
 
             toolTip: allEnabled
               ? `Disable ${items.length} workflows`
               : `Enable ${items.length} workflows`,
             click() {
-              for (const targetItem of items) {
-                const bundleId = targetItem.workflowPath.split(path.sep).pop();
-                WindowManager.getInstance()
-                  .getPreferenceWindow()
-                  .webContents.send(IPCMainEnum.toggleWorkflowEnabled, {
-                    bundleId,
-                    enabled: targetItem.workflowEnabled,
-                  });
-              }
+              const bundleIds = items.map((item: WorkflowItem) =>
+                item.workflowPath.split(path.sep).pop()
+              );
+
+              WindowManager.getInstance()
+                .getPreferenceWindow()
+                .webContents.send(IPCMainEnum.toggleWorkflowsEnabled, {
+                  bundleIds: JSON.stringify(bundleIds),
+                  enabled: allEnabled,
+                });
             },
           })
         );

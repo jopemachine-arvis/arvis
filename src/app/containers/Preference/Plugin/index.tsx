@@ -40,9 +40,16 @@ import './index.global.css';
 import * as style from './style';
 
 export default function Plugin() {
-  const [plugins, setPlugins] = useState<any>({});
-  const pluginsRef = useRef<any>();
-  const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(0);
+  const plugins = Core.getPluginList();
+  const pluginBundleIds = Object.keys(plugins).sort((a, b) => {
+    return Core.getNameFromBundleId(a).toLowerCase() <
+      Core.getNameFromBundleId(b).toLowerCase()
+      ? -1
+      : 1;
+  });
+
+  const pluginBundleIdsRef = useRef<any>(pluginBundleIds);
+  const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(-1);
   const selectedPluginIdxRef = useRef<any>();
 
   const [pluginBundleId, setPluginBundleId] = useState<string>('');
@@ -58,19 +65,10 @@ export default function Plugin() {
     StoreAvailabilityContext
   ) as any;
 
-  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(
-    new Set([selectedPluginIdx])
-  );
+  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
   const forceUpdate = useForceUpdate();
   const deletePluginEventHandler = useRef<any>();
-
-  const fetchPlugins = () => {
-    // Set plugins object to Core's plugin list.
-    // If there is any update, Automatically updates from Core
-    setPlugins(Core.getPluginList());
-    return null;
-  };
 
   /**
    * @summary
@@ -90,8 +88,6 @@ export default function Plugin() {
 
         Core.installPlugin(arvisPluginFilePath)
           .then(() => {
-            fetchPlugins();
-
             ipcRenderer.send(IPCRendererEnum.renewPlugin, {
               destWindow: 'searchWindow',
             });
@@ -120,27 +116,39 @@ export default function Plugin() {
       }
     },
 
-    togglePluginEnabled: (
+    togglePluginsEnabled: (
       e: Electron.IpcRendererEvent,
-      { bundleId, enabled }: { bundleId: string; enabled: string }
+      { bundleIds, enabled }: { bundleIds: string; enabled: string }
     ) => {
       setStoreAvailable(false);
-      const targetPath = Core.path.getPluginConfigJsonPath(bundleId);
-      fse
-        .readJson(targetPath)
-        .then(async (json) => {
-          json.enabled = !enabled;
+      const bundleIdList = JSON.parse(bundleIds) as string[];
+      const works: Promise<any>[] = [];
 
-          await fse.writeJson(targetPath, json, {
+      ipcRenderer.send(IPCRendererEnum.stopFileWatch);
+      for (const bundleId of bundleIdList) {
+        const targetPath = Core.path.getPluginConfigJsonPath(bundleId);
+        const targetJson = Core.getPluginList()[bundleId];
+
+        targetJson.enabled = !enabled;
+
+        works.push(
+          fse.writeJson(targetPath, targetJson, {
             encoding: 'utf8',
             spaces: 4,
-          });
+          })
+        );
+      }
 
+      Promise.all(works)
+        .then(async () => {
+          ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
+          ipcRenderer.send(IPCRendererEnum.renewPlugin);
+          setStoreAvailable(true);
           return null;
         })
         .catch((err) => {
-          setStoreAvailable(true);
           console.error(err);
+          setStoreAvailable(true);
         });
     },
   };
@@ -156,8 +164,8 @@ export default function Plugin() {
       ipcCallbackTbl.openYesnoDialogRet
     );
     ipcRenderer.on(
-      IPCMainEnum.togglePluginEnabled,
-      ipcCallbackTbl.togglePluginEnabled
+      IPCMainEnum.togglePluginsEnabled,
+      ipcCallbackTbl.togglePluginsEnabled
     );
 
     return () => {
@@ -171,17 +179,19 @@ export default function Plugin() {
         ipcCallbackTbl.openYesnoDialogRet
       );
       ipcRenderer.off(
-        IPCMainEnum.togglePluginEnabled,
-        ipcCallbackTbl.togglePluginEnabled
+        IPCMainEnum.togglePluginsEnabled,
+        ipcCallbackTbl.togglePluginsEnabled
       );
     };
   }, []);
 
   useEffect(() => {
-    const pluginBundleIds = Object.keys(plugins);
-
     if (pluginBundleIds.length) {
-      const info = plugins[pluginBundleIds[selectedPluginIdx]];
+      const info =
+        selectedPluginIdx === -1
+          ? {}
+          : plugins[pluginBundleIds[selectedPluginIdx]];
+
       const {
         category = '',
         createdby = '',
@@ -192,7 +202,8 @@ export default function Plugin() {
         webaddress = '',
       } = info;
 
-      const bundleId = Core.getBundleId(createdby, name);
+      const bundleId =
+        selectedPluginIdx === -1 ? '' : Core.getBundleId(createdby, name);
 
       setPluginBundleId(bundleId);
       setPluginCategory(category);
@@ -259,7 +270,7 @@ export default function Plugin() {
     const selectedItemInfos = [];
 
     for (const idx of targetIdxs) {
-      const bundleId = Object.keys(plugins)[idx];
+      const bundleId = pluginBundleIds[idx];
       selectedItemInfos.push({
         pluginPath: Core.path.getPluginInstalledPath(bundleId),
         pluginEnabled: plugins[bundleId].enabled,
@@ -319,6 +330,7 @@ export default function Plugin() {
   };
 
   const editPlugin = () => {
+    if (selectedPluginIdx === -1) return;
     setStoreAvailable(false);
     const targetPath = Core.path.getPluginConfigJsonPath(pluginBundleId);
     fse
@@ -340,9 +352,13 @@ export default function Plugin() {
   };
 
   const exportPlugin = () => {
-    const defaultPath = `${homedir()}${path.sep}Desktop${
-      path.sep
-    }${pluginBundleId}.arvisplugin`;
+    if (selectedPluginIdx === -1) return;
+
+    const defaultPath = path.resolve(
+      homedir(),
+      'Desktop',
+      `${pluginBundleId}.arvisplugin`
+    );
 
     ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to save',
@@ -350,30 +366,23 @@ export default function Plugin() {
     });
   };
 
-  const deleteSelectedPlugin = (pluginList: any, idxToRemove: number) => {
-    const pluginBundleIds = Object.keys(pluginList);
-    if (!pluginBundleIds.length) return;
+  const deleteSelectedPlugin = (_pluginBundleIds: any, idxToRemove: number) => {
+    if (!_pluginBundleIds.length) return;
 
-    const targetBundleId = pluginList[pluginBundleIds[idxToRemove]].bundleId;
+    const targetBundleId = _pluginBundleIds[idxToRemove];
 
     setStoreAvailable(false);
     Core.uninstallPlugin({
       bundleId: targetBundleId,
     })
       .then(async () => {
-        const temp = pluginList;
-        delete temp[targetBundleId];
-        setPlugins(temp);
-
-        ipcRenderer.send(IPCRendererEnum.renewPlugin, {
-          destWindow: 'searchWindow',
-        });
+        ipcRenderer.send(IPCRendererEnum.renewPlugin);
 
         if (idxToRemove !== 0) {
-          setSelectedPluginIdx(idxToRemove - 1);
-        } else {
-          forceUpdate();
+          setSelectedPluginIdx(-1);
+          setSelectedIdxs(new Set());
         }
+
         return null;
       })
       .catch((err) => {
@@ -385,7 +394,7 @@ export default function Plugin() {
   };
 
   const callDeletePluginConfModal = () => {
-    const pluginBundleIds = Object.keys(plugins);
+    if (selectedPluginIdx === -1) return;
     if (!pluginBundleIds.length) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
@@ -395,7 +404,7 @@ export default function Plugin() {
   };
 
   useEffect(() => {
-    pluginsRef.current = plugins;
+    pluginBundleIdsRef.current = pluginBundleIds;
     selectedPluginIdxRef.current = selectedPluginIdx;
   });
 
@@ -404,9 +413,11 @@ export default function Plugin() {
       forceUpdate();
     };
 
-    fetchPlugins();
     deletePluginEventHandler.current = () => {
-      deleteSelectedPlugin(pluginsRef.current, selectedPluginIdxRef.current);
+      deleteSelectedPlugin(
+        pluginBundleIdsRef.current,
+        selectedPluginIdxRef.current
+      );
     };
   }, []);
 

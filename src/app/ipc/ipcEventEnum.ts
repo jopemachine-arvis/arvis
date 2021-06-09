@@ -54,6 +54,6 @@ export enum IPCMainEnum {
   searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
   setPreferencePage = '@ipcMain/setPreferencePage',
   setSearchbarInput = '@ipcMain/setSearchbarInput',
-  togglePluginEnabled = '@ipcMain/togglePluginEnabled',
-  toggleWorkflowEnabled = '@ipcMain/toggleWorkflowEnabled',
+  togglePluginsEnabled = '@ipcMain/togglePluginsEnabled',
+  toggleWorkflowsEnabled = '@ipcMain/toggleWorkflowsEnabled',
 }

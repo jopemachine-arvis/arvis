@@ -15,7 +15,7 @@ const pluginWatchPaths = [
   `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
 ];
 
-let workspaceWatcher: FSWatcher | null;
+let workflowWatcher: FSWatcher | null;
 let pluginWatcher: FSWatcher | null;
 
 /**
@@ -56,14 +56,14 @@ const requestRenewPlugins = (bundleId?: string) => {
  * @summary
  */
 export const stopFileWatcher = () => {
-  if (!workspaceWatcher || !pluginWatcher) {
-    console.error('workspaceWatcher is not running');
+  if (!workflowWatcher || !pluginWatcher) {
+    console.error('workflowWatcher is not running');
     return;
   }
 
   console.log(chalk.whiteBright('File watching is paused...'));
 
-  workspaceWatcher.close();
+  workflowWatcher.close();
   pluginWatcher.close();
 };
 
@@ -131,7 +131,7 @@ export const startFileWatcher = () => {
     }
   };
 
-  workspaceWatcher = chokidar
+  workflowWatcher = chokidar
     .watch(workflowWatchPaths, {
       cwd: Core.path.workflowInstallPath,
       ...watchOpts,

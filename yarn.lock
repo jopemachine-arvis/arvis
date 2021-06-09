@@ -1431,10 +1431,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.69":
-  version "0.1.69"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.69.tgz#a8d21af6ff1c49c8d575ec4a4b074f90628f14a9"
-  integrity sha512-5WSR40Jr6mlpsq4VL/Yl7egzdcn3SkyTay0JiLelerJ8OgW2FjXoqU/1q995UZjvwBVI/VycIXtTKkDd4ElyVA==
+"@jopemachine/arvis-core@^0.1.75":
+  version "0.1.75"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.75.tgz#1229b6c8741506abd5a019d8b5ee75b06652fcc1"
+  integrity sha512-JpWQU9ptXWeAH3BXlhwQHUN3rAqn38eX6qOmPe5XDGRsyBhbhZ3Og7HjC19SZwU/5aSn3YXP+rSNGHiyyqUlcg==
   dependencies:
     "@jopemachine/arvis-extension-validator" "^0.0.6"
     "@jopemachine/arvis-plist-converter" "^0.1.5"
@@ -1450,7 +1450,6 @@
     p-cancelable "^2.1.1"
     parse-json "^5.2.0"
     readdirp "^3.6.0"
-    recursive-readdir "^2.2.2"
     rimraf "^3.0.2"
     semver "^7.3.5"
     unzipper "^0.10.11"
@@ -10376,13 +10375,6 @@ rechoir@^0.7.0:
   integrity sha512-ADsDEH2bvbjltXEP+hTIAmeFekTFK0V2BTxMkok6qILyAJEXV0AFfoWcAq4yfll5VdIMd/RVXq0lR+wQi5ZU3Q==
   dependencies:
     resolve "^1.9.0"
-
-recursive-readdir@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/recursive-readdir/-/recursive-readdir-2.2.2.tgz#9946fb3274e1628de6e36b2f6714953b4845094f"
-  integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
-  dependencies:
-    minimatch "3.0.4"
 
 redent@^1.0.0:
   version "1.0.0"

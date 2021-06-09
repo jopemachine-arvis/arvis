@@ -24,12 +24,12 @@ class PluginContextMenu extends Menu {
           label: targetItem.pluginEnabled ? `Disable` : 'Enable',
           toolTip: targetItem.pluginEnabled
             ? 'Disable selected plugin'
-            : 'Enable plugin',
+            : 'Enable selected plugin',
           click() {
             WindowManager.getInstance()
               .getPreferenceWindow()
-              .webContents.send(IPCMainEnum.togglePluginEnabled, {
-                bundleId,
+              .webContents.send(IPCMainEnum.togglePluginsEnabled, {
+                bundleIds: JSON.stringify([bundleId]),
                 enabled: targetItem.pluginEnabled,
               });
           },
@@ -99,21 +99,22 @@ class PluginContextMenu extends Menu {
           new MenuItem({
             type: 'normal',
             label: allEnabled
-              ? `Disable ${items.length}`
-              : `Enable ${items.length}`,
+              ? `Disable ${items.length} plugins`
+              : `Enable ${items.length} plugins`,
             toolTip: allEnabled
               ? `Disable ${items.length} plugins`
               : `Enable ${items.length} plugins`,
             click() {
-              for (const targetItem of items) {
-                const bundleId = targetItem.pluginPath.split(path.sep).pop();
-                WindowManager.getInstance()
-                  .getPreferenceWindow()
-                  .webContents.send(IPCMainEnum.togglePluginEnabled, {
-                    bundleId,
-                    enabled: targetItem.pluginEnabled,
-                  });
-              }
+              const bundleIds = items.map((item: PluginItem) =>
+                item.pluginPath.split(path.sep).pop()
+              );
+
+              WindowManager.getInstance()
+                .getPreferenceWindow()
+                .webContents.send(IPCMainEnum.togglePluginsEnabled, {
+                  bundleIds: JSON.stringify(bundleIds),
+                  enabled: allEnabled,
+                });
             },
           })
         );

@@ -26,7 +26,7 @@ import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StateType } from '@redux/reducers/types';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
-import { isWithCtrlOrCmd, range } from '@utils/index';
+import { isWithCtrlOrCmd, range, sleep } from '@utils/index';
 import {
   Header,
   OuterContainer,
@@ -43,14 +43,19 @@ import * as style from './style';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
-  const [workflows, setWorkflows] = useState<any>({});
-  const workflowsRef = useRef<any>();
-  const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(0);
+  const workflows = Core.getWorkflowList();
+  const workflowBundleIds = Object.keys(workflows).sort((a, b) => {
+    return Core.getNameFromBundleId(a).toLowerCase() <
+      Core.getNameFromBundleId(b).toLowerCase()
+      ? -1
+      : 1;
+  });
+
+  const workflowBundleIdsRef = useRef<any>(workflowBundleIds);
+  const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(-1);
   const selectedWorkflowIdxRef = useRef<any>();
 
-  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(
-    new Set([selectedWorkflowIdx])
-  );
+  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
   const [workflowCategory, setWorkflowCategory] = useState<string>('');
@@ -72,13 +77,6 @@ export default function Workflow() {
   const forceUpdate = useForceUpdate();
   const deleteWorkflowEventHandler = useRef<any>();
 
-  const fetchWorkflows = () => {
-    // Set workflows object to Core's workflow list.
-    // If there is any update, Automatically updates from Core
-    setWorkflows(Core.getWorkflowList());
-    return null;
-  };
-
   /**
    * @summary
    */
@@ -97,7 +95,6 @@ export default function Workflow() {
 
         Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
-            fetchWorkflows();
             ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
               destWindow: 'searchWindow',
             });
@@ -125,27 +122,39 @@ export default function Workflow() {
       }
     },
 
-    toggleWorkflowEnabled: (
+    toggleWorkflowsEnabled: (
       e: Electron.IpcRendererEvent,
-      { bundleId, enabled }: { bundleId: string; enabled: string }
+      { bundleIds, enabled }: { bundleIds: string; enabled: string }
     ) => {
       setStoreAvailable(false);
-      const targetPath = Core.path.getWorkflowConfigJsonPath(bundleId);
-      fse
-        .readJson(targetPath)
-        .then(async (json) => {
-          json.enabled = !enabled;
+      const bundleIdList = JSON.parse(bundleIds) as string[];
+      const works: Promise<any>[] = [];
 
-          await fse.writeJson(targetPath, json, {
+      ipcRenderer.send(IPCRendererEnum.stopFileWatch);
+      for (const bundleId of bundleIdList) {
+        const targetPath = Core.path.getWorkflowConfigJsonPath(bundleId);
+        const targetJson = Core.getWorkflowList()[bundleId];
+
+        targetJson.enabled = !enabled;
+
+        works.push(
+          fse.writeJson(targetPath, targetJson, {
             encoding: 'utf8',
             spaces: 4,
-          });
+          })
+        );
+      }
 
+      Promise.all(works)
+        .then(async () => {
+          ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
+          ipcRenderer.send(IPCRendererEnum.renewWorkflow);
+          setStoreAvailable(true);
           return null;
         })
         .catch((err) => {
-          setStoreAvailable(true);
           console.error(err);
+          setStoreAvailable(true);
         });
     },
   };
@@ -161,8 +170,8 @@ export default function Workflow() {
       ipcCallbackTbl.openYesnoDialogRet
     );
     ipcRenderer.on(
-      IPCMainEnum.toggleWorkflowEnabled,
-      ipcCallbackTbl.toggleWorkflowEnabled
+      IPCMainEnum.toggleWorkflowsEnabled,
+      ipcCallbackTbl.toggleWorkflowsEnabled
     );
 
     return () => {
@@ -176,17 +185,19 @@ export default function Workflow() {
         ipcCallbackTbl.openYesnoDialogRet
       );
       ipcRenderer.off(
-        IPCMainEnum.toggleWorkflowEnabled,
-        ipcCallbackTbl.toggleWorkflowEnabled
+        IPCMainEnum.toggleWorkflowsEnabled,
+        ipcCallbackTbl.toggleWorkflowsEnabled
       );
     };
   }, []);
 
   useEffect(() => {
-    const workflowBundleIds = Object.keys(workflows);
-
     if (workflowBundleIds.length) {
-      const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
+      const info =
+        selectedWorkflowIdx === -1
+          ? {}
+          : workflows[workflowBundleIds[selectedWorkflowIdx]];
+
       const {
         category = '',
         createdby = '',
@@ -197,7 +208,8 @@ export default function Workflow() {
         webaddress = '',
       } = info;
 
-      const bundleId = Core.getBundleId(createdby, name);
+      const bundleId =
+        selectedWorkflowIdx === -1 ? '' : Core.getBundleId(createdby, name);
 
       setWorkflowBundleId(bundleId);
       setWorkflowCategory(category);
@@ -264,7 +276,7 @@ export default function Workflow() {
     const selectedItemInfos = [];
 
     for (const idx of targetIdxs) {
-      const bundleId = Object.keys(workflows)[idx];
+      const bundleId = workflowBundleIds[idx];
       selectedItemInfos.push({
         workflowPath: Core.path.getWorkflowInstalledPath(bundleId),
         workflowEnabled: workflows[bundleId].enabled,
@@ -326,6 +338,7 @@ export default function Workflow() {
   };
 
   const editWorkflow = () => {
+    if (selectedWorkflowIdx === -1) return;
     setStoreAvailable(false);
     const targetPath = Core.path.getWorkflowConfigJsonPath(workflowBundleId);
     fse
@@ -347,9 +360,12 @@ export default function Workflow() {
   };
 
   const exportWorkflow = () => {
-    const defaultPath = `${homedir()}${path.sep}Desktop${
-      path.sep
-    }${workflowBundleId}.arvisworkflow`;
+    if (selectedWorkflowIdx === -1) return;
+    const defaultPath = path.resolve(
+      homedir(),
+      'Desktop',
+      `${workflowBundleId}.arvisworkflow`
+    );
 
     ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to save',
@@ -357,31 +373,26 @@ export default function Workflow() {
     });
   };
 
-  const deleteSelectedWorkflow = (workflowList: any, idxToRemove: number) => {
-    const workflowBundleIds = Object.keys(workflowList);
-    if (!workflowBundleIds.length) return;
+  const deleteSelectedWorkflow = (
+    _workflowBundleIds: any,
+    idxToRemove: number
+  ) => {
+    if (!_workflowBundleIds.length) return;
 
-    const targetBundleId =
-      workflowList[workflowBundleIds[idxToRemove]].bundleId;
+    const targetBundleId = _workflowBundleIds[idxToRemove];
 
     setStoreAvailable(false);
     Core.uninstallWorkflow({
       bundleId: targetBundleId,
     })
       .then(async () => {
-        const temp = workflowList;
-        delete temp[targetBundleId];
-        setWorkflows(temp);
-
-        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
-          destWindow: 'searchWindow',
-        });
+        ipcRenderer.send(IPCRendererEnum.renewWorkflow);
 
         if (idxToRemove !== 0) {
-          setSelectedWorkflowIdx(idxToRemove - 1);
-        } else {
-          forceUpdate();
+          setSelectedWorkflowIdx(-1);
+          setSelectedIdxs(new Set());
         }
+
         return null;
       })
       .catch((err) => {
@@ -393,7 +404,7 @@ export default function Workflow() {
   };
 
   const callDeleteWorkflowConfModal = () => {
-    const workflowBundleIds = Object.keys(workflows);
+    if (selectedWorkflowIdx === -1) return;
     if (!workflowBundleIds.length) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
@@ -403,7 +414,7 @@ export default function Workflow() {
   };
 
   useEffect(() => {
-    workflowsRef.current = workflows;
+    workflowBundleIdsRef.current = workflowBundleIds;
     selectedWorkflowIdxRef.current = selectedWorkflowIdx;
   });
 
@@ -412,10 +423,9 @@ export default function Workflow() {
       forceUpdate();
     };
 
-    fetchWorkflows();
     deleteWorkflowEventHandler.current = () => {
       deleteSelectedWorkflow(
-        workflowsRef.current,
+        workflowBundleIdsRef.current,
         selectedWorkflowIdxRef.current
       );
     };
@@ -432,7 +442,7 @@ export default function Workflow() {
       </Header>
       <WorkflowListView>
         <WorkflowListOrderedList>
-          {_.map(Object.keys(workflows), (workflow, idx) => {
+          {_.map(workflowBundleIds, (workflow, idx) => {
             return renderItem(workflows[workflow], idx);
           })}
         </WorkflowListOrderedList>

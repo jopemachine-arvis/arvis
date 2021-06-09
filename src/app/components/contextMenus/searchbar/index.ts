@@ -9,8 +9,8 @@ class SearchbarContextMenu extends Menu {
     super.append(
       new MenuItem({
         type: 'checkbox',
-        label: 'Pin window',
-        toolTip: 'Pin search window',
+        label: 'Pin Search Window',
+        toolTip: 'Pin Search Window',
         checked: isPinned,
         click() {
           if (!isPinned === true) {

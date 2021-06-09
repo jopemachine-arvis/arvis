@@ -69,7 +69,7 @@ export default function PreferenceWindow() {
       e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
-      Core.renewWorkflows(bundleId);
+      Core.renewWorkflows(bundleId).catch(console.error);
     },
 
     renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
