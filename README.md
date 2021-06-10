@@ -11,8 +11,8 @@ It would be very helpful if you could put bugs on the issue.
 **Table of Contents**
 
 - [1. What is Arvis?](#what-is-arvis-why-it-is-needed)
-- [2. What is workflow, plugin?](#what-is-workflow-plugins)
-- [3. How to write new workflows, plugins](#how-to-write-new-workflows-plugins)
+- [2. What is Workflow, Plugin?](#what-is-workflow-plugins)
+- [3. How to write new Workflows, Plugins](#how-to-write-new-workflows-plugins)
 - [4. Build and development](#build-and-development)
 
 ## 💬 What is Arvis? why it is needed?
@@ -39,17 +39,17 @@ You can change Arvis search window's appearance to some extent.
 
 Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
-## 📓 What is workflow, plugin?
+## 📓 What is Workflow, Plugin?
 
-* [What is workflow?](./documents/workflow-intro.md)
+* [What is Workflow?](./documents/workflow-intro.md)
 
-* [What is plugin?](./documents/plugin-intro.md)
+* [What is Plugin?](./documents/plugin-intro.md)
 
 ## 🔨 How to write new extensions
 
-* [Click me to check how to create new workflows](./documents/workflow-develop.md)
+* [Click me to check how to create new Workflows](./documents/workflow-develop.md)
 
-* [Click me to check how to create new plugins](./documents/plugin-develop.md)
+* [Click me to check how to create new Plugins](./documents/plugin-develop.md)
 
 ### 🔖 Convert alfredworkflow to arvisworkflow
 

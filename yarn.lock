@@ -1431,10 +1431,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.75":
-  version "0.1.75"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.75.tgz#1229b6c8741506abd5a019d8b5ee75b06652fcc1"
-  integrity sha512-JpWQU9ptXWeAH3BXlhwQHUN3rAqn38eX6qOmPe5XDGRsyBhbhZ3Og7HjC19SZwU/5aSn3YXP+rSNGHiyyqUlcg==
+"@jopemachine/arvis-core@^0.1.83":
+  version "0.1.83"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.83.tgz#465cfcbf9d34f6139e53642a8a35797837b33c8c"
+  integrity sha512-QT6pz+Sr9iSUgu1iZHGjRUG8yD7A8TGoPmGGPR1BbBGJKwcdJ+Rq8+dXQD6Nih5EdbBtBhbPA7UqF/FCUh5t+g==
   dependencies:
     "@jopemachine/arvis-extension-validator" "^0.0.6"
     "@jopemachine/arvis-plist-converter" "^0.1.5"
@@ -1452,6 +1452,7 @@
     readdirp "^3.6.0"
     rimraf "^3.0.2"
     semver "^7.3.5"
+    string-similarity "^4.0.4"
     unzipper "^0.10.11"
     uuid "^8.3.2"
     xml-js "^1.6.11"
@@ -4886,10 +4887,10 @@ electron-updater@^4.3.4:
     lodash.isequal "^4.5.0"
     semver "^7.3.5"
 
-electron@12.0.10:
-  version "12.0.10"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-12.0.10.tgz#d0879ff005a200d5b08dbfb3e5bbea744d38c71a"
-  integrity sha512-qaNvFG4AgeuT3PkSljQ9MlY7hz87wIwJ5cmSZ1453IVsUd0BV7pcaLViSpR1bRSqxetDDWxCLtCp0N9RXeDZww==
+electron@^12.0.10:
+  version "12.0.11"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-12.0.11.tgz#555dc1cf663e320f2f2cbdf89319352b08fc59f2"
+  integrity sha512-6gPjcce3QCeAWZ8UVAqVy6os+86D5BcxgkIzlROxX89u+du/i7WpZXF5F1vgv419rspds9OHejP3JrJnoUGh6w==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^14.6.2"
@@ -11403,6 +11404,11 @@ string-length@^4.0.1:
   dependencies:
     char-regex "^1.0.2"
     strip-ansi "^6.0.0"
+
+string-similarity@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-4.0.4.tgz#42d01ab0b34660ea8a018da8f56a3309bb8b2a5b"
+  integrity sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==
 
 string-width@^1.0.1:
   version "1.0.2"
