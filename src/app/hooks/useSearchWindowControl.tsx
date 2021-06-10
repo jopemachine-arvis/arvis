@@ -430,11 +430,7 @@ const useSearchWindowControl = ({
    */
   const quicklookHandler = (item: any) => {
     if (!item) return;
-    if (
-      !workManager.hasEmptyWorkStk() &&
-      workManager.getTopWork().type === 'scriptfilter' &&
-      item.quicklookurl
-    ) {
+    if (item.quicklookurl) {
       ipcRenderer.send(IPCRendererEnum.showQuicklookWindow, {
         url: item.quicklookurl,
       });
@@ -445,28 +441,42 @@ const useSearchWindowControl = ({
    * @param {any} item
    */
   const showTextLargeTypeHandler = (item: any) => {
-    if (
-      !workManager.hasEmptyWorkStk() &&
-      workManager.getTopWork().type === 'scriptfilter'
-    ) {
-      const text =
-        item.text && item.text.largetype ? item.text.largetype : item.title;
-      ipcRenderer.send(IPCRendererEnum.showLargeTextWindow, {
-        text,
-      });
+    if (!item) return;
+    let text = '(no target)';
+
+    if (item.text && typeof item.text === 'string') {
+      text = item.text;
+    } else if (item.text && item.text.largetype) {
+      text = item.text.largetype;
+    } else if (item.title) {
+      text = item.title;
+    } else if (item.command) {
+      text = item.command;
     }
+
+    ipcRenderer.send(IPCRendererEnum.showLargeTextWindow, {
+      text,
+    });
   };
 
   /**
    * @param {any} item
    */
   const itemCopyHandler = (item: any) => {
-    if (
-      !workManager.hasEmptyWorkStk() &&
-      workManager.getTopWork().type === 'scriptfilter'
-    ) {
-      clipboard.writeText(item.title);
+    if (!item) return;
+    let text = '(no copy target)';
+
+    if (item.text && typeof item.text === 'string') {
+      text = item.text;
+    } else if (item.text && item.text.copy) {
+      text = item.text.copy;
+    } else if (item.title) {
+      text = item.title;
+    } else if (item.command) {
+      text = item.command;
     }
+
+    clipboard.writeText(text);
   };
 
   /**
@@ -491,6 +501,16 @@ const useSearchWindowControl = ({
       isWithCtrl: keyData.isWithCtrl,
     });
 
+    const searchByNextInput = () =>
+      setTimeout(
+        () =>
+          handleNormalInput(
+            '',
+            (document.getElementById('searchBar') as HTMLInputElement).value
+          ),
+        25
+      );
+
     if (keyData.isNumber && (modifiers.cmd || modifiers.ctrl)) {
       await onHandleReturnByNumberKey(Number(input));
     } else if (keyData.isEnter) {
@@ -514,10 +534,9 @@ const useSearchWindowControl = ({
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'C') {
       itemCopyHandler(items[selectedItemIdx]);
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
-      // To update items, trigger normal event
-      handleNormalInput('', clipboard.readText());
-    } else if (keyData.isArrowLeft || keyData.isArrowRight) {
-      // Skip
+      searchByNextInput();
+    } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'Z') {
+      searchByNextInput();
     }
 
     if (modifiers.alt || modifiers.cmd || modifiers.ctrl || modifiers.shift) {
