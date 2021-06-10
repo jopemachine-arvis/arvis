@@ -415,6 +415,48 @@ export default function Workflow() {
     });
   };
 
+  const onKeyDownHandler = (e: React.KeyboardEvent) => {
+    if (e.shiftKey) {
+      const minIdx = Math.min(...selectedIdxs.values());
+      const maxIdx = Math.max(...selectedIdxs.values());
+
+      if (e.key === 'ArrowUp' && minIdx !== 0) {
+        if (selectedWorkflowIdx === maxIdx) {
+          setSelectedIdxs(new Set([...selectedIdxs.values(), minIdx - 1]));
+        } else {
+          const newSet = selectedIdxs;
+          newSet.delete(maxIdx);
+          setSelectedIdxs(newSet);
+          forceUpdate();
+        }
+      }
+      if (e.key === 'ArrowDown' && maxIdx !== workflowBundleIds.length - 1) {
+        if (selectedWorkflowIdx === minIdx) {
+          setSelectedIdxs(new Set([...selectedIdxs.values(), maxIdx + 1]));
+        } else {
+          const newSet = selectedIdxs;
+          newSet.delete(minIdx);
+          setSelectedIdxs(newSet);
+          forceUpdate();
+        }
+      }
+    } else {
+      if (e.key === 'ArrowUp' && selectedWorkflowIdx !== 0) {
+        const minIdx = Math.min(...selectedIdxs.values());
+        setSelectedWorkflowIdx(minIdx - 1);
+        setSelectedIdxs(new Set([minIdx - 1]));
+      }
+      if (
+        e.key === 'ArrowDown' &&
+        selectedWorkflowIdx !== workflowBundleIds.length - 1
+      ) {
+        const maxIdx = Math.max(...selectedIdxs.values());
+        setSelectedWorkflowIdx(maxIdx + 1);
+        setSelectedIdxs(new Set([maxIdx + 1]));
+      }
+    }
+  };
+
   useEffect(() => {
     workflowBundleIdsRef.current = workflowBundleIds;
     selectedWorkflowIdxRef.current = selectedWorkflowIdx;
@@ -434,7 +476,11 @@ export default function Workflow() {
   }, []);
 
   return (
-    <OuterContainer>
+    <OuterContainer
+      id="workflow-page-container"
+      tabIndex={0}
+      onKeyDown={onKeyDownHandler}
+    >
       <Header
         style={{
           marginLeft: 40,
