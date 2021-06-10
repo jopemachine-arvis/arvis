@@ -1,13 +1,13 @@
 {
   "name": "arvis",
-  "productName": "Arvis",
+  "productName": "arvis",
   "version": "0.0.1",
   "description": "demo version",
   "main": "./main.prod.js",
   "author": {
     "name": "jopemachine",
     "email": "jopemachine@gmail.com",
-    "url": "https://github.com/jopemachine/Arvis"
+    "url": "https://github.com/jopemachine/arvis"
   },
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",

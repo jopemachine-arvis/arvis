@@ -245,11 +245,13 @@ export default function Plugin() {
   const getDefaultIcon = (bundleId: string) => {
     const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
     const { defaultIcon } = plugins[bundleId];
-    const pluginDefaultIconPath = path.resolve(pluginRootPath, defaultIcon);
-
-    if (fse.existsSync(pluginDefaultIconPath)) {
-      return pluginDefaultIconPath;
+    if (defaultIcon) {
+      const pluginDefaultIconPath = path.resolve(pluginRootPath, defaultIcon);
+      if (fse.existsSync(pluginDefaultIconPath)) {
+        return pluginDefaultIconPath;
+      }
     }
+
     return undefined;
   };
 

@@ -251,11 +251,18 @@ export default function Workflow() {
   const getDefaultIcon = (bundleId: string) => {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     const { defaultIcon } = workflows[bundleId];
-    const workflowDefaultIconPath = path.resolve(workflowRootPath, defaultIcon);
 
-    if (fse.existsSync(workflowDefaultIconPath)) {
-      return workflowDefaultIconPath;
+    if (defaultIcon) {
+      const workflowDefaultIconPath = path.resolve(
+        workflowRootPath,
+        defaultIcon
+      );
+
+      if (fse.existsSync(workflowDefaultIconPath)) {
+        return workflowDefaultIconPath;
+      }
     }
+
     return undefined;
   };
 
