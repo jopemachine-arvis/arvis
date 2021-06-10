@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Core } from '@jopemachine/arvis-core';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
@@ -12,6 +12,7 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { sleep } from '@utils/index';
 import _ from 'lodash';
+import { UIConfigActions } from '@redux/actions';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -47,6 +48,8 @@ export default function PreferenceWindow() {
   const [storeAvailable, setStoreAvailable] = useState<boolean>();
 
   const [fontList, setFontList] = useState<string[]>([]);
+
+  const dispatch = useDispatch();
 
   const { global_font } = useSelector(
     (state: StateType) => state.global_config
@@ -90,6 +93,13 @@ export default function PreferenceWindow() {
     setFont: (e: Electron.IpcRendererEvent, { fonts }: { fonts: string[] }) => {
       setFontList(fonts);
     },
+
+    autoFitSearchWindowSizeRet: (
+      e: Electron.IpcRendererEvent,
+      { width }: { width: number }
+    ) => {
+      dispatch(UIConfigActions.setSearchWindowWidth(width));
+    },
   };
 
   const checkExtensionsUpdate = () => {
@@ -129,6 +139,10 @@ export default function PreferenceWindow() {
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(
+      IPCMainEnum.autoFitSearchWindowSizeRet,
+      ipcCallbackTbl.autoFitSearchWindowSizeRet
+    );
+    ipcRenderer.on(
       IPCMainEnum.setPreferencePage,
       ipcCallbackTbl.setPreferencePage
     );
@@ -137,6 +151,10 @@ export default function PreferenceWindow() {
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
       ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
       ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(
+        IPCMainEnum.autoFitSearchWindowSizeRet,
+        ipcCallbackTbl.autoFitSearchWindowSizeRet
+      );
       ipcRenderer.off(
         IPCMainEnum.setPreferencePage,
         ipcCallbackTbl.setPreferencePage

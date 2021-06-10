@@ -2,6 +2,7 @@ import { ipcMain } from 'electron';
 import { IPCRendererEnum } from './ipcEventEnum';
 
 // To prevent SIGSEV errors, each module should be imported directly not through index.ts
+import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
 import { hideQuicklookWindow } from './mainProcessEventHandler/windowManage/hideQuicklookWindow';
@@ -39,6 +40,7 @@ import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/po
  * @summary Register ipc callbacks
  */
 export const initIPCHandlers = () => {
+  ipcMain.on(IPCRendererEnum.autoFitSearchWindowSize, autoFitSearchWindowSize);
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideLargeTextWindow, hideLargeTextWindow);

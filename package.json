@@ -268,6 +268,7 @@
     "connected-react-router": "^6.9.1",
     "easy-auto-launch": "^6.0.0",
     "electron-debug": "^3.1.0",
+    "electron-first-run": "^3.0.0",
     "electron-log": "^4.2.4",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.4",

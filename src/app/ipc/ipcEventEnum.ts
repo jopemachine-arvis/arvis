@@ -2,6 +2,7 @@
  * @summary Events sent from renderer process to main process
  */
 export enum IPCRendererEnum {
+  autoFitSearchWindowSize = '@ipcRenderer/autoFitSearchWindowSize',
   dispatchAction = '@ipcRenderer/dispatchAction',
   getSystemFont = '@ipcRenderer/getSystemFont',
   hideLargeTextWindow = '@ipcRenderer/hideLargeTextWindow',
@@ -36,6 +37,7 @@ export enum IPCRendererEnum {
  * @summary Events sent from main process to renderer process
  */
 export enum IPCMainEnum {
+  autoFitSearchWindowSizeRet = '@ipcRenderer/autoFitSearchWindowSizeRet',
   executeAction = '@ipcMain/executeAction',
   fetchAction = '@ipcMain/fetchAction',
   forwardLargeText = '@ipcRenderer/forwardLargeText',

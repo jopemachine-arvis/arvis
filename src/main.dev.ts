@@ -15,6 +15,9 @@ import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from '@jopemachine/arvis-core';
+import firstRun from 'electron-first-run';
+import chalk from 'chalk';
+import { IPCRendererEnum } from './app/ipc/ipcEventEnum';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {
@@ -107,6 +110,18 @@ app.on('ready', () => {
 
     if (openFile) {
       openArvisFile(openFile);
+    }
+
+    if (firstRun('arvis')) {
+      console.log(
+        chalk.yellowBright(
+          'Arvis first launched.. Initilize search window size..'
+        )
+      );
+
+      windowManager
+        .getSearchWindow()
+        .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
     }
 
     // * For debugging
