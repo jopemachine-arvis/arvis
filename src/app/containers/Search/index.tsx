@@ -250,6 +250,13 @@ export default function SearchWindow() {
     loadPluginsInfo();
     loadWorkflowsInfo();
     registerWindowUpdater();
+
+    Core.getSystemPaths()
+      .then((result) => {
+        Core.setMacPathsEnv(result);
+        return null;
+      })
+      .catch(console.error);
     return unsubscribe;
   }, []);
 

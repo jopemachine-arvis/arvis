@@ -70,10 +70,6 @@ export default function Workflow() {
     StoreAvailabilityContext
   ) as any;
 
-  const { can_install_alfredworkflow } = useSelector(
-    (state: StateType) => state.advanced_config
-  );
-
   const forceUpdate = useForceUpdate();
   const deleteWorkflowEventHandler = useRef<any>();
 
@@ -340,9 +336,7 @@ export default function Workflow() {
   };
 
   const requestAddNewWorkflow = () => {
-    ipcRenderer.send(IPCRendererEnum.openWorkflowInstallFileDialog, {
-      canInstallAlfredWorkflow: can_install_alfredworkflow,
-    });
+    ipcRenderer.send(IPCRendererEnum.openWorkflowInstallFileDialog);
   };
 
   const editWorkflow = () => {

@@ -28,7 +28,6 @@ export default {
     title_font_size: 17,
   },
   advanced_config: {
-    can_install_alfredworkflow: false,
     debugging_action_type: true,
     debugging_args: false,
     debugging_scriptfilter: false,

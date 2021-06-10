@@ -1431,13 +1431,12 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.83":
-  version "0.1.83"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.83.tgz#465cfcbf9d34f6139e53642a8a35797837b33c8c"
-  integrity sha512-QT6pz+Sr9iSUgu1iZHGjRUG8yD7A8TGoPmGGPR1BbBGJKwcdJ+Rq8+dXQD6Nih5EdbBtBhbPA7UqF/FCUh5t+g==
+"@jopemachine/arvis-core@^0.1.93":
+  version "0.1.93"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.93.tgz#eaaf3f89fa65b668db6a7f20a2ae5192dffa64d0"
+  integrity sha512-LE/GPEKokIyczkvsjUn+vs6ovzUid5QL3aUs0Kbb+rIqDyXlGz39mNhYvLiTwzkeNtPq+FNXxSQhqMh93V/5Bg==
   dependencies:
     "@jopemachine/arvis-extension-validator" "^0.0.6"
-    "@jopemachine/arvis-plist-converter" "^0.1.5"
     archiver "^5.3.0"
     chalk "^4.1.0"
     chmodr "^1.2.0"
@@ -1466,17 +1465,6 @@
     fs-extra "^10.0.0"
     jsonschema "^1.4.0"
     meow "^5.0.0"
-
-"@jopemachine/arvis-plist-converter@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-plist-converter/-/arvis-plist-converter-0.1.5.tgz#9c7e7c38bb8be016ef5685f546c9d538ff7ffe35"
-  integrity sha512-JxbJ6pJ6CZb20WzX5fMPE8qDMC1NjDQZhUNI+oP4Fy9wsVagu7/SCf675uki6quODmL/gQfUEjQXdunwBillKQ==
-  dependencies:
-    chalk "^4.1.0"
-    fs-extra "^9.1.0"
-    lodash "^4.17.21"
-    meow "^5.0.0"
-    plist "^3.0.1"
 
 "@malept/cross-spawn-promise@^1.1.0", "@malept/cross-spawn-promise@^1.1.1":
   version "1.1.1"

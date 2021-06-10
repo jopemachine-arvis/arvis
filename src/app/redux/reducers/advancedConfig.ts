@@ -6,11 +6,6 @@ const { actionTypes: AdvancedConfigActionTypes } = AdvancedConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case AdvancedConfigActionTypes.SET_INSTALL_ALFRED_WORKFLOW:
-      return {
-        ...state,
-        can_install_alfredworkflow: payload.arg,
-      };
     case AdvancedConfigActionTypes.SET_DEBUGGING_ACTION_TYPE:
       return {
         ...state,
@@ -53,10 +48,6 @@ export default (state = {}, action: any) => {
 
 export function getMaxActionLogCount(state: StateType) {
   return state.advanced_config.max_action_log_count;
-}
-
-export function getCanAlfredWorkflowFileInstall(state: StateType) {
-  return state.advanced_config.can_install_alfredworkflow;
 }
 
 export function getIsOnDebuggingActionType(state: StateType) {

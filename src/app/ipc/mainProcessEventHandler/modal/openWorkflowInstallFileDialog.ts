@@ -5,12 +5,8 @@ import { WindowManager } from '../../../windows';
 /**
  * @summary Used to select wfconf file
  */
-export const openWorkflowInstallFileDialog = async (
-  e: IpcMainEvent,
-  { canInstallAlfredWorkflow }: { canInstallAlfredWorkflow: boolean }
-) => {
+export const openWorkflowInstallFileDialog = async (e: IpcMainEvent) => {
   const extensions = ['arvisworkflow'];
-  if (canInstallAlfredWorkflow) extensions.push('alfredworkflow');
 
   const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
     properties: ['openFile'],
