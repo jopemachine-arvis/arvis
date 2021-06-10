@@ -25,6 +25,8 @@ I've thought many useful alfred-workflows can run in cross-platform So I started
 
 It is intentionally built similar to Alfred, but there could be some different points.
 
+* [Click me to check basic usage of Arvis](./documents/basic-usage.md)
+
 ### 📝 Alfred-workflow Compatibility
 
 * Basically, `Arvis` use same [JSON Scriptfilter Format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.

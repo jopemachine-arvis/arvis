@@ -54,17 +54,41 @@ module.exports = ({ inputStr, history }) => {
 
 You can check [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
 
-#### inputStr
+#### Arguments
+
+##### inputStr
 
 type: `string`
 
 String entered by user
 
-#### history
+##### history
 
 type: `array`
 
-[Click me to check history](./history.md)
+[Click me to check history schema](./history.md)
+
+#### Return value
+
+##### items
+
+type: `array`
+
+required: `true`
+
+[Click me to check items schema](./plugin-items-format-description.md)
+
+##### nosort
+
+type: `boolean`
+
+required: `false`
+
+defalult value: `false`
+
+If you want to not sort your plugin item, use `nosort` option.
+
+Note that `nosort` is true, your plugin items will be positioned most below position.
 
 ## JSON Schema
 

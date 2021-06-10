@@ -1,6 +1,4 @@
-# Scriptfilter item JSON format
-
-`Arvis` use scriptfilter JSON format same with Alfred-workflow
+# Plugin items format
 
 ## title
 
@@ -9,6 +7,26 @@ type: `string`
 required: `true`
 
 The biggest text in the item.
+
+Plugin items are sorted with `title` in Arvis.
+
+So, `items`'s order is ignored.
+
+If you want to not sort your plugin item, use `nosort` option.
+
+Note that `nosort` is true, your plugin items will be positioned most below position.
+
+## command
+
+type: `string`
+
+required: `false`
+
+If you want to sort your plugin item not using `title`, use `command`.
+
+If command is specified, Arvis sort plugin items by command, not title.
+
+But note that the difference between commands and titles can cause confusion to users.
 
 ## subtitle
 
@@ -40,7 +58,7 @@ Image to display on item.
 
 If icon is `string`, it will be treated as file path.
 
-You can forward `icon` like below way too.
+You can forward icon like below way too.
 
 ```js
 icon: {
