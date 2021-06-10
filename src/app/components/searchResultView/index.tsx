@@ -67,7 +67,6 @@ const SearchResultView = (props: IProps) => {
 
   const determineIconPath = useCallback((command: any): string | undefined => {
     if (!command.bundleId) {
-      console.error('bundleId is not set on the item', command);
       return undefined;
     }
 
