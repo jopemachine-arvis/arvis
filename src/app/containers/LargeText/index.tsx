@@ -25,6 +25,14 @@ const OuterContainer = styled.div`
   word-break: break-word;
   padding-left: 20px;
   padding-right: 20px;
+  -webkit-app-region: drag;
+`;
+
+const InnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: none;
 `;
 
 export default function LargeTextWindow() {
@@ -66,5 +74,9 @@ export default function LargeTextWindow() {
     }
   }, [keyData]);
 
-  return <OuterContainer>{text}</OuterContainer>;
+  return (
+    <OuterContainer>
+      <InnerContainer>{text}</InnerContainer>
+    </OuterContainer>
+  );
 }
