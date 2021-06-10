@@ -6,7 +6,9 @@ Arvis is still in the construction and there could be lots of bugs.
 
 It would be very helpful if you could put bugs on the issue.
 
-* ⚠️ Currently has severe [performance issue]() on mac
+* ⚠️ Currently has [severe performance issue](https://github.com/jopemachine/arvis-core/issues/2) on mac
+
+* ⚠️ Currently has [cannot auto launch issue]() on linux
 
 **Table of Contents**
 
