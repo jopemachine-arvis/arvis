@@ -3,5 +3,6 @@ export enum PreferencePage {
   Workflow = 'Workflows',
   Appearance = 'Appearance',
   Plugin = 'Plugins',
-  Advanced = 'Advanced',
+  AdvancedHistory = 'History Setting',
+  AdvancedDebugging = 'Debugger Setting',
 }

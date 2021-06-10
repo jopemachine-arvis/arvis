@@ -18,7 +18,8 @@ import GeneralPage from './General';
 import WorkflowPage from './Workflow';
 import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
-import AdvancedPage from './Advanced';
+import AdvancedHistoryPage from './Advanced/AdvanceHistory';
+import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
@@ -153,8 +154,11 @@ export default function PreferenceWindow() {
       case PreferencePage.Workflow:
         main = <WorkflowPage />;
         break;
-      case PreferencePage.Advanced:
-        main = <AdvancedPage />;
+      case PreferencePage.AdvancedHistory:
+        main = <AdvancedHistoryPage />;
+        break;
+      case PreferencePage.AdvancedDebugging:
+        main = <AdvancedDebuggingPage />;
         break;
       case PreferencePage.Appearance:
         main = <AppearancePage />;

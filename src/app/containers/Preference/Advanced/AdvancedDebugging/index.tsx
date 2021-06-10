@@ -3,18 +3,16 @@ import { ipcRenderer } from 'electron';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
-import StyledInput from '@components/styledInput';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
 import { StateType } from '@redux/reducers/types';
-import { makeActionCreator, onNumberChangeHandler } from '@utils/index';
+import { makeActionCreator } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { Core } from '@jopemachine/arvis-core';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
-export default function Advanced() {
+export default function AdvancedDebugging() {
   const {
-    can_install_alfredworkflow,
     debugging_action_type,
     debugging_script_output,
     debugging_workstack,
@@ -137,47 +135,6 @@ export default function Advanced() {
             />
             Debugging plugins
           </Label>
-        </FormGroup>
-
-        <FormGroup check style={formGroupStyle}>
-          <Label checked style={labelStyle}>
-            <Input
-              type="checkbox"
-              checked={can_install_alfredworkflow}
-              onChange={() =>
-                toggleState(
-                  AdvancedActionTypes.SET_INSTALL_ALFRED_WORKFLOW,
-                  can_install_alfredworkflow
-                )
-              }
-            />
-            Install alfred-workflow file directly
-            <br />
-            (Not recommended for use for purposes other than development)
-          </Label>
-        </FormGroup>
-
-        <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Workflow script executing timeout</Label>
-          <StyledInput type="number" onChange={() => {}} />
-        </FormGroup>
-
-        <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Max action log count to save</Label>
-          <StyledInput
-            type="number"
-            min={0}
-            max={9999}
-            defaultValue={max_action_log_count}
-            onBlur={(e: React.FormEvent<HTMLInputElement>) =>
-              onNumberChangeHandler(e, {
-                min: 0,
-                max: 9999,
-                actionType: AdvancedActionTypes.SET_MAX_ACTION_LOG_COUNT,
-                dispatch,
-              })
-            }
-          />
         </FormGroup>
       </Form>
     </OuterContainer>

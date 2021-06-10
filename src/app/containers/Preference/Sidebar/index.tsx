@@ -6,6 +6,7 @@ import {
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
+  SubMenu,
 } from 'react-pro-sidebar';
 import {
   AiOutlineSetting,
@@ -90,13 +91,20 @@ export default function Sidebar(props: IProps) {
             >
               Appearance
             </MenuItem>
-            <MenuItem
-              onClick={() => setPage(PreferencePage.Advanced)}
-              icon={<AiOutlineTool />}
-              active={page === PreferencePage.Advanced}
-            >
-              Advanced
-            </MenuItem>
+            <SubMenu title="Advanced" icon={<AiOutlineTool />}>
+              <MenuItem
+                onClick={() => setPage(PreferencePage.AdvancedHistory)}
+                active={page === PreferencePage.AdvancedHistory}
+              >
+                History
+              </MenuItem>
+              <MenuItem
+                onClick={() => setPage(PreferencePage.AdvancedDebugging)}
+                active={page === PreferencePage.AdvancedDebugging}
+              >
+                Debugging
+              </MenuItem>
+            </SubMenu>
           </Menu>
         </SidebarContent>
 
