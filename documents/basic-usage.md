@@ -8,6 +8,8 @@ So first, recommend looking for useful extensions.
 
 ## Preference window
 
+You can manage your extensions or change config, appearance of search window on preference window.
+
 ### General
 
 ![](./imgs/general-page.png)
@@ -45,3 +47,6 @@ You can see search window's style update according to their setting values.
 ![](./imgs/debugging-page.png)
 
 Change debugging options according to your needs
+
+## Search window
+

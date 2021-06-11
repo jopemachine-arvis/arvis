@@ -47,6 +47,5 @@ labels: 'bug'
 <!--- Include as many relevant details about the environment you experienced the bug in -->
 
 - Node version :
-- Version or Branch used :
+- Arvis version, branch :
 - Operating System and version :
-- Link to your project :
