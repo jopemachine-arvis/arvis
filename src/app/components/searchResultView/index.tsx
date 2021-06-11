@@ -29,6 +29,7 @@ type IProps = {
   startIdx: number;
   subtitleFontSize: number;
   titleFontSize: number;
+  noShowIcon: boolean;
   onDoubleClickHandler: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void;
@@ -56,6 +57,7 @@ const SearchResultView = (props: IProps) => {
     startIdx,
     subtitleFontSize,
     titleFontSize,
+    noShowIcon,
     onDoubleClickHandler,
     onMouseoverHandler,
   } = props;
@@ -149,6 +151,7 @@ const SearchResultView = (props: IProps) => {
               titleFontSize={titleFontSize}
               searchWindowWidth={searchWindowWidth}
               searchWindowTransparency={searchWindowTransparency}
+              noShowIcon={noShowIcon}
             />
           </InnerContainer>
         );

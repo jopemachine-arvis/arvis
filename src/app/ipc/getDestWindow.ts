@@ -12,5 +12,15 @@ export const getDestWindow = (windowName: string): BrowserWindow => {
   if (windowName === 'preferenceWindow') {
     return WindowManager.getInstance().getPreferenceWindow();
   }
+  if (windowName === 'clipboardManagerWindow') {
+    return WindowManager.getInstance().getClipboardManagerWindow();
+  }
+  if (windowName === 'largeTextWindow') {
+    return WindowManager.getInstance().getLargeTextWindow();
+  }
+  if (windowName === 'quicklookWindow') {
+    return WindowManager.getInstance().getQuicklookWindow();
+  }
+
   throw new Error(`Window name is not properly set up:\n${windowName}`);
 };

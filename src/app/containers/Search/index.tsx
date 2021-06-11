@@ -143,9 +143,6 @@ export default function SearchWindow() {
     registerAllGlobalHotkey();
   };
 
-  /**
-   * @summary Used to receive dispatched action from different window
-   */
   const ipcCallbackTbl = {
     fetchAction: (
       e: IpcRendererEvent,
@@ -316,6 +313,7 @@ export default function SearchWindow() {
           itemLeftPadding={item_left_padding}
           itemTitleSubtitleMargin={item_title_subtitle_margin}
           maxItemCount={max_item_count_to_show}
+          noShowIcon={false}
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
           searchbarHeight={searchbar_height}

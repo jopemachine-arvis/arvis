@@ -291,6 +291,7 @@ export default function Appearance() {
         >
           <SearchBar
             alwaysFocus={false}
+            hasContextMenu={false}
             itemLeftPadding={item_left_padding}
             searchbarFontColor={searchbar_font_color}
             searchbarFontSize={searchbar_font_size}
@@ -306,6 +307,7 @@ export default function Appearance() {
             itemLeftPadding={item_left_padding}
             itemTitleSubtitleMargin={item_title_subtitle_margin}
             maxItemCount={mockItems.length}
+            noShowIcon={false}
             onDoubleClickHandler={() => {}}
             onMouseoverHandler={() => {}}
             searchbarHeight={searchbar_height}

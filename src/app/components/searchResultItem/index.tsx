@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/display-name */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useMemo } from 'react';
@@ -23,9 +24,10 @@ type IProps = {
   itemHeight: number;
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
+  noShowIcon?: boolean;
   offset: number;
-  searchWindowWidth: number;
   searchWindowTransparency: number;
+  searchWindowWidth: number;
   selected: boolean;
   selectedItemBackgroundColor: string;
   selectedItemFontColor: string;
@@ -53,9 +55,10 @@ const SearchResultItem = (props: IProps) => {
     itemHeight,
     itemLeftPadding,
     itemTitleSubtitleMargin,
+    noShowIcon,
     offset,
-    searchWindowWidth,
     searchWindowTransparency,
+    searchWindowWidth,
     selected,
     selectedItemBackgroundColor,
     selectedItemFontColor,
@@ -77,6 +80,7 @@ const SearchResultItem = (props: IProps) => {
       width: iconSize,
       height: iconSize,
       marginRight: iconRightMargin,
+      objectFit: 'scale-down',
     };
   }, [iconRightMargin]);
 
@@ -119,7 +123,7 @@ const SearchResultItem = (props: IProps) => {
         onDoubleClickHandler(e);
       }}
     >
-      {getIconElement()}
+      {!noShowIcon && getIconElement()}
       <InnerContainer
         style={{
           paddingLeft: iconRightMargin,
@@ -145,7 +149,7 @@ const SearchResultItem = (props: IProps) => {
         </SubTitle>
       </InnerContainer>
       {/* Small screen does not display OffsetText. */}
-      {searchWindowWidth >= 850 && (
+      {searchWindowWidth >= 850 && offset <= 9 && (
         <OffsetText
           style={{
             color: selected ? selectedItemFontColor : itemFontColor,
@@ -162,6 +166,7 @@ SearchResultItem.defaultProps = {
   arg: undefined,
   autocomplete: undefined,
   icon: undefined,
+  noShowIcon: false,
   text: undefined,
   valid: true,
   variables: undefined,

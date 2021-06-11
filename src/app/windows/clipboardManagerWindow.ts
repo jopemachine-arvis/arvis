@@ -15,10 +15,17 @@ const createClipboardManagerWindow = () => {
     fullscreenable: false,
     width: constants.clipboardManagerWindowWidth,
     height: constants.clipboardManagerWindowHeight,
+    alwaysOnTop: true,
     transparent: true,
     webPreferences: {
+      accessibleTitle: 'arvis-clipboardManagerWindow',
       contextIsolation: false,
+      experimentalFeatures: false,
       nodeIntegration: true,
+      plugins: false,
+      scrollBounce: false,
+      spellcheck: false,
+      webviewTag: false,
     },
   });
 

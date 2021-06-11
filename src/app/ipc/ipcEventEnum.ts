@@ -7,6 +7,7 @@ export enum IPCRendererEnum {
   getSystemFont = '@ipcRenderer/getSystemFont',
   hideLargeTextWindow = '@ipcRenderer/hideLargeTextWindow',
   hideQuicklookWindow = '@ipcRenderer/hideQuicklookWindow',
+  hideClipboardManagerWindow = '@ipcRenderer/hideClipboardManagerWindow',
   hideSearchWindow = '@ipcRenderer/hideSearchWindow',
   importTheme = '@ipcRenderer/importTheme',
   openPluginInstallFileDialog = '@ipcRenderer/openPluginInstallFileDialog',
@@ -30,6 +31,7 @@ export enum IPCRendererEnum {
   showQuicklookWindow = '@ipcRenderer/showQuicklookWindow',
   stopFileWatch = '@ipcRenderer/stopFileWatch',
   triggerDoubleModifierKey = '@ipcRenderer/triggerDoubleModifierKey',
+  triggerKeyDownEvent = '@ipcRenderer/triggerKeyDownEvent',
   unregisterAllShortcuts = '@ipcRenderer/unregisterAllShortcuts',
 }
 
@@ -51,6 +53,7 @@ export enum IPCMainEnum {
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
   pinSearchWindow = '@ipcMain/pinSearchWindow',
   registerAllShortcuts = '@ipcRenderer/registerAllShortcuts',
+  renewClipboardStore = '@ipcRenderer/renewClipboardStore',
   renewPlugin = '@ipcMain/renewPlugin',
   renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',
@@ -59,4 +62,5 @@ export enum IPCMainEnum {
   setSearchbarInput = '@ipcMain/setSearchbarInput',
   togglePluginsEnabled = '@ipcMain/togglePluginsEnabled',
   toggleWorkflowsEnabled = '@ipcMain/toggleWorkflowsEnabled',
+  triggerKeyDownEvent = '@ipcMain/triggerKeyDownEvent',
 }

@@ -16,6 +16,7 @@ import { showErrorDialog } from './modal/showErrorDialog';
 
 import { hideLargeTextWindow } from './windowManage/hideLargeTextWindow';
 import { hideQuicklookWindow } from './windowManage/hideQuicklookWindow';
+import { hideClipboardManagerWindow } from './windowManage/hideClipboardManagerWindow';
 import { hideSearchWindow } from './windowManage/hideSearchWindow';
 import { resizeSearchWindowHeight } from './windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './windowManage/setSearchWindowWidth';
@@ -25,10 +26,12 @@ import { showQuicklookWindow } from './windowManage/showQuicklookWindow';
 import { renewWorkflow } from './renewWorkflow';
 import { showNotification } from './showNotification';
 import { triggerDoubleModifierKey } from './triggerDoubleModifierKey';
+import { triggerKeyDownEvent } from './triggerKeyDownEvent';
 
 export {
   dispatchAction,
   getSystemFont,
+  hideClipboardManagerWindow,
   hideLargeTextWindow,
   hideQuicklookWindow,
   hideSearchWindow,
@@ -50,4 +53,5 @@ export {
   showNotification,
   showQuicklookWindow,
   triggerDoubleModifierKey,
+  triggerKeyDownEvent,
 };

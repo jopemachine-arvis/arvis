@@ -13,7 +13,7 @@ export default (state = {}, action: any) => {
         store: [],
       };
     case ClipboardManagerActionTypes.PUSH_CLIPBOARD_STORE:
-      state['store'].push(payload.arg);
+      state['store'].push(JSON.parse(payload.arg));
       return {
         ...state,
       };

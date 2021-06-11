@@ -1,0 +1,7 @@
+#clipboardManager-textarea:focus {
+  overflow-y: auto;
+}
+
+#clipboardManager-textarea {
+  overflow-y: hidden;
+}

@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import ioHook from 'iohook';
-import { ipcRenderer, clipboard } from 'electron';
-import { IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { ipcRenderer, clipboard, IpcRendererEvent } from 'electron';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { keyCodeToString } from '@utils/iohook/keyTbl';
 import { isWithCtrlOrCmd } from '@utils/index';
-import { ClipboardManagerActions } from '@redux/actions/index';
-import { useDispatch } from 'react-redux';
+import { actionTypes } from '@redux/actions/clipboardManager';
 
 interface IOHookKeyEvent {
   altKey: boolean;
@@ -21,8 +20,6 @@ export default () => {
   const doubleKeyPressElapse = 200;
 
   const doubleKeyPressedTimers = {};
-
-  const dispatch = useDispatch();
 
   const handleDoubleKeyModifier = (doubledKeyModifier: string) => {
     if (
@@ -58,23 +55,35 @@ export default () => {
     return e.ctrlKey;
   };
 
+  const cpyKeyPressed = (e: IOHookKeyEvent) => {
+    return (
+      (isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
+        keyCodeToString(e.keycode) === 'c' &&
+        !isShiftKey(e) &&
+        !isAltKey(e) &&
+        e.metaKey &&
+        !e.ctrlKey) ||
+      (!e.metaKey && e.ctrlKey)
+    );
+  };
+
   useEffect(() => {
     // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
     ioHook.on('keydown', (e: IOHookKeyEvent) => {
       console.log('ioHook keydown event', e);
 
-      if (
-        isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
-        keyCodeToString(e.keycode) === 'c'
-      ) {
+      if (cpyKeyPressed(e)) {
         setTimeout(() => {
           console.log('hook copy key', clipboard.readText());
-          dispatch(
-            ClipboardManagerActions.pushClipboardStore({
+
+          ipcRenderer.send(IPCRendererEnum.dispatchAction, {
+            destWindow: 'clipboardManagerWindow',
+            actionType: actionTypes.PUSH_CLIPBOARD_STORE,
+            args: JSON.stringify({
               text: clipboard.readText(),
               date: new Date().getTime(),
-            })
-          );
+            }),
+          });
         }, 25);
       }
 
@@ -91,7 +100,21 @@ export default () => {
 
     ioHook.start();
 
+    const triggerKeyCombo = (
+      e: IpcRendererEvent,
+      { keycombo }: { keycombo: string }
+    ) => {
+      console.log('emit!');
+
+      // Find new method to dispatching key to os
+      // ioHook.emit();
+    };
+
+    ipcRenderer.on(IPCMainEnum.triggerKeyDownEvent, triggerKeyCombo);
+
     return () => {
+      ipcRenderer.off(IPCMainEnum.triggerKeyDownEvent, triggerKeyCombo);
+
       ioHook.removeAllListeners();
       ioHook.unload();
     };

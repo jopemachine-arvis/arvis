@@ -17,12 +17,14 @@ type IProps = {
   searchbarFontSize: number;
   searchbarHeight: number;
   spinning?: boolean;
+  hasContextMenu?: boolean;
 };
 
 const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
     getInputProps,
+    hasContextMenu,
     isPinned,
     itemLeftPadding,
     searchbarFontColor,
@@ -66,8 +68,10 @@ const SearchBar = (props: IProps) => {
   };
 
   const rightClickHandler = (e: React.MouseEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu, { isPinned });
+    if (hasContextMenu) {
+      e.preventDefault();
+      ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu, { isPinned });
+    }
   };
 
   return (
@@ -100,6 +104,7 @@ const SearchBar = (props: IProps) => {
 
 SearchBar.defaultProps = {
   getInputProps: undefined,
+  hasContextMenu: true,
   isPinned: false,
   spinning: false,
 };

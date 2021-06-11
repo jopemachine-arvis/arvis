@@ -6,6 +6,7 @@ import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
 import { hideQuicklookWindow } from './mainProcessEventHandler/windowManage/hideQuicklookWindow';
+import { hideClipboardManagerWindow } from './mainProcessEventHandler/windowManage/hideClipboardManagerWindow';
 import { resizeSearchWindowHeight } from './mainProcessEventHandler/windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './mainProcessEventHandler/windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/showLargeTextWindow';
@@ -31,6 +32,7 @@ import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
 import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
+import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
@@ -51,8 +53,9 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
-  ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
+  ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.renewPlugin, renewPlugin);
+  ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);
@@ -63,9 +66,13 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
   ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
-  ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
+  ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
 
+  ipcMain.on(
+    IPCRendererEnum.hideClipboardManagerWindow,
+    hideClipboardManagerWindow
+  );
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,
     openWorkflowInstallFileDialog
