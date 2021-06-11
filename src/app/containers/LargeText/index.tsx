@@ -25,6 +25,7 @@ const OuterContainer = styled.div`
   word-break: break-word;
   padding-left: 20px;
   padding-right: 20px;
+  border-radius: 15px;
   -webkit-app-region: drag;
 `;
 
@@ -68,6 +69,7 @@ export default function LargeTextWindow() {
         isWithCtrl: keyData.isWithCtrl,
         isWithCmd: keyData.isWithMeta,
       }) &&
+        keyData.key &&
         keyData.key.toUpperCase() === 'L')
     ) {
       ipcRenderer.send(IPCRendererEnum.hideLargeTextWindow);

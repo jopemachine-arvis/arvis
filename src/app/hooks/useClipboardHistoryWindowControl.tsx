@@ -121,6 +121,8 @@ const useClipboardHistoryWindowControl = ({
         newItems.push(item);
       }
     }
+
+    clearIndexInfo();
     setItems(newItems);
   };
 
@@ -128,19 +130,9 @@ const useClipboardHistoryWindowControl = ({
    * @param  {string} str
    * @param  {needItemsUpdate} boolean
    */
-  const setInputStr = ({
-    str,
-    needItemsUpdate,
-  }: {
-    str: string | undefined;
-    needItemsUpdate: boolean;
-  }) => {
-    // Resetinput 호출될 때 storeAvailability 동기화 문제로 빼놓음
+  const setInputStr = (str: string) => {
     if (str && inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
-    }
-    if (needItemsUpdate) {
-      handleNormalInput('', str ?? '');
     }
   };
 
@@ -347,6 +339,7 @@ const useClipboardHistoryWindowControl = ({
 
   return {
     setInputStr,
+    clearIndexInfo,
     indexInfo,
     onWheelHandler,
     onMouseoverHandler,

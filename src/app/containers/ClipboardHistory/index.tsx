@@ -47,6 +47,20 @@ export default function ClipboardHistoryWindow() {
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
 
+  const {
+    indexInfo,
+    clearIndexInfo,
+    setInputStr,
+    onDoubleClickHandler,
+    onMouseoverHandler,
+    onWheelHandler,
+    getInputProps,
+  } = useClipboardHistoryWindowControl({
+    items,
+    setItems,
+    maxItemCount: maxShow,
+  });
+
   const ipcCallbackTbl = {
     fetchAction: (
       e: IpcRendererEvent,
@@ -57,6 +71,8 @@ export default function ClipboardHistoryWindow() {
 
     renewClipboardStore: (e: IpcRendererEvent) => {
       setItems(transformStore(store));
+      clearIndexInfo();
+      setInputStr('');
     },
   };
 
@@ -75,18 +91,6 @@ export default function ClipboardHistoryWindow() {
       );
     };
   }, []);
-
-  const {
-    indexInfo,
-    onDoubleClickHandler,
-    onMouseoverHandler,
-    onWheelHandler,
-    getInputProps,
-  } = useClipboardHistoryWindowControl({
-    items,
-    setItems,
-    maxItemCount: maxShow,
-  });
 
   const infoContainerOnWheelHandler = () => {
     setSearchContainerScrollbarVisible(false);

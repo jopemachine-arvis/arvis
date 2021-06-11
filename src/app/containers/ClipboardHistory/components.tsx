@@ -13,6 +13,7 @@ export const OuterContainer = styled.div`
   text-align: center;
   width: 100%;
   word-break: break-word;
+  border-radius: 15px;
 `;
 
 export const SearchContainer = styled.div`

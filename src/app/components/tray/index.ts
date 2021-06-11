@@ -33,7 +33,10 @@ export default class TrayBuilder {
       toolTip: 'Open Debugging Window',
       click: () => {
         const searchWindow = WindowManager.getInstance().getSearchWindow();
-        searchWindow.webContents.toggleDevTools();
+        searchWindow.webContents.openDevTools({
+          mode: 'undocked',
+          activate: true,
+        });
       },
     },
     {
