@@ -14,14 +14,20 @@ import {
   SearchResultView,
 } from '@components/index';
 
-import { InfoContainer, OuterContainer, SearchContainer } from './components';
+import {
+  InfoContainer,
+  OuterContainer,
+  SearchContainer,
+  InfoInnerContainer,
+  CopyDateTime,
+} from './components';
 import { style } from './style';
 import './index.global.css';
 
 const maxShow = 15;
 
-const transformStore = (_store: any[]): any[] => {
-  const items = _store.map((item) => {
+const transformStore = (store: any[]): any[] => {
+  const items = store.map((item) => {
     return {
       title: item.text,
       date: item.date,
@@ -146,7 +152,17 @@ export default function ClipboardManagerWindow() {
         id="clipboardManager-textarea"
         onWheel={infoContainerOnWheelHandler}
       >
-        {items[indexInfo.selectedItemIdx].title}
+        <InfoInnerContainer>
+          {items[indexInfo.selectedItemIdx]
+            ? items[indexInfo.selectedItemIdx].title
+            : ''}
+        </InfoInnerContainer>
+        <CopyDateTime>
+          {items[indexInfo.selectedItemIdx] &&
+            `Copied on ${new Date(
+              items[indexInfo.selectedItemIdx].date
+            ).toLocaleString()}`}
+        </CopyDateTime>
       </InfoContainer>
     </OuterContainer>
   );
