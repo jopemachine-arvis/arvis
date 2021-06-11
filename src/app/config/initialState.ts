@@ -36,4 +36,10 @@ export default {
     debugging_plugin: false,
     max_action_log_count: 500,
   },
+  clipboard_manager: {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    store: [],
+    hotkey: process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
+    max_size: 400,
+  },
 };

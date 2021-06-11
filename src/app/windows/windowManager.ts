@@ -3,6 +3,7 @@ import { createLargeTextWindow } from './largeTextWindow';
 import { createPreferenceWindow } from './preferenceWindow';
 import { createQuicklookWindow } from './quicklookWindow';
 import { createSearchWindow } from './searchWindow';
+import { createClipboardManagerWindow } from './clipboardManagerWindow';
 
 export class WindowManager {
   private static instance: WindowManager;
@@ -17,6 +18,7 @@ export class WindowManager {
     this.preferenceWindow = createPreferenceWindow({
       searchWindow: this.searchWindow,
     });
+    this.clipboardManagerWindow = createClipboardManagerWindow();
   }
 
   private quicklookWindow: BrowserWindow;
@@ -26,6 +28,8 @@ export class WindowManager {
   private searchWindow: BrowserWindow;
 
   private preferenceWindow: BrowserWindow;
+
+  private clipboardManagerWindow: BrowserWindow;
 
   public static getInstance() {
     if (!WindowManager.instance) {
@@ -50,6 +54,10 @@ export class WindowManager {
     return this.preferenceWindow;
   }
 
+  public getClipboardManagerWindow() {
+    return this.clipboardManagerWindow;
+  }
+
   public windowAllClose() {
     if (this.searchWindow && this.searchWindow.closable) {
       this.searchWindow.close();
@@ -62,6 +70,9 @@ export class WindowManager {
     }
     if (this.preferenceWindow && this.preferenceWindow.closable) {
       this.preferenceWindow.close();
+    }
+    if (this.clipboardManagerWindow && this.clipboardManagerWindow.closable) {
+      this.clipboardManagerWindow.close();
     }
   }
 }

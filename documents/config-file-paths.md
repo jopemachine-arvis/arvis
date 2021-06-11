@@ -29,6 +29,6 @@ The storage path for all installed extension files is stored in the `data` path 
 
 Note that in a development environment, `arvis-nodejs` is replaced with `Electron` in the below pathes.
 
-* on Linux: `~/.local/share/arvis-nodejs/arvis-gui-config.json` (or `$XDG_DATA_HOME/arvis-nodejs/arvis-gui-config.json`)
-* on macOS: `~/Library/Application Support/arvis-nodejs/arvis-gui-config.json`
-* on Windows: `%LOCALAPPDATA%\arvis-nodejs\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\arvis-nodejs\Data\arvis-gui-config.json`)
+* on Linux: `~/.local/share/Arvis/arvis-gui-config.json` (or `$XDG_DATA_HOME/Arvis/arvis-gui-config.json`)
+* on macOS: `~/Library/Application Support/Arvis/arvis-gui-config.json`
+* on Windows: `%LOCALAPPDATA%\Arvis\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\Arvis\Data\arvis-gui-config.json`)

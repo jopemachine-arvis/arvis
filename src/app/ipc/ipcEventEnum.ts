@@ -40,6 +40,7 @@ export enum IPCMainEnum {
   autoFitSearchWindowSizeRet = '@ipcRenderer/autoFitSearchWindowSizeRet',
   executeAction = '@ipcMain/executeAction',
   fetchAction = '@ipcMain/fetchAction',
+  forwardClipboardData = '@ipcRenderer/forwardClipboardData',
   forwardLargeText = '@ipcRenderer/forwardLargeText',
   forwardQuicklookWindowUrl = '@ipcMain/forwardQuicklookWindowUrl',
   getSystemFontRet = '@ipcMain/getSystemFontRet',

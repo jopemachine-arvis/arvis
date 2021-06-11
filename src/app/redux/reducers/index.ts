@@ -5,6 +5,7 @@ import { History } from 'history';
 import GlobalConfigReducer from './globalConfig';
 import UIConfigReducer from './uiConfig';
 import AdvancedConfigReducer from './advancedConfig';
+import ClipboardManagerReducer from './clipboardManager';
 
 export default function createRootReducer(history: History) {
   return combineReducers({
@@ -12,5 +13,6 @@ export default function createRootReducer(history: History) {
     global_config: GlobalConfigReducer,
     advanced_config: AdvancedConfigReducer,
     ui_config: UIConfigReducer,
+    clipboard_manager: ClipboardManagerReducer,
   });
 }
