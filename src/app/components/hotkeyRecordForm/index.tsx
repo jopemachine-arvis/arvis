@@ -3,12 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
-import {
-  createGlobalConfigChangeHandler,
-  getHotkeyNameOnThisPlatform,
-} from '@utils/index';
+import { getHotkeyNameOnThisPlatform } from '@utils/index';
 import StyledInput from '../styledInput';
 import useKey from '../../../use-key-capture/src';
 
@@ -23,13 +18,6 @@ export default function HotkeyRecordForm(props: IProps) {
   const { keyData } = useKey();
 
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
-
-  const dispatch = useDispatch();
-
-  const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindow: 'searchWindow',
-    dispatch,
-  });
 
   const hotkeyChangedEventHandler = () => {
     if (hotkeyFormFocused) {
@@ -79,14 +67,11 @@ export default function HotkeyRecordForm(props: IProps) {
 
       const doubledStr = keyData.doubleKeyPressed ? 'Double ' : '';
 
-      configChangeHandler(
-        {
-          currentTarget: {
-            value: doubledStr + result,
-          },
-        } as React.FormEvent<HTMLInputElement>,
-        GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
-      );
+      onHotkeyChange({
+        currentTarget: {
+          value: doubledStr + result,
+        },
+      } as React.FormEvent<HTMLInputElement>);
     }
   };
 
@@ -105,7 +90,6 @@ export default function HotkeyRecordForm(props: IProps) {
       onBlur={() => setHotkeyFormFocused(false)}
       onChange={() => {}}
       onFocus={() => setHotkeyFormFocused(true)}
-      onKeyDown={onHotkeyChange}
       value={getHotkeyNameOnThisPlatform(hotkey)}
     />
   );

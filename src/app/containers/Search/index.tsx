@@ -270,10 +270,13 @@ export default function SearchWindow() {
 
   useEffect(() => {
     if (!storeAvailable) return;
-    if (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') {
+    if (
+      (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') ||
+      (clipboard_history_hotkey && clipboard_history_hotkey !== '')
+    ) {
       renewHotkeys();
     }
-  }, [toggle_search_window_hotkey]);
+  }, [toggle_search_window_hotkey, clipboard_history_hotkey]);
 
   return (
     <OuterContainer

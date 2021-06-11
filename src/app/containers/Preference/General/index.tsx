@@ -63,7 +63,6 @@ export default function General(props: IProps) {
   };
 
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    e.preventDefault();
     configChangeHandler(
       e,
       GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY

@@ -25,7 +25,6 @@ export default function ClipboardHistory() {
   });
 
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    e.preventDefault();
     configChangeHandler(
       e,
       ClipboardHistoryActionTypes.SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY
