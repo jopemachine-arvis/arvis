@@ -22,7 +22,7 @@ export const setMaxClipboardStoreSize = makeActionCreator(
   'arg'
 );
 
-export const setClipboardManagerWindowHotkey = makeActionCreator(
+export const setClipboardHistoryWindowHotkey = makeActionCreator(
   actionTypes.CLEAR_CLIPBOARD_STORE,
   'arg'
 );

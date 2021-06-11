@@ -17,7 +17,7 @@ type IndexInfo = {
  * @param {(items: any[]) => void} setItems
  * @param {number} maxItemCount
  */
-const useClipboardManagerWindowControl = ({
+const useClipboardHistoryWindowControl = ({
   items,
   setItems,
   maxItemCount,
@@ -158,7 +158,7 @@ const useClipboardManagerWindowControl = ({
     if (items[selectedItemIdx]) {
       clipboard.writeText(items[selectedItemIdx].title);
 
-      ipcRenderer.send(IPCRendererEnum.hideClipboardManagerWindow);
+      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
       // Find new method to dispatching key to os
 
       //   setTimeout(() => {
@@ -322,7 +322,7 @@ const useClipboardManagerWindowControl = ({
     } else if (keyData.isArrowUp) {
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
-      ipcRenderer.send(IPCRendererEnum.hideClipboardManagerWindow);
+      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'C') {
       itemCopyHandler(items[selectedItemIdx]);
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
@@ -355,4 +355,4 @@ const useClipboardManagerWindowControl = ({
   };
 };
 
-export default useClipboardManagerWindowControl;
+export default useClipboardHistoryWindowControl;

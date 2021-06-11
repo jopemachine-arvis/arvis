@@ -13,7 +13,7 @@ import {
   Search as SearchContainer,
   Quicklook as QuicklookContainer,
   LargeText as LargeTextContainer,
-  ClipboardManager as ClipboardManagerContainer,
+  ClipboardHistory as ClipboardHistoryContainer,
 } from '../containers';
 
 Object.assign(console, loggerFunctions);
@@ -38,8 +38,8 @@ const windowRoute = (windowName: string) => {
       return <LargeTextContainer />;
     case 'quicklookWindow':
       return <QuicklookContainer />;
-    case 'clipboardManagerWindow':
-      return <ClipboardManagerContainer />;
+    case 'clipboardHistoryWindow':
+      return <ClipboardHistoryContainer />;
     default:
       throw new Error(`windowName is not proper: '${windowName}'`);
   }

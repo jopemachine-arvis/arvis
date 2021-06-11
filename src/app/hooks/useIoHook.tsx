@@ -5,7 +5,7 @@ import { ipcRenderer, clipboard, IpcRendererEvent } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { keyCodeToString } from '@utils/iohook/keyTbl';
 import { isWithCtrlOrCmd } from '@utils/index';
-import { actionTypes } from '@redux/actions/clipboardManager';
+import { actionTypes } from '@redux/actions/clipboardHistory';
 
 interface IOHookKeyEvent {
   altKey: boolean;
@@ -77,7 +77,7 @@ export default () => {
           console.log('hook copy key', clipboard.readText());
 
           ipcRenderer.send(IPCRendererEnum.dispatchAction, {
-            destWindow: 'clipboardManagerWindow',
+            destWindow: 'clipboardHistoryWindow',
             actionType: actionTypes.PUSH_CLIPBOARD_STORE,
             args: JSON.stringify({
               text: clipboard.readText(),

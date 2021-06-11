@@ -46,8 +46,8 @@ export default function SearchWindow() {
     toggle_search_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
 
-  const { hotkey: clipboard_manager_hotkey } = useSelector(
-    (state: StateType) => state.clipboard_manager
+  const { hotkey: clipboard_history_hotkey } = useSelector(
+    (state: StateType) => state.clipboard_history
   );
 
   const debuggingConfig = useSelector(
@@ -132,7 +132,7 @@ export default function SearchWindow() {
     ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
       callbackTable: {
         [toggle_search_window_hotkey]: 'toggleSearchWindow',
-        [clipboard_manager_hotkey]: 'toggleClipboardManagerWindow',
+        [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
       },
       workflowHotkeyTbl: JSON.stringify(hotkeys),
     });

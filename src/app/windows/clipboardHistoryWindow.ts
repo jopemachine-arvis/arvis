@@ -2,9 +2,9 @@ import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 
-const createClipboardManagerWindow = () => {
-  const clipboardManagerWindow = new BrowserWindow({
-    title: 'ClipboardManagerWindow',
+const createClipboardHistoryWindow = () => {
+  const clipboardHistoryWindow = new BrowserWindow({
+    title: 'ClipboardHistoryWindow',
     center: true,
     show: false,
     frame: false,
@@ -13,12 +13,12 @@ const createClipboardManagerWindow = () => {
     skipTaskbar: true,
     movable: true,
     fullscreenable: false,
-    width: constants.clipboardManagerWindowWidth,
-    height: constants.clipboardManagerWindowHeight,
+    width: constants.clipboardHistoryWindowWidth,
+    height: constants.clipboardHistoryWindowHeight,
     alwaysOnTop: true,
     transparent: true,
     webPreferences: {
-      accessibleTitle: 'arvis-clipboardManagerWindow',
+      accessibleTitle: 'arvis-clipboardHistoryWindow',
       contextIsolation: false,
       experimentalFeatures: false,
       nodeIntegration: true,
@@ -34,22 +34,22 @@ const createClipboardManagerWindow = () => {
       ? path.join(__dirname, '../../', 'app.html')
       : path.join(__dirname, 'app.html');
 
-  clipboardManagerWindow.loadFile(filePath, {
-    query: { window: 'clipboardManagerWindow' },
+  clipboardHistoryWindow.loadFile(filePath, {
+    query: { window: 'clipboardHistoryWindow' },
   });
 
-  clipboardManagerWindow.on('close', (e) => {
+  clipboardHistoryWindow.on('close', (e) => {
     e.preventDefault();
-    if (clipboardManagerWindow) {
-      clipboardManagerWindow.hide();
+    if (clipboardHistoryWindow) {
+      clipboardHistoryWindow.hide();
     }
   });
 
-  clipboardManagerWindow.on('blur', () => {
-    clipboardManagerWindow.hide();
+  clipboardHistoryWindow.on('blur', () => {
+    clipboardHistoryWindow.hide();
   });
 
-  return clipboardManagerWindow;
+  return clipboardHistoryWindow;
 };
 
-export { createClipboardManagerWindow };
+export { createClipboardHistoryWindow };

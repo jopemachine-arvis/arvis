@@ -6,7 +6,7 @@ import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
 import { hideQuicklookWindow } from './mainProcessEventHandler/windowManage/hideQuicklookWindow';
-import { hideClipboardManagerWindow } from './mainProcessEventHandler/windowManage/hideClipboardManagerWindow';
+import { hideClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/hideClipboardHistoryWindow';
 import { resizeSearchWindowHeight } from './mainProcessEventHandler/windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './mainProcessEventHandler/windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/showLargeTextWindow';
@@ -70,8 +70,8 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
 
   ipcMain.on(
-    IPCRendererEnum.hideClipboardManagerWindow,
-    hideClipboardManagerWindow
+    IPCRendererEnum.hideClipboardHistoryWindow,
+    hideClipboardHistoryWindow
   );
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,

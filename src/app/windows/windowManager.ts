@@ -3,7 +3,7 @@ import { createLargeTextWindow } from './largeTextWindow';
 import { createPreferenceWindow } from './preferenceWindow';
 import { createQuicklookWindow } from './quicklookWindow';
 import { createSearchWindow } from './searchWindow';
-import { createClipboardManagerWindow } from './clipboardManagerWindow';
+import { createClipboardHistoryWindow } from './clipboardHistoryWindow';
 
 export class WindowManager {
   private static instance: WindowManager;
@@ -18,7 +18,7 @@ export class WindowManager {
     this.preferenceWindow = createPreferenceWindow({
       searchWindow: this.searchWindow,
     });
-    this.clipboardManagerWindow = createClipboardManagerWindow();
+    this.clipboardHistoryWindow = createClipboardHistoryWindow();
   }
 
   private quicklookWindow: BrowserWindow;
@@ -29,7 +29,7 @@ export class WindowManager {
 
   private preferenceWindow: BrowserWindow;
 
-  private clipboardManagerWindow: BrowserWindow;
+  private clipboardHistoryWindow: BrowserWindow;
 
   public static getInstance() {
     if (!WindowManager.instance) {
@@ -54,8 +54,8 @@ export class WindowManager {
     return this.preferenceWindow;
   }
 
-  public getClipboardManagerWindow() {
-    return this.clipboardManagerWindow;
+  public getClipboardHistoryWindow() {
+    return this.clipboardHistoryWindow;
   }
 
   public windowAllClose() {
@@ -71,8 +71,8 @@ export class WindowManager {
     if (this.preferenceWindow && this.preferenceWindow.closable) {
       this.preferenceWindow.close();
     }
-    if (this.clipboardManagerWindow && this.clipboardManagerWindow.closable) {
-      this.clipboardManagerWindow.close();
+    if (this.clipboardHistoryWindow && this.clipboardHistoryWindow.closable) {
+      this.clipboardHistoryWindow.close();
     }
   }
 }

@@ -1,10 +1,10 @@
 import { useReserveForceUpdate } from './useReserveForceUpdate';
 import useSearchWindowControl from './useSearchWindowControl';
-import useClipboardManagerWindowControl from './useClipboardManagerWindowControl';
+import useClipboardHistoryWindowControl from './useClipboardHistoryWindowControl';
 import useIoHook from './useIoHook';
 
 export {
-  useClipboardManagerWindowControl,
+  useClipboardHistoryWindowControl,
   useIoHook,
   useReserveForceUpdate,
   useSearchWindowControl,

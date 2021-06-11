@@ -17,7 +17,7 @@ export default {
   largeTextWindowWidth: 1200,
   largeTextWindowHeight: 900,
 
-  // Initial clipboardManager window size
-  clipboardManagerWindowWidth: 1600,
-  clipboardManagerWindowHeight: 900,
+  // Initial clipboardHistory window size
+  clipboardHistoryWindowWidth: 1600,
+  clipboardHistoryWindowHeight: 900,
 };

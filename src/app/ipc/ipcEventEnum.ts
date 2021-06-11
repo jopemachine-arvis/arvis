@@ -7,7 +7,7 @@ export enum IPCRendererEnum {
   getSystemFont = '@ipcRenderer/getSystemFont',
   hideLargeTextWindow = '@ipcRenderer/hideLargeTextWindow',
   hideQuicklookWindow = '@ipcRenderer/hideQuicklookWindow',
-  hideClipboardManagerWindow = '@ipcRenderer/hideClipboardManagerWindow',
+  hideClipboardHistoryWindow = '@ipcRenderer/hideClipboardHistoryWindow',
   hideSearchWindow = '@ipcRenderer/hideSearchWindow',
   importTheme = '@ipcRenderer/importTheme',
   openPluginInstallFileDialog = '@ipcRenderer/openPluginInstallFileDialog',

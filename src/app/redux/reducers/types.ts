@@ -38,7 +38,7 @@ export type StateType = {
     debugging_plugin: boolean;
     max_action_log_count: number;
   };
-  clipboard_manager: {
+  clipboard_history: {
     // eslint-disable-next-line @typescript-eslint/ban-types
     store: object[];
     hotkey: string;

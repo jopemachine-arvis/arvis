@@ -1,0 +1,7 @@
+#clipboardHistory-textarea:focus {
+  overflow-y: auto;
+}
+
+#clipboardHistory-textarea {
+  overflow-y: hidden;
+}

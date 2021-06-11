@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
-import { useClipboardManagerWindowControl } from '@hooks/index';
+import { useClipboardHistoryWindowControl } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SearchWindowScrollbar,
@@ -37,8 +37,8 @@ const transformStore = (store: any[]): any[] => {
   return items.reverse();
 };
 
-export default function ClipboardManagerWindow() {
-  const { store } = useSelector((state: StateType) => state.clipboard_manager);
+export default function ClipboardHistoryWindow() {
+  const { store } = useSelector((state: StateType) => state.clipboard_history);
 
   const [items, setItems] = useState<any[]>(transformStore(store));
 
@@ -82,7 +82,7 @@ export default function ClipboardManagerWindow() {
     onMouseoverHandler,
     onWheelHandler,
     getInputProps,
-  } = useClipboardManagerWindowControl({
+  } = useClipboardHistoryWindowControl({
     items,
     setItems,
     maxItemCount: maxShow,
@@ -149,7 +149,7 @@ export default function ClipboardManagerWindow() {
         )}
       </SearchContainer>
       <InfoContainer
-        id="clipboardManager-textarea"
+        id="clipboardHistory-textarea"
         onWheel={infoContainerOnWheelHandler}
       >
         <InfoInnerContainer>

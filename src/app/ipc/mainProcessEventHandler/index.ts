@@ -16,7 +16,7 @@ import { showErrorDialog } from './modal/showErrorDialog';
 
 import { hideLargeTextWindow } from './windowManage/hideLargeTextWindow';
 import { hideQuicklookWindow } from './windowManage/hideQuicklookWindow';
-import { hideClipboardManagerWindow } from './windowManage/hideClipboardManagerWindow';
+import { hideClipboardHistoryWindow } from './windowManage/hideClipboardHistoryWindow';
 import { hideSearchWindow } from './windowManage/hideSearchWindow';
 import { resizeSearchWindowHeight } from './windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './windowManage/setSearchWindowWidth';
@@ -31,7 +31,7 @@ import { triggerKeyDownEvent } from './triggerKeyDownEvent';
 export {
   dispatchAction,
   getSystemFont,
-  hideClipboardManagerWindow,
+  hideClipboardHistoryWindow,
   hideLargeTextWindow,
   hideQuicklookWindow,
   hideSearchWindow,
