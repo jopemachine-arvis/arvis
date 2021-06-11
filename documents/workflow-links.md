@@ -2,6 +2,13 @@
 
 You can find `arvis-workflow` here.
 
+`O`: Tested on the platform
+
+`X`: Not working
+
+`?`: Not tested 
+
+
 ## Common
 
 |Name|Win|Mac|Linux|Description|
@@ -15,8 +22,6 @@ You can find `arvis-workflow` here.
 | [arvis-react-native](https://github.com/jopemachine/arvis-react-native) | O | O | O | Access the React Native Documentation from Arvis |
 | [arvis-loremipsum](https://github.com/jopemachine/arvis-loremipsum) | O | O | O | Lorem Ipsum generator in Arvis |
 | [arvis-vue](https://github.com/jopemachine/arvis-vue) | O | O | O | Search for Vue.js API references on vuejs.org |
-| [arvis-hl](https://github.com/jopemachine/arvis-hl) | O | O | O | 🔆 Syntax highlight code in the clipboard |
-| [arvis-polyglot](https://github.com/jopemachine/arvis-polyglot) | O | O | O | Translate text with ease using Google Translate |
 
 ## Mac only
 
@@ -27,6 +32,8 @@ You can find `arvis-workflow` here.
 | [arvis-mac-dark-mode](https://github.com/jopemachine/arvis-mac-dark-mode) | X | O | X | Arvis workflow to toggle the system dark mode |
 | [arvis-chrome-control](https://github.com/jopemachine/arvis-chrome-control) | X | O | X | A JXA script and an Arvis Workflow for controlling Google Chrome |
 | [arvis-evernote-workflow](https://github.com/jopemachine/arvis-evernote-workflow) | X | O | X | Evernote workflow for Arvis |
+| [arvis-polyglot](https://github.com/jopemachine/arvis-polyglot) | X | O | ? | Translate text with ease using Google Translate |
+| [arvis-hl](https://github.com/jopemachine/arvis-hl) | X | O | ? | 🔆 Syntax highlight code in the clipboard |
 
 ## Windows only
 
