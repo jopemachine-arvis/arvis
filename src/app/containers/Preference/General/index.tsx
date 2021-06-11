@@ -2,7 +2,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Form,
   FormGroup,
@@ -17,16 +17,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import { StateType } from '@redux/reducers/types';
 import { GlobalConfigActions } from '@redux/actions';
-import { StyledInput } from '@components/index';
+import { StyledInput, HotkeyRecordForm } from '@components/index';
 import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
-import {
-  createGlobalConfigChangeHandler,
-  getHotkeyNameOnThisPlatform,
-} from '@utils/index';
+import { createGlobalConfigChangeHandler } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
-import useKey from '../../../../use-key-capture/src';
 
 type IProps = {
   fontList: any[];
@@ -34,7 +30,6 @@ type IProps = {
 
 export default function General(props: IProps) {
   const { fontList } = props;
-  const { keyData } = useKey();
   const {
     global_font,
     launch_at_login,
@@ -43,7 +38,6 @@ export default function General(props: IProps) {
     toggle_search_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
 
-  const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
   const [fontListDrawerOpen, setFontListDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -59,69 +53,6 @@ export default function General(props: IProps) {
     destWindow: 'searchWindow',
     dispatch,
   });
-
-  const hotkeyChangedEventHandler = () => {
-    if (hotkeyFormFocused) {
-      console.log('Recorded keyData', keyData);
-
-      let result = '';
-      const modifiers = {
-        // On mac, cmd key is handled by meta;
-        cmd: keyData.isWithMeta,
-        ctrl: keyData.isWithCtrl,
-        shift: keyData.isWithShift,
-        alt: keyData.isWithAlt,
-      };
-
-      if (
-        !modifiers.cmd &&
-        !modifiers.ctrl &&
-        !modifiers.shift &&
-        !modifiers.alt
-      ) {
-        return;
-      }
-
-      for (const modifier in modifiers) {
-        if ((modifiers as any)[modifier]) {
-          result += `${modifier} + `;
-        }
-      }
-
-      const normalKey = keyData.key;
-      if (normalKey) {
-        if (keyData.isSpace) {
-          result += 'Space';
-        } else {
-          result += normalKey;
-        }
-      }
-      // Modifier key without normal key is not allowed
-      else if (!normalKey && !keyData.doubleKeyPressed) {
-        return;
-      }
-      // Double modifier key
-      else {
-        // remove last ' + '
-        result = result.substring(0, result.length - 3);
-      }
-
-      const doubledStr = keyData.doubleKeyPressed ? 'Double ' : '';
-
-      configChangeHandler(
-        {
-          currentTarget: {
-            value: doubledStr + result,
-          },
-        } as React.FormEvent<HTMLInputElement>,
-        GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
-      );
-    }
-  };
-
-  useEffect(() => {
-    hotkeyChangedEventHandler();
-  }, [keyData]);
 
   const toggleAutoLaunchAtLogin = () => {
     dispatch(GlobalConfigActions.setLaunchAtLogin(!launch_at_login));
@@ -155,18 +86,9 @@ export default function General(props: IProps) {
 
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Arvis Hotkey</Label>
-          <StyledInput
-            style={{
-              textTransform: 'capitalize',
-              color: 'transparent',
-              textShadow: '0px 0px 0px #fff',
-            }}
-            type="text"
-            onBlur={() => setHotkeyFormFocused(false)}
-            onChange={() => {}}
-            onFocus={() => setHotkeyFormFocused(true)}
-            onKeyDown={hotkeyChangeHandler}
-            value={getHotkeyNameOnThisPlatform(toggle_search_window_hotkey)}
+          <HotkeyRecordForm
+            hotkey={toggle_search_window_hotkey}
+            onHotkeyChange={hotkeyChangeHandler}
           />
           <FormDescription>
             Select the form and type the hotkey

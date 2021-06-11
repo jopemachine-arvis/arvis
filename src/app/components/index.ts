@@ -8,6 +8,7 @@ import Spinner from './spinner';
 import ScreenCover from './screenCover';
 import SearchWindowScrollbar from './searchWindowScrollbar';
 import SearchWindowSpinner from './searchWindowSpinner';
+import HotkeyRecordForm from './hotkeyRecordForm';
 
 export {
   MenuBuilder,
@@ -20,4 +21,5 @@ export {
   Spinner,
   StyledInput,
   TrayBuilder,
+  HotkeyRecordForm,
 };
