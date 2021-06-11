@@ -38,6 +38,7 @@ export default () => {
 
   const isMetaKey = (e: IOHookKeyEvent) => {
     if (process.platform === 'darwin') {
+      // On Mac, right cmd key is double triggered. One of them's keycode is not 3676.
       return e.keycode === 3675 || e.keycode === 3676;
     }
     return e.metaKey;

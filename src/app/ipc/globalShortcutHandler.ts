@@ -119,8 +119,8 @@ const registerWorkflowHotkeys = ({
 
     if (!registerShortcut(hotkey, cb)) {
       dialog.showErrorBox(
-        'Duplicated shortcut found',
-        `'${hotkey}' duplicated. Please reassign this hotkey`
+        'Duplicated Shortcuts Found',
+        `'${hotkey}' has been assigned as duplicate. Please reassign hotkeys`
       );
     }
   }
@@ -150,8 +150,8 @@ export default ({
       !registerShortcut(shortcut, (defaultShortcutCallbackTbl as any)[action]())
     ) {
       dialog.showErrorBox(
-        'Duplicated shortcut found',
-        `'${shortcut}' duplicated. Please reassign this hotkey`
+        'Duplicated Shortcuts Found',
+        `'${shortcut}' has been assigned as duplicate. Please reassign hotkeys`
       );
     }
   }
