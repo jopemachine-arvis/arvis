@@ -9,6 +9,7 @@ import { sleep } from './sleep';
 import { range } from './range';
 import { applyAlphaColor } from './applyAlphaColor';
 import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
+import { hideWindowAndRestoreFocus } from './hideWindowAndRestoreFocus';
 import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
 // eslint-disable-next-line import/no-cycle
 import { onNumberChangeHandler } from './onNumberChangeHandler';
@@ -23,6 +24,7 @@ export {
   isSupportedImageFormat,
   isWithCtrlOrCmd,
   makeActionCreator,
+  hideWindowAndRestoreFocus,
   getHotkeyNameOnThisPlatform,
   range,
   onNumberChangeHandler,

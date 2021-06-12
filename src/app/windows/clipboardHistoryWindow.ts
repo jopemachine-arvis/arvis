@@ -51,16 +51,6 @@ const createClipboardHistoryWindow = () => {
     clipboardHistoryWindow.hide();
   });
 
-  clipboardHistoryWindow.on('show', () => {
-    if (WindowManager.getInstance().getPreferenceWindow().isVisible()) {
-      WindowManager.getInstance().getPreferenceWindow().hide();
-    }
-  });
-
-  clipboardHistoryWindow.on('hide', () => {
-    app.hide();
-  });
-
   return clipboardHistoryWindow;
 };
 

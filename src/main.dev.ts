@@ -131,6 +131,10 @@ app.on('ready', () => {
     initIPCHandlers();
   };
 
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
+
   setTimeout(() => {
     onReadyHandler();
   }, 300);

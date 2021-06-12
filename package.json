@@ -18,7 +18,7 @@
     "start:renderer": "cross-env NODE_ENV=development webpack serve --config ./.erb/configs/webpack.config.renderer.dev.babel.js",
     "test": "jest",
     "replace-node-modules": "rm -rf node_modules && yarn",
-    "replace-iohook-prebuilt": "node iohook-prebuilt-replace.js"
+    "replace-prebuilt": "node iohook-prebuilt-replace.js"
   },
   "keywords": [
     "arvis",

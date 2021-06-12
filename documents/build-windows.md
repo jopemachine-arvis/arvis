@@ -28,3 +28,6 @@ $ npm --add-python-to-path='true' --debug install --global windows-build-tools
 $ python=C:\Users\User.windows-build-tools\python27\python.exe
 ```
 
+## How to package app
+
+1. `yarn package`

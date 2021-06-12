@@ -10,3 +10,6 @@
 
 4. `yarn start`
 
+## How to package app
+
+1. `yarn package-dev`

@@ -11,8 +11,11 @@
 4. Before `yarn start`, Run the command below
 
 ```shell
-$ yarn replace-iohook-prebuilt
+$ yarn replace-prebuilt
 ```
 
 5. `yarn start`
 
+## How to package app
+
+1. `yarn package`
