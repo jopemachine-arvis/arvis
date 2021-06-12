@@ -1,10 +1,12 @@
 import { IpcMainEvent } from 'electron';
 import { WindowManager } from '../../../windows';
-import { hideWindowAndRestoreFocus } from '../../../utils';
 
 /**
  * @summary
  */
 export const hideSearchWindow = (e: IpcMainEvent) => {
-  hideWindowAndRestoreFocus(WindowManager.getInstance().getSearchWindow());
+  console.log('hideWindowAndRestoreFocus');
+  // Bug:: On Windows, below function cause not showing search window bug.
+  // hideWindowAndRestoreFocus(WindowManager.getInstance().getSearchWindow());
+  WindowManager.getInstance().getSearchWindow().hide();
 };
