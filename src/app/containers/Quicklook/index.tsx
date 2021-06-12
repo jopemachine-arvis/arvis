@@ -16,7 +16,7 @@ const OuterContainer = styled.div`
 `;
 
 export default function QuicklookWindow() {
-  const [url, setUrl] = useState<string>('');
+  const [url, setUrl] = useState<string | undefined>('');
   const { keyData } = useKey();
 
   const ipcCallbackTbl = {
@@ -45,6 +45,7 @@ export default function QuicklookWindow() {
     });
 
     if (ev.code === 'Escape' || (ev.shiftKey && ev.key === ' ')) {
+      setUrl(undefined);
       ipcRenderer.send(IPCRendererEnum.hideQuicklookWindow);
     }
   };
@@ -75,21 +76,24 @@ export default function QuicklookWindow() {
 
   useEffect(() => {
     if (keyData.isEscape) {
+      setUrl(undefined);
       ipcRenderer.send(IPCRendererEnum.hideQuicklookWindow);
     }
   }, [keyData]);
 
   return (
     <OuterContainer>
-      <webview
-        id="webview"
-        src={url}
-        allowFullScreen={false}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-      />
+      {url !== undefined && (
+        <webview
+          id="webview"
+          src={url}
+          allowFullScreen={false}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      )}
     </OuterContainer>
   );
 }
