@@ -1,5 +1,9 @@
 # How to build on Macos
 
+## Prerequisite
+
+### [robotjs](https://github.com/octalmage/robotjs#Building) dependencies
+
 ## How to build
 
 1. Clone this repository
@@ -8,8 +12,15 @@
 
 3. `yarn build`
 
-4. `yarn start`
+4. Before `yarn start`, Run the command below
+
+```shell
+$ yarn replace-prebuilt
+```
+
+5. `yarn start`
 
 ## How to package app
 
 1. `yarn package-dev`
+

@@ -1,5 +1,9 @@
 # How to build on Linux
 
+## Prerequisite
+
+### [robotjs](https://github.com/octalmage/robotjs#Building) dependencies
+
 ## How to build
 
 1. Clone this repository
