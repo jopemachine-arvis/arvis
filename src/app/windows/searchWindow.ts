@@ -1,7 +1,9 @@
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
+// eslint-disable-next-line import/no-cycle
+import { WindowManager } from './windowManager';
 
 const createSearchWindow = ({
   quicklookWindow,
@@ -72,7 +74,14 @@ const createSearchWindow = ({
   });
 
   searchWindow.on('show', () => {
+    if (WindowManager.getInstance().getPreferenceWindow().isVisible()) {
+      WindowManager.getInstance().getPreferenceWindow().hide();
+    }
     searchWindow.webContents.send(IPCMainEnum.searchWindowShowCallback);
+  });
+
+  searchWindow.on('hide', () => {
+    app.hide();
   });
 
   return searchWindow;

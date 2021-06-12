@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
+// eslint-disable-next-line import/no-cycle
+import { WindowManager } from './windowManager';
 
 const createClipboardHistoryWindow = () => {
   const clipboardHistoryWindow = new BrowserWindow({
@@ -47,6 +49,12 @@ const createClipboardHistoryWindow = () => {
 
   clipboardHistoryWindow.on('blur', () => {
     clipboardHistoryWindow.hide();
+  });
+
+  clipboardHistoryWindow.on('show', () => {
+    if (WindowManager.getInstance().getPreferenceWindow().isVisible()) {
+      WindowManager.getInstance().getPreferenceWindow().hide();
+    }
   });
 
   clipboardHistoryWindow.on('hide', () => {
