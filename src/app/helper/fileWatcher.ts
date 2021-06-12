@@ -90,7 +90,7 @@ export const startFileWatcher = () => {
 
   const watchOpts = {
     disableGlobbing: false,
-    followSymlinks: true,
+    followSymlinks: false,
     ignoreInitial: true,
     persistent: true,
     // awaitWriteFinish: {

@@ -131,7 +131,7 @@ app.on('ready', () => {
     initIPCHandlers();
   };
 
-  if (process.platform === 'darwin') {
+  if (process.env.NODE_ENV === 'production' && process.platform === 'darwin') {
     app.dock.hide();
   }
 

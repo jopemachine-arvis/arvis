@@ -117,7 +117,7 @@ const useClipboardHistoryWindowControl = ({
   ) => {
     const newItems = [];
     for (const item of items) {
-      if (item.title.includes(updatedInput)) {
+      if (item.title.toLowerCase().includes(updatedInput.toLowerCase())) {
         newItems.push(item);
       }
     }
