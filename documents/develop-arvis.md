@@ -16,6 +16,12 @@ Arvis module not directly related to electron, renderer
 * [Macos](./build-macos.md)
 * [Linux](./build-linux.md)
 
+## module aliasing
+
+Currently, module aliasing is applied on `renderer process`'s scripts.
+
+To apply module aliasing on main process, you might need to update some webpack config.
+
 ## iohook config
 
 This package uses [iohook](https://github.com/electron/releases) which depending on the version of the electron and node, has different binaries.

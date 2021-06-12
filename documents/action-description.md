@@ -50,10 +50,39 @@ required: `true`
 
 ### script
 
-type: `string`
+type: `string | object`
 
 required: `true`
 
+If the script can run in all platform, just set like below.
+
+```json
+"script": "node abc.js"
+```
+
+If the script can run in specific platform, you can set like below.
+
+```json
+"script": {
+  "win32": "node abc.js",
+  "darwin": "node def.js",
+  "linux": "node ghi.js"
+}
+```
+
+If the script can run in specific shell of the platform, you can set like below.
+
+You can give `true` or `shell name` to `shell` option
+
+```json
+"script": {
+  "win32": {
+    "script": "node abc.js",
+    // "shell": true,
+    "shell": "specific shell name",
+  }
+}
+```
 
 ## args
 

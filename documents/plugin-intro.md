@@ -18,9 +18,9 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 
 * You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`.
 
-* If async plugin continues work after some specified time (100ms), the plugin async will be forcibly shut down to avoid slowing down arvis performance.
+* If async plugin continues work after some specified time (currently, it is set on `100ms`), the plugin async will be forcibly shut down to avoid slowing down arvis performance.
 
-* If you should put heavy operation, consider replacing it with `workflow`
+* If you should put heavy async operation, consider replacing it with `workflow`
 
 ## Action
 

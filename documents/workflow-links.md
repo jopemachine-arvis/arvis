@@ -37,6 +37,7 @@ You can find `arvis-workflow` here.
 | [arvis-evernote-workflow](https://github.com/jopemachine/arvis-evernote-workflow) | X | O | X | Evernote workflow for Arvis |
 | [arvis-polyglot](https://github.com/jopemachine/arvis-polyglot) | X | O | ? | Translate text with ease using Google Translate |
 | [arvis-hl](https://github.com/jopemachine/arvis-hl) | X | O | ? | 🔆 Syntax highlight code in the clipboard |
+| [arvis-change-case](https://github.com/jopemachine/arvis-change-case) | X | O | ? | Changes the case of text on the clipboard. |
 
 ## Windows only
 

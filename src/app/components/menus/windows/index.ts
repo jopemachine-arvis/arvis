@@ -1,4 +1,7 @@
 import { shell, BrowserWindow } from 'electron';
+import { Core } from '@jopemachine/arvis-core';
+import open from 'open';
+import path from 'path';
 
 export default (mainWindow: BrowserWindow) => [
   {
@@ -84,6 +87,28 @@ export default (mainWindow: BrowserWindow) => [
           shell.openExternal(
             'https://github.com/jopemachine/arvis/blob/master/documents/plugin-links.md'
           );
+        },
+      },
+      { type: 'separator' },
+      {
+        label: 'Open installed extension folder',
+        click() {
+          open(Core.path.installedDataPath);
+        },
+      },
+      {
+        label: "Open installed extension's cache folder",
+        click() {
+          open(Core.path.cachePath);
+        },
+      },
+      {
+        label: 'Open arvis history file path',
+        click() {
+          const historyFilePath = Core.path.getExtensionHistoryPath();
+          const historyFilePathArr = historyFilePath.split(path.sep);
+          historyFilePathArr.pop();
+          open(historyFilePathArr.join(path.sep));
         },
       },
     ],

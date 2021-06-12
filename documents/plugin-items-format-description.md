@@ -6,7 +6,7 @@ type: `string`
 
 required: `true`
 
-The biggest text in the item.
+The most visible text in the item.
 
 Plugin items are sorted with `title` in Arvis.
 

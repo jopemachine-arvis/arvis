@@ -1,5 +1,9 @@
 # Config file pathes
 
+You can open below paths by pressing `menu > help > Open ... path` 
+
+(Not supported in `linux`, Not all paths supported yet)
+
 ## History file
 
 The Arvis history log the action logs and query logs in the path below.

@@ -1431,10 +1431,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.96":
-  version "0.1.96"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.96.tgz#52d5f0f49abd84e734584ea07772c4d68d4716f5"
-  integrity sha512-nONDHbxE9rDgEeFhIEb8IEBeKHPtayiOfmbtt4GT1HUgIVuI69nfjs+UrP5zhj5dzvtT3xHR/btDX80OT1xgsg==
+"@jopemachine/arvis-core@^0.1.97":
+  version "0.1.97"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.97.tgz#99449870ee6195fadf0124ca8ff78fcb23fb8ff3"
+  integrity sha512-CFUVs24C/VFxgCHiLqLeMDcc0r/tXjHZW5AMbs5Ho6dtXdlhkSEylPMzJ/JNaxsSxumug45V3JcF2IPbR1SXRg==
   dependencies:
     "@jopemachine/arvis-extension-validator" "^0.0.6"
     archiver "^5.3.0"

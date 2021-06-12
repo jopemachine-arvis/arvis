@@ -54,9 +54,39 @@ If `title` is not set, command will be `title`.
 
 ## script_filter
 
-type: `string`
+type: `string | object`
 
 Each time a query changes, the script specified in `script_filter` is executed again to update the items.
+
+If the script can run in all platform, just set like below.
+
+```json
+"script_filter": "node abc.js"
+```
+
+If the script can run in specific platform, you can set like below.
+
+```json
+"script_filter": {
+  "win32": "node abc.js",
+  "darwin": "node def.js",
+  "linux": "node ghi.js"
+}
+```
+
+If the script can run in specific shell of the platform, you can set like below.
+
+You can give `true` or `shell name` to `shell` option
+
+```json
+"script_filter": {
+  "win32": {
+    "script": "node abc.js",
+    // "shell": true,
+    "shell": "specific shell name",
+  }
+}
+```
 
 ## withspace
 
