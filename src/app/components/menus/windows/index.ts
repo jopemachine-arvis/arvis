@@ -1,4 +1,4 @@
-import { shell, BrowserWindow } from 'electron';
+import { app, shell, BrowserWindow } from 'electron';
 import { Core } from '@jopemachine/arvis-core';
 import open from 'open';
 import path from 'path';
@@ -14,6 +14,13 @@ export default (mainWindow: BrowserWindow) => [
           if (mainWindow && !mainWindow.isDestroyed()) {
             mainWindow.close();
           }
+        },
+      },
+      {
+        label: '&Quit',
+        accelerator: 'Ctrl+Q',
+        click: () => {
+          app.exit();
         },
       },
     ],

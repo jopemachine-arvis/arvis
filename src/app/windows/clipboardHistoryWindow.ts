@@ -1,8 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
-// eslint-disable-next-line import/no-cycle
-import { WindowManager } from './windowManager';
 
 const createClipboardHistoryWindow = () => {
   const clipboardHistoryWindow = new BrowserWindow({

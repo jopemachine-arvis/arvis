@@ -58,13 +58,11 @@ export default () => {
 
   const cpyKeyPressed = (e: IOHookKeyEvent) => {
     return (
-      (isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
-        keyCodeToString(e.keycode) === 'c' &&
-        !isShiftKey(e) &&
-        !isAltKey(e) &&
-        e.metaKey &&
-        !e.ctrlKey) ||
-      (!e.metaKey && e.ctrlKey)
+      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
+      keyCodeToString(e.keycode) === 'c' &&
+      !isShiftKey(e) &&
+      !isAltKey(e) &&
+      ((e.metaKey && !e.ctrlKey) || (!e.metaKey && e.ctrlKey))
     );
   };
 

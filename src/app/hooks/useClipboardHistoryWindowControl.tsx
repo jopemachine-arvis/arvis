@@ -115,6 +115,9 @@ const useClipboardHistoryWindowControl = ({
     pressedKey: string,
     updatedInput: string
   ) => {
+    // No need to run when clipboard history window shows up
+    if (pressedKey === 'c' && updatedInput === '') return;
+
     const newItems = [];
     for (const item of items) {
       if (item.title.toLowerCase().includes(updatedInput.toLowerCase())) {
@@ -131,7 +134,7 @@ const useClipboardHistoryWindowControl = ({
    * @param  {needItemsUpdate} boolean
    */
   const setInputStr = (str: string) => {
-    if (str && inputRef && inputRef.current) {
+    if (inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
   };

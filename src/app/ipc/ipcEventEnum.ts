@@ -39,11 +39,11 @@ export enum IPCRendererEnum {
  * @summary Events sent from main process to renderer process
  */
 export enum IPCMainEnum {
-  autoFitSearchWindowSizeRet = '@ipcRenderer/autoFitSearchWindowSizeRet',
+  autoFitSearchWindowSizeRet = '@ipcMain/autoFitSearchWindowSizeRet',
   executeAction = '@ipcMain/executeAction',
   fetchAction = '@ipcMain/fetchAction',
-  forwardClipboardData = '@ipcRenderer/forwardClipboardData',
-  forwardLargeText = '@ipcRenderer/forwardLargeText',
+  forwardClipboardData = '@ipcMain/forwardClipboardData',
+  forwardLargeText = '@ipcMain/forwardLargeText',
   forwardQuicklookWindowUrl = '@ipcMain/forwardQuicklookWindowUrl',
   getSystemFontRet = '@ipcMain/getSystemFontRet',
   hideSearchWindowByBlurEvent = '@ipcMain/hideSearchWindowByBlurEvent',
@@ -52,8 +52,8 @@ export enum IPCMainEnum {
   openWorkflowInstallFileDialogRet = '@ipcMain/openWorkflowInstallFileDialogRet',
   openYesnoDialogRet = '@ipcMain/openYesnoDialogRet',
   pinSearchWindow = '@ipcMain/pinSearchWindow',
-  registerAllShortcuts = '@ipcRenderer/registerAllShortcuts',
-  renewClipboardStore = '@ipcRenderer/renewClipboardStore',
+  registerAllShortcuts = '@ipcMain/registerAllShortcuts',
+  renewClipboardStore = '@ipcMain/renewClipboardStore',
   renewPlugin = '@ipcMain/renewPlugin',
   renewWorkflow = '@ipcMain/renewWorkflow',
   saveFileRet = '@ipcMain/saveFileRet',
