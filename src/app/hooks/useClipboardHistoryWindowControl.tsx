@@ -153,12 +153,15 @@ const useClipboardHistoryWindowControl = ({
       ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
       // Find new method to dispatching key to os
 
-      //   setTimeout(() => {
-      //     ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
-      //       keycombo: 'Cmd + V',
-      //     });
-      //   }, 25);
-      // };
+      setTimeout(() => {
+        ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
+          key: 'v',
+          modifiers:
+            process.platform === 'darwin'
+              ? JSON.stringify(['command'])
+              : JSON.stringify(['control']),
+        });
+      }, 25);
     }
   };
 

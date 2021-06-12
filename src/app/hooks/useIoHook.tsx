@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import ioHook from 'iohook';
-import { ipcRenderer, clipboard, IpcRendererEvent } from 'electron';
-import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { ipcRenderer, clipboard } from 'electron';
+import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { keyCodeToString } from '@utils/iohook/keyTbl';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { actionTypes } from '@redux/actions/clipboardHistory';
@@ -71,12 +71,8 @@ export default () => {
   useEffect(() => {
     // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
     ioHook.on('keydown', (e: IOHookKeyEvent) => {
-      console.log('ioHook keydown event', e);
-
       if (cpyKeyPressed(e)) {
         setTimeout(() => {
-          console.log('hook copy key', clipboard.readText());
-
           ipcRenderer.send(IPCRendererEnum.dispatchAction, {
             destWindow: 'clipboardHistoryWindow',
             actionType: actionTypes.PUSH_CLIPBOARD_STORE,
@@ -101,21 +97,7 @@ export default () => {
 
     ioHook.start();
 
-    const triggerKeyCombo = (
-      e: IpcRendererEvent,
-      { keycombo }: { keycombo: string }
-    ) => {
-      console.log('emit!');
-
-      // Find new method to dispatching key to os
-      // ioHook.emit();
-    };
-
-    ipcRenderer.on(IPCMainEnum.triggerKeyDownEvent, triggerKeyCombo);
-
     return () => {
-      ipcRenderer.off(IPCMainEnum.triggerKeyDownEvent, triggerKeyCombo);
-
       ioHook.removeAllListeners();
       ioHook.unload();
     };

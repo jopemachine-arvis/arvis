@@ -8,7 +8,7 @@ It would be very helpful if you could put bugs on the issue.
 
 * ⚠️ Currently has [severe performance issue](https://github.com/jopemachine/arvis-core/issues/2) on mac
 
-* ⚠️ Currently has [cannot auto launch issue]() on linux
+* ⚠️ Currently has [cannot auto launch issue](https://github.com/Izurii/easy-auto-launch/issues/2) on linux
 
 **Table of Contents**
 

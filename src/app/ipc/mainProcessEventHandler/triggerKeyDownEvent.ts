@@ -1,17 +1,12 @@
 import { IpcMainEvent } from 'electron';
-import { IPCMainEnum } from '../ipcEventEnum';
-import { WindowManager } from '../../windows/windowManager';
+import robot from 'robotjs';
 
 /**
  * @summary
  */
 export const triggerKeyDownEvent = (
   e: IpcMainEvent,
-  { keycombo }: { keycombo: string }
+  { key, modifiers }: { key: string; modifiers?: string }
 ) => {
-  console.error('Not implemented yet!');
-
-  WindowManager.getInstance()
-    .getSearchWindow()
-    .webContents.send(IPCMainEnum.triggerKeyDownEvent, { keycombo });
+  robot.keyTap(key, modifiers ? JSON.parse(modifiers) : undefined);
 };

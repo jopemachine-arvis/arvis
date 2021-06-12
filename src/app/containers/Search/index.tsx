@@ -124,6 +124,8 @@ export default function SearchWindow() {
         body: action.text,
       });
     });
+
+    Core.registerCustomAction('keyDispatching', (action: any) => {});
   };
 
   const registerAllGlobalHotkey = () => {

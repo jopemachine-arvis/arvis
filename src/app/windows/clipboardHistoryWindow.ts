@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 
@@ -47,6 +47,10 @@ const createClipboardHistoryWindow = () => {
 
   clipboardHistoryWindow.on('blur', () => {
     clipboardHistoryWindow.hide();
+  });
+
+  clipboardHistoryWindow.on('hide', () => {
+    app.hide();
   });
 
   return clipboardHistoryWindow;

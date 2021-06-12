@@ -62,5 +62,4 @@ export enum IPCMainEnum {
   setSearchbarInput = '@ipcMain/setSearchbarInput',
   togglePluginsEnabled = '@ipcMain/togglePluginsEnabled',
   toggleWorkflowsEnabled = '@ipcMain/toggleWorkflowsEnabled',
-  triggerKeyDownEvent = '@ipcMain/triggerKeyDownEvent',
 }
