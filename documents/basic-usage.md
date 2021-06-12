@@ -26,6 +26,10 @@ You can manage your workflows on this page.
 
 Check and edit your workflow's info, install, delete, export workflow file through the bottom bar.
 
+To open your extension's folder, right click on extension and select `Open in Finder`.
+
+You can also disable the extension by right-clicking on them, select `Disable`.
+
 ### Plugins
 
 ![](./imgs/plugin-page.png)
@@ -33,6 +37,10 @@ Check and edit your workflow's info, install, delete, export workflow file throu
 You can manage your plugins on this page.
 
 Check and edit your plugin's info, install, delete, export plugin file through the bottom bar.
+
+To open your extension's folder, right click on extension and select `Open in Finder`.
+
+You can also disable the extension by right-clicking on them, select `Disable`.
 
 ### Appearence
 
@@ -42,6 +50,12 @@ Change search window's style to your style.
 
 You can see search window's style update according to their setting values.
 
+### Clipboard History
+
+![](./imgs/clipboard-history-page.png)
+
+Change Clipboard History's setting.
+
 ### Advanced
 
 ![](./imgs/debugging-page.png)
@@ -50,3 +64,35 @@ Change debugging options according to your needs
 
 ## Search window
 
+You can use your extension through this window.
+
+
+### Pin window
+
+You can pin search window.
+
+Right click on search window, and select `Pin window`.
+
+Your search window would be set `always on top`, and never disappear when you click other window.
+
+### Quicklook window
+
+To view your item on Browser, press `shift + space`
+
+(Need to extension support)
+
+### LargeText window
+
+To view your item in larger window, press `cmd (or ctrl) + L`
+
+### Autocomplete
+
+To autocomplete command, press `tab`.
+
+## Clipboard history
+
+![](./imgs/clipboard-history.png)
+
+You can look for and search your clipboard history through clipboard history window.
+
+Default shortcut in `macos`, `cmd + opt + c`, in other os, `ctrl + alt + c`.

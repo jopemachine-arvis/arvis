@@ -12,9 +12,9 @@ Plugin items are sorted with `title` in Arvis.
 
 So, `items`'s order is ignored.
 
-If you want to not sort your plugin item, use `nosort` option.
+If you want to not sort your plugin item, use `noSort` option.
 
-Note that `nosort` is true, your plugin items will be positioned most below position.
+Note that `noSort` is true, your plugin items will be positioned most below position.
 
 ## command
 

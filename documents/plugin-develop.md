@@ -78,7 +78,7 @@ required: `true`
 
 [Click me to check items schema](./plugin-items-format-description.md)
 
-##### nosort
+##### noSort
 
 type: `boolean`
 
@@ -86,9 +86,9 @@ required: `false`
 
 defalult value: `false`
 
-If you want to not sort your plugin item, use `nosort` option.
+If you want to not sort your plugin item, use `noSort` option.
 
-Note that `nosort` is true, your plugin items will be positioned most below position.
+Note that `noSort` is true, your plugin items will be positioned most below position.
 
 ## JSON Schema
 
