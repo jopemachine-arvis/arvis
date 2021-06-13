@@ -1,5 +1,5 @@
-import { IPCMainEnum } from '../../ipcEventEnum';
-import { WindowManager } from '../../../windows';
+import { IPCMainEnum } from './ipcEventEnum';
+import { WindowManager } from '../windows';
 
 export default ({ showsUp }: { showsUp?: boolean }) => {
   const clipboardHistoryWindow =

@@ -1,5 +1,5 @@
 import toggleSearchWindow from './toggleSearchWindow';
-import toggleClipboardHistoryWindow from './mainProcessEventHandler/windowManage/toggleClipboardHistoryWindow';
+import toggleClipboardHistoryWindow from './toggleClipboardHistoryWindow';
 
 /**
  * @summary This is a table of callback functions that always require key binding, such as calling searchWindow.
