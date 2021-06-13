@@ -193,7 +193,7 @@ export default function PreferenceWindow() {
     }
 
     setMainContent(main);
-  }, [page]);
+  }, [page, fontList]);
 
   const renderMain = () => {
     return <MainContainer>{mainContent}</MainContainer>;

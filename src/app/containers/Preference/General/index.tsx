@@ -45,14 +45,22 @@ export default function General(props: IProps) {
   const toggleFontListDrawerOpen = () =>
     setFontListDrawerOpen((prevState) => !prevState);
 
-  const fontSelectEventHandler = (font: string) => {
-    dispatch(GlobalConfigActions.setGlobalFont(font));
-  };
-
   const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindow: 'searchWindow',
+    destWindows: ['searchWindow', 'clipboardHistoryWindow'],
     dispatch,
   });
+
+  const fontSelectEventHandler = (font: string) => {
+    dispatch(GlobalConfigActions.setGlobalFont(font));
+    configChangeHandler(
+      {
+        currentTarget: {
+          value: font,
+        },
+      } as React.FormEvent<HTMLInputElement>,
+      GlobalConfigActionTypes.SET_GLOBAL_FONT
+    );
+  };
 
   const toggleAutoLaunchAtLogin = () => {
     dispatch(GlobalConfigActions.setLaunchAtLogin(!launch_at_login));
