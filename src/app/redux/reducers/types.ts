@@ -32,18 +32,18 @@ export type StateType = {
   advanced_config: {
     debugging_action_type: boolean;
     debugging_args: boolean;
+    debugging_plugin: boolean;
     debugging_scriptfilter: boolean;
     debugging_script_output: boolean;
     debugging_workstack: boolean;
-    debugging_plugin: boolean;
     max_action_log_count: number;
   };
   clipboard_history: {
+    hotkey: string;
+    max_show: number;
+    max_size: number;
     // eslint-disable-next-line @typescript-eslint/ban-types
     store: object[];
-    hotkey: string;
-    max_size: number;
-    max_show: number;
   };
 };
 

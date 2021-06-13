@@ -30,17 +30,16 @@ export default {
   advanced_config: {
     debugging_action_type: true,
     debugging_args: false,
-    debugging_scriptfilter: false,
-    debugging_workflow_output: true,
-    debugging_workstack: false,
     debugging_plugin: false,
+    debugging_scriptfilter: false,
+    debugging_script_output: true,
+    debugging_workstack: false,
     max_action_log_count: 500,
   },
   clipboard_history: {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    store: [],
     hotkey: process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
-    max_size: 400,
     max_show: 50,
+    max_size: 400,
+    store: [],
   },
 };

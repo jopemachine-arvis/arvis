@@ -15,7 +15,8 @@ export const getSystemFont = async (e: IpcMainEvent) => {
       .webContents.send(IPCMainEnum.getSystemFontRet, {
         fonts,
       });
-  } catch (err) {
-    dialog.showErrorBox('Get font error', err);
+  } catch (err: any) {
+    console.error(err);
+    dialog.showErrorBox('Get Font Error', err);
   }
 };

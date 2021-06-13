@@ -1,4 +1,4 @@
-import { dialog, IpcMainEvent, nativeImage } from 'electron';
+import { dialog, IpcMainEvent, MessageBoxOptions, nativeImage } from 'electron';
 import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
@@ -11,12 +11,17 @@ export const openYesnoDialog = async (
   e: IpcMainEvent,
   { msg, icon }: { msg: string; icon?: string }
 ) => {
-  const ret: Electron.MessageBoxReturnValue = await dialog.showMessageBox({
+  const arg: MessageBoxOptions = {
     type: 'info',
     buttons: ['ok', 'cancel'],
     message: msg,
-    icon: icon ? nativeImage.createFromPath(icon) : undefined,
-  });
+  };
+
+  if (icon) {
+    arg.icon = nativeImage.createFromPath(icon);
+  }
+
+  const ret: Electron.MessageBoxReturnValue = await dialog.showMessageBox(arg);
 
   const yesPressed = ret.response === 0;
 

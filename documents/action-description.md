@@ -6,6 +6,18 @@ If there is one more action in `action array`, the actions are all executed sequ
 
 But don't put other actions together when you put `trigger` in `action`.
 
+**Table of contents**
+
+- [script](#script)
+- [args](#args)
+- [cond](#cond)
+- [open](#open)
+- [notification](#notification)
+- [clipboard](#clipboard)
+- [keyword](#keyword)
+- [scriptfilter](#scriptfilter)
+- [resetInput](#resetInput)
+
 ## script
 
 Execute script through [execa](https://github.com/sindresorhus/execa)
@@ -452,3 +464,17 @@ Specific modifier key must be pressed to run
 If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
+
+## resetInput
+
+Reset user input string.
+
+If there would be scriptfilter in progress, it will be quited.
+
+### newInput
+
+type: `string`
+
+required: `true`
+
+User input is replaced by `newInput`

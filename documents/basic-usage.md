@@ -2,7 +2,7 @@
 
 Arvis cannot do anything without installing extensions.
 
-(Even do not have basic builtin features).
+(Even do not have any builtin features).
 
 So first, recommend looking for useful extensions.
 
@@ -66,6 +66,15 @@ Change debugging options according to your needs
 
 You can use your extension through this window.
 
+### Window handle
+
+You can drag your search window by holding press the handle.
+
+### Window resize
+
+Search window is resizable horizontally.
+
+(Linux not support)
 
 ### Pin window
 
@@ -77,7 +86,7 @@ Your search window would be set `always on top`, and never disappear when you cl
 
 ### Quicklook window
 
-To view your item on Browser, press `shift + space`
+To view your item on quicklook window (Browser), press `shift + space`
 
 (Need to extension support)
 
@@ -95,4 +104,4 @@ To autocomplete command, press `tab`.
 
 You can look for and search your clipboard history through clipboard history window.
 
-Default shortcut in `macos`, `cmd + opt + c`, in other os, `ctrl + alt + c`.
+Default shortcut in Mac, `cmd + opt + c`, in other platforms, `ctrl + alt + c`.

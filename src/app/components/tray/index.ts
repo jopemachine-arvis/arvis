@@ -21,7 +21,8 @@ export default class TrayBuilder {
       type: 'normal',
       toolTip: 'Open Preference Window',
       click: () => {
-        const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
+        const preferenceWindow =
+          WindowManager.getInstance().getPreferenceWindow();
         preferenceWindow.show();
         preferenceWindow.focus();
       },

@@ -53,6 +53,9 @@ const extractShortcutName = (shortcut: string): string => {
     case 'shift':
       return 'shift';
 
+    case 'windows':
+    case 'window':
+    case 'win':
     case 'cmd':
     case 'command':
     case 'meta':
