@@ -7,7 +7,14 @@ export const onNumberChangeHandler = (
     max,
     actionType,
     dispatch,
-  }: { min: number; max: number; actionType: string; dispatch: any }
+    destWindow,
+  }: {
+    min: number;
+    max: number;
+    actionType: string;
+    dispatch: any;
+    destWindow?: string;
+  }
 ) => {
   const mockEvent = {
     currentTarget: {
@@ -24,7 +31,7 @@ export const onNumberChangeHandler = (
   }
 
   createGlobalConfigChangeHandler({
-    destWindow: 'searchWindow',
+    destWindow: destWindow ?? 'searchWindow',
     dispatch,
   })(e, actionType);
 };

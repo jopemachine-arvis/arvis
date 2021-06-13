@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lonely-if */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { clipboard, ipcRenderer } from 'electron';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -15,16 +15,20 @@ type IndexInfo = {
 /**
  * @param {any[]} items
  * @param {(items: any[]) => void} setItems
- * @param {number} maxItemCount
+ * @param {number} maxShowOnScreen
  */
 const useClipboardHistoryWindowControl = ({
   items,
   setItems,
-  maxItemCount,
+  originalItems,
+  maxShowOnScreen,
+  maxShowOnWindow,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
-  maxItemCount: number;
+  originalItems: any[];
+  maxShowOnScreen: number;
+  maxShowOnWindow: number;
 }) => {
   const { keyData, getTargetProps } = useKey();
   const { originalRef: inputRef } = getTargetProps();
@@ -33,6 +37,9 @@ const useClipboardHistoryWindowControl = ({
     itemStartIdx: 0,
     selectedItemIdx: 0,
   });
+
+  const originalItemsRef = useRef<any[]>(originalItems);
+  const maxShowOnWindowRef = useRef<number>(maxShowOnWindow);
 
   /**
    * @summary
@@ -57,7 +64,9 @@ const useClipboardHistoryWindowControl = ({
       selectedItemIdx = items.length - 1;
 
       const itemStartIdx =
-        items.length - maxItemCount >= 0 ? items.length - maxItemCount : 0;
+        items.length - maxShowOnScreen >= 0
+          ? items.length - maxShowOnScreen
+          : 0;
 
       setIndexInfo({
         itemStartIdx,
@@ -92,7 +101,7 @@ const useClipboardHistoryWindowControl = ({
       clearIndexInfo();
     }
     // Select down
-    else if (indexInfo.itemStartIdx + maxItemCount <= selectedItemIdx) {
+    else if (indexInfo.itemStartIdx + maxShowOnScreen <= selectedItemIdx) {
       setIndexInfo({
         itemStartIdx: indexInfo.itemStartIdx + 1,
         selectedItemIdx,
@@ -112,21 +121,23 @@ const useClipboardHistoryWindowControl = ({
    * @param {string} updatedInput
    */
   const handleNormalInput = async (
+    _originalItems: any[],
     pressedKey: string,
-    updatedInput: string
+    updatedInput: string,
+    _maxShowOnWindow: number
   ) => {
     // No need to run when clipboard history window shows up
     if (pressedKey === 'c' && updatedInput === '') return;
 
     const newItems = [];
-    for (const item of items) {
+    for (const item of _originalItems) {
       if (item.title.toLowerCase().includes(updatedInput.toLowerCase())) {
         newItems.push(item);
       }
     }
 
     clearIndexInfo();
-    setItems(newItems);
+    setItems(newItems.slice(0, _maxShowOnWindow));
   };
 
   /**
@@ -173,7 +184,7 @@ const useClipboardHistoryWindowControl = ({
    */
   const onWheelHandler = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY > 0) {
-      if (indexInfo.itemStartIdx + maxItemCount < items.length) {
+      if (indexInfo.itemStartIdx + maxShowOnScreen < items.length) {
         setIndexInfo({
           itemStartIdx: indexInfo.itemStartIdx + 1,
           selectedItemIdx: indexInfo.selectedItemIdx,
@@ -265,7 +276,12 @@ const useClipboardHistoryWindowControl = ({
         ? (inputRef.current! as HTMLInputElement).value
         : '';
 
-      handleNormalInput(e.key, txt);
+      handleNormalInput(
+        originalItemsRef.current,
+        e.key,
+        txt,
+        maxShowOnWindowRef.current
+      );
     }
   };
 
@@ -302,8 +318,10 @@ const useClipboardHistoryWindowControl = ({
       setTimeout(
         () =>
           handleNormalInput(
+            originalItemsRef.current,
             '',
-            (document.getElementById('searchBar') as HTMLInputElement).value
+            (document.getElementById('searchBar') as HTMLInputElement).value,
+            maxShowOnWindowRef.current
           ),
         25
       );
@@ -329,6 +347,11 @@ const useClipboardHistoryWindowControl = ({
       searchByNextInput();
     }
   };
+
+  useEffect(() => {
+    maxShowOnWindowRef.current = maxShowOnWindow;
+    originalItemsRef.current = originalItems;
+  });
 
   useEffect(() => {
     if (inputRef.current) {

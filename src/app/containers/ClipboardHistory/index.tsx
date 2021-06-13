@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
@@ -24,9 +25,13 @@ import {
 import { style } from './style';
 import './index.global.css';
 
-const maxShow = 15;
+const maxShowOnScreen = 15;
 
-const transformStore = (store: any[]): any[] => {
+const transformStore = (
+  store: any[],
+  options: { maxShowOnWindow: number }
+): any[] => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const items = store.map((item) => {
     return {
       title: item.text,
@@ -34,18 +39,30 @@ const transformStore = (store: any[]): any[] => {
     };
   });
 
-  return items.reverse();
+  return items.reverse().slice(0, options.maxShowOnWindow);
 };
 
 export default function ClipboardHistoryWindow() {
-  const { store } = useSelector((state: StateType) => state.clipboard_history);
+  const {
+    store,
+    max_size,
+    max_show: max_show_on_window,
+  } = useSelector((state: StateType) => state.clipboard_history);
 
-  const [items, setItems] = useState<any[]>(transformStore(store));
+  const [items, setItems] = useState<any[]>(
+    transformStore(store, { maxShowOnWindow: max_show_on_window })
+  );
+
+  const [originalItems, setOriginalItems] = useState<any[]>(
+    transformStore(store, { maxShowOnWindow: max_show_on_window })
+  );
 
   const dispatch = useDispatch();
 
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
+
+  const maxShowOnWindowRef = useRef<number>(max_show_on_window);
 
   const {
     indexInfo,
@@ -57,8 +74,10 @@ export default function ClipboardHistoryWindow() {
     getInputProps,
   } = useClipboardHistoryWindowControl({
     items,
+    originalItems,
     setItems,
-    maxItemCount: maxShow,
+    maxShowOnScreen,
+    maxShowOnWindow: max_show_on_window,
   });
 
   const ipcCallbackTbl = {
@@ -70,7 +89,12 @@ export default function ClipboardHistoryWindow() {
     },
 
     renewClipboardStore: (e: IpcRendererEvent) => {
-      setItems(transformStore(store));
+      setItems(
+        transformStore(store, { maxShowOnWindow: maxShowOnWindowRef.current })
+      );
+      setOriginalItems(
+        transformStore(store, { maxShowOnWindow: maxShowOnWindowRef.current })
+      );
       clearIndexInfo();
       setInputStr('');
     },
@@ -91,6 +115,17 @@ export default function ClipboardHistoryWindow() {
       );
     };
   }, []);
+
+  useEffect(() => {
+    maxShowOnWindowRef.current = max_show_on_window;
+  });
+
+  useEffect(() => {
+    setItems(transformStore(store, { maxShowOnWindow: max_show_on_window }));
+    setOriginalItems(
+      transformStore(store, { maxShowOnWindow: max_show_on_window })
+    );
+  }, [max_size, max_show_on_window]);
 
   const infoContainerOnWheelHandler = () => {
     setSearchContainerScrollbarVisible(false);
@@ -124,7 +159,7 @@ export default function ClipboardHistoryWindow() {
           itemHeight={style.itemHeight}
           itemLeftPadding={style.itemLeftPadding}
           itemTitleSubtitleMargin={0}
-          maxItemCount={maxShow}
+          maxItemCount={maxShowOnScreen}
           noShowIcon
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
@@ -144,7 +179,7 @@ export default function ClipboardHistoryWindow() {
             footerHeight={style.footerHeight}
             itemHeight={style.itemHeight}
             itemLength={items.length}
-            maxShow={maxShow}
+            maxShow={maxShowOnScreen}
             scrollbarColor="#fff"
             scrollbarWidth={2}
             searchbarHeight={style.searchbarHeight}

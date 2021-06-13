@@ -43,6 +43,7 @@ export type StateType = {
     store: object[];
     hotkey: string;
     max_size: number;
+    max_show: number;
   };
 };
 

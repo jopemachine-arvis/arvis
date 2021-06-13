@@ -41,5 +41,6 @@ export default {
     store: [],
     hotkey: process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
     max_size: 400,
+    max_show: 50,
   },
 };

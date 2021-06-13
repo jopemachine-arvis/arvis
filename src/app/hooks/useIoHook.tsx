@@ -71,14 +71,17 @@ export default () => {
     ioHook.on('keydown', (e: IOHookKeyEvent) => {
       if (cpyKeyPressed(e)) {
         setTimeout(() => {
-          ipcRenderer.send(IPCRendererEnum.dispatchAction, {
-            destWindow: 'clipboardHistoryWindow',
-            actionType: actionTypes.PUSH_CLIPBOARD_STORE,
-            args: JSON.stringify({
-              text: clipboard.readText(),
-              date: new Date().getTime(),
-            }),
-          });
+          const copiedText = clipboard.readText();
+          if (copiedText !== '') {
+            ipcRenderer.send(IPCRendererEnum.dispatchAction, {
+              destWindow: 'clipboardHistoryWindow',
+              actionType: actionTypes.PUSH_CLIPBOARD_STORE,
+              args: JSON.stringify({
+                text: clipboard.readText(),
+                date: new Date().getTime(),
+              }),
+            });
+          }
         }, 25);
       }
 

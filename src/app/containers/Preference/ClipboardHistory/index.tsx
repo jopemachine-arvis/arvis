@@ -13,19 +13,20 @@ import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
 export default function ClipboardHistory() {
-  const { hotkey, max_size } = useSelector(
+  const { hotkey, max_size, max_show } = useSelector(
     (state: StateType) => state.clipboard_history
   );
 
   const dispatch = useDispatch();
 
-  const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindow: 'searchWindow',
-    dispatch,
-  });
+  const configChangeHandler = (destWindow: string) =>
+    createGlobalConfigChangeHandler({
+      destWindow,
+      dispatch,
+    });
 
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    configChangeHandler(
+    configChangeHandler('searchWindow')(
       e,
       ClipboardHistoryActionTypes.SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY
     );
@@ -60,6 +61,25 @@ export default function ClipboardHistory() {
                 actionType:
                   ClipboardHistoryActionTypes.SET_MAX_CLIPBOARD_STORE_SIZE,
                 dispatch,
+                destWindow: 'clipboardHistoryWindow',
+              })
+            }
+          />
+        </FormGroup>
+        <FormGroup style={formGroupStyle}>
+          <Label style={labelStyle}>Maximum log count to show</Label>
+          <StyledInput
+            type="number"
+            min={0}
+            max={500}
+            defaultValue={max_show}
+            onBlur={(e: React.FormEvent<HTMLInputElement>) =>
+              onNumberChangeHandler(e, {
+                min: 0,
+                max: 500,
+                actionType: ClipboardHistoryActionTypes.SET_MAX_SHOW_SIZE,
+                dispatch,
+                destWindow: 'clipboardHistoryWindow',
               })
             }
           />

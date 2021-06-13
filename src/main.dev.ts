@@ -125,7 +125,7 @@ app.on('ready', () => {
     }
 
     // * For debugging
-    // windowManager.getPreferenceWindow().webContents.openDevTools();
+    windowManager.getClipboardHistoryWindow().webContents.openDevTools();
 
     startFileWatcher();
     initIPCHandlers();

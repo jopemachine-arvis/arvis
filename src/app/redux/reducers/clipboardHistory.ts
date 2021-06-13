@@ -13,6 +13,12 @@ export default (state = {}, action: any) => {
         store: [],
       };
     case ClipboardHistoryActionTypes.PUSH_CLIPBOARD_STORE:
+      if (state['max_size'] <= state['store'].length) {
+        state['store'] = state['store'].slice(
+          state['store'].length - state['max_size'] + 1
+        );
+      }
+
       state['store'].push(JSON.parse(payload.arg));
       return {
         ...state,
@@ -27,6 +33,11 @@ export default (state = {}, action: any) => {
         ...state,
         max_size: payload.arg,
       };
+    case ClipboardHistoryActionTypes.SET_MAX_SHOW_SIZE:
+      return {
+        ...state,
+        max_show: payload.arg,
+      };
     default:
       return state;
   }
@@ -38,6 +49,10 @@ export function getClipboardHistoryHotkey(state: StateType) {
 
 export function getMaxSize(state: StateType) {
   return state.clipboard_history.max_size;
+}
+
+export function getMaxShowSize(state: StateType) {
+  return state.clipboard_history.max_show;
 }
 
 export function getClipboardStore(state: StateType) {
