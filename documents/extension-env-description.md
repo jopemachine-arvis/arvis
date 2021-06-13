@@ -14,7 +14,7 @@ Version of arvis
 
 `bundleId` of extension
 
-`bundleId` is set by `{createdby}.{name}` of the config json file.
+`bundleId` is set by `{creator}.{name}` of the config json file.
 
 ### arvis_extension_name
 

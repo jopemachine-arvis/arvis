@@ -44,9 +44,13 @@ const createPreferenceWindow = () => {
   });
 
   if (process.env.NODE_ENV === 'production') {
-    preferenceWindow.setIcon(nativeImage.createFromPath(path.join(__dirname, 'icon.png')));
+    preferenceWindow.setIcon(
+      nativeImage.createFromPath(path.join(__dirname, 'icon.png'))
+    );
   } else {
-    preferenceWindow.setIcon(nativeImage.createFromPath(path.join(__dirname,  '../../', 'icon.png')));
+    preferenceWindow.setIcon(
+      nativeImage.createFromPath(path.join(__dirname, '../../', 'icon.png'))
+    );
   }
 
   return preferenceWindow;

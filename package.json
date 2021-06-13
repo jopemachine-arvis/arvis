@@ -2,7 +2,7 @@
   "name": "arvis",
   "productName": "arvis",
   "version": "0.0.1",
-  "description": "demo version",
+  "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
@@ -180,7 +180,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.12.1",
     "@hot-loader/react-dom": "^17.0.1",
-    "@jopemachine/arvis-core": "^0.1.108",
+    "@jopemachine/arvis-core": "^0.2.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
     "@testing-library/jest-dom": "^5.11.6",
@@ -298,9 +298,6 @@
     "node": ">=12.x",
     "npm": ">=6.x",
     "yarn": ">=1.21.3"
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
   "browserslist": [],
   "prettier": {

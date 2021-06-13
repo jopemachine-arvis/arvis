@@ -6,21 +6,21 @@ Example:
 {
   "type": "hotkey",
   "hotkey": "Double ctrl",
-  "action": [
+  "actions": [
     {
       "modifiers": "normal",
       "type": "scriptfilter",
-      "script_filter": "node src/selectProvider.js",
-      "running_subtext": "Selecting accounts..",
+      "scriptFilter": "node src/selectProvider.js",
+      "runningSubtext": "Selecting accounts..",
       "withspace": false,
-      "action": [
+      "actions": [
         {
           "modifiers": "normal",
           "type": "scriptfilter",
-          "script_filter": "node src/fetchEmails.js 'UNSEEN' '{query}'",
-          "running_subtext": "Fetching unread emails..",
+          "scriptFilter": "node src/fetchEmails.js 'UNSEEN' '{query}'",
+          "runningSubtext": "Fetching unread emails..",
           "withspace": false,
-          "action": [
+          "actions": [
             {
               "modifiers": "normal",
               "type": "open",
@@ -46,7 +46,7 @@ type: `string`
 
 required: `true`
 
-Hotkey to register action.
+Hotkey to register actions.
 
 Possible Modifiers used in `hotkey`: `cmd`, `win`, `option`, `ctrl`, `alt`, `shift`
 
@@ -60,7 +60,7 @@ But `Double cmd + a` is not available.
 
 If there are duplicate hotkeys within user's workflow, user will be notified.
 
-## action
+## actions
 
 type: `Action (object)`
 

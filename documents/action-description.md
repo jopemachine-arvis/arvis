@@ -2,9 +2,9 @@
 
 You can use below predefined actions.
 
-If there is one more action in `action array`, the actions are all executed sequentially.
+If there is one more action in `actions`, the actions are all executed sequentially.
 
-But don't put other actions together when you put `trigger` in `action`.
+But don't put other actions together when you put `trigger` in `actions`.
 
 **Table of contents**
 
@@ -15,7 +15,7 @@ But don't put other actions together when you put `trigger` in `action`.
 - [notification](#notification)
 - [clipboard](#clipboard)
 - [keyword](#keyword)
-- [scriptfilter](#scriptfilter)
+- [scriptFilter](#scriptFilter)
 - [resetInput](#resetInput)
 
 ## script
@@ -25,12 +25,12 @@ Execute script through [execa](https://github.com/sindresorhus/execa)
 Example :
 
 ```json
-"action": [
+"actions": [
   {
     "modifiers": "normal",
     "type": "script",
     "script": "node src/clearCache.js",
-    "action": [
+    "actions": [
       {
         "modifiers": "normal",
         "type": "notification",
@@ -50,7 +50,7 @@ required: `false`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
@@ -102,12 +102,12 @@ Extract selected `variable` to `query`
 Example :
 
 ```json
-"action": [
+"actions": [
   {
     "modifiers": "normal",
     "type": "args",
     "arg": "{var:folder}",
-    "action": [
+    "actions": [
       {
       }
     ]
@@ -134,13 +134,13 @@ Argument to select.
 Example :
 
 ```json
-"action": [
+"actions": [
   {
     "modifiers": "normal",
     "type": "cond",
     "if": {
       "cond": "new RegExp(\".*url.*\").test({query})",
-      "action": {
+      "actions": {
         "then": [
           {
             "modifiers": "normal",
@@ -178,7 +178,7 @@ type: `object`
 
 required: `true`
 
-if `cond` is true, then `action` is executed.
+if `cond` is true, then `actions` is executed.
 
 ### else
 
@@ -186,7 +186,7 @@ type: `object`
 
 required: `false`
 
-if `cond` is false, else `action` is executed.
+if `cond` is false, else `actions` is executed.
 
 ## open
 
@@ -195,7 +195,7 @@ Open file path, web url by [open](https://github.com/sindresorhus/open)
 Example :
 
 ```json
-"action": [
+"actions": [
   {
     "modifiers": "normal",
     "type": "open",
@@ -212,7 +212,7 @@ required: `false`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
@@ -235,7 +235,7 @@ Create notification with the notification feature of the OS.
 Example :
 
 ```json
-"action": [
+"actions": [
   {
     "modifiers": "normal",
     "type": "notification",
@@ -253,7 +253,7 @@ required: `false`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
@@ -282,7 +282,7 @@ Copy `text` to clipboard
 Example :
 
 ```json
-"action": [
+"actions": [
   {
     "modifiers": "normal",
     "type": "clipboard",
@@ -299,7 +299,7 @@ required: `false`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
@@ -317,7 +317,7 @@ required: `false`
 
 ## keyword
 
-`keyword` is a trigger, but it can also be used as an `action`.
+`keyword` is a trigger, but it can also be used as an `actions`.
 
 Example :
 
@@ -327,20 +327,19 @@ Example :
     "command": "enct",
     "title": "enct",
     "subtitle": "Select tag and enter note content to create.",
-    "script_filter": "node searchTag.js '{query}' --create",
-    "action": [
+    "scriptFilter": "node searchTag.js '{query}' --create",
+    "actions": [
         {
             "modifiers": "normal",
             "type": "keyword",
             "title": "Create Note..",
             "subtitle": "Please enter note content to create.",
-            "action": [
+            "actions": [
                 {
                     "modifiers": "normal",
                     "type": "script",
                     "script": "node createNoteWithTag.js '{query}'",
-                    "action": [
-                      ...
+                    "actions": [
                     ]
                 }
             ]
@@ -379,27 +378,25 @@ required: `false`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### arg_type
+### argType
 
 type: `string (enum)`
 
 Possible values: `required`, `no`, `optional`.
 
-If `arg_type` is `required`, the action is triggered only when `arg` is given.
+If `argType` is `required`, the actions are triggered only when `arg` is given.
 
-If `arg_type` is `no`, the action is triggered only when `arg` is not given.
+If `argType` is `no`, the actions are triggered only when `arg` is not given.
 
-If `arg_type` is `optional`, the action is triggered with or without `arg`
+If `argType` is `optional`, the actions are triggered with or without `arg`
 
-## scriptfilter
+## scriptFilter
 
-`scriptfilter` is a trigger, but it can also be used as an `action`.
-
-Overlapping scriptfilter might be useful.
+`scriptFilter` is a trigger, but it can also be used as an `actions`.
 
 Example :
 
@@ -408,19 +405,19 @@ Example :
     "type": "scriptfilter",
     "command": "chf",
     "subtitle": "Search chrome bookmark folder",
-    "script_filter": "node src/fetchBookmarkFolder.js '{query}'",
-    "action": [
+    "scriptFilter": "node src/fetchBookmarkFolder.js '{query}'",
+    "actions": [
         {
             "modifiers": "normal",
             "type": "args",
             "arg": "{var:folder}",
-            "action": [
+            "actions": [
                 {
                     "modifiers": "normal",
                     "title": "",
                     "type": "scriptfilter",
-                    "script_filter": "node src/fetchBookmark.js '{query}'",
-                    "action": [
+                    "scriptFilter": "node src/fetchBookmark.js '{query}'",
+                    "actions": [
                     ]
                 }
             ]
@@ -459,7 +456,7 @@ required: `false`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 

@@ -1431,12 +1431,12 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jopemachine/arvis-core@^0.1.108":
-  version "0.1.108"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.1.108.tgz#57b56cda813327a23e109d4b1af5f477d6884f14"
-  integrity sha512-qpkbahbZfUjQb23739/Ao80Q1C4MGeXiG7W9PsF2ZGmyGUB/K5olxwroIGrjHyobR+5Jd3dKUlGGd6qkskFrvQ==
+"@jopemachine/arvis-core@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-core/-/arvis-core-0.2.1.tgz#9ab328d58c5d5c7bc7fe06ec6c537f1d2ffc4a01"
+  integrity sha512-FWfgUt/NNWPckBSn6xtPuhbO0RaZ/8og6gv9xsAiLHTmsWA5sRhJ4K7iNXVVxLvc8uZzRrIkdDHla2oz4cxX3Q==
   dependencies:
-    "@jopemachine/arvis-extension-validator" "^0.0.6"
+    "@jopemachine/arvis-extension-validator" "^0.2.0"
     archiver "^5.3.0"
     chalk "^4.1.0"
     chmodr "^1.2.0"
@@ -1456,10 +1456,10 @@
     uuid "^8.3.2"
     xml-js "^1.6.11"
 
-"@jopemachine/arvis-extension-validator@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-extension-validator/-/arvis-extension-validator-0.0.6.tgz#607fc9ba65054aa66975a0880c1bb180d2ec74c4"
-  integrity sha512-JyReMT94fSMSQZwVrjZbMn6uyn5mLY7DzKEJ71kmodaBKVa/dl6P0GBQirDOWyHBxxHhiAm9TBOxIpo7Dr96ow==
+"@jopemachine/arvis-extension-validator@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@jopemachine/arvis-extension-validator/-/arvis-extension-validator-0.2.0.tgz#7941ea5e92a99b0637df18c1fe433c5bea868675"
+  integrity sha512-Qji+KYypwiQGAQQ/H/QnJ22xy4VDxlKRS7LZzoBugW9wH804H+tFLRQR00ZdvvNtxhlQg3ZBEIZCx/F1pGeoyA==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"

@@ -29,7 +29,7 @@ All variable could be used in form of `{var:some_var}`.
 
 **Table of contents**
 
-- [createdby](#createdby)
+- [creator](#creator)
 - [name](#name)
 - [main](#main)
 - [defaultIcon](#defaultIcon)
@@ -38,18 +38,18 @@ All variable could be used in form of `{var:some_var}`.
 - [readme](#readme)
 - [version](#version)
 - [latest](#latest)
-- [webaddress](#webaddress)
+- [webAddress](#webAddress)
 - [enabled](#enabled)
-- [action](#action)
+- [actions](#actions)
 - [variables](#variables)
 
-### createdby
+### creator
 
 type: `string`
 
 required: `true`
 
-Required of consisting of bundleId, so cannot change this `createdby` after install the plugin.
+Required of consisting of bundleId, so cannot change this `creator` after install the plugin.
 
 ### name
 
@@ -115,7 +115,7 @@ Arvis notify this extension is updatable when user Arvis started up.
 
 Assume to use semantic versioning.
 
-### webaddress
+### webAddress
 
 type: `string`
 
@@ -129,7 +129,7 @@ required: `true`
 
 If `enabled` is false, arvis exclude the plugin from the user search result.
 
-### action
+### actions
 
 type: `object (Action [])`
 

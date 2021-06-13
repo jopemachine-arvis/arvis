@@ -8,11 +8,11 @@ Example:
   "command": "ch > conf",
   "title": "ch > conf",
   "subtitle": "Open config file",
-  "script_filter": "node src/openConf.js",
-  "running_subtext": "Waiting...",
+  "scriptFilter": "node src/openConf.js",
+  "runningSubtext": "Waiting...",
   "withspace": false,
-  "arg_type": "no",
-  "action": [
+  "argType": "no",
+  "actions": [
     {
       "modifiers": "normal",
       "type": "open",
@@ -52,22 +52,22 @@ Command string used for searches.
 
 If `title` is not set, command will be `title`.
 
-## script_filter
+## scriptFilter
 
 type: `string | object`
 
-Each time a query changes, the script specified in `script_filter` is executed again to update the items.
+Each time a query changes, the script specified in `scriptFilter` is executed again to update the items.
 
 If the script can run in all platform, just set like below.
 
 ```json
-"script_filter": "node abc.js"
+"scriptFilter": "node abc.js"
 ```
 
 If the script can run in specific platform, you can set like below.
 
 ```json
-"script_filter": {
+"scriptFilter": {
   "win32": "node abc.js",
   "darwin": "node def.js",
   "linux": "node ghi.js"
@@ -79,7 +79,7 @@ If the script can run in specific shell of the platform, you can set like below.
 You can give `true` or `shell name` to `shell` option
 
 ```json
-"script_filter": {
+"scriptFilter": {
   "win32": {
     "script": "node abc.js",
     "shell": "specific shell name",
@@ -99,29 +99,29 @@ If `withspace` is true, the command include the first white space.
 
 Set this value to false if you do not want to include first space in your query.
 
-## running_subtext
+## runningSubtext
 
 type: `string`
 
-Indicate `running_subtext` instead of `subtitle` while specified `script_filter` is running.
+Indicate `runningSubtext` instead of `subtitle` while specified `scriptFilter` is running.
 
-## arg_type
+## argType
 
 type: `string (enum)`
 
 Possible values: `required`, `no`, `optional`.
 
-If `arg_type` is `required`, the action is triggered only when `arg` is given.
+If `argType` is `required`, the actions are triggered only when `arg` is given.
 
-If `arg_type` is `no`, the action is triggered only when `arg` is not given.
+If `argType` is `no`, the actions are triggered only when `arg` is not given.
 
-If `arg_type` is `optional`, the action could be triggered with or without `arg`.
+If `argType` is `optional`, the actions could be triggered with or without `arg`.
 
-## action
+## actions
 
 type: `Action (object)`
 
-Action to be triggered by the `scriptfilter`.
+Action to be triggered by the `scriptFilter`.
 
 [Click to view "action" type](./action-description.md)
 

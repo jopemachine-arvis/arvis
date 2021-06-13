@@ -1,6 +1,6 @@
 # Trigger
 
-You can use `keyword`, `scriptfilter`, `hotkey` to trigger commands.
+You can use `keyword`, `scriptFilter`, `hotkey` to trigger commands.
 
 ## Keyword
 
@@ -16,8 +16,8 @@ Example:
   "command": "ch > init",
   "text": "Init your config file",
   "subtitle": "",
-  "arg_type": "no",
-  "action": [
+  "argType": "no",
+  "actions": [
     {
       "modifiers": "normal",
       "type": "script",
@@ -29,9 +29,9 @@ Example:
 
 In above example, you can see command with `ch > init`.
 
-`Keyword` type executes the `action` when you pressed the item.
+`Keyword` type executes the `actions` when you pressed the item.
 
-To trigger above `action`, you can type `ch > init` in your search window like this.
+To trigger above `actions`, you can type `ch > init` in your search window like this.
 
 ![](./imgs/trigger-description-1.png)
 
@@ -39,25 +39,25 @@ In above screen, your pressing enter event trigger the 'Action', `script`.
 
 [Click me to check available attributes](./keyword-description.md)
 
-## Scriptfilter
+## scriptFilter
 
-Unlike `Keyword` type don't have script, `scriptfilter` type has its `script_filter` on its own.
+Unlike `Keyword` type don't have script, `scriptFilter` type has its `scriptFilter` on its own.
 
-When `scriptfilter` runs, it executes the script specified in `script_filter`.
+When `scriptFilter` runs, it executes the script specified in `scriptFilter`.
 
 Example: 
 
 ```json
 {
-  "type": "scriptfilter",
+  "type": "scriptFilter",
   "command": "chb",
   "title": "chb",
   "subtitle": "Search chrome bookmark",
-  "script_filter": "node src/fetchBookmark.js '{query}'",
-  "running_subtext": "Searching...",
+  "scriptFilter": "node src/fetchBookmark.js '{query}'",
+  "runningSubtext": "Searching...",
   "withspace": true,
-  "arg_type": "optional",
-  "action": [
+  "argType": "optional",
+  "actions": [
     {
       "modifiers": "normal",
       "type": "open",
@@ -76,19 +76,19 @@ Example:
 
 When you type the command in search window, the commands shows up.
 
-And you can give some query like `Keyword` type. the querys are passed in `script_filter` in form of `{query}`.
+And you can give some query like `Keyword` type. the querys are passed in `scriptFilter` in form of `{query}`.
 
 And result of the scripts shows in the search window, you can select and press them.
 
-When you pressing the enter key on your selected item, `action` is triggered.
+When you pressing the enter key on your selected item, `actions` is triggered.
 
-And `action` with `modifiers` key with other than `normal` is only triggered when you press the modifier key together.
+And `actions` with `modifiers` key with other than `normal` is only triggered when you press the modifier key together.
 
 [Click me to check available attributes](./scriptfilter-description.md)
 
 ## Hotkey
 
-You can register `hotkey` to run a specific `action`.
+You can register `hotkey` to run a specific `actions`.
 
 Example:
 
@@ -96,21 +96,21 @@ Example:
 {
   "type": "hotkey",
   "hotkey": "Double ctrl",
-  "action": [
+  "actions": [
     {
       "modifiers": "normal",
-      "type": "scriptfilter",
-      "script_filter": "node src/selectProvider.js",
-      "running_subtext": "Selecting accounts..",
+      "type": "scriptFilter",
+      "scriptFilter": "node src/selectProvider.js",
+      "runningSubtext": "Selecting accounts..",
       "withspace": false,
-      "action": [
+      "actions": [
         {
           "modifiers": "normal",
-          "type": "scriptfilter",
-          "script_filter": "node src/fetchEmails.js 'UNSEEN' '{query}'",
-          "running_subtext": "Fetching unread emails..",
+          "type": "scriptFilter",
+          "scriptFilter": "node src/fetchEmails.js 'UNSEEN' '{query}'",
+          "runningSubtext": "Fetching unread emails..",
           "withspace": false,
-          "action": [
+          "actions": [
             {
               "modifiers": "normal",
               "type": "open",

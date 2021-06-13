@@ -151,7 +151,7 @@ const useSearchWindowControl = ({
     // auto script filter executing should be started from first item
     if (itemArr.length === 0) return;
     const firstItem = itemArr[0];
-    if (firstItem.type !== 'scriptfilter') return;
+    if (firstItem.type !== 'scriptFilter') return;
 
     const hasRequiredArg = Core.hasRequiredArg({
       item: firstItem,
@@ -197,7 +197,7 @@ const useSearchWindowControl = ({
         await searchCommands();
       }
       // Execute Script filter
-      else if (workManager.getTopWork().type === 'scriptfilter') {
+      else if (workManager.getTopWork().type === 'scriptFilter') {
         // Execute current command's script filter
         if (updatedInput.startsWith(workManager.getTopWork().input)) {
           Core.scriptFilterExcute(updatedInput);
@@ -253,7 +253,7 @@ const useSearchWindowControl = ({
     let item;
     if (workManager.hasEmptyWorkStk()) {
       item = selectedItem;
-    } else if (workManager.getTopWork().type === 'scriptfilter') {
+    } else if (workManager.getTopWork().type === 'scriptFilter') {
       item = workManager.getTopWork().actionTrigger;
     }
 
@@ -265,7 +265,7 @@ const useSearchWindowControl = ({
       : true;
 
     if (hasRequiredArg) {
-      if (selectedItem.type === 'scriptfilter') {
+      if (selectedItem.type === 'scriptFilter') {
         setInputStr({ str: selectedItem.command, needItemsUpdate: false });
 
         workManager.setRunningText({
@@ -418,7 +418,7 @@ const useSearchWindowControl = ({
     if (workManager.hasEmptyWorkStk() && item.command) {
       setInputStr({ str: item.command, needItemsUpdate: true });
     } else if (
-      workManager.getTopWork().type === 'scriptfilter' &&
+      workManager.getTopWork().type === 'scriptFilter' &&
       item.autocomplete
     ) {
       setInputStr({ str: item.autocomplete, needItemsUpdate: true });

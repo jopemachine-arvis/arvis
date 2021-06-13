@@ -42,7 +42,7 @@ You can use these variables in your script if needed.
 
 ## Scriptfilter JSON format
 
-Check the format of `scriptfilter` to use `scriptfilter` in your `workflow`, `plugin`.
+Check the format of `scriptFilter` to use `scriptFilter` in your `workflow`, `plugin`.
 
 [Click me to check Scriptfilter JSON format](./scriptfilter-json-format-description.md)
 

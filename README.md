@@ -57,7 +57,7 @@ Click `Appearance` in the Preference window and import the `arvistheme` file or 
 
 ### 🔖 Convert alfredworkflow to arvisworkflow
 
-Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [arvis-plist-converter](https://github.com/jopemachine/arvis-plist-converter) 
+Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [alfred-to-arvis](https://github.com/jopemachine/alfred-to-arvis) 
 
 ## 🔧 Build and development
 

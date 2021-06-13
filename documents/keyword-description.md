@@ -8,8 +8,8 @@ Example:
   "command": "ch > init",
   "title": "Init your config file",
   "subtitle": "",
-  "arg_type": "no",
-  "action": [
+  "argType": "no",
+  "actions": [
     {
       "modifiers": "normal",
       "type": "script",
@@ -47,25 +47,25 @@ type: `string`
 
 A additional description of the command to display in the search window.
 
-## arg_type
+## argType
 
 type: `string (enum)`
 
 Possible values: `required`, `no`, `optional`.
 
-If `arg_type` is `required`, the action is triggered only when `arg` is given.
+If `argType` is `required`, the actions are triggered only when `arg` is given.
 
-If `arg_type` is `no`, the action is triggered only when `arg` is not given.
+If `argType` is `no`, the actions are triggered only when `arg` is not given.
 
-If `arg_type` is `optional`, the action is triggered with or without `arg`
+If `argType` is `optional`, the actions are triggered with or without `arg`
 
-## action
+## actions
 
-type: `Action (object)`
+type: `actions (object)`
 
-Action to be triggered by the `keyword`.
+actions to be triggered by the `keyword`.
 
-[Click to view "action" type](./documents/action-description.md)
+[Click to view "actions" type](./documents/actions-description.md)
 
 ## modifiers
 
@@ -73,6 +73,6 @@ type: `string (enum)`
 
 Specific modifier key must be pressed to run
 
-If you do not give any modifiers, it would be handled by `normal` which means the action will be executed with no `modifier` key
+If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.

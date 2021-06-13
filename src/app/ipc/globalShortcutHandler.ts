@@ -22,7 +22,7 @@ const getWorkflowHotkeyPressHandler = ({
     (item: any) => item.type
   );
 
-  if (actionTypes.includes('keyword') || actionTypes.includes('scriptfilter')) {
+  if (actionTypes.includes('keyword') || actionTypes.includes('scriptFilter')) {
     toggleSearchWindow({ showsUp: true });
   }
 

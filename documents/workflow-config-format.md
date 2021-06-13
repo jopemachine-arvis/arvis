@@ -16,7 +16,7 @@ Example:
   "type": "keyword",
   "command": "test",
   "title": "Test",
-  "action": [
+  "actions": [
     {
       "modifiers": "normal",
       "type": "script",
@@ -42,13 +42,12 @@ Example:
   "variable": {
     "some_var": ""
   },
-  ...
-  "action": [
+  "actions": [
     {
       "type": "keyword",
       "command": "test",
       "title": "Test",
-      "action": [
+      "actions": [
         {
           "modifiers": "normal",
           "type": "script",
@@ -64,7 +63,7 @@ Example:
 
 **Table of contents**
 
-- [createdby](#createdby)
+- [creator](#creator)
 - [name](#name)
 - [defaultIcon](#defaultIcon)
 - [category](#category)
@@ -72,18 +71,18 @@ Example:
 - [readme](#readme)
 - [version](#version)
 - [latest](#latest)
-- [webaddress](#webaddress)
+- [webAddress](#webAddress)
 - [enabled](#enabled)
 - [commands](#commands)
 - [variables](#variables)
 
-### createdby
+### creator
 
 type: `string`
 
 required: `true`
 
-Required of consisting of `bundleId` of the extension, so cannot be changed this `createdby` after install the workflow.
+Required of consisting of `bundleId` of the extension, so cannot be changed this `creator` after install the workflow.
 
 ### name
 
@@ -141,7 +140,7 @@ Arvis notify this extension is updatable when user Arvis started up.
 
 Assume to use semantic versioning.
 
-### webaddress
+### webAddress
 
 type: `string`
 
