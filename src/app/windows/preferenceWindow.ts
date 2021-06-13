@@ -2,11 +2,7 @@ import path from 'path';
 import { BrowserWindow } from 'electron';
 import constants from '../constants';
 
-const createPreferenceWindow = ({
-  searchWindow,
-}: {
-  searchWindow: BrowserWindow;
-}) => {
+const createPreferenceWindow = () => {
   const preferenceWindow: BrowserWindow = new BrowserWindow({
     title: 'Arvis',
     show: false,
@@ -38,9 +34,6 @@ const createPreferenceWindow = ({
     }
     if (process.env.START_MINIMIZED) {
       preferenceWindow.minimize();
-    } else {
-      preferenceWindow.show();
-      preferenceWindow.focus();
     }
   });
 

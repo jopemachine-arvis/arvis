@@ -69,7 +69,7 @@ export default function AdvancedDebugging() {
                 )
               }
             />
-            Debugging workflow output
+            Debugging script output
           </Label>
         </FormGroup>
 

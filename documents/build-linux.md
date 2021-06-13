@@ -2,7 +2,7 @@
 
 ## Prerequisite
 
-### [robotjs](https://github.com/octalmage/robotjs#Building) dependencies
+* [robotjs](https://github.com/octalmage/robotjs#Building) dependencies
 
 ## How to build
 

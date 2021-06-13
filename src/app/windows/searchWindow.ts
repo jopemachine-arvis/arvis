@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';

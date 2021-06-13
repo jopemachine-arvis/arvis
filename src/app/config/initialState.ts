@@ -29,9 +29,9 @@ export default {
   },
   advanced_config: {
     debugging_action_type: true,
-    debugging_args: false,
-    debugging_plugin: false,
-    debugging_scriptfilter: false,
+    debugging_args: true,
+    debugging_plugin: true,
+    debugging_scriptfilter: true,
     debugging_script_output: true,
     debugging_workstack: false,
     max_action_log_count: 500,

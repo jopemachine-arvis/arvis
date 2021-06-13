@@ -14,15 +14,13 @@ export class WindowManager {
   private constructor() {
     this.quicklookWindow = createQuicklookWindow();
     this.largeTextWindow = createLargeTextWindow();
+    this.preferenceWindow = createPreferenceWindow();
     this.clipboardHistoryWindow = createClipboardHistoryWindow(
       WindowManager.eventHandlers
     );
     this.searchWindow = createSearchWindow({
       quicklookWindow: this.quicklookWindow,
       largeTextWindow: this.largeTextWindow,
-    });
-    this.preferenceWindow = createPreferenceWindow({
-      searchWindow: this.searchWindow,
     });
   }
 
