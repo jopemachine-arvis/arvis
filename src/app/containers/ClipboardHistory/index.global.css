@@ -1,3 +1,11 @@
+::-webkit-scrollbar {
+  width: 2px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff !important;
+}
+
 #clipboardHistory-textarea:focus {
   overflow-y: auto;
 }

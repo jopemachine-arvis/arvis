@@ -7,6 +7,7 @@ import { setGlobalShortcut } from './config/setGlobalShortcut';
 import { popupPluginItemMenu } from './contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './contextMenu/popupWorkflowItemMenu';
 import { popupSearchbarItemMenu } from './contextMenu/popupSearchbarItemMenu';
+import { popupClipboardHistoryContextMenu } from './contextMenu/popupClipboardHistoryContextMenu';
 
 import { openPluginInstallFileDialog } from './modal/openPluginInstallFileDialog';
 import { openWorkflowInstallFileDialog } from './modal/openWorkflowInstallFileDialog';
@@ -39,6 +40,7 @@ export {
   openPluginInstallFileDialog,
   openWorkflowInstallFileDialog,
   openYesnoDialog,
+  popupClipboardHistoryContextMenu,
   popupPluginItemMenu,
   popupSearchbarItemMenu,
   popupWorkflowItemMenu,

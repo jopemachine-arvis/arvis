@@ -12,12 +12,8 @@ type IProps = {
   scrollbarWidth: number;
   searchbarHeight: number;
   startItemIdx: number;
+  positionStyle?: any;
 };
-
-const OuterContainer = styled.div`
-  position: absolute;
-  right: 2px;
-`;
 
 const SearchWindowScrollbar = (props: IProps) => {
   const {
@@ -29,6 +25,7 @@ const SearchWindowScrollbar = (props: IProps) => {
     scrollbarWidth,
     searchbarHeight,
     startItemIdx,
+    positionStyle,
   } = props;
 
   if (itemLength <= maxShow) {
@@ -47,15 +44,23 @@ const SearchWindowScrollbar = (props: IProps) => {
     (searchWindowHeight - scrollbarHeight) / (itemLength - maxShow);
 
   return (
-    <OuterContainer
+    <div
       style={{
+        ...positionStyle,
         width: scrollbarWidth,
         height: scrollbarHeight,
         top: searchbarHeight + startItemIdx * lenStep,
         backgroundColor: scrollbarColor,
       }}
-    ></OuterContainer>
+    />
   );
+};
+
+SearchWindowScrollbar.defaultProps = {
+  positionStyle: {
+    position: 'absolute',
+    right: 2,
+  },
 };
 
 export default SearchWindowScrollbar;

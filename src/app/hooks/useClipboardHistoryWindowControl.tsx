@@ -23,12 +23,14 @@ const useClipboardHistoryWindowControl = ({
   originalItems,
   maxShowOnScreen,
   maxShowOnWindow,
+  isPinned,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
   maxShowOnScreen: number;
   maxShowOnWindow: number;
+  isPinned: boolean;
 }) => {
   const { keyData, getTargetProps } = useKey();
   const { originalRef: inputRef } = getTargetProps();
@@ -338,7 +340,9 @@ const useClipboardHistoryWindowControl = ({
     } else if (keyData.isArrowUp) {
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
-      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+      if (!isPinned) {
+        ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+      }
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'C') {
       itemCopyHandler(items[selectedItemIdx]);
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {

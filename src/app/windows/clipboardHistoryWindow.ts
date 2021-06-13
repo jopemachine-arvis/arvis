@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 
-const createClipboardHistoryWindow = () => {
+const createClipboardHistoryWindow = (eventHandlers: Map<string, Function>) => {
   const clipboardHistoryWindow = new BrowserWindow({
     title: 'ClipboardHistoryWindow',
     center: true,
@@ -45,9 +46,13 @@ const createClipboardHistoryWindow = () => {
     }
   });
 
-  clipboardHistoryWindow.on('blur', () => {
+  const hideClipboardWindow = () => {
     clipboardHistoryWindow.hide();
-  });
+  };
+
+  eventHandlers.set('clipboardHistoryWindow#blur', hideClipboardWindow);
+
+  clipboardHistoryWindow.on('blur', hideClipboardWindow);
 
   return clipboardHistoryWindow;
 };

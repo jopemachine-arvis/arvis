@@ -37,6 +37,7 @@ import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEve
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
+import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/contextMenu/popupClipboardHistoryContextMenu';
 
 /**
  * @summary Register ipc callbacks
@@ -69,6 +70,10 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
 
+  ipcMain.on(
+    IPCRendererEnum.popupClipboardHistoryContextMenu,
+    popupClipboardHistoryContextMenu
+  );
   ipcMain.on(
     IPCRendererEnum.hideClipboardHistoryWindow,
     hideClipboardHistoryWindow

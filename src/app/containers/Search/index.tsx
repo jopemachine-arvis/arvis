@@ -132,11 +132,11 @@ export default function SearchWindow() {
     const hotkeys = Core.findHotkeys();
 
     ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+      workflowHotkeyTbl: JSON.stringify(hotkeys),
       callbackTable: {
         [toggle_search_window_hotkey]: 'toggleSearchWindow',
         [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
       },
-      workflowHotkeyTbl: JSON.stringify(hotkeys),
     });
   };
 

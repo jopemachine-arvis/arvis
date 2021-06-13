@@ -82,7 +82,6 @@ You can give `true` or `shell name` to `shell` option
 "script_filter": {
   "win32": {
     "script": "node abc.js",
-    // "shell": true,
     "shell": "specific shell name",
   }
 }

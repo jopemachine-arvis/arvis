@@ -90,7 +90,6 @@ You can give `true` or `shell name` to `shell` option
 "script": {
   "win32": {
     "script": "node abc.js",
-    // "shell": true,
     "shell": "specific shell name",
   }
 }
@@ -422,7 +421,6 @@ Example :
                     "type": "scriptfilter",
                     "script_filter": "node src/fetchBookmark.js '{query}'",
                     "action": [
-                      ...
                     ]
                 }
             ]

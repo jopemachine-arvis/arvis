@@ -4,7 +4,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
-import { IPCMainEnum } from '@ipc/ipcEventEnum';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
 import { useClipboardHistoryWindowControl } from '@hooks/index';
@@ -31,7 +31,6 @@ const transformStore = (
   store: any[],
   options: { maxShowOnWindow: number }
 ): any[] => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const items = store.map((item) => {
     return {
       title: item.text,
@@ -43,6 +42,10 @@ const transformStore = (
 };
 
 export default function ClipboardHistoryWindow() {
+  const { global_font } = useSelector(
+    (state: StateType) => state.global_config
+  );
+
   const {
     store,
     max_size,
@@ -62,6 +65,8 @@ export default function ClipboardHistoryWindow() {
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
 
+  const [isPinned, setIsPinned] = useState<boolean>(false);
+
   const maxShowOnWindowRef = useRef<number>(max_show_on_window);
 
   const {
@@ -76,6 +81,7 @@ export default function ClipboardHistoryWindow() {
     items,
     originalItems,
     setItems,
+    isPinned,
     maxShowOnScreen,
     maxShowOnWindow: max_show_on_window,
   });
@@ -98,9 +104,20 @@ export default function ClipboardHistoryWindow() {
       clearIndexInfo();
       setInputStr('');
     },
+
+    pinClipboardHistoryWindow: (
+      e: IpcRendererEvent,
+      { bool }: { bool: boolean }
+    ) => {
+      setIsPinned(bool);
+    },
   };
 
   useEffect(() => {
+    ipcRenderer.on(
+      IPCMainEnum.pinClipboardHistoryWindow,
+      ipcCallbackTbl.pinClipboardHistoryWindow
+    );
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(
       IPCMainEnum.renewClipboardStore,
@@ -131,8 +148,18 @@ export default function ClipboardHistoryWindow() {
     setSearchContainerScrollbarVisible(false);
   };
 
+  const rightClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    ipcRenderer.send(IPCRendererEnum.popupClipboardHistoryContextMenu, {
+      isPinned,
+    });
+  };
+
   return (
-    <OuterContainer>
+    <OuterContainer
+      style={{ fontFamily: global_font }}
+      onContextMenu={rightClickHandler}
+    >
       <SearchContainer
         onWheel={(e: React.WheelEvent<HTMLDivElement>) => {
           setSearchContainerScrollbarVisible(true);
@@ -184,6 +211,10 @@ export default function ClipboardHistoryWindow() {
             scrollbarWidth={2}
             searchbarHeight={style.searchbarHeight}
             startItemIdx={indexInfo.itemStartIdx}
+            positionStyle={{
+              position: 'absolute',
+              left: '50%',
+            }}
           />
         )}
       </SearchContainer>

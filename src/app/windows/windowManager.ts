@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { BrowserWindow } from 'electron';
 import { createLargeTextWindow } from './largeTextWindow';
 import { createPreferenceWindow } from './preferenceWindow';
@@ -8,9 +9,14 @@ import { createClipboardHistoryWindow } from './clipboardHistoryWindow';
 export class WindowManager {
   private static instance: WindowManager;
 
+  private static readonly eventHandlers: Map<string, Function> = new Map();
+
   private constructor() {
     this.quicklookWindow = createQuicklookWindow();
     this.largeTextWindow = createLargeTextWindow();
+    this.clipboardHistoryWindow = createClipboardHistoryWindow(
+      WindowManager.eventHandlers
+    );
     this.searchWindow = createSearchWindow({
       quicklookWindow: this.quicklookWindow,
       largeTextWindow: this.largeTextWindow,
@@ -18,7 +24,6 @@ export class WindowManager {
     this.preferenceWindow = createPreferenceWindow({
       searchWindow: this.searchWindow,
     });
-    this.clipboardHistoryWindow = createClipboardHistoryWindow();
   }
 
   private quicklookWindow: BrowserWindow;
@@ -30,6 +35,15 @@ export class WindowManager {
   private preferenceWindow: BrowserWindow;
 
   private clipboardHistoryWindow: BrowserWindow;
+
+  public static getEventHandler(windowName: string, eventName: string) {
+    if (!WindowManager.eventHandlers.has(`${windowName}#${eventName}`))
+      throw new Error(`${eventName} Event Not Registered in ${windowName}`);
+
+    return WindowManager.eventHandlers.get(
+      `${windowName}#${eventName}`
+    ) as Function;
+  }
 
   public static getInstance() {
     if (!WindowManager.instance) {
