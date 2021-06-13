@@ -13,3 +13,8 @@
 #clipboardHistory-textarea {
   overflow-y: hidden;
 }
+
+#clipboardHistory-textarea pre::selection {
+  color: white;
+  background: #888888;
+}

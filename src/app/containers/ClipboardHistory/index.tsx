@@ -167,7 +167,7 @@ export default function ClipboardHistoryWindow() {
         }}
       >
         <SearchBar
-          alwaysFocus
+          alwaysFocus={false}
           getInputProps={getInputProps}
           hasContextMenu={false}
           isPinned={false}
@@ -182,7 +182,7 @@ export default function ClipboardHistoryWindow() {
           footerHeight={style.footerHeight}
           iconRightMargin={0}
           itemBackgroundColor="#ccc"
-          itemFontColor="#777777"
+          itemFontColor="#888888"
           itemHeight={style.itemHeight}
           itemLeftPadding={style.itemLeftPadding}
           itemTitleSubtitleMargin={0}

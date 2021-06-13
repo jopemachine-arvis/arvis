@@ -2,6 +2,14 @@
 
 You can find `arvis-plugin` here.
 
+`O`: Tested on the platform
+
+`X`: Not working
+
+`?`: Not tested 
+
+## Common
+
 |Name|Win|Mac|Linux|Description|
 |:--:|:--:|:--:|:--:|:--:|
 | [arvis-calculator-plugin-example](https://github.com/jopemachine/arvis-calculator-plugin-example) | O | O | O | Calculator plugin example |

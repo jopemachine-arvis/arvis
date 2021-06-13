@@ -27,6 +27,22 @@ All variable could be used in form of `{var:some_var}`.
 
 ## Json schema
 
+**Table of contents**
+
+- [createdby](#createdby)
+- [name](#name)
+- [main](#main)
+- [defaultIcon](#defaultIcon)
+- [category](#category)
+- [description](#description)
+- [readme](#readme)
+- [version](#version)
+- [latest](#latest)
+- [webaddress](#webaddress)
+- [enabled](#enabled)
+- [action](#action)
+- [variables](#variables)
+
 ### createdby
 
 type: `string`
@@ -84,6 +100,20 @@ required: `false`
 type: `string`
 
 required: `false`
+
+Recommend to using semantic versioning.
+
+### latest
+
+type: `string`
+
+required: `false`
+
+If `latest` exists, and this is latest than `version`, 
+
+Arvis notify this extension is updatable when user Arvis started up.
+
+Assume to use semantic versioning.
 
 ### webaddress
 

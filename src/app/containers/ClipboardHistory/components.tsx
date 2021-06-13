@@ -14,6 +14,7 @@ export const OuterContainer = styled.div`
   width: 100%;
   word-break: break-word;
   border-radius: 15px;
+  user-select: text !important;
 `;
 
 export const SearchContainer = styled.div`
@@ -36,10 +37,8 @@ export const InfoInnerContainer = styled.pre`
   display: flex;
   padding: 15px;
   overflow-x: hidden;
-  user-select: text !important;
   text-align: left;
   white-space: pre-wrap;
-  -webkit-app-region: none;
 `;
 
 export const CopyDateTime = styled.div`
