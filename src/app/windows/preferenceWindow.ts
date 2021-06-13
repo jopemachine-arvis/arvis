@@ -1,5 +1,5 @@
 import path from 'path';
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, nativeImage } from 'electron';
 import constants from '../constants';
 
 const createPreferenceWindow = () => {
@@ -27,7 +27,6 @@ const createPreferenceWindow = () => {
     query: { window: 'preferenceWindow' },
   });
 
-  // To do:: remove below event handler
   preferenceWindow.webContents.on('did-finish-load', () => {
     if (!preferenceWindow) {
       throw new Error('"preferenceWindow" is not defined');
@@ -43,6 +42,12 @@ const createPreferenceWindow = () => {
       preferenceWindow.hide();
     }
   });
+
+  if (process.env.NODE_ENV === 'production') {
+    preferenceWindow.setIcon(nativeImage.createFromPath(path.join(__dirname, 'icon.png')));
+  } else {
+    preferenceWindow.setIcon(nativeImage.createFromPath(path.join(__dirname,  '../../', 'icon.png')));
+  }
 
   return preferenceWindow;
 };
