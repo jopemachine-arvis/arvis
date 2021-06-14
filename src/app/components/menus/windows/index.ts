@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindow } from 'electron';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import open from 'open';
 import path from 'path';
 

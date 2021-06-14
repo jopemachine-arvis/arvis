@@ -6,7 +6,7 @@
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {

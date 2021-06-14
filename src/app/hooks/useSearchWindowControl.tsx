@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lonely-if */
 import React, { useEffect, useRef, useState } from 'react';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd } from '@utils/index';

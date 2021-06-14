@@ -14,7 +14,7 @@
 import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import firstRun from 'electron-first-run';
 import chalk from 'chalk';
 import { IPCRendererEnum } from './app/ipc/ipcEventEnum';

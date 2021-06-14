@@ -6,7 +6,7 @@ import StyledInput from '@components/styledInput';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
 import { StateType } from '@redux/reducers/types';
 import { onNumberChangeHandler } from '@utils/index';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 

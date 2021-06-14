@@ -1,5 +1,5 @@
 import chokidar, { FSWatcher } from 'chokidar';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import path from 'path';
 import chalk from 'chalk';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';

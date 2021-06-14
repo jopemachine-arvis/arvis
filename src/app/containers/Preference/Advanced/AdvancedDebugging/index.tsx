@@ -7,7 +7,7 @@ import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfi
 import { StateType } from '@redux/reducers/types';
 import { makeActionCreator } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 

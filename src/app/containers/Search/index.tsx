@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Core } from '@jopemachine/arvis-core';
+import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import {
