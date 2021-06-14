@@ -20,11 +20,9 @@ import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
-import { useSelector } from 'react-redux';
 import { StyledInput } from '@components/index';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { StateType } from '@redux/reducers/types';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
 import {

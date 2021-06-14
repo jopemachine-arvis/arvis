@@ -1,10 +1,14 @@
 # Action
 
-You can use below predefined actions.
+You can use below predefined `actions`.
 
 If there is one more action in `actions`, the actions are all executed sequentially.
 
-But don't put other actions together when you put `trigger` in `actions`.
+(But don't put other actions together when you put `trigger` in `actions`. currently, it can cause bugs)
+
+You can also put `actions` in some `action`.
+
+For example, If you put some action in `script` action, the action is triggered when the script execution ends.
 
 **Table of contents**
 
