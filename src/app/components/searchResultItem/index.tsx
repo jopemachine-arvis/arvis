@@ -149,7 +149,7 @@ const SearchResultItem = (props: IProps) => {
         </SubTitle>
       </InnerContainer>
       {/* Small screen does not display OffsetText. */}
-      {searchWindowWidth >= 850 && offset <= 9 && (
+      {searchWindowWidth >= 850 && offset <= 8 && (
         <OffsetText
           style={{
             color: selected ? selectedItemFontColor : itemFontColor,
