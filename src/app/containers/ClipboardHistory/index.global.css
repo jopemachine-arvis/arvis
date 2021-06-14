@@ -6,6 +6,10 @@
   background-color: #fff !important;
 }
 
+#clipboardHistoryOuterContainer {
+  outline: none;
+}
+
 #clipboardHistory-textarea:focus {
   overflow-y: auto;
 }

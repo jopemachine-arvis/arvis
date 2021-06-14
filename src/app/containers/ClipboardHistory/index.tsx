@@ -148,6 +148,14 @@ export default function ClipboardHistoryWindow() {
     setSearchContainerScrollbarVisible(false);
   };
 
+  const outerContainerKeydownEventHandler = (
+    e: React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    if (e.key === 'Escape') {
+      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+    }
+  };
+
   const rightClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     ipcRenderer.send(IPCRendererEnum.popupClipboardHistoryContextMenu, {
@@ -157,8 +165,11 @@ export default function ClipboardHistoryWindow() {
 
   return (
     <OuterContainer
+      id="clipboardHistoryOuterContainer"
+      tabIndex={0}
       style={{ fontFamily: global_font }}
       onContextMenu={rightClickHandler}
+      onKeyDown={outerContainerKeydownEventHandler}
     >
       <SearchContainer
         onWheel={(e: React.WheelEvent<HTMLDivElement>) => {
