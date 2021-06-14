@@ -150,10 +150,15 @@ const useSearchWindowControl = ({
     const firstItem = itemArr[0];
     if (firstItem.type !== 'scriptFilter') return;
 
-    const hasRequiredArg = Core.hasRequiredArg({
-      item: firstItem,
-      inputStr: updatedInput,
-    });
+    const hasRequiredArg =
+      Core.hasRequiredArg({
+        item: firstItem,
+        inputStr: updatedInput,
+      }) &&
+      Core.isInputMeetWithspaceCond({
+        item: firstItem,
+        inputStr: updatedInput,
+      });
 
     if (hasRequiredArg) {
       const commandOnStackIsEmpty = firstItem;
@@ -190,10 +195,15 @@ const useSearchWindowControl = ({
       }
       // Execute Script filter
       else if (workManager.getTopWork().type === 'scriptFilter') {
-        const hasRequiredArg = Core.hasRequiredArg({
-          item: workManager.getTopWork().actionTrigger,
-          inputStr: updatedInput,
-        });
+        const hasRequiredArg =
+          Core.hasRequiredArg({
+            item: workManager.getTopWork().actionTrigger,
+            inputStr: updatedInput,
+          }) &&
+          Core.isInputMeetWithspaceCond({
+            item: workManager.getTopWork().actionTrigger,
+            inputStr: updatedInput,
+          });
 
         // Execute current command's script filter
         if (
