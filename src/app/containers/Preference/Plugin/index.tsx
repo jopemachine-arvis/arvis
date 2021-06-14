@@ -195,25 +195,25 @@ export default function Plugin() {
 
       const {
         category = '',
-        createdby = '',
+        creator = '',
         description = '',
         name = '',
         readme = '',
         version = '',
-        webaddress = '',
+        webAddress = '',
       } = info;
 
       const bundleId =
-        selectedPluginIdx === -1 ? '' : Core.getBundleId(createdby, name);
+        selectedPluginIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setPluginBundleId(bundleId);
       setPluginCategory(category);
-      setPluginCreator(createdby);
+      setPluginCreator(creator);
       setPluginDescription(description);
       setPluginName(name);
       setPluginReadme(readme);
       setPluginVersion(version);
-      setPluginWebsite(webaddress);
+      setPluginWebsite(webAddress);
     }
   }, [selectedPluginIdx, plugins]);
 
@@ -291,7 +291,7 @@ export default function Plugin() {
     const itemBundleId = plugin.bundleId;
     const info = plugins[itemBundleId];
     if (!info) return <React.Fragment key={`pluginItem-${idx}`} />;
-    const { createdby, name, enabled } = info;
+    const { creator, name, enabled } = info;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
     const pluginItemStyle = selectedIdxs.has(idx)
@@ -322,7 +322,7 @@ export default function Plugin() {
         {icon}
         <PluginItemTitle style={applyDisabledStyle}>{name}</PluginItemTitle>
         <PluginItemCreatorText style={applyDisabledStyle}>
-          {createdby}
+          {creator}
         </PluginItemCreatorText>
       </PluginItemContainer>
     );

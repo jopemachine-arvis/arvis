@@ -133,7 +133,6 @@ const useSearchWindowControl = ({
 
   /**
    * @param {any[]} itemArr
-   * @param {string} pressedKey
    * @param {string} updatedInput
    * @summary scriptfilter must be able to run automatically when a command is entered
    *          This function handle scriptfilter's auto run.
@@ -141,11 +140,9 @@ const useSearchWindowControl = ({
    */
   const handleScriptFilterAutoExecute = ({
     itemArr,
-    pressedKey,
     updatedInput,
   }: {
     itemArr: any[];
-    pressedKey: string;
     updatedInput: string;
   }) => {
     // auto script filter executing should be started from first item
@@ -158,7 +155,7 @@ const useSearchWindowControl = ({
       inputStr: updatedInput,
     });
 
-    if (updatedInput.includes(firstItem.command) && hasRequiredArg) {
+    if (hasRequiredArg) {
       const commandOnStackIsEmpty = firstItem;
 
       workManager.setRunningText({
@@ -170,13 +167,9 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {string} pressedKey
    * @param {string} updatedInput
    */
-  const handleNormalInput = async (
-    pressedKey: string,
-    updatedInput: string
-  ) => {
+  const handleNormalInput = async (updatedInput: string) => {
     let timer: NodeJS.Timeout;
 
     const handler = async () => {
@@ -187,7 +180,6 @@ const useSearchWindowControl = ({
         setItems(itemArr.slice(0, maxRetrieveCount));
         handleScriptFilterAutoExecute({
           itemArr,
-          pressedKey,
           updatedInput,
         });
       };
@@ -198,8 +190,16 @@ const useSearchWindowControl = ({
       }
       // Execute Script filter
       else if (workManager.getTopWork().type === 'scriptFilter') {
+        const hasRequiredArg = Core.hasRequiredArg({
+          item: workManager.getTopWork().actionTrigger,
+          inputStr: updatedInput,
+        });
+
         // Execute current command's script filter
-        if (updatedInput.startsWith(workManager.getTopWork().input)) {
+        if (
+          hasRequiredArg &&
+          updatedInput.startsWith(workManager.getTopWork().input)
+        ) {
           Core.scriptFilterExcute(updatedInput);
         }
         // If the command changes, clear stack and search commands
@@ -232,7 +232,7 @@ const useSearchWindowControl = ({
       (inputRef.current! as HTMLInputElement).value = str;
     }
     if (needItemsUpdate) {
-      handleNormalInput('', str ?? '');
+      handleNormalInput(str ?? '');
     }
   };
 
@@ -404,7 +404,7 @@ const useSearchWindowControl = ({
         ? (inputRef.current! as HTMLInputElement).value
         : '';
 
-      handleNormalInput(e.key, txt);
+      handleNormalInput(txt);
     }
 
     workManager.clearModifierOnScriptFilterItem();
@@ -505,7 +505,6 @@ const useSearchWindowControl = ({
       setTimeout(
         () =>
           handleNormalInput(
-            '',
             (document.getElementById('searchBar') as HTMLInputElement).value
           ),
         25

@@ -197,25 +197,25 @@ export default function Workflow() {
 
       const {
         category = '',
-        createdby = '',
+        creator = '',
         description = '',
         name = '',
         readme = '',
         version = '',
-        webaddress = '',
+        webAddress = '',
       } = info;
 
       const bundleId =
-        selectedWorkflowIdx === -1 ? '' : Core.getBundleId(createdby, name);
+        selectedWorkflowIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setWorkflowBundleId(bundleId);
       setWorkflowCategory(category);
-      setWorkflowCreator(createdby);
+      setWorkflowCreator(creator);
       setWorkflowDescription(description);
       setWorkflowName(name);
       setWorkflowReadme(readme);
       setWorkflowVersion(version);
-      setWorkflowWebsite(webaddress);
+      setWorkflowWebsite(webAddress);
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -298,7 +298,7 @@ export default function Workflow() {
     const itemBundleId = workflow.bundleId;
     const info = workflows[itemBundleId];
     if (!info) return <React.Fragment key={`workflowItem-${idx}`} />;
-    const { createdby, name, enabled } = info;
+    const { creator, name, enabled } = info;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
     const workflowItemStyle = selectedIdxs.has(idx)
@@ -329,7 +329,7 @@ export default function Workflow() {
         {icon}
         <WorkflowItemTitle style={applyDisabledStyle}>{name}</WorkflowItemTitle>
         <WorkflowItemCreatorText style={applyDisabledStyle}>
-          {createdby}
+          {creator}
         </WorkflowItemCreatorText>
       </WorkflowItemContainer>
     );
