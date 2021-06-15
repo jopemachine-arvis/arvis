@@ -1,4 +1,5 @@
 # [Arvis](https://github.com/jopemachine/arvis/releases)
+[![Github All Releases](https://img.shields.io/github/downloads/jopemachine/arvis/total.svg)]()
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 [![GitHub issues](https://img.shields.io/github/issues/jopemachine/arvis.svg)](https://GitHub.com/jopemachine/arvis/issues/)
