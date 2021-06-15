@@ -37,7 +37,7 @@ const InnerContainer = styled.div`
 `;
 
 export default function LargeTextWindow() {
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useState<string | undefined>('');
   const { keyData } = useKey();
 
   const ipcCallbackTbl = {
@@ -72,13 +72,14 @@ export default function LargeTextWindow() {
         keyData.key &&
         keyData.key.toUpperCase() === 'L')
     ) {
+      setText(undefined);
       ipcRenderer.send(IPCRendererEnum.hideLargeTextWindow);
     }
   }, [keyData]);
 
   return (
     <OuterContainer>
-      <InnerContainer>{text}</InnerContainer>
+      {text && <InnerContainer>{text}</InnerContainer>}
     </OuterContainer>
   );
 }
