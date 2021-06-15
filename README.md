@@ -18,8 +18,9 @@ It would be very helpful if you could put bugs on the issue.
 
 - [1. What is Arvis?](#what-is-arvis-why-it-is-needed)
 - [2. What is Workflow, Plugin?](#what-is-workflow-plugins)
-- [3. How to write new Workflows, Plugins](#how-to-write-new-workflows-plugins)
-- [4. Build and development](#build-and-development)
+- [3. Take a look at useful Workflows, Plugins](#take-a-look-at-useful-workflows-plugins)
+- [4. How to write new Workflows, Plugins](#how-to-write-new-workflows-plugins)
+- [5. Build and development](#build-and-development)
 
 ## 💬 What is Arvis? why it is needed?
 
@@ -52,6 +53,12 @@ Click `Appearance` in the Preference window and import the `arvistheme` file or 
 * [What is Workflow?](./documents/workflow-intro.md)
 
 * [What is Plugin?](./documents/plugin-intro.md)
+
+## 🌟 Take a look useful Workflows, Plugins
+
+* [Click me to check available Workflows](./documents/workflow-links.md)
+
+* [Click me to check available Plugins](./documents/plugin-links.md)
 
 ## 🔨 How to write new extensions
 
