@@ -240,7 +240,7 @@ const useClipboardHistoryWindowControl = ({
     }
 
     handleReturn({
-      selectedItemIdx: selectedItemIdx - 1,
+      selectedItemIdx: indexInfo.itemStartIdx + selectedItemIdx - 1,
       modifiers: {
         cmd: false,
         ctrl: false,
