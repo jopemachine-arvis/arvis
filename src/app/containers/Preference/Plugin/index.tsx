@@ -481,7 +481,7 @@ export default function Plugin() {
       </Header>
       <PluginListView>
         <PluginListOrderedList>
-          {_.map(Object.keys(plugins), (plugin, idx) => {
+          {_.map(pluginBundleIds, (plugin, idx) => {
             return renderItem(plugins[plugin], idx);
           })}
         </PluginListOrderedList>

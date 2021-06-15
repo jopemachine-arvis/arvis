@@ -2612,10 +2612,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.0.5.tgz#ed9c47ba4fda6c0193bbca07c9412267425e4247"
-  integrity sha512-5ExngkLsNonV15A1ZNGHGUSU7YEyiLgN1EQIisz1Rf47NDwxGSJhQiws1CGfI/CsX+1s2scsI+ejqy/4ngnhhQ==
+arvis-core@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.0.6.tgz#f4b1b6a7e03775cf20bd50d787a7cb958a18396b"
+  integrity sha512-V1VkgTgBjhbmksT718zeZWrvw2Y+NiuCei4o1YpNsGTHs3FP9gsD1/fGcHt0m35fZ/Bkc8vTXuc44lgicO8K1g==
   dependencies:
     archiver "^5.3.0"
     arvis-extension-validator "^0.0.2"
