@@ -180,7 +180,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.12.1",
     "@hot-loader/react-dom": "^17.0.1",
-    "arvis-core": "^0.0.3",
+    "arvis-core": "^0.0.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
     "@testing-library/jest-dom": "^5.11.6",
