@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import { persistReducer, persistStore } from 'redux-persist';
-import createElectronStorage from 'redux-persist-electron-storage';
 import createRootReducer from '../redux/reducers';
 import { StateType } from '../redux/reducers/types';
+import { electronPersistedStore } from './electronStorage';
 
 const history = createHashHistory();
 
@@ -13,12 +13,7 @@ const rootReducer = createRootReducer(history);
 
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage({
-    electronStoreOpts: {
-      clearInvalidConfig: true,
-      name: 'arvis-gui-config',
-    },
-  }),
+  storage: electronPersistedStore,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

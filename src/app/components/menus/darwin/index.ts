@@ -8,6 +8,7 @@ import {
 } from 'electron';
 import open from 'open';
 import path from 'path';
+import { electronStore } from '../../../store/electronStorage';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -147,10 +148,13 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'Open arvis history file path',
         click() {
-          const historyFilePath = Core.path.getExtensionHistoryPath();
-          const historyFilePathArr = historyFilePath.split(path.sep);
-          historyFilePathArr.pop();
-          open(historyFilePathArr.join(path.sep));
+          open(path.dirname(Core.path.getExtensionHistoryPath()));
+        },
+      },
+      {
+        label: 'Open arvis-gui-config file path',
+        click() {
+          open(path.dirname(electronStore.path));
         },
       },
     ],

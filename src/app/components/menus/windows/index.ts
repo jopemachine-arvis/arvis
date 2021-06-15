@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow } from 'electron';
 import { Core } from 'arvis-core';
 import open from 'open';
 import path from 'path';
+import { electronStore } from '../../../store/electronStorage';
 
 export default (mainWindow: BrowserWindow) => [
   {
@@ -112,10 +113,13 @@ export default (mainWindow: BrowserWindow) => [
       {
         label: 'Open arvis history file path',
         click() {
-          const historyFilePath = Core.path.getExtensionHistoryPath();
-          const historyFilePathArr = historyFilePath.split(path.sep);
-          historyFilePathArr.pop();
-          open(historyFilePathArr.join(path.sep));
+          open(path.dirname(Core.path.getExtensionHistoryPath()));
+        },
+      },
+      {
+        label: 'Open arvis-gui-config file path',
+        click() {
+          open(path.dirname(electronStore.path));
         },
       },
     ],

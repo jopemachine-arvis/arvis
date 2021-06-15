@@ -4,7 +4,7 @@ export default {
     launch_at_login: false,
     max_item_count_to_search: 100,
     max_item_count_to_show: 9,
-    toggle_search_window_hotkey: 'Ctrl+Space',
+    toggle_search_window_hotkey: 'Cmd+Space',
   },
   ui_config: {
     icon_right_margin: 10,

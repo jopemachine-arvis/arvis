@@ -66,6 +66,8 @@ Change debugging options according to your needs
 
 You can use your extension through this window.
 
+To shows up search window, press `ctrl + space` (on mac, `cmd + space`)
+
 ### Window handle
 
 You can drag your search window by holding press the handle.
