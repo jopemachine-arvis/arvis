@@ -65,7 +65,7 @@ export default (mainWindow: BrowserWindow) => [
           ],
   },
   {
-    label: 'Help',
+    label: '&Help',
     submenu: [
       {
         label: 'Documentation',
@@ -97,7 +97,11 @@ export default (mainWindow: BrowserWindow) => [
           );
         },
       },
-      { type: 'separator' },
+    ],
+  },
+  {
+    label: '&Advanced',
+    submenu: [
       {
         label: 'Open installed extension folder',
         click() {

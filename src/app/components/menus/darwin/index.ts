@@ -132,7 +132,12 @@ export default (mainWindow: BrowserWindow) => {
           );
         },
       },
-      { type: 'separator' },
+    ],
+  };
+
+  const subMenuAdvanced: MenuItemConstructorOptions = {
+    label: 'Advanced',
+    submenu: [
       {
         label: 'Open installed extension folder',
         click() {
@@ -204,5 +209,12 @@ export default (mainWindow: BrowserWindow) => {
       ? subMenuViewDev
       : subMenuViewProd;
 
-  return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+  return [
+    subMenuAbout,
+    subMenuEdit,
+    subMenuView,
+    subMenuWindow,
+    subMenuHelp,
+    subMenuAdvanced,
+  ];
 };

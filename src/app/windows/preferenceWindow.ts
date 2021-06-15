@@ -3,8 +3,9 @@ import { BrowserWindow, nativeImage } from 'electron';
 import constants from '../constants';
 
 const createPreferenceWindow = () => {
+  const pkg = require('../../package.json');
   const preferenceWindow: BrowserWindow = new BrowserWindow({
-    title: 'Arvis',
+    title: `Arvis (alpha v${pkg.version})`,
     show: false,
     skipTaskbar: true,
     transparent: false,

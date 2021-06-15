@@ -92,20 +92,15 @@ const SearchResultItem = (props: IProps) => {
       return iconElem;
     }
 
-    if (icon) {
-      iconElem = (
-        <IconImg
-          style={iconStyle}
-          src={icon}
-          onError={(e) => {
-            e.currentTarget.src = DefaultImg;
-          }}
-        />
-      );
-    } else {
-      iconElem = <BsApp style={iconStyle} />;
-    }
-    return iconElem;
+    return (
+      <IconImg
+        style={iconStyle}
+        src={icon ?? DefaultImg}
+        onError={(e) => {
+          e.currentTarget.src = DefaultImg;
+        }}
+      />
+    );
   }, [valid, icon]);
 
   const getOffsetText = useCallback(() => {
