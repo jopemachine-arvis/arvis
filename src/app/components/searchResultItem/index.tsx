@@ -5,6 +5,7 @@ import React, { useCallback, useMemo } from 'react';
 import { BsApp } from 'react-icons/bs';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
+import DefaultImg from '../../../../assets/images/default.svg';
 import {
   InnerContainer,
   OuterContainer,
@@ -92,7 +93,15 @@ const SearchResultItem = (props: IProps) => {
     }
 
     if (icon) {
-      iconElem = <IconImg style={iconStyle} src={icon} />;
+      iconElem = (
+        <IconImg
+          style={iconStyle}
+          src={icon}
+          onError={(e) => {
+            e.currentTarget.src = DefaultImg;
+          }}
+        />
+      );
     } else {
       iconElem = <BsApp style={iconStyle} />;
     }
