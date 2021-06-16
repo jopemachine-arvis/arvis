@@ -20,6 +20,7 @@ import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
+import alphaSort from 'alpha-sort';
 import { StyledInput } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
@@ -41,12 +42,12 @@ import * as style from './style';
 
 export default function Plugin() {
   const plugins = Core.getPluginList();
-  const pluginBundleIds = Object.keys(plugins).sort((a, b) => {
-    return Core.getNameFromBundleId(a).toLowerCase() <
-      Core.getNameFromBundleId(b).toLowerCase()
-      ? -1
-      : 1;
-  });
+  const pluginBundleIds = Object.keys(plugins).sort(
+    alphaSort({
+      natural: true,
+      descending: true,
+    })
+  );
 
   const pluginBundleIdsRef = useRef<any>(pluginBundleIds);
   const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(-1);

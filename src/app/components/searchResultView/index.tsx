@@ -72,9 +72,9 @@ const SearchResultView = (props: IProps) => {
       return undefined;
     }
 
-    const workflowRootPath: string = Core.path.getWorkflowInstalledPath(
-      command.bundleId
-    );
+    const workflowRootPath: string = command.isPluginItem
+      ? Core.path.getPluginInstalledPath(command.bundleId)
+      : Core.path.getWorkflowInstalledPath(command.bundleId);
 
     let iconPath;
     try {

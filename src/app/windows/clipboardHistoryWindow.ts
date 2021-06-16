@@ -27,6 +27,7 @@ const createClipboardHistoryWindow = (eventHandlers: Map<string, Function>) => {
       scrollBounce: false,
       spellcheck: false,
       webviewTag: false,
+      enableRemoteModule: true,
     },
   });
 

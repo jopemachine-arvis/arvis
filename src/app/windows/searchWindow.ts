@@ -38,6 +38,7 @@ const createSearchWindow = ({
       scrollBounce: false,
       spellcheck: false,
       webviewTag: false,
+      enableRemoteModule: true,
     },
   });
 

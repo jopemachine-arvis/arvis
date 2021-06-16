@@ -15,8 +15,8 @@ import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
-import firstRun from 'electron-first-run';
 import chalk from 'chalk';
+import { isFirstAppLaunch } from 'electron-util';
 import { IPCRendererEnum } from './app/ipc/ipcEventEnum';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
@@ -112,7 +112,7 @@ app.on('ready', () => {
       openArvisFile(openFile);
     }
 
-    if (firstRun('arvis')) {
+    if (isFirstAppLaunch()) {
       console.log(
         chalk.yellowBright(
           'Arvis first launched.. Initilize search window size..'

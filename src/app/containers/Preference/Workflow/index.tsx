@@ -20,6 +20,7 @@ import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
+import alphaSort from 'alpha-sort';
 import { StyledInput } from '@components/index';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -42,12 +43,12 @@ import * as style from './style';
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
   const workflows = Core.getWorkflowList();
-  const workflowBundleIds = Object.keys(workflows).sort((a, b) => {
-    return Core.getNameFromBundleId(a).toLowerCase() <
-      Core.getNameFromBundleId(b).toLowerCase()
-      ? -1
-      : 1;
-  });
+  const workflowBundleIds = Object.keys(workflows).sort(
+    alphaSort({
+      natural: true,
+      descending: true,
+    })
+  );
 
   const workflowBundleIdsRef = useRef<any>(workflowBundleIds);
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(-1);

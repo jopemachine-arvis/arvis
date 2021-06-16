@@ -19,6 +19,7 @@ const createLargeTextWindow = () => {
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 

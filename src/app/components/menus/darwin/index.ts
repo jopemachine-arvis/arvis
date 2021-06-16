@@ -5,10 +5,13 @@ import {
   shell,
   BrowserWindow,
   MenuItemConstructorOptions,
+  dialog,
 } from 'electron';
 import open from 'open';
 import path from 'path';
+import { debugInfo } from 'electron-util';
 import { electronStore } from '../../../store/electronStorage';
+import { WindowManager } from '../../../windows/windowManager';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -138,6 +141,18 @@ export default (mainWindow: BrowserWindow) => {
   const subMenuAdvanced: MenuItemConstructorOptions = {
     label: 'Advanced',
     submenu: [
+      {
+        label: 'View Debug info',
+        click() {
+          dialog.showMessageBox(
+            WindowManager.getInstance().getPreferenceWindow(),
+            { title: 'Debug info', message: debugInfo() }
+          );
+        },
+      },
+      {
+        type: 'separator',
+      },
       {
         label: 'Open installed extension folder',
         click() {
