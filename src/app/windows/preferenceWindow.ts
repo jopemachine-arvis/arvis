@@ -1,5 +1,5 @@
 import path from 'path';
-import { BrowserWindow, nativeImage } from 'electron';
+import { BrowserWindow } from 'electron';
 import constants from '../constants';
 
 const createPreferenceWindow = () => {
@@ -44,16 +44,6 @@ const createPreferenceWindow = () => {
       preferenceWindow.hide();
     }
   });
-
-  if (process.env.NODE_ENV === 'production') {
-    preferenceWindow.setIcon(
-      nativeImage.createFromPath(path.join(__dirname, 'icon.png'))
-    );
-  } else {
-    preferenceWindow.setIcon(
-      nativeImage.createFromPath(path.join(__dirname, '../../', 'icon.png'))
-    );
-  }
 
   return preferenceWindow;
 };
