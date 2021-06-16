@@ -54,6 +54,15 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
+   * @summary
+   */
+  const focusSearchbar = () => {
+    if (inputRef.current) {
+      (inputRef.current! as HTMLInputElement).focus();
+    }
+  };
+
+  /**
    * @return {number} changed selectedItemIdx
    * @summary
    */
@@ -373,6 +382,7 @@ const useClipboardHistoryWindowControl = ({
   return {
     setInputStr,
     clearIndexInfo,
+    focusSearchbar,
     indexInfo,
     onWheelHandler,
     onMouseoverHandler,

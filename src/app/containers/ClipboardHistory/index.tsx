@@ -72,6 +72,7 @@ export default function ClipboardHistoryWindow() {
   const {
     indexInfo,
     clearIndexInfo,
+    focusSearchbar,
     setInputStr,
     onDoubleClickHandler,
     onMouseoverHandler,
@@ -103,6 +104,7 @@ export default function ClipboardHistoryWindow() {
       );
       clearIndexInfo();
       setInputStr('');
+      focusSearchbar();
     },
 
     pinClipboardHistoryWindow: (
