@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Arvis (alpha)",
   "main": "./main.prod.js",
   "author": {
