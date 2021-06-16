@@ -1,8 +1,10 @@
-import { app, shell, BrowserWindow } from 'electron';
+import { app, shell, BrowserWindow, dialog } from 'electron';
 import { Core } from 'arvis-core';
 import open from 'open';
 import path from 'path';
+import { debugInfo } from 'electron-util';
 import { electronStore } from '../../../store/electronStorage';
+import { WindowManager } from '../../../windows/windowManager';
 
 export default (mainWindow: BrowserWindow) => [
   {
@@ -102,6 +104,18 @@ export default (mainWindow: BrowserWindow) => [
   {
     label: '&Advanced',
     submenu: [
+      {
+        label: 'View Debug info',
+        click() {
+          dialog.showMessageBox(
+            WindowManager.getInstance().getPreferenceWindow(),
+            { title: 'Debug info', message: debugInfo() }
+          );
+        },
+      },
+      {
+        type: 'separator',
+      },
       {
         label: 'Open installed extension folder',
         click() {

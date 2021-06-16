@@ -17,10 +17,11 @@ It would be very helpful if you could put bugs on the issue.
 **Table of Contents**
 
 - [1. What is Arvis?](#what-is-arvis-why-it-is-needed)
-- [2. What is Workflow, Plugin?](#what-is-workflow-plugins)
-- [3. Take a look at useful Workflows, Plugins](#take-a-look-at-useful-workflows-plugins)
-- [4. How to write new Workflows, Plugins](#how-to-write-new-workflows-plugins)
-- [5. Build and development](#build-and-development)
+- [2. How to Install](#how-to-install)
+- [3. What is Workflow, Plugin?](#what-is-workflow-plugins)
+- [4. Take a look at useful Workflows, Plugins](#take-a-look-at-useful-workflows-plugins)
+- [5. How to write new Workflows, Plugins](#how-to-write-new-workflows-plugins)
+- [6. Build and development](#build-and-development)
 
 ## 💬 What is Arvis? why it is needed?
 
@@ -47,6 +48,16 @@ It is intentionally built similar to Alfred, but there could be some different p
 You can change Arvis search window's appearance to some extent.
 
 Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
+
+## 🌈 How to Install
+
+1. Double click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+
+2. (On mac), open mac's preference and give appropriate permissions to Arvis.
+
+(Including notification permissions, Full disk access permission)
+
+3. Note that you should install [other extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
 ## 📓 What is Workflow, Plugin?
 
