@@ -51,9 +51,9 @@ Click `Appearance` in the Preference window and import the `arvistheme` file or 
 
 ## 🌈 How to Install
 
-Double click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
-Note that you should install [other extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
+Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
 ### mac installation issues
 
