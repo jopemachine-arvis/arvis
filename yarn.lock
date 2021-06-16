@@ -2301,6 +2301,11 @@ ajv@^8.0.0, ajv@^8.0.1, ajv@^8.1.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
+alpha-sort@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/alpha-sort/-/alpha-sort-4.0.0.tgz#4bff5b77892f2c853beaf4339e11ec5adb9cdfee"
+  integrity sha512-fIzG0HQOM/WcoWTPp7sttwVOEB5r1QdVrwHf+ef2RdPWfJbA9c6YB4MFyMMLaTetCLn3Dz3j7bJnOdloJa9g9A==
+
 alpha-sort@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/alpha-sort/-/alpha-sort-5.0.0.tgz#83dceebaf1c838eb45e75c03b45d0d1f53724f8c"
@@ -2617,13 +2622,14 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.0.10.tgz#6b3a26c0dbe798701f2ce9ad956ab0ede04216b4"
-  integrity sha512-y63LmtX+7Udnhm0344LgaWAcSEp7VoLMvMeJU2w39+dBlSPNeKPYNMJcKyXiQI7bjbC0XPYrK02gJ3heSZUGPA==
+arvis-core@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.1.0.tgz#217900ea9457be3feed41eead872d5ef4dbf9c0b"
+  integrity sha512-xGVrPvb3QIYnbJ4vv4OsarpamqKeZm+pisow7xezre182gvcc+vvC7vZwrrDovdRGY29fSm9Ts1+SYSk4GBi4Q==
   dependencies:
+    alpha-sort "^4.0.0"
     archiver "^5.3.0"
-    arvis-extension-validator "^0.0.3"
+    arvis-extension-validator "^0.1.0"
     chalk "^4.1.0"
     chmodr "^1.2.0"
     clipboardy "^2.3.0"
@@ -2644,10 +2650,10 @@ arvis-core@^0.0.10:
     uuid "^8.3.2"
     xml-js "^1.6.11"
 
-arvis-extension-validator@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.0.3.tgz#c6087bd498df63b8174ec392b5d824758b17ec01"
-  integrity sha512-oqLYHooH9lgDgTCVVF9sV5eLBU+mLuGu+w/7+CCEeJ778Dzo28XYOkTPJjerXFxnpAbkWzCdCWQySXIT31mbPw==
+arvis-extension-validator@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.1.0.tgz#42265049fc75e5c823754dc4a891220bb275baf7"
+  integrity sha512-pIKrJp5H7g603dmAMcOU+mIqUHN95Nyqanpb6Q7V9Kzhzy26o7O3q+bv5caGD4Mj9ucxlbFbUEjLr3AeJmUhFQ==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"
