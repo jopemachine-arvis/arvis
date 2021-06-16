@@ -51,13 +51,21 @@ Click `Appearance` in the Preference window and import the `arvistheme` file or 
 
 ## 🌈 How to Install
 
-1. Double click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+Double click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
-2. (On mac), open mac's preference and give appropriate permissions to Arvis.
+Note that you should install [other extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
-(Including notification permissions, Full disk access permission)
+### mac installation issues
 
-3. Note that you should install [other extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
+* Open mac's preference and `give appropriate permissions` to Arvis. (Including notification permissions, Full disk access permission)
+
+### linux installation issues
+
+* run `chmod 777 {appimage binary}` to give execute permission to appimage file.
+
+### arvis-linker issues
+
+* If permission error occurs when you try to install extension by npm command, open your shell `as administrator`.
 
 ## 📓 What is Workflow, Plugin?
 
