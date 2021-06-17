@@ -38,22 +38,18 @@ const mockItems = [
   {
     title: 'Selected Item',
     subtitle: 'Subtitle',
-    bundleId: 'mock',
   },
   {
     title: 'Normal Item',
     subtitle: 'Subtitle',
-    bundleId: 'mock',
   },
   {
     title: 'Normal Item',
     subtitle: 'Subtitle',
-    bundleId: 'mock',
   },
   {
     title: 'Normal Item',
     subtitle: 'Subtitle',
-    bundleId: 'mock',
   },
 ];
 

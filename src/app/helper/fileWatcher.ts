@@ -6,17 +6,29 @@ import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
 
-const workflowWatchPaths = [
-  `${Core.path.workflowInstallPath}${path.sep}**${path.sep}arvis-workflow.json`,
-];
-
-const pluginWatchPaths = [
-  `${Core.path.pluginInstallPath}${path.sep}**${path.sep}*.js`,
-  `${Core.path.pluginInstallPath}${path.sep}**${path.sep}arvis-plugin.json`,
-];
-
 let workflowWatcher: FSWatcher | null;
 let pluginWatcher: FSWatcher | null;
+
+const watchOpts = {
+  disableGlobbing: false,
+  followSymlinks: false,
+  ignoreInitial: true,
+  persistent: true,
+  // awaitWriteFinish: {
+  //   pollInterval: 100,
+  //   stabilityThreshold: 2000,
+  // },
+};
+
+const workflowWatchPaths = [
+  `${Core.path.workflowInstallPath}${path.sep}*${path.sep}arvis-workflow.json`,
+];
+
+// Detects only changes to plugin root folder files to save system resources
+const pluginWatchPaths = [
+  `${Core.path.pluginInstallPath}${path.sep}*${path.sep}*.js`,
+  `${Core.path.pluginInstallPath}${path.sep}*${path.sep}arvis-plugin.json`,
+];
 
 /**
  * @param  {string} bundleId?
@@ -53,18 +65,42 @@ const requestRenewPlugins = (bundleId?: string) => {
 };
 
 /**
- * @summary
+ * @param  {string} changedFilePath
  */
-export const stopFileWatcher = () => {
-  if (!workflowWatcher || !pluginWatcher) {
-    console.error('workflowWatcher is not running');
-    return;
+const getBundleIdFromFilePath = (changedFilePath: string) => {
+  return changedFilePath.split(path.sep)[0];
+};
+
+const workflowChangeHandler = async (filePath: string) => {
+  if (filePath.endsWith('arvis-workflow.json')) {
+    console.log(
+      chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
+    );
+    await sleep(1000);
+    requestRenewWorkflows(getBundleIdFromFilePath(filePath));
+  } else {
+    console.log(
+      chalk.magenta(
+        `"${filePath}" change detected.. there might be wrong regexp in filewatcher..`
+      )
+    );
   }
+};
 
-  console.log(chalk.whiteBright('File watching is paused...'));
-
-  workflowWatcher.close();
-  pluginWatcher.close();
+const pluginChangeHandler = async (filePath: string) => {
+  if (filePath.endsWith('arvis-plugin.json') || filePath.endsWith('.js')) {
+    console.log(
+      chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
+    );
+    await sleep(1000);
+    requestRenewPlugins(getBundleIdFromFilePath(filePath));
+  } else {
+    console.log(
+      chalk.magenta(
+        `"${filePath}" change detected.. there might be wrong regexp in filewatcher..`
+      )
+    );
+  }
 };
 
 /**
@@ -78,58 +114,6 @@ export const stopFileWatcher = () => {
  */
 export const startFileWatcher = () => {
   console.log(chalk.whiteBright('Start file watching...'));
-
-  /**
-   * @param  {string} arvisWorkflowConfigFilePath
-   */
-  const getBundleIdFromFilePath = (arvisWorkflowConfigFilePath: string) => {
-    const pathArrs = arvisWorkflowConfigFilePath.split(path.sep);
-    pathArrs.pop();
-    return pathArrs.pop();
-  };
-
-  const watchOpts = {
-    disableGlobbing: false,
-    followSymlinks: false,
-    ignoreInitial: true,
-    persistent: true,
-    // awaitWriteFinish: {
-    //   pollInterval: 100,
-    //   stabilityThreshold: 2000,
-    // },
-  };
-
-  const workflowChangeHandler = async (filePath: string) => {
-    if (filePath.endsWith('arvis-workflow.json')) {
-      console.log(
-        chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
-      );
-      await sleep(1000);
-      requestRenewWorkflows(getBundleIdFromFilePath(filePath));
-    } else {
-      console.log(
-        chalk.magenta(
-          `"${filePath}" change detected.. there might be wrong regexp in filewatcher..`
-        )
-      );
-    }
-  };
-
-  const pluginChangeHandler = async (filePath: string) => {
-    if (filePath.endsWith('arvis-plugin.json') || filePath.endsWith('.js')) {
-      console.log(
-        chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
-      );
-      await sleep(1000);
-      requestRenewPlugins(getBundleIdFromFilePath(filePath));
-    } else {
-      console.log(
-        chalk.magenta(
-          `"${filePath}" change detected.. there might be wrong regexp in filewatcher..`
-        )
-      );
-    }
-  };
 
   workflowWatcher = chokidar
     .watch(workflowWatchPaths, {
@@ -148,4 +132,19 @@ export const startFileWatcher = () => {
     .on('change', pluginChangeHandler)
     .on('unlink', pluginChangeHandler)
     .on('add', pluginChangeHandler);
+};
+
+/**
+ * @summary
+ */
+export const stopFileWatcher = () => {
+  if (!workflowWatcher || !pluginWatcher) {
+    console.error('workflowWatcher is not running');
+    return;
+  }
+
+  console.log(chalk.whiteBright('File watching is paused...'));
+
+  workflowWatcher.close();
+  pluginWatcher.close();
 };
