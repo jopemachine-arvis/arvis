@@ -2,7 +2,7 @@ import makeActionCreator from './makeActionCreator';
 import { isNumeric } from './isNumeric';
 import extractJson from './extractJSON';
 import { checkFileExists } from './checkFileExists';
-import { isSupportedImageFormat } from './isSupportedImage';
+import { supportedImageFormats } from './isSupportedImage';
 import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 import { sleep } from './sleep';
@@ -21,7 +21,7 @@ export {
   extractJson,
   getRandomColor,
   isNumeric,
-  isSupportedImageFormat,
+  supportedImageFormats,
   isWithCtrlOrCmd,
   makeActionCreator,
   hideWindowAndRestoreFocus,

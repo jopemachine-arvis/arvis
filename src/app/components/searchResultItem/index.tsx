@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/display-name */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useMemo } from 'react';
-import { BsApp } from 'react-icons/bs';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
 import DefaultImg from '../../../../assets/images/default.svg';
@@ -18,6 +17,7 @@ import {
 type IProps = {
   arg?: any;
   autocomplete?: string;
+  extensionDefaultIcon?: string | undefined;
   icon?: string | undefined;
   iconRightMargin: number;
   itemBackgroundColor: string;
@@ -49,6 +49,7 @@ const SearchResultItem = (props: IProps) => {
   const {
     arg,
     autocomplete,
+    extensionDefaultIcon,
     icon,
     iconRightMargin,
     itemBackgroundColor,
@@ -76,6 +77,8 @@ const SearchResultItem = (props: IProps) => {
 
   const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
 
+  const iconRef = useRef<any>();
+
   const iconStyle: React.CSSProperties = useMemo(() => {
     return {
       width: iconSize,
@@ -94,10 +97,11 @@ const SearchResultItem = (props: IProps) => {
 
     return (
       <IconImg
+        ref={iconRef}
         style={iconStyle}
         src={icon ?? DefaultImg}
         onError={(e) => {
-          e.currentTarget.src = DefaultImg;
+          e.currentTarget.src = extensionDefaultIcon ?? DefaultImg;
         }}
       />
     );
@@ -169,6 +173,7 @@ const SearchResultItem = (props: IProps) => {
 SearchResultItem.defaultProps = {
   arg: undefined,
   autocomplete: undefined,
+  extensionDefaultIcon: undefined,
   icon: undefined,
   noShowIcon: false,
   text: undefined,

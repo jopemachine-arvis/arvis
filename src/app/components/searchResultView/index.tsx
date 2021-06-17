@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ipcRenderer } from 'electron';
-import path from 'path';
 import { Core } from 'arvis-core';
 import _ from 'lodash';
-import { isSupportedImageFormat } from '@utils/index';
+import { supportedImageFormats as supportedImgFormats } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import SearchResultItem from '../searchResultItem';
 import { InnerContainer, OuterContainer } from './components';
@@ -67,43 +66,6 @@ const SearchResultView = (props: IProps) => {
     [props]
   );
 
-  const determineIconPath = useCallback((command: any): string | undefined => {
-    if (!command.bundleId) {
-      return undefined;
-    }
-
-    const workflowRootPath: string = command.isPluginItem
-      ? Core.path.getPluginInstalledPath(command.bundleId)
-      : Core.path.getWorkflowInstalledPath(command.bundleId);
-
-    let iconPath;
-    try {
-      if (command.icon) {
-        // In case of 'icon' is string
-        if (command.icon.length) {
-          command.icon = {
-            path: command.icon,
-          };
-        }
-
-        if (command.icon.path.includes('.')) {
-          const iconExt = command.icon.path.split('.').pop();
-          if (isSupportedImageFormat(iconExt)) {
-            if (path.isAbsolute(command.icon.path)) {
-              iconPath = command.icon.path;
-            } else {
-              iconPath = path.resolve(workflowRootPath, command.icon.path);
-            }
-          }
-        }
-      }
-    } catch (err) {
-      // Assume command.icon.path is undefined
-    }
-
-    return iconPath;
-  }, []);
-
   useEffect(() => {
     if (!demo) {
       ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
@@ -121,37 +83,39 @@ const SearchResultView = (props: IProps) => {
     <OuterContainer>
       {_.map(resultToRenders, (command: any, offset: number) => {
         const itemIdx: number = startIdx + offset;
-        const iconPath: string | undefined = determineIconPath(command);
 
         return (
           <InnerContainer key={`searchResultViewItem-${offset}`}>
             <SearchResultItem
-              offset={offset}
-              selected={itemIdx === selectedItemIdx}
-              // If there is no title, shows command
-              title={command.title ? command.title : command.command}
-              subtitle={command.subtitle}
               arg={command.arg}
-              text={command.text}
-              icon={iconPath}
-              valid={command.valid}
               autocomplete={command.autocomplete}
-              variables={command.variables}
-              onMouseoverHandler={() => onMouseoverHandler(itemIdx)}
-              onDoubleClickHandler={onDoubleClickHandler}
+              icon={Core.determineIconPath(command, {
+                supportedImgFormats,
+              })}
+              extensionDefaultIcon={Core.determineDefaultIconPath(command)}
               iconRightMargin={iconRightMargin}
               itemBackgroundColor={itemBackgroundColor}
               itemFontColor={itemFontColor}
               itemHeight={itemHeight}
               itemLeftPadding={itemLeftPadding}
               itemTitleSubtitleMargin={itemTitleSubtitleMargin}
+              noShowIcon={noShowIcon}
+              offset={offset}
+              onDoubleClickHandler={onDoubleClickHandler}
+              onMouseoverHandler={() => onMouseoverHandler(itemIdx)}
+              searchWindowTransparency={searchWindowTransparency}
+              searchWindowWidth={searchWindowWidth}
+              selected={itemIdx === selectedItemIdx}
               selectedItemBackgroundColor={selectedItemBackgroundColor}
               selectedItemFontColor={selectedItemFontColor}
+              subtitle={command.subtitle}
               subtitleFontSize={subtitleFontSize}
+              text={command.text}
+              // If there is no title, shows command
+              title={command.title ? command.title : command.command}
               titleFontSize={titleFontSize}
-              searchWindowWidth={searchWindowWidth}
-              searchWindowTransparency={searchWindowTransparency}
-              noShowIcon={noShowIcon}
+              valid={command.valid}
+              variables={command.variables}
             />
           </InnerContainer>
         );
