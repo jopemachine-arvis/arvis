@@ -77,7 +77,7 @@ export default () => {
               destWindow: 'clipboardHistoryWindow',
               actionType: actionTypes.PUSH_CLIPBOARD_STORE,
               args: JSON.stringify({
-                text: clipboard.readText(),
+                text: copiedText,
                 date: new Date().getTime(),
               }),
             });
