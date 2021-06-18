@@ -166,6 +166,41 @@ export default (mainWindow: BrowserWindow) => {
         type: 'separator',
       },
       {
+        label: 'Open Preference Window Debugger',
+        click() {
+          WindowManager.getInstance()
+            .getPreferenceWindow()
+            .webContents.openDevTools();
+        },
+      },
+      {
+        label: 'Open ClipboardHistory Window Debugger',
+        click() {
+          WindowManager.getInstance()
+            .getClipboardHistoryWindow()
+            .webContents.openDevTools();
+        },
+      },
+      {
+        label: 'Open LargeText Window Debugger',
+        click() {
+          WindowManager.getInstance()
+            .getLargeTextWindow()
+            .webContents.openDevTools();
+        },
+      },
+      {
+        label: 'Open Quicklook Window Debugger',
+        click() {
+          WindowManager.getInstance()
+            .getQuicklookWindow()
+            .webContents.openDevTools();
+        },
+      },
+      {
+        type: 'separator',
+      },
+      {
         label: 'Open installed extension folder',
         click() {
           open(Core.path.installedDataPath);

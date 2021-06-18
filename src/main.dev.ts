@@ -126,9 +126,6 @@ app.on('ready', () => {
         .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
     }
 
-    // * For debugging
-    // windowManager.getClipboardHistoryWindow().webContents.openDevTools();
-
     startFileWatcher();
     initIPCHandlers();
   };
