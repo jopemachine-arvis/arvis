@@ -4,6 +4,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
+import useForceUpdate from 'use-force-update';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
@@ -14,7 +15,6 @@ import {
   SearchBar,
   SearchResultView,
 } from '@components/index';
-
 import {
   InfoContainer,
   OuterContainer,
@@ -27,10 +27,7 @@ import './index.global.css';
 
 const maxShowOnScreen = 15;
 
-const transformStore = (
-  store: any[],
-  options: { maxShowOnWindow: number }
-): any[] => {
+const transformStore = (store: any[]): any[] => {
   const items = store.map((item) => {
     return {
       title: item.text,
@@ -38,7 +35,7 @@ const transformStore = (
     };
   });
 
-  return items.reverse().slice(0, options.maxShowOnWindow);
+  return items.reverse();
 };
 
 export default function ClipboardHistoryWindow() {
@@ -53,21 +50,27 @@ export default function ClipboardHistoryWindow() {
   } = useSelector((state: StateType) => state.clipboard_history);
 
   const [items, setItems] = useState<any[]>(
-    transformStore(store, { maxShowOnWindow: max_show_on_window })
+    transformStore(store).slice(0, max_show_on_window)
   );
 
   const [originalItems, setOriginalItems] = useState<any[]>(
-    transformStore(store, { maxShowOnWindow: max_show_on_window })
+    transformStore(store)
   );
-
-  const dispatch = useDispatch();
 
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
 
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
+  const forceUpdate = useForceUpdate();
+
+  const dispatch = useDispatch();
+
   const maxShowOnWindowRef = useRef<number>(max_show_on_window);
+  const storeRef = useRef<any>(store);
+
+  storeRef.current = store;
+  maxShowOnWindowRef.current = max_show_on_window;
 
   const {
     indexInfo,
@@ -96,15 +99,16 @@ export default function ClipboardHistoryWindow() {
     },
 
     renewClipboardStore: (e: IpcRendererEvent) => {
-      setItems(
-        transformStore(store, { maxShowOnWindow: maxShowOnWindowRef.current })
-      );
-      setOriginalItems(
-        transformStore(store, { maxShowOnWindow: maxShowOnWindowRef.current })
-      );
-      clearIndexInfo();
-      setInputStr('');
-      focusSearchbar();
+      forceUpdate();
+      // wait until force update is done.
+      setTimeout(() => {
+        const newItems = transformStore(storeRef.current);
+        setItems(newItems.slice(0, maxShowOnWindowRef.current));
+        setOriginalItems(transformStore(storeRef.current));
+        clearIndexInfo();
+        setInputStr('');
+        focusSearchbar();
+      }, 15);
     },
 
     pinClipboardHistoryWindow: (
@@ -136,14 +140,8 @@ export default function ClipboardHistoryWindow() {
   }, []);
 
   useEffect(() => {
-    maxShowOnWindowRef.current = max_show_on_window;
-  });
-
-  useEffect(() => {
-    setItems(transformStore(store, { maxShowOnWindow: max_show_on_window }));
-    setOriginalItems(
-      transformStore(store, { maxShowOnWindow: max_show_on_window })
-    );
+    setItems(transformStore(store).slice(0, max_show_on_window));
+    setOriginalItems(transformStore(store));
   }, [max_size, max_show_on_window]);
 
   const infoContainerOnWheelHandler = () => {

@@ -297,14 +297,6 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {any} item
-   */
-  const itemCopyHandler = (item: any) => {
-    if (!item) return;
-    clipboard.writeText(item.title);
-  };
-
-  /**
    * @summary
    */
   const onKeydownHandler = async () => {
@@ -352,8 +344,6 @@ const useClipboardHistoryWindowControl = ({
       if (!isPinned) {
         ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
       }
-    } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'C') {
-      itemCopyHandler(items[selectedItemIdx]);
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
       searchByNextInput();
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'Z') {

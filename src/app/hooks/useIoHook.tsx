@@ -83,6 +83,7 @@ export default () => {
             });
           }
         }, 25);
+        return;
       }
 
       if (isShiftKey(e)) {
