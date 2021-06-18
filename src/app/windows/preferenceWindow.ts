@@ -1,5 +1,5 @@
 import path from 'path';
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import constants from '../constants';
 
 const createPreferenceWindow = () => {
@@ -38,10 +38,20 @@ const createPreferenceWindow = () => {
     }
   });
 
+  preferenceWindow.on('show', (e: any) => {
+    if (process.platform === 'darwin') {
+      app.dock.show();
+    }
+  });
+
   preferenceWindow.on('close', (e: any) => {
     e.preventDefault();
     if (preferenceWindow) {
       preferenceWindow.hide();
+    }
+
+    if (process.platform === 'darwin') {
+      app.dock.hide();
     }
   });
 

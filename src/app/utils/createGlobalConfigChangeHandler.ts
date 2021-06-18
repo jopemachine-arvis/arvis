@@ -17,7 +17,7 @@ export const createGlobalConfigChangeHandler =
     dispatch,
   }: {
     destWindow?: string;
-    destWindows?: string[];
+    destWindows?: string[] | undefined;
     dispatch: Dispatch<any>;
   }) =>
   (e: React.FormEvent<HTMLInputElement>, actionType: string) => {

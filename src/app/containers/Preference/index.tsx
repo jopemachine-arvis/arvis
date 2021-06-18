@@ -4,12 +4,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Core } from 'arvis-core';
+import fse from 'fs-extra';
+import path from 'path';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { validate as reduxStoreValidate } from '@helper/reduxStoreValidator';
 import { sleep } from '@utils/index';
 import _ from 'lodash';
 import { UIConfigActions } from '@redux/actions';
@@ -20,8 +23,9 @@ import WorkflowPage from './Workflow';
 import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
 import ClipboardHistoryPage from './ClipboardHistory';
-import AdvancedHistoryPage from './Advanced/AdvanceHistory';
+import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
+import AdvancedPluginPage from './Advanced/AdvancedPlugin';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
@@ -50,6 +54,8 @@ export default function PreferenceWindow() {
 
   const [fontList, setFontList] = useState<string[]>([]);
 
+  const store = useStore();
+
   const dispatch = useDispatch();
 
   const { global_font } = useSelector(
@@ -65,6 +71,19 @@ export default function PreferenceWindow() {
       initializePluginWorkspace: false,
     }).catch(console.error);
   }, []);
+
+  const resetReduxStore = () => {
+    fse
+      .writeFile(
+        path.resolve(Core.path.tempPath, 'arvis-redux-store-reset'),
+        ''
+      )
+      .then(() => {
+        ipcRenderer.send(IPCRendererEnum.reloadApplication);
+        return null;
+      })
+      .catch(console.error);
+  };
 
   /**
    * @summary Used to receive dispatched action from different window
@@ -108,6 +127,10 @@ export default function PreferenceWindow() {
     ) => {
       Core.setExternalEnvs(JSON.parse(externalEnvs));
     },
+
+    resetReduxStoreCallback: (e: IpcRendererEvent) => {
+      resetReduxStore();
+    },
   };
 
   const checkExtensionsUpdate = () => {
@@ -135,7 +158,16 @@ export default function PreferenceWindow() {
       .catch(console.error);
   };
 
+  const preventInvalidReduxState = () => {
+    // Prevent invalid states occurring from updates
+    if (!reduxStoreValidate(store.getState())) {
+      resetReduxStore();
+    }
+  };
+
   useEffect(() => {
+    preventInvalidReduxState();
+
     Core.setStoreAvailabiltyChecker(setStoreAvailable);
     loadWorkflowsInfo();
     loadPluginsInfo();
@@ -157,6 +189,10 @@ export default function PreferenceWindow() {
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(
+      IPCMainEnum.resetReduxStore,
+      ipcCallbackTbl.resetReduxStoreCallback
+    );
+    ipcRenderer.on(
       IPCMainEnum.autoFitSearchWindowSizeRet,
       ipcCallbackTbl.autoFitSearchWindowSizeRet
     );
@@ -173,6 +209,10 @@ export default function PreferenceWindow() {
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
       ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
       ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(
+        IPCMainEnum.resetReduxStore,
+        ipcCallbackTbl.resetReduxStoreCallback
+      );
       ipcRenderer.off(
         IPCMainEnum.getElectronEnvsRet,
         ipcCallbackTbl.getElectronEnvsRet
@@ -203,6 +243,9 @@ export default function PreferenceWindow() {
         break;
       case PreferencePage.AdvancedDebugging:
         main = <AdvancedDebuggingPage />;
+        break;
+      case PreferencePage.AdvancedPlugin:
+        main = <AdvancedPluginPage />;
         break;
       case PreferencePage.Appearance:
         main = <AppearancePage />;

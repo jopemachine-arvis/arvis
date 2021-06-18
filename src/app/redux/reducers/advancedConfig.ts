@@ -41,10 +41,19 @@ export default (state = {}, action: any) => {
         ...state,
         max_action_log_count: payload.arg,
       };
+    case AdvancedConfigActionTypes.SET_ASYNC_PLUGIN_TIMER:
+      return {
+        ...state,
+        async_plugin_timer: payload.arg,
+      };
     default:
       return state;
   }
 };
+
+export function getAsyncPluginTimer(state: StateType) {
+  return state.advanced_config.async_plugin_timer;
+}
 
 export function getMaxActionLogCount(state: StateType) {
   return state.advanced_config.max_action_log_count;

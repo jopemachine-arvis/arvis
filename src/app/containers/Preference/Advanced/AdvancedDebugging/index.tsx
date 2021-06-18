@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { ipcRenderer } from 'electron';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
 import { StateType } from '@redux/reducers/types';
 import { makeActionCreator } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { Core } from 'arvis-core';
 import { OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
@@ -19,12 +18,7 @@ export default function AdvancedDebugging() {
     debugging_args,
     debugging_scriptfilter,
     debugging_plugin,
-    max_action_log_count,
   } = useSelector((state: StateType) => state.advanced_config);
-
-  useEffect(() => {
-    Core.history.setMaxLogCnt(max_action_log_count);
-  }, [max_action_log_count]);
 
   const dispatch = useDispatch();
 

@@ -54,6 +54,10 @@ export default function SearchWindow() {
     (state: StateType) => state.advanced_config
   );
 
+  const { async_plugin_timer, max_action_log_count } = useSelector(
+    (state: StateType) => state.advanced_config
+  );
+
   const [storeAvailable, setStoreAvailable] = useState<boolean>(false);
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
@@ -203,7 +207,6 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { externalEnvs }: { externalEnvs: string }
     ) => {
-      console.log('abc', JSON.parse(externalEnvs));
       Core.setExternalEnvs(JSON.parse(externalEnvs));
     },
   };
@@ -300,6 +303,14 @@ export default function SearchWindow() {
       renewHotkeys();
     }
   }, [toggle_search_window_hotkey, clipboard_history_hotkey]);
+
+  useEffect(() => {
+    Core.setAsyncPluginTimer(async_plugin_timer);
+  }, [async_plugin_timer]);
+
+  useEffect(() => {
+    Core.history.setMaxLogCnt(max_action_log_count);
+  }, [max_action_log_count]);
 
   return (
     <OuterContainer

@@ -29,6 +29,7 @@ export default {
     title_font_size: 17,
   },
   advanced_config: {
+    async_plugin_timer: 100,
     debugging_action_type: true,
     debugging_args: true,
     debugging_plugin: true,

@@ -107,6 +107,12 @@ export default function Sidebar(props: IProps) {
                 History
               </MenuItem>
               <MenuItem
+                onClick={() => setPage(PreferencePage.AdvancedPlugin)}
+                active={page === PreferencePage.AdvancedPlugin}
+              >
+                Plugin
+              </MenuItem>
+              <MenuItem
                 onClick={() => setPage(PreferencePage.AdvancedDebugging)}
                 active={page === PreferencePage.AdvancedDebugging}
               >

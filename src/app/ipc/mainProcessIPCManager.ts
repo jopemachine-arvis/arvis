@@ -34,6 +34,8 @@ import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
+import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
+import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
@@ -46,6 +48,7 @@ import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/cont
 export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.autoFitSearchWindowSize, autoFitSearchWindowSize);
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
+  ipcMain.on(IPCRendererEnum.getElectronEnvs, getElectronEnvs);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideLargeTextWindow, hideLargeTextWindow);
   ipcMain.on(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
@@ -56,6 +59,7 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
+  ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.renewPlugin, renewPlugin);
   ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
@@ -68,9 +72,9 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
   ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
   ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
+  ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
-  ipcMain.on(IPCRendererEnum.getElectronEnvs, getElectronEnvs);
 
   ipcMain.on(
     IPCRendererEnum.popupClipboardHistoryContextMenu,

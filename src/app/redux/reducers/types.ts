@@ -30,6 +30,7 @@ export type StateType = {
     title_font_size: number;
   };
   advanced_config: {
+    async_plugin_timer: number;
     debugging_action_type: boolean;
     debugging_args: boolean;
     debugging_plugin: boolean;

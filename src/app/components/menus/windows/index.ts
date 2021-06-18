@@ -5,6 +5,7 @@ import path from 'path';
 import { debugInfo } from 'electron-util';
 import { electronStore } from '../../../store/electronStorage';
 import { WindowManager } from '../../../windows/windowManager';
+import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
 
 export default (mainWindow: BrowserWindow) => [
   {
@@ -111,6 +112,17 @@ export default (mainWindow: BrowserWindow) => [
             WindowManager.getInstance().getPreferenceWindow(),
             { title: 'Debug info', message: debugInfo() }
           );
+        },
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Initialize redux setting',
+        click() {
+          WindowManager.getInstance()
+            .getPreferenceWindow()
+            .webContents.send(IPCMainEnum.resetReduxStore);
         },
       },
       {

@@ -1,7 +1,6 @@
 /* eslint-disable no-lonely-if */
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable no-new */
-/* eslint global-require: off, no-console: off */
 
 /**
  * This module executes inside of electron's main process. You can start
@@ -29,6 +28,7 @@ import installExtensions from './app/config/extensionInstaller';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
+import { reduxStoreResetHandler } from './app/store/reduxStoreResetHandler';
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -38,6 +38,8 @@ if (!gotTheLock) {
 
 ElectronStore.initRenderer();
 Core.path.initializePath();
+
+reduxStoreResetHandler();
 
 // Below tray variable should be here and be exported to exclude itself from the GC targets
 export let tray: Electron.Tray;
@@ -131,7 +133,7 @@ app.on('ready', () => {
     initIPCHandlers();
   };
 
-  if (process.env.NODE_ENV === 'production' && process.platform === 'darwin') {
+  if (process.platform === 'darwin') {
     app.dock.hide();
   }
 

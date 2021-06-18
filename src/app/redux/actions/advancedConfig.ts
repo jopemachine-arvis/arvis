@@ -9,6 +9,7 @@ export const actionTypes = {
   SET_DEBUGGING_WORKSTACK: '@advancedConfig/SET_DEBUGGING_WORKSTACK',
   SET_INSTALL_ALFRED_WORKFLOW: '@advancedConfig/SET_INSTALL_ALFRED_WORKFLOW',
   SET_MAX_ACTION_LOG_COUNT: '@advancedConfig/SET_MAX_ACTION_LOG_COUNT',
+  SET_ASYNC_PLUGIN_TIMER: '@advancedConfig/SET_ASYNC_PLUGIN_TIMER',
 };
 
 export const setMaxActionLogCount = makeActionCreator(
@@ -48,5 +49,10 @@ export const setDebuggingArgs = makeActionCreator(
 
 export const setDebuggingScriptFilter = makeActionCreator(
   actionTypes.SET_DEBUGGING_SCRIPTFILTER,
+  'arg'
+);
+
+export const setAsyncPluginTimer = makeActionCreator(
+  actionTypes.SET_ASYNC_PLUGIN_TIMER,
   'arg'
 );
