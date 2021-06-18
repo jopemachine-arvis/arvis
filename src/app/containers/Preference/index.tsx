@@ -101,6 +101,13 @@ export default function PreferenceWindow() {
     ) => {
       dispatch(UIConfigActions.setSearchWindowWidth(width));
     },
+
+    getElectronEnvsRet: (
+      e: IpcRendererEvent,
+      { externalEnvs }: { externalEnvs: string }
+    ) => {
+      Core.setExternalEnvs(JSON.parse(externalEnvs));
+    },
   };
 
   const checkExtensionsUpdate = () => {
@@ -134,7 +141,17 @@ export default function PreferenceWindow() {
     loadPluginsInfo();
     checkExtensionsUpdate();
 
+    Core.getSystemPaths()
+      .then((result) => {
+        Core.setMacPathsEnv(result);
+        return null;
+      })
+      .catch(console.error);
+
     ipcRenderer.send(IPCRendererEnum.getSystemFont);
+    ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
+      sourceWindow: 'preferenceWindow',
+    });
 
     ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
@@ -142,6 +159,10 @@ export default function PreferenceWindow() {
     ipcRenderer.on(
       IPCMainEnum.autoFitSearchWindowSizeRet,
       ipcCallbackTbl.autoFitSearchWindowSizeRet
+    );
+    ipcRenderer.on(
+      IPCMainEnum.getElectronEnvsRet,
+      ipcCallbackTbl.getElectronEnvsRet
     );
     ipcRenderer.on(
       IPCMainEnum.setPreferencePage,
@@ -152,6 +173,10 @@ export default function PreferenceWindow() {
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
       ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
       ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(
+        IPCMainEnum.getElectronEnvsRet,
+        ipcCallbackTbl.getElectronEnvsRet
+      );
       ipcRenderer.off(
         IPCMainEnum.autoFitSearchWindowSizeRet,
         ipcCallbackTbl.autoFitSearchWindowSizeRet

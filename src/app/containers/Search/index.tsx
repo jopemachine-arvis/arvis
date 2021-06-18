@@ -198,6 +198,14 @@ export default function SearchWindow() {
     pinSearchWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
       setIsPinned(bool);
     },
+
+    getElectronEnvsRet: (
+      e: IpcRendererEvent,
+      { externalEnvs }: { externalEnvs: string }
+    ) => {
+      console.log('abc', JSON.parse(externalEnvs));
+      Core.setExternalEnvs(JSON.parse(externalEnvs));
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
@@ -206,6 +214,10 @@ export default function SearchWindow() {
     ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
     ipcRenderer.on(IPCMainEnum.pinSearchWindow, ipcCallbackTbl.pinSearchWindow);
+    ipcRenderer.on(
+      IPCMainEnum.getElectronEnvsRet,
+      ipcCallbackTbl.getElectronEnvsRet
+    );
     ipcRenderer.on(
       IPCMainEnum.registerAllShortcuts,
       ipcCallbackTbl.registerAllShortcuts
@@ -221,6 +233,10 @@ export default function SearchWindow() {
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
     ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.off(
+      IPCMainEnum.getElectronEnvsRet,
+      ipcCallbackTbl.getElectronEnvsRet
+    );
     ipcRenderer.off(
       IPCMainEnum.pinSearchWindow,
       ipcCallbackTbl.pinSearchWindow
@@ -255,12 +271,17 @@ export default function SearchWindow() {
     loadWorkflowsInfo();
     registerWindowUpdater();
 
+    ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
+      sourceWindow: 'searchWindow',
+    });
+
     Core.getSystemPaths()
       .then((result) => {
         Core.setMacPathsEnv(result);
         return null;
       })
       .catch(console.error);
+
     return unsubscribe;
   }, []);
 

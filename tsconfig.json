@@ -3,6 +3,7 @@
     "baseUrl": "src",
     "paths": {
       "@components/*": ["app/components/*"],
+      "@config/*": ["app/config/*"],
       "@constants/*": ["app/constants/*"],
       "@containers/*": ["app/containers/*"],
       "@helper/*": ["app/helper/*"],
