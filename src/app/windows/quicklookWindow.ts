@@ -4,7 +4,7 @@ import constants from '../constants';
 
 const createQuicklookWindow = () => {
   const quicklookWindow = new BrowserWindow({
-    title: 'Quicklook',
+    title: 'QuicklookWindow',
     center: true,
     show: false,
     frame: true,

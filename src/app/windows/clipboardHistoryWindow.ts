@@ -19,7 +19,7 @@ const createClipboardHistoryWindow = (eventHandlers: Map<string, Function>) => {
     alwaysOnTop: true,
     transparent: true,
     webPreferences: {
-      accessibleTitle: 'arvis-clipboardHistoryWindow',
+      accessibleTitle: 'arvis-clipboard-history-window',
       contextIsolation: false,
       experimentalFeatures: false,
       nodeIntegration: true,

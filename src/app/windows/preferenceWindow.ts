@@ -14,6 +14,7 @@ const createPreferenceWindow = () => {
     minWidth: constants.preferenceMinWindowWidth,
     minHeight: constants.preferenceMinWindowHeight,
     webPreferences: {
+      accessibleTitle: 'arvis-preference-window',
       contextIsolation: false,
       nodeIntegration: true,
       enableRemoteModule: true,

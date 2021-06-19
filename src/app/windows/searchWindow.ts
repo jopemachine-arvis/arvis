@@ -29,7 +29,7 @@ const createSearchWindow = ({
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences: {
-      accessibleTitle: 'arvis-searchwindow',
+      accessibleTitle: 'arvis-search-window',
       contextIsolation: false,
       devTools: true,
       experimentalFeatures: false,
