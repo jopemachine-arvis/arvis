@@ -66,7 +66,7 @@ Directory for a user's "My Documents".
 
 ### arvis_platform_downloads
 
-The current executable file.
+Directory for a user's "Downloads".
 
 ### arvis_platform_exe
 
