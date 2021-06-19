@@ -72,11 +72,15 @@ export default function PreferenceWindow() {
     }).catch(console.error);
   }, []);
 
-  const resetReduxStore = () => {
+  const resetReduxStore = ({
+    resetOnlyInvalid,
+  }: {
+    resetOnlyInvalid: boolean;
+  }) => {
     fse
       .writeFile(
         path.resolve(Core.path.tempPath, 'arvis-redux-store-reset'),
-        ''
+        resetOnlyInvalid ? store.getState() : {}
       )
       .then(() => {
         ipcRenderer.send(IPCRendererEnum.reloadApplication);
@@ -129,7 +133,7 @@ export default function PreferenceWindow() {
     },
 
     resetReduxStoreCallback: (e: IpcRendererEvent) => {
-      resetReduxStore();
+      resetReduxStore({ resetOnlyInvalid: false });
     },
   };
 
@@ -161,7 +165,7 @@ export default function PreferenceWindow() {
   const preventInvalidReduxState = () => {
     // Prevent invalid states occurring from updates
     if (!reduxStoreValidate(store.getState())) {
-      resetReduxStore();
+      resetReduxStore({ resetOnlyInvalid: true });
     }
   };
 
