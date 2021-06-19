@@ -1,9 +1,9 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import constants from '../constants';
+import pkg from '../config/pkg';
 
 const createPreferenceWindow = () => {
-  const pkg = require('../../package.json');
   const preferenceWindow: BrowserWindow = new BrowserWindow({
     title: `Arvis (alpha v${pkg.version})`,
     show: false,

@@ -1,7 +1,9 @@
 import { app } from 'electron';
+import pkg from './pkg';
 
 // Ref: https://www.electronjs.org/docs/api/app#appgetpathname
 export const externalEnvs = {
+  arvis_version: pkg.version,
   arvis_platform_home: app.getPath('home'), // User's home directory.
   arvis_platform_cache: app.getPath('cache'), //
   arvis_platform_crashDumps: app.getPath('crashDumps'), // Directory where crash dumps are stored.
