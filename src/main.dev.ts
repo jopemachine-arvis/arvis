@@ -100,10 +100,6 @@ app.on('ready', () => {
       process.env.DEBUG_PROD === 'true'
     ) {
       installExtensions();
-      windowManager.getSearchWindow().webContents.openDevTools({
-        mode: 'undocked',
-        activate: true,
-      });
     }
 
     if (process.env.NODE_ENV === 'production') {
