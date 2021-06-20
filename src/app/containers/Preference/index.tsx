@@ -78,7 +78,7 @@ export default function PreferenceWindow() {
     resetOnlyInvalid: boolean;
   }) => {
     fse
-      .writeFile(
+      .writeJson(
         path.resolve(Core.path.tempPath, 'arvis-redux-store-reset'),
         resetOnlyInvalid ? store.getState() : {}
       )

@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable promise/no-nesting */
 /* eslint-disable no-restricted-syntax */
 import { Core } from 'arvis-core';
@@ -21,6 +22,8 @@ export const reduxStoreResetHandler = () => {
 
             const outerKeys = Object.keys(prevStore);
             for (const outerKey of outerKeys) {
+              if (!(updatedInitialState as any)[outerKey]) continue;
+
               const innerObj = prevStore[outerKey];
               const innerKeys = Object.keys(innerObj);
               for (const innerKey of innerKeys) {
@@ -39,8 +42,8 @@ export const reduxStoreResetHandler = () => {
                 spaces: 2,
               }
             );
-            fse.remove(resetFile);
 
+            fse.removeSync(resetFile);
             return null;
           })
           .catch(console.error);
