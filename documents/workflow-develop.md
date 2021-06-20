@@ -46,6 +46,14 @@ Check the format of `scriptFilter` to use `scriptFilter` in your `workflow`, `pl
 
 [Click me to check Scriptfilter JSON format](./scriptfilter-json-format-description.md)
 
+## Scriptfilter XML format
+
+Do not recommend using XML format scriptfilter.
+
+Lots of alfred workflow uses XML format's scriptfilter, so I've implemented some functions converting scriptfilter's xml format to json format for compatibility.
+
+This logic is incomplete and not necessary in new extensions.
+
 ## Debugging workflow, plugin
 
 [How to debug workflow, plugin](./debugging-description.md)
