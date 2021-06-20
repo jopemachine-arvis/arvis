@@ -13,7 +13,8 @@ const { app } = require('../global');
 describe('Integration test', function () {
   this.timeout(setting.timeout);
 
-  it('Test 2 - scriptFilter', async function () {
+  // To do:: Need to improve async action chain test
+  it('Test 4 - muitiple, async action chain', async function () {
     await app.client.waitUntilWindowLoaded();
     await app.client.switchWindow('searchWindow');
 
@@ -23,22 +24,18 @@ describe('Integration test', function () {
     await sleep(500);
 
     robot.keyTap('t');
-    robot.keyTap('2');
+    robot.keyTap('4');
 
-    await app.client.waitUntilTextExists('#searchResultItemTitle-0', 'scriptfilter item 1');
+    await app.client.waitUntilTextExists('#searchResultItemTitle-0', 'Test 4 - muitiple, async action chain');
 
     const itemTitle = await (await app.client.$('#searchResultItemTitle-0')).getText();
-    const itemSubTitle = await (await app.client.$('#searchResultItemSubTitle-0')).getText();
 
-    assert.strictEqual(itemTitle, 'scriptfilter item 1');
-    assert.strictEqual(itemSubTitle, 'subtitle 1');
+    assert.strictEqual(itemTitle, 'Test 4 - muitiple, async action chain');
 
     robot.keyTap('enter');
 
-    await sleep(500);
+    await sleep(100);
 
-    const copiedText = await app.electron.clipboard.readText();
-
-    assert.strictEqual(copiedText, 'Test 2 - scriptFilter, result');
+    assert.strictEqual(await app.electron.clipboard.readText(), 'Test 4 - muitiple, async action chain, result 1');
   });
 });

@@ -10,7 +10,7 @@ const setting = require('../setting.json');
 const { sleep } = require('../utils');
 const { app } = require('../global');
 
-describe('Application launch', function () {
+describe('Integration test', function () {
   this.timeout(setting.timeout);
 
   it('Test 1 - keyword', async function () {

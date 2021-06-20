@@ -18,7 +18,7 @@ Arvis module not directly related to electron, renderer
 
 ## module aliasing
 
-Currently, module aliasing is applied on `renderer process`'s scripts.
+Currently, module aliasing is applied on only `renderer process`'s scripts.
 
 To apply module aliasing on main process, you might need to update some webpack config.
 
