@@ -195,7 +195,7 @@ const useSearchWindowControl = ({
       }
       // Execute Script filter
       else if (workManager.getTopWork().type === 'scriptFilter') {
-        const hasRequiredArg =
+        const scriptfilterShouldBeReRun =
           Core.hasRequiredArg({
             item: workManager.getTopWork().actionTrigger,
             inputStr: updatedInput,
@@ -203,11 +203,15 @@ const useSearchWindowControl = ({
           Core.isInputMeetWithspaceCond({
             item: workManager.getTopWork().actionTrigger,
             inputStr: updatedInput,
+          }) &&
+          !Core.isArgTypeNoButHaveArg({
+            item: workManager.getTopWork().actionTrigger,
+            inputStr: updatedInput,
           });
 
         // Execute current command's script filter
         if (
-          hasRequiredArg &&
+          scriptfilterShouldBeReRun &&
           updatedInput.startsWith(workManager.getTopWork().input)
         ) {
           Core.scriptFilterExcute(updatedInput);

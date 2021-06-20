@@ -80,7 +80,7 @@ const SearchResultView = (props: IProps) => {
   }, [searchResult]);
 
   return (
-    <OuterContainer>
+    <OuterContainer id="searchResultView">
       {_.map(resultToRenders, (command: any, offset: number) => {
         const itemIdx: number = startIdx + offset;
 
