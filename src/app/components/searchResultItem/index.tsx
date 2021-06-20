@@ -97,6 +97,7 @@ const SearchResultItem = (props: IProps) => {
 
     return (
       <IconImg
+        id={`searchResultItemIcon-${offset}`}
         ref={iconRef}
         style={iconStyle}
         src={icon ?? DefaultImg}
@@ -139,6 +140,7 @@ const SearchResultItem = (props: IProps) => {
       >
         {/* If there is no Title or Subtitle, the other item appears in the center */}
         <Title
+          id={`searchResultItemTitle-${offset}`}
           style={{
             fontSize: titleFontSize,
             color: selected ? selectedItemFontColor : itemFontColor,
@@ -147,6 +149,7 @@ const SearchResultItem = (props: IProps) => {
           {title}
         </Title>
         <SubTitle
+          id={`searchResultItemSubTitle-${offset}`}
           style={{
             fontSize: subtitleFontSize,
             marginTop: itemTitleSubtitleMargin,

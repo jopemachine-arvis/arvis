@@ -9,6 +9,8 @@ import { WindowManager } from '../windows';
 export const openArvisFile = (file: string) => {
   const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
 
+  preferenceWindow.show();
+
   if (file.endsWith('arvisworkflow')) {
     preferenceWindow.webContents.send(IPCMainEnum.setPreferencePage, {
       pageToOpen: PreferencePage.Workflow,

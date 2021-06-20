@@ -11,7 +11,9 @@ const createSearchWindow = ({
   largeTextWindow: BrowserWindow;
 }) => {
   const searchWindow = new BrowserWindow({
-    title: 'Arvis',
+    // Need to be tested
+    paintWhenInitiallyHidden: true,
+    title: 'SearchWindow',
     show: false,
     frame: false,
     transparent: true,

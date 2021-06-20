@@ -1,0 +1,15 @@
+{
+    "toggle_search_window_hotkey": {
+        "key": "space",
+        "modifier": [
+            "command"
+        ]
+    },
+    "timeout": 20000,
+    "initialization_time": 7000,
+    "chrome_driver_args": [
+        "--no-sandbox",
+        "--whitelisted-ips=",
+        "--disable-dev-shm-usage"
+    ]
+}

@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <script>
+      // In development mode, title should be below string to be tested in spectron
+      if (process?.env?.NODE_ENV === 'development') {
+        document.title = global.location.search.split('?window=')[1];
+      }
+
       (() => {
         if (process?.env?.NODE_ENV !== 'development') {
           const link = document.createElement('link');
