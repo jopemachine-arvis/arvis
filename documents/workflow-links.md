@@ -25,7 +25,7 @@ You can find `arvis-workflow` here.
 | [arvis-stock-price-workflow](https://github.com/jopemachine/arvis-stock-price-workflow) | O | O | O | Get the real-time stock price from US stock market! (Dow Jones, Nasdaq, S&P 500) - stonks stonks stonks |
 | [arvis-packagist](https://github.com/jopemachine/arvis-packagist) | O | O | O | Arvis workflow to search for PHP packages with Packagist |
 | [arvis-naver-dictionary-with-anki](https://github.com/jopemachine/arvis-naver-dictionary-with-anki) | O | O | O | English to Korean Naver dictionary workflow for Arvis |
-| [arvis-naversearch](https://github.com/jopemachine/https://github.com/jopemachine/arvis-naversearch) | X | O | O | Naver Search Workflow for Arvis |
+| [arvis-naversearch](https://github.com/jopemachine/arvis-naversearch) | X | O | O | Naver Search Workflow for Arvis |
 
 ## Mac only
 
