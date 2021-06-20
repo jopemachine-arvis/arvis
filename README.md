@@ -92,7 +92,7 @@ Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [alfred-to
 
 ## 🔧 Build and development
 
-[Build and development](./src/develop-arvis.md)
+[Build and development](./src/README.md)
 
 ## Contribution
 
