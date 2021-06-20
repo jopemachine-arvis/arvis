@@ -100,7 +100,7 @@ const SearchResultItem = (props: IProps) => {
         id={`searchResultItemIcon-${offset}`}
         ref={iconRef}
         style={iconStyle}
-        src={icon ?? DefaultImg}
+        src={icon ?? extensionDefaultIcon ?? DefaultImg}
         onError={(e) => {
           e.currentTarget.src = extensionDefaultIcon ?? DefaultImg;
         }}
