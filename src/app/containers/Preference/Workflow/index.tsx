@@ -43,11 +43,11 @@ import * as style from './style';
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
   const workflows = Core.getWorkflowList();
-  const workflowBundleIds = Object.keys(workflows).sort(
+  const workflowBundleIds = Object.keys(workflows).sort((a, b) =>
     alphaSort({
       natural: true,
-      descending: true,
-    })
+      caseInsensitive: true,
+    })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
   );
 
   const workflowBundleIdsRef = useRef<any>(workflowBundleIds);

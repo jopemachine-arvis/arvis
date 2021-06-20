@@ -42,11 +42,11 @@ import * as style from './style';
 
 export default function Plugin() {
   const plugins = Core.getPluginList();
-  const pluginBundleIds = Object.keys(plugins).sort(
+  const pluginBundleIds = Object.keys(plugins).sort((a, b) =>
     alphaSort({
       natural: true,
-      descending: true,
-    })
+      caseInsensitive: true,
+    })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
   );
 
   const pluginBundleIdsRef = useRef<any>(pluginBundleIds);
