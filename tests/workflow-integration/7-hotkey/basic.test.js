@@ -6,9 +6,9 @@ const robot = require('robotjs');
 const path = require('path');
 const fse = require('fs-extra');
 const pathExists = require('path-exists');
-const setting = require('../setting.json');
-const { sleep } = require('../utils');
-const { app } = require('../global');
+const setting = require('../../setting.json');
+const { sleep } = require('../../utils');
+const { app } = require('../../global');
 
 describe('Integration test', function () {
   this.timeout(setting.timeout);

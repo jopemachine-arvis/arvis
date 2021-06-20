@@ -6,14 +6,14 @@ const robot = require('robotjs');
 const path = require('path');
 const fse = require('fs-extra');
 const pathExists = require('path-exists');
-const setting = require('../setting.json');
-const { sleep } = require('../utils');
-const { app } = require('../global');
+const setting = require('../../setting.json');
+const { sleep } = require('../../utils');
+const { app } = require('../../global');
 
 describe('Integration test', function () {
   this.timeout(setting.timeout);
 
-  it('Test 9 - scriptFilter with argType', async function () {
+  it('Test 8 - scriptFilter with withspace false', async function () {
     await app.client.waitUntilWindowLoaded();
     await app.client.switchWindow('searchWindow');
 
@@ -23,7 +23,10 @@ describe('Integration test', function () {
     await sleep(500);
 
     robot.keyTap('t');
-    robot.keyTap('9');
+    robot.keyTap('8');
+    robot.keyTap('a');
+    robot.keyTap('b');
+    robot.keyTap('c');
 
     await app.client.waitUntilTextExists('#searchResultItemTitle-0', 'scriptfilter item 1');
 
@@ -33,11 +36,12 @@ describe('Integration test', function () {
     assert.strictEqual(itemTitle, 'scriptfilter item 1');
     assert.strictEqual(itemSubTitle, 'subtitle 1');
 
-    robot.keyTap('space');
+    robot.keyTap('enter');
+
     await sleep(500);
 
-    const result = await app.client.$('#searchResultItemTitle-0');
+    const copiedText = await app.electron.clipboard.readText();
 
-    assert.notStrictEqual(result.error, undefined);
+    assert.strictEqual(copiedText, 'Test 8 - scriptFilter with withspace false, result');
   });
 });
