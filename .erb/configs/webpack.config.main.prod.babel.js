@@ -38,6 +38,9 @@ export default merge(baseConfig, {
         parallel: true,
       }),
     ]
+
+    // Tip: For debugging, disable webpack minimizer
+    // minimizer: [],
   },
 
   plugins: [

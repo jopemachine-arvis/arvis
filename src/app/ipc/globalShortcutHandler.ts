@@ -18,7 +18,7 @@ const getWorkflowHotkeyPressHandler = ({
   hotKeyAction: any;
 }) => {
   const searchWindow = WindowManager.getInstance().getSearchWindow();
-  const actionTypes: string[] = hotKeyAction.action.map(
+  const actionTypes: string[] = hotKeyAction.actions.map(
     (item: any) => item.type
   );
 
@@ -29,7 +29,7 @@ const getWorkflowHotkeyPressHandler = ({
   // Force action to be executed after window shows up
   setTimeout(() => {
     searchWindow.webContents.send(IPCMainEnum.executeAction, {
-      action: hotKeyAction.action.map((item: any) => {
+      action: hotKeyAction.actions.map((item: any) => {
         item.bundleId = hotKeyAction.bundleId;
         return item;
       }),

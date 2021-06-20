@@ -28,7 +28,8 @@ before(async () => {
 });
 
 beforeEach(async () => {
-  console.log(chalk.bgGreenBright('Waiting for next test..'));
+  console.log(chalk.greenBright('Waiting for next test..'));
+  app.electron.clipboard.writeText('');
   await sleep(2000);
   console.log(chalk.cyan('Starting next test..'));
 });
