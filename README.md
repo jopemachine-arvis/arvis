@@ -68,6 +68,8 @@ Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugi
 
 * If permission error occurs when you try to install extension by npm command, open your shell `as administrator`.
 
+* Currently `followSymlink` is turned off to avoid [performance issue](https://github.com/jopemachine/arvis/issues/2). After installing extension by npm, you need to reload Arvis to apply the extension
+
 ## 📓 What is Workflow, Plugin?
 
 * [What is Workflow?](./documents/workflow-intro.md)
