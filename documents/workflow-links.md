@@ -26,6 +26,7 @@ You can find `arvis-workflow` here.
 | [arvis-packagist](https://github.com/jopemachine/arvis-packagist) | O | O | O | Arvis workflow to search for PHP packages with Packagist |
 | [arvis-naver-dictionary-with-anki](https://github.com/jopemachine/arvis-naver-dictionary-with-anki) | O | O | O | English to Korean Naver dictionary workflow for Arvis |
 | [arvis-naversearch](https://github.com/jopemachine/arvis-naversearch) | X | O | O | Naver Search Workflow for Arvis |
+| [arvis-simple-naver-search](https://github.com/jopemachine/arvis-simple-naver-search) | O | O | O | Simple naver search workflow for Arvis |
 
 ## Mac only
 
