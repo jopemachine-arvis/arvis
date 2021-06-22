@@ -216,10 +216,13 @@ const useSearchWindowControl = ({
         ) {
           Core.scriptFilterExcute(updatedInput);
         }
+        // To do:: Need to update here
+
         // If the command changes, clear stack and search commands
         else {
-          workManager.clearWorkStack();
-          await searchCommands();
+          // console.log('handleNormalInput');
+          // workManager.clearWorkStack();
+          // await searchCommands();
         }
       }
 
@@ -267,7 +270,7 @@ const useSearchWindowControl = ({
     let item;
     if (workManager.hasEmptyWorkStk()) {
       item = selectedItem;
-    } else if (workManager.getTopWork().type === 'scriptFilter') {
+    } else {
       item = workManager.getTopWork().actionTrigger;
     }
 
@@ -288,11 +291,7 @@ const useSearchWindowControl = ({
 
         Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
       } else {
-        await workManager
-          .handleItemPressEvent(selectedItem, inputStr, modifiers)
-          .catch((err: any) => {
-            console.error('Error occured in handleItemPressEvent!', err);
-          });
+        workManager.handleItemPressEvent(selectedItem, inputStr, modifiers);
       }
     } else {
       setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });

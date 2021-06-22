@@ -24,7 +24,6 @@ import {
   initIPCHandlers,
 } from './app/ipc/mainProcessIPCManager';
 import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
-import installExtensions from './app/config/extensionInstaller';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
@@ -94,13 +93,6 @@ app.on('ready', () => {
     tray = trayBuilder.buildTray();
 
     const windowManager = WindowManager.getInstance();
-
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
-      installExtensions();
-    }
 
     if (process.env.NODE_ENV === 'production') {
       new AppUpdater();

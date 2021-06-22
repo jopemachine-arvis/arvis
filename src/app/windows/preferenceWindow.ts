@@ -2,6 +2,7 @@ import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import constants from '../constants';
 import pkg from '../config/pkg';
+import installExtensions from '../config/extensionInstaller';
 
 const createPreferenceWindow = () => {
   const preferenceWindow: BrowserWindow = new BrowserWindow({
@@ -36,6 +37,15 @@ const createPreferenceWindow = () => {
     }
     if (process.env.START_MINIMIZED) {
       preferenceWindow.minimize();
+    }
+  });
+
+  preferenceWindow.webContents.on('did-frame-finish-load', () => {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
+      installExtensions();
     }
   });
 
