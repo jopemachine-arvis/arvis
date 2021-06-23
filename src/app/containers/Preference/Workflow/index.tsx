@@ -21,6 +21,7 @@ import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
+import open from 'open';
 import { StyledInput } from '@components/index';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -243,6 +244,18 @@ export default function Workflow() {
     forceUpdate();
   };
 
+  const itemDoubleClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    open(
+      path.resolve(
+        Core.path.getWorkflowInstalledPath(workflowBundleIds[idx]),
+        'arvis-workflow.json'
+      )
+    );
+  };
+
   const getDefaultIcon = (bundleId: string) => {
     const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
     const { defaultIcon } = workflows[bundleId];
@@ -321,6 +334,7 @@ export default function Workflow() {
         style={workflowItemStyle}
         key={`workflowItem-${idx}`}
         onClick={(e) => itemClickHandler(e, idx)}
+        onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
         onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
           workflowItemRightClickHandler(e, idx);
         }}

@@ -21,6 +21,7 @@ import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
+import open from 'open';
 import { StyledInput } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
@@ -243,6 +244,18 @@ export default function Plugin() {
     forceUpdate();
   };
 
+  const itemDoubleClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    open(
+      path.resolve(
+        Core.path.getPluginInstalledPath(pluginBundleIds[idx]),
+        'arvis-plugin.json'
+      )
+    );
+  };
+
   const getDefaultIcon = (bundleId: string) => {
     const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
     const { defaultIcon } = plugins[bundleId];
@@ -316,6 +329,7 @@ export default function Plugin() {
         style={pluginItemStyle}
         key={`pluginItem-${idx}`}
         onClick={(e) => itemClickHandler(e, idx)}
+        onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
         onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
           pluginItemRightClickHandler(e, idx);
         }}
