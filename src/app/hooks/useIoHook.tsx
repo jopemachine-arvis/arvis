@@ -45,15 +45,15 @@ export default () => {
   };
 
   const isAltKey = (e: IOHookKeyEvent) => {
-    return e.altKey;
+    return e.altKey && (e.keycode === 56 || e.keycode === 3640);
   };
 
   const isShiftKey = (e: IOHookKeyEvent) => {
-    return e.shiftKey;
+    return e.shiftKey && (e.keycode === 42 || e.keycode === 54);
   };
 
   const isCtrlKey = (e: IOHookKeyEvent) => {
-    return e.ctrlKey;
+    return e.ctrlKey && (e.keycode === 29 || e.keycode === 3613);
   };
 
   const cpyKeyPressed = (e: IOHookKeyEvent) => {
