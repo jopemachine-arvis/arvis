@@ -1651,6 +1651,11 @@
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
   integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
 
+"@types/encodeurl@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/encodeurl/-/encodeurl-1.0.0.tgz#b811667d62e53d01adc4bbbfc3b5a1ad99b4738a"
+  integrity sha512-iO2Q6xQOJ5DtOB6wJ2KIetFq9JRTbpzcKTe2aS6CCsa+W9KNWX2yXx9KeB5sY/nBfAWN43LkPg6SFB+ldsW9ZA==
+
 "@types/enzyme-adapter-react-16@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.0.6.tgz#8aca7ae2fd6c7137d869b6616e696d21bb8b0cec"

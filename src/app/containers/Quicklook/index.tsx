@@ -4,6 +4,7 @@
 import { ipcRenderer, IpcRendererEvent, remote } from 'electron';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import encodeUrl from 'encodeurl';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import useKey from '../../../use-key-capture/src';
 
@@ -24,7 +25,9 @@ export default function QuicklookWindow() {
       e: IpcRendererEvent,
       { url: urlToSet }: { url: string }
     ) => {
-      setUrl(urlToSet);
+      if (!urlToSet || urlToSet.trim() === '') return;
+      const encodedUrl = encodeUrl(urlToSet.split(' ').join('%20'));
+      setUrl(encodedUrl);
     },
   };
 
