@@ -44,6 +44,7 @@ export default function ClipboardHistoryWindow() {
   );
 
   const {
+    apply_mouse_hover_event,
     store,
     max_size,
     max_show: max_show_on_window,
@@ -86,6 +87,7 @@ export default function ClipboardHistoryWindow() {
     originalItems,
     setItems,
     isPinned,
+    applyMouseHoverEvent: apply_mouse_hover_event,
     maxShowOnScreen,
     maxShowOnWindow: max_show_on_window,
   });

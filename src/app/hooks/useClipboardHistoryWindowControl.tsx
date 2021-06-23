@@ -22,6 +22,7 @@ const useClipboardHistoryWindowControl = ({
   items,
   setItems,
   originalItems,
+  applyMouseHoverEvent,
   maxShowOnScreen,
   maxShowOnWindow,
   isPinned,
@@ -29,6 +30,7 @@ const useClipboardHistoryWindowControl = ({
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
+  applyMouseHoverEvent: boolean;
   maxShowOnScreen: number;
   maxShowOnWindow: number;
   isPinned: boolean;
@@ -43,6 +45,7 @@ const useClipboardHistoryWindowControl = ({
 
   const originalItemsRef = useRef<any[]>(originalItems);
   const maxShowOnWindowRef = useRef<number>(maxShowOnWindow);
+  const applyMouseHoverEventRef = useRef<boolean>(applyMouseHoverEvent);
 
   /**
    * @summary
@@ -177,7 +180,6 @@ const useClipboardHistoryWindowControl = ({
       clipboard.writeText(items[selectedItemIdx].title);
 
       ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
-      // Find new method to dispatching key to os
 
       setTimeout(() => {
         ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
@@ -216,10 +218,12 @@ const useClipboardHistoryWindowControl = ({
    * @param {number} index
    */
   const onMouseoverHandler = (index: number) => {
-    setIndexInfo({
-      itemStartIdx: indexInfo.itemStartIdx,
-      selectedItemIdx: index,
-    });
+    if (applyMouseHoverEventRef.current === true) {
+      setIndexInfo({
+        itemStartIdx: indexInfo.itemStartIdx,
+        selectedItemIdx: index,
+      });
+    }
   };
 
   /**
@@ -353,6 +357,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   useEffect(() => {
+    applyMouseHoverEventRef.current = applyMouseHoverEvent;
     maxShowOnWindowRef.current = maxShowOnWindow;
     originalItemsRef.current = originalItems;
   });

@@ -38,10 +38,19 @@ export default (state = {}, action: any) => {
         ...state,
         max_show: payload.arg,
       };
+    case ClipboardHistoryActionTypes.SET_APPLY_MOUSE_HOVER_EVENT_FLAG:
+      return {
+        ...state,
+        apply_mouse_hover_event: payload.arg,
+      };
     default:
       return state;
   }
 };
+
+export function getApplyMouseHoverEvent(state: StateType) {
+  return state.clipboard_history.apply_mouse_hover_event;
+}
 
 export function getClipboardHistoryHotkey(state: StateType) {
   return state.clipboard_history.hotkey;

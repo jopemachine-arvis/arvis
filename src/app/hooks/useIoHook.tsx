@@ -60,8 +60,8 @@ export default () => {
     return (
       isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
       keyCodeToString(e.keycode) === 'c' &&
-      !isShiftKey(e) &&
-      !isAltKey(e) &&
+      !e.shiftKey &&
+      !e.altKey &&
       ((e.metaKey && !e.ctrlKey) || (!e.metaKey && e.ctrlKey))
     );
   };

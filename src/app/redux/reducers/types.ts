@@ -40,6 +40,7 @@ export type StateType = {
     max_action_log_count: number;
   };
   clipboard_history: {
+    apply_mouse_hover_event: boolean;
     hotkey: string;
     max_show: number;
     max_size: number;

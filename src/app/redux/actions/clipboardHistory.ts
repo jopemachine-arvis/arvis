@@ -7,7 +7,14 @@ export const actionTypes = {
   SET_MAX_SHOW_SIZE: '@clipboardStore/SET_MAX_SHOW_SIZE',
   SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY:
     '@clipboardStore/SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY',
+  SET_APPLY_MOUSE_HOVER_EVENT_FLAG:
+    '@clipboardStore/SET_APPLY_MOUSE_HOVER_EVENT_FLAG',
 };
+
+export const setApplyMouseHoverEvent = makeActionCreator(
+  actionTypes.SET_APPLY_MOUSE_HOVER_EVENT_FLAG,
+  'arg'
+);
 
 export const setCliboardHistoryMaxShow = makeActionCreator(
   actionTypes.SET_MAX_SHOW_SIZE,

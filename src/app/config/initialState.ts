@@ -39,6 +39,7 @@ export default {
     max_action_log_count: 500,
   },
   clipboard_history: {
+    apply_mouse_hover_event: true,
     hotkey: process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
     max_show: 50,
     max_size: 400,
