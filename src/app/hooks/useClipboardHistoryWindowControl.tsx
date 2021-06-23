@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { clipboard, ipcRenderer } from 'electron';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
+import _ from 'lodash';
 import useKey from '../../use-key-capture/src';
 
 type IndexInfo = {
@@ -364,7 +365,7 @@ const useClipboardHistoryWindowControl = ({
 
   useEffect(() => {
     // Ignore Initial Mount
-    if (keyData.key === null) return;
+    if (_.isNull(keyData.key)) return;
 
     onKeydownHandler();
   }, [keyData]);

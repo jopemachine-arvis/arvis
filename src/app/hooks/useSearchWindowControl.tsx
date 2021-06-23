@@ -5,6 +5,7 @@ import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd } from '@utils/index';
+import _ from 'lodash';
 import useKey from '../../use-key-capture/src';
 
 type IndexInfo = {
@@ -245,7 +246,7 @@ const useSearchWindowControl = ({
     needItemsUpdate: boolean;
   }) => {
     // Resetinput 호출될 때 storeAvailability 동기화 문제로 빼놓음
-    if (str && inputRef && inputRef.current) {
+    if (!_.isNil(str) && inputRef && inputRef.current) {
       (inputRef.current! as HTMLInputElement).value = str;
     }
     if (needItemsUpdate) {
@@ -625,7 +626,7 @@ const useSearchWindowControl = ({
 
   useEffect(() => {
     // Ignore Initial Mount
-    if (keyData.key === null) return;
+    if (_.isNull(keyData.key)) return;
 
     onKeydownHandler();
   }, [keyData]);

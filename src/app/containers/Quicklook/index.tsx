@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import encodeUrl from 'encodeurl';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import _ from 'lodash';
 import useKey from '../../../use-key-capture/src';
 
 const OuterContainer = styled.div`
@@ -86,7 +87,7 @@ export default function QuicklookWindow() {
 
   return (
     <OuterContainer>
-      {url !== undefined && (
+      {!_.isUndefined(url) && (
         <webview
           id="webview"
           src={url}
