@@ -11,7 +11,6 @@ import { applyAlphaColor } from './applyAlphaColor';
 import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 import { hideWindowAndRestoreFocus } from './hideWindowAndRestoreFocus';
 import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
-// eslint-disable-next-line import/no-cycle
 import { onNumberChangeHandler } from './onNumberChangeHandler';
 
 export {
@@ -19,14 +18,14 @@ export {
   checkFileExists,
   createGlobalConfigChangeHandler,
   extractJson,
+  getHotkeyNameOnThisPlatform,
   getRandomColor,
+  hideWindowAndRestoreFocus,
   isNumeric,
-  supportedImageFormats,
   isWithCtrlOrCmd,
   makeActionCreator,
-  hideWindowAndRestoreFocus,
-  getHotkeyNameOnThisPlatform,
-  range,
   onNumberChangeHandler,
+  range,
   sleep,
+  supportedImageFormats,
 };

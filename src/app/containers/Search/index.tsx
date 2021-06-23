@@ -183,9 +183,9 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { bundleId, action }: { bundleId: string; action: any }
     ) => {
-      workManager.commandExcute(
+      workManager.handleItemPressEvent(
         {
-          action,
+          actions: action,
           bundleId,
           type: 'hotkey',
           title: '',

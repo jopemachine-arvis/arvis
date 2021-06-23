@@ -8,6 +8,6 @@ export const hideWindowAndRestoreFocus = (window: BrowserWindow) => {
   } else if (process.platform === 'linux') {
     window.hide();
   } else {
-    throw new Error(`${process.platform} is not valid platform`);
+    throw new Error(`'${process.platform}' is not valid platform`);
   }
 };
