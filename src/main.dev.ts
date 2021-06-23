@@ -78,51 +78,45 @@ app.on('open-file', (event: Electron.Event, file: string) => {
 });
 
 app.on('ready', () => {
-  const onReadyHandler = () => {
-    const menuBuilder = new MenuBuilder();
-    menuBuilder.buildMenu();
+  const menuBuilder = new MenuBuilder();
+  menuBuilder.buildMenu();
 
-    const trayIconPath = path.join(
-      __dirname,
-      '../',
-      'assets',
-      'icons',
-      '24x24.png'
+  const trayIconPath = path.join(
+    __dirname,
+    '../',
+    'assets',
+    'icons',
+    '24x24.png'
+  );
+  const trayBuilder = new TrayBuilder(trayIconPath);
+  tray = trayBuilder.buildTray();
+
+  const windowManager = WindowManager.getInstance();
+
+  if (process.env.NODE_ENV === 'production') {
+    new AppUpdater();
+  }
+
+  if (openFile) {
+    openArvisFile(openFile);
+  }
+
+  if (isFirstAppLaunch()) {
+    console.log(
+      chalk.yellowBright(
+        'Arvis first launched.. Initilize search window size..'
+      )
     );
-    const trayBuilder = new TrayBuilder(trayIconPath);
-    tray = trayBuilder.buildTray();
 
-    const windowManager = WindowManager.getInstance();
+    windowManager
+      .getSearchWindow()
+      .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
+  }
 
-    if (process.env.NODE_ENV === 'production') {
-      new AppUpdater();
-    }
-
-    if (openFile) {
-      openArvisFile(openFile);
-    }
-
-    if (isFirstAppLaunch()) {
-      console.log(
-        chalk.yellowBright(
-          'Arvis first launched.. Initilize search window size..'
-        )
-      );
-
-      windowManager
-        .getSearchWindow()
-        .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
-    }
-
-    startFileWatcher();
-    initIPCHandlers();
-  };
+  startFileWatcher();
+  initIPCHandlers();
 
   if (process.platform === 'darwin') {
     app.dock.hide();
   }
-
-  setTimeout(() => {
-    onReadyHandler();
-  }, 300);
 });
