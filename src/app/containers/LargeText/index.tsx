@@ -79,7 +79,7 @@ export default function LargeTextWindow() {
 
   return (
     <OuterContainer>
-      {text && <InnerContainer>{text}</InnerContainer>}
+      {text && <InnerContainer id="largeText">{text}</InnerContainer>}
     </OuterContainer>
   );
 }
