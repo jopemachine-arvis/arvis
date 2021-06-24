@@ -579,10 +579,29 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * @summary Check that the window should be closed, and close the window if it should be closed
+   */
+  const checkShouldBeHided = (forceHide?: boolean) => {
+    if (isPinned) return;
+
+    // After cleanUp
+    if (forceHide || (shouldBeHided === true && items.length === 0)) {
+      (document.getElementById('searchBar') as HTMLInputElement).value = '';
+
+      // Give some time to remove Afterimage
+      setTimeout(() => {
+        ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
+      }, 10);
+    }
+  };
+
+  /**
    * @summary
    */
   const onWorkEndHandler = () => {
     setShouldBeHided(true);
+    alreadyClearedRef.current = true;
+    checkShouldBeHided(true);
   };
 
   /**
@@ -629,18 +648,8 @@ const useSearchWindowControl = ({
   }, [keyData]);
 
   useEffect(() => {
-    if (isPinned) return;
-
-    // After cleanUp
-    if (shouldBeHided === true && items.length === 0) {
-      (document.getElementById('searchBar') as HTMLInputElement).value = '';
-
-      // Give some time to remove Afterimage
-      setTimeout(() => {
-        ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
-      }, 10);
-    }
-  }, [shouldBeHided, items]);
+    checkShouldBeHided();
+  }, [shouldBeHided]);
 
   return {
     setInputStr,
