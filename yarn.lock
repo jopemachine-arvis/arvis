@@ -2706,14 +2706,14 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.1.29:
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.1.29.tgz#eeada9f1bf830a3a6471bbbcb7ce8d21b81e481f"
-  integrity sha512-rR1B+eDozarYUUHBZtYRHQnuPdRymaBbOfiu63aGf1kcJhByTqRNbaRRp7UIIaoUOZiVqIvegIZoT7YfK0UyNg==
+arvis-core@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.2.0.tgz#203c2c851251be87081122a6c837fc25b30ce7ae"
+  integrity sha512-TAaZq7lqNasV7mDXY8oms8D30WbfYCn6hQGVMBPmJtO/SbywpmgJTq/egbHHPrYYuLWDKSMRcqQJn68EB20SqA==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
-    arvis-extension-validator "^0.1.0"
+    arvis-extension-validator "^0.2.0"
     chalk "^4.1.0"
     chmodr "^1.2.0"
     clipboardy "^2.3.0"
@@ -2736,10 +2736,10 @@ arvis-core@^0.1.29:
     uuid "^8.3.2"
     xml-js "^1.6.11"
 
-arvis-extension-validator@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.1.0.tgz#42265049fc75e5c823754dc4a891220bb275baf7"
-  integrity sha512-pIKrJp5H7g603dmAMcOU+mIqUHN95Nyqanpb6Q7V9Kzhzy26o7O3q+bv5caGD4Mj9ucxlbFbUEjLr3AeJmUhFQ==
+arvis-extension-validator@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.2.0.tgz#1b9b97c336c851e7371e1dd9b7ba75d6097e0078"
+  integrity sha512-bGXz/INJh2Y335uV/7g39LVA7vVJ9bj/P9ERtbj+0sbTCP1nM9K9Q/IKebDnImIxcOzoNTUv7J7IcVe6XyQRFw==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"
