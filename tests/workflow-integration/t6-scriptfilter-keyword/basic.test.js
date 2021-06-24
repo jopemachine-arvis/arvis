@@ -24,7 +24,7 @@ describe('Integration test', function () {
     await sleep(500);
 
     robot.keyTap('t');
-    robot.keyTap('5');
+    robot.keyTap('6');
 
     await app.client.waitUntilTextExists('#searchResultItemTitle-0', 'scriptfilter item 1');
 

@@ -13,7 +13,6 @@ const { app } = require('../../global');
 describe('Integration test', function () {
   this.timeout(setting.timeout);
 
-  // To do:: Need to improve async action chain test
   it('Test u1 - keyword + scriptfilter + keyword', async function () {
     await app.client.waitUntilWindowLoaded();
     await app.client.switchWindow('searchWindow');

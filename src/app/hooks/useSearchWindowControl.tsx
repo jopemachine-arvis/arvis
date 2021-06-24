@@ -217,13 +217,11 @@ const useSearchWindowControl = ({
         ) {
           Core.scriptFilterExcute(updatedInput);
         }
-        // To do:: Need to update here
 
         // If the command changes, clear stack and search commands
         else {
-          // console.log('handleNormalInput');
-          // workManager.clearWorkStack();
-          // await searchCommands();
+          workManager.clearWorkStack();
+          await searchCommands();
         }
       }
 

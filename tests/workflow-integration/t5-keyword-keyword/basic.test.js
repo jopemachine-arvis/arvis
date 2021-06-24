@@ -26,11 +26,19 @@ describe('Integration test', function () {
     robot.keyTap('t');
     robot.keyTap('5');
 
-    await app.client.waitUntilTextExists('#searchResultItemTitle-0', 'Test 5 - keyword + keyword, result');
+    await sleep(200);
 
     const itemTitle = await (await app.client.$('#searchResultItemTitle-0')).getText();
 
-    assert.strictEqual(itemTitle, 'Test 5 - keyword + keyword, result');
+    assert.strictEqual(itemTitle, 'Test 5 - keyword + keyword');
+
+    robot.keyTap('enter');
+
+    await sleep(200);
+
+    const itemTitle2 = await (await app.client.$('#searchResultItemTitle-0')).getText();
+
+    assert.strictEqual(itemTitle2, 'Test 5 - keyword + keyword, result');
 
     robot.keyTap('enter');
 
