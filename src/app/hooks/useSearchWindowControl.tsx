@@ -228,7 +228,7 @@ const useSearchWindowControl = ({
       clearIndexInfo();
     };
 
-    // Wait a little longer than Spawn will uses (around 15ms).
+    // Wait a little longer than child process spawning will uses (around 15ms).
     timer = setTimeout(handler, 25);
   };
 
@@ -535,7 +535,6 @@ const useSearchWindowControl = ({
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
       workManager.popWork();
-      alreadyClearedRef.current = true;
     } else if (keyData.isTab) {
       autoCompleteHandler(items[selectedItemIdx]);
     } else if (keyData.isWithShift && keyData.isSpace) {
