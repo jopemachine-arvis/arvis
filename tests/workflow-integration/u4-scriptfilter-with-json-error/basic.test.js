@@ -13,8 +13,7 @@ const { app } = require('../../global');
 describe('Integration test', function () {
   this.timeout(setting.timeout);
 
-  // To do:: Need to improve async action chain test
-  it('Test u4 - hotkey + scriptfilter', async function () {
+  it('Test u4 - scriptfilter with json error', async function () {
     await app.client.waitUntilWindowLoaded();
     await app.client.switchWindow('searchWindow');
 
@@ -25,5 +24,11 @@ describe('Integration test', function () {
  
     robot.keyTap('u');
     robot.keyTap('4');
+
+    await sleep(1000);
+
+    const itemTitle = await (await app.client.$('#searchResultItemTitle-0')).getText();
+
+    assert.strictEqual(itemTitle.includes('Error'), true);
   });
 });
