@@ -9,6 +9,8 @@ import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
 import { Core } from 'arvis-core';
+import { ipcRenderer } from 'electron';
+import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { EditableCell } from './editableCell';
 
 const OuterContainer = styled.div`
@@ -174,7 +176,22 @@ export function WorkflowTriggerTable(props: any) {
 
   const updateJson = (rowIndex: number, _columnId: number, value: string) => {
     const { triggerPath } = data[rowIndex];
-    Core.updateWorkflowTrigger(props.bundleId, triggerPath, value);
+
+    // To do:: Below logic needs to be removed after chokidar's symlink issue is resolved
+    // Because followSymlink is false now, below logic is needed for now.
+    Core.updateWorkflowTrigger(props.bundleId, triggerPath, value)
+      .then(() => {
+        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+          destWindow: 'searchWindow',
+          bundleId: props.bundleId,
+        });
+        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+          destWindow: 'preferenceWindow',
+          bundleId: props.bundleId,
+        });
+        return null;
+      })
+      .catch(console.error);
   };
 
   return (
