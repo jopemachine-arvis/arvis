@@ -11,22 +11,20 @@ import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {
   AiOutlineAppstoreAdd,
-  AiOutlineEdit,
   AiOutlineBranches,
   AiOutlineDelete,
   AiOutlineExport,
 } from 'react-icons/ai';
-import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
 import open from 'open';
-import { StyledInput } from '@components/index';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
+import { WorkflowTriggerTable } from '@components/index';
 import {
   Header,
   OuterContainer,
@@ -58,13 +56,6 @@ export default function Workflow() {
   const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
-  const [workflowCategory, setWorkflowCategory] = useState<string>('');
-  const [workflowCreator, setWorkflowCreator] = useState<string>('');
-  const [workflowDescription, setWorkflowDescription] = useState<string>('');
-  const [workflowName, setWorkflowName] = useState<string>('');
-  const [workflowReadme, setWorkflowReadme] = useState<string>('');
-  const [workflowVersion, setWorkflowVersion] = useState<string>('');
-  const [workflowWebsite, setWorkflowWebsite] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -72,6 +63,8 @@ export default function Workflow() {
 
   const forceUpdate = useForceUpdate();
   const deleteWorkflowEventHandler = useRef<any>();
+
+  const workflowTriggers = Core.getTriggers();
 
   /**
    * @summary
@@ -195,27 +188,12 @@ export default function Workflow() {
           ? {}
           : workflows[workflowBundleIds[selectedWorkflowIdx]];
 
-      const {
-        category = '',
-        creator = '',
-        description = '',
-        name = '',
-        readme = '',
-        version = '',
-        webAddress = '',
-      } = info;
+      const { creator = '', name = '' } = info;
 
       const bundleId =
         selectedWorkflowIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setWorkflowBundleId(bundleId);
-      setWorkflowCategory(category);
-      setWorkflowCreator(creator);
-      setWorkflowDescription(description);
-      setWorkflowName(name);
-      setWorkflowReadme(readme);
-      setWorkflowVersion(version);
-      setWorkflowWebsite(webAddress);
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -350,28 +328,6 @@ export default function Workflow() {
 
   const requestAddNewWorkflow = () => {
     ipcRenderer.send(IPCRendererEnum.openWorkflowInstallFileDialog);
-  };
-
-  const editWorkflow = () => {
-    if (selectedWorkflowIdx === -1) return;
-    setStoreAvailable(false);
-    const targetPath = Core.path.getWorkflowConfigJsonPath(workflowBundleId);
-    fse
-      .readJson(targetPath)
-      .then(async (json) => {
-        json.category = workflowCategory;
-        json.description = workflowDescription;
-        json.readme = workflowReadme;
-        json.version = workflowVersion;
-        json.webaddress = workflowWebsite;
-
-        await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
-        return null;
-      })
-      .catch((err) => {
-        setStoreAvailable(true);
-        console.error(err);
-      });
   };
 
   const exportWorkflow = () => {
@@ -509,97 +465,10 @@ export default function Workflow() {
         </WorkflowListOrderedList>
       </WorkflowListView>
       <WorkflowDescContainer>
-        <Form style={style.descriptionContainerStyle}>
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Name</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Name"
-              value={workflowName}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowName(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Creator</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Creator"
-              value={workflowCreator}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowCreator(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Version</Label>
-            <StyledInput
-              type="text"
-              placeholder="Version"
-              value={workflowVersion}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowVersion(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Category</Label>
-            <StyledInput
-              type="text"
-              placeholder="Category"
-              value={workflowCategory}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowCategory(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Description</Label>
-            <StyledInput
-              type="text"
-              placeholder="Description"
-              value={workflowDescription}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowDescription(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Read Me</Label>
-            <StyledInput
-              type="textarea"
-              className="workflow-page-textarea"
-              placeholder="README"
-              style={{
-                height: 260,
-              }}
-              value={workflowReadme}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowReadme(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Web Site</Label>
-            <StyledInput
-              type="url"
-              placeholder="Web Site"
-              value={workflowWebsite}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setWorkflowWebsite(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-        </Form>
+        <WorkflowTriggerTable
+          bundleId={workflowBundleId}
+          triggers={workflowTriggers[workflowBundleId]}
+        />
       </WorkflowDescContainer>
 
       <WorkflowListViewFooter>
@@ -607,11 +476,6 @@ export default function Workflow() {
           className="workflow-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewWorkflow()}
-        />
-        <AiOutlineEdit
-          className="workflow-page-buttons"
-          style={style.bottomFixedBarIconStyle}
-          onClick={() => editWorkflow()}
         />
         <AiOutlineExport
           className="workflow-page-buttons"

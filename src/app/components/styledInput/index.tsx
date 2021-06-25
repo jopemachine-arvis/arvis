@@ -10,6 +10,7 @@ const StyledInput = (props: any) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
       className={`styledInput ${className}`}
+      spellCheck={false}
       style={{
         backgroundColor: '#1f2228',
         borderColor: '#2f323c',

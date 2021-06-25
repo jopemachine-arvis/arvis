@@ -97,6 +97,7 @@ export const WorkflowItemContainer = styled.div`
 
 export const WorkflowDescContainer = styled.div`
   margin-top: 95px;
+  border-radius: 10px;
   flex-grow: 1;
 `;
 
