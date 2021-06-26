@@ -10,25 +10,17 @@ import fse from 'fs-extra';
 const makeLauncher = () => {
   if (process.platform === 'linux') {
     return {
-      enable: ({
-        appName,
-        appPath,
-        isHiddenOnLaunch,
-      }: {
-        appName: string;
-        appPath: string;
-        isHiddenOnLaunch: boolean;
-      }) => {
+      enable: () => {
         return fse
           .readdir(`${os.homedir()}/Applications`)
           .then((files) => {
             for (const fileName of files) {
-              if (fileName.startsWith(appName)) {
+              if (fileName.startsWith('Arvis')) {
                 const data = `[Desktop Entry]
   Type=Application
   Version=1.0
-  Name=${appName}
-  Comment=${appName}startup script
+  Name=Arvis
+  Comment=Arvis startup script
   Exec=${os.homedir()}/Applications/${fileName}
   X-GNOME-Autostart-enabled=true
   StartupNotify=false
