@@ -1,0 +1,44 @@
+{
+  "name": "easy-auto-launch",
+  "version": "6.0.0",
+  "description": "Launch node applications or executables at login (Mac, Windows, and Linux)",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "gulp",
+    "test": "gulp test"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Izurii/easy-auto-launch"
+  },
+  "keywords": [
+    "login",
+    "launch",
+    "node-webkit",
+    "electron",
+    "boot",
+    "login-items"
+  ],
+  "author": "Izurii Hootoh",
+  "contributors": [],
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Izurii/easy-auto-launch/issues"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "gulp": "^4.0.2",
+    "gulp-load-plugins": "^2.0.6",
+    "gulp-mocha": "^8.0.0"
+  },
+  "homepage": "https://github.com/Izurii/easy-auto-launch",
+  "dependencies": {
+    "applescript": "^1.0.0",
+    "mkdirp": "^1.0.4",
+    "untildify": "^4.0.0",
+    "winreg": "^1.2.4"
+  }
+}

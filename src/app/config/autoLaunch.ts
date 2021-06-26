@@ -1,4 +1,4 @@
-import AutoLaunch from 'easy-auto-launch';
+import AutoLaunch from '../../easy-auto-launch/src';
 
 /**
  * @summary

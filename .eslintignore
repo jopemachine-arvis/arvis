@@ -1,5 +1,6 @@
 tests/
 src/use-key-capture
+src/easy-auto-launch
 
 # Logs
 logs
