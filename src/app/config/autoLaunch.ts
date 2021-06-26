@@ -16,20 +16,21 @@ const makeLauncher = () => {
           .then((files) => {
             for (const fileName of files) {
               if (fileName.startsWith('Arvis')) {
-                const data = `[Desktop Entry]
-  Type=Application
-  Version=1.0
-  Name=Arvis
-  Comment=Arvis startup script
-  Exec=${os.homedir()}/Applications/${fileName}
-  X-GNOME-Autostart-enabled=true
-  StartupNotify=false
-  NoDisplay=false
-  Hide=false
-  Terminal=false`;
+                const data =
+`[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Arvis
+Comment=Arvis startup script
+Exec=${os.homedir()}/Applications/${fileName}
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+NoDisplay=false
+Hide=false
+Terminal=false`;
 
                 return fse.writeFile(
-                  `${os.homedir}/.config/autostart/arvis`,
+                  `${os.homedir}/.config/autostart/arvis.desktop`,
                   data
                 );
               }
