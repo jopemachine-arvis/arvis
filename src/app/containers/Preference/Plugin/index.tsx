@@ -11,7 +11,6 @@ import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
 import {
   AiOutlineAppstoreAdd,
-  AiOutlineEdit,
   AiOutlineBranches,
   AiOutlineDelete,
   AiOutlineExport,

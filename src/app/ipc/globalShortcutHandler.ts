@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 import { globalShortcut, dialog } from 'electron';
 import chalk from 'chalk';
@@ -80,9 +81,13 @@ const extractShortcutName = (shortcut: string): string => {
 const registerShortcut = (shortcut: string, callback: () => void): boolean => {
   console.log(chalk.cyanBright(`Shortcut registered.. '${shortcut}'`));
 
+  const loweredCaseShortcut = shortcut.toLowerCase();
+
   // Double modifier shortcut
-  if (shortcut.includes('Double')) {
-    const doubledKeyModifier = extractShortcutName(shortcut.split('Double')[1]);
+  if (loweredCaseShortcut.includes('double')) {
+    const doubledKeyModifier = extractShortcutName(
+      loweredCaseShortcut.split('double')[1]
+    );
 
     // Already used shortcut
     if ((doubleKeyPressHandler as any)[doubledKeyModifier]) {
@@ -95,10 +100,17 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
   }
   // Normal modifier shortcut
   else {
-    if (globalShortcut.isRegistered(shortcut)) {
-      return false;
+    try {
+      if (globalShortcut.isRegistered(loweredCaseShortcut)) {
+        return false;
+      }
+      globalShortcut.register(loweredCaseShortcut, callback as () => void);
+    } catch (err) {
+      dialog.showErrorBox(
+        'Invalid Shortcut Assign',
+        `'${loweredCaseShortcut}' is not invalid hotkeys. Please reassign this hotkey`
+      );
     }
-    globalShortcut.register(shortcut, callback as () => void);
   }
 
   return true;
@@ -114,6 +126,11 @@ const registerWorkflowHotkeys = ({
 }) => {
   const hotkeys = Object.keys(workflowHotkeyTbl);
   for (const hotkey of hotkeys) {
+    // Skip hotkey assigning if empty
+    if (hotkey.trim() === '') {
+      continue;
+    }
+
     const cb = () => {
       getWorkflowHotkeyPressHandler({
         hotKeyAction: workflowHotkeyTbl[hotkey],

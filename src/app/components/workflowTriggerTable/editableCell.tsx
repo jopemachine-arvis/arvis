@@ -75,11 +75,11 @@ export const EditableCell = ({
 
   const getTextColor = () => {
     return id === 'command' ? '#888888' : '#fff';
-  }
+  };
 
   const getTextAlign = () => {
     return id === 'description' ? 'left' : 'center';
-  }
+  };
 
   const backgroundColor = id === 'type' ? getTypeColor() : '#1f2228';
   const indicatedValue = id === 'type' ? getTypeValue() : value;
