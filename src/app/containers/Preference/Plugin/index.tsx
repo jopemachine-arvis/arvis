@@ -347,28 +347,6 @@ export default function Plugin() {
     ipcRenderer.send(IPCRendererEnum.openPluginInstallFileDialog);
   };
 
-  const editPlugin = () => {
-    if (selectedPluginIdx === -1) return;
-    setStoreAvailable(false);
-    const targetPath = Core.path.getPluginConfigJsonPath(pluginBundleId);
-    fse
-      .readJson(targetPath)
-      .then(async (json) => {
-        json.category = pluginCategory;
-        json.description = pluginDescription;
-        json.readme = pluginReadme;
-        json.version = pluginVersion;
-        json.webaddress = pluginWebsite;
-
-        await fse.writeJson(targetPath, json, { encoding: 'utf8', spaces: 4 });
-        return null;
-      })
-      .catch((err) => {
-        setStoreAvailable(true);
-        console.error(err);
-      });
-  };
-
   const exportPlugin = () => {
     if (selectedPluginIdx === -1) return;
 
@@ -532,6 +510,7 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Version</Label>
             <StyledInput
+              disabled
               type="text"
               placeholder="Version"
               value={pluginVersion}
@@ -544,6 +523,7 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Category</Label>
             <StyledInput
+              disabled
               type="text"
               placeholder="Category"
               value={pluginCategory}
@@ -556,6 +536,7 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Description</Label>
             <StyledInput
+              disabled
               type="text"
               placeholder="Description"
               value={pluginDescription}
@@ -568,6 +549,7 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Read Me</Label>
             <StyledInput
+              disabled
               type="textarea"
               className="plugin-page-textarea"
               placeholder="README"
@@ -584,6 +566,7 @@ export default function Plugin() {
           <FormGroup style={style.formGroupStyle}>
             <Label style={style.labelStyle}>Web Site</Label>
             <StyledInput
+              disabled
               type="url"
               placeholder="Web Site"
               value={pluginWebsite}
@@ -600,11 +583,6 @@ export default function Plugin() {
           className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewPlugin()}
-        />
-        <AiOutlineEdit
-          className="plugin-page-buttons"
-          style={style.bottomFixedBarIconStyle}
-          onClick={() => editPlugin()}
         />
         <AiOutlineExport
           className="plugin-page-buttons"

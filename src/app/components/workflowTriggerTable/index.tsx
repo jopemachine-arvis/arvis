@@ -33,8 +33,18 @@ const OuterContainer = styled.div`
     overflow-y: auto !important;
   }
 
-  td:last-child {
-    width: 70%;
+  td:nth-child(1) {
+    min-width: 90px;
+    width: 12%;
+  }
+
+  td:nth-child(2) {
+    min-width: 110px;
+    width: 22%;
+  }
+
+  td:nth-child(3) {
+    width: 66%;
   }
 
   table {
@@ -51,7 +61,6 @@ const OuterContainer = styled.div`
 
       input {
         width: 100%;
-        font-size: 1rem;
         padding-top: 0;
         padding-bottom: 0;
         padding-left: 3;
@@ -159,7 +168,7 @@ export function WorkflowTriggerTable(props: any) {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Trigger Type',
+        Header: 'Type',
         accessor: 'type',
       },
       {
