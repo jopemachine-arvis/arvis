@@ -2,12 +2,14 @@ import chokidar, { FSWatcher } from 'chokidar';
 import { Core } from 'arvis-core';
 import path from 'path';
 import chalk from 'chalk';
+import fse from 'fs-extra';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
 
 let workflowWatcher: FSWatcher | null;
 let pluginWatcher: FSWatcher | null;
+let otherFilesWatcher: FSWatcher | null;
 
 const watchOpts = {
   disableGlobbing: false,
@@ -19,6 +21,8 @@ const watchOpts = {
   //   stabilityThreshold: 2000,
   // },
 };
+
+const renewFlagFilePath = `${Core.path.installedDataPath}${path.sep}arvis-extension-renew`;
 
 const workflowWatchPaths = [
   `${Core.path.workflowInstallPath}${path.sep}*${path.sep}arvis-workflow.json`,
@@ -69,6 +73,18 @@ const requestRenewPlugins = (bundleId?: string) => {
  */
 const getBundleIdFromFilePath = (changedFilePath: string) => {
   return changedFilePath.split(path.sep)[0];
+};
+
+const renewFlagAddHandler = async (filePath: string) => {
+  if (filePath.endsWith('arvis-extension-renew')) {
+    console.log(
+      chalk.greenBright(`"${renewFlagFilePath}" detected. Reload extensions..`)
+    );
+
+    await fse.remove(renewFlagFilePath);
+    requestRenewWorkflows();
+    requestRenewPlugins();
+  }
 };
 
 const workflowChangeHandler = async (filePath: string) => {
@@ -132,13 +148,20 @@ export const startFileWatcher = () => {
     .on('change', pluginChangeHandler)
     .on('unlink', pluginChangeHandler)
     .on('add', pluginChangeHandler);
+
+  otherFilesWatcher = chokidar
+    .watch([renewFlagFilePath], {
+      cwd: Core.path.installedDataPath,
+      ...watchOpts,
+    })
+    .on('add', renewFlagAddHandler);
 };
 
 /**
  * @summary
  */
 export const stopFileWatcher = () => {
-  if (!workflowWatcher || !pluginWatcher) {
+  if (!workflowWatcher || !pluginWatcher || !otherFilesWatcher) {
     console.error('workflowWatcher is not running');
     return;
   }
@@ -147,4 +170,5 @@ export const stopFileWatcher = () => {
 
   workflowWatcher.close();
   pluginWatcher.close();
+  otherFilesWatcher.close();
 };
