@@ -1,8 +1,10 @@
 /* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import AutoLaunch from 'easy-auto-launch';
 import os from 'os';
 import fse from 'fs-extra';
+import pathExists from 'path-exists';
 
 /**
  * @summary
@@ -16,8 +18,7 @@ const makeLauncher = () => {
           .then((files) => {
             for (const fileName of files) {
               if (fileName.startsWith('Arvis')) {
-                const data =
-`[Desktop Entry]
+                const data = `[Desktop Entry]
 Type=Application
 Version=1.0
 Name=Arvis
@@ -41,7 +42,15 @@ Terminal=false`;
       },
 
       disable: () => {
-        fse.remove(`${os.homedir}/.config/autostart/arvis`).catch(() => {});
+        pathExists(`${os.homedir}/.config/autostart/arvis`)
+          .then((exist) => {
+            exist &&
+              fse
+                .remove(`${os.homedir}/.config/autostart/arvis`)
+                .catch(console.error);
+            return null;
+          })
+          .catch(console.error);
       },
     };
   }

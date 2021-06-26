@@ -13,8 +13,6 @@ It would be very helpful if you could put bugs on the issue.
 
 * ⚠️ Currently has [severe performance issue](https://github.com/jopemachine/arvis-core/issues/2) on mac
 
-* ⚠️ Currently has [cannot auto launch issue](https://github.com/Izurii/easy-auto-launch/issues/2) on linux
-
 **Table of Contents**
 
 - [1. What is Arvis?](#what-is-arvis-why-it-is-needed)
@@ -61,6 +59,8 @@ Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugi
 * Open mac's preference and `give appropriate permissions` to Arvis. (Including notification permissions, Full disk access permission)
 
 ### linux installation issues
+
+* Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) before install arvis.
 
 * run `chmod 777 {appimage binary}` to give execute permission to appimage file.
 
