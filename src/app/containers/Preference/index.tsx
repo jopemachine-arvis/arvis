@@ -153,7 +153,7 @@ export default function PreferenceWindow() {
 
         if (updatable.length > 0) {
           ipcRenderer.send(IPCRendererEnum.showNotification, {
-            title: `${updatable.length} extension is updatable`,
+            title: updatable.length === 1 ? `${updatable.length} extension is updatable` : `${updatable.length} extensions are updatable`,
             body: updatableTexts,
           });
         }
