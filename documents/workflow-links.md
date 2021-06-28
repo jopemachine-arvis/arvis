@@ -17,6 +17,7 @@ Note: Below table entries are arranged alphabetically.
 |:--:|:--:|:--:|:--:|:--:|
 | [arvis-chrome-workflow](https://github.com/jopemachine/arvis-chrome-workflow) | O | O | O | Chrome kernel based broswer workflow for Arvis |
 | [arvis-coolors](https://github.com/jopemachine/arvis-coolors) | O | O | O | 🎨 Arvis workflow to generate color names |
+| [arvis-css-triggers](https://github.com/jopemachine/arvis-css-triggers) | O | O | O | Arvis workflow to search through csstriggers.com |
 | [arvis-emoji](https://github.com/jopemachine/arvis-emoji) | O | O | O | Arvis workflow to find relevant emoji from text |
 | [arvis-extension-updater](https://github.com/jopemachine/arvis-extension-updater) | O | O | O | Arvis extension updater |
 | [arvis-fkill](https://github.com/jopemachine/arvis-fkill) | O | O | O | Arvis workflow to fabulously search and kill processes |
