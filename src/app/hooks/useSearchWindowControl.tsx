@@ -549,6 +549,7 @@ const useSearchWindowControl = ({
       searchByNextInput();
     }
 
+    // on Macos, option key not detected!! -> maybe this logic need to be migrated to iohook
     if (modifiers.alt || modifiers.cmd || modifiers.ctrl || modifiers.shift) {
       workManager.setModifierOnScriptFilterItem(selectedItemIdx, modifiers);
     }

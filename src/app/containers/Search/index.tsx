@@ -183,6 +183,7 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { bundleId, action }: { bundleId: string; action: any }
     ) => {
+      workManager.isInitialTrigger = false;
       workManager.handleItemPressEvent(
         {
           actions: action,
