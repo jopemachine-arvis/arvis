@@ -21,6 +21,7 @@ Note: Below table entries are arranged alphabetically.
 | [arvis-emoji](https://github.com/jopemachine/arvis-emoji) | O | O | O | Arvis workflow to find relevant emoji from text |
 | [arvis-extension-updater](https://github.com/jopemachine/arvis-extension-updater) | O | O | O | Arvis extension updater |
 | [arvis-fkill](https://github.com/jopemachine/arvis-fkill) | O | O | O | Arvis workflow to fabulously search and kill processes |
+| [arvis-font-awesome](https://github.com/jopemachine/arvis-font-awesome) | O | O | O | Arvis workflow to search for font-awesome icons |
 | [arvis-keycode](https://github.com/jopemachine/arvis-keycode) | O | O | O | ⌨ Arivs workflow to get JavaScript keycodes. |
 | [arvis-loremipsum](https://github.com/jopemachine/arvis-loremipsum) | O | O | O | Lorem Ipsum generator in Arvis |
 | [arvis-naver-dictionary-with-anki](https://github.com/jopemachine/arvis-naver-dictionary-with-anki) | O | O | O | English to Korean Naver dictionary workflow for Arvis |
