@@ -24,6 +24,7 @@ Note: Below table entries are arranged alphabetically.
 | [arvis-loremipsum](https://github.com/jopemachine/arvis-loremipsum) | O | O | O | Lorem Ipsum generator in Arvis |
 | [arvis-naver-dictionary-with-anki](https://github.com/jopemachine/arvis-naver-dictionary-with-anki) | O | O | O | English to Korean Naver dictionary workflow for Arvis |
 | [arvis-naversearch](https://github.com/jopemachine/arvis-naversearch) | X | O | O | Naver Search Workflow for Arvis |
+| [arvis-node-doc](https://github.com/jopemachine/arvis-node-doc) | O | O | O | Search for Node.js documentation in Arvis |
 | [arvis-npms](https://github.com/jopemachine/arvis-npms) | O | O | O | Arvis workflow to search for npm packages with npms.io |
 | [arvis-packagist](https://github.com/jopemachine/arvis-packagist) | O | O | O | Arvis workflow to search for PHP packages with Packagist |
 | [arvis-react-native](https://github.com/jopemachine/arvis-react-native) | O | O | O | Access the React Native Documentation from Arvis |
