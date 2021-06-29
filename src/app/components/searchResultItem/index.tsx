@@ -116,6 +116,7 @@ const SearchResultItem = (props: IProps) => {
 
   return (
     <OuterContainer
+      className="searchResultItem"
       style={{
         height: itemHeight,
         paddingLeft: itemLeftPadding,

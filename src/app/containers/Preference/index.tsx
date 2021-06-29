@@ -63,13 +63,25 @@ export default function PreferenceWindow() {
   );
 
   const loadWorkflowsInfo = useCallback(() => {
-    return Core.renewWorkflows().catch(console.error);
+    return Core.renewWorkflows().catch((err) => {
+      ipcRenderer.send(IPCRendererEnum.showNotification, {
+        title: err.name,
+        body: err.message,
+      });
+      console.error(err);
+    });
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
     return Core.renewPlugins({
       initializePluginWorkspace: false,
-    }).catch(console.error);
+    }).catch((err) => {
+      ipcRenderer.send(IPCRendererEnum.showNotification, {
+        title: err.name,
+        body: err.message,
+      });
+      console.error(err);
+    });
   }, []);
 
   const resetReduxStore = ({
@@ -104,7 +116,7 @@ export default function PreferenceWindow() {
       Core.renewPlugins({
         initializePluginWorkspace: false,
         bundleId,
-      });
+      }).catch(console.error);
     },
 
     setPreferencePage: (

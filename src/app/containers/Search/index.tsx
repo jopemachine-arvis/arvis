@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable promise/catch-or-return */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
@@ -258,10 +259,12 @@ export default function SearchWindow() {
   const loadWorkflowsInfo = useCallback(() => {
     Core.renewWorkflows()
       .then(() => {
-        registerAllGlobalHotkey();
         return null;
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        registerAllGlobalHotkey();
+      });
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
