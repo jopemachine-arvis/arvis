@@ -62,8 +62,6 @@ Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugi
 
 * Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) before install arvis.
 
-* run `chmod 777 {appimage binary}` to give execute permission to appimage file.
-
 ### arvis-linker issues
 
 * If permission error occurs when you try to install extension by npm command, open your shell `as administrator`.
