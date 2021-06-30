@@ -45,6 +45,8 @@ const useSearchWindowControl = ({
     selectedItemIdx: 0,
   });
 
+  const [bestMatch, setBestMatch] = useState<string>('');
+
   const inputStr = inputRef.current
     ? (inputRef.current! as HTMLInputElement).value
     : '';
@@ -177,6 +179,8 @@ const useSearchWindowControl = ({
    */
   const handleNormalInput = async (updatedInput: string) => {
     let timer: NodeJS.Timeout;
+
+    setBestMatch(Core.history.getBestMatch(updatedInput));
 
     const handler = async () => {
       clearTimeout(timer);
@@ -533,6 +537,10 @@ const useSearchWindowControl = ({
       selectedItemIdx = handleDownArrow();
     } else if (keyData.isArrowUp) {
       selectedItemIdx = handleUpArrow();
+    } else if (keyData.isArrowRight) {
+      if ((inputRef.current as any).selectionStart === inputStr.length) {
+        setInputStr({ str: bestMatch, needItemsUpdate: true });
+      }
     } else if (keyData.isEscape) {
       workManager.popWork();
     } else if (keyData.isTab) {
@@ -653,6 +661,7 @@ const useSearchWindowControl = ({
   }, [shouldBeHided]);
 
   return {
+    bestMatch,
     setInputStr,
     indexInfo,
     onWheelHandler,

@@ -85,6 +85,7 @@ export default function SearchWindow() {
   useIoHook();
 
   const {
+    bestMatch,
     getInputProps,
     indexInfo,
     onDoubleClickHandler,
@@ -336,6 +337,7 @@ export default function SearchWindow() {
       >
         <SearchBar
           alwaysFocus
+          bestMatch={bestMatch}
           isPinned={isPinned}
           getInputProps={getInputProps}
           itemLeftPadding={item_left_padding}

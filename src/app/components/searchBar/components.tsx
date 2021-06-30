@@ -5,6 +5,12 @@ export const Input = styled.input`
   height: 100%;
   width: 100%;
   border-width: 0px;
+  z-index: 100;
+`;
+
+export const AutoMatch = styled.span`
+  color: #888;
+  position: absolute;
 `;
 
 export const OuterContainer = styled.div`

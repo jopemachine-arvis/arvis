@@ -4,11 +4,12 @@ import React, { useEffect } from 'react';
 import DraggerImg from '../../../../assets/images/drag.svg';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
-import { OuterContainer, Input, Dragger } from './components';
+import { OuterContainer, Input, Dragger, AutoMatch } from './components';
 import './index.global.css';
 
 type IProps = {
   alwaysFocus: boolean;
+  bestMatch?: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
   getInputProps?: Function;
   isPinned?: boolean;
@@ -23,6 +24,7 @@ type IProps = {
 const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
+    bestMatch,
     getInputProps,
     hasContextMenu,
     isPinned,
@@ -97,12 +99,23 @@ const SearchBar = (props: IProps) => {
         onContextMenu={rightClickHandler}
         onBlur={alwaysFocus ? preventBlur : () => {}}
       />
+      {bestMatch && (
+        <AutoMatch
+          style={{
+            left: itemLeftPadding,
+            fontSize: searchbarFontSize,
+          }}
+        >
+          {bestMatch}
+        </AutoMatch>
+      )}
       <Dragger src={DraggerImg} />
     </OuterContainer>
   );
 };
 
 SearchBar.defaultProps = {
+  bestMatch: '',
   getInputProps: undefined,
   hasContextMenu: true,
   isPinned: false,
