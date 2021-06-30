@@ -68,6 +68,8 @@ app.on('before-quit', () => {
   app.exit();
 });
 
+// To do:: open-file is triggered only in macos.
+// find other implementation on windows
 app.on('open-file', (event: Electron.Event, file: string) => {
   if (!app.isReady()) {
     openFile = file;

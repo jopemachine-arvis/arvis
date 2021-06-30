@@ -12,10 +12,11 @@ import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
-import { validate as reduxStoreValidate } from '@helper/reduxStoreValidator';
+import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
 import { sleep } from '@utils/index';
 import _ from 'lodash';
 import { UIConfigActions } from '@redux/actions';
+import { extractGuiConfig } from '@store/extractGuiConfig';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -92,7 +93,7 @@ export default function PreferenceWindow() {
     fse
       .writeJson(
         path.resolve(Core.path.tempPath, 'arvis-redux-store-reset'),
-        resetOnlyInvalid ? store.getState() : {}
+        resetOnlyInvalid ? extractGuiConfig(store.getState()) : {}
       )
       .then(() => {
         ipcRenderer.send(IPCRendererEnum.reloadApplication);
@@ -179,7 +180,7 @@ export default function PreferenceWindow() {
 
   const preventInvalidReduxState = () => {
     // Prevent invalid states occurring from updates
-    if (!reduxStoreValidate(store.getState())) {
+    if (!reduxStoreValidate(extractGuiConfig(store.getState()))) {
       resetReduxStore({ resetOnlyInvalid: true });
     }
   };

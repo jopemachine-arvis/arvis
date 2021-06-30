@@ -153,6 +153,7 @@ export const startFileWatcher = () => {
     .watch([renewFlagFilePath], {
       cwd: Core.path.installedDataPath,
       ...watchOpts,
+      ignoreInitial: false,
     })
     .on('add', renewFlagAddHandler);
 };

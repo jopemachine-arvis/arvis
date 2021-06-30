@@ -36,3 +36,19 @@ Note that in a development environment, `arvis-nodejs` is replaced with `Electro
 * on Linux: `~/.local/share/Arvis/arvis-gui-config.json` (or `$XDG_DATA_HOME/Arvis/arvis-gui-config.json`)
 * on macOS: `~/Library/Application Support/Arvis/arvis-gui-config.json`
 * on Windows: `%LOCALAPPDATA%\Arvis\Data\arvis-gui-config.json` (for example, `C:\Users\USERNAME\AppData\Local\Arvis\Data\arvis-gui-config.json`)
+
+## Flag files
+
+Some files are used as flags to forward command to Arvis.
+
+1. `arvis-redux-store-reset`
+
+Path: `temp` path of the [env-paths]
+
+Used to reset redux store.
+
+2. `arvis-extension-renew`
+
+Path: `data` path of the [env-paths]
+
+Used to renew extensions.

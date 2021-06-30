@@ -168,10 +168,12 @@ export default function SearchWindow() {
     ) => {
       Core.renewWorkflows(bundleId)
         .then(() => {
-          renewHotkeys();
           return null;
         })
-        .catch(console.error);
+        .catch(console.error)
+        .finally(() => {
+          renewHotkeys();
+        });
     },
 
     renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
@@ -328,8 +330,6 @@ export default function SearchWindow() {
         ),
       }}
       onWheel={onWheelHandler}
-      // to do:: handle below event properly
-      onTouchMove={() => {}}
     >
       <StoreAvailabilityContext.Provider
         value={[storeAvailable, setStoreAvailable]}

@@ -39,7 +39,7 @@ export const reduxStoreResetHandler = () => {
               updatedInitialState,
               {
                 encoding: 'utf8',
-                spaces: 2,
+                spaces: 4,
               }
             );
 
