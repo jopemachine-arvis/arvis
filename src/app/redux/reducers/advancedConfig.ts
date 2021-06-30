@@ -6,25 +6,20 @@ const { actionTypes: AdvancedConfigActionTypes } = AdvancedConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case AdvancedConfigActionTypes.SET_DEBUGGING_ACTION_TYPE:
+    case AdvancedConfigActionTypes.SET_DEBUGGING_ACTION:
       return {
         ...state,
-        debugging_action_type: payload.arg,
+        debugging_action: payload.arg,
       };
-    case AdvancedConfigActionTypes.SET_DEBUGGING_SCRIPT_OUTPUT:
+    case AdvancedConfigActionTypes.SET_DEBUGGING_SCRIPT:
       return {
         ...state,
-        debugging_script_output: payload.arg,
+        debugging_script: payload.arg,
       };
-    case AdvancedConfigActionTypes.SET_DEBUGGING_WORKSTACK:
+    case AdvancedConfigActionTypes.SET_DEBUGGING_TRIGGER_STACK:
       return {
         ...state,
-        debugging_workstack: payload.arg,
-      };
-    case AdvancedConfigActionTypes.SET_DEBUGGING_ARGS:
-      return {
-        ...state,
-        debugging_args: payload.arg,
+        debugging_trigger_stack: payload.arg,
       };
     case AdvancedConfigActionTypes.SET_DEBUGGING_SCRIPTFILTER:
       return {
@@ -59,20 +54,16 @@ export function getMaxActionLogCount(state: StateType) {
   return state.advanced_config.max_action_log_count;
 }
 
-export function getIsOnDebuggingActionType(state: StateType) {
-  return state.advanced_config.debugging_action_type;
+export function getIsOnDebuggingAction(state: StateType) {
+  return state.advanced_config.debugging_action;
 }
 
-export function getIsOnDebuggingScriptOutput(state: StateType) {
-  return state.advanced_config.debugging_script_output;
+export function getIsOnDebuggingScript(state: StateType) {
+  return state.advanced_config.debugging_script;
 }
 
-export function getIsOnDebuggingWorkflowStack(state: StateType) {
-  return state.advanced_config.debugging_workstack;
-}
-
-export function getIsOnDebuggingArgs(state: StateType) {
-  return state.advanced_config.debugging_args;
+export function getIsOnDebuggingTriggerStack(state: StateType) {
+  return state.advanced_config.debugging_trigger_stack;
 }
 
 export function getIsOnDebuggingPlugin(state: StateType) {

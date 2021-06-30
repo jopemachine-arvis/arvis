@@ -9,7 +9,6 @@ export const Input = styled.input`
 `;
 
 export const AutoMatch = styled.span`
-  color: #888;
   position: absolute;
 `;
 

@@ -29,12 +29,12 @@ export default function AdvancedHistory() {
           <StyledInput
             type="number"
             min={0}
-            max={9999}
+            max={99999}
             defaultValue={max_action_log_count}
             onBlur={(e: React.FormEvent<HTMLInputElement>) =>
               onNumberChangeHandler(e, {
                 min: 0,
-                max: 9999,
+                max: 99999,
                 actionType: AdvancedActionTypes.SET_MAX_ACTION_LOG_COUNT,
                 dispatch,
                 destWindows: ['searchWindow'],

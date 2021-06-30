@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import StyledInput from '../styledInput';
+import HotkeyRecordForm from '../hotkeyRecordForm';
 import './index.global.css';
 
 export const EditableCell = ({
@@ -7,17 +8,24 @@ export const EditableCell = ({
   row: { index },
   column: { id },
   updateJson,
+  type,
 }: {
   value: any;
   row: any;
   column: any;
   updateJson: any;
+  type: string;
 }) => {
   const [value, setValue] = useState<string>(initialValue);
   const [focusedValue, setFocusedValue] = useState<string>(initialValue);
 
+  const onHotkeyChangeHandler = (e: any) => {
+    setValue(e.currentTarget.value);
+    updateJson(index, id, e.currentTarget.value);
+  };
+
   const onChangeHandler = (e: any) => {
-    setValue(e.target.value);
+    setValue(e.currentTarget.value);
   };
 
   const onBlurHandler = () => {
@@ -84,19 +92,34 @@ export const EditableCell = ({
   const backgroundColor = id === 'type' ? getTypeColor() : '#1f2228';
   const indicatedValue = id === 'type' ? getTypeValue() : value;
 
+  const style = {
+    height: 20,
+    padding: 3,
+    border: 1,
+    backgroundColor,
+    fontSize: getFontSize(),
+    color: getTextColor(),
+    textAlign: getTextAlign(),
+    textShadow: undefined,
+  };
+
+  if (id === 'command' && type === 'hotkey') {
+    return (
+      <HotkeyRecordForm
+        className="workflowTriggerTableItem"
+        canBeEmpty
+        hotkey={indicatedValue ?? ''}
+        onHotkeyChange={onHotkeyChangeHandler}
+        style={style}
+      />
+    );
+  }
+
   return (
     <StyledInput
       className="workflowTriggerTableItem"
       disabled={id !== 'command'}
-      style={{
-        height: 20,
-        padding: 3,
-        border: 1,
-        backgroundColor,
-        fontSize: getFontSize(),
-        color: getTextColor(),
-        textAlign: getTextAlign(),
-      }}
+      style={style}
       value={indicatedValue}
       onChange={onChangeHandler}
       onBlur={onBlurHandler}

@@ -65,6 +65,7 @@ export default function ClipboardHistory() {
               })
             }
           />
+          <FormDescription>Maximum number of logs to store</FormDescription>
         </FormGroup>
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Maximum log count to show</Label>
@@ -83,6 +84,9 @@ export default function ClipboardHistory() {
               })
             }
           />
+          <FormDescription>
+            Maximum number of logs to display in the window
+          </FormDescription>
         </FormGroup>
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
@@ -101,6 +105,9 @@ export default function ClipboardHistory() {
             />
             Apply Mouse Hover Event
           </Label>
+          <FormDescription>
+            Ignore mouse hovering event when disabled
+          </FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>

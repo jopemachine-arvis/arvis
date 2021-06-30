@@ -10,10 +10,13 @@ import useKey from '../../../use-key-capture/src';
 type IProps = {
   hotkey: string;
   onHotkeyChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  canBeEmpty?: boolean;
+  style?: any;
+  className?: string;
 };
 
-export default function HotkeyRecordForm(props: IProps) {
-  const { hotkey, onHotkeyChange } = props;
+const HotkeyRecordForm = (props: IProps) => {
+  const { canBeEmpty, className, hotkey, onHotkeyChange, style } = props;
 
   const { keyData } = useKey();
 
@@ -22,6 +25,14 @@ export default function HotkeyRecordForm(props: IProps) {
   const hotkeyChangedEventHandler = () => {
     if (hotkeyFormFocused) {
       console.log('Recorded keyData', keyData);
+
+      if (canBeEmpty && keyData.isBackspace) {
+        onHotkeyChange({
+          currentTarget: {
+            value: '',
+          },
+        } as React.FormEvent<HTMLInputElement>);
+      }
 
       let result = '';
       const modifiers = {
@@ -67,11 +78,13 @@ export default function HotkeyRecordForm(props: IProps) {
 
       const doubledStr = keyData.doubleKeyPressed ? 'Double ' : '';
 
-      onHotkeyChange({
-        currentTarget: {
-          value: doubledStr + result,
-        },
-      } as React.FormEvent<HTMLInputElement>);
+      if (doubledStr + result !== hotkey) {
+        onHotkeyChange({
+          currentTarget: {
+            value: doubledStr + result,
+          },
+        } as React.FormEvent<HTMLInputElement>);
+      }
     }
   };
 
@@ -85,12 +98,26 @@ export default function HotkeyRecordForm(props: IProps) {
         textTransform: 'capitalize',
         color: 'transparent',
         textShadow: '0px 0px 0px #fff',
+        ...style,
       }}
+      className={className}
       type="text"
-      onBlur={() => setHotkeyFormFocused(false)}
       onChange={() => {}}
-      onFocus={() => setHotkeyFormFocused(true)}
+      onBlur={(e: any) => {
+        setHotkeyFormFocused(false);
+      }}
+      onFocus={(e: any) => {
+        setHotkeyFormFocused(true);
+      }}
       value={getHotkeyNameOnThisPlatform(hotkey)}
     />
   );
-}
+};
+
+HotkeyRecordForm.defaultProps = {
+  canBeEmpty: false,
+  className: '',
+  style: {},
+};
+
+export default HotkeyRecordForm;

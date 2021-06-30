@@ -62,6 +62,7 @@ export default function Appearance() {
     item_height,
     item_left_padding,
     item_title_subtitle_margin,
+    searchbar_automatch_font_color,
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
@@ -203,6 +204,11 @@ export default function Appearance() {
           UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
         );
 
+        configChangeHandler(
+          createFormEvent(themeJson.searchbar_automatch_font_color),
+          UIActionTypes.SET_AUTOMATCH_FONT_COLOR
+        );
+
         return null;
       })
       .catch(console.error);
@@ -289,6 +295,7 @@ export default function Appearance() {
             alwaysFocus={false}
             hasContextMenu={false}
             itemLeftPadding={item_left_padding}
+            searchbarAutomatchFontColor={searchbar_automatch_font_color}
             searchbarFontColor={searchbar_font_color}
             searchbarFontSize={searchbar_font_size}
             searchbarHeight={searchbar_height}
@@ -506,6 +513,17 @@ export default function Appearance() {
               value={searchbar_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONTCOLOR)
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Searchbar auto match font color</Label>
+            <StyledInput
+              type="color"
+              value={searchbar_automatch_font_color}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(e, UIActionTypes.SET_AUTOMATCH_FONT_COLOR)
               }
             />
           </FormGroup>

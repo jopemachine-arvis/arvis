@@ -12,6 +12,8 @@ export const actionTypes = {
   SET_SELECTED_ITEM_BACKGROUND_COLOR:
     '@uiConfig/SET_SELECTED_ITEM_BACKGROUND_COLOR',
 
+  SET_AUTOMATCH_FONT_COLOR: '@uiConfig/SET_AUTOMATCH_FONT_COLOR',
+
   SET_TITLE_FONTSIZE: '@uiConfig/SET_TITLE_FONTSIZE',
   SET_SUBTITLE_FONTSIZE: '@uiConfig/SET_SUBTITLE_FONTSIZE',
 
@@ -35,6 +37,11 @@ export const actionTypes = {
 
 export const setSearchWindowScrollbarColor = makeActionCreator(
   actionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR,
+  'arg'
+);
+
+export const setAutoMatchFontColor = makeActionCreator(
+  actionTypes.SET_AUTOMATCH_FONT_COLOR,
   'arg'
 );
 

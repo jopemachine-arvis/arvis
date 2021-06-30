@@ -15,6 +15,7 @@ export type StateType = {
     item_height: number;
     item_left_padding: number;
     item_title_subtitle_margin: number;
+    searchbar_automatch_font_color: string;
     searchbar_font_color: string;
     searchbar_font_size: number;
     searchbar_height: number;
@@ -31,12 +32,11 @@ export type StateType = {
   };
   advanced_config: {
     async_plugin_timer: number;
-    debugging_action_type: boolean;
-    debugging_args: boolean;
+    debugging_action: boolean;
     debugging_plugin: boolean;
+    debugging_script: boolean;
     debugging_scriptfilter: boolean;
-    debugging_script_output: boolean;
-    debugging_workstack: boolean;
+    debugging_trigger_stack: boolean;
     max_action_log_count: number;
   };
   clipboard_history: {

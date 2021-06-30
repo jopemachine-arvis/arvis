@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable react/no-unescaped-entities */
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,17 +8,16 @@ import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfi
 import { StateType } from '@redux/reducers/types';
 import { makeActionCreator } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { OuterContainer } from './components';
+import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
 export default function AdvancedDebugging() {
   const {
-    debugging_action_type,
-    debugging_script_output,
-    debugging_workstack,
-    debugging_args,
-    debugging_scriptfilter,
+    debugging_action,
     debugging_plugin,
+    debugging_script,
+    debugging_scriptfilter,
+    debugging_trigger_stack,
   } = useSelector((state: StateType) => state.advanced_config);
 
   const dispatch = useDispatch();
@@ -39,48 +39,38 @@ export default function AdvancedDebugging() {
           <Label checked style={labelStyle}>
             <Input
               type="checkbox"
-              checked={debugging_action_type}
+              checked={debugging_action}
               onChange={() =>
                 toggleState(
-                  AdvancedActionTypes.SET_DEBUGGING_ACTION_TYPE,
-                  debugging_action_type
+                  AdvancedActionTypes.SET_DEBUGGING_ACTION,
+                  debugging_action
                 )
               }
             />
-            Debugging action types
+            Debugging actions
           </Label>
+          <FormDescription>
+            Print executed action info on devtools
+          </FormDescription>
         </FormGroup>
 
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
             <Input
               type="checkbox"
-              checked={debugging_script_output}
+              checked={debugging_script}
               onChange={() =>
                 toggleState(
-                  AdvancedActionTypes.SET_DEBUGGING_SCRIPT_OUTPUT,
-                  debugging_script_output
+                  AdvancedActionTypes.SET_DEBUGGING_SCRIPT,
+                  debugging_script
                 )
               }
             />
-            Debugging script output
+            Debugging script
           </Label>
-        </FormGroup>
-
-        <FormGroup check style={formGroupStyle}>
-          <Label checked style={labelStyle}>
-            <Input
-              type="checkbox"
-              checked={debugging_workstack}
-              onChange={() =>
-                toggleState(
-                  AdvancedActionTypes.SET_DEBUGGING_WORKSTACK,
-                  debugging_workstack
-                )
-              }
-            />
-            Debugging workstack
-          </Label>
+          <FormDescription>
+            Print executed script and script's stdout, stderr on devtools
+          </FormDescription>
         </FormGroup>
 
         <FormGroup check style={formGroupStyle}>
@@ -97,22 +87,28 @@ export default function AdvancedDebugging() {
             />
             Debugging scriptfilter
           </Label>
+          <FormDescription>
+            Print executed scriptfilter's script devtools
+          </FormDescription>
         </FormGroup>
 
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>
             <Input
               type="checkbox"
-              checked={debugging_args}
+              checked={debugging_trigger_stack}
               onChange={() =>
                 toggleState(
-                  AdvancedActionTypes.SET_DEBUGGING_ARGS,
-                  debugging_args
+                  AdvancedActionTypes.SET_DEBUGGING_TRIGGER_STACK,
+                  debugging_trigger_stack
                 )
               }
             />
-            Debugging arguments, query, variables
+            Debugging trigger stack
           </Label>
+          <FormDescription>
+            Print executed trigger info on devtools
+          </FormDescription>
         </FormGroup>
 
         <FormGroup check style={formGroupStyle}>
@@ -129,6 +125,9 @@ export default function AdvancedDebugging() {
             />
             Debugging plugins
           </Label>
+          <FormDescription>
+            Print executed plugin info on devtools
+          </FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>

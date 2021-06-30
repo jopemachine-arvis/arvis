@@ -3,7 +3,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/destructuring-assignment */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
@@ -98,11 +98,17 @@ function TriggerTable({
   data: any;
   updateJson: any;
 }) {
+  const dataRef = useRef<any>(data);
+
   const defaultColumn = React.useMemo(
     () => ({
-      Cell: EditableCell,
+      Cell: (cellArgs: any) => {
+        if (!dataRef.current[cellArgs.row.index]) return null;
+        const { type } = dataRef.current[cellArgs.row.index];
+        return EditableCell({ type, ...cellArgs });
+      },
     }),
-    []
+    [data]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -115,6 +121,10 @@ function TriggerTable({
       },
       useSortBy
     );
+
+  useEffect(() => {
+    dataRef.current = data;
+  });
 
   return (
     <Table {...getTableProps()}>

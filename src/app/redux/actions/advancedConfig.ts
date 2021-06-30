@@ -1,15 +1,14 @@
 import makeActionCreator from '../../utils/makeActionCreator';
 
 export const actionTypes = {
-  SET_DEBUGGING_ACTION_TYPE: '@advancedConfig/SET_DEBUGGING_ACTION_TYPE',
-  SET_DEBUGGING_ARGS: '@advancedConfig/SET_DEBUGGING_ARGS',
+  SET_ASYNC_PLUGIN_TIMER: '@advancedConfig/SET_ASYNC_PLUGIN_TIMER',
+  SET_DEBUGGING_ACTION: '@advancedConfig/SET_DEBUGGING_ACTION',
   SET_DEBUGGING_PLUGIN: '@advancedConfig/SET_DEBUGGING_PLUGIN',
+  SET_DEBUGGING_SCRIPT: '@advancedConfig/SET_DEBUGGING_SCRIPT',
   SET_DEBUGGING_SCRIPTFILTER: '@advancedConfig/SET_DEBUGGING_SCRIPTFILTER',
-  SET_DEBUGGING_SCRIPT_OUTPUT: '@advancedConfig/SET_DEBUGGING_SCRIPT_OUTPUT',
-  SET_DEBUGGING_WORKSTACK: '@advancedConfig/SET_DEBUGGING_WORKSTACK',
+  SET_DEBUGGING_TRIGGER_STACK: '@advancedConfig/SET_DEBUGGING_TRIGGER_STACK',
   SET_INSTALL_ALFRED_WORKFLOW: '@advancedConfig/SET_INSTALL_ALFRED_WORKFLOW',
   SET_MAX_ACTION_LOG_COUNT: '@advancedConfig/SET_MAX_ACTION_LOG_COUNT',
-  SET_ASYNC_PLUGIN_TIMER: '@advancedConfig/SET_ASYNC_PLUGIN_TIMER',
 };
 
 export const setMaxActionLogCount = makeActionCreator(
@@ -27,23 +26,18 @@ export const setDebuggingPlugin = makeActionCreator(
   'arg'
 );
 
-export const setDebuggingActionType = makeActionCreator(
-  actionTypes.SET_DEBUGGING_ACTION_TYPE,
+export const setDebuggingAction = makeActionCreator(
+  actionTypes.SET_DEBUGGING_ACTION,
   'arg'
 );
 
-export const setDebuggingScriptOutput = makeActionCreator(
-  actionTypes.SET_DEBUGGING_SCRIPT_OUTPUT,
+export const setDebuggingScript = makeActionCreator(
+  actionTypes.SET_DEBUGGING_SCRIPT,
   'arg'
 );
 
-export const setDebuggingWorkstack = makeActionCreator(
-  actionTypes.SET_DEBUGGING_WORKSTACK,
-  'arg'
-);
-
-export const setDebuggingArgs = makeActionCreator(
-  actionTypes.SET_DEBUGGING_ARGS,
+export const setDebuggingTriggerStk = makeActionCreator(
+  actionTypes.SET_DEBUGGING_TRIGGER_STACK,
   'arg'
 );
 

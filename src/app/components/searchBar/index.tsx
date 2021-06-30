@@ -14,6 +14,7 @@ type IProps = {
   getInputProps?: Function;
   isPinned?: boolean;
   itemLeftPadding: number;
+  searchbarAutomatchFontColor: string;
   searchbarFontColor: string;
   searchbarFontSize: number;
   searchbarHeight: number;
@@ -29,6 +30,7 @@ const SearchBar = (props: IProps) => {
     hasContextMenu,
     isPinned,
     itemLeftPadding,
+    searchbarAutomatchFontColor,
     searchbarFontColor,
     searchbarFontSize,
     searchbarHeight,
@@ -104,6 +106,7 @@ const SearchBar = (props: IProps) => {
           style={{
             left: itemLeftPadding,
             fontSize: searchbarFontSize,
+            color: searchbarAutomatchFontColor,
           }}
         >
           {bestMatch}

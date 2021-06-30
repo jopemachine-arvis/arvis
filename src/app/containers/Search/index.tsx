@@ -25,6 +25,7 @@ export default function SearchWindow() {
     item_height,
     item_left_padding,
     item_title_subtitle_margin,
+    searchbar_automatch_font_color,
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
@@ -68,12 +69,11 @@ export default function SearchWindow() {
 
   const setDebuggingOptions = () => {
     workManager.loggerColorType = 'gui';
-    workManager.printActionType = debuggingConfig.debugging_action_type;
-    workManager.printArgs = debuggingConfig.debugging_args;
+    workManager.printActionType = debuggingConfig.debugging_action;
     workManager.printPluginItems = debuggingConfig.debugging_plugin;
     workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
-    workManager.printScriptOutput = debuggingConfig.debugging_script_output;
-    workManager.printWorkStack = debuggingConfig.debugging_workstack;
+    workManager.printScriptOutput = debuggingConfig.debugging_script;
+    workManager.printWorkStack = debuggingConfig.debugging_trigger_stack;
   };
 
   useEffect(() => {
@@ -338,9 +338,10 @@ export default function SearchWindow() {
         <SearchBar
           alwaysFocus
           bestMatch={bestMatch}
-          isPinned={isPinned}
           getInputProps={getInputProps}
+          isPinned={isPinned}
           itemLeftPadding={item_left_padding}
+          searchbarAutomatchFontColor={searchbar_automatch_font_color}
           searchbarFontColor={searchbar_font_color}
           searchbarFontSize={searchbar_font_size}
           searchbarHeight={searchbar_height}
