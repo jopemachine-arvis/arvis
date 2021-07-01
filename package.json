@@ -285,7 +285,7 @@
     "electron-updater": "^4.3.4",
     "electron-util": "^0.16.0",
     "encodeurl": "^1.0.2",
-    "font-list": "^1.2.14",
+    "font-list": "^1.2.15",
     "history": "^5.0.0",
     "open": "^8.0.8",
     "path-exists": "^4.0.0",
