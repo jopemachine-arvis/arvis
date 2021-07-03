@@ -23,6 +23,7 @@ import GeneralPage from './General';
 import WorkflowPage from './Workflow';
 import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
+import StorePage from './Store';
 import ClipboardHistoryPage from './ClipboardHistory';
 import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
@@ -272,6 +273,9 @@ export default function PreferenceWindow() {
         break;
       case PreferencePage.Plugin:
         main = <PluginPage />;
+        break;
+      case PreferencePage.Store:
+        main = <StorePage />;
         break;
       case PreferencePage.ClipboardHistory:
         main = <ClipboardHistoryPage />;

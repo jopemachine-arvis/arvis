@@ -17,8 +17,9 @@ const createPreferenceWindow = () => {
     webPreferences: {
       accessibleTitle: 'arvis-preference-window',
       contextIsolation: false,
-      nodeIntegration: true,
       enableRemoteModule: true,
+      nodeIntegration: true,
+      webviewTag: true,
     },
   });
 

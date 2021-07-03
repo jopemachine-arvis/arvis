@@ -18,7 +18,7 @@ import {
 import './index.global.css';
 import './sidebar.global.css';
 import styled from 'styled-components';
-import { BiMenuAltLeft } from 'react-icons/bi';
+import { BiMenuAltLeft, BiStore } from 'react-icons/bi';
 import { FaGithub } from 'react-icons/fa';
 import open from 'open';
 import { BsClipboardData } from 'react-icons/bs';
@@ -98,6 +98,13 @@ export default function Sidebar(props: IProps) {
               active={page === PreferencePage.ClipboardHistory}
             >
               Clipboard History
+            </MenuItem>
+            <MenuItem
+              onClick={() => setPage(PreferencePage.Store)}
+              icon={<BiStore />}
+              active={page === PreferencePage.Store}
+            >
+              Store
             </MenuItem>
             <SubMenu title="Advanced" icon={<AiOutlineTool />}>
               <MenuItem
