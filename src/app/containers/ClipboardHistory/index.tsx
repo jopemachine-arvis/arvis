@@ -185,6 +185,7 @@ export default function ClipboardHistoryWindow() {
           hasContextMenu={false}
           isPinned={false}
           itemLeftPadding={style.itemLeftPadding}
+          searchbarAutomatchFontColor="#fff"
           searchbarFontColor="#fff"
           searchbarFontSize={style.searchbarFontSize}
           searchbarHeight={style.searchbarHeight}

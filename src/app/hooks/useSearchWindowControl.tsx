@@ -180,7 +180,11 @@ const useSearchWindowControl = ({
   const handleNormalInput = async (updatedInput: string) => {
     let timer: NodeJS.Timeout;
 
-    setBestMatch(Core.history.getBestMatch(updatedInput));
+    try {
+      setBestMatch((Core.history.getBestMatch(updatedInput)! as Log).inputStr!);
+    } catch {
+      setBestMatch('');
+    }
 
     const handler = async () => {
       clearTimeout(timer);
