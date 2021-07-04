@@ -9,7 +9,6 @@ import ScreenCover from './screenCover';
 import SearchWindowScrollbar from './searchWindowScrollbar';
 import SearchWindowSpinner from './searchWindowSpinner';
 import HotkeyRecordForm from './hotkeyRecordForm';
-import { WorkflowTriggerTable } from './workflowTriggerTable';
 
 export {
   MenuBuilder,
@@ -23,5 +22,4 @@ export {
   StyledInput,
   TrayBuilder,
   HotkeyRecordForm,
-  WorkflowTriggerTable,
 };

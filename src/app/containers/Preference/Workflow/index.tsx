@@ -24,10 +24,14 @@ import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
-import { WorkflowTriggerTable } from '@components/index';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { WorkflowTriggerTable } from './workflowTriggerTable';
+import WorkflowInfoTable from './infoTable';
+import ReadMeTable from './readme';
 import {
   Header,
   OuterContainer,
+  TabNavigatorContainer,
   WorkflowDescContainer,
   WorkflowImg,
   WorkflowItemContainer,
@@ -38,6 +42,7 @@ import {
   WorkflowListViewFooter,
 } from './components';
 import * as style from './style';
+import 'react-tabs/style/react-tabs.css';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -49,6 +54,8 @@ export default function Workflow() {
     })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
   );
 
+  const [tabIdx, setTabIdx] = useState<number>(0);
+
   const workflowBundleIdsRef = useRef<any>(workflowBundleIds);
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(-1);
   const selectedWorkflowIdxRef = useRef<any>();
@@ -56,6 +63,8 @@ export default function Workflow() {
   const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
+
+  const [webviewUrl, setWebviewUrl] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -188,12 +197,13 @@ export default function Workflow() {
           ? {}
           : workflows[workflowBundleIds[selectedWorkflowIdx]];
 
-      const { creator = '', name = '' } = info;
+      const { creator = '', name = '', webAddress } = info;
 
       const bundleId =
         selectedWorkflowIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setWorkflowBundleId(bundleId);
+      setWebviewUrl(webAddress);
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -465,10 +475,56 @@ export default function Workflow() {
         </WorkflowListOrderedList>
       </WorkflowListView>
       <WorkflowDescContainer>
-        <WorkflowTriggerTable
-          bundleId={workflowBundleId}
-          triggers={workflowTriggers[workflowBundleId]}
-        />
+        <TabNavigatorContainer>
+          <Tabs
+            style={{
+              width: '100%',
+            }}
+          >
+            <TabList>
+              <Tab>Basic info</Tab>
+              <Tab>Trigger table</Tab>
+              <Tab>README</Tab>
+              <Tab>Web view</Tab>
+            </TabList>
+            <TabPanel>
+              <WorkflowInfoTable info={workflows[workflowBundleId]} />
+            </TabPanel>
+            <TabPanel>
+              <WorkflowTriggerTable
+                bundleId={workflowBundleId}
+                triggers={workflowTriggers[workflowBundleId]}
+              />
+            </TabPanel>
+            <TabPanel>
+              <ReadMeTable
+                readme={
+                  workflows[workflowBundleId]
+                    ? workflows[workflowBundleId].readme
+                    : null
+                }
+              />
+            </TabPanel>
+            <TabPanel
+              style={{
+                height: '85%',
+              }}
+            >
+              {webviewUrl && (
+                <webview
+                  id="webview"
+                  src={webviewUrl}
+                  allowFullScreen={false}
+                  style={{
+                    width: '90%',
+                    height: '100%',
+                  }}
+                />
+              )}
+              {!webviewUrl && <div>There is no web address</div>}
+            </TabPanel>
+          </Tabs>
+        </TabNavigatorContainer>
       </WorkflowDescContainer>
 
       <WorkflowListViewFooter>

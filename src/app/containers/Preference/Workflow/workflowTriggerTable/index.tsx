@@ -15,13 +15,12 @@ import { EditableCell } from './editableCell';
 
 const OuterContainer = styled.div`
   width: 95%;
-  height: 78%;
+  height: 100%;
 
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: #1f2228;
   border-radius: 10px;
 
   overflow-x: hidden;
