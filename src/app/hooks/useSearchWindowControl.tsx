@@ -541,10 +541,6 @@ const useSearchWindowControl = ({
       selectedItemIdx = handleDownArrow();
     } else if (keyData.isArrowUp) {
       selectedItemIdx = handleUpArrow();
-    } else if (keyData.isArrowRight) {
-      if ((inputRef.current as any).selectionStart === inputStr.length) {
-        setInputStr({ str: bestMatch, needItemsUpdate: true });
-      }
     } else if (keyData.isEscape) {
       workManager.popWork();
     } else if (keyData.isTab) {
@@ -559,6 +555,13 @@ const useSearchWindowControl = ({
       searchByNextInput();
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'Z') {
       searchByNextInput();
+    } else if (keyData.isArrowRight) {
+      if (
+        workManager.hasEmptyWorkStk() &&
+        (inputRef.current as any).selectionStart === inputStr.length
+      ) {
+        setInputStr({ str: bestMatch, needItemsUpdate: true });
+      }
     }
 
     // on Macos, option key not detected!! -> maybe this logic need to be migrated to iohook
