@@ -17,10 +17,12 @@ import {
   AiOutlineExport,
 } from 'react-icons/ai';
 import { Form, FormGroup, Label } from 'reactstrap';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import ExtensionInfoTable from './infoTable';
 import {
   Header,
   OuterContainer,
@@ -35,6 +37,7 @@ import {
   ExtensionListOrderedList,
   ExtensionListView,
   ExtensionListViewFooter,
+  TabNavigatorContainer,
 } from './components';
 import './index.global.css';
 import * as style from './style';
@@ -209,90 +212,39 @@ export default function Store() {
         </ExtensionListOrderedList>
       </ExtensionListView>
       <ExtensionDescContainer>
-        <webview
-          id="webview"
-          src={webviewUrl}
-          allowFullScreen={false}
-          style={{
-            width: '90%',
-            height: '85%',
-          }}
-        />
-        {/* <Form style={style.descriptionContainerStyle}>
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Name</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Name"
-              value={extensionName}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Creator</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Creator"
-              value={extensionCreator}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Version</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Version"
-              value={extensionVersion}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Category</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Category"
-              value={extensionCategory}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Description</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Description"
-              value={extensionDescription}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Read Me</Label>
-            <StyledInput
-              disabled
-              type="textarea"
-              className="extension-page-textarea"
-              placeholder="README"
+        <TabNavigatorContainer>
+          <Tabs
+            style={{
+              width: '100%',
+            }}
+          >
+            <TabList>
+              <Tab>Basic info</Tab>
+              <Tab>Web view</Tab>
+            </TabList>
+            <TabPanel>
+              <ExtensionInfoTable info={extensions[selectedExtensionIdx]} />
+            </TabPanel>
+            <TabPanel
               style={{
-                height: 260,
+                height: '85%',
               }}
-              value={extensionReadme}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Web Site</Label>
-            <StyledInput
-              disabled
-              type="url"
-              placeholder="Web Site"
-              value={extensionWebsite}
-            />
-          </FormGroup>
-            </Form> */}
+            >
+              {webviewUrl && (
+                <webview
+                  id="webview"
+                  src={webviewUrl}
+                  allowFullScreen={false}
+                  style={{
+                    width: '90%',
+                    height: '100%',
+                  }}
+                />
+              )}
+              {!webviewUrl && <div>There is no web address</div>}
+            </TabPanel>
+          </Tabs>
+        </TabNavigatorContainer>
       </ExtensionDescContainer>
 
       <ExtensionListViewFooter />
