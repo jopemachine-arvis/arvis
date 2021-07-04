@@ -75,6 +75,7 @@ a:hover {
   list-style: none;
   padding: 6px 12px;
   cursor: pointer;
+  color: #fff;
 }
 
 .react-tabs__tab--selected {
@@ -111,4 +112,5 @@ a:hover {
 
 .react-tabs__tab-panel--selected {
   display: block;
+  color: #fff;
 }
