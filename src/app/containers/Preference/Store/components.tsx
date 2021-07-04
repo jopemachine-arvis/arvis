@@ -138,6 +138,18 @@ export const ExtensionImg = styled.img`
   left: 15px;
 `;
 
+export const InstallMark = styled.span`
+  width: 40px;
+  height: 10px;
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  font-size: 8px;
+  border-radius: 2px;
+  background-color: #7bbb3e88;
+`;
+
 export const TabNavigatorContainer = styled.div`
   width: 90%;
   height: 85%;

@@ -6,17 +6,21 @@
 /* eslint-disable promise/catch-or-return */
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
-import { Form, FormGroup, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { StyledInput } from '@components/index';
 import './index.global.css';
 import * as style from './style';
+import { Core } from 'arvis-core';
 
 type IProps = {
   info: any;
+  installed: boolean;
+  installExtension: (bundleId: string) => void;
+  uninstallExtension: (bundleId: string) => void;
 };
 
 export default function ExtensionInfoTable(props: IProps) {
-  const { info } = props;
+  const { info, installed, installExtension, uninstallExtension } = props;
 
   const [extensionCreator, setExtensionCreator] = useState<string>('');
   const [extensionDescription, setExtensionDescription] = useState<string>('');
@@ -32,12 +36,12 @@ export default function ExtensionInfoTable(props: IProps) {
       const {
         creator = '',
         description = '',
-        name = '',
-        latest: version = '',
-        webAddress = '',
-        dw = '?',
         dt = '?',
+        dw = '?',
+        latest: version = '',
+        name = '',
         uploaded = '?',
+        webAddress = '',
       } = info;
 
       setExtensionCreator(creator);
@@ -53,6 +57,14 @@ export default function ExtensionInfoTable(props: IProps) {
       }
     }
   }, [info]);
+
+  const installHandler = () => {
+    installExtension(Core.getBundleId(extensionCreator, extensionName));
+  };
+
+  const uninstallHandler = () => {
+    uninstallExtension(Core.getBundleId(extensionCreator, extensionName));
+  };
 
   return (
     <Form style={style.descriptionContainerStyle}>
@@ -108,18 +120,41 @@ export default function ExtensionInfoTable(props: IProps) {
 
       <FormGroup style={style.formGroupStyle}>
         <Label style={style.labelStyle}>Total downloads</Label>
-        <StyledInput disabled type="url" value={totalDownloads} />
+        <StyledInput
+          disabled
+          type="url"
+          value={totalDownloads}
+          placeholder="Total downloads"
+        />
       </FormGroup>
 
       <FormGroup style={style.formGroupStyle}>
         <Label style={style.labelStyle}>Last week downloads</Label>
-        <StyledInput disabled type="url" value={lastWeekDownloads} />
+        <StyledInput
+          disabled
+          type="url"
+          value={lastWeekDownloads}
+          placeholder="Last week downloads"
+        />
       </FormGroup>
 
       <FormGroup style={style.formGroupStyle}>
         <Label style={style.labelStyle}>Uploaded date</Label>
-        <StyledInput disabled type="url" value={uploadedDateTime} />
+        <StyledInput
+          disabled
+          type="url"
+          value={uploadedDateTime}
+          placeholder="Uploaded date"
+        />
       </FormGroup>
+
+      <Button
+        style={{ ...style.installButton, marginTop: 50 }}
+        size="md"
+        onClick={installed ? installHandler : uninstallHandler}
+      >
+        {installed ? 'Remove' : 'Install'}
+      </Button>
     </Form>
   );
 }

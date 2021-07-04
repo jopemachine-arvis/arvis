@@ -16,6 +16,7 @@ import {
   AiOutlineExport,
 } from 'react-icons/ai';
 import { constant } from 'arvis-store';
+import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { SearchBar } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
@@ -36,6 +37,7 @@ import {
   TabNavigatorContainer,
   ExtensionItemDescText,
   ExtensionImg,
+  InstallMark,
 } from './components';
 import './index.global.css';
 import * as style from './style';
@@ -47,8 +49,6 @@ type IProps = {
 export default function Store(props: IProps) {
   const { allStoreExtensions } = props;
   const [extensions, setExtensions] = useState<any[]>([]);
-
-  const [extensionIcons, setExtensionIcons] = useState<any[]>([]);
 
   const [selectedExtensionIdx, setSelectedExtensionIdx] = useState<number>(-1);
 
@@ -62,6 +62,11 @@ export default function Store(props: IProps) {
   });
 
   const forceUpdate = useForceUpdate();
+
+  const installed = [
+    ...Object.keys(Core.getWorkflowList()),
+    ...Object.keys(Core.getPluginList()),
+  ];
 
   /**
    * @summary
@@ -101,17 +106,12 @@ export default function Store(props: IProps) {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     idx: number
   ) => {
-    // open(
-    //   path.resolve(
-    //     Core.path.getExtensionInstalledPath(pluginBundleIds[idx]),
-    //     'arvis-plugin.json'
-    //   )
-    // );
+    open(extensions[idx].webAddress);
   };
 
   const renderItem = (extension: any, idx: number) => {
     if (!extension) return <React.Fragment key={`extensionItem-${idx}`} />;
-    const { creator, name, description, dt, type } = extension;
+    const { creator, name, description, type } = extension;
     const bundleId = Core.getBundleId(creator, name);
 
     const extensionItemStyle =
@@ -130,11 +130,20 @@ export default function Store(props: IProps) {
             e.currentTarget.src = DefaultImg;
           }}
         />
+        {installed.includes(bundleId) && <InstallMark>installed</InstallMark>}
         <ExtensionItemTitle>{name}</ExtensionItemTitle>
         <ExtensionItemCreatorText>{`${creator}`}</ExtensionItemCreatorText>
         <ExtensionItemDescText>{`${description}`}</ExtensionItemDescText>
       </ExtensionItemContainer>
     );
+  };
+
+  const installExtension = (bundleId: string) => {
+
+  };
+
+  const uninstallExtension = (bundleId: string) => {
+
   };
 
   return (
@@ -179,7 +188,12 @@ export default function Store(props: IProps) {
               <Tab>Web view</Tab>
             </TabList>
             <TabPanel>
-              <ExtensionInfoTable info={extensions[selectedExtensionIdx]} />
+              <ExtensionInfoTable
+                info={extensions[selectedExtensionIdx]}
+                installed={installed.includes(extensionBundleId)}
+                installExtension={installExtension}
+                uninstallExtension={uninstallExtension}
+              />
             </TabPanel>
             <TabPanel
               style={{
