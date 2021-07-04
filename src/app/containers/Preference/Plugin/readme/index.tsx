@@ -6,7 +6,6 @@
 /* eslint-disable promise/catch-or-return */
 import React from 'react';
 import _ from 'lodash';
-import './index.global.css';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';

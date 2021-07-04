@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
@@ -16,9 +16,8 @@ import {
   AiOutlineDelete,
   AiOutlineExport,
 } from 'react-icons/ai';
-import { Form, FormGroup, Label } from 'reactstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { SearchBar, StyledInput } from '@components/index';
+import { SearchBar } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
@@ -28,8 +27,6 @@ import {
   OuterContainer,
   ExtensionDescContainer,
   SearchbarContainer,
-  ExtensionItemDescText,
-  ExtensionImg,
   ExtensionItemContainer,
   ExtensionItemCreatorText,
   ExtensionItemDownloadCntText,
@@ -47,17 +44,8 @@ export default function Store() {
   const [extensionIcons, setExtensionIcons] = useState<any[]>([]);
 
   const [selectedExtensionIdx, setSelectedExtensionIdx] = useState<number>(-1);
-  const selectedExtensionIdxRef = useRef<any>();
 
   const [extensionBundleId, setExtensionBundleId] = useState<string>('');
-  const [extensionCategory, setExtensionCategory] = useState<string>('');
-  const [extensionCreator, setExtensionCreator] = useState<string>('');
-  const [extensionDescription, setExtensionDescription] = useState<string>('');
-  const [extensionName, setExtensionName] = useState<string>('');
-  const [extensionReadme, setExtensionReadme] = useState<string>('');
-  const [extensionVersion, setExtensionVersion] = useState<string>('');
-  const [extensionWebsite, setExtensionWebsite] = useState<string>('');
-
   const [webviewUrl, setWebviewUrl] = useState<string | undefined>('');
 
   const {
@@ -109,21 +97,12 @@ export default function Store() {
       const info =
         selectedExtensionIdx === -1 ? {} : extensions[selectedExtensionIdx];
 
-      const {
-        creator = '',
-        description = '',
-        name = '',
-        webAddress = '',
-      } = info;
+      const { creator = '', name = '', webAddress = '' } = info;
 
       const bundleId =
         selectedExtensionIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setExtensionBundleId(bundleId);
-      setExtensionCreator(creator);
-      setExtensionDescription(description);
-      setExtensionName(name);
-      setExtensionWebsite(webAddress);
 
       setWebviewUrl(webAddress);
     }
@@ -246,7 +225,6 @@ export default function Store() {
           </Tabs>
         </TabNavigatorContainer>
       </ExtensionDescContainer>
-
       <ExtensionListViewFooter />
     </OuterContainer>
   );

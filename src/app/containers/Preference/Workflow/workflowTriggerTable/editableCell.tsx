@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import StyledInput from '../../../../components/styledInput';
-import HotkeyRecordForm from '../../../../components/hotkeyRecordForm';
+import StyledInput from '@components/styledInput';
+import HotkeyRecordForm from '@components/hotkeyRecordForm';
 import './index.global.css';
 
 export const EditableCell = ({
