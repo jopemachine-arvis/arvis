@@ -15,7 +15,7 @@ type IProps = {
   info: any;
 };
 
-export default function WorkflowInfoTable(props: IProps) {
+export default function PluginInfoTable(props: IProps) {
   const { info } = props;
 
   const [extensionCategory, setExtensionCategory] = useState<string>('');

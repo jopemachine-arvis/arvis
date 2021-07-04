@@ -15,16 +15,17 @@ import {
   AiOutlineDelete,
   AiOutlineExport,
 } from 'react-icons/ai';
-import { Form, FormGroup, Label } from 'reactstrap';
 import path from 'path';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
 import open from 'open';
-import { StyledInput } from '@components/index';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
+import PluginInfoTable from './infoTable';
+import ReadMeTable from './readme';
 import {
   Header,
   OuterContainer,
@@ -36,6 +37,7 @@ import {
   PluginListOrderedList,
   PluginListView,
   PluginListViewFooter,
+  TabNavigatorContainer,
 } from './components';
 import './index.global.css';
 import * as style from './style';
@@ -54,13 +56,8 @@ export default function Plugin() {
   const selectedPluginIdxRef = useRef<any>();
 
   const [pluginBundleId, setPluginBundleId] = useState<string>('');
-  const [pluginCategory, setPluginCategory] = useState<string>('');
-  const [pluginCreator, setPluginCreator] = useState<string>('');
-  const [pluginDescription, setPluginDescription] = useState<string>('');
-  const [pluginName, setPluginName] = useState<string>('');
-  const [pluginReadme, setPluginReadme] = useState<string>('');
-  const [pluginVersion, setPluginVersion] = useState<string>('');
-  const [pluginWebsite, setPluginWebsite] = useState<string>('');
+
+  const [webviewUrl, setWebviewUrl] = useState<string>('');
 
   const [storeAvailable, setStoreAvailable] = useContext(
     StoreAvailabilityContext
@@ -194,27 +191,13 @@ export default function Plugin() {
           ? {}
           : plugins[pluginBundleIds[selectedPluginIdx]];
 
-      const {
-        category = '',
-        creator = '',
-        description = '',
-        name = '',
-        readme = '',
-        version = '',
-        webAddress = '',
-      } = info;
+      const { creator = '', name = '', webAddress = '' } = info;
 
       const bundleId =
         selectedPluginIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setPluginBundleId(bundleId);
-      setPluginCategory(category);
-      setPluginCreator(creator);
-      setPluginDescription(description);
-      setPluginName(name);
-      setPluginReadme(readme);
-      setPluginVersion(version);
-      setPluginWebsite(webAddress);
+      setWebviewUrl(webAddress);
     }
   }, [selectedPluginIdx, plugins]);
 
@@ -479,102 +462,49 @@ export default function Plugin() {
         </PluginListOrderedList>
       </PluginListView>
       <PluginDescContainer>
-        <Form style={style.descriptionContainerStyle}>
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Name</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Name"
-              value={pluginName}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginName(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Creator</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Creator"
-              value={pluginCreator}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginCreator(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Version</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Version"
-              value={pluginVersion}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginVersion(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Category</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Category"
-              value={pluginCategory}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginCategory(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Description</Label>
-            <StyledInput
-              disabled
-              type="text"
-              placeholder="Description"
-              value={pluginDescription}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginDescription(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Read Me</Label>
-            <StyledInput
-              disabled
-              type="textarea"
-              className="plugin-page-textarea"
-              placeholder="README"
+        <TabNavigatorContainer>
+          <Tabs
+            style={{
+              width: '100%',
+            }}
+          >
+            <TabList>
+              <Tab>Basic info</Tab>
+              <Tab>README</Tab>
+              <Tab>Web view</Tab>
+            </TabList>
+            <TabPanel>
+              <PluginInfoTable info={plugins[pluginBundleId]} />
+            </TabPanel>
+            <TabPanel>
+              <ReadMeTable
+                readme={
+                  plugins[pluginBundleId]
+                    ? plugins[pluginBundleId].readme
+                    : null
+                }
+              />
+            </TabPanel>
+            <TabPanel
               style={{
-                height: 260,
+                height: '85%',
               }}
-              value={pluginReadme}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginReadme(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup style={style.formGroupStyle}>
-            <Label style={style.labelStyle}>Web Site</Label>
-            <StyledInput
-              disabled
-              type="url"
-              placeholder="Web Site"
-              value={pluginWebsite}
-              onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                setPluginWebsite(e.currentTarget.value);
-              }}
-            />
-          </FormGroup>
-        </Form>
+            >
+              {webviewUrl && (
+                <webview
+                  id="webview"
+                  src={webviewUrl}
+                  allowFullScreen={false}
+                  style={{
+                    width: '90%',
+                    height: '100%',
+                  }}
+                />
+              )}
+              {!webviewUrl && <div>There is no web address</div>}
+            </TabPanel>
+          </Tabs>
+        </TabNavigatorContainer>
       </PluginDescContainer>
 
       <PluginListViewFooter>

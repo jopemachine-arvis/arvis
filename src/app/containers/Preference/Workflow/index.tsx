@@ -42,7 +42,6 @@ import {
   WorkflowListViewFooter,
 } from './components';
 import * as style from './style';
-import 'react-tabs/style/react-tabs.css';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
