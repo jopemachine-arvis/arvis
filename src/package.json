@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "archiver": "^5.3.0",
-    "iohook": "^0.9.1",
+    "iohook": "^0.9.2",
     "robotjs": "^0.6.0"
   },
   "optionalDependencies": {
