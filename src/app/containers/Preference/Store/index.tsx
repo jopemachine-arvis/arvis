@@ -4,23 +4,23 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
-import { api, searchMostTotalDownload } from 'arvis-store';
 import {
   AiOutlineAppstoreAdd,
   AiOutlineBranches,
   AiOutlineDelete,
   AiOutlineExport,
 } from 'react-icons/ai';
+import { constant } from 'arvis-store';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { SearchBar } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import DefaultImg from '../../../../../assets/images/default.svg';
 import ExtensionInfoTable from './infoTable';
 import {
   Header,
@@ -29,18 +29,25 @@ import {
   SearchbarContainer,
   ExtensionItemContainer,
   ExtensionItemCreatorText,
-  ExtensionItemDownloadCntText,
   ExtensionItemTitle,
   ExtensionListOrderedList,
   ExtensionListView,
   ExtensionListViewFooter,
   TabNavigatorContainer,
+  ExtensionItemDescText,
+  ExtensionImg,
 } from './components';
 import './index.global.css';
 import * as style from './style';
 
-export default function Store() {
+type IProps = {
+  allStoreExtensions: any[];
+};
+
+export default function Store(props: IProps) {
+  const { allStoreExtensions } = props;
   const [extensions, setExtensions] = useState<any[]>([]);
+
   const [extensionIcons, setExtensionIcons] = useState<any[]>([]);
 
   const [selectedExtensionIdx, setSelectedExtensionIdx] = useState<number>(-1);
@@ -48,23 +55,11 @@ export default function Store() {
   const [extensionBundleId, setExtensionBundleId] = useState<string>('');
   const [webviewUrl, setWebviewUrl] = useState<string | undefined>('');
 
-  const {
-    indexInfo,
-    clearIndexInfo,
-    setInputStr,
-    onDoubleClickHandler,
-    onWheelHandler,
-    getInputProps,
-  } = useStoreSearchControl({
+  const { setInputStr, getInputProps } = useStoreSearchControl({
     items: extensions,
-    originalItems: extensions,
+    originalItems: allStoreExtensions,
     setItems: setExtensions,
-    maxShowOnScreen: 10,
   });
-
-  const [storeAvailable, setStoreAvailable] = useContext(
-    StoreAvailabilityContext
-  ) as any;
 
   const forceUpdate = useForceUpdate();
 
@@ -73,29 +68,24 @@ export default function Store() {
    */
   const ipcCallbackTbl = {};
 
-  useEffect(() => {
-    searchMostTotalDownload()
-      .then((extensionInfos) => {
-        setExtensions(extensionInfos);
-        return null;
-      })
-      .catch(console.error);
-    return () => {};
-  }, []);
-
   const itemClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     idx: number
   ) => {
     setSelectedExtensionIdx(idx);
-
     forceUpdate();
   };
+
+  useEffect(() => {
+    setExtensions(allStoreExtensions);
+  }, []);
 
   useEffect(() => {
     if (extensions.length) {
       const info =
         selectedExtensionIdx === -1 ? {} : extensions[selectedExtensionIdx];
+
+      if (!info) return;
 
       const { creator = '', name = '', webAddress = '' } = info;
 
@@ -103,7 +93,6 @@ export default function Store() {
         selectedExtensionIdx === -1 ? '' : Core.getBundleId(creator, name);
 
       setExtensionBundleId(bundleId);
-
       setWebviewUrl(webAddress);
     }
   }, [selectedExtensionIdx, extensions]);
@@ -121,9 +110,9 @@ export default function Store() {
   };
 
   const renderItem = (extension: any, idx: number) => {
-    // const itemBundleId = Core.getBundleId(extension.creator, extension.name) as string;
-    if (!extension) return <React.Fragment key={`pluginItem-${idx}`} />;
-    const { creator, name, uploaded, dt, dw } = extension;
+    if (!extension) return <React.Fragment key={`extensionItem-${idx}`} />;
+    const { creator, name, description, dt, type } = extension;
+    const bundleId = Core.getBundleId(creator, name);
 
     const extensionItemStyle =
       selectedExtensionIdx === idx ? style.selectedItemStyle : {};
@@ -135,26 +124,18 @@ export default function Store() {
         onClick={(e) => itemClickHandler(e, idx)}
         onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
       >
+        <ExtensionImg
+          src={`${constant.extensionIconUrl}/${type}/${bundleId}.png`}
+          onError={(e) => {
+            e.currentTarget.src = DefaultImg;
+          }}
+        />
         <ExtensionItemTitle>{name}</ExtensionItemTitle>
         <ExtensionItemCreatorText>{`${creator}`}</ExtensionItemCreatorText>
-        <ExtensionItemCreatorText>
-          {`${new Date(uploaded).toLocaleString()}`}
-        </ExtensionItemCreatorText>
-        <ExtensionItemDownloadCntText>
-          {`Total downloads: ${dt}`}
-        </ExtensionItemDownloadCntText>
-        {/* <ExtensionItemDownloadCntText>
-          {`Weekly downloads: ${dw}`}
-        </ExtensionItemDownloadCntText> */}
+        <ExtensionItemDescText>{`${description}`}</ExtensionItemDescText>
       </ExtensionItemContainer>
     );
   };
-
-  useEffect(() => {
-    Core.Store.onStoreUpdate = () => {
-      forceUpdate();
-    };
-  }, []);
 
   return (
     <OuterContainer id="extension-page-container" tabIndex={0}>
@@ -165,11 +146,7 @@ export default function Store() {
       >
         Store
       </Header>
-      <ExtensionListView
-        onWheel={(e: React.WheelEvent<HTMLDivElement>) => {
-          onWheelHandler(e);
-        }}
-      >
+      <ExtensionListView>
         <SearchbarContainer>
           <SearchBar
             alwaysFocus={false}

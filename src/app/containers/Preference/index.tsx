@@ -8,13 +8,14 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Core } from 'arvis-core';
 import fse from 'fs-extra';
 import path from 'path';
+import _ from 'lodash';
+import { searchMostTotalDownload } from 'arvis-store';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
 import { sleep } from '@utils/index';
-import _ from 'lodash';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import Sidebar from './Sidebar';
@@ -55,6 +56,8 @@ export default function PreferenceWindow() {
   const [storeAvailable, setStoreAvailable] = useState<boolean>();
 
   const [fontList, setFontList] = useState<string[]>([]);
+
+  const [allStoreExtensions, setAllStoreExtensions] = useState<any[]>([]);
 
   const store = useStore();
 
@@ -187,6 +190,15 @@ export default function PreferenceWindow() {
   };
 
   useEffect(() => {
+    searchMostTotalDownload()
+      .then((extensionInfos) => {
+        setAllStoreExtensions(extensionInfos);
+        return null;
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
     preventInvalidReduxState();
 
     Core.setStoreAvailabiltyChecker(setStoreAvailable);
@@ -275,7 +287,7 @@ export default function PreferenceWindow() {
         main = <PluginPage />;
         break;
       case PreferencePage.Store:
-        main = <StorePage />;
+        main = <StorePage allStoreExtensions={allStoreExtensions} />;
         break;
       case PreferencePage.ClipboardHistory:
         main = <ClipboardHistoryPage />;

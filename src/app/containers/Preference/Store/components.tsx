@@ -110,12 +110,12 @@ export const ExtensionListOrderedList = styled.div`
 `;
 
 export const ExtensionItemContainer = styled.div`
-  height: 120px;
+  height: 95px;
   justify-content: center;
   align-items: center;
   padding-top: 15px;
   padding-bottom: 10px;
-  padding-left: 20px;
+  padding-left: 70px;
   padding-right: 35px;
   margin-bottom: 7px;
   user-select: none;
@@ -134,7 +134,7 @@ export const ExtensionImg = styled.img`
   position: absolute;
   width: 40px;
   height: 40px;
-  top: 14px;
+  top: 27px;
   left: 15px;
 `;
 

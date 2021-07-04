@@ -276,7 +276,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "alpha-sort": "^5.0.0",
-    "arvis-store": "^0.0.41",
+    "arvis-store": "^0.0.42",
     "bootstrap": "^5.0.0",
     "chokidar": "^3.5.2",
     "connected-react-router": "^6.9.1",

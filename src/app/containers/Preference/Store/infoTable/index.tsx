@@ -23,7 +23,7 @@ export default function ExtensionInfoTable(props: IProps) {
   const [extensionName, setExtensionName] = useState<string>('');
   const [extensionVersion, setExtensionVersion] = useState<string>('');
   const [extensionWebsite, setExtensionWebsite] = useState<string>('');
-
+  const [uploadedDateTime, setUploadedDateTime] = useState<string>('');
   const [totalDownloads, setTotalDownloads] = useState<string>('');
   const [lastWeekDownloads, setLastWeekDownloads] = useState<string>('');
 
@@ -37,6 +37,7 @@ export default function ExtensionInfoTable(props: IProps) {
         webAddress = '',
         dw = '?',
         dt = '?',
+        uploaded = '?',
       } = info;
 
       setExtensionCreator(creator);
@@ -46,6 +47,10 @@ export default function ExtensionInfoTable(props: IProps) {
       setExtensionWebsite(webAddress);
       setTotalDownloads(dt);
       setLastWeekDownloads(dw);
+
+      if (uploaded !== '?') {
+        setUploadedDateTime(new Date(uploaded).toLocaleString());
+      }
     }
   }, [info]);
 
@@ -102,15 +107,18 @@ export default function ExtensionInfoTable(props: IProps) {
       </FormGroup>
 
       <FormGroup style={style.formGroupStyle}>
-        <Label style={style.labelStyle}>
-          Total downloads / last week downloads
-        </Label>
-        <StyledInput
-          disabled
-          type="url"
-          placeholder="Web Site"
-          value={`${totalDownloads} / ${lastWeekDownloads}`}
-        />
+        <Label style={style.labelStyle}>Total downloads</Label>
+        <StyledInput disabled type="url" value={totalDownloads} />
+      </FormGroup>
+
+      <FormGroup style={style.formGroupStyle}>
+        <Label style={style.labelStyle}>Last week downloads</Label>
+        <StyledInput disabled type="url" value={lastWeekDownloads} />
+      </FormGroup>
+
+      <FormGroup style={style.formGroupStyle}>
+        <Label style={style.labelStyle}>Uploaded date</Label>
+        <StyledInput disabled type="url" value={uploadedDateTime} />
       </FormGroup>
     </Form>
   );

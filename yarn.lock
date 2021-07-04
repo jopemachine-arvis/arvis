@@ -2886,10 +2886,10 @@ arvis-extension-validator@^0.2.0:
     jsonschema "^1.4.0"
     meow "^5.0.0"
 
-arvis-store@^0.0.41:
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.0.41.tgz#e47ffeb62448ce657787646260a0e30b8b950da0"
-  integrity sha512-WIuK8Bb6XaCQPX6dMBReeOsqmywL8T9yXvn1S8sab5jvpCSrP4hagP/B6RnAUyRTg4KMTBm9AncWkOpN7Dg+XQ==
+arvis-store@^0.0.42:
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.0.42.tgz#ff671f202930ecc0ff92a19e018b69a8ab95eccc"
+  integrity sha512-RmXXc0jZzcDB8OWsJir1+uFfws0NO6RbcV1zMrqJfyFXgeAwRsXDvwgr9APrv9N1kVXb10KB/u7VZQ6CYJbsYQ==
   dependencies:
     "@octokit/core" "^3.5.1"
     "@octokit/rest" "^18.6.6"
