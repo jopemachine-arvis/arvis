@@ -2845,10 +2845,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.3.7.tgz#b9cd44959aec887fa165c4e25d7a0eaabaf0ac9a"
-  integrity sha512-fp2qYoNYAe00gX4UESz68DU1uqwCv3IjIbrlDfaWkNFPjMUMNQXr8uzpJxE1K7LFstyacGbT1i9oWIfqnlUyPw==
+arvis-core@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.4.1.tgz#cf3ff7b67beeea31545f0b6c240d2debcdd86e8d"
+  integrity sha512-SOQTG5Np0tCwVAPD33gRcNAj6MWgwIbbVBQCJ2MKEmB7wFMslxwylSlVsOOkKz5h8vYV9PSf5n2LNPwLwy+skA==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
@@ -2860,6 +2860,7 @@ arvis-core@^0.3.7:
     dot-prop "^6.0.1"
     encodeurl "^1.0.2"
     env-paths "^2.2.1"
+    execa "^5.1.1"
     fs-extra "^9.1.0"
     is-promise "^4.0.0"
     is-url "^1.2.4"
@@ -5895,7 +5896,7 @@ exec-sh@^0.3.2:
   resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.3.6.tgz#ff264f9e325519a60cb5e273692943483cca63bc"
   integrity sha512-nQn+hI3yp+oD0huYhKwvYI32+JFeq+XkNcD1GAo3Y/MjxsfVGmrrzrnzjWiNY6f+pUCP440fThsFh5gZrRAU/w==
 
-execa@5.1.1:
+execa@5.1.1, execa@^5.0.0, execa@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/execa/-/execa-5.1.1.tgz#f80ad9cbf4298f7bd1d4c9555c21e93741c411dd"
   integrity sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==
@@ -5936,21 +5937,6 @@ execa@^4.0.0, execa@^4.1.0:
     npm-run-path "^4.0.0"
     onetime "^5.1.0"
     signal-exit "^3.0.2"
-    strip-final-newline "^2.0.0"
-
-execa@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/execa/-/execa-5.0.0.tgz#4029b0007998a841fbd1032e5f4de86a3c1e3376"
-  integrity sha512-ov6w/2LCiuyO4RLYGdpFGjkcs0wMTgGE8PrkTHikeUy5iJekXyPIKUjifk5CsE0pt7sMCrMZ3YNqoCj6idQOnQ==
-  dependencies:
-    cross-spawn "^7.0.3"
-    get-stream "^6.0.0"
-    human-signals "^2.1.0"
-    is-stream "^2.0.0"
-    merge-stream "^2.0.0"
-    npm-run-path "^4.0.1"
-    onetime "^5.1.2"
-    signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
 exit-on-epipe@~1.0.1:
