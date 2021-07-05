@@ -47,7 +47,10 @@ const useStoreSearch = ({
     console.log('updatedInput', updatedInput);
 
     for (const item of _originalItems) {
-      if (item.name.toLowerCase().includes(updatedInput.toLowerCase())) {
+      if (
+        item.name.toLowerCase().includes(updatedInput.toLowerCase()) ||
+        item.description.toLowerCase().includes(updatedInput.toLowerCase())
+      ) {
         newItems.push(item);
       }
     }

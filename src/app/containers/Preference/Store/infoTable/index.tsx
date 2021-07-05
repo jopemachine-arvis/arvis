@@ -212,13 +212,13 @@ export default function ExtensionInfoTable(props: IProps) {
         />
       </FormGroup>
 
-      {!installed && (
+      {info && !installed && (
         <Button
           style={{ ...style.installButton, marginTop: 50 }}
           size="md"
-          onClick={installed ? uninstallHandler : installHandler}
+          onClick={installHandler}
         >
-          {installed ? 'Remove' : 'Install'}
+          Install
         </Button>
       )}
     </Form>
