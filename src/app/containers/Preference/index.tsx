@@ -55,6 +55,8 @@ export default function PreferenceWindow() {
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
   const [storeAvailable, setStoreAvailable] = useState<boolean>();
 
+  const [initResourced, setInitResourced] = useState<boolean>(false);
+
   const [fontList, setFontList] = useState<string[]>([]);
 
   const [allStoreExtensions, setAllStoreExtensions] = useState<any[]>([]);
@@ -154,32 +156,33 @@ export default function PreferenceWindow() {
     },
   };
 
-  const checkExtensionsUpdate = () => {
-    Promise.all([
-      Core.checkUpdatableExtensions('workflow'),
-      Core.checkUpdatableExtensions('plugin'),
-    ])
-      .then(async (result) => {
-        await sleep(100);
-        const updatable: any[] = _.flatten(result);
+  const checkExtensionsUpdate = async () => {
+    try {
+      const result = await Promise.all([
+        Core.checkUpdatableExtensions('workflow'),
+        Core.checkUpdatableExtensions('plugin'),
+      ]);
+      await sleep(100);
+      const updatable: any[] = _.flatten(result);
 
-        const updatableTexts = _.map(
-          updatable,
-          (item) => `${item.name}: ${item.current} → ${item.latest}.`
-        ).join('\n');
+      const updatableTexts = _.map(
+        updatable,
+        (item) => `${item.name}: ${item.current} → ${item.latest}.`
+      ).join('\n');
 
-        if (updatable.length > 0) {
-          ipcRenderer.send(IPCRendererEnum.showNotification, {
-            title:
-              updatable.length === 1
-                ? `${updatable.length} extension is updatable`
-                : `${updatable.length} extensions are updatable`,
-            body: updatableTexts,
-          });
-        }
-        return null;
-      })
-      .catch(console.error);
+      if (updatable.length > 0) {
+        ipcRenderer.send(IPCRendererEnum.showNotification, {
+          title:
+            updatable.length === 1
+              ? `${updatable.length} extension is updatable`
+              : `${updatable.length} extensions are updatable`,
+          body: updatableTexts,
+        });
+      }
+      return null;
+    } catch (message) {
+      return console.error(message);
+    }
   };
 
   const preventInvalidReduxState = () => {
@@ -189,26 +192,39 @@ export default function PreferenceWindow() {
     }
   };
 
-  useEffect(() => {
-    searchMostTotalDownload()
-      .then((extensionInfos) => {
-        setAllStoreExtensions(extensionInfos);
-        return null;
-      })
-      .catch(console.error);
-  }, []);
+  const fetchArvisStore = async () => {
+    try {
+      const extensionInfos = await searchMostTotalDownload();
+      setAllStoreExtensions(extensionInfos);
+      return extensionInfos;
+    } catch (message) {
+      return console.error(message);
+    }
+  };
+
+  const setMacSystemPaths = async () => {
+    try {
+      const pathEnv = await Core.getSystemPaths();
+      Core.setMacPathsEnv(pathEnv);
+      return pathEnv;
+    } catch (message) {
+      return console.error(message);
+    }
+  };
 
   useEffect(() => {
     preventInvalidReduxState();
-
     Core.setStoreAvailabiltyChecker(setStoreAvailable);
-    loadWorkflowsInfo();
-    loadPluginsInfo();
-    checkExtensionsUpdate();
 
-    Core.getSystemPaths()
-      .then((result) => {
-        Core.setMacPathsEnv(result);
+    Promise.allSettled([
+      loadWorkflowsInfo(),
+      loadPluginsInfo(),
+      checkExtensionsUpdate(),
+      fetchArvisStore(),
+      setMacSystemPaths(),
+    ])
+      .then(() => {
+        setInitResourced(true);
         return null;
       })
       .catch(console.error);
@@ -309,8 +325,8 @@ export default function PreferenceWindow() {
         fontFamily: global_font,
       }}
     >
-      {!storeAvailable && <ScreenCover />}
-      {!storeAvailable && <Spinner center />}
+      {(!initResourced || !storeAvailable) && <ScreenCover />}
+      {(!initResourced || !storeAvailable) && <Spinner center />}
       <StoreAvailabilityContext.Provider
         value={[storeAvailable, setStoreAvailable]}
       >
