@@ -374,6 +374,7 @@ const useSearchWindowControl = ({
     clearIndexInfo();
     workManager.clearWorkStack();
     setShouldBeHided(true);
+    setBestMatch('');
   };
 
   /**
@@ -601,13 +602,10 @@ const useSearchWindowControl = ({
     if (isPinned) return;
 
     // After cleanUp
-    if (forceHide || (shouldBeHided === true && items.length === 0)) {
+    if (forceHide || shouldBeHided === true) {
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
-
       // Give some time to remove Afterimage
-      setTimeout(() => {
-        ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
-      }, 10);
+      ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
     }
   };
 

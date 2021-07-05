@@ -18,7 +18,7 @@ export const autoFitSearchWindowSize = (e: IpcMainEvent) => {
   width = maxWidth < evaluatedWidth ? maxWidth : evaluatedWidth;
 
   const searchWindow = WindowManager.getInstance().getSearchWindow();
-  searchWindow.setBounds({ width, height: searchWindow.getSize()[1] });
+  searchWindow.setBounds({ width, height: searchWindow.getSize()[1] }, false);
 
   WindowManager.getInstance()
     .getPreferenceWindow()

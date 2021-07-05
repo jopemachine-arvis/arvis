@@ -36,5 +36,5 @@ export default ({
     heightToSet = itemCount * itemHeight + searchbarHeight + footerHeight;
   }
 
-  searchWindow.setBounds({ width: windowWidth, height: heightToSet });
+  searchWindow.setBounds({ width: windowWidth, height: heightToSet }, false);
 };

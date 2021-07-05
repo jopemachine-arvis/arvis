@@ -9,7 +9,7 @@ export default ({ showsUp }: { showsUp?: boolean }) => {
     clipboardHistoryWindow.hide();
   } else {
     // Center the window and set y position.
-    clipboardHistoryWindow.setBounds({ width: 1200, height: 580 });
+    clipboardHistoryWindow.setBounds({ width: 1200, height: 580 }, false);
     clipboardHistoryWindow.center();
     clipboardHistoryWindow.show();
     clipboardHistoryWindow.focus();

@@ -16,7 +16,10 @@ export const showQuicklookWindow = (
   const { width, height } = screen.getPrimaryDisplay().size;
   const quicklookWindow = WindowManager.getInstance().getQuicklookWindow();
 
-  quicklookWindow.setBounds({ width: width * 0.6, height: height * 0.75 });
+  quicklookWindow.setBounds(
+    { width: width * 0.6, height: height * 0.75 },
+    false
+  );
   quicklookWindow.center();
   quicklookWindow.show();
   quicklookWindow.focus();
