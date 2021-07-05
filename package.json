@@ -287,7 +287,7 @@
     "electron-updater": "^4.3.10",
     "electron-util": "^0.16.0",
     "encodeurl": "^1.0.2",
-    "execa": "5.0.0",
+    "execa": "5.1.1",
     "font-list": "^1.2.15",
     "history": "^5.0.0",
     "open": "^8.0.8",
