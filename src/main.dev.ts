@@ -80,45 +80,53 @@ app.on('open-file', (event: Electron.Event, file: string) => {
 });
 
 app.on('ready', () => {
-  const menuBuilder = new MenuBuilder();
-  menuBuilder.buildMenu();
+  const onReadyHandler = () => {
+    const menuBuilder = new MenuBuilder();
+    menuBuilder.buildMenu();
 
-  const trayIconPath = path.join(
-    __dirname,
-    '../',
-    'assets',
-    'icons',
-    '24x24.png'
-  );
-  const trayBuilder = new TrayBuilder(trayIconPath);
-  tray = trayBuilder.buildTray();
-
-  const windowManager = WindowManager.getInstance();
-
-  if (process.env.NODE_ENV === 'production') {
-    new AppUpdater();
-  }
-
-  if (openFile) {
-    openArvisFile(openFile);
-  }
-
-  if (isFirstAppLaunch()) {
-    console.log(
-      chalk.yellowBright(
-        'Arvis first launched.. Initilize search window size..'
-      )
+    const trayIconPath = path.join(
+      __dirname,
+      '../',
+      'assets',
+      'icons',
+      '24x24.png'
     );
+    const trayBuilder = new TrayBuilder(trayIconPath);
+    tray = trayBuilder.buildTray();
 
-    windowManager
-      .getSearchWindow()
-      .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
-  }
+    const windowManager = WindowManager.getInstance();
 
-  startFileWatcher();
-  initIPCHandlers();
+    if (process.env.NODE_ENV === 'production') {
+      new AppUpdater();
+    }
 
-  if (process.platform === 'darwin') {
-    app.dock.hide();
+    if (openFile) {
+      openArvisFile(openFile);
+    }
+
+    if (isFirstAppLaunch()) {
+      console.log(
+        chalk.yellowBright(
+          'Arvis first launched.. Initilize search window size..'
+        )
+      );
+
+      windowManager
+        .getSearchWindow()
+        .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
+    }
+
+    startFileWatcher();
+    initIPCHandlers();
+
+    if (process.platform === 'darwin') {
+      app.dock.hide();
+    }
+  };
+
+  if (process.platform === 'linux') {
+    setTimeout(onReadyHandler, 300);
+  } else {
+    onReadyHandler();
   }
 });
