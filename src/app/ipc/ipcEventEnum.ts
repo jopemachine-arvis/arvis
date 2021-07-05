@@ -11,6 +11,7 @@ export enum IPCRendererEnum {
   hideQuicklookWindow = '@ipcRenderer/hideQuicklookWindow',
   hideSearchWindow = '@ipcRenderer/hideSearchWindow',
   importTheme = '@ipcRenderer/importTheme',
+  openExtensionInstallerFile = '@ipcRenderer/openExtensionInstallerFile',
   openPluginInstallFileDialog = '@ipcRenderer/openPluginInstallFileDialog',
   openWorkflowInstallFileDialog = '@ipcRenderer/openWorkflowInstallFileDialog',
   openYesnoDialog = '@ipcRenderer/openYesnoDialog',

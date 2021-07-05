@@ -53,8 +53,6 @@ export default function Workflow() {
     })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
   );
 
-  const [tabIdx, setTabIdx] = useState<number>(0);
-
   const workflowBundleIdsRef = useRef<any>(workflowBundleIds);
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(-1);
   const selectedWorkflowIdxRef = useRef<any>();
@@ -86,6 +84,8 @@ export default function Workflow() {
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
     ) => {
+      console.log('Open installer file: ', file);
+
       if (file.filePaths[0]) {
         setStoreAvailable(false);
         const arvisWorkflowFilePath = file.filePaths[0];
@@ -95,6 +95,8 @@ export default function Workflow() {
             ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
               destWindow: 'searchWindow',
             });
+
+            fse.remove(arvisWorkflowFilePath).catch(console.error);
             return null;
           })
           .catch((err) => {

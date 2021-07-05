@@ -80,6 +80,8 @@ export default function Plugin() {
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
     ) => {
+      console.log('Open installer file: ', file);
+
       if (file.filePaths[0]) {
         setStoreAvailable(false);
         const arvisPluginFilePath = file.filePaths[0];
@@ -90,6 +92,7 @@ export default function Plugin() {
               destWindow: 'searchWindow',
             });
 
+            fse.remove(arvisPluginFilePath).catch(console.error);
             return null;
           })
           .catch((err) => {

@@ -24,6 +24,10 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import DefaultImg from '../../../../../assets/images/default.svg';
 import ExtensionInfoTable from './infoTable';
 import {
+  installExtension,
+  uninstallExtension,
+} from './extensionDownloadHandler';
+import {
   Header,
   OuterContainer,
   ExtensionDescContainer,
@@ -136,14 +140,6 @@ export default function Store(props: IProps) {
         <ExtensionItemDescText>{`${description}`}</ExtensionItemDescText>
       </ExtensionItemContainer>
     );
-  };
-
-  const installExtension = (bundleId: string) => {
-
-  };
-
-  const uninstallExtension = (bundleId: string) => {
-
   };
 
   return (

@@ -12,10 +12,12 @@ import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 import { hideWindowAndRestoreFocus } from './hideWindowAndRestoreFocus';
 import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
 import { onNumberChangeHandler } from './onNumberChangeHandler';
+import { checkIsRendererProc } from './checkProcessType';
 
 export {
   applyAlphaColor,
   checkFileExists,
+  checkIsRendererProc,
   createGlobalConfigChangeHandler,
   extractJson,
   getHotkeyNameOnThisPlatform,

@@ -29,13 +29,14 @@ import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
 import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
 
-import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
+import { openExtensionInstallerFile } from './mainProcessEventHandler/openExtensionInstallerFile';
+import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
 import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
+import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
+import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
-import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
-import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
@@ -75,6 +76,10 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+  ipcMain.on(
+    IPCRendererEnum.openExtensionInstallerFile,
+    openExtensionInstallerFile
+  );
 
   ipcMain.on(
     IPCRendererEnum.popupClipboardHistoryContextMenu,

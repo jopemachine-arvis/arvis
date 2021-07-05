@@ -4,19 +4,35 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { StyledInput } from '@components/index';
 import './index.global.css';
+import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
 import * as style from './style';
-import { Core } from 'arvis-core';
 
 type IProps = {
   info: any;
   installed: boolean;
-  installExtension: (bundleId: string) => void;
-  uninstallExtension: (bundleId: string) => void;
+  installExtension: ({
+    extensionType,
+    bundleId,
+    installType,
+  }: {
+    extensionType: 'workflow' | 'plugin';
+    bundleId: string;
+    installType: string;
+  }) => Promise<void>;
+  uninstallExtension: ({
+    extensionType,
+    bundleId,
+    installType,
+  }: {
+    extensionType: 'workflow' | 'plugin';
+    bundleId: string;
+    installType: string;
+  }) => Promise<void>;
 };
 
 export default function ExtensionInfoTable(props: IProps) {
@@ -30,40 +46,78 @@ export default function ExtensionInfoTable(props: IProps) {
   const [uploadedDateTime, setUploadedDateTime] = useState<string>('');
   const [totalDownloads, setTotalDownloads] = useState<string>('');
   const [lastWeekDownloads, setLastWeekDownloads] = useState<string>('');
+  const [supportedPlatforms, setSupportedPlatforms] = useState<string>('');
+
+  const bundleId = `${extensionCreator}.${extensionName}`;
+
+  const [storeAvailable, setStoreAvailable] = useContext(
+    StoreAvailabilityContext
+  ) as any;
 
   useEffect(() => {
     if (info) {
       const {
         creator = '',
-        description = '',
+        description = '(No description)',
         dt = '?',
         dw = '?',
-        latest: version = '',
+        latest = '',
         name = '',
         uploaded = '?',
         webAddress = '',
+        platform = 'win32, darwin and linux',
       } = info;
 
       setExtensionCreator(creator);
       setExtensionDescription(description);
       setExtensionName(name);
-      setExtensionVersion(version);
+      setExtensionVersion(latest);
       setExtensionWebsite(webAddress);
       setTotalDownloads(dt);
       setLastWeekDownloads(dw);
 
       if (uploaded !== '?') {
         setUploadedDateTime(new Date(uploaded).toLocaleString());
+      } else {
+        setUploadedDateTime(uploaded);
+      }
+
+      if (typeof platform !== 'string') {
+        setSupportedPlatforms(
+          platform.join(', ').replace(/, ([^,]*)$/, ' and $1')
+        );
+      } else {
+        setSupportedPlatforms(platform);
       }
     }
   }, [info]);
 
   const installHandler = () => {
-    installExtension(Core.getBundleId(extensionCreator, extensionName));
+    setStoreAvailable(false);
+
+    installExtension({
+      extensionType: info.type,
+      bundleId,
+      installType: info.installType,
+    })
+      .catch(console.error)
+      .finally(() => {
+        setStoreAvailable(true);
+      });
   };
 
   const uninstallHandler = () => {
-    uninstallExtension(Core.getBundleId(extensionCreator, extensionName));
+    setStoreAvailable(false);
+
+    uninstallExtension({
+      extensionType: info.type,
+      bundleId,
+      installType: info.installType,
+    })
+      .catch(console.error)
+      .finally(() => {
+        setStoreAvailable(true);
+      });
   };
 
   return (
@@ -148,13 +202,25 @@ export default function ExtensionInfoTable(props: IProps) {
         />
       </FormGroup>
 
-      <Button
-        style={{ ...style.installButton, marginTop: 50 }}
-        size="md"
-        onClick={installed ? installHandler : uninstallHandler}
-      >
-        {installed ? 'Remove' : 'Install'}
-      </Button>
+      <FormGroup style={style.formGroupStyle}>
+        <Label style={style.labelStyle}>Supported platforms</Label>
+        <StyledInput
+          disabled
+          type="url"
+          value={supportedPlatforms}
+          placeholder="Uploaded date"
+        />
+      </FormGroup>
+
+      {!installed && (
+        <Button
+          style={{ ...style.installButton, marginTop: 50 }}
+          size="md"
+          onClick={installed ? uninstallHandler : installHandler}
+        >
+          {installed ? 'Remove' : 'Install'}
+        </Button>
+      )}
     </Form>
   );
 }
