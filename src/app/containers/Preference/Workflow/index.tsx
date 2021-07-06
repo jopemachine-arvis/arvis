@@ -23,7 +23,7 @@ import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { SpinnerContext } from '@helper/spinnerContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
 import { WorkflowTriggerTable } from './workflowTriggerTable';
 import WorkflowInfoTable from './infoTable';
@@ -63,9 +63,7 @@ export default function Workflow() {
 
   const [webviewUrl, setWebviewUrl] = useState<string>('');
 
-  const [storeAvailable, setStoreAvailable] = useContext(
-    StoreAvailabilityContext
-  ) as any;
+  const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   const forceUpdate = useForceUpdate();
   const deleteWorkflowEventHandler = useRef<any>();
@@ -87,7 +85,7 @@ export default function Workflow() {
       console.log('Open installer file: ', file);
 
       if (file.filePaths[0]) {
-        setStoreAvailable(false);
+        setSpinning(true);
         const arvisWorkflowFilePath = file.filePaths[0];
 
         Core.installWorkflow(arvisWorkflowFilePath)
@@ -107,7 +105,7 @@ export default function Workflow() {
             });
           })
           .finally(() => {
-            setStoreAvailable(true);
+            setSpinning(false);
           });
       }
     },
@@ -125,7 +123,7 @@ export default function Workflow() {
       e: Electron.IpcRendererEvent,
       { bundleIds, enabled }: { bundleIds: string; enabled: string }
     ) => {
-      setStoreAvailable(false);
+      setSpinning(true);
       const bundleIdList = JSON.parse(bundleIds) as string[];
       const works: Promise<any>[] = [];
 
@@ -154,7 +152,7 @@ export default function Workflow() {
         })
         .finally(() => {
           ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
-          setStoreAvailable(true);
+          setSpinning(false);
         });
     },
   };
@@ -364,7 +362,7 @@ export default function Workflow() {
 
     const targetBundleId = _workflowBundleIds[idxToRemove];
 
-    setStoreAvailable(false);
+    setSpinning(true);
     Core.uninstallWorkflow({
       bundleId: targetBundleId,
     })
@@ -382,7 +380,7 @@ export default function Workflow() {
         console.error(err);
       })
       .finally(() => {
-        setStoreAvailable(true);
+        setSpinning(false);
       });
   };
 

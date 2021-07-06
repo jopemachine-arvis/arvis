@@ -15,7 +15,7 @@ import { searchMostTotalDownload } from 'arvis-store';
 import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { SpinnerContext } from '@helper/spinnerContext';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
 import { sleep } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
@@ -55,7 +55,7 @@ const MainContainer = styled.div`
 export default function PreferenceWindow() {
   const [page, setPage] = useState<PreferencePage>(INITIAL_PAGE);
   const [mainContent, setMainContent] = useState<JSX.Element>(<></>);
-  const [storeAvailable, setStoreAvailable] = useState<boolean>();
+  const [isSpinning, setSpinning] = useState<boolean>();
 
   const [initResourced, setInitResourced] = useState<boolean>(false);
 
@@ -223,7 +223,7 @@ export default function PreferenceWindow() {
 
   useEffect(() => {
     preventInvalidReduxState();
-    Core.setStoreAvailabiltyChecker(setStoreAvailable);
+    Core.setStoreAvailabiltyChecker((available) => setSpinning(!available));
 
     Promise.allSettled([
       loadWorkflowsInfo(),
@@ -337,14 +337,12 @@ export default function PreferenceWindow() {
         fontFamily: global_font,
       }}
     >
-      {(!initResourced || !storeAvailable) && <ScreenCover />}
-      {(!initResourced || !storeAvailable) && <Spinner center />}
-      <StoreAvailabilityContext.Provider
-        value={[storeAvailable, setStoreAvailable]}
-      >
+      {(!initResourced || isSpinning) && <ScreenCover />}
+      {(!initResourced || isSpinning) && <Spinner center />}
+      <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <Sidebar page={page} setPage={setPage} />
         {renderMain()}
-      </StoreAvailabilityContext.Provider>
+      </SpinnerContext.Provider>
     </OuterContainer>
   );
 }

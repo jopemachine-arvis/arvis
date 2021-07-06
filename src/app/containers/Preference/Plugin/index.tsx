@@ -22,7 +22,7 @@ import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { SpinnerContext } from '@helper/spinnerContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
 import PluginInfoTable from './infoTable';
 import ReadMeTable from './readme';
@@ -59,9 +59,7 @@ export default function Plugin() {
 
   const [webviewUrl, setWebviewUrl] = useState<string>('');
 
-  const [storeAvailable, setStoreAvailable] = useContext(
-    StoreAvailabilityContext
-  ) as any;
+  const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
@@ -83,7 +81,7 @@ export default function Plugin() {
       console.log('Open installer file: ', file);
 
       if (file.filePaths[0]) {
-        setStoreAvailable(false);
+        setSpinning(true);
         const arvisPluginFilePath = file.filePaths[0];
 
         Core.installPlugin(arvisPluginFilePath)
@@ -103,7 +101,7 @@ export default function Plugin() {
             });
           })
           .finally(() => {
-            setStoreAvailable(true);
+            setSpinning(false);
           });
       }
     },
@@ -121,7 +119,7 @@ export default function Plugin() {
       e: Electron.IpcRendererEvent,
       { bundleIds, enabled }: { bundleIds: string; enabled: string }
     ) => {
-      setStoreAvailable(false);
+      setSpinning(true);
       const bundleIdList = JSON.parse(bundleIds) as string[];
       const works: Promise<any>[] = [];
 
@@ -149,7 +147,7 @@ export default function Plugin() {
           console.error(err);
         })
         .finally(() => {
-          setStoreAvailable(true);
+          setSpinning(false);
           ipcRenderer.send(IPCRendererEnum.resumeFileWatch);
         });
     },
@@ -353,7 +351,7 @@ export default function Plugin() {
 
     const targetBundleId = _pluginBundleIds[idxToRemove];
 
-    setStoreAvailable(false);
+    setSpinning(true);
     Core.uninstallPlugin({
       bundleId: targetBundleId,
     })
@@ -371,7 +369,7 @@ export default function Plugin() {
         console.error(err);
       })
       .finally(() => {
-        setStoreAvailable(true);
+        setSpinning(false);
       });
   };
 

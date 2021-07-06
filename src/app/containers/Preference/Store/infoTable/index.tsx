@@ -9,7 +9,7 @@ import _ from 'lodash';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { StyledInput } from '@components/index';
 import './index.global.css';
-import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { SpinnerContext } from '@helper/spinnerContext';
 import * as style from './style';
 
 type IProps = {
@@ -50,9 +50,7 @@ export default function ExtensionInfoTable(props: IProps) {
 
   const bundleId = `${extensionCreator}.${extensionName}`;
 
-  const [storeAvailable, setStoreAvailable] = useContext(
-    StoreAvailabilityContext
-  ) as any;
+  const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   useEffect(() => {
     if (info) {
@@ -93,7 +91,7 @@ export default function ExtensionInfoTable(props: IProps) {
   }, [info]);
 
   const installHandler = () => {
-    setStoreAvailable(false);
+    setSpinning(true);
 
     installExtension({
       extensionType: info.type,
@@ -102,12 +100,12 @@ export default function ExtensionInfoTable(props: IProps) {
     })
       .catch(console.error)
       .finally(() => {
-        setStoreAvailable(true);
+        setSpinning(false);
       });
   };
 
   const uninstallHandler = () => {
-    setStoreAvailable(false);
+    setSpinning(true);
 
     uninstallExtension({
       extensionType: info.type,
@@ -116,7 +114,7 @@ export default function ExtensionInfoTable(props: IProps) {
     })
       .catch(console.error)
       .finally(() => {
-        setStoreAvailable(true);
+        setSpinning(false);
       });
   };
 

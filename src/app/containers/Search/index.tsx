@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -14,7 +14,7 @@ import { useSearchWindowControl, useIoHook } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { StoreAvailabilityContext } from '@helper/storeAvailabilityContext';
+import { SpinnerContext } from '@helper/spinnerContext';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -60,7 +60,7 @@ export default function SearchWindow() {
     (state: StateType) => state.advanced_config
   );
 
-  const [storeAvailable, setStoreAvailable] = useState<boolean>(false);
+  const [isSpinning, setSpinning] = useState<boolean>(false);
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
   const [items, setItems] = useState<any[]>([]);
@@ -102,11 +102,11 @@ export default function SearchWindow() {
     maxItemCount: max_item_count_to_show,
     maxRetrieveCount: max_item_count_to_search,
     isPinned,
-    storeAvailable,
+    spinning: isSpinning,
   });
 
   const registerWindowUpdater = useCallback(() => {
-    Core.setStoreAvailabiltyChecker(setStoreAvailable);
+    Core.setStoreAvailabiltyChecker((available) => setSpinning(!available));
 
     workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
     workManager.onItemPressHandler = onItemPressHandler;
@@ -260,7 +260,7 @@ export default function SearchWindow() {
   }, []);
 
   const loadWorkflowsInfo = useCallback(() => {
-    Core.renewWorkflows()
+    return Core.renewWorkflows()
       .then(() => {
         return null;
       })
@@ -271,15 +271,23 @@ export default function SearchWindow() {
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
-    Core.renewPlugins({ initializePluginWorkspace: true }).catch(console.error);
+    return Core.renewPlugins({ initializePluginWorkspace: true }).catch(
+      console.error
+    );
   }, []);
 
   useEffect(() => {
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
-    loadPluginsInfo();
-    loadWorkflowsInfo();
     registerWindowUpdater();
+
+    Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()])
+      .then(() => {
+        console.log('resource initialzed successfully.');
+        return null;
+      })
+      .catch(console.error)
+      .finally(() => {});
 
     ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
       sourceWindow: 'searchWindow',
@@ -301,8 +309,14 @@ export default function SearchWindow() {
     });
   }, [search_window_width]);
 
+  const firstRun = useRef(true);
+
   useEffect(() => {
-    if (!storeAvailable) return;
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+
     if (
       (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') ||
       (clipboard_history_hotkey && clipboard_history_hotkey !== '')
@@ -332,9 +346,7 @@ export default function SearchWindow() {
       }}
       onWheel={onWheelHandler}
     >
-      <StoreAvailabilityContext.Provider
-        value={[storeAvailable, setStoreAvailable]}
-      >
+      <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <SearchBar
           alwaysFocus
           bestMatch={bestMatch}
@@ -345,7 +357,7 @@ export default function SearchWindow() {
           searchbarFontColor={searchbar_font_color}
           searchbarFontSize={searchbar_font_size}
           searchbarHeight={searchbar_height}
-          spinning={!storeAvailable}
+          spinning={isSpinning}
         />
         <SearchResultView
           demo={false}
@@ -381,7 +393,7 @@ export default function SearchWindow() {
           searchbarHeight={searchbar_height}
           startItemIdx={indexInfo.itemStartIdx}
         />
-      </StoreAvailabilityContext.Provider>
+      </SpinnerContext.Provider>
     </OuterContainer>
   );
 }

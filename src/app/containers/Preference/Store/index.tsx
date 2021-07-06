@@ -4,23 +4,17 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
-import { ipcRenderer } from 'electron';
 import useForceUpdate from 'use-force-update';
-import {
-  AiOutlineAppstoreAdd,
-  AiOutlineBranches,
-  AiOutlineDelete,
-  AiOutlineExport,
-} from 'react-icons/ai';
-import { constant } from 'arvis-store';
+import { constant, searchMostTotalDownload } from 'arvis-store';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { IoMdRefresh } from 'react-icons/io';
 import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
-import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { SpinnerContext } from '@helper/spinnerContext';
 import DefaultImg from '../../../../../assets/images/default.svg';
 import ExtensionInfoTable from './infoTable';
 import {
@@ -61,10 +55,20 @@ const sortTxtDict: any = {
 
 const needToReverse: string[] = ['dt', 'dw', 'uploaded'];
 
+const filterSupportedExtensions = (extensions: any[]) => {
+  return extensions.filter(
+    (extension) =>
+      !extension.platform || extension.platform.includes(process.platform)
+  );
+};
+
 export default function Store(props: IProps) {
   const { allStoreExtensions } = props;
-  const [extensions, setExtensions] = useState<any[]>([]);
-  const [allExtensions, setAllExtensions] = useState<any[]>(allStoreExtensions);
+  const [allExtensions, setAllExtensions] = useState<any[]>(
+    filterSupportedExtensions(allStoreExtensions)
+  );
+
+  const [extensions, setExtensions] = useState<any[]>(allExtensions);
 
   const [selectedExtensionIdx, setSelectedExtensionIdx] = useState<number>(-1);
 
@@ -77,6 +81,8 @@ export default function Store(props: IProps) {
     setItems: setExtensions,
   });
 
+  const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
+
   const [sortBy, setSortBy] = useState<string>('dt');
 
   const forceUpdate = useForceUpdate();
@@ -86,10 +92,18 @@ export default function Store(props: IProps) {
     ...Object.keys(Core.getPluginList()),
   ];
 
-  /**
-   * @summary
-   */
-  const ipcCallbackTbl = {};
+  const refreshStore = () => {
+    setSpinning(true);
+    setSortBy('dt');
+    searchMostTotalDownload()
+      .then((newExtensions) => {
+        const supportedNewExts = filterSupportedExtensions(newExtensions);
+        setAllExtensions(supportedNewExts);
+        setSpinning(false);
+        return null;
+      })
+      .catch(console.error);
+  };
 
   const itemClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -113,7 +127,7 @@ export default function Store(props: IProps) {
 
   useEffect(() => {
     setExtensions(allStoreExtensions);
-  }, []);
+  }, [allStoreExtensions]);
 
   useEffect(() => {
     sortExtensions();
@@ -198,7 +212,7 @@ export default function Store(props: IProps) {
         </SearchbarContainer>
         <SearchbarDescriptionContainer>
           <SearchResultText>
-            {extensions.length} search results have been retrieved
+            {extensions.length} results have been retrieved
           </SearchResultText>
 
           <StyledInput
@@ -270,7 +284,13 @@ export default function Store(props: IProps) {
           </Tabs>
         </TabNavigatorContainer>
       </ExtensionDescContainer>
-      <ExtensionListViewFooter />
+      <ExtensionListViewFooter>
+        <IoMdRefresh
+          className="plugin-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => refreshStore()}
+        />
+      </ExtensionListViewFooter>
     </OuterContainer>
   );
 }

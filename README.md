@@ -27,11 +27,11 @@ It would be very helpful if you could put bugs on the issue.
 
 `Arvis` aims to help you run any scripts or binarys very simple.
 
-I've thought many useful alfred-workflows can run in cross-platform So I started to work on this.
+I've thought many useful alfred-workflows can run in "cross-platform", that's why I started to work on this.
 
-`Arvis` also aims to provide a "frame" or "library" to help create such `workflow`, `plugin` more easily.
+`Arvis` also aims to provide "librarys" to help create such `workflow`, `plugin` more easily.
 
-It is intentionally built similar to Alfred, but there could be some different points.
+`Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
 * [Click me to check basic usage of Arvis](./documents/basic-usage.md)
 
