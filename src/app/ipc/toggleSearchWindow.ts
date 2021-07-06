@@ -12,16 +12,14 @@ export default ({ showsUp }: { showsUp?: boolean }) => {
     const [x] = searchWindow.getPosition();
     const { height } = screen.getPrimaryDisplay().size;
 
-    const [width] = searchWindow.getSize();
-    searchWindow.setBounds({ width: 1 }, false);
+    const opacity = searchWindow.getOpacity();
+    searchWindow.setOpacity(0);
 
-    // To remove afterimage, move window to unseen position and show
-    searchWindow.setPosition(99999, 99999);
+    searchWindow.setPosition(x, Math.round(height / 8));
     searchWindow.show();
 
     setTimeout(() => {
-      searchWindow.setBounds({ width }, false);
-      searchWindow.setPosition(x, Math.round(height / 8));
+      searchWindow.setOpacity(opacity);
       searchWindow.focus();
     }, 150);
   }
