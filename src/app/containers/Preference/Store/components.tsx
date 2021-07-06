@@ -57,12 +57,31 @@ export const OuterContainer = styled.div`
 `;
 
 export const SearchbarContainer = styled.div`
-  width: 85%;
   margin-left: 40px;
   margin-bottom: 20px;
   border-radius: 5px;
   background-color: #202228;
   padding-left: 30px;
+  min-width: 380px;
+  max-width: 380px;
+`;
+
+export const SearchResultText = styled.div`
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-right: 20px;
+`;
+
+export const SearchbarDescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  min-width: 380px;
+  max-width: 380px;
+  margin-left: 40px;
 `;
 
 export const ExtensionListView = styled.div`
@@ -104,7 +123,7 @@ export const ExtensionListOrderedList = styled.div`
   padding-left: 30px;
   padding-top: 20px;
   overflow: auto;
-  height: 78%;
+  height: 75%;
   min-width: 380px;
   max-width: 380px;
 `;

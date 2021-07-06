@@ -18,7 +18,7 @@ import {
 import { constant } from 'arvis-store';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { SearchBar } from '@components/index';
+import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import DefaultImg from '../../../../../assets/images/default.svg';
@@ -42,6 +42,8 @@ import {
   ExtensionItemDescText,
   ExtensionImg,
   InstallMark,
+  SearchResultText,
+  SearchbarDescriptionContainer,
 } from './components';
 import './index.global.css';
 import * as style from './style';
@@ -50,9 +52,19 @@ type IProps = {
   allStoreExtensions: any[];
 };
 
+const sortTxtDict: any = {
+  dt: '▼ Total download',
+  dw: '▼ Last week download',
+  uploaded: '▼ Uploaded time',
+  name: '▼ Name',
+};
+
+const needToReverse: string[] = ['dt', 'dw', 'uploaded'];
+
 export default function Store(props: IProps) {
   const { allStoreExtensions } = props;
   const [extensions, setExtensions] = useState<any[]>([]);
+  const [allExtensions, setAllExtensions] = useState<any[]>(allStoreExtensions);
 
   const [selectedExtensionIdx, setSelectedExtensionIdx] = useState<number>(-1);
 
@@ -61,9 +73,11 @@ export default function Store(props: IProps) {
 
   const { setInputStr, getInputProps } = useStoreSearchControl({
     items: extensions,
-    originalItems: allStoreExtensions,
+    originalItems: allExtensions,
     setItems: setExtensions,
   });
+
+  const [sortBy, setSortBy] = useState<string>('dt');
 
   const forceUpdate = useForceUpdate();
 
@@ -85,9 +99,25 @@ export default function Store(props: IProps) {
     forceUpdate();
   };
 
+  const sortExtensions = () => {
+    const [canSortItems, cannotSortItems] = _.partition(
+      allExtensions,
+      (item) => item[sortBy]
+    );
+    const sortedItems = needToReverse.includes(sortBy)
+      ? _.sortBy(canSortItems, sortBy).reverse()
+      : _.sortBy(canSortItems, sortBy);
+
+    setAllExtensions(_.concat(sortedItems, cannotSortItems));
+  };
+
   useEffect(() => {
     setExtensions(allStoreExtensions);
   }, []);
+
+  useEffect(() => {
+    sortExtensions();
+  }, [sortBy]);
 
   useEffect(() => {
     if (extensions.length) {
@@ -166,6 +196,34 @@ export default function Store(props: IProps) {
             spinning={false}
           />
         </SearchbarContainer>
+        <SearchbarDescriptionContainer>
+          <SearchResultText>
+            {extensions.length} search results have been retrieved
+          </SearchResultText>
+
+          <StyledInput
+            style={{
+              width: 125,
+              fontSize: 11,
+              height: 28,
+              color: '#888',
+            }}
+            type="select"
+            value={sortTxtDict[sortBy]}
+            onChange={(e: any) => {
+              const key = _.findKey(
+                sortTxtDict,
+                (value) => value === e.target.value
+              ) as string;
+              setSortBy(key);
+            }}
+          >
+            <option>▼ Total download</option>
+            <option>▼ Last week download</option>
+            <option>▼ Name</option>
+            <option>▼ Uploaded time</option>
+          </StyledInput>
+        </SearchbarDescriptionContainer>
         <ExtensionListOrderedList>
           {_.map(extensions, (extension, idx) => {
             return renderItem(extension, idx);

@@ -44,7 +44,6 @@ const useStoreSearch = ({
     updatedInput: string
   ) => {
     const newItems = [];
-    console.log('updatedInput', updatedInput);
 
     for (const item of _originalItems) {
       if (
@@ -57,6 +56,14 @@ const useStoreSearch = ({
 
     setItems(newItems);
   };
+
+  useEffect(() => {
+    handleNormalInput(
+      originalItems,
+      '',
+      (document.getElementById('searchBar') as HTMLInputElement).value
+    );
+  }, [originalItems]);
 
   /**
    * @param  {string} str
