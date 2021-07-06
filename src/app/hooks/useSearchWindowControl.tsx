@@ -181,7 +181,7 @@ const useSearchWindowControl = ({
     let timer: NodeJS.Timeout;
 
     try {
-      if (Core.WorkManager.getInstance().hasEmptyWorkStk()) {
+      if (workManager.hasEmptyWorkStk()) {
         setBestMatch(
           (Core.history.getBestMatch(updatedInput)! as Log).inputStr!
         );
@@ -422,6 +422,7 @@ const useSearchWindowControl = ({
       'CapsLock',
       'Tab',
       'Escape',
+      'Enter',
     ];
 
     // For quicklook feature, prevent adding space when quicklook shortcut is pressed
