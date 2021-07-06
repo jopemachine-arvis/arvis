@@ -8,6 +8,7 @@ import { WindowManager } from '../../../windows';
 
 type PluginItem = {
   pluginPath: string;
+  pluginWebAddress: string;
   pluginEnabled: boolean;
 };
 
@@ -82,6 +83,16 @@ class PluginContextMenu extends Menu {
           toolTip: 'Open arvis-plugin.json of the selected plugin',
           click() {
             open(path.resolve(targetItem.pluginPath, 'arvis-plugin.json'));
+          },
+        })
+      );
+      super.append(
+        new MenuItem({
+          type: 'normal',
+          label: "Open plugin's web page",
+          toolTip: "Open plugin's web page",
+          click() {
+            open(targetItem.pluginWebAddress);
           },
         })
       );

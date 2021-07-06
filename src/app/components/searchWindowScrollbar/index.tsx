@@ -1,7 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
-import styled from 'styled-components';
 
 type IProps = {
   footerHeight: number;

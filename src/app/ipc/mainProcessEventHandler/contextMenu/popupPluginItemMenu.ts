@@ -1,11 +1,6 @@
 import { IpcMainEvent } from 'electron';
 import { PluginItemContextMenu } from '../../../components/contextMenus';
 
-type PluginItem = {
-  pluginPath: string;
-  pluginEnabled: boolean;
-};
-
 /**
  * @param  {string} path
  * @summary Used to popup context menu
@@ -14,5 +9,5 @@ export const popupPluginItemMenu = (
   e: IpcMainEvent,
   { items }: { items: string }
 ) => {
-  new PluginItemContextMenu(JSON.parse(items) as PluginItem[]).popup();
+  new PluginItemContextMenu(JSON.parse(items) as any[]).popup();
 };

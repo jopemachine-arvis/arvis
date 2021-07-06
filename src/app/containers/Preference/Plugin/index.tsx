@@ -276,6 +276,7 @@ export default function Plugin() {
       selectedItemInfos.push({
         pluginPath: Core.path.getPluginInstalledPath(bundleId),
         pluginEnabled: plugins[bundleId].enabled,
+        pluginWebAddress: plugins[bundleId].webAddress,
       });
     }
 

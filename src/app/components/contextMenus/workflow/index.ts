@@ -9,6 +9,7 @@ import { WindowManager } from '../../../windows';
 
 type WorkflowItem = {
   workflowPath: string;
+  workflowWebAddress: string;
   workflowEnabled: boolean;
 };
 
@@ -83,6 +84,16 @@ class WorkflowItemContextMenu extends Menu {
           toolTip: 'Open arvis-workflow.json of the selected workflow',
           click() {
             open(path.resolve(targetItem.workflowPath, 'arvis-workflow.json'));
+          },
+        })
+      );
+      super.append(
+        new MenuItem({
+          type: 'normal',
+          label: "Open workflow's web page",
+          toolTip: "Open workflow's web page",
+          click() {
+            open(targetItem.workflowWebAddress);
           },
         })
       );

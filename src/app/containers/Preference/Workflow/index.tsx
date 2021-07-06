@@ -285,6 +285,7 @@ export default function Workflow() {
       selectedItemInfos.push({
         workflowPath: Core.path.getWorkflowInstalledPath(bundleId),
         workflowEnabled: workflows[bundleId].enabled,
+        workflowWebAddress: workflows[bundleId].webAddress,
       });
     }
 
