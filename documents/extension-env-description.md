@@ -42,7 +42,7 @@ Depending on the extension type, this value is set by `workflow` or `plugin`
 
 ## Arvis platform environment variables
 
-Arvis provides some useful env variables through `app.getPath` of electron.
+Arvis provides some useful env variables through `app.getPath` of [electron](https://www.electronjs.org/docs/api/app).
 
 This variable is set as below names
 
@@ -107,6 +107,52 @@ Directory for a user's videos.
 ### arvis_platform_recent
 
 Directory for the user's recent files (Windows only).
+
+## Arvis UI config variables
+
+You can know User's UI configs through environment variables.
+
+This can be used to change icon colors depending on the user's search window background color or whatever.
+
+### arvis_ui_icon_right_margin
+
+### arvis_ui_item_background_color
+
+### arvis_ui_item_font_color
+
+### arvis_ui_item_height
+
+### arvis_ui_item_left_padding
+
+### arvis_ui_item_title_subtitle_margin
+
+### arvis_ui_searchbar_automatch_font_color
+
+### arvis_ui_searchbar_font_color
+
+### arvis_ui_searchbar_font_size
+
+### arvis_ui_searchbar_height
+
+### arvis_ui_search_window_border_radius
+
+### arvis_ui_search_window_footer_height
+
+### arvis_ui_search_window_scrollbar_color
+
+### arvis_ui_search_window_scrollbar_width
+
+### arvis_ui_search_window_transparency
+
+### arvis_ui_search_window_width
+
+### arvis_ui_selected_item_background_color
+
+### arvis_ui_selected_item_font_color
+
+### arvis_ui_subtitle_font_size
+
+### arvis_ui_title_font_size
 
 ## Alfred mock environment variables
 

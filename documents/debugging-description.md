@@ -16,11 +16,9 @@ Currently, you can select
 
 - Script output
 
-- Workstack (used for overlaying scriptfilters or something)
+- Trigger stack (Including argument, query, variables info)
 
-- Scrpitfilter
-
-- Argument, query, variables
+- Scriptfilter
 
 - Plugin
 
