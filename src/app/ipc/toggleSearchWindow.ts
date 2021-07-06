@@ -63,17 +63,10 @@ const handleLinux = ({ showsUp }: { showsUp?: boolean }) => {
     const { height } = screen.getPrimaryDisplay().size;
 
     const [width] = searchWindow.getSize();
-    searchWindow.setBounds({ width: 1 }, false);
 
-    // To remove afterimage, move window to unseen position and show
-    searchWindow.setPosition(99999, 99999);
+    searchWindow.setPosition(x, Math.round(height / 8));
     searchWindow.show();
-
-    setTimeout(() => {
-      searchWindow.setBounds({ width }, false);
-      searchWindow.setPosition(x, Math.round(height / 8));
-      searchWindow.focus();
-    }, 150);
+    searchWindow.focus();
   }
 };
 
