@@ -290,7 +290,11 @@ const useSearchWindowControl = ({
 
     if (hasRequiredArg) {
       if (selectedItem.type === 'scriptFilter') {
-        setInputStr({ str: selectedItem.command, needItemsUpdate: false });
+        const newInputStr = selectedItem.withspace
+          ? `${selectedItem.command} `
+          : selectedItem.command;
+
+        setInputStr({ str: newInputStr, needItemsUpdate: false });
 
         workManager.setRunningText({
           selectedItem: items[selectedItemIdx],
