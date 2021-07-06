@@ -181,7 +181,11 @@ const useSearchWindowControl = ({
     let timer: NodeJS.Timeout;
 
     try {
-      setBestMatch((Core.history.getBestMatch(updatedInput)! as Log).inputStr!);
+      if (Core.WorkManager.getInstance().hasEmptyWorkStk()) {
+        setBestMatch(
+          (Core.history.getBestMatch(updatedInput)! as Log).inputStr!
+        );
+      }
     } catch {
       setBestMatch('');
     }
@@ -304,6 +308,7 @@ const useSearchWindowControl = ({
       } else {
         workManager.handleItemPressEvent(selectedItem, inputStr, modifiers);
       }
+      setBestMatch('');
     } else {
       setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
     }
