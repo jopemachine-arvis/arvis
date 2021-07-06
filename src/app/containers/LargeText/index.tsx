@@ -15,7 +15,6 @@ const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  font-size: 32px;
   height: 100vh;
   justify-content: center;
   overflow-x: hidden;
@@ -38,6 +37,7 @@ const InnerContainer = styled.div`
 
 export default function LargeTextWindow() {
   const [text, setText] = useState<string | undefined>('');
+  const [fontSize, setFontSize] = useState<number>(32);
   const { keyData } = useKey();
 
   const ipcCallbackTbl = {
@@ -47,6 +47,17 @@ export default function LargeTextWindow() {
     ) => {
       setText(textToSet);
     },
+  };
+
+  const onWheelEventHandler = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (
+      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
+      e.deltaY > 0
+    ) {
+      setFontSize(fontSize + 1);
+    } else {
+      setFontSize(fontSize - 1);
+    }
   };
 
   useEffect(() => {
@@ -79,7 +90,17 @@ export default function LargeTextWindow() {
 
   return (
     <OuterContainer>
-      {text && <InnerContainer id="largeText">{text}</InnerContainer>}
+      {text && (
+        <InnerContainer
+          onWheel={onWheelEventHandler}
+          id="largeText"
+          style={{
+            fontSize,
+          }}
+        >
+          {text}
+        </InnerContainer>
+      )}
     </OuterContainer>
   );
 }
