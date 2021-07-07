@@ -21,6 +21,7 @@ import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { JsonEditor } from 'jsoneditor-react';
 import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
@@ -69,6 +70,47 @@ export default function Workflow() {
   const deleteWorkflowEventHandler = useRef<any>();
 
   const workflowTriggers = Core.getTriggers();
+
+  const variableTblRef = useRef<any>();
+
+  const setVariableTblRef = (instance: any) => {
+    if (instance) {
+      variableTblRef.current = instance.jsonEditor;
+    } else {
+      variableTblRef.current = null;
+    }
+  };
+
+  const getVariableTbl = (bundleId: string) => {
+    if (!workflows[bundleId]) return {};
+    return workflows[bundleId].variables ? workflows[bundleId].variables : {};
+  };
+
+  const variableTblChangeHandler = (e: any) => {
+    if (
+      !_.isEqual(
+        workflows[workflowBundleId].variables,
+        variableTblRef.current.get()
+      )
+    ) {
+      fse
+        .writeJSON(
+          Core.path.getWorkflowConfigJsonPath(workflowBundleId),
+          {
+            ...workflows[workflowBundleId],
+            variables: variableTblRef.current.get(),
+          },
+          { encoding: 'utf-8', spaces: 4 }
+        )
+        .then(() => {
+          ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+            bundleId: workflowBundleId,
+          });
+          return null;
+        })
+        .catch(console.error);
+    }
+  };
 
   /**
    * @summary
@@ -203,6 +245,10 @@ export default function Workflow() {
 
       setWorkflowBundleId(bundleId);
       setWebviewUrl(webAddress);
+
+      if (variableTblRef.current) {
+        variableTblRef.current.set(getVariableTbl(bundleId));
+      }
     }
   }, [selectedWorkflowIdx, workflows]);
 
@@ -484,6 +530,7 @@ export default function Workflow() {
             <TabList>
               <Tab>Basic info</Tab>
               <Tab>Trigger table</Tab>
+              <Tab>Variables</Tab>
               <Tab>README</Tab>
               <Tab>Web view</Tab>
             </TabList>
@@ -494,6 +541,25 @@ export default function Workflow() {
               <WorkflowTriggerTable
                 bundleId={workflowBundleId}
                 triggers={workflowTriggers[workflowBundleId]}
+              />
+            </TabPanel>
+            <TabPanel>
+              <JsonEditor
+                ref={setVariableTblRef}
+                statusBar={false}
+                sortObjectKeys={false}
+                navigationBar={false}
+                history={false}
+                search={false}
+                onError={console.error}
+                value={getVariableTbl(workflowBundleId)}
+                onBlur={variableTblChangeHandler}
+                htmlElementProps={{
+                  onBlur: variableTblChangeHandler,
+                  style: {
+                    height: 600,
+                  },
+                }}
               />
             </TabPanel>
             <TabPanel>

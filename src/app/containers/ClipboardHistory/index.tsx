@@ -87,6 +87,7 @@ export default function ClipboardHistoryWindow() {
     originalItems,
     setItems,
     isPinned,
+    setIsPinned,
     applyMouseHoverEvent: apply_mouse_hover_event,
     maxShowOnScreen,
     maxShowOnWindow: max_show_on_window,

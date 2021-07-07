@@ -6,6 +6,8 @@ import RootRouter from './app/navigator/rootRouter';
 import { configureStore, history } from './app/store/configureStore';
 import initialState from './app/config/initialState';
 import './app.global.css';
+import './external/react-tabs/index.global.css';
+import './external/jsoneditor/index.global.css';
 
 const { store, persistor } = configureStore(initialState);
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;

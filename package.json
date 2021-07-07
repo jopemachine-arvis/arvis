@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -291,6 +291,8 @@
     "execa": "5.1.1",
     "font-list": "^1.2.15",
     "history": "^5.0.0",
+    "jsoneditor": "^9.5.1",
+    "jsoneditor-react": "^3.1.1",
     "open": "^8.0.8",
     "path-exists": "^4.0.0",
     "react": "^17.0.1",

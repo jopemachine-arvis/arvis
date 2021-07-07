@@ -24,6 +24,7 @@ const useSearchWindowControl = ({
   maxItemCount,
   maxRetrieveCount,
   isPinned,
+  setIsPinned,
   spinning,
 }: {
   items: any[];
@@ -31,6 +32,7 @@ const useSearchWindowControl = ({
   maxItemCount: number;
   maxRetrieveCount: number;
   isPinned: boolean;
+  setIsPinned: (bool: boolean) => void;
   spinning: boolean;
 }) => {
   const workManager = Core.WorkManager.getInstance();
@@ -306,6 +308,7 @@ const useSearchWindowControl = ({
 
         Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
       } else {
+        setIsPinned(false);
         workManager.handleItemPressEvent(selectedItem, inputStr, modifiers);
       }
       setBestMatch('');

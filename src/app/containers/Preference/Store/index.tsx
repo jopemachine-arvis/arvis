@@ -15,8 +15,8 @@ import { IoMdRefresh } from 'react-icons/io';
 import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { SpinnerContext } from '@helper/spinnerContext';
-import DefaultImg from '../../../../../assets/images/default.svg';
 import ExtensionInfoTable from './infoTable';
+import ExtensionDefaultImg from '../../../../../assets/images/extensionDefaultIcon.svg';
 import {
   installExtension,
   uninstallExtension,
@@ -175,7 +175,7 @@ export default function Store(props: IProps) {
         <ExtensionImg
           src={`${constant.extensionIconUrl}/${type}/${bundleId}.png`}
           onError={(e) => {
-            e.currentTarget.src = DefaultImg;
+            e.currentTarget.src = ExtensionDefaultImg;
           }}
         />
         {installed.includes(bundleId) && <InstallMark>installed</InstallMark>}

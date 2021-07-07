@@ -62,8 +62,6 @@ const handleLinux = ({ showsUp }: { showsUp?: boolean }) => {
     const [x] = searchWindow.getPosition();
     const { height } = screen.getPrimaryDisplay().size;
 
-    const [width] = searchWindow.getSize();
-
     searchWindow.setPosition(x, Math.round(height / 8));
     searchWindow.show();
     searchWindow.focus();

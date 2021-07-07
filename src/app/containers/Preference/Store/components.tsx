@@ -167,6 +167,7 @@ export const InstallMark = styled.span`
   font-size: 8px;
   border-radius: 2px;
   background-color: #7bbb3e88;
+  color: #fff;
 `;
 
 export const TabNavigatorContainer = styled.div`

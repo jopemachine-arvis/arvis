@@ -21,6 +21,7 @@ import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { JsonEditor } from 'jsoneditor-react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { isWithCtrlOrCmd, range } from '@utils/index';
@@ -65,6 +66,47 @@ export default function Plugin() {
 
   const forceUpdate = useForceUpdate();
   const deletePluginEventHandler = useRef<any>();
+
+  const variableTblRef = useRef<any>();
+
+  const setVariableTblRef = (instance: any) => {
+    if (instance) {
+      variableTblRef.current = instance.jsonEditor;
+    } else {
+      variableTblRef.current = null;
+    }
+  };
+
+  const getVariableTbl = (bundleId: string) => {
+    if (!plugins[bundleId]) return {};
+    return plugins[bundleId].variables ? plugins[bundleId].variables : {};
+  };
+
+  const variableTblChangeHandler = (e: any) => {
+    if (
+      !_.isEqual(
+        plugins[pluginBundleId].variables,
+        variableTblRef.current.get()
+      )
+    ) {
+      fse
+        .writeJSON(
+          Core.path.getPluginConfigJsonPath(pluginBundleId),
+          {
+            ...plugins[pluginBundleId],
+            variables: variableTblRef.current.get(),
+          },
+          { encoding: 'utf-8', spaces: 4 }
+        )
+        .then(() => {
+          ipcRenderer.send(IPCRendererEnum.renewPlugin, {
+            bundleId: pluginBundleId,
+          });
+          return null;
+        })
+        .catch(console.error);
+    }
+  };
 
   /**
    * @summary
@@ -199,6 +241,10 @@ export default function Plugin() {
 
       setPluginBundleId(bundleId);
       setWebviewUrl(webAddress);
+
+      if (variableTblRef.current) {
+        variableTblRef.current.set(getVariableTbl(bundleId));
+      }
     }
   }, [selectedPluginIdx, plugins]);
 
@@ -472,11 +518,31 @@ export default function Plugin() {
           >
             <TabList>
               <Tab>Basic info</Tab>
+              <Tab>Variables</Tab>
               <Tab>README</Tab>
               <Tab>Web view</Tab>
             </TabList>
             <TabPanel>
               <PluginInfoTable info={plugins[pluginBundleId]} />
+            </TabPanel>
+            <TabPanel>
+              <JsonEditor
+                ref={setVariableTblRef}
+                statusBar={false}
+                sortObjectKeys={false}
+                navigationBar={false}
+                history={false}
+                search={false}
+                onError={console.error}
+                value={getVariableTbl(pluginBundleId)}
+                onBlur={variableTblChangeHandler}
+                htmlElementProps={{
+                  onBlur: variableTblChangeHandler,
+                  style: {
+                    height: 600,
+                  },
+                }}
+              />
             </TabPanel>
             <TabPanel>
               <ReadMeTable

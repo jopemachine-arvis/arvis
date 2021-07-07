@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
-import DefaultImg from '../../../../assets/images/default.svg';
+import DefaultImg from '../../../../assets/images/itemDefaultIcon.svg';
 import {
   InnerContainer,
   OuterContainer,

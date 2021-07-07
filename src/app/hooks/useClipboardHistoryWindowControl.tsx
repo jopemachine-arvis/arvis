@@ -26,6 +26,7 @@ const useClipboardHistoryWindowControl = ({
   maxShowOnScreen,
   maxShowOnWindow,
   isPinned,
+  setIsPinned,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
@@ -34,6 +35,7 @@ const useClipboardHistoryWindowControl = ({
   maxShowOnScreen: number;
   maxShowOnWindow: number;
   isPinned: boolean;
+  setIsPinned: (bool: boolean) => void;
 }) => {
   const { keyData, getTargetProps } = useKey();
   const { originalRef: inputRef } = getTargetProps();
@@ -190,6 +192,8 @@ const useClipboardHistoryWindowControl = ({
               : JSON.stringify(['control']),
         });
       }, 25);
+
+      setIsPinned(false);
     }
   };
 

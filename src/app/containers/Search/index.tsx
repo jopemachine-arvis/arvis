@@ -102,6 +102,7 @@ export default function SearchWindow() {
     maxItemCount: max_item_count_to_show,
     maxRetrieveCount: max_item_count_to_search,
     isPinned,
+    setIsPinned,
     spinning: isSpinning,
   });
 
