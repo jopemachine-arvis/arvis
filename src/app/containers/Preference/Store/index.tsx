@@ -258,9 +258,13 @@ export default function Store(props: IProps) {
             <TabPanel>
               <ExtensionInfoTable
                 info={extensions[selectedExtensionIdx]}
-                installed={installed.includes(extensionBundleId)}
                 installExtension={installExtension}
                 uninstallExtension={uninstallExtension}
+                installed={
+                  extensionBundleId && selectedExtensionIdx !== -1
+                    ? installed.includes(extensionBundleId)
+                    : undefined
+                }
               />
             </TabPanel>
             <TabPanel

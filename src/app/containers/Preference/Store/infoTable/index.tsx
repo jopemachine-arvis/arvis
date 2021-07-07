@@ -14,7 +14,7 @@ import * as style from './style';
 
 type IProps = {
   info: any;
-  installed: boolean;
+  installed: boolean | undefined;
   installExtension: ({
     extensionType,
     bundleId,
@@ -210,7 +210,7 @@ export default function ExtensionInfoTable(props: IProps) {
         />
       </FormGroup>
 
-      {info && !installed && (
+      {info && installed === false && (
         <Button
           style={{ ...style.installButton, marginTop: 50 }}
           size="md"
