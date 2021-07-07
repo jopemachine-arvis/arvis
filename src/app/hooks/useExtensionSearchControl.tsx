@@ -4,6 +4,8 @@
 import React, { useEffect, useRef } from 'react';
 import { isWithCtrlOrCmd } from '@utils/index';
 import _ from 'lodash';
+import { Core } from 'arvis-core';
+import alphaSort from 'alpha-sort';
 import useKey from '../../use-key-capture/src';
 
 /**
@@ -11,14 +13,16 @@ import useKey from '../../use-key-capture/src';
  * @param {(items: any[]) => void} setItems
  * @param {number} maxShowOnScreen
  */
-const useStoreSearchControl = ({
+const useExtensionSearchControl = ({
   items,
   setItems,
   originalItems,
+  extensionInfos,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
+  extensionInfos: any;
 }) => {
   const { keyData, getTargetProps } = useKey();
   const { originalRef: inputRef } = getTargetProps();
@@ -45,16 +49,29 @@ const useStoreSearchControl = ({
   ) => {
     const newItems = [];
 
-    for (const item of _originalItems) {
+    for (const bundleId of Object.keys(extensionInfos)) {
       if (
-        item.name.toLowerCase().includes(updatedInput.toLowerCase()) ||
-        item.description.toLowerCase().includes(updatedInput.toLowerCase())
+        (extensionInfos[bundleId].name &&
+          extensionInfos[bundleId].name
+            .toLowerCase()
+            .includes(updatedInput.toLowerCase())) ||
+        (extensionInfos[bundleId].description &&
+          extensionInfos[bundleId].description
+            .toLowerCase()
+            .includes(updatedInput.toLowerCase()))
       ) {
-        newItems.push(item);
+        newItems.push(bundleId);
       }
     }
 
-    setItems(newItems);
+    setItems(
+      newItems.sort((a, b) =>
+        alphaSort({
+          natural: true,
+          caseInsensitive: true,
+        })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
+      )
+    );
   };
 
   useEffect(() => {
@@ -124,13 +141,7 @@ const useStoreSearchControl = ({
         25
       );
 
-    if (keyData.isArrowDown) {
-      // To do :: add here
-    } else if (keyData.isArrowUp) {
-      // To do :: add here
-    } else if (keyData.isEscape) {
-      // To do :: add here
-    } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
+    if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
       searchByNextInput();
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'Z') {
       searchByNextInput();
@@ -161,4 +172,4 @@ const useStoreSearchControl = ({
   };
 };
 
-export default useStoreSearchControl;
+export default useExtensionSearchControl;

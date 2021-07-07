@@ -77,14 +77,14 @@ const transformData = (trigger: any) => {
   if (trigger.type === 'hotkey') {
     desc = trigger.actions[0] ? trigger.actions[0].title : '';
   } else {
-    desc = trigger.title;
+    desc = trigger.title || trigger.subtitle;
   }
 
   return {
     type: trigger.type,
-    command: trigger.hotkey || trigger.command,
+    command: trigger.hotkey || trigger.command || '',
     triggerPath: trigger.triggerPath,
-    description: desc,
+    description: desc || '',
   };
 };
 

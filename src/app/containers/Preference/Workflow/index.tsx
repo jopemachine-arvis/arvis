@@ -22,16 +22,18 @@ import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { JsonEditor } from 'jsoneditor-react';
-import './index.global.css';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
+import { useExtensionSearchControl } from '@hooks/index';
 import { isWithCtrlOrCmd, range } from '@utils/index';
+import { SearchBar } from '@components/index';
 import { WorkflowTriggerTable } from './workflowTriggerTable';
 import WorkflowInfoTable from './infoTable';
 import ReadMeTable from './readme';
 import {
   Header,
   OuterContainer,
+  SearchbarContainer,
   TabNavigatorContainer,
   WorkflowDescContainer,
   WorkflowImg,
@@ -43,16 +45,20 @@ import {
   WorkflowListViewFooter,
 } from './components';
 import * as style from './style';
+import './index.global.css';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
   const workflows = Core.getWorkflowList();
-  const workflowBundleIds = Object.keys(workflows).sort((a, b) =>
+  const allWorkflowBundleIds = Object.keys(workflows).sort((a, b) =>
     alphaSort({
       natural: true,
       caseInsensitive: true,
     })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
   );
+
+  const [workflowBundleIds, setWorkflowBundleIds] =
+    useState<string[]>(allWorkflowBundleIds);
 
   const workflowBundleIdsRef = useRef<any>(workflowBundleIds);
   const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(-1);
@@ -72,6 +78,13 @@ export default function Workflow() {
   const workflowTriggers = Core.getTriggers();
 
   const variableTblRef = useRef<any>();
+
+  const { getInputProps } = useExtensionSearchControl({
+    items: workflowBundleIds,
+    originalItems: allWorkflowBundleIds,
+    setItems: setWorkflowBundleIds,
+    extensionInfos: workflows,
+  });
 
   const setVariableTblRef = (instance: any) => {
     if (instance) {
@@ -514,6 +527,21 @@ export default function Workflow() {
         Installed Workflows
       </Header>
       <WorkflowListView>
+        <SearchbarContainer>
+          <SearchBar
+            alwaysFocus={false}
+            getInputProps={getInputProps}
+            hasContextMenu={false}
+            isPinned={false}
+            itemLeftPadding={style.searchBarStyle.itemLeftPadding}
+            searchbarAutomatchFontColor="#fff"
+            searchbarFontColor="#fff"
+            searchbarFontSize={style.searchBarStyle.searchbarFontSize}
+            searchbarHeight={style.searchBarStyle.searchbarHeight}
+            spinning={false}
+          />
+        </SearchbarContainer>
+
         <WorkflowListOrderedList>
           {_.map(workflowBundleIds, (workflow, idx) => {
             return renderItem(workflows[workflow], idx);

@@ -62,3 +62,12 @@ export const defaultIconStyle: React.CSSProperties = {
   top: 14,
   left: 15,
 };
+
+export const searchBarStyle = {
+  itemHeight: 35,
+  footerHeight: 15,
+  itemLeftPadding: 10,
+  searchbarHeight: 35,
+  searchbarFontSize: 12,
+  itemFontSize: 14,
+};

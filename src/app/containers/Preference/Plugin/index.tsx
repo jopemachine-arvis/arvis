@@ -22,8 +22,10 @@ import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { JsonEditor } from 'jsoneditor-react';
+import { useExtensionSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
+import { SearchBar } from '@components/index';
 import { isWithCtrlOrCmd, range } from '@utils/index';
 import PluginInfoTable from './infoTable';
 import ReadMeTable from './readme';
@@ -38,6 +40,7 @@ import {
   PluginListOrderedList,
   PluginListView,
   PluginListViewFooter,
+  SearchbarContainer,
   TabNavigatorContainer,
 } from './components';
 import './index.global.css';
@@ -45,13 +48,15 @@ import * as style from './style';
 
 export default function Plugin() {
   const plugins = Core.getPluginList();
-  const pluginBundleIds = Object.keys(plugins).sort((a, b) =>
+  const allPluginBundleIds = Object.keys(plugins).sort((a, b) =>
     alphaSort({
       natural: true,
       caseInsensitive: true,
     })(Core.getNameFromBundleId(a), Core.getNameFromBundleId(b))
   );
 
+  const [pluginBundleIds, setPluginBundleIds] =
+    useState<string[]>(allPluginBundleIds);
   const pluginBundleIdsRef = useRef<any>(pluginBundleIds);
   const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(-1);
   const selectedPluginIdxRef = useRef<any>();
@@ -76,6 +81,13 @@ export default function Plugin() {
       variableTblRef.current = null;
     }
   };
+
+  const { getInputProps } = useExtensionSearchControl({
+    items: pluginBundleIds,
+    originalItems: allPluginBundleIds,
+    setItems: setPluginBundleIds,
+    extensionInfos: plugins,
+  });
 
   const getVariableTbl = (bundleId: string) => {
     if (!plugins[bundleId]) return {};
@@ -503,6 +515,20 @@ export default function Plugin() {
         Installed Plugins
       </Header>
       <PluginListView>
+        <SearchbarContainer>
+          <SearchBar
+            alwaysFocus={false}
+            getInputProps={getInputProps}
+            hasContextMenu={false}
+            isPinned={false}
+            itemLeftPadding={style.searchBarStyle.itemLeftPadding}
+            searchbarAutomatchFontColor="#fff"
+            searchbarFontColor="#fff"
+            searchbarFontSize={style.searchBarStyle.searchbarFontSize}
+            searchbarHeight={style.searchBarStyle.searchbarHeight}
+            spinning={false}
+          />
+        </SearchbarContainer>
         <PluginListOrderedList>
           {_.map(pluginBundleIds, (plugin, idx) => {
             return renderItem(plugins[plugin], idx);
