@@ -159,11 +159,20 @@ export default function Store(props: IProps) {
 
   const renderItem = (extension: any, idx: number) => {
     if (!extension) return <React.Fragment key={`extensionItem-${idx}`} />;
-    const { creator, name, description, type } = extension;
+    const { creator, name, description, type, latest } = extension;
     const bundleId = Core.getBundleId(creator, name);
 
     const extensionItemStyle =
       selectedExtensionIdx === idx ? style.selectedItemStyle : {};
+
+    const installedExtensionInfo: any | undefined =
+      type === 'workflow'
+        ? Core.getWorkflowList()[bundleId]
+        : Core.getPluginList()[bundleId];
+
+    const currentVersion = installedExtensionInfo
+      ? installedExtensionInfo.version
+      : undefined;
 
     return (
       <ExtensionItemContainer
@@ -178,7 +187,24 @@ export default function Store(props: IProps) {
             e.currentTarget.src = ExtensionDefaultImg;
           }}
         />
-        {installed.includes(bundleId) && <InstallMark>installed</InstallMark>}
+        {installed.includes(bundleId) && currentVersion === latest && (
+          <InstallMark
+            style={{
+              backgroundColor: '#7bbb3e88',
+            }}
+          >
+            installed
+          </InstallMark>
+        )}
+        {installed.includes(bundleId) && currentVersion !== latest && (
+          <InstallMark
+            style={{
+              backgroundColor: '#ffff00aa',
+            }}
+          >
+            updatable
+          </InstallMark>
+        )}
         <ExtensionItemTitle>{name}</ExtensionItemTitle>
         <ExtensionItemCreatorText>{`${creator}`}</ExtensionItemCreatorText>
         <ExtensionItemDescText>{`${description}`}</ExtensionItemDescText>

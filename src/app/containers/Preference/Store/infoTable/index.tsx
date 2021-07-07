@@ -3,6 +3,7 @@
 /* eslint-disable promise/no-nesting */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable promise/catch-or-return */
 import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
@@ -10,6 +11,7 @@ import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { StyledInput } from '@components/index';
 import './index.global.css';
 import { SpinnerContext } from '@helper/spinnerContext';
+import { Core } from 'arvis-core';
 import * as style from './style';
 
 type IProps = {
@@ -51,6 +53,16 @@ export default function ExtensionInfoTable(props: IProps) {
   const bundleId = `${extensionCreator}.${extensionName}`;
 
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
+
+  const installedExtensionInfo: any | undefined = info
+    ? info.type === 'workflow'
+      ? Core.getWorkflowList()[bundleId]
+      : Core.getPluginList()[bundleId]
+    : undefined;
+
+  const currentVersion = installedExtensionInfo
+    ? installedExtensionInfo.version
+    : undefined;
 
   useEffect(() => {
     if (info) {
@@ -94,8 +106,8 @@ export default function ExtensionInfoTable(props: IProps) {
     setSpinning(true);
 
     installExtension({
-      extensionType: info.type,
       bundleId,
+      extensionType: info.type,
       installType: info.installType,
     })
       .catch(console.error)
@@ -108,8 +120,8 @@ export default function ExtensionInfoTable(props: IProps) {
     setSpinning(true);
 
     uninstallExtension({
-      extensionType: info.type,
       bundleId,
+      extensionType: info.type,
       installType: info.installType,
     })
       .catch(console.error)
@@ -219,6 +231,19 @@ export default function ExtensionInfoTable(props: IProps) {
           Install
         </Button>
       )}
+
+      {info &&
+        installed &&
+        extensionName === info.name &&
+        currentVersion !== info.latest && (
+          <Button
+            style={{ ...style.installButton, marginTop: 50 }}
+            size="md"
+            onClick={installHandler}
+          >
+            Update
+          </Button>
+        )}
     </Form>
   );
 }

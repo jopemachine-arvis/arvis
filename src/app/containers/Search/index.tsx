@@ -15,6 +15,10 @@ import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
+import {
+  clipboardActionHandler,
+  notificationActionHandler,
+} from '@helper/customActionHandler';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -116,22 +120,8 @@ export default function SearchWindow() {
   }, []);
 
   const initializeCustomActions = () => {
-    Core.registerCustomAction('notification', (action: any) => {
-      if (workManager.printActionType) {
-        console.log(
-          '%c[Action: notification]%c ',
-          'color: cyan',
-          'color: unset',
-          action
-        );
-      }
-
-      ipcRenderer.send(IPCRendererEnum.showNotification, {
-        title: action.title,
-        body: action.text,
-      });
-    });
-
+    Core.registerCustomAction('notification', notificationActionHandler);
+    Core.registerCustomAction('clipboard', clipboardActionHandler);
     Core.registerCustomAction('keyDispatching', (action: any) => {});
   };
 

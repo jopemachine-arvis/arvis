@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -277,7 +277,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "alpha-sort": "^5.0.0",
-    "arvis-store": "^0.1.9",
+    "arvis-store": "^0.2.6",
     "bootstrap": "^5.0.0",
     "chokidar": "^3.5.2",
     "connected-react-router": "^6.9.1",
