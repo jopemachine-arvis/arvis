@@ -74,14 +74,6 @@ const useExtensionSearchControl = ({
     );
   };
 
-  useEffect(() => {
-    handleNormalInput(
-      originalItems,
-      '',
-      (document.getElementById('searchBar') as HTMLInputElement).value
-    );
-  }, [originalItems]);
-
   /**
    * @param  {string} str
    * @param  {needItemsUpdate} boolean

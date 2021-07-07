@@ -265,6 +265,11 @@ export default function Workflow() {
     }
   }, [selectedWorkflowIdx, workflows]);
 
+  useEffect(() => {
+    setSelectedIdxs(new Set([]));
+    setSelectedWorkflowIdx(-1);
+  }, [workflowBundleIds]);
+
   const itemClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     idx: number
@@ -454,6 +459,15 @@ export default function Workflow() {
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent) => {
+    if (
+      (e.key === 'ArrowUp' || e.key === 'ArrowDown') &&
+      selectedWorkflowIdx === -1
+    ) {
+      setSelectedWorkflowIdx(0);
+      setSelectedIdxs(new Set([0]));
+      return;
+    }
+
     if (e.shiftKey) {
       const minIdx = Math.min(...selectedIdxs.values());
       const maxIdx = Math.max(...selectedIdxs.values());

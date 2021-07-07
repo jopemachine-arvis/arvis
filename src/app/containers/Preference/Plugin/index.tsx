@@ -240,6 +240,11 @@ export default function Plugin() {
   }, []);
 
   useEffect(() => {
+    setSelectedIdxs(new Set([]));
+    setSelectedPluginIdx(-1);
+  }, [pluginBundleIds]);
+
+  useEffect(() => {
     if (pluginBundleIds.length) {
       const info =
         selectedPluginIdx === -1
@@ -442,6 +447,15 @@ export default function Plugin() {
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent) => {
+    if (
+      (e.key === 'ArrowUp' || e.key === 'ArrowDown') &&
+      selectedPluginIdx === -1
+    ) {
+      setSelectedPluginIdx(0);
+      setSelectedIdxs(new Set([0]));
+      return;
+    }
+
     if (e.shiftKey) {
       const minIdx = Math.min(...selectedIdxs.values());
       const maxIdx = Math.max(...selectedIdxs.values());
