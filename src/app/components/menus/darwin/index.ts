@@ -107,6 +107,14 @@ export default (mainWindow: BrowserWindow) => {
     label: 'Help',
     submenu: [
       {
+        label: 'License',
+        click() {
+          shell.openExternal(
+            'https://github.com/jopemachine/arvis/blob/master/LICENSE'
+          );
+        },
+      },
+      {
         label: 'Documentation',
         click() {
           shell.openExternal(
@@ -121,18 +129,10 @@ export default (mainWindow: BrowserWindow) => {
         },
       },
       {
-        label: 'Search available workflows',
+        label: 'Bug Report / Feature Request',
         click() {
           shell.openExternal(
-            'https://github.com/jopemachine/arvis/blob/master/documents/workflow-links.md'
-          );
-        },
-      },
-      {
-        label: 'Search available plugins',
-        click() {
-          shell.openExternal(
-            'https://github.com/jopemachine/arvis/blob/master/documents/plugin-links.md'
+            'https://github.com/jopemachine/arvis/issues/new/choose'
           );
         },
       },
