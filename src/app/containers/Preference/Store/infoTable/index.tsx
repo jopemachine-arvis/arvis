@@ -130,6 +130,21 @@ export default function ExtensionInfoTable(props: IProps) {
       });
   };
 
+  let installBtnTxt;
+
+  if (info && installed === false) {
+    installBtnTxt = 'Install';
+  } else if (
+    info &&
+    installed &&
+    extensionName === info.name &&
+    currentVersion !== info.latest
+  ) {
+    installBtnTxt = 'Update';
+  } else {
+    installBtnTxt = 'Reinstall';
+  }
+
   return (
     <Form style={style.descriptionContainerStyle}>
       <FormGroup style={style.formGroupStyle}>
@@ -222,28 +237,15 @@ export default function ExtensionInfoTable(props: IProps) {
         />
       </FormGroup>
 
-      {info && installed === false && (
+      {info && (
         <Button
           style={{ ...style.installButton, marginTop: 50 }}
           size="md"
           onClick={installHandler}
         >
-          Install
+          {installBtnTxt}
         </Button>
       )}
-
-      {info &&
-        installed &&
-        extensionName === info.name &&
-        currentVersion !== info.latest && (
-          <Button
-            style={{ ...style.installButton, marginTop: 50 }}
-            size="md"
-            onClick={installHandler}
-          >
-            Update
-          </Button>
-        )}
     </Form>
   );
 }

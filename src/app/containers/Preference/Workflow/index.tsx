@@ -581,7 +581,11 @@ export default function Workflow() {
             <TabPanel>
               <WorkflowInfoTable info={workflows[workflowBundleId]} />
             </TabPanel>
-            <TabPanel>
+            <TabPanel
+              style={{
+                height: '90%',
+              }}
+            >
               <WorkflowTriggerTable
                 bundleId={workflowBundleId}
                 triggers={workflowTriggers[workflowBundleId]}

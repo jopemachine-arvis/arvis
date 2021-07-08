@@ -42,6 +42,7 @@ import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popup
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/contextMenu/popupClipboardHistoryContextMenu';
+import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
 
 /**
  * @summary Register ipc callbacks
@@ -59,6 +60,10 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
+  ipcMain.on(
+    IPCRendererEnum.popupWorkflowTriggerTableItem,
+    popupWorkflowTriggerTableItem
+  );
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.renewPlugin, renewPlugin);

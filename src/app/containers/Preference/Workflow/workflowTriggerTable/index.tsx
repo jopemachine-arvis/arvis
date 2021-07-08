@@ -77,22 +77,24 @@ const transformData = (trigger: any) => {
   if (trigger.type === 'hotkey') {
     desc = trigger.actions[0] ? trigger.actions[0].title : '';
   } else {
-    desc = trigger.title || trigger.subtitle;
+    desc = trigger.title || trigger.subtitle || '';
   }
 
   return {
     type: trigger.type,
     command: trigger.hotkey || trigger.command || '',
     triggerPath: trigger.triggerPath,
-    description: desc || '',
+    description: desc,
   };
 };
 
 function TriggerTable({
+  bundleId,
   columns,
   data,
   updateJson,
 }: {
+  bundleId: string;
   columns: any;
   data: any;
   updateJson: any;
@@ -120,6 +122,17 @@ function TriggerTable({
       },
       useSortBy
     );
+
+  const onContextMenuHandler = (rowInfo: any) => {
+    const rowIdx = rowInfo.index;
+    const rowData = data[rowIdx];
+
+    ipcRenderer.send(IPCRendererEnum.popupWorkflowTriggerTableItem, {
+      bundleId,
+      triggerPath: rowData.triggerPath,
+      workflowInfo: JSON.stringify(Core.getWorkflowList()[bundleId]),
+    });
+  };
 
   useEffect(() => {
     dataRef.current = data;
@@ -156,7 +169,10 @@ function TriggerTable({
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr
+              {...row.getRowProps()}
+              onContextMenu={() => onContextMenuHandler(row)}
+            >
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
               })}
@@ -169,9 +185,11 @@ function TriggerTable({
 }
 
 export function WorkflowTriggerTable(props: any) {
+  const { bundleId, triggers } = props;
+
   const data = React.useMemo(
-    () => (props.triggers ? props.triggers.map(transformData) : []),
-    [props.triggers]
+    () => (triggers ? triggers.map(transformData) : []),
+    [triggers]
   );
 
   const columns = React.useMemo(
@@ -197,15 +215,15 @@ export function WorkflowTriggerTable(props: any) {
 
     // To do:: Below logic needs to be removed after chokidar's symlink issue is resolved
     // Because followSymlink is false now, below logic is needed for now.
-    Core.updateWorkflowTrigger(props.bundleId, triggerPath, value)
+    Core.updateWorkflowTrigger(bundleId, triggerPath, value)
       .then(() => {
         ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
           destWindow: 'searchWindow',
-          bundleId: props.bundleId,
+          bundleId,
         });
         ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
           destWindow: 'preferenceWindow',
-          bundleId: props.bundleId,
+          bundleId,
         });
         return null;
       })
@@ -215,7 +233,12 @@ export function WorkflowTriggerTable(props: any) {
   return (
     <OuterContainer>
       {data.length > 0 && (
-        <TriggerTable columns={columns} data={data} updateJson={updateJson} />
+        <TriggerTable
+          columns={columns}
+          data={data}
+          updateJson={updateJson}
+          bundleId={bundleId}
+        />
       )}
     </OuterContainer>
   );

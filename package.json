@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -208,7 +208,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "arvis-core": "^0.4.6",
+    "arvis-core": "^0.4.9",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.2.2",
@@ -281,6 +281,7 @@
     "bootstrap": "^5.0.0",
     "chokidar": "^3.5.2",
     "connected-react-router": "^6.9.1",
+    "dot-prop": "^6.0.1",
     "easy-auto-launch": "^6.0.0",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
