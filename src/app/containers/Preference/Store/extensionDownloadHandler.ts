@@ -15,24 +15,31 @@ export const installExtension = async ({
 }): Promise<void> => {
   const [creator, name] = bundleId.split('.');
 
-  switch (installType) {
-    case 'npm':
-      await execa('npm', ['install', '-g', name]);
-      break;
+  try {
+    switch (installType) {
+      case 'npm':
+        await execa('npm', ['install', '-g', name]);
+        break;
 
-    case 'local': {
-      const dst = await downloadExtension(extensionType, bundleId, {
-        path: Core.path.tempPath,
-      });
-      ipcRenderer.send(IPCRendererEnum.openExtensionInstallerFile, {
-        path: dst,
-      });
-      break;
+      case 'local': {
+        const dst = await downloadExtension(extensionType, bundleId, {
+          path: Core.path.tempPath,
+        });
+        ipcRenderer.send(IPCRendererEnum.openExtensionInstallerFile, {
+          path: dst,
+        });
+        break;
+      }
+
+      default:
+        console.error('Unsupported type');
+        break;
     }
-
-    default:
-      console.error('Unsupported type');
-      break;
+  } catch (err) {
+    ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+      title: 'Error occurs during installation!',
+      content: err.message,
+    });
   }
 };
 
@@ -47,16 +54,23 @@ export const uninstallExtension = async ({
 }): Promise<void> => {
   const [creator, name] = bundleId.split('.');
 
-  switch (installType) {
-    case 'npm':
-      await execa('npm', ['uninstall', '-g', name]);
-      break;
+  try {
+    switch (installType) {
+      case 'npm':
+        await execa('npm', ['uninstall', '-g', name]);
+        break;
 
-    case 'local':
-      break;
+      case 'local':
+        break;
 
-    default:
-      console.error('Unsupported type');
-      break;
+      default:
+        console.error('Unsupported type');
+        break;
+    }
+  } catch (err) {
+    ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+      title: 'Error occurs during installation!',
+      content: err.message,
+    });
   }
 };
