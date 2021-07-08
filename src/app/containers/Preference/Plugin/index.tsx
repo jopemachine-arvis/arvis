@@ -95,6 +95,8 @@ export default function Plugin() {
   };
 
   const variableTblChangeHandler = (e: any) => {
+    if (!pluginBundleId) return;
+
     if (
       !_.isEqual(
         plugins[pluginBundleId].variables,
