@@ -100,6 +100,8 @@ export default function Workflow() {
   };
 
   const variableTblChangeHandler = (e: any) => {
+    if (!workflowBundleId) return;
+
     if (
       !_.isEqual(
         workflows[workflowBundleId].variables,
