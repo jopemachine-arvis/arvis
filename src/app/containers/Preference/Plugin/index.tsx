@@ -62,6 +62,7 @@ export default function Plugin() {
   const selectedPluginIdxRef = useRef<any>();
 
   const [pluginBundleId, setPluginBundleId] = useState<string>('');
+  const pluginBundleIdRef = useRef<string>(pluginBundleId);
 
   const [webviewUrl, setWebviewUrl] = useState<string>('');
 
@@ -95,26 +96,41 @@ export default function Plugin() {
   };
 
   const variableTblChangeHandler = (e: any) => {
-    if (!pluginBundleId) return;
+    if (!pluginBundleId || _.isNil(variableTblRef.current)) return;
+    if (!e.target || !e.target.classList) return;
+
+    if (
+      !e.target.classList.contains('jsoneditor-field') &&
+      !e.target.classList.contains('jsoneditor-value') &&
+      !e.target.classList.contains('jsoneditor-remove')
+    )
+      return;
 
     if (
       !_.isEqual(
-        plugins[pluginBundleId].variables,
+        plugins[pluginBundleIdRef.current].variables,
         variableTblRef.current.get()
       )
     ) {
       fse
         .writeJSON(
-          Core.path.getPluginConfigJsonPath(pluginBundleId),
+          Core.path.getPluginConfigJsonPath(pluginBundleIdRef.current),
           {
-            ...plugins[pluginBundleId],
+            ...plugins[pluginBundleIdRef.current],
+            bundleId: undefined,
             variables: variableTblRef.current.get(),
           },
           { encoding: 'utf-8', spaces: 4 }
         )
         .then(() => {
+          Core.addUserConfigs(
+            pluginBundleIdRef.current,
+            'variables',
+            variableTblRef.current.get()
+          ).catch(console.error);
+
           ipcRenderer.send(IPCRendererEnum.renewPlugin, {
-            bundleId: pluginBundleId,
+            bundleId: pluginBundleIdRef.current,
           });
           return null;
         })
@@ -240,6 +256,10 @@ export default function Plugin() {
       );
     };
   }, []);
+
+  useEffect(() => {
+    pluginBundleIdRef.current = pluginBundleId;
+  }, [pluginBundleId]);
 
   useEffect(() => {
     setSelectedIdxs(new Set([]));
@@ -560,7 +580,7 @@ export default function Plugin() {
           >
             <TabList>
               <Tab>Basic info</Tab>
-              <Tab>Variables</Tab>
+              <Tab>User config</Tab>
               <Tab>README</Tab>
               <Tab>Web view</Tab>
             </TabList>
@@ -568,23 +588,25 @@ export default function Plugin() {
               <PluginInfoTable info={plugins[pluginBundleId]} />
             </TabPanel>
             <TabPanel>
-              <JsonEditor
-                ref={setVariableTblRef}
-                statusBar={false}
-                sortObjectKeys={false}
-                navigationBar={false}
-                history={false}
-                search={false}
-                onError={console.error}
-                value={getVariableTbl(pluginBundleId)}
-                onBlur={variableTblChangeHandler}
-                htmlElementProps={{
-                  onBlur: variableTblChangeHandler,
-                  style: {
-                    height: 600,
-                  },
-                }}
-              />
+              {pluginBundleId && (
+                <JsonEditor
+                  ref={setVariableTblRef}
+                  statusBar={false}
+                  sortObjectKeys={false}
+                  navigationBar={false}
+                  history={false}
+                  search={false}
+                  onError={console.error}
+                  value={getVariableTbl(pluginBundleId)}
+                  onBlur={variableTblChangeHandler}
+                  htmlElementProps={{
+                    onBlur: variableTblChangeHandler,
+                    style: {
+                      height: 600,
+                    },
+                  }}
+                />
+              )}
             </TabPanel>
             <TabPanel>
               <ReadMeTable

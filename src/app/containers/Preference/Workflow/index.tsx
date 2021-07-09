@@ -67,6 +67,7 @@ export default function Workflow() {
   const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
+  const workflowBundleIdRef = useRef<string>(workflowBundleId);
 
   const [webviewUrl, setWebviewUrl] = useState<string>('');
 
@@ -100,26 +101,41 @@ export default function Workflow() {
   };
 
   const variableTblChangeHandler = (e: any) => {
-    if (!workflowBundleId) return;
+    if (!workflowBundleId || _.isNil(variableTblRef.current)) return;
+    if (!e.target || !e.target.classList) return;
+
+    if (
+      !e.target.classList.contains('jsoneditor-field') &&
+      !e.target.classList.contains('jsoneditor-value') &&
+      !e.target.classList.contains('jsoneditor-remove')
+    )
+      return;
 
     if (
       !_.isEqual(
-        workflows[workflowBundleId].variables,
+        workflows[workflowBundleIdRef.current].variables,
         variableTblRef.current.get()
       )
     ) {
       fse
         .writeJSON(
-          Core.path.getWorkflowConfigJsonPath(workflowBundleId),
+          Core.path.getWorkflowConfigJsonPath(workflowBundleIdRef.current),
           {
-            ...workflows[workflowBundleId],
+            ...workflows[workflowBundleIdRef.current],
+            bundleId: undefined,
             variables: variableTblRef.current.get(),
           },
           { encoding: 'utf-8', spaces: 4 }
         )
         .then(() => {
+          Core.addUserConfigs(
+            workflowBundleIdRef.current,
+            'variables',
+            variableTblRef.current.get()
+          ).catch(console.error);
+
           ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
-            bundleId: workflowBundleId,
+            bundleId: workflowBundleIdRef.current,
           });
           return null;
         })
@@ -266,6 +282,10 @@ export default function Workflow() {
       }
     }
   }, [selectedWorkflowIdx, workflows]);
+
+  useEffect(() => {
+    workflowBundleIdRef.current = workflowBundleId;
+  }, [workflowBundleId]);
 
   useEffect(() => {
     setSelectedIdxs(new Set([]));
@@ -574,7 +594,7 @@ export default function Workflow() {
             <TabList>
               <Tab>Basic info</Tab>
               <Tab>Trigger table</Tab>
-              <Tab>Variables</Tab>
+              <Tab>User config</Tab>
               <Tab>README</Tab>
               <Tab>Web view</Tab>
             </TabList>
@@ -592,23 +612,25 @@ export default function Workflow() {
               />
             </TabPanel>
             <TabPanel>
-              <JsonEditor
-                ref={setVariableTblRef}
-                statusBar={false}
-                sortObjectKeys={false}
-                navigationBar={false}
-                history={false}
-                search={false}
-                onError={console.error}
-                value={getVariableTbl(workflowBundleId)}
-                onBlur={variableTblChangeHandler}
-                htmlElementProps={{
-                  onBlur: variableTblChangeHandler,
-                  style: {
-                    height: 600,
-                  },
-                }}
-              />
+              {workflowBundleId && (
+                <JsonEditor
+                  ref={setVariableTblRef}
+                  statusBar={false}
+                  sortObjectKeys={false}
+                  navigationBar={false}
+                  history={false}
+                  search={false}
+                  onError={console.error}
+                  value={getVariableTbl(workflowBundleId)}
+                  onBlur={variableTblChangeHandler}
+                  htmlElementProps={{
+                    onBlur: variableTblChangeHandler,
+                    style: {
+                      height: 600,
+                    },
+                  }}
+                />
+              )}
             </TabPanel>
             <TabPanel>
               <ReadMeTable

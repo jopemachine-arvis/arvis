@@ -182,6 +182,12 @@ export default (mainWindow: BrowserWindow) => [
         },
       },
       {
+        label: 'Open user config (variables) file path',
+        click() {
+          open(path.dirname(Core.path.userConfigPath));
+        },
+      },
+      {
         label: 'Open arvis-gui-config file path',
         click() {
           open(path.dirname(electronStore.path));
