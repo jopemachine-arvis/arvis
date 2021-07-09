@@ -2,6 +2,16 @@ import { ipcMain } from 'electron';
 import { IPCRendererEnum } from './ipcEventEnum';
 
 // To prevent SIGSEV errors, each module should be imported directly not through index.ts
+
+import { openExtensionInstallerFile } from './mainProcessEventHandler/openExtensionInstallerFile';
+import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
+import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
+import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
+import { showNotification } from './mainProcessEventHandler/showNotification';
+import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
+import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
+import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
+
 import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
@@ -29,15 +39,6 @@ import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
 import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
 
-import { openExtensionInstallerFile } from './mainProcessEventHandler/openExtensionInstallerFile';
-import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
-import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
-import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
-import { showNotification } from './mainProcessEventHandler/showNotification';
-import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
-import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
-import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
-
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
@@ -60,10 +61,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
-  ipcMain.on(
-    IPCRendererEnum.popupWorkflowTriggerTableItem,
-    popupWorkflowTriggerTableItem
-  );
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.renewPlugin, renewPlugin);
@@ -81,6 +78,12 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+
+  ipcMain.on(
+    IPCRendererEnum.popupWorkflowTriggerTableItem,
+    popupWorkflowTriggerTableItem
+  );
+
   ipcMain.on(
     IPCRendererEnum.openExtensionInstallerFile,
     openExtensionInstallerFile
@@ -90,22 +93,27 @@ export const initIPCHandlers = () => {
     IPCRendererEnum.popupClipboardHistoryContextMenu,
     popupClipboardHistoryContextMenu
   );
+
   ipcMain.on(
     IPCRendererEnum.hideClipboardHistoryWindow,
     hideClipboardHistoryWindow
   );
+
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,
     openWorkflowInstallFileDialog
   );
+
   ipcMain.on(
     IPCRendererEnum.triggerDoubleModifierKey,
     triggerDoubleModifierKey
   );
+
   ipcMain.on(
     IPCRendererEnum.openPluginInstallFileDialog,
     openPluginInstallFileDialog
   );
+
   ipcMain.on(
     IPCRendererEnum.resizeSearchWindowHeight,
     resizeSearchWindowHeight

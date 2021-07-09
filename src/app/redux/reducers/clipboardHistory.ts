@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/dot-notation */
-import { ClipboardHistoryActions } from '../actions';
-import { StateType } from './types';
+import { ClipboardHistoryActions } from '@redux/actions';
+import { StateType } from '@redux/reducers/types';
 
 const { actionTypes: ClipboardHistoryActionTypes } = ClipboardHistoryActions;
 
-export default (state = {}, action: any) => {
+export default (state: any = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
     case ClipboardHistoryActionTypes.CLEAR_CLIPBOARD_STORE:

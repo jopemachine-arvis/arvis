@@ -5,9 +5,9 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
-import createRootReducer from '../redux/reducers';
-import { StateType } from '../redux/reducers/types';
-import { electronPersistedStore } from './electronStorage';
+import createRootReducer from '@redux/reducers';
+import { StateType } from '@redux/reducers/types';
+import { electronPersistedStore } from '@store/electronStorage';
 
 declare global {
   interface Window {

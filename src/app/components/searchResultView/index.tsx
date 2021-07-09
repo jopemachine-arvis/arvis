@@ -112,7 +112,7 @@ const SearchResultView = (props: IProps) => {
               subtitleFontSize={subtitleFontSize}
               text={command.text}
               // If there is no title, shows command
-              title={command.title ? command.title : command.command}
+              title={command.title ?? command.command}
               titleFontSize={titleFontSize}
               valid={command.valid}
               variables={command.variables}

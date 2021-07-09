@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import { StateType } from '../redux/reducers/types';
-import initialState from '../config/initialState';
+import { StateType } from '@redux/reducers/types';
+import initialState from '@config/initialState';
 
 export const validate = (store: any): store is StateType => {
   // Assume:: store tree has outer objects and have inner objects in it.

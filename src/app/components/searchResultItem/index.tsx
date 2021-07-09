@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/display-name */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+/* eslint-disable react/no-unused-prop-types */
+import React, { useCallback, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
 import DefaultImg from '../../../../assets/images/itemDefaultIcon.svg';
@@ -47,12 +48,9 @@ type IProps = {
 
 const SearchResultItem = (props: IProps) => {
   const {
-    arg,
-    autocomplete,
     extensionDefaultIcon,
     icon,
     iconRightMargin,
-    itemBackgroundColor,
     itemFontColor,
     itemHeight,
     itemLeftPadding,
@@ -66,11 +64,9 @@ const SearchResultItem = (props: IProps) => {
     selectedItemFontColor,
     subtitle,
     subtitleFontSize,
-    text,
     title,
     titleFontSize,
     valid,
-    variables,
     onMouseoverHandler,
     onDoubleClickHandler,
   } = props;

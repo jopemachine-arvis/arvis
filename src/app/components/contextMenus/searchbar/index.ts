@@ -33,7 +33,7 @@ class SearchbarContextMenu extends Menu {
       new MenuItem({
         type: 'normal',
         label: 'Preferences..',
-        toolTip: 'Open Preference window',
+        toolTip: 'Open Preference Window',
         click() {
           WindowManager.getInstance().getPreferenceWindow().show();
         },

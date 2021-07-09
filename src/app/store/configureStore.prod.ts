@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import { persistReducer, persistStore } from 'redux-persist';
-import createRootReducer from '../redux/reducers';
-import { StateType } from '../redux/reducers/types';
-import { electronPersistedStore } from './electronStorage';
+import createRootReducer from '@redux/reducers';
+import { StateType } from '@redux/reducers/types';
+import { electronPersistedStore } from '@store/electronStorage';
 
 const history = createHashHistory();
 

@@ -1,4 +1,4 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from '@utils/makeActionCreator';
 
 export const actionTypes = {
   PUSH_CLIPBOARD_STORE: '@clipboardStore/PUSH_CLIPBOARD_STORE',

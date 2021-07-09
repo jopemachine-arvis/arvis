@@ -1,5 +1,5 @@
-import configureStoreDev from './configureStore.dev';
-import configureStoreProd from './configureStore.prod';
+import configureStoreDev from '@store/configureStore.dev';
+import configureStoreProd from '@store/configureStore.prod';
 
 const selectedConfigureStore =
   process.env.NODE_ENV === 'production'

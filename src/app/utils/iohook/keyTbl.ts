@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-types
-const objectFlip = (obj: object) => {
-  const ret = {};
+const objectFlip = (obj: any) => {
+  const ret: any = {};
   Object.keys(obj).forEach((key) => {
     ret[obj[key]] = key;
   });
@@ -121,7 +121,7 @@ export const keyCodeToString = (keycode: number): string => {
     57421: '→',
   };
 
-  return tbl[keycode];
+  return (tbl as any)[keycode];
 };
 
 export const stringToKeyCode = objectFlip(keyCodeToString);

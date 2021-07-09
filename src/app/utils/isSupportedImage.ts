@@ -1,4 +1,6 @@
 /**
+ * @description Supported image formats of html.
+ *              Add more if there are any missing items
  */
 export const supportedImageFormats = [
   'apng',

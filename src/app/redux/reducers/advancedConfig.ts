@@ -1,4 +1,4 @@
-import { AdvancedConfigActions } from '../actions';
+import { AdvancedConfigActions } from '@redux/actions';
 import { StateType } from './types';
 
 const { actionTypes: AdvancedConfigActionTypes } = AdvancedConfigActions;

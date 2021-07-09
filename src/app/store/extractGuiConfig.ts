@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import initialState from '../config/initialState';
+import initialState from '@config/initialState';
 
 export const extractGuiConfig = (store: any) => {
   const targetKeys = Object.keys(initialState);

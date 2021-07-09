@@ -1,7 +1,6 @@
 import makeActionCreator from './makeActionCreator';
 import { isNumeric } from './isNumeric';
 import extractJson from './extractJSON';
-import { checkFileExists } from './checkFileExists';
 import { supportedImageFormats } from './isSupportedImage';
 import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
@@ -16,7 +15,6 @@ import { checkIsRendererProc } from './checkProcessType';
 
 export {
   applyAlphaColor,
-  checkFileExists,
   checkIsRendererProc,
   createGlobalConfigChangeHandler,
   extractJson,

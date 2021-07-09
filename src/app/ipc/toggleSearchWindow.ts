@@ -69,7 +69,6 @@ const handleLinux = ({ showsUp }: { showsUp?: boolean }) => {
 };
 
 export default ({ showsUp }: { showsUp?: boolean }) => {
-  // eslint-disable-next-line default-case
   switch (process.platform) {
     case 'win32':
       handleWindows({ showsUp });
@@ -80,5 +79,7 @@ export default ({ showsUp }: { showsUp?: boolean }) => {
     case 'linux':
       handleLinux({ showsUp });
       break;
+    default:
+      throw new Error('Unsupported Platform!');
   }
 };

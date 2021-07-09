@@ -1,4 +1,4 @@
-import { UIConfigActions } from '../actions';
+import { UIConfigActions } from '@redux/actions';
 
 const { actionTypes: UIConfigActionTypes } = UIConfigActions;
 

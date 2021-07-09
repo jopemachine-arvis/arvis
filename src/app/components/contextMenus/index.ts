@@ -1,13 +1,13 @@
-import SearchbarContextMenu from './searchbar';
-import PluginItemContextMenu from './pluginItem';
-import WorkflowItemContextMenu from './workflow';
 import ClipboardHistoryWindowContextMenu from './clipboardHistory';
+import PluginItemContextMenu from './pluginItem';
+import SearchbarContextMenu from './searchbar';
+import WorkflowItemContextMenu from './workflow';
 import WorkflowTriggerTableItemContextMenu from './workflowTriggerTableItem';
 
 export {
   ClipboardHistoryWindowContextMenu,
-  SearchbarContextMenu,
   PluginItemContextMenu,
+  SearchbarContextMenu,
   WorkflowItemContextMenu,
   WorkflowTriggerTableItemContextMenu,
 };

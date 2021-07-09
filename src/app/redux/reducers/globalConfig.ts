@@ -1,5 +1,5 @@
-import { GlobalConfigActions } from '../actions';
-import { StateType } from './types';
+import { GlobalConfigActions } from '@redux/actions';
+import { StateType } from '@redux/reducers/types';
 
 const { actionTypes: GlobalConfigActionTypes } = GlobalConfigActions;
 
