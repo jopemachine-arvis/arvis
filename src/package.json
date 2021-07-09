@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Arvis (alpha)",
   "main": "./main.prod.js",
   "homepage": "https://github.com/jopemachine/arvis#readme",
@@ -13,6 +13,17 @@
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
+  },
+  "maintainers": [
+    "jopemachine"
+  ],
+  "readme": "https://github.com/jopemachine/arvis#README.md",
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/jopemachine/arvis/issues"
+  },
+  "repository": {
+    "url": "https://github.com/jopemachine/arvis"
   },
   "keywords": [
     "arvis",

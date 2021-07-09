@@ -624,7 +624,7 @@ div.jsoneditor-value.jsoneditor-string {
 }
 
 div.jsoneditor-value.jsoneditor-number {
-  color: #fff;
+  color: #037d50;
 }
 
 div.jsoneditor-value.jsoneditor-boolean {
@@ -670,6 +670,11 @@ div.jsoneditor td.jsoneditor-separator {
 
 div.jsoneditor td.jsoneditor-tree {
   vertical-align: top;
+}
+
+td.jsoneditor-tree > input {
+  /* Not show check box */
+  display: none;
 }
 
 div.jsoneditor.busy pre.jsoneditor-preview {
