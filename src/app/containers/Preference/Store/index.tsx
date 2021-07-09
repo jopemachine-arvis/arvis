@@ -12,6 +12,7 @@ import { constant, searchMostTotalDownload } from 'arvis-store';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { IoMdRefresh } from 'react-icons/io';
+import semver from 'semver';
 import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { SpinnerContext } from '@helper/spinnerContext';
@@ -187,24 +188,30 @@ export default function Store(props: IProps) {
             e.currentTarget.src = ExtensionDefaultImg;
           }}
         />
-        {installed.includes(bundleId) && currentVersion === latest && (
-          <InstallMark
-            style={{
-              backgroundColor: '#7bbb3e88',
-            }}
-          >
-            installed
-          </InstallMark>
-        )}
-        {installed.includes(bundleId) && currentVersion !== latest && (
-          <InstallMark
-            style={{
-              backgroundColor: '#ffff00aa',
-            }}
-          >
-            updatable
-          </InstallMark>
-        )}
+        {installed.includes(bundleId) &&
+          latest &&
+          currentVersion &&
+          semver.gte(currentVersion, latest) && (
+            <InstallMark
+              style={{
+                backgroundColor: '#7bbb3e88',
+              }}
+            >
+              installed
+            </InstallMark>
+          )}
+        {installed.includes(bundleId) &&
+          latest &&
+          currentVersion &&
+          semver.gt(latest, currentVersion) && (
+            <InstallMark
+              style={{
+                backgroundColor: '#ffff00aa',
+              }}
+            >
+              updatable
+            </InstallMark>
+          )}
         <ExtensionItemTitle>{name}</ExtensionItemTitle>
         <ExtensionItemCreatorText>{`${creator}`}</ExtensionItemCreatorText>
         <ExtensionItemDescText>{`${description}`}</ExtensionItemDescText>
