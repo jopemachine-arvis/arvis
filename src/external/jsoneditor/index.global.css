@@ -624,7 +624,7 @@ div.jsoneditor-value.jsoneditor-string {
 }
 
 div.jsoneditor-value.jsoneditor-number {
-  color: #282828;
+  color: #fff;
 }
 
 div.jsoneditor-value.jsoneditor-boolean {
@@ -636,11 +636,11 @@ div.jsoneditor-value.jsoneditor-null {
 }
 
 div.jsoneditor-value.jsoneditor-color-value {
-  color: #1a1a1a;
+  color: #fff;
 }
 
 div.jsoneditor-value.jsoneditor-invalid {
-  color: #1a1a1a;
+  color: red;
 }
 
 div.jsoneditor-readonly {
