@@ -106,6 +106,10 @@ export default (mainWindow: BrowserWindow) => [
     label: '&Advanced',
     submenu: [
       {
+        label: '* Debug Info',
+        enabled: false,
+      },
+      {
         label: 'View Debug info',
         click() {
           dialog.showMessageBox(
@@ -118,7 +122,11 @@ export default (mainWindow: BrowserWindow) => [
         type: 'separator',
       },
       {
-        label: 'Initialize redux setting',
+        label: '* Setting Intialzation',
+        enabled: false,
+      },
+      {
+        label: 'Initialize Redux Setting',
         click() {
           WindowManager.getInstance()
             .getPreferenceWindow()
@@ -126,7 +134,25 @@ export default (mainWindow: BrowserWindow) => [
         },
       },
       {
+        label: 'Initialize User Config (variables)',
+        click() {
+          Core.initialzeUserConfigs();
+        },
+      },
+      {
         type: 'separator',
+      },
+      {
+        label: '* Open Debugger',
+        enabled: false,
+      },
+      {
+        label: 'Open Search Window Debugger',
+        click() {
+          WindowManager.getInstance()
+            .getSearchWindow()
+            .webContents.openDevTools();
+        },
       },
       {
         label: 'Open Preference Window Debugger',
@@ -162,6 +188,10 @@ export default (mainWindow: BrowserWindow) => [
       },
       {
         type: 'separator',
+      },
+      {
+        label: '* Open Setting File Directory',
+        enabled: false,
       },
       {
         label: 'Open installed extension folder',
