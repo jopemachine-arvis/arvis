@@ -3,7 +3,6 @@ import { Menu } from 'electron';
 
 import getWindowsTemplate from './windows';
 import getDarwinTemplate from './darwin';
-
 import { WindowManager } from '../../windows';
 
 export default class MenuBuilder {
@@ -20,7 +19,7 @@ export default class MenuBuilder {
         ? this.buildDarwinTemplate()
         : this.buildDefaultTemplate();
 
-    const menu = Menu.buildFromTemplate(template);
+    const menu = Menu.buildFromTemplate(template as any);
     Menu.setApplicationMenu(menu);
 
     return menu;
