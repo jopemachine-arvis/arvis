@@ -169,12 +169,16 @@ function TriggerTable({
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr
-              {...row.getRowProps()}
-              onContextMenu={() => onContextMenuHandler(row)}
-            >
+            <tr {...row.getRowProps()} onContextMenu={() => onContextMenuHandler(row)}>
               {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                return (
+                  <td
+                    onContextMenu={() => onContextMenuHandler(row)}
+                    {...cell.getCellProps()}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                );
               })}
             </tr>
           );
