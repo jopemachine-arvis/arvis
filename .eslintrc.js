@@ -9,6 +9,9 @@ module.exports = {
     'global-require': 'off',
     'import/no-dynamic-require': 'off',
     camelcase: 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
