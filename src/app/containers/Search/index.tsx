@@ -78,7 +78,8 @@ export default function SearchWindow() {
     actionFlowManager.printScriptfilter =
       debuggingConfig.debugging_scriptfilter;
     actionFlowManager.printScriptOutput = debuggingConfig.debugging_script;
-    actionFlowManager.printWorkStack = debuggingConfig.debugging_trigger_stack;
+    actionFlowManager.printTriggerStack =
+      debuggingConfig.debugging_trigger_stack;
   };
 
   useEffect(() => {

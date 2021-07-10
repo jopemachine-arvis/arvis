@@ -380,11 +380,9 @@ export default function Workflow() {
     forceUpdate();
   };
 
-  const renderItem = (workflow: any, idx: number) => {
-    const itemBundleId = workflow.bundleId;
-    const info = workflows[itemBundleId];
-    if (!info) return <React.Fragment key={`workflowItem-${idx}`} />;
-    const { creator, name, enabled } = info;
+  const renderItem = (workflowInfo: any, idx: number) => {
+    if (!workflowInfo) return <React.Fragment key={`workflowItem-${idx}`} />;
+    const { creator, name, enabled, bundleId: itemBundleId } = workflowInfo;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
     const workflowItemStyle = selectedIdxs.has(idx)
@@ -579,8 +577,8 @@ export default function Workflow() {
         </SearchbarContainer>
 
         <WorkflowListOrderedList>
-          {_.map(workflowBundleIds, (workflow, idx) => {
-            return renderItem(workflows[workflow], idx);
+          {_.map(workflowBundleIds, (bundleId, idx) => {
+            return renderItem(workflows[bundleId], idx);
           })}
         </WorkflowListOrderedList>
       </WorkflowListView>

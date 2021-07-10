@@ -370,11 +370,9 @@ export default function Plugin() {
     forceUpdate();
   };
 
-  const renderItem = (plugin: any, idx: number) => {
-    const itemBundleId = plugin.bundleId;
-    const info = plugins[itemBundleId];
-    if (!info) return <React.Fragment key={`pluginItem-${idx}`} />;
-    const { creator, name, enabled } = info;
+  const renderItem = (pluginInfo: any, idx: number) => {
+    if (!pluginInfo) return <React.Fragment key={`pluginItem-${idx}`} />;
+    const { creator, name, enabled, bundleId: itemBundleId } = pluginInfo;
 
     const applyDisabledStyle = enabled ? {} : style.disabledStyle;
     const pluginItemStyle = selectedIdxs.has(idx)
@@ -566,8 +564,8 @@ export default function Plugin() {
           />
         </SearchbarContainer>
         <PluginListOrderedList>
-          {_.map(pluginBundleIds, (plugin, idx) => {
-            return renderItem(plugins[plugin], idx);
+          {_.map(pluginBundleIds, (bundleId, idx) => {
+            return renderItem(plugins[bundleId], idx);
           })}
         </PluginListOrderedList>
       </PluginListView>
