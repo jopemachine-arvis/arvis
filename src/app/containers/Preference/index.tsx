@@ -20,6 +20,7 @@ import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
 import { sleep } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
+import { arvisReduxStoreResetFlagPath } from '@config/path';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -100,7 +101,7 @@ export default function PreferenceWindow() {
   }) => {
     fse
       .writeJson(
-        path.resolve(Core.path.tempPath, 'arvis-redux-store-reset'),
+        arvisReduxStoreResetFlagPath,
         resetOnlyInvalid ? extractGuiConfig(store.getState()) : {}
       )
       .then(() => {

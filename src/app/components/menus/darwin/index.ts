@@ -159,7 +159,7 @@ export default (mainWindow: BrowserWindow) => {
         type: 'separator',
       },
       {
-        label: '* Setting Intialzation',
+        label: '* Setting Intialization',
         enabled: false,
       },
       {

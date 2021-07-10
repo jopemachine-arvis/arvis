@@ -14,11 +14,16 @@ export const installExtension = async ({
   installType: string;
 }): Promise<void> => {
   const [creator, name] = bundleId.split('.');
+  const env =
+    process.platform === 'darwin'
+      ? { PATH: Core.getMacPathsEnv() }
+      : process.env;
 
   try {
     switch (installType) {
       case 'npm':
-        await execa('npm', ['install', '-g', name]);
+        console.log('env', Core.getExternalEnvs());
+        await execa('npm', ['install', '-g', name], { env, windowsHide: true });
         break;
 
       case 'local': {
@@ -53,11 +58,18 @@ export const uninstallExtension = async ({
   installType: string;
 }): Promise<void> => {
   const [creator, name] = bundleId.split('.');
+  const env =
+    process.platform === 'darwin'
+      ? { PATH: Core.getMacPathsEnv() }
+      : process.env;
 
   try {
     switch (installType) {
       case 'npm':
-        await execa('npm', ['uninstall', '-g', name]);
+        await execa('npm', ['uninstall', '-g', name], {
+          env,
+          windowsHide: true,
+        });
         break;
 
       case 'local':
