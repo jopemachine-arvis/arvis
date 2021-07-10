@@ -69,15 +69,16 @@ export default function SearchWindow() {
 
   const [items, setItems] = useState<any[]>([]);
 
-  const workManager = Core.WorkManager.getInstance();
+  const actionFlowManager = Core.ActionFlowManager.getInstance();
 
   const setDebuggingOptions = () => {
-    workManager.loggerColorType = 'gui';
-    workManager.printActionType = debuggingConfig.debugging_action;
-    workManager.printPluginItems = debuggingConfig.debugging_plugin;
-    workManager.printScriptfilter = debuggingConfig.debugging_scriptfilter;
-    workManager.printScriptOutput = debuggingConfig.debugging_script;
-    workManager.printWorkStack = debuggingConfig.debugging_trigger_stack;
+    actionFlowManager.loggerColorType = 'gui';
+    actionFlowManager.printActionType = debuggingConfig.debugging_action;
+    actionFlowManager.printPluginItems = debuggingConfig.debugging_plugin;
+    actionFlowManager.printScriptfilter =
+      debuggingConfig.debugging_scriptfilter;
+    actionFlowManager.printScriptOutput = debuggingConfig.debugging_script;
+    actionFlowManager.printWorkStack = debuggingConfig.debugging_trigger_stack;
   };
 
   useEffect(() => {
@@ -113,10 +114,10 @@ export default function SearchWindow() {
   const registerWindowUpdater = useCallback(() => {
     Core.setStoreAvailabiltyChecker((available) => setSpinning(!available));
 
-    workManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
-    workManager.onItemPressHandler = onItemPressHandler;
-    workManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
-    workManager.onWorkEndHandler = onWorkEndHandler;
+    actionFlowManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
+    actionFlowManager.onItemPressHandler = onItemPressHandler;
+    actionFlowManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
+    actionFlowManager.onWorkEndHandler = onWorkEndHandler;
   }, []);
 
   const initializeCustomActions = () => {
@@ -178,8 +179,8 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { bundleId, action }: { bundleId: string; action: any }
     ) => {
-      workManager.isInitialTrigger = false;
-      workManager.handleItemPressEvent(
+      actionFlowManager.isInitialTrigger = false;
+      actionFlowManager.handleItemPressEvent(
         {
           actions: action,
           bundleId,

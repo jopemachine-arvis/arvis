@@ -1,10 +1,10 @@
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { WorkManager } from 'arvis-core/dist/core';
+import { Core } from 'arvis-core';
 import { clipboard, ipcRenderer } from 'electron';
 
 const notificationActionHandler = (action: any) => {
-  const workManager = WorkManager.getInstance();
-  if (workManager.printActionType) {
+  const actionFlowManager = Core.ActionFlowManager.getInstance();
+  if (actionFlowManager.printActionType) {
     console.log(
       '%c[Action: notification]%c ',
       'color: cyan',
@@ -20,8 +20,8 @@ const notificationActionHandler = (action: any) => {
 };
 
 const clipboardActionHandler = (action: any) => {
-  const workManager = WorkManager.getInstance();
-  if (workManager.printActionType) {
+  const actionFlowManager = Core.ActionFlowManager.getInstance();
+  if (actionFlowManager.printActionType) {
     console.log(
       '%c[Action: clipboard]%c ',
       'color: cyan',

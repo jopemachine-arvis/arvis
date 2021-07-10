@@ -35,7 +35,7 @@ const useSearchWindowControl = ({
   setIsPinned: (bool: boolean) => void;
   spinning: boolean;
 }) => {
-  const workManager = Core.WorkManager.getInstance();
+  const actionFlowManager = Core.ActionFlowManager.getInstance();
 
   const { keyData, getTargetProps } = useKey();
   const { originalRef: inputRef } = getTargetProps();
@@ -168,7 +168,7 @@ const useSearchWindowControl = ({
     if (hasRequiredArg) {
       const commandOnStackIsEmpty = firstItem;
 
-      workManager.setRunningText({
+      actionFlowManager.setRunningText({
         selectedItem: itemArr[0],
       });
 
@@ -182,8 +182,9 @@ const useSearchWindowControl = ({
   const handleNormalInput = async (updatedInput: string) => {
     let timer: NodeJS.Timeout;
 
+    console.log(Core.history.getHistory());
     try {
-      if (workManager.hasEmptyWorkStk()) {
+      if (actionFlowManager.hasEmptyTriggerStk()) {
         setBestMatch(
           (Core.history.getBestMatch(updatedInput)! as Log).inputStr!
         );
@@ -205,36 +206,36 @@ const useSearchWindowControl = ({
       };
 
       // Search workflow commands, builtInCommands
-      if (workManager.hasEmptyWorkStk()) {
+      if (actionFlowManager.hasEmptyTriggerStk()) {
         await searchCommands();
       }
       // Execute Script filter
-      else if (workManager.getTopWork().type === 'scriptFilter') {
+      else if (actionFlowManager.getTopTrigger().type === 'scriptFilter') {
         const scriptfilterShouldBeReRun =
           Core.hasRequiredArg({
-            item: workManager.getTopWork().actionTrigger,
+            item: actionFlowManager.getTopTrigger().actionTrigger,
             inputStr: updatedInput,
           }) &&
           Core.isInputMeetWithspaceCond({
-            item: workManager.getTopWork().actionTrigger,
+            item: actionFlowManager.getTopTrigger().actionTrigger,
             inputStr: updatedInput,
           }) &&
           !Core.isArgTypeNoButHaveArg({
-            item: workManager.getTopWork().actionTrigger,
+            item: actionFlowManager.getTopTrigger().actionTrigger,
             inputStr: updatedInput,
           });
 
         // Execute current command's script filter
         if (
           scriptfilterShouldBeReRun &&
-          updatedInput.startsWith(workManager.getTopWork().input)
+          updatedInput.startsWith(actionFlowManager.getTopTrigger().input)
         ) {
           Core.scriptFilterExcute(updatedInput);
         }
 
         // If the command changes, clear stack and search commands
         else {
-          workManager.clearWorkStack();
+          actionFlowManager.clearTriggerStk();
           await searchCommands();
         }
       }
@@ -281,10 +282,10 @@ const useSearchWindowControl = ({
     if (!selectedItem) return;
 
     let item;
-    if (workManager.hasEmptyWorkStk()) {
+    if (actionFlowManager.hasEmptyTriggerStk()) {
       item = selectedItem;
     } else {
-      item = workManager.getTopWork().actionTrigger;
+      item = actionFlowManager.getTopTrigger().actionTrigger;
     }
 
     const hasRequiredArg = item
@@ -302,14 +303,18 @@ const useSearchWindowControl = ({
 
         setInputStr({ str: newInputStr, needItemsUpdate: false });
 
-        workManager.setRunningText({
+        actionFlowManager.setRunningText({
           selectedItem: items[selectedItemIdx],
         });
 
         Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
       } else {
         setIsPinned(false);
-        workManager.handleItemPressEvent(selectedItem, inputStr, modifiers);
+        actionFlowManager.handleItemPressEvent(
+          selectedItem,
+          inputStr,
+          modifiers
+        );
       }
       setBestMatch('');
     } else {
@@ -384,7 +389,7 @@ const useSearchWindowControl = ({
     alreadyClearedRef.current = true;
     setItems([]);
     clearIndexInfo();
-    workManager.clearWorkStack();
+    actionFlowManager.clearTriggerStk();
     setShouldBeHided(true);
     setBestMatch('');
   };
@@ -441,7 +446,7 @@ const useSearchWindowControl = ({
       handleNormalInput(txt);
     }
 
-    workManager.clearModifierOnScriptFilterItem();
+    actionFlowManager.clearModifierOnScriptFilterItem();
   };
 
   /**
@@ -449,10 +454,10 @@ const useSearchWindowControl = ({
    */
   const autoCompleteHandler = (item: any) => {
     if (!item) return;
-    if (workManager.hasEmptyWorkStk() && item.command) {
+    if (actionFlowManager.hasEmptyTriggerStk() && item.command) {
       setInputStr({ str: item.command, needItemsUpdate: true });
     } else if (
-      workManager.getTopWork().type === 'scriptFilter' &&
+      actionFlowManager.getTopTrigger().type === 'scriptFilter' &&
       item.autocomplete
     ) {
       setInputStr({ str: item.autocomplete, needItemsUpdate: true });
@@ -518,7 +523,7 @@ const useSearchWindowControl = ({
    */
   const bestMatchKeyAvailable = () => {
     return (
-      workManager.hasEmptyWorkStk() &&
+      actionFlowManager.hasEmptyTriggerStk() &&
       bestMatch !== '' &&
       (inputRef.current as any).selectionStart === inputStr.length
     );
@@ -567,7 +572,7 @@ const useSearchWindowControl = ({
     } else if (keyData.isArrowUp) {
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
-      workManager.popWork();
+      actionFlowManager.popTrigger();
     } else if (keyData.isTab) {
       autoCompleteHandler(items[selectedItemIdx]);
     } else if (keyData.isWithShift && keyData.isSpace) {
@@ -586,7 +591,10 @@ const useSearchWindowControl = ({
 
     // on Macos, option key not detected!! -> maybe this logic need to be migrated to iohook
     if (modifiers.alt || modifiers.cmd || modifiers.ctrl || modifiers.shift) {
-      workManager.setModifierOnScriptFilterItem(selectedItemIdx, modifiers);
+      actionFlowManager.setModifierOnScriptFilterItem(
+        selectedItemIdx,
+        modifiers
+      );
     }
   };
 

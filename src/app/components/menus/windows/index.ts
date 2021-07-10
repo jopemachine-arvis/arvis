@@ -140,6 +140,12 @@ export default (mainWindow: BrowserWindow) => [
         },
       },
       {
+        label: 'Initialize History',
+        click() {
+          Core.history.initHistory();
+        },
+      },
+      {
         type: 'separator',
       },
       {
