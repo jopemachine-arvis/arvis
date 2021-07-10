@@ -11,3 +11,10 @@ export const OuterContainer = styled.div`
   justify-content: center;
   user-select: none;
 `;
+
+export const FormDescription = styled.div`
+  font-size: 12px;
+  color: #777777;
+  text-align: left;
+  margin-top: 10px;
+`;

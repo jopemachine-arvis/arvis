@@ -6,7 +6,7 @@ import StyledInput from '@components/styledInput';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
 import { StateType } from '@redux/reducers/types';
 import { onNumberChangeHandler } from '@utils/index';
-import { OuterContainer } from './components';
+import { FormDescription, OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
 export default function AdvancedHistory() {
@@ -36,6 +36,12 @@ export default function AdvancedHistory() {
               })
             }
           />
+          <FormDescription>
+            If async plugin continues work after this time,
+            <br />
+            async plugin will be quited forcibly to avoid slowing down
+            performance.
+          </FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>

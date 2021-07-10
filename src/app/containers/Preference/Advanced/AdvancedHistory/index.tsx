@@ -7,7 +7,7 @@ import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfi
 import { StateType } from '@redux/reducers/types';
 import { onNumberChangeHandler } from '@utils/index';
 import { Core } from 'arvis-core';
-import { OuterContainer } from './components';
+import { FormDescription, OuterContainer } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
 export default function AdvancedHistory() {
@@ -41,6 +41,11 @@ export default function AdvancedHistory() {
               })
             }
           />
+          <FormDescription>
+            Arvis store action execution log, input log.
+            <br />
+            Set this logs max count to store.
+          </FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>

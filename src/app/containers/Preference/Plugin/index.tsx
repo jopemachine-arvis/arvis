@@ -13,11 +13,9 @@ import {
   AiOutlineAppstoreAdd,
   AiOutlineBranches,
   AiOutlineDelete,
-  AiOutlineExport,
 } from 'react-icons/ai';
 import path from 'path';
 import fse from 'fs-extra';
-import { homedir } from 'os';
 import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
