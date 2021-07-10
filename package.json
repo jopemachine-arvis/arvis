@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -31,6 +31,11 @@
     "macos",
     "linux",
     "electron"
+  ],
+  "os": [
+    "darwin",
+    "win32",
+    "linux"
   ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -140,10 +145,12 @@
   },
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/jopemachine/arvis"
+    "url": "https://github.com/jopemachine/arvis",
+    "email": "jopemachine@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/jopemachine/arvis/issues"
+    "url": "https://github.com/jopemachine/arvis/issues",
+    "email": "jopemachine@gmail.com"
   },
   "jest": {
     "testURL": "http://localhost/",

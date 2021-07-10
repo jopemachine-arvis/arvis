@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Arvis (alpha)",
   "main": "./main.prod.js",
   "homepage": "https://github.com/jopemachine/arvis#readme",
@@ -17,13 +17,20 @@
   "maintainers": [
     "jopemachine"
   ],
+  "os": [
+    "darwin",
+    "win32",
+    "linux"
+  ],
   "readme": "https://github.com/jopemachine/arvis#README.md",
   "contributors": [],
   "bugs": {
-    "url": "https://github.com/jopemachine/arvis/issues"
+    "url": "https://github.com/jopemachine/arvis/issues",
+    "email": "jopemachine@gmail.com"
   },
   "repository": {
-    "url": "https://github.com/jopemachine/arvis"
+    "url": "https://github.com/jopemachine/arvis",
+    "email": "jopemachine@gmail.com"
   },
   "keywords": [
     "arvis",
