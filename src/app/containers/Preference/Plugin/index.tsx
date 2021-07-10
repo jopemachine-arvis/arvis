@@ -605,6 +605,7 @@ export default function Plugin() {
                   src={webviewUrl}
                   allowFullScreen={false}
                   style={{
+                    marginTop: 16,
                     width: '90%',
                     height: '100%',
                   }}

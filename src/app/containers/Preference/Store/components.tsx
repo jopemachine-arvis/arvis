@@ -123,7 +123,7 @@ export const ExtensionListOrderedList = styled.div`
   padding-left: 30px;
   padding-top: 20px;
   overflow: auto;
-  height: 75%;
+  height: 73%;
   min-width: 380px;
   max-width: 380px;
 `;

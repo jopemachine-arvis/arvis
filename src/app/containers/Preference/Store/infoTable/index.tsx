@@ -239,7 +239,7 @@ export default function ExtensionInfoTable(props: IProps) {
 
       {info && (
         <Button
-          style={{ ...style.installButton, marginTop: 50 }}
+          style={{ ...style.installButton, marginTop: 30 }}
           size="md"
           onClick={installHandler}
         >

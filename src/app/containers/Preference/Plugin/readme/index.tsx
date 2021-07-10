@@ -8,20 +8,28 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 
 type IProps = {
   readme: any;
 };
 
 const OuterContainer = styled.div`
+  margin-top: 8px;
   background-color: #202228;
   position: absolute;
   border-radius: 10px;
-  padding: 15px;
   width: 50%;
-  height: 75%;
+  height: 70%;
   overflow-y: auto;
+
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+    color: #fff !important;
+  }
 `;
 
 export default function READMETable(props: IProps) {
@@ -29,7 +37,7 @@ export default function READMETable(props: IProps) {
 
   return (
     <OuterContainer>
-      <ReactMarkdown plugins={[gfm]}>{readme}</ReactMarkdown>
+      <ReactMarkdown className="markdown-body">{readme}</ReactMarkdown>
     </OuterContainer>
   );
 }

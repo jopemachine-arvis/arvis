@@ -311,6 +311,7 @@ export default function Store(props: IProps) {
                   src={webviewUrl}
                   allowFullScreen={false}
                   style={{
+                    marginTop: 16,
                     width: '90%',
                     height: '100%',
                   }}
