@@ -22,7 +22,6 @@ export const installExtension = async ({
   try {
     switch (installType) {
       case 'npm':
-        console.log('env', Core.getExternalEnvs());
         await execa('npm', ['install', '-g', name], { env, windowsHide: true });
         break;
 

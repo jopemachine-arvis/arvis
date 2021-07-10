@@ -3,6 +3,10 @@ import { Core } from 'arvis-core';
 import open from 'open';
 import path from 'path';
 import { debugInfo } from 'electron-util';
+import {
+  arvisReduxStoreResetFlagPath,
+  arvisRenewExtensionFlagFilePath,
+} from '../../../config/path';
 import { electronStore } from '../../../store/electronStorage';
 import { WindowManager } from '../../../windows/windowManager';
 import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
@@ -227,6 +231,18 @@ export default (mainWindow: BrowserWindow) => [
         label: 'Open arvis-gui-config file path',
         click() {
           open(path.dirname(electronStore.path));
+        },
+      },
+      {
+        label: 'Open arvisReduxStoreResetFlagPath (tempPath)',
+        click() {
+          open(path.dirname(arvisReduxStoreResetFlagPath));
+        },
+      },
+      {
+        label: 'Open arvisRenewExtensionFlagFilePath',
+        click() {
+          open(path.dirname(arvisRenewExtensionFlagFilePath));
         },
       },
     ],
