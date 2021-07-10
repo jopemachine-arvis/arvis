@@ -147,10 +147,6 @@ export default function Workflow() {
    * @summary
    */
   const ipcCallbackTbl = {
-    saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
-      Core.exportWorkflow(workflowBundleId, file.filePath);
-    },
-
     openWorkflowInstallFileDialogRet: (
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
@@ -231,7 +227,6 @@ export default function Workflow() {
   };
 
   useEffect(() => {
-    ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
     ipcRenderer.on(
       IPCMainEnum.openWorkflowInstallFileDialogRet,
       ipcCallbackTbl.openWorkflowInstallFileDialogRet
@@ -246,7 +241,6 @@ export default function Workflow() {
     );
 
     return () => {
-      ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
       ipcRenderer.off(
         IPCMainEnum.openWorkflowInstallFileDialogRet,
         ipcCallbackTbl.openWorkflowInstallFileDialogRet
@@ -422,20 +416,6 @@ export default function Workflow() {
 
   const requestAddNewWorkflow = () => {
     ipcRenderer.send(IPCRendererEnum.openWorkflowInstallFileDialog);
-  };
-
-  const exportWorkflow = () => {
-    if (selectedWorkflowIdx === -1) return;
-    const defaultPath = path.resolve(
-      homedir(),
-      'Desktop',
-      `${workflowBundleId}.arvisworkflow`
-    );
-
-    ipcRenderer.send(IPCRendererEnum.saveFile, {
-      title: 'Select path to save',
-      defaultPath,
-    });
   };
 
   const deleteSelectedWorkflow = (
@@ -666,11 +646,6 @@ export default function Workflow() {
           className="workflow-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewWorkflow()}
-        />
-        <AiOutlineExport
-          className="workflow-page-buttons"
-          style={style.bottomFixedBarIconStyle}
-          onClick={() => exportWorkflow()}
         />
         <AiOutlineDelete
           className="workflow-page-buttons"

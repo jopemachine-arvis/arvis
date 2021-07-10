@@ -142,10 +142,6 @@ export default function Plugin() {
    * @summary
    */
   const ipcCallbackTbl = {
-    saveFileRet: (e: Electron.IpcRendererEvent, { file }: { file: any }) => {
-      Core.exportPlugin(pluginBundleId, file.filePath);
-    },
-
     openPluginInstallFileDialogRet: (
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
@@ -226,7 +222,6 @@ export default function Plugin() {
   };
 
   useEffect(() => {
-    ipcRenderer.on(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
     ipcRenderer.on(
       IPCMainEnum.openPluginInstallFileDialogRet,
       ipcCallbackTbl.openPluginInstallFileDialogRet
@@ -241,7 +236,6 @@ export default function Plugin() {
     );
 
     return () => {
-      ipcRenderer.off(IPCMainEnum.saveFileRet, ipcCallbackTbl.saveFileRet);
       ipcRenderer.off(
         IPCMainEnum.openPluginInstallFileDialogRet,
         ipcCallbackTbl.openPluginInstallFileDialogRet
@@ -412,21 +406,6 @@ export default function Plugin() {
 
   const requestAddNewPlugin = () => {
     ipcRenderer.send(IPCRendererEnum.openPluginInstallFileDialog);
-  };
-
-  const exportPlugin = () => {
-    if (selectedPluginIdx === -1) return;
-
-    const defaultPath = path.resolve(
-      homedir(),
-      'Desktop',
-      `${pluginBundleId}.arvisplugin`
-    );
-
-    ipcRenderer.send(IPCRendererEnum.saveFile, {
-      title: 'Select path to save',
-      defaultPath,
-    });
   };
 
   const deleteSelectedPlugin = (_pluginBundleIds: any, idxToRemove: number) => {
@@ -642,11 +621,6 @@ export default function Plugin() {
           className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewPlugin()}
-        />
-        <AiOutlineExport
-          className="plugin-page-buttons"
-          style={style.bottomFixedBarIconStyle}
-          onClick={() => exportPlugin()}
         />
         <AiOutlineDelete
           className="plugin-page-buttons"
