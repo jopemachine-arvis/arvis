@@ -182,7 +182,6 @@ const useSearchWindowControl = ({
   const handleNormalInput = async (updatedInput: string) => {
     let timer: NodeJS.Timeout;
 
-    console.log(Core.history.getHistory());
     try {
       if (actionFlowManager.hasEmptyTriggerStk()) {
         setBestMatch(
