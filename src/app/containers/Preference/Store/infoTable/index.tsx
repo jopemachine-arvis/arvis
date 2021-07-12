@@ -12,6 +12,7 @@ import { StyledInput } from '@components/index';
 import './index.global.css';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { Core } from 'arvis-core';
+import semver from 'semver';
 import * as style from './style';
 
 type IProps = {
@@ -138,7 +139,7 @@ export default function ExtensionInfoTable(props: IProps) {
     info &&
     installed &&
     extensionName === info.name &&
-    currentVersion !== info.latest
+    semver.gt(info.latest, currentVersion)
   ) {
     installBtnTxt = 'Update';
   } else {
