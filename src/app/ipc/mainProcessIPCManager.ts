@@ -5,8 +5,8 @@ import { IPCRendererEnum } from './ipcEventEnum';
 
 import { openExtensionInstallerFile } from './mainProcessEventHandler/openExtensionInstallerFile';
 import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
-import { renewPlugin } from './mainProcessEventHandler/renewPlugin';
-import { renewWorkflow } from './mainProcessEventHandler/renewWorkflow';
+import { reloadPlugin } from './mainProcessEventHandler/reloadPlugin';
+import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
@@ -63,8 +63,8 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
-  ipcMain.on(IPCRendererEnum.renewPlugin, renewPlugin);
-  ipcMain.on(IPCRendererEnum.renewWorkflow, renewWorkflow);
+  ipcMain.on(IPCRendererEnum.reloadPlugin, reloadPlugin);
+  ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);

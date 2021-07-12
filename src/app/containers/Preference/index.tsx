@@ -9,7 +9,6 @@ import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Core } from 'arvis-core';
 import fse from 'fs-extra';
-import path from 'path';
 import _ from 'lodash';
 import { searchMostTotalDownload } from 'arvis-store';
 import { StateType } from '@redux/reducers/types';
@@ -73,7 +72,7 @@ export default function PreferenceWindow() {
   );
 
   const loadWorkflowsInfo = useCallback(() => {
-    return Core.renewWorkflows().catch((err) => {
+    return Core.reloadWorkflows().catch((err) => {
       ipcRenderer.send(IPCRendererEnum.showNotification, {
         title: err.name,
         body: err.message,
@@ -83,7 +82,7 @@ export default function PreferenceWindow() {
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
-    return Core.renewPlugins({
+    return Core.reloadPlugins({
       initializePluginWorkspace: false,
     }).catch((err) => {
       ipcRenderer.send(IPCRendererEnum.showNotification, {
@@ -115,15 +114,15 @@ export default function PreferenceWindow() {
    * @summary Used to receive dispatched action from different window
    */
   const ipcCallbackTbl = {
-    renewWorkflow: (
+    reloadWorkflow: (
       e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
-      Core.renewWorkflows(bundleId).catch(console.error);
+      Core.reloadWorkflows(bundleId).catch(console.error);
     },
 
-    renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
-      Core.renewPlugins({
+    reloadPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
+      Core.reloadPlugins({
         initializePluginWorkspace: false,
         bundleId,
       }).catch(console.error);
@@ -248,8 +247,8 @@ export default function PreferenceWindow() {
     });
 
     ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
-    ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
-    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
+    ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
     ipcRenderer.on(
       IPCMainEnum.resetReduxStore,
       ipcCallbackTbl.resetReduxStoreCallback
@@ -269,8 +268,11 @@ export default function PreferenceWindow() {
 
     return () => {
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
-      ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
-      ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+      ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
+      ipcRenderer.off(
+        IPCMainEnum.reloadWorkflow,
+        ipcCallbackTbl.reloadWorkflow
+      );
       ipcRenderer.off(
         IPCMainEnum.resetReduxStore,
         ipcCallbackTbl.resetReduxStoreCallback

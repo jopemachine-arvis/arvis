@@ -132,7 +132,7 @@ export default function Workflow() {
             variableTblRef.current.get()
           ).catch(console.error);
 
-          ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+          ipcRenderer.send(IPCRendererEnum.reloadWorkflow, {
             bundleId: workflowBundleIdRef.current,
           });
           return null;
@@ -157,7 +157,7 @@ export default function Workflow() {
 
         Core.installWorkflow(arvisWorkflowFilePath)
           .then(() => {
-            ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+            ipcRenderer.send(IPCRendererEnum.reloadWorkflow, {
               destWindow: 'searchWindow',
             });
 
@@ -211,7 +211,7 @@ export default function Workflow() {
 
       Promise.all(works)
         .then(async () => {
-          ipcRenderer.send(IPCRendererEnum.renewWorkflow);
+          ipcRenderer.send(IPCRendererEnum.reloadWorkflow);
           return null;
         })
         .catch((err) => {
@@ -429,7 +429,7 @@ export default function Workflow() {
       bundleId: targetBundleId,
     })
       .then(async () => {
-        ipcRenderer.send(IPCRendererEnum.renewWorkflow);
+        ipcRenderer.send(IPCRendererEnum.reloadWorkflow);
 
         if (idxToRemove !== 0) {
           setSelectedWorkflowIdx(-1);

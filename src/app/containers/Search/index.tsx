@@ -156,11 +156,11 @@ export default function SearchWindow() {
       setInputStr({ str, needItemsUpdate: true });
     },
 
-    renewWorkflow: (
+    reloadWorkflow: (
       e: IpcRendererEvent,
       { bundleId }: { bundleId: string }
     ) => {
-      Core.renewWorkflows(bundleId)
+      Core.reloadWorkflows(bundleId)
         .then(() => {
           return null;
         })
@@ -170,8 +170,8 @@ export default function SearchWindow() {
         });
     },
 
-    renewPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
-      Core.renewPlugins({ initializePluginWorkspace: true, bundleId }).catch(
+    reloadPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
+      Core.reloadPlugins({ initializePluginWorkspace: true, bundleId }).catch(
         console.error
       );
     },
@@ -212,8 +212,8 @@ export default function SearchWindow() {
   const initilizeSearchWindowIPCHandler = useCallback(() => {
     ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-    ipcRenderer.on(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
-    ipcRenderer.on(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
+    ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
     ipcRenderer.on(IPCMainEnum.pinSearchWindow, ipcCallbackTbl.pinSearchWindow);
     ipcRenderer.on(
       IPCMainEnum.getElectronEnvsRet,
@@ -232,8 +232,8 @@ export default function SearchWindow() {
   const unsubscribe = useCallback(() => {
     ipcRenderer.off(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-    ipcRenderer.off(IPCMainEnum.renewPlugin, ipcCallbackTbl.renewPlugin);
-    ipcRenderer.off(IPCMainEnum.renewWorkflow, ipcCallbackTbl.renewWorkflow);
+    ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
+    ipcRenderer.off(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
     ipcRenderer.off(
       IPCMainEnum.getElectronEnvsRet,
       ipcCallbackTbl.getElectronEnvsRet
@@ -253,7 +253,7 @@ export default function SearchWindow() {
   }, []);
 
   const loadWorkflowsInfo = useCallback(() => {
-    return Core.renewWorkflows()
+    return Core.reloadWorkflows()
       .then(() => {
         return null;
       })
@@ -264,7 +264,7 @@ export default function SearchWindow() {
   }, []);
 
   const loadPluginsInfo = useCallback(() => {
-    return Core.renewPlugins({ initializePluginWorkspace: true }).catch(
+    return Core.reloadPlugins({ initializePluginWorkspace: true }).catch(
       console.error
     );
   }, []);

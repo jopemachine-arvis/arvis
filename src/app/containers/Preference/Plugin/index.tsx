@@ -127,7 +127,7 @@ export default function Plugin() {
             variableTblRef.current.get()
           ).catch(console.error);
 
-          ipcRenderer.send(IPCRendererEnum.renewPlugin, {
+          ipcRenderer.send(IPCRendererEnum.reloadPlugin, {
             bundleId: pluginBundleIdRef.current,
           });
           return null;
@@ -152,7 +152,7 @@ export default function Plugin() {
 
         Core.installPlugin(arvisPluginFilePath)
           .then(() => {
-            ipcRenderer.send(IPCRendererEnum.renewPlugin, {
+            ipcRenderer.send(IPCRendererEnum.reloadPlugin, {
               destWindow: 'searchWindow',
             });
 
@@ -206,7 +206,7 @@ export default function Plugin() {
 
       Promise.all(works)
         .then(() => {
-          ipcRenderer.send(IPCRendererEnum.renewPlugin);
+          ipcRenderer.send(IPCRendererEnum.reloadPlugin);
           return null;
         })
         .catch((err) => {
@@ -416,7 +416,7 @@ export default function Plugin() {
       bundleId: targetBundleId,
     })
       .then(async () => {
-        ipcRenderer.send(IPCRendererEnum.renewPlugin);
+        ipcRenderer.send(IPCRendererEnum.reloadPlugin);
 
         if (idxToRemove !== 0) {
           setSelectedPluginIdx(-1);

@@ -4,6 +4,11 @@ import path from 'path';
 import chalk from 'chalk';
 import fse from 'fs-extra';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
+import {
+  workflowWatchPaths,
+  pluginWatchPaths,
+  arvisRenewExtensionFlagFilePath,
+} from '../config/path';
 import { sleep } from '../utils';
 import { WindowManager } from '../windows';
 
@@ -22,31 +27,19 @@ const watchOpts = {
   // },
 };
 
-const renewFlagFilePath = `${Core.path.installedDataPath}${path.sep}arvis-extension-renew`;
-
-const workflowWatchPaths = [
-  `${Core.path.workflowInstallPath}${path.sep}*${path.sep}arvis-workflow.json`,
-];
-
-// Detects only changes to plugin root folder files to save system resources
-const pluginWatchPaths = [
-  `${Core.path.pluginInstallPath}${path.sep}*${path.sep}*.js`,
-  `${Core.path.pluginInstallPath}${path.sep}*${path.sep}arvis-plugin.json`,
-];
-
 /**
  * @param  {string} bundleId?
  * @summary Update store of each singletons for each renderer processes
  */
-const requestRenewWorkflows = (bundleId?: string) => {
+const requestReloadWorkflows = (bundleId?: string) => {
   const windowManager = WindowManager.getInstance();
   windowManager
     .getSearchWindow()
-    .webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
+    .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
 
   windowManager
     .getPreferenceWindow()
-    .webContents.send(IPCMainEnum.renewWorkflow, {
+    .webContents.send(IPCMainEnum.reloadWorkflow, {
       bundleId,
     });
 };
@@ -55,15 +48,15 @@ const requestRenewWorkflows = (bundleId?: string) => {
  * @param  {string} bundleId?
  * @summary Update store of each singletons for each renderer processes
  */
-const requestRenewPlugins = (bundleId?: string) => {
+const requestReloadPlugins = (bundleId?: string) => {
   const windowManager = WindowManager.getInstance();
 
   windowManager
     .getSearchWindow()
-    .webContents.send(IPCMainEnum.renewPlugin, { bundleId });
+    .webContents.send(IPCMainEnum.reloadPlugin, { bundleId });
   windowManager
     .getPreferenceWindow()
-    .webContents.send(IPCMainEnum.renewPlugin, {
+    .webContents.send(IPCMainEnum.reloadPlugin, {
       bundleId,
     });
 };
@@ -75,15 +68,20 @@ const getBundleIdFromFilePath = (changedFilePath: string) => {
   return changedFilePath.split(path.sep)[0];
 };
 
-const renewFlagAddHandler = async (filePath: string) => {
+const reloadFlagHandler = async (filePath: string) => {
   if (filePath.endsWith('arvis-extension-renew')) {
     console.log(
-      chalk.greenBright(`"${renewFlagFilePath}" detected. Reload extensions..`)
+      chalk.greenBright(
+        `"${arvisRenewExtensionFlagFilePath}" detected. Reload extensions..`
+      )
     );
 
-    await fse.remove(renewFlagFilePath);
-    requestRenewWorkflows();
-    requestRenewPlugins();
+    await fse.remove(arvisRenewExtensionFlagFilePath);
+
+    setTimeout(() => {
+      requestReloadWorkflows();
+      requestReloadPlugins();
+    }, 1000);
   }
 };
 
@@ -93,7 +91,7 @@ const workflowChangeHandler = async (filePath: string) => {
       chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
     );
     await sleep(1000);
-    requestRenewWorkflows(getBundleIdFromFilePath(filePath));
+    requestReloadWorkflows(getBundleIdFromFilePath(filePath));
   } else {
     console.log(
       chalk.magenta(
@@ -109,7 +107,7 @@ const pluginChangeHandler = async (filePath: string) => {
       chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
     );
     await sleep(1000);
-    requestRenewPlugins(getBundleIdFromFilePath(filePath));
+    requestReloadPlugins(getBundleIdFromFilePath(filePath));
   } else {
     console.log(
       chalk.magenta(
@@ -150,12 +148,12 @@ export const startFileWatcher = () => {
     .on('add', pluginChangeHandler);
 
   otherFilesWatcher = chokidar
-    .watch([renewFlagFilePath], {
+    .watch([arvisRenewExtensionFlagFilePath], {
       cwd: Core.path.installedDataPath,
       ...watchOpts,
       ignoreInitial: false,
     })
-    .on('add', renewFlagAddHandler);
+    .on('add', reloadFlagHandler);
 };
 
 /**

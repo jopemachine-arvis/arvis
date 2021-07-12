@@ -53,10 +53,10 @@ class WorkflowTriggerTableItemContextMenu extends Menu {
             .then(() => {
               WindowManager.getInstance()
                 .getPreferenceWindow()
-                .webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
+                .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
               WindowManager.getInstance()
                 .getSearchWindow()
-                .webContents.send(IPCMainEnum.renewWorkflow, { bundleId });
+                .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
               return null;
             })
             .catch(console.error);

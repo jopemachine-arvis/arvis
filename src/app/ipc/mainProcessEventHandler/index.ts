@@ -24,7 +24,7 @@ import { setSearchWindowWidth } from './windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './windowManage/showLargeTextWindow';
 import { showQuicklookWindow } from './windowManage/showQuicklookWindow';
 
-import { renewWorkflow } from './renewWorkflow';
+import { reloadWorkflow } from './reloadWorkflow';
 import { showNotification } from './showNotification';
 import { triggerDoubleModifierKey } from './triggerDoubleModifierKey';
 import { triggerKeyDownEvent } from './triggerKeyDownEvent';
@@ -44,7 +44,7 @@ export {
   popupPluginItemMenu,
   popupSearchbarItemMenu,
   popupWorkflowItemMenu,
-  renewWorkflow,
+  reloadWorkflow,
   resizeSearchWindowHeight,
   saveFile,
   setAutoLaunch,

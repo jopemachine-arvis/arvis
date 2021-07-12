@@ -2,7 +2,7 @@ import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { Core } from 'arvis-core';
 import { clipboard, ipcRenderer } from 'electron';
 
-const notificationActionHandler = (action: NotiAction) => {
+const notificationActionHandler = (action: any) => {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
   if (actionFlowManager.printActionType) {
     console.log(
@@ -19,7 +19,7 @@ const notificationActionHandler = (action: NotiAction) => {
   });
 };
 
-const clipboardActionHandler = (action: ClipboardAction) => {
+const clipboardActionHandler = (action: any) => {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
   if (actionFlowManager.printActionType) {
     console.log(

@@ -6,20 +6,20 @@ import { IPCMainEnum } from '../ipcEventEnum';
  * @param  {string} destWindow?
  * @param  {string} bundleId?
  */
-export const renewWorkflow = (
+export const reloadPlugin = (
   e: IpcMainEvent,
   arg: { destWindow?: string; bundleId?: string } | undefined
 ) => {
   if (arg && arg.destWindow) {
-    getDestWindow(arg.destWindow).webContents.send(IPCMainEnum.renewWorkflow, {
+    getDestWindow(arg.destWindow).webContents.send(IPCMainEnum.reloadPlugin, {
       bundleId: arg.bundleId,
     });
   } else {
-    getDestWindow('searchWindow').webContents.send(IPCMainEnum.renewWorkflow, {
+    getDestWindow('searchWindow').webContents.send(IPCMainEnum.reloadPlugin, {
       bundleId: arg ? arg.bundleId : undefined,
     });
     getDestWindow('preferenceWindow').webContents.send(
-      IPCMainEnum.renewWorkflow,
+      IPCMainEnum.reloadPlugin,
       {
         bundleId: arg ? arg.bundleId : undefined,
       }

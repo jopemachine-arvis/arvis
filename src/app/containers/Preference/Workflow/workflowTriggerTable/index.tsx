@@ -224,11 +224,11 @@ export function WorkflowTriggerTable(props: any) {
     // Because followSymlink is false now, below logic is needed for now.
     Core.updateWorkflowTrigger(bundleId, triggerPath, value)
       .then(() => {
-        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+        ipcRenderer.send(IPCRendererEnum.reloadWorkflow, {
           destWindow: 'searchWindow',
           bundleId,
         });
-        ipcRenderer.send(IPCRendererEnum.renewWorkflow, {
+        ipcRenderer.send(IPCRendererEnum.reloadWorkflow, {
           destWindow: 'preferenceWindow',
           bundleId,
         });
