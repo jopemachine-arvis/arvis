@@ -2855,10 +2855,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.7.0.tgz#5156cb68a85d085dbde5dcdf440d21d15c1bee73"
-  integrity sha512-F0as8B3L9llz+89vJkypKrEtKDGNXDX8n/FgTbFedKoLgn3pwMRT5uzEslaAkY1jqiYIEWIeulGLIiKIu+ZHfA==
+arvis-core@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.7.1.tgz#09f8c0e3c27cb7ddc8c0b7182f009c1b2afaaadf"
+  integrity sha512-y1chmx+vNCQLQrolHmf66UlZBgyAsju+AukDf+0XbC8q0hUu4Bbd6MksioFmSJhZB+7tJ97l10GpnTvAl85Ryg==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
@@ -2887,10 +2887,10 @@ arvis-core@^0.7.0:
     uuid "^8.3.2"
     xml-js "^1.6.11"
 
-arvis-extension-validator@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.2.1.tgz#d76ea7ffe260858b7d122d3c0da628f90957851c"
-  integrity sha512-nx1XfCGuztJI0tp5Z5Ugw64zRd6gYyp1KEGiob+BiBBed8bNHQ4fVxD9F55hQmD6HrbQq6qOXXmjcn0l/hLhyQ==
+arvis-extension-validator@^0.2.1, arvis-extension-validator@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.2.2.tgz#3d437adc4ef9c375f1eb927f477f60bc17e53003"
+  integrity sha512-acT7Dca2TR/bRF194QbQATi4c1NcxUhokuq0ah9JSxTeddZuccU9TW+JR48xXyNaISc736upi4eIaZd1njnNRA==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"
@@ -2898,15 +2898,15 @@ arvis-extension-validator@^0.2.1:
     jsonschema "^1.4.0"
     meow "^5.0.0"
 
-arvis-store@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.2.6.tgz#589240572f6a1007e1df144203e2ff49e495408c"
-  integrity sha512-fQvHqcZiQlINv88s1UOiO0UtAM1vU3jTgZSmwUYtwa0P8KlMDh2a2+8r0vIqrOsdqr+LMDxcSxRPpRw/4SJbHg==
+arvis-store@^0.2.8:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.2.9.tgz#39992b50728c422a643743077d2d861d06694496"
+  integrity sha512-gl+etvwCyod4LyFAwWsGlr3i4dpubN75Ymv/cUQAJNjkz1faTis1wiaji8aRAFeyyDrVdnCWkDSiYRW3aQOONQ==
   dependencies:
     "@octokit/core" "^3.5.1"
     "@octokit/rest" "^18.6.6"
     alpha-sort "^4.0.0"
-    arvis-extension-validator "^0.2.1"
+    arvis-extension-validator "^0.2.2"
     chalk "^4.1.1"
     clean-stack "^2.2.0"
     conf "^10.0.1"
@@ -2918,6 +2918,7 @@ arvis-store@^0.2.6:
     meow "^9.0.0"
     octokit-commit-multiple-files "^3.2.1"
     octokit-plugin-create-pull-request "^3.9.3"
+    open "^8.2.1"
     ora "^5.4.1"
     parse-json "^5.2.0"
     shorthash2 "^1.0.3"
@@ -9856,16 +9857,7 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-open@^8.0.4:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/open/-/open-8.2.0.tgz#d6a4788b00009a9d60df471ecb89842a15fdcfc1"
-  integrity sha512-O8uInONB4asyY3qUcEytpgwxQG3O0fJ/hlssoUHsBboOIRVZzT6Wq+Rwj5nffbeUhOdMjpXeISpDDzHCMRDuOQ==
-  dependencies:
-    define-lazy-prop "^2.0.0"
-    is-docker "^2.1.1"
-    is-wsl "^2.2.0"
-
-open@^8.2.1:
+open@^8.0.4, open@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/open/-/open-8.2.1.tgz#82de42da0ccbf429bc12d099dad2e0975e14e8af"
   integrity sha512-rXILpcQlkF/QuFez2BJDf3GsqpjGKbkUUToAIGo9A0Q6ZkoSGogZJulrUdwRkrAsoQvoZsrjCYt8+zblOk7JQQ==

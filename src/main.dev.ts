@@ -10,6 +10,7 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
+import fse from 'fs-extra';
 import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
@@ -24,6 +25,7 @@ import {
   initIPCHandlers,
 } from './app/ipc/mainProcessIPCManager';
 import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
+import { arvisRenewExtensionFlagFilePath } from './app/config/path';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
@@ -37,6 +39,7 @@ if (!gotTheLock) {
 
 ElectronStore.initRenderer();
 Core.path.initializePath();
+fse.remove(arvisRenewExtensionFlagFilePath).catch(null);
 
 reduxStoreResetHandler();
 
