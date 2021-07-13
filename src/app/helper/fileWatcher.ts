@@ -86,8 +86,8 @@ const reloadFlagHandler = async (filePath: string) => {
         setTimeout(() => requestReloadPlugins(flagInfo.targets), 1000);
       } else {
         setTimeout(() => {
-          requestReloadWorkflows(flagInfo.targets);
-          requestReloadPlugins(flagInfo.targets);
+          requestReloadWorkflows();
+          requestReloadPlugins();
         }, 1000);
       }
     } catch (err) {

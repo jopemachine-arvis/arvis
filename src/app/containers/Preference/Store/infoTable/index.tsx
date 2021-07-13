@@ -138,6 +138,7 @@ export default function ExtensionInfoTable(props: IProps) {
   } else if (
     info &&
     installed &&
+    info.latest &&
     currentVersion &&
     extensionName === info.name &&
     semver.gt(info.latest, currentVersion)
