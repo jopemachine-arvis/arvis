@@ -76,30 +76,28 @@ const reloadFlagHandler = async (filePath: string) => {
       )
     );
 
-    let targets: string[] | undefined;
-
     try {
       const flagInfo = await fse.readJSON(arvisRenewExtensionFlagFilePath);
       if (!flagInfo.targets || !flagInfo.type) throw new Error();
 
-      targets = flagInfo.targets;
-
       if (flagInfo.type === 'workflow') {
-        setTimeout(() => requestReloadWorkflows(targets), 1000);
+        setTimeout(() => requestReloadWorkflows(flagInfo.targets), 1000);
+      } else if (flagInfo.type === 'plugin') {
+        setTimeout(() => requestReloadPlugins(flagInfo.targets), 1000);
       } else {
-        setTimeout(() => requestReloadPlugins(targets), 1000);
+        setTimeout(() => {
+          requestReloadWorkflows(flagInfo.targets);
+          requestReloadPlugins(flagInfo.targets);
+        }, 1000);
       }
-      return;
     } catch (err) {
-      //
+      setTimeout(() => {
+        requestReloadWorkflows();
+        requestReloadPlugins();
+      }, 1000);
+    } finally {
+      await fse.remove(arvisRenewExtensionFlagFilePath);
     }
-
-    await fse.remove(arvisRenewExtensionFlagFilePath);
-
-    setTimeout(() => {
-      requestReloadWorkflows(targets);
-      requestReloadPlugins(targets);
-    }, 1000);
   }
 };
 
