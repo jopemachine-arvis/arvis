@@ -125,9 +125,7 @@ const SearchResultItem = (props: IProps) => {
       }}
       onFocus={() => {}}
       onMouseOver={onMouseoverHandler}
-      onDoubleClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        onDoubleClickHandler(e);
-      }}
+      onDoubleClick={onDoubleClickHandler}
     >
       {!noShowIcon && getIconElement()}
       <InnerContainer
@@ -143,7 +141,7 @@ const SearchResultItem = (props: IProps) => {
             color: selected ? selectedItemFontColor : itemFontColor,
           }}
         >
-          {title}
+          {String(title)}
         </Title>
         <SubTitle
           id={`searchResultItemSubTitle-${offset}`}
@@ -153,7 +151,7 @@ const SearchResultItem = (props: IProps) => {
             color: selected ? selectedItemFontColor : itemFontColor,
           }}
         >
-          {subtitle !== '(none)' ? subtitle : ' '}
+          {subtitle ? String(subtitle) : ''}
         </SubTitle>
       </InnerContainer>
       {/* Small screen does not display OffsetText. */}

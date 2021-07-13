@@ -255,16 +255,18 @@ export default function Workflow() {
   }, []);
 
   useEffect(() => {
+    if (selectedWorkflowIdx === -1) {
+      setWorkflowBundleId('');
+      setWebviewUrl('');
+      return;
+    }
+
     if (workflowBundleIds.length) {
-      const info =
-        selectedWorkflowIdx === -1
-          ? {}
-          : workflows[workflowBundleIds[selectedWorkflowIdx]];
+      const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
+      if (!info) return;
 
-      const { creator = '', name = '', webAddress } = info;
-
-      const bundleId =
-        selectedWorkflowIdx === -1 ? '' : Core.getBundleId(creator, name);
+      const { creator = '', name = '', webAddress = '' } = info;
+      const bundleId = Core.getBundleId(creator, name);
 
       setWorkflowBundleId(bundleId);
       setWebviewUrl(webAddress);

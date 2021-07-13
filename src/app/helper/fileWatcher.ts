@@ -28,36 +28,36 @@ const watchOpts = {
 };
 
 /**
- * @param  {string} bundleId?
+ * @param  {string[]} bundleIds?
  * @summary Update store of each singletons for each renderer processes
  */
-const requestReloadWorkflows = (bundleId?: string) => {
+const requestReloadWorkflows = (bundleIds?: string[]) => {
   const windowManager = WindowManager.getInstance();
-  windowManager
-    .getSearchWindow()
-    .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
+  windowManager.getSearchWindow().webContents.send(IPCMainEnum.reloadWorkflow, {
+    bundleIds: JSON.stringify(bundleIds),
+  });
 
   windowManager
     .getPreferenceWindow()
     .webContents.send(IPCMainEnum.reloadWorkflow, {
-      bundleId,
+      bundleIds: JSON.stringify(bundleIds),
     });
 };
 
 /**
- * @param  {string} bundleId?
+ * @param  {string[]} bundleIds?
  * @summary Update store of each singletons for each renderer processes
  */
-const requestReloadPlugins = (bundleId?: string) => {
+const requestReloadPlugins = (bundleIds?: string[]) => {
   const windowManager = WindowManager.getInstance();
 
-  windowManager
-    .getSearchWindow()
-    .webContents.send(IPCMainEnum.reloadPlugin, { bundleId });
+  windowManager.getSearchWindow().webContents.send(IPCMainEnum.reloadPlugin, {
+    bundleIds: JSON.stringify(bundleIds),
+  });
   windowManager
     .getPreferenceWindow()
     .webContents.send(IPCMainEnum.reloadPlugin, {
-      bundleId,
+      bundleIds: JSON.stringify(bundleIds),
     });
 };
 
@@ -76,11 +76,29 @@ const reloadFlagHandler = async (filePath: string) => {
       )
     );
 
+    let targets: string[] | undefined;
+
+    try {
+      const flagInfo = await fse.readJSON(arvisRenewExtensionFlagFilePath);
+      if (!flagInfo.targets || !flagInfo.type) throw new Error();
+
+      targets = flagInfo.targets;
+
+      if (flagInfo.type === 'workflow') {
+        setTimeout(() => requestReloadWorkflows(targets), 1000);
+      } else {
+        setTimeout(() => requestReloadPlugins(targets), 1000);
+      }
+      return;
+    } catch (err) {
+      //
+    }
+
     await fse.remove(arvisRenewExtensionFlagFilePath);
 
     setTimeout(() => {
-      requestReloadWorkflows();
-      requestReloadPlugins();
+      requestReloadWorkflows(targets);
+      requestReloadPlugins(targets);
     }, 1000);
   }
 };
@@ -91,7 +109,7 @@ const workflowChangeHandler = async (filePath: string) => {
       chalk.greenBright(`"${filePath}" changed. Reload workflows settings..`)
     );
     await sleep(1000);
-    requestReloadWorkflows(getBundleIdFromFilePath(filePath));
+    requestReloadWorkflows([getBundleIdFromFilePath(filePath)]);
   } else {
     console.log(
       chalk.magenta(
@@ -107,7 +125,7 @@ const pluginChangeHandler = async (filePath: string) => {
       chalk.greenBright(`"${filePath}" changed. Reload plugins settings..`)
     );
     await sleep(1000);
-    requestReloadPlugins(getBundleIdFromFilePath(filePath));
+    requestReloadPlugins([getBundleIdFromFilePath(filePath)]);
   } else {
     console.log(
       chalk.magenta(

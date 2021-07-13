@@ -158,9 +158,11 @@ export default function SearchWindow() {
 
     reloadWorkflow: (
       e: IpcRendererEvent,
-      { bundleId }: { bundleId: string }
+      { bundleIds }: { bundleIds: string }
     ) => {
-      Core.reloadWorkflows(bundleId)
+      const targets = bundleIds ? JSON.parse(bundleIds) : undefined;
+
+      Core.reloadWorkflows(targets)
         .then(() => {
           return null;
         })
@@ -170,10 +172,16 @@ export default function SearchWindow() {
         });
     },
 
-    reloadPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
-      Core.reloadPlugins({ initializePluginWorkspace: true, bundleId }).catch(
-        console.error
-      );
+    reloadPlugin: (
+      e: IpcRendererEvent,
+      { bundleIds }: { bundleIds: string }
+    ) => {
+      const targets = bundleIds ? JSON.parse(bundleIds) : undefined;
+
+      Core.reloadPlugins({
+        initializePluginWorkspace: true,
+        bundleIds: targets,
+      }).catch(console.error);
     },
 
     executeAction: (

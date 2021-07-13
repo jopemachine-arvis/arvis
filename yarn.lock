@@ -2855,10 +2855,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.7.2.tgz#b9cf441a8f4ec913c3d9307e3e5ba057b61032cc"
-  integrity sha512-f+vdyhNjom1jsVXCoDy3jofTWZNJY/sCGCb/s1D7ysVNUHeWzfZYgy61glr9DoSWlj0sn1hCpQS0bjHJaCglHg==
+arvis-core@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.8.1.tgz#27801e96d06a834fdd9b2b338513a0f38a068178"
+  integrity sha512-c1TIHUDJIITXPvy6OqxugwbXU1+msNc0GMf0+/9/RwwHZVa+snHXgep13y/VzALh8t8NlhYxPmOFl08chZqlwA==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
@@ -2875,7 +2875,7 @@ arvis-core@^0.7.2:
     is-promise "^4.0.0"
     is-url "^1.2.4"
     lodash "^4.17.21"
-    open "^8.0.4"
+    open "^8.2.1"
     p-cancelable "^2.1.1"
     parse-json "^5.2.0"
     path-exists "^4.0.0"
@@ -9857,7 +9857,7 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-open@^8.0.4, open@^8.2.1:
+open@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/open/-/open-8.2.1.tgz#82de42da0ccbf429bc12d099dad2e0975e14e8af"
   integrity sha512-rXILpcQlkF/QuFez2BJDf3GsqpjGKbkUUToAIGo9A0Q6ZkoSGogZJulrUdwRkrAsoQvoZsrjCYt8+zblOk7JQQ==

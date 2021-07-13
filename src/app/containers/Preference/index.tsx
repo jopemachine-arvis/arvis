@@ -116,15 +116,22 @@ export default function PreferenceWindow() {
   const ipcCallbackTbl = {
     reloadWorkflow: (
       e: IpcRendererEvent,
-      { bundleId }: { bundleId: string }
+      { bundleIds }: { bundleIds: string }
     ) => {
-      Core.reloadWorkflows(bundleId).catch(console.error);
+      const targets = bundleIds ? JSON.parse(bundleIds) : undefined;
+
+      Core.reloadWorkflows(targets).catch(console.error);
     },
 
-    reloadPlugin: (e: IpcRendererEvent, { bundleId }: { bundleId: string }) => {
+    reloadPlugin: (
+      e: IpcRendererEvent,
+      { bundleIds }: { bundleIds: string }
+    ) => {
+      const targets = bundleIds ? JSON.parse(bundleIds) : undefined;
+
       Core.reloadPlugins({
         initializePluginWorkspace: false,
-        bundleId,
+        bundleIds: targets,
       }).catch(console.error);
     },
 

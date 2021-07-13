@@ -168,8 +168,9 @@ const useSearchWindowControl = ({
     if (hasRequiredArg) {
       const commandOnStackIsEmpty = firstItem;
 
-      actionFlowManager.setRunningText({
+      actionFlowManager.setRunningScriptfilterItem({
         selectedItem: itemArr[0],
+        setRunningText: true,
       });
 
       Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
@@ -229,6 +230,12 @@ const useSearchWindowControl = ({
           scriptfilterShouldBeReRun &&
           updatedInput.startsWith(actionFlowManager.getTopTrigger().input)
         ) {
+          actionFlowManager.setRunningScriptfilterItem({
+            selectedItem: actionFlowManager.getTopTrigger()
+              .actionTrigger as Command,
+            setRunningText: true,
+          });
+
           Core.scriptFilterExcute(updatedInput);
         }
 
@@ -280,12 +287,9 @@ const useSearchWindowControl = ({
     const selectedItem = items[selectedItemIdx];
     if (!selectedItem) return;
 
-    let item;
-    if (actionFlowManager.hasEmptyTriggerStk()) {
-      item = selectedItem;
-    } else {
-      item = actionFlowManager.getTopTrigger().actionTrigger;
-    }
+    const item = actionFlowManager.hasEmptyTriggerStk()
+      ? selectedItem
+      : actionFlowManager.getTopTrigger().actionTrigger;
 
     const hasRequiredArg = item
       ? Core.hasRequiredArg({
@@ -294,31 +298,34 @@ const useSearchWindowControl = ({
         })
       : true;
 
-    if (hasRequiredArg) {
-      if (selectedItem.type === 'scriptFilter') {
-        const newInputStr = selectedItem.withspace
+    if (selectedItem.type === 'scriptFilter') {
+      const newInputStr =
+        hasRequiredArg || selectedItem.withspace
           ? `${selectedItem.command} `
           : selectedItem.command;
 
-        setInputStr({ str: newInputStr, needItemsUpdate: false });
+      setInputStr({ str: newInputStr, needItemsUpdate: false });
 
-        actionFlowManager.setRunningText({
-          selectedItem: items[selectedItemIdx],
-        });
+      actionFlowManager.setRunningScriptfilterItem({
+        selectedItem: items[selectedItemIdx],
+        setRunningText: hasRequiredArg,
+      });
 
-        Core.scriptFilterExcute(selectedItem.command, items[selectedItemIdx]);
-      } else {
+      Core.scriptFilterExcute(newInputStr, items[selectedItemIdx]);
+    } else {
+      if (hasRequiredArg) {
         setIsPinned(false);
         actionFlowManager.handleItemPressEvent(
           selectedItem,
           inputStr,
           modifiers
         );
+      } else {
+        setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
       }
-      setBestMatch('');
-    } else {
-      setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
     }
+
+    setBestMatch('');
   };
 
   /**

@@ -259,16 +259,18 @@ export default function Plugin() {
   }, [pluginBundleIds]);
 
   useEffect(() => {
+    if (selectedPluginIdx === -1) {
+      setPluginBundleId('');
+      setWebviewUrl('');
+      return;
+    }
+
     if (pluginBundleIds.length) {
-      const info =
-        selectedPluginIdx === -1
-          ? {}
-          : plugins[pluginBundleIds[selectedPluginIdx]];
+      const info = plugins[pluginBundleIds[selectedPluginIdx]];
+      if (!info) return;
 
       const { creator = '', name = '', webAddress = '' } = info;
-
-      const bundleId =
-        selectedPluginIdx === -1 ? '' : Core.getBundleId(creator, name);
+      const bundleId = Core.getBundleId(creator, name);
 
       setPluginBundleId(bundleId);
       setWebviewUrl(webAddress);
