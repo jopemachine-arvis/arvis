@@ -290,7 +290,7 @@
     "@fortawesome/fontawesome-free": "^5.15.3",
     "alpha-sort": "^5.0.0",
     "arvis-store": "^0.2.8",
-    "bootstrap": "^5.0.0",
+    "bootstrap": "^5.0.2",
     "chokidar": "^3.5.2",
     "connected-react-router": "^6.9.1",
     "dot-prop": "^6.0.1",
