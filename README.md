@@ -16,12 +16,12 @@ It would be very helpful if you could put bugs on the issue.
 
 **Table of Contents**
 
-- [1. What is Arvis?](#what-is-arvis-why-it-is-needed)
-- [2. How to Install](#how-to-install)
-- [3. What is Workflow, Plugin?](#what-is-workflow-plugins)
-- [4. Take a look at useful Workflows, Plugins](#take-a-look-at-useful-workflows-plugins)
-- [5. How to write new Workflows, Plugins](#how-to-write-new-workflows-plugins)
-- [6. Build and development](#build-and-development)
+- [1. What is Arvis?](#-what-is-arvis-why-it-is-needed)
+- [2. How to Install](#-how-to-install)
+- [3. What is Workflow, Plugin?](#-what-is-workflow-plugin)
+- [4. Take a look at useful Workflows, Plugins](#-take-a-look-useful-workflows-plugins)
+- [5. How to create new Workflows, Plugins](#-how-to-create-new-extensions)
+- [6. Build and development](#-build-and-development)
 
 ## 💬 What is Arvis? why it is needed?
 
