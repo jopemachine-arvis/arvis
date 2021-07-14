@@ -9,9 +9,7 @@ import alphaSort from 'alpha-sort';
 import useKey from '../../use-key-capture/src';
 
 /**
- * @param {any[]} items
- * @param {(items: any[]) => void} setItems
- * @param {number} maxShowOnScreen
+ * @description
  */
 const useExtensionSearchControl = ({
   items,

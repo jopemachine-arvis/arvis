@@ -14,9 +14,7 @@ type IndexInfo = {
 };
 
 /**
- * @param {any[]} items
- * @param {(items: any[]) => void} setItems
- * @param {number} maxShowOnScreen
+ * @description
  */
 const useClipboardHistoryWindowControl = ({
   items,

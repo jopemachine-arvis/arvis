@@ -10,7 +10,6 @@ import toggleSearchWindow from './toggleSearchWindow';
 import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
 
 /**
- * @param  {BrowserWindow} searchWindow
  * @param  {any} hotKeyAction
  */
 const getWorkflowHotkeyPressHandler = ({
@@ -147,8 +146,6 @@ const registerWorkflowHotkeys = ({
 };
 
 /**
- * @param  {BrowserWindow} preferenceWindow
- * @param  {BrowserWindow} searchWindow
  * @param  {any} callbackTable
  * @param  {any} workflowHotkeyTbl
  */

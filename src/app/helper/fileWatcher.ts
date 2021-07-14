@@ -18,13 +18,10 @@ let otherFilesWatcher: FSWatcher | null;
 
 const watchOpts = {
   disableGlobbing: false,
+  // To do:: Change below to true after chokidar followSymlink issue is resolved
   followSymlinks: false,
   ignoreInitial: true,
   persistent: true,
-  // awaitWriteFinish: {
-  //   pollInterval: 100,
-  //   stabilityThreshold: 2000,
-  // },
 };
 
 /**

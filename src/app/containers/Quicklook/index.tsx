@@ -32,7 +32,7 @@ export default function QuicklookWindow() {
     },
   };
 
-  const emulatedKeyboardEvent = (event: any, input: any) => {
+  const emulatedKeyboardEvent = (e: any, input: any) => {
     if (input.type !== 'keyDown') {
       return;
     }

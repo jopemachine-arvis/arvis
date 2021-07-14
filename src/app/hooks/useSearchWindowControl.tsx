@@ -14,9 +14,7 @@ type IndexInfo = {
 };
 
 /**
- * @param {any[]} items
- * @param {(items: any[]) => void} setItems
- * @param {number} maxItemCount
+ * @description
  */
 const useSearchWindowControl = ({
   items,
