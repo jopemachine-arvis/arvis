@@ -37,6 +37,7 @@ const useExtensionSearchControl = ({
   };
 
   /**
+   * @param {any[]} _originalItems
    * @param {string} pressedKey
    * @param {string} updatedInput
    */
