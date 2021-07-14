@@ -81,7 +81,7 @@ Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugi
 
 * [Click me to check available Plugins](./documents/plugin-links.md)
 
-## 🔨 How to write new extensions
+## 🔨 How to create new extensions
 
 * [Click me to check how to create new Workflows](./documents/workflow-develop.md)
 
