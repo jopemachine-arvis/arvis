@@ -7338,6 +7338,13 @@ is-accessor-descriptor@^1.0.0:
   dependencies:
     kind-of "^6.0.0"
 
+is-admin@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-admin/-/is-admin-3.0.0.tgz#5c6077fd235e056c3dbc0b6f1bbd23ff96e97135"
+  integrity sha512-wOa3CXFJAu8BZ2BDtG9xYOOrsq6oiSvc2jFPy4X/HINx5bmJUcW8e+apItVbU2E7GIfBVaFVO7Zit4oAWtTJcw==
+  dependencies:
+    execa "^1.0.0"
+
 is-alphabetical@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/is-alphabetical/-/is-alphabetical-1.0.4.tgz#9e7d6b94916be22153745d184c298cbf986a686d"
