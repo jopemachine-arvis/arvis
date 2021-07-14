@@ -9,7 +9,8 @@ const checkPermissionOnWindows = async () => {
   if (process.platform === 'win32') {
     if ((await isAdmin()) === false) {
       ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
-        title: 'To install extension, run Arvis by administrator permission',
+        title: 'Permission Error',
+        content: 'To install extension, run Arvis by administrator permission',
       });
       return false;
     }
