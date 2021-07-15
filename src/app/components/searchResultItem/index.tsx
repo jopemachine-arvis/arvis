@@ -5,6 +5,7 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
+import pathExists from 'path-exists';
 import DefaultImg from '../../../../assets/images/itemDefaultIcon.svg';
 import {
   InnerContainer,
@@ -97,8 +98,23 @@ const SearchResultItem = (props: IProps) => {
         ref={iconRef}
         style={iconStyle}
         src={icon ?? extensionDefaultIcon ?? DefaultImg}
-        onError={(e) => {
-          e.currentTarget.src = extensionDefaultIcon ?? DefaultImg;
+        onError={async (e) => {
+          if (
+            extensionDefaultIcon &&
+            (await pathExists(extensionDefaultIcon))
+          ) {
+            (
+              document.getElementById(
+                `searchResultItemIcon-${offset}`
+              )! as HTMLImageElement
+            ).src = extensionDefaultIcon;
+          } else {
+            (
+              document.getElementById(
+                `searchResultItemIcon-${offset}`
+              )! as HTMLImageElement
+            ).src = DefaultImg;
+          }
         }}
       />
     );
