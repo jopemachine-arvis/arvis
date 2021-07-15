@@ -2855,10 +2855,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.8.5:
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.8.5.tgz#ec1808dd3bbdaf7f1f1a5228e1f4d7f2e3916bfa"
-  integrity sha512-e9/I6dW6N1KvMSgKTrjzXyQtJq3Sj/Os8PXHdodFU1WAt2irNlFmwHcrC1THi+Oqz26osneAZbfkhlqud8ACbA==
+arvis-core@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.8.7.tgz#75b7f7f2e544400dfbbef9d523be713909148835"
+  integrity sha512-5/40SH/bIdmzbhj0tSNh8sySWOSj+pNwWIfnP1BUG6WwIoz2eQlbqgpcKFxeJaZRap81w/NEXaEQ9Kih/NKtkw==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
@@ -2881,6 +2881,7 @@ arvis-core@^0.8.5:
     path-exists "^4.0.0"
     readdirp "^3.6.0"
     rimraf "^3.0.2"
+    safe-eval "^0.4.1"
     semver "^7.3.5"
     string-similarity "^4.0.4"
     unzipper "^0.10.11"
@@ -11715,6 +11716,11 @@ safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2,
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
+
+safe-eval@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/safe-eval/-/safe-eval-0.4.1.tgz#e54ba5a1bbdec795d488f6c8765e0c2a78b4cdc0"
+  integrity sha512-wmiu4RSYVZ690RP1+cv/LxfPK1dIlEN35aW7iv4SMYdqDrHbkll4+NJcHmKm7PbCuI1df1otOcPwgcc2iFR85g==
 
 safe-regex@^1.1.0:
   version "1.1.0"
