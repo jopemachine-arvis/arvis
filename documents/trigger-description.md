@@ -4,7 +4,7 @@ You can use `keyword`, `scriptFilter`, `hotkey` to trigger commands.
 
 ## Keyword
 
-Command to invoke a specific command.
+Command to invoke a specific command (and actions).
 
 You can append query following keyword.
 
@@ -29,7 +29,7 @@ Example:
 
 In above example, you can see command with `ch > init`.
 
-`Keyword` type executes the `actions` when you pressed the item.
+`keyword` type executes the `actions` when you pressed the item.
 
 To trigger above `actions`, you can type `ch > init` in your search window like this.
 
@@ -41,9 +41,13 @@ In above screen, your pressing enter event trigger the 'Action', `script`.
 
 ## scriptFilter
 
-Unlike `Keyword` type don't have script, `scriptFilter` type has its `scriptFilter` on its own.
+Unlike `keyword` type doesn't have a script on its own, `scriptFilter` type has its `scriptFilter` on its own.
+
+Whenever you changes your "query" (your input), `scriptFilter` runs.
 
 When `scriptFilter` runs, it executes the script specified in `scriptFilter`.
+
+![](./imgs/trigger-description-2.png)
 
 Example: 
 
@@ -72,11 +76,9 @@ Example:
 },
 ```
 
-![](./imgs/trigger-description-2.gif)
-
 When you type the command in search window, the commands shows up.
 
-And you can give some query like `Keyword` type. the querys are passed in `scriptFilter` in form of `{query}`.
+And you can give some query like `keyword` type. the querys are passed in `scriptFilter` in form of `{query}`.
 
 And result of the scripts shows in the search window, you can select and press them.
 
@@ -89,6 +91,8 @@ And `actions` with `modifiers` key with other than `normal` is only triggered wh
 ## Hotkey
 
 You can register `hotkey` to run a specific `actions`.
+
+Hotkey must be the ancestor of all its child actions.
 
 Example:
 
@@ -125,3 +129,11 @@ Example:
 ```
 
 [Click me to check available attributes](./hotkey-description.md)
+
+You can easily append hotkey to the command you often use.
+
+Open Preference Window and Click workflow page, select the workflow and trigger table.
+
+Then right click the command, click append hotkey.
+
+![](./imgs/append-hotkey.png)

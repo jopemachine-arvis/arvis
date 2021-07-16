@@ -1,12 +1,12 @@
 # Action
 
-You can use below predefined `actions`.
+You can use below `actions` types.
 
 If there is one more action in `actions`, the actions are all executed sequentially.
 
-(But don't put other actions together when you put `trigger` in `actions`. currently, it can cause bugs)
-
 You can also put `actions` in some `action`.
+
+In case of the `action` is async action, next actions are executed after the async action is ended.
 
 For example, If you put some action in `script` action, the action is triggered when the script execution ends.
 
@@ -23,6 +23,8 @@ For example, If you put some action in `script` action, the action is triggered 
 - [resetInput](#resetInput)
 
 ## script
+
+async: `true`
 
 Execute script through [execa](https://github.com/sindresorhus/execa)
 
@@ -110,7 +112,7 @@ Example :
   {
     "modifiers": "normal",
     "type": "args",
-    "arg": "{var:folder}",
+    "arg": "{var:some_variable_name}",
     "actions": [
       {
       }
@@ -133,7 +135,15 @@ required: `true`
 
 Argument to select.
 
+This variable is forwarded to `{query}`.
+
 ## cond, if
+
+`cond` code is `evaluated` in runtime.
+
+So, you can check some statuses in here and branch your extension's code logic.
+
+This is useful, for example, for executing different actions according to variables.
 
 Example :
 
@@ -174,7 +184,9 @@ required: `true`
 
 `cond` codes will be evaluated runtime.
 
-Here you can inspect variable condition to branch out
+Here you can inspect variable condition to branch out.
+
+Note: If variables such as `{query}` are not evaluated, `cond` are evaluated as false.
 
 ### then
 
@@ -214,9 +226,9 @@ type: `string (enum)`
 
 required: `false`
 
-Specific modifier key must be pressed to run
+Specific modifier key that must be pressed to run.
 
-If you do not give any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
+If you do not specify any modifiers, it would be handled by `normal` which means the actions will be executed with no `modifier` key
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
@@ -243,8 +255,8 @@ Example :
   {
     "modifiers": "normal",
     "type": "notification",
-    "title": "Caching completed successfully",
-    "text": ""
+    "title": "Some work completed successfully!",
+    "text": "{query}"
   }
 ]
 ```
@@ -322,6 +334,11 @@ required: `false`
 ## keyword
 
 `keyword` is a trigger, but it can also be used as an `actions`.
+
+In this case, you can attach command optionally to the child `keyword`.
+
+If child `keyword` also has command, child `keyword` also belongs to seperate triggers.
+
 
 Example :
 
@@ -401,6 +418,10 @@ If `argType` is `optional`, the actions are triggered with or without `arg`
 ## scriptFilter
 
 `scriptFilter` is a trigger, but it can also be used as an `actions`.
+
+In this case, you can attach command optionally to the child `scriptfilter`.
+
+If child `scriptFilter` also has command, child `scriptFilter` also belongs to seperate triggers.
 
 Example :
 
