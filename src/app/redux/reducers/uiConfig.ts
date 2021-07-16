@@ -5,12 +5,12 @@ const { actionTypes: UIConfigActionTypes } = UIConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case UIConfigActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR:
+    case UIConfigActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_COLOR:
       return {
         ...state,
         search_window_scrollbar_color: payload.arg,
       };
-    case UIConfigActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH:
+    case UIConfigActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_WIDTH:
       return {
         ...state,
         search_window_scrollbar_width: payload.arg,
@@ -35,7 +35,7 @@ export default (state = {}, action: any) => {
         ...state,
         item_left_padding: payload.arg,
       };
-    case UIConfigActionTypes.SET_TITLE_SUBTITLE_MARGIN:
+    case UIConfigActionTypes.SET_ITEM_TITLE_SUBTITLE_MARGIN:
       return {
         ...state,
         item_title_subtitle_margin: payload.arg,
@@ -55,22 +55,22 @@ export default (state = {}, action: any) => {
         ...state,
         selected_item_background_color: payload.arg,
       };
-    case UIConfigActionTypes.SET_ITEM_FONTCOLOR:
+    case UIConfigActionTypes.SET_ITEM_FONT_COLOR:
       return {
         ...state,
         item_font_color: payload.arg,
       };
-    case UIConfigActionTypes.SET_SUBTITLE_FONTSIZE:
+    case UIConfigActionTypes.SET_SUBTITLE_FONT_SIZE:
       return {
         ...state,
         subtitle_font_size: payload.arg,
       };
-    case UIConfigActionTypes.SET_SELECTED_ITEM_FONTCOLOR:
+    case UIConfigActionTypes.SET_SELECTED_ITEM_FONT_COLOR:
       return {
         ...state,
         selected_item_font_color: payload.arg,
       };
-    case UIConfigActionTypes.SET_TITLE_FONTSIZE:
+    case UIConfigActionTypes.SET_TITLE_FONT_SIZE:
       return {
         ...state,
         title_font_size: payload.arg,
@@ -80,12 +80,12 @@ export default (state = {}, action: any) => {
         ...state,
         searchbar_height: payload.arg,
       };
-    case UIConfigActionTypes.SET_SEARCHBAR_FONTSIZE:
+    case UIConfigActionTypes.SET_SEARCHBAR_FONT_SIZE:
       return {
         ...state,
         searchbar_font_size: payload.arg,
       };
-    case UIConfigActionTypes.SET_SEARCHBAR_FONTCOLOR:
+    case UIConfigActionTypes.SET_SEARCHBAR_FONT_COLOR:
       return {
         ...state,
         searchbar_font_color: payload.arg,

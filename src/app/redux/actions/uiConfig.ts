@@ -1,44 +1,35 @@
 import makeActionCreator from '@utils/makeActionCreator';
 
 export const actionTypes = {
-  SET_SEARCH_WINDOW_WIDTH: '@uiConfig/SET_SEARCH_WINDOW_WIDTH',
-  SET_SEARCH_WINDOW_FOOTER_HEIGHT: '@uiConfig/SET_SEARCH_WINDOW_FOOTER_HEIGHT',
-  SET_SEARCH_WINDOW_TRANSPARENCY: '@uiConfig/SET_SEARCH_WINDOW_TRANSPARENCY',
-  SET_SEARCH_WINDOW_BORDER_RADIUS: '@uiConfig/SET_SEARCH_WINDOW_BORDER_RADIUS',
-
-  SET_ITEM_HEIGHT: '@uiConfig/SET_ITEM_HEIGHT',
-
+  SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN',
   SET_ITEM_BACKGROUND_COLOR: '@uiConfig/SET_ITEM_BACKGROUND_COLOR',
+  SET_ITEM_FONT_COLOR: '@uiConfig/SET_ITEM_FONT_COLOR',
+  SET_ITEM_HEIGHT: '@uiConfig/SET_ITEM_HEIGHT',
+  SET_ITEM_LEFT_PADDING: '@uiConfig/SET_ITEM_LEFT_PADDING',
+  SET_ITEM_TITLE_SUBTITLE_MARGIN: '@uiConfig/SET_ITEM_TITLE_SUBTITLE_MARGIN',
+  SET_SEARCHBAR_AUTOMATCH_FONT_COLOR:
+    '@uiConfig/SET_SEARCHBAR_AUTOMATCH_FONT_COLOR',
+  SET_SEARCHBAR_FONT_COLOR: '@uiConfig/SET_SEARCHBAR_FONT_COLOR',
+  SET_SEARCHBAR_FONT_SIZE: '@uiConfig/SET_SEARCHBAR_FONT_SIZE',
+  SET_SEARCHBAR_HEIGHT: '@uiConfig/SET_SEARCHBAR_HEIGHT',
+  SET_SEARCHBAR_DRAGGER_COLOR: '@uiConfig/SET_SEARCHBAR_DRAGGER_COLOR',
+  SET_SEARCH_WINDOW_BORDER_RADIUS: '@uiConfig/SET_SEARCH_WINDOW_BORDER_RADIUS',
+  SET_SEARCH_WINDOW_FOOTER_HEIGHT: '@uiConfig/SET_SEARCH_WINDOW_FOOTER_HEIGHT',
+  SET_SEARCH_WINDOW_SCROLLBAR_COLOR:
+    '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_COLOR',
+  SET_SEARCH_WINDOW_SCROLLBAR_WIDTH:
+    '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_WIDTH',
+  SET_SEARCH_WINDOW_TRANSPARENCY: '@uiConfig/SET_SEARCH_WINDOW_TRANSPARENCY',
+  SET_SEARCH_WINDOW_WIDTH: '@uiConfig/SET_SEARCH_WINDOW_WIDTH',
   SET_SELECTED_ITEM_BACKGROUND_COLOR:
     '@uiConfig/SET_SELECTED_ITEM_BACKGROUND_COLOR',
-
-  SET_AUTOMATCH_FONT_COLOR: '@uiConfig/SET_AUTOMATCH_FONT_COLOR',
-
-  SET_TITLE_FONTSIZE: '@uiConfig/SET_TITLE_FONTSIZE',
-  SET_SUBTITLE_FONTSIZE: '@uiConfig/SET_SUBTITLE_FONTSIZE',
-
-  SET_ITEM_FONTCOLOR: '@uiConfig/SET_ITEM_FONTCOLOR',
-  SET_SELECTED_ITEM_FONTCOLOR: '@uiConfig/SET_SELECTED_ITEM_FONTCOLOR',
-
-  SET_ITEM_LEFT_PADDING: '@uiConfig/SET_ITEM_LEFT_PADDING',
-  SET_TITLE_SUBTITLE_MARGIN: '@uiConfig/SET_TITLE_SUBTITLE_MARGIN',
-
-  SET_SEARCHBAR_HEIGHT: '@uiConfig/SET_SEARCHBAR_HEIGHT',
-  SET_SEARCHBAR_FONTSIZE: '@uiConfig/SET_SEARCHBAR_FONTSIZE',
-  SET_SEARCHBAR_FONTCOLOR: '@uiConfig/SET_SEARCHBAR_FONTCOLOR',
-
-  SET_SEARCHWINDOW_SCROLLBAR_COLOR:
-    '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_COLOR',
-  SET_SEARCHWINDOW_SCROLLBAR_WIDTH:
-    '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_WIDTH',
-
-  SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN',
-
-  SET_SEARCHBAR_DRAGGER_COLOR: '@uiConfig/SET_SEARCHBAR_DRAGGER_COLOR',
+  SET_SELECTED_ITEM_FONT_COLOR: '@uiConfig/SET_SELECTED_ITEM_FONT_COLOR',
+  SET_TITLE_FONT_SIZE: '@uiConfig/SET_TITLE_FONT_SIZE',
+  SET_SUBTITLE_FONT_SIZE: '@uiConfig/SET_SUBTITLE_FONT_SIZE',
 };
 
 export const setSearchWindowScrollbarColor = makeActionCreator(
-  actionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR,
+  actionTypes.SET_SEARCH_WINDOW_SCROLLBAR_COLOR,
   'arg'
 );
 
@@ -47,13 +38,13 @@ export const setSearchbarDraggerColor = makeActionCreator(
   'arg'
 );
 
-export const setAutoMatchFontColor = makeActionCreator(
-  actionTypes.SET_AUTOMATCH_FONT_COLOR,
+export const setSearchbarAutoMatchFontColor = makeActionCreator(
+  actionTypes.SET_SEARCHBAR_AUTOMATCH_FONT_COLOR,
   'arg'
 );
 
 export const setSearchWindowScrollbarWidth = makeActionCreator(
-  actionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH,
+  actionTypes.SET_SEARCH_WINDOW_SCROLLBAR_WIDTH,
   'arg'
 );
 
@@ -63,7 +54,7 @@ export const setSearchWindowBorderRadius = makeActionCreator(
 );
 
 export const setSearchBarFontSize = makeActionCreator(
-  actionTypes.SET_SEARCHBAR_FONTSIZE,
+  actionTypes.SET_SEARCHBAR_FONT_SIZE,
   'arg'
 );
 
@@ -103,22 +94,22 @@ export const setSelectedItemBackgroundColor = makeActionCreator(
 );
 
 export const setTitleFontSize = makeActionCreator(
-  actionTypes.SET_TITLE_FONTSIZE,
+  actionTypes.SET_TITLE_FONT_SIZE,
   'arg'
 );
 
 export const setItemFontColor = makeActionCreator(
-  actionTypes.SET_ITEM_FONTCOLOR,
+  actionTypes.SET_ITEM_FONT_COLOR,
   'arg'
 );
 
 export const setSelectedItemFontColor = makeActionCreator(
-  actionTypes.SET_SELECTED_ITEM_FONTCOLOR,
+  actionTypes.SET_SELECTED_ITEM_FONT_COLOR,
   'arg'
 );
 
 export const setSubTitleFontSize = makeActionCreator(
-  actionTypes.SET_SUBTITLE_FONTSIZE,
+  actionTypes.SET_SUBTITLE_FONT_SIZE,
   'arg'
 );
 
@@ -127,13 +118,13 @@ export const setItemLeftPadding = makeActionCreator(
   'arg'
 );
 
-export const setTitleSubTitleMargin = makeActionCreator(
-  actionTypes.SET_TITLE_SUBTITLE_MARGIN,
+export const setItemTitleSubTitleMargin = makeActionCreator(
+  actionTypes.SET_ITEM_TITLE_SUBTITLE_MARGIN,
   'arg'
 );
 
 export const setSearchBarFontColor = makeActionCreator(
-  actionTypes.SET_SEARCHBAR_FONTCOLOR,
+  actionTypes.SET_SEARCHBAR_FONT_COLOR,
   'arg'
 );
 

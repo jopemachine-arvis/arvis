@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-restricted-syntax */
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
@@ -115,110 +117,14 @@ export default function Appearance() {
   };
 
   const applyTheme = (themeJson: any) => {
-    configChangeHandler(
-      createFormEvent(themeJson.icon_right_margin),
-      UIActionTypes.SET_ICON_RIGHT_MARGIN
-    );
+    for (const key of Object.keys(themeJson)) {
+      const setHandlerName = `SET_${key.toUpperCase()}`;
 
-    configChangeHandler(
-      createFormEvent(themeJson.item_background_color),
-      UIActionTypes.SET_ITEM_BACKGROUND_COLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.item_font_color),
-      UIActionTypes.SET_ITEM_FONTCOLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.item_height),
-      UIActionTypes.SET_ITEM_HEIGHT
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.item_left_padding),
-      UIActionTypes.SET_ITEM_LEFT_PADDING
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.item_title_subtitle_margin),
-      UIActionTypes.SET_TITLE_SUBTITLE_MARGIN
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.searchbar_font_color),
-      UIActionTypes.SET_SEARCHBAR_FONTCOLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.searchbar_font_size),
-      UIActionTypes.SET_SEARCHBAR_FONTSIZE
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.searchbar_height),
-      UIActionTypes.SET_SEARCHBAR_HEIGHT
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.search_window_border_radius),
-      UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.search_window_footer_height),
-      UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.search_window_transparency),
-      UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.search_window_width),
-      UIActionTypes.SET_SEARCH_WINDOW_WIDTH
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.selected_item_background_color),
-      UIActionTypes.SET_SELECTED_ITEM_BACKGROUND_COLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.selected_item_font_color),
-      UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.subtitle_font_size),
-      UIActionTypes.SET_SUBTITLE_FONTSIZE
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.title_font_size),
-      UIActionTypes.SET_TITLE_FONTSIZE
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.selected_item_font_color),
-      UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.search_window_scrollbar_color),
-      UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.search_window_scrollbar_width),
-      UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
-    );
-
-    configChangeHandler(
-      createFormEvent(themeJson.searchbar_automatch_font_color),
-      UIActionTypes.SET_AUTOMATCH_FONT_COLOR
-    );
+      configChangeHandler(
+        createFormEvent(themeJson[key]),
+        (UIActionTypes as any)[setHandlerName]
+      );
+    }
   };
 
   const importTheme = (themePath: string) => {
@@ -495,7 +401,7 @@ export default function Appearance() {
                 onNumberChangeHandler(e, {
                   min: 8,
                   max: 50,
-                  actionType: UIActionTypes.SET_TITLE_FONTSIZE,
+                  actionType: UIActionTypes.SET_TITLE_FONT_SIZE,
                   dispatch,
                 })
               }
@@ -513,7 +419,7 @@ export default function Appearance() {
                 onNumberChangeHandler(e, {
                   min: 8,
                   max: 50,
-                  actionType: UIActionTypes.SET_SUBTITLE_FONTSIZE,
+                  actionType: UIActionTypes.SET_SUBTITLE_FONT_SIZE,
                   dispatch,
                 })
               }
@@ -526,7 +432,7 @@ export default function Appearance() {
               type="color"
               value={item_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_ITEM_FONTCOLOR)
+                configChangeHandler(e, UIActionTypes.SET_ITEM_FONT_COLOR)
               }
             />
           </FormGroup>
@@ -539,7 +445,7 @@ export default function Appearance() {
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
                   e,
-                  UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
+                  UIActionTypes.SET_SELECTED_ITEM_FONT_COLOR
                 )
               }
             />
@@ -551,7 +457,7 @@ export default function Appearance() {
               type="color"
               value={searchbar_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONTCOLOR)
+                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONT_COLOR)
               }
             />
           </FormGroup>
@@ -562,7 +468,10 @@ export default function Appearance() {
               type="color"
               value={searchbar_automatch_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_AUTOMATCH_FONT_COLOR)
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCHBAR_AUTOMATCH_FONT_COLOR
+                )
               }
             />
           </FormGroup>
@@ -610,7 +519,7 @@ export default function Appearance() {
                 onNumberChangeHandler(e, {
                   min: 0,
                   max: 30,
-                  actionType: UIActionTypes.SET_TITLE_SUBTITLE_MARGIN,
+                  actionType: UIActionTypes.SET_ITEM_TITLE_SUBTITLE_MARGIN,
                   dispatch,
                 })
               }
@@ -664,7 +573,7 @@ export default function Appearance() {
                 onNumberChangeHandler(e, {
                   min: 8,
                   max: 30,
-                  actionType: UIActionTypes.SET_SEARCHBAR_FONTSIZE,
+                  actionType: UIActionTypes.SET_SEARCHBAR_FONT_SIZE,
                   dispatch,
                 })
               }
@@ -679,7 +588,7 @@ export default function Appearance() {
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(
                   e,
-                  UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR
+                  UIActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_COLOR
                 )
               }
             />
@@ -696,7 +605,7 @@ export default function Appearance() {
                 onNumberChangeHandler(e, {
                   min: 0,
                   max: 8,
-                  actionType: UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH,
+                  actionType: UIActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_WIDTH,
                   dispatch,
                 })
               }
