@@ -38,6 +38,16 @@ export const Header = styled.div`
   font-size: 20px;
 `;
 
+export const ThemeItemIcon = styled.div`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border-radius: 3px;
+  top: 22px;
+  left: 15px;
+  border: 1px solid #555 !important;
+`;
+
 export const ThemeListContainer = styled.div`
   width: 15%;
   padding-left: 15px;
@@ -49,12 +59,12 @@ export const ThemeItemContainer = styled.div`
   height: 65px;
   background-color: #222;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
   justify-content: center;
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 7px;
+  padding-left: 50px;
   padding-right: 7px;
   margin-bottom: 7px;
   user-select: none;
@@ -62,7 +72,7 @@ export const ThemeItemContainer = styled.div`
 `;
 
 export const ThemeItemTitle = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: #ffffff;
   overflow: hidden;
   white-space: nowrap;
@@ -71,7 +81,7 @@ export const ThemeItemTitle = styled.div`
 
 export const ThemeItemSubtitle = styled.div`
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 10px;
   color: #cccccc;
   overflow: hidden;
   white-space: nowrap;

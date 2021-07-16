@@ -1,10 +1,12 @@
 {
     "default": {
         "title": "Arvis",
-        "subtitle": "Arvis Default Theme"
+        "subtitle": "Arvis Default Theme",
+        "icon_color": "#222222"
     },
     "macOsWhite": {
-        "title": "Arvis macOS white",
-        "subtitle": "Arvis Default Theme"
+        "title": "Arvis mac white",
+        "subtitle": "Arvis Default Theme",
+        "icon_color": "#fff"
     }
 }

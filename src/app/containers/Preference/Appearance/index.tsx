@@ -35,6 +35,7 @@ import {
   ThemeItemContainer,
   ThemeItemTitle,
   ThemeItemSubtitle,
+  ThemeItemIcon,
 } from './components';
 import {
   descriptionContainerStyle,
@@ -183,13 +184,18 @@ export default function Appearance() {
 
   const renderThemeItem = (themeInfo: any, fileName: string) => {
     if (!themeInfo) return <React.Fragment key={`pluginItem-${fileName}`} />;
-    const { title, subtitle } = themeInfo;
+    const { title, subtitle, icon_color } = themeInfo;
 
     return (
       <ThemeItemContainer
         key={`pluginItem-${fileName}`}
         onClick={(e) => themeItemClickHandler(fileName)}
       >
+        <ThemeItemIcon
+          style={{
+            backgroundColor: icon_color,
+          }}
+        />
         <ThemeItemTitle>{title}</ThemeItemTitle>
         <ThemeItemSubtitle>{subtitle}</ThemeItemSubtitle>
       </ThemeItemContainer>
@@ -206,7 +212,7 @@ export default function Appearance() {
       <BiExport
         className="theme-page-buttons"
         style={{ ...iconStyle, left: Number(iconStyle.left!) + 60 }}
-        onClick={async () => await requestExportTheme()}
+        onClick={async () => requestExportTheme()}
       />
       <BiImport
         className="theme-page-buttons"
