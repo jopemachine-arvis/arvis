@@ -10,8 +10,6 @@
 
 Arvis is still in the construction and there could be lots of bugs.
 
-It would be very helpful if you could put bugs on the issue.
-
 * ⚠️ Currently has [severe performance issue](https://github.com/jopemachine/arvis-core/issues/2) on mac
 
 **Table of Contents**
@@ -53,21 +51,13 @@ Click `Appearance` in the Preference window and import the `arvistheme` file or 
 
 Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
-Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
+Note that you should install some [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
-### mac installation issues
+* [Windows](./documents/how-to-install-windows.md)
 
-* Open mac's preference and `give appropriate permissions` to Arvis. (Including notification permissions, Full disk access permission)
+* [Mac](./documents/how-to-install-mac.md)
 
-### linux installation issues
-
-* Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) before install arvis.
-
-### arvis-linker issues
-
-* If permission error occurs when you try to install extension by npm command, open your shell `as administrator`.
-
-* Currently `followSymlink` is turned off to avoid [performance issue](https://github.com/jopemachine/arvis/issues/2). After installing extension by npm, you need to reload Arvis to apply the extension
+* [Linux](./documents/how-to-install-linux.md)
 
 ## 📓 What is Workflow, Plugin?
 
@@ -77,9 +67,9 @@ Note that you should install [Extensions](#take-a-look-at-useful-workflows-plugi
 
 ## 🌟 Take a look useful Workflows, Plugins
 
-* [Click me to check available Workflows](./documents/workflow-links.md)
+* [Click me to check available Workflows](https://github.com/jopemachine/arvis-store/blob/master/docs/workflow-links.md)
 
-* [Click me to check available Plugins](./documents/plugin-links.md)
+* [Click me to check available Plugins](https://github.com/jopemachine/arvis-store/blob/master/docs/plugin-links.md)
 
 ## 🔨 How to create new extensions
 
@@ -97,6 +87,6 @@ Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [alfred-to
 
 ## Contribution
 
-* Arvis is alpha version, needs contributions to improve quality. Open to all kinds of contributions.
+* Arvis is opened to all kinds of contributions.
 
 * Please feel free to create `bug`, `feature request` or other things in issue.

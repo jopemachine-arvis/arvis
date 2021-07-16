@@ -2,7 +2,7 @@
 
 ## Template
 
-This package is builded on [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+Arvis is builted with [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
 ## Other packages
 

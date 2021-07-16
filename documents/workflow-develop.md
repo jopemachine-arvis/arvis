@@ -4,7 +4,7 @@
 
 All changes in workflow, plugin folders's changes are being watched and reflected when they are created.
 
-## Use [arvish](https://github.com/jopemachine/arvish)
+## Use [arvish](https://github.com/jopemachine/arvish) to build your plugin
 
 1. Write proper `arvis-workflow.json`
 
@@ -34,9 +34,9 @@ Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extensio
 
 ## Available Environment variable
 
-Both `workflows` and `plugin` set environment variables when running scripts.
+Both `workflows` and `plugin` set useful environment variables when running scripts.
 
-You can use these variables in your script if needed.
+You can use the variables you want in your script
 
 [Click me to check Environment variables](./extension-env-description.md)
 

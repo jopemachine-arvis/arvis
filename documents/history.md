@@ -1,6 +1,6 @@
 # History
 
-Arvis supports providing `history` to execute different results in `extension` depending on the user's usage pattern.
+Arvis supports providing `history log`.
 
 In `plugin`, it would be provided as `second argument` of entry function,
 
@@ -16,7 +16,7 @@ In `workflow`, you can access the history file's path with environment variable 
 
 type: `number`
 
-Timestamp when the log was saved.
+Timestamp when the action is executed (when the log was saved).
 
 ### type
 

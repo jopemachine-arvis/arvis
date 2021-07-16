@@ -4,7 +4,7 @@
 
 All changes in workflow, plugin folders's changes are being watched and reflected when they are created.
 
-## Use [arvish](https://github.com/jopemachine/arvish)
+## Use [arvish](https://github.com/jopemachine/arvish) to build your plugin
 
 1. Write proper `arvis-plugin.json`
 
@@ -28,13 +28,13 @@ All changes in workflow, plugin folders's changes are being watched and reflecte
 
 `arvis-plugin.json` format is very similar with `arvis-workflow.json` format.
 
-The only differences are that there is `action` right away instead of `commands` and there is `main`.
+[Click me to check arvis-plugin.json format](./plugin-config-format.md)
 
 ### Action
 
 [Click me to check Action](./action-description.md)
 
-### Entry point of plugin
+### Entry point of plugin (`main`)
 
 The js file specified in `main` is entry point of the `plugin`, which means this is imported by `Arvis` in runtime.
 
@@ -52,7 +52,7 @@ module.exports = ({ inputStr, history }) => {
 };
 ```
 
-You can check [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
+You can check very simple [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
 
 #### Arguments
 
@@ -96,9 +96,9 @@ Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extensio
 
 ## Available Environment variable
 
-Both `workflows` and `plugin` set environment variables when running scripts.
+Both `workflows` and `plugin` set useful environment variables when running scripts.
 
-You can use these variables in your script if needed.
+You can use the variables you want in your script
 
 [Click me to check Environment variables](./extension-env-description.md)
 

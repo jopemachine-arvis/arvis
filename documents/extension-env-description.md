@@ -1,8 +1,10 @@
 # Extension environment variables
 
-Unlike Alfred, Arvis provides `$PATH` env to extension's scripts.
+Arvis provides `$PATH` env to extension's scripts in windows, linux, macos.
 
-Also provides below additional envs.
+Also provides below envs.
+
+Use the environment variables below to make your extension easier.
 
 ## Arvis extension environment variables
 
