@@ -13302,6 +13302,14 @@ untildify@^4.0.0:
   resolved "https://registry.yarnpkg.com/untildify/-/untildify-4.0.0.tgz#2bc947b953652487e4600949fb091e3ae8cd919b"
   integrity sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==
 
+unused-filename@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/unused-filename/-/unused-filename-3.0.0.tgz#f8aa01c94495ab06d7e9b9a79a1946d4f8e285a8"
+  integrity sha512-YJbSon9TiwV/80zn0iy3V3DAJL62GQgUTNexjfZS40D7N7BADhpkUCdfMS4d2VK5YT9WyEsDJVpTTTiMrdB50g==
+  dependencies:
+    escape-string-regexp "^4.0.0"
+    path-exists "^4.0.0"
+
 unzip-crx-3@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/unzip-crx-3/-/unzip-crx-3-0.2.0.tgz#d5324147b104a8aed9ae8639c95521f6f7cda292"

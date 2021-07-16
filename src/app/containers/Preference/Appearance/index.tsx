@@ -23,6 +23,7 @@ import {
 } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import _ from 'lodash';
+import unusedFilename from 'unused-filename';
 import {
   OuterContainer,
   ConfigContainer,
@@ -161,12 +162,14 @@ export default function Appearance() {
     setPreviewBackgroundColor(getRandomColor());
   };
 
-  const requestExportTheme = () => {
-    const defaultPath = path.resolve(homedir(), 'Desktop', `theme.arvistheme`);
+  const requestExportTheme = async () => {
+    const themeFilePath = await unusedFilename(
+      path.resolve(homedir(), 'Desktop', 'theme.arvistheme')
+    );
 
     ipcRenderer.send(IPCRendererEnum.saveFile, {
       title: 'Select path to export arvistheme',
-      defaultPath,
+      defaultPath: themeFilePath,
     });
   };
 
@@ -203,7 +206,7 @@ export default function Appearance() {
       <BiExport
         className="theme-page-buttons"
         style={{ ...iconStyle, left: Number(iconStyle.left!) + 60 }}
-        onClick={() => requestExportTheme()}
+        onClick={async () => await requestExportTheme()}
       />
       <BiImport
         className="theme-page-buttons"
