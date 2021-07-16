@@ -12,6 +12,7 @@ import './index.global.css';
 type IProps = {
   alwaysFocus: boolean;
   bestMatch?: string;
+  hasDragger?: boolean;
   draggerColor?: string;
   getInputProps?: Function;
   hasContextMenu?: boolean;
@@ -31,6 +32,7 @@ const SearchBar = (props: IProps) => {
     draggerColor,
     getInputProps,
     hasContextMenu,
+    hasDragger,
     isPinned,
     itemLeftPadding,
     searchbarAutomatchFontColor,
@@ -115,7 +117,7 @@ const SearchBar = (props: IProps) => {
           {bestMatch}
         </AutoMatch>
       )}
-      <SearchbarDragger color={draggerColor} />
+      {hasDragger && <SearchbarDragger color={draggerColor} />}
     </OuterContainer>
   );
 };
@@ -125,6 +127,7 @@ SearchBar.defaultProps = {
   draggerColor: '#fff',
   getInputProps: undefined,
   hasContextMenu: true,
+  hasDragger: false,
   isPinned: false,
   spinning: false,
 };

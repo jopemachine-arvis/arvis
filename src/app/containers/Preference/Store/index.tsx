@@ -232,6 +232,7 @@ export default function Store(props: IProps) {
         <SearchbarContainer>
           <SearchBar
             alwaysFocus={false}
+            hasDragger={false}
             getInputProps={getInputProps}
             hasContextMenu={false}
             isPinned={false}

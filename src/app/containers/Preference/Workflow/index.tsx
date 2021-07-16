@@ -545,6 +545,7 @@ export default function Workflow() {
           <SearchBar
             alwaysFocus={false}
             getInputProps={getInputProps}
+            hasDragger={false}
             hasContextMenu={false}
             isPinned={false}
             itemLeftPadding={style.searchBarStyle.itemLeftPadding}

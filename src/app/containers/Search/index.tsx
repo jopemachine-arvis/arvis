@@ -25,15 +25,16 @@ export default function SearchWindow() {
   const {
     icon_right_margin,
     item_background_color,
+    item_default_icon_color,
     item_font_color,
     item_height,
     item_left_padding,
     item_title_subtitle_margin,
     searchbar_automatch_font_color,
+    searchbar_dragger_color,
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
-    searchbar_dragger_color,
     search_window_border_radius,
     search_window_footer_height,
     search_window_scrollbar_color,
@@ -352,6 +353,7 @@ export default function SearchWindow() {
         <SearchBar
           alwaysFocus
           bestMatch={bestMatch}
+          hasDragger
           draggerColor={searchbar_dragger_color}
           getInputProps={getInputProps}
           isPinned={isPinned}
@@ -367,6 +369,7 @@ export default function SearchWindow() {
           footerHeight={search_window_footer_height}
           iconRightMargin={icon_right_margin}
           itemBackgroundColor={item_background_color}
+          itemDefaultIconColor={item_default_icon_color}
           itemFontColor={item_font_color}
           itemHeight={item_height}
           itemLeftPadding={item_left_padding}

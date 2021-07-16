@@ -531,6 +531,7 @@ export default function Plugin() {
         <SearchbarContainer>
           <SearchBar
             alwaysFocus={false}
+            hasDragger={false}
             getInputProps={getInputProps}
             hasContextMenu={false}
             isPinned={false}
