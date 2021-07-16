@@ -287,7 +287,7 @@ export default function Store(props: IProps) {
           >
             <TabList>
               <Tab>Basic info</Tab>
-              <Tab>Web view</Tab>
+              <Tab>Web page</Tab>
             </TabList>
             <TabPanel>
               <ExtensionInfoTable

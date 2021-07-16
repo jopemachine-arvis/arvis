@@ -7,3 +7,7 @@ Note that you should install some [Extensions](#take-a-look-at-useful-workflows-
 ### Installation issues
 
 * Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) before install arvis.
+
+### Recommends
+
+* Recommend to install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.

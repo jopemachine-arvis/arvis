@@ -6,6 +6,9 @@ Arvis cannot do anything without installing extensions.
 
 So first, recommend looking for useful extensions.
 
+You can look for and install lots of extensions through `store` page.
+
+
 ## Preference window
 
 You can manage your extensions or change config, appearance of search window on preference window.
@@ -16,31 +19,37 @@ You can manage your extensions or change config, appearance of search window on 
 
 Allows you to set basic settings for Arvis.
 
-Change the Arvis shortcut change the maximum number of items, or change fonts.
+You can change the Arvis shortcut, the maximum number of items, and fonts.
+
+Font can be set up system fonts installed in your OS.
 
 ### Workflows
 
 ![](./imgs/workflow-page.png)
 
-You can manage your workflows on this page.
+You can manage your installed workflows on this page.
 
-Check and edit your workflow's info, install, delete, export workflow file through the bottom bar.
+Check your workflow's info, install, delete file through the bottom bar.
 
 To open your extension's folder, right click on extension and select `Open in Finder`.
 
 You can also disable the extension by right-clicking on them, select `Disable`.
+
+Disabled extensions are not used on your search.
 
 ### Plugins
 
 ![](./imgs/plugin-page.png)
 
-You can manage your plugins on this page.
+You can manage your installed plugins on this page.
 
-Check and edit your plugin's info, install, delete, export plugin file through the bottom bar.
+Check your plugin's info, install, delete plugin file through the bottom bar.
 
 To open your extension's folder, right click on extension and select `Open in Finder`.
 
 You can also disable the extension by right-clicking on them, select `Disable`.
+
+Disabled extensions are not used on your search.
 
 ### Appearence
 
@@ -49,6 +58,14 @@ You can also disable the extension by right-clicking on them, select `Disable`.
 Change search window's style to your style.
 
 You can see search window's style update according to their setting values.
+
+### Store
+
+![](./imgs/store-page.png)
+
+You can look for and install lots of extensions through `store` page.
+
+Check the extension information on the web page and install the extension.
 
 ### Clipboard History
 
@@ -80,7 +97,9 @@ Search window is resizable horizontally.
 
 ### Pin window
 
-You can pin search window.
+You can pin search window if you want.
+
+This is useful when you want to pin window and check for some information.
 
 Right click on search window, and select `Pin window`.
 
@@ -107,3 +126,5 @@ To autocomplete command, press `tab`.
 You can look for and search your clipboard history through clipboard history window.
 
 Default shortcut in Mac, `cmd + opt + c`, in other platforms, `ctrl + alt + c`.
+
+You can also pin clipboard history window if you want.

@@ -8,7 +8,7 @@ Certain values in the Json file are replaced by arvis.
 
 ### `{query}`, `$1`, `$2`..
 
-`{query}` is replaced with user's query without the `command`.
+`{query}` is replaced with user's input (query not including the `command`).
 
 Example:
 ```json
