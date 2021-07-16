@@ -574,7 +574,7 @@ export default function Workflow() {
               <Tab>Trigger table</Tab>
               <Tab>User config</Tab>
               <Tab>README</Tab>
-              <Tab>Web view</Tab>
+              <Tab>Web page</Tab>
             </TabList>
             <TabPanel>
               <WorkflowInfoTable info={workflows[workflowBundleId]} />

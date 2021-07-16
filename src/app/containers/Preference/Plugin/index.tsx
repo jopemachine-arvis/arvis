@@ -559,7 +559,7 @@ export default function Plugin() {
               <Tab>Basic info</Tab>
               <Tab>User config</Tab>
               <Tab>README</Tab>
-              <Tab>Web view</Tab>
+              <Tab>Web page</Tab>
             </TabList>
             <TabPanel>
               <PluginInfoTable info={plugins[pluginBundleId]} />
