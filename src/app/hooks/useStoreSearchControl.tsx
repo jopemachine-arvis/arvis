@@ -33,8 +33,7 @@ const useStoreSearchControl = ({
   };
 
   /**
-   * @param {string} pressedKey
-   * @param {string} updatedInput
+   * @summary
    */
   const handleNormalInput = async (
     _originalItems: any[],
@@ -65,7 +64,6 @@ const useStoreSearchControl = ({
 
   /**
    * @param  {string} str
-   * @param  {needItemsUpdate} boolean
    */
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {

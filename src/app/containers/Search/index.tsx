@@ -33,6 +33,7 @@ export default function SearchWindow() {
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
+    searchbar_dragger_color,
     search_window_border_radius,
     search_window_footer_height,
     search_window_scrollbar_color,
@@ -351,6 +352,7 @@ export default function SearchWindow() {
         <SearchBar
           alwaysFocus
           bestMatch={bestMatch}
+          draggerColor={searchbar_dragger_color}
           getInputProps={getInputProps}
           isPinned={isPinned}
           itemLeftPadding={item_left_padding}

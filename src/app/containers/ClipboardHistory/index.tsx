@@ -182,6 +182,7 @@ export default function ClipboardHistoryWindow() {
       >
         <SearchBar
           alwaysFocus={false}
+          draggerColor="#fff"
           getInputProps={getInputProps}
           hasContextMenu={false}
           isPinned={false}

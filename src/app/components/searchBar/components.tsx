@@ -19,7 +19,7 @@ export const OuterContainer = styled.div`
   align-items: center;
 `;
 
-export const Dragger = styled.img`
+export const Dragger = styled.svg`
   display: flex;
   justify-content: flex-end;
   margin-right: 20px;

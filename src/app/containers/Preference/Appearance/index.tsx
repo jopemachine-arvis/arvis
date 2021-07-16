@@ -20,12 +20,18 @@ import {
   onNumberChangeHandler,
 } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import _ from 'lodash';
 import {
   OuterContainer,
   ConfigContainer,
   Header,
   PreviewContainer,
   PreviewMainContainer,
+  ThemeListContainer,
+  ThemeList,
+  ThemeItemContainer,
+  ThemeItemTitle,
+  ThemeItemSubtitle,
 } from './components';
 import {
   descriptionContainerStyle,
@@ -33,6 +39,13 @@ import {
   labelStyle,
   iconStyle,
 } from './style';
+
+const themes = require('./themes.json');
+
+const themeInfos = {
+  default: require('./Themes/default.json'),
+  macOsWhite: require('./Themes/macos-white.json'),
+};
 
 const mockItems = [
   {
@@ -66,6 +79,7 @@ export default function Appearance() {
     searchbar_font_color,
     searchbar_font_size,
     searchbar_height,
+    searchbar_dragger_color,
     search_window_border_radius,
     search_window_footer_height,
     search_window_scrollbar_color,
@@ -100,118 +114,115 @@ export default function Appearance() {
     fse.writeJSON(out, theme, { encoding: 'utf8', spaces: 4 });
   };
 
+  const applyTheme = (themeJson: any) => {
+    configChangeHandler(
+      createFormEvent(themeJson.icon_right_margin),
+      UIActionTypes.SET_ICON_RIGHT_MARGIN
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.item_background_color),
+      UIActionTypes.SET_ITEM_BACKGROUND_COLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.item_font_color),
+      UIActionTypes.SET_ITEM_FONTCOLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.item_height),
+      UIActionTypes.SET_ITEM_HEIGHT
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.item_left_padding),
+      UIActionTypes.SET_ITEM_LEFT_PADDING
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.item_title_subtitle_margin),
+      UIActionTypes.SET_TITLE_SUBTITLE_MARGIN
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.searchbar_font_color),
+      UIActionTypes.SET_SEARCHBAR_FONTCOLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.searchbar_font_size),
+      UIActionTypes.SET_SEARCHBAR_FONTSIZE
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.searchbar_height),
+      UIActionTypes.SET_SEARCHBAR_HEIGHT
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.search_window_border_radius),
+      UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.search_window_footer_height),
+      UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.search_window_transparency),
+      UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.search_window_width),
+      UIActionTypes.SET_SEARCH_WINDOW_WIDTH
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.selected_item_background_color),
+      UIActionTypes.SET_SELECTED_ITEM_BACKGROUND_COLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.selected_item_font_color),
+      UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.subtitle_font_size),
+      UIActionTypes.SET_SUBTITLE_FONTSIZE
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.title_font_size),
+      UIActionTypes.SET_TITLE_FONTSIZE
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.selected_item_font_color),
+      UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.search_window_scrollbar_color),
+      UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.search_window_scrollbar_width),
+      UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
+    );
+
+    configChangeHandler(
+      createFormEvent(themeJson.searchbar_automatch_font_color),
+      UIActionTypes.SET_AUTOMATCH_FONT_COLOR
+    );
+  };
+
   const importTheme = (themePath: string) => {
-    fse
-      .readJson(themePath)
-      .then((themeJson) => {
-        configChangeHandler(
-          createFormEvent(themeJson.icon_right_margin),
-          UIActionTypes.SET_ICON_RIGHT_MARGIN
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.item_background_color),
-          UIActionTypes.SET_ITEM_BACKGROUND_COLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.item_font_color),
-          UIActionTypes.SET_ITEM_FONTCOLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.item_height),
-          UIActionTypes.SET_ITEM_HEIGHT
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.item_left_padding),
-          UIActionTypes.SET_ITEM_LEFT_PADDING
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.item_title_subtitle_margin),
-          UIActionTypes.SET_TITLE_SUBTITLE_MARGIN
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.searchbar_font_color),
-          UIActionTypes.SET_SEARCHBAR_FONTCOLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.searchbar_font_size),
-          UIActionTypes.SET_SEARCHBAR_FONTSIZE
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.searchbar_height),
-          UIActionTypes.SET_SEARCHBAR_HEIGHT
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.search_window_border_radius),
-          UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.search_window_footer_height),
-          UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.search_window_transparency),
-          UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.search_window_width),
-          UIActionTypes.SET_SEARCH_WINDOW_WIDTH
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.selected_item_background_color),
-          UIActionTypes.SET_SELECTED_ITEM_BACKGROUND_COLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.selected_item_font_color),
-          UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.subtitle_font_size),
-          UIActionTypes.SET_SUBTITLE_FONTSIZE
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.title_font_size),
-          UIActionTypes.SET_TITLE_FONTSIZE
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.selected_item_font_color),
-          UIActionTypes.SET_SELECTED_ITEM_FONTCOLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.search_window_scrollbar_color),
-          UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.search_window_scrollbar_width),
-          UIActionTypes.SET_SEARCHWINDOW_SCROLLBAR_WIDTH
-        );
-
-        configChangeHandler(
-          createFormEvent(themeJson.searchbar_automatch_font_color),
-          UIActionTypes.SET_AUTOMATCH_FONT_COLOR
-        );
-
-        return null;
-      })
-      .catch(console.error);
+    fse.readJson(themePath).then(applyTheme).catch(console.error);
   };
 
   const ipcCallbackTbl = {
@@ -257,6 +268,25 @@ export default function Appearance() {
     ipcRenderer.send(IPCRendererEnum.importTheme);
   };
 
+  const themeItemClickHandler = (fileName: string) => {
+    applyTheme((themeInfos as any)[fileName]);
+  };
+
+  const renderThemeItem = (themeInfo: any, fileName: string) => {
+    if (!themeInfo) return <React.Fragment key={`pluginItem-${fileName}`} />;
+    const { title, subtitle } = themeInfo;
+
+    return (
+      <ThemeItemContainer
+        key={`pluginItem-${fileName}`}
+        onClick={(e) => themeItemClickHandler(fileName)}
+      >
+        <ThemeItemTitle>{title}</ThemeItemTitle>
+        <ThemeItemSubtitle>{subtitle}</ThemeItemSubtitle>
+      </ThemeItemContainer>
+    );
+  };
+
   return (
     <OuterContainer>
       <IoMdColorPalette
@@ -294,6 +324,7 @@ export default function Appearance() {
           <SearchBar
             alwaysFocus={false}
             hasContextMenu={false}
+            draggerColor={searchbar_dragger_color}
             itemLeftPadding={item_left_padding}
             searchbarAutomatchFontColor={searchbar_automatch_font_color}
             searchbarFontColor={searchbar_font_color}
@@ -326,6 +357,14 @@ export default function Appearance() {
           />
         </PreviewMainContainer>
       </PreviewContainer>
+      <ThemeListContainer>
+        <Header>Theme</Header>
+        <ThemeList>
+          {_.map(themes, (themeInfo, fileName) => {
+            return renderThemeItem(themeInfo, fileName);
+          })}
+        </ThemeList>
+      </ThemeListContainer>
       <ConfigContainer>
         <Header>Config</Header>
         <Form style={descriptionContainerStyle}>
@@ -524,6 +563,20 @@ export default function Appearance() {
               value={searchbar_automatch_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 configChangeHandler(e, UIActionTypes.SET_AUTOMATCH_FONT_COLOR)
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Searchbar dragger color</Label>
+            <StyledInput
+              type="color"
+              value={searchbar_dragger_color}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCHBAR_DRAGGER_COLOR
+                )
               }
             />
           </FormGroup>

@@ -1,17 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @typescript-eslint/ban-types */
+
 import { ipcRenderer } from 'electron';
 import React, { useEffect } from 'react';
-import DraggerImg from '../../../../assets/images/drag.svg';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
-import { OuterContainer, Input, Dragger, AutoMatch } from './components';
+import { OuterContainer, Input, AutoMatch } from './components';
+import SearchbarDragger from './dragger';
 import './index.global.css';
 
 type IProps = {
   alwaysFocus: boolean;
   bestMatch?: string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  draggerColor?: string;
   getInputProps?: Function;
+  hasContextMenu?: boolean;
   isPinned?: boolean;
   itemLeftPadding: number;
   searchbarAutomatchFontColor: string;
@@ -19,13 +22,13 @@ type IProps = {
   searchbarFontSize: number;
   searchbarHeight: number;
   spinning?: boolean;
-  hasContextMenu?: boolean;
 };
 
 const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
     bestMatch,
+    draggerColor,
     getInputProps,
     hasContextMenu,
     isPinned,
@@ -112,13 +115,14 @@ const SearchBar = (props: IProps) => {
           {bestMatch}
         </AutoMatch>
       )}
-      <Dragger src={DraggerImg} />
+      <SearchbarDragger color={draggerColor} />
     </OuterContainer>
   );
 };
 
 SearchBar.defaultProps = {
   bestMatch: '',
+  draggerColor: '#fff',
   getInputProps: undefined,
   hasContextMenu: true,
   isPinned: false,

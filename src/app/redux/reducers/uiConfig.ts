@@ -100,6 +100,11 @@ export default (state = {}, action: any) => {
         ...state,
         search_window_transparency: payload.arg,
       };
+    case UIConfigActionTypes.SET_SEARCHBAR_DRAGGER_COLOR:
+      return {
+        ...state,
+        searchbar_dragger_color: payload.arg,
+      };
     default:
       return state;
   }

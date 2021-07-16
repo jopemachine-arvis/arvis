@@ -11,7 +11,7 @@ export const OuterContainer = styled.div`
 `;
 
 export const PreviewContainer = styled.div`
-  width: 75%;
+  width: 60%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -36,6 +36,58 @@ export const Header = styled.div`
   justify-content: flex-start;
   align-items: center;
   font-size: 20px;
+`;
+
+export const ThemeListContainer = styled.div`
+  width: 15%;
+  padding-left: 15px;
+  user-select: none;
+  overflow-y: auto;
+`;
+
+export const ThemeItemContainer = styled.div`
+  height: 65px;
+  background-color: #222;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-bottom: 7px;
+  user-select: none;
+  position: relative;
+`;
+
+export const ThemeItemTitle = styled.div`
+  font-size: 14px;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+export const ThemeItemSubtitle = styled.div`
+  margin-top: 5px;
+  font-size: 12px;
+  color: #cccccc;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+export const ThemeList = styled.div`
+  background-color: #1f2228;
+  border-radius: 10px;
+  margin-left: 15px;
+  padding-bottom: 20px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 20px;
+  overflow: auto;
+  height: 78%;
 `;
 
 export const ConfigContainer = styled.div`

@@ -1,0 +1,10 @@
+{
+    "default": {
+        "title": "Arvis",
+        "subtitle": "Arvis Default Theme"
+    },
+    "macOsWhite": {
+        "title": "Arvis macOS white",
+        "subtitle": "Arvis Default Theme"
+    }
+}

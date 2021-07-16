@@ -33,10 +33,17 @@ export const actionTypes = {
     '@uiConfig/SET_SEARCHWINDOW_SCROLLBAR_WIDTH',
 
   SET_ICON_RIGHT_MARGIN: '@uiConfig/SET_ICON_RIGHT_MARGIN',
+
+  SET_SEARCHBAR_DRAGGER_COLOR: '@uiConfig/SET_SEARCHBAR_DRAGGER_COLOR',
 };
 
 export const setSearchWindowScrollbarColor = makeActionCreator(
   actionTypes.SET_SEARCHWINDOW_SCROLLBAR_COLOR,
+  'arg'
+);
+
+export const setSearchbarDraggerColor = makeActionCreator(
+  actionTypes.SET_SEARCHBAR_DRAGGER_COLOR,
   'arg'
 );
 
