@@ -197,6 +197,7 @@ export default function ClipboardHistoryWindow() {
           demo
           footerHeight={style.footerHeight}
           iconRightMargin={0}
+          itemDefaultIconColor="#fff"
           itemBackgroundColor="#ccc"
           itemFontColor="#888888"
           itemHeight={style.itemHeight}

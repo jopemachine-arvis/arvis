@@ -3,6 +3,7 @@
     "item_background_color": "#FFFFFF",
     "item_font_color": "#000000",
     "item_height": 67,
+    "item_default_icon_color": "#000000",
     "item_left_padding": 15,
     "item_title_subtitle_margin": 3,
     "searchbar_automatch_font_color": "#888",

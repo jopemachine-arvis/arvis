@@ -1,10 +1,17 @@
-import { IpcMainEvent, app } from 'electron';
+import { IpcMainEvent, app, Notification } from 'electron';
 
-/**
- * @param  {string} modifier
- */
 export const reloadApplication = (e: IpcMainEvent) => {
   // On linux, reloading not works (just quit the app)
-  app.relaunch();
+  // Reload cause several bugs.
+  // So just alert user restart arvis
+  // app.relaunch();
+
+  console.log('Should restart..');
+
+  new Notification({
+    title: 'Restart Arvis',
+    body: 'Force termination due to some updates that can only take effect when Arvis is restarted. Just restart Arvis.',
+  }).show();
+
   app.quit();
 };

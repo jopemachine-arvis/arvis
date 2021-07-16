@@ -1,22 +1,22 @@
 /* eslint-disable no-continue */
 /* eslint-disable promise/no-nesting */
 /* eslint-disable no-restricted-syntax */
-import { Core } from 'arvis-core';
 import path from 'path';
 import pathExists from 'path-exists';
 import fse from 'fs-extra';
+import parseJson from 'parse-json';
+import { arvisReduxStoreResetFlagPath } from '../config/path';
 import initialState from '../config/initialState';
 import { electronStore } from './electronStorage';
 
 export const reduxStoreResetHandler = () => {
-  const resetFile = path.resolve(Core.path.tempPath, 'arvis-redux-store-reset');
-  const updatedInitialState = initialState;
+  const updatedInitialState = { ...initialState };
 
-  pathExists(resetFile)
+  pathExists(arvisReduxStoreResetFlagPath)
     .then((shouldBeReset) => {
       if (shouldBeReset) {
         fse
-          .readJSON(resetFile)
+          .readJSON(arvisReduxStoreResetFlagPath)
           .then((prevStore) => {
             // Assume:: store tree has outer objects and have inner objects in it.
 
@@ -34,16 +34,22 @@ export const reduxStoreResetHandler = () => {
               }
             }
 
-            fse.writeJsonSync(
-              path.resolve(electronStore.path),
-              updatedInitialState,
-              {
-                encoding: 'utf8',
-                spaces: 4,
-              }
-            );
+            const conf = {
+              ...parseJson(electronStore.get('persist:root') as string),
+              ...updatedInitialState,
+            };
 
-            fse.removeSync(resetFile);
+            electronStore.set('persist:root', JSON.stringify(conf));
+
+            // fse.writeJsonSync(
+            //   path.resolve(electronStore.path),
+            //   updatedInitialState,
+            //   {
+            //     encoding: 'utf8',
+            //   }
+            // );
+
+            // fse.remove(arvisReduxStoreResetFlagPath);
             return null;
           })
           .catch(console.error);

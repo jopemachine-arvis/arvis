@@ -75,6 +75,7 @@ export default function Appearance() {
   const {
     icon_right_margin,
     item_background_color,
+    item_default_icon_color,
     item_font_color,
     item_height,
     item_left_padding,
@@ -251,6 +252,7 @@ export default function Appearance() {
             footerHeight={search_window_footer_height}
             iconRightMargin={icon_right_margin}
             itemBackgroundColor={item_background_color}
+            itemDefaultIconColor={item_default_icon_color}
             itemFontColor={item_font_color}
             itemHeight={item_height}
             itemLeftPadding={item_left_padding}

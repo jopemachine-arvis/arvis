@@ -61,7 +61,7 @@ const handleLoggerSetting = () => {
 /**
  * @param  {Store} store
  * @param  {any} persistor
- * @param  {History} history
+ * @param  {History<State>} history
  * @param  {string} windowName
  */
 const RootRouter = ({ store, persistor, history, windowName }: IProps) => {

@@ -43,7 +43,7 @@ Some files are used as flags to forward command to Arvis.
 
 1. `arvis-redux-store-reset`
 
-Path: `temp` path of the [env-paths]
+Path: `data` path of the [env-paths]
 
 Used to reset redux store.
 

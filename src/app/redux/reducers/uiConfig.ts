@@ -5,6 +5,11 @@ const { actionTypes: UIConfigActionTypes } = UIConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
+    case UIConfigActionTypes.SET_ITEM_DEFAULT_ICON_COLOR:
+      return {
+        ...state,
+        item_default_icon_color: payload.arg,
+      };
     case UIConfigActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_COLOR:
       return {
         ...state,

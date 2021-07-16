@@ -6,7 +6,8 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
 import pathExists from 'path-exists';
-import DefaultImg from '../../../../assets/images/itemDefaultIcon.svg';
+import DefaultImg from './defaultIcon';
+import IconNotFoundImg from '../../../../assets/images/iconNotFound.png';
 import {
   InnerContainer,
   OuterContainer,
@@ -23,6 +24,7 @@ type IProps = {
   icon?: string | undefined;
   iconRightMargin: number;
   itemBackgroundColor: string;
+  itemDefaultIconColor?: string;
   itemFontColor: string;
   itemHeight: number;
   itemLeftPadding: number;
@@ -52,6 +54,7 @@ const SearchResultItem = (props: IProps) => {
     extensionDefaultIcon,
     icon,
     iconRightMargin,
+    itemDefaultIconColor,
     itemFontColor,
     itemHeight,
     itemLeftPadding,
@@ -92,12 +95,16 @@ const SearchResultItem = (props: IProps) => {
       return iconElem;
     }
 
+    if (!icon && !extensionDefaultIcon) {
+      return <DefaultImg styleProp={iconStyle} color={itemDefaultIconColor} />;
+    }
+
     return (
       <IconImg
         id={`searchResultItemIcon-${offset}`}
         ref={iconRef}
         style={iconStyle}
-        src={icon ?? extensionDefaultIcon ?? DefaultImg}
+        src={icon ?? extensionDefaultIcon}
         onError={async (e) => {
           if (
             extensionDefaultIcon &&
@@ -113,12 +120,12 @@ const SearchResultItem = (props: IProps) => {
               document.getElementById(
                 `searchResultItemIcon-${offset}`
               )! as HTMLImageElement
-            ).src = DefaultImg;
+            ).src = IconNotFoundImg;
           }
         }}
       />
     );
-  }, [valid, icon]);
+  }, [valid, icon, itemDefaultIconColor]);
 
   const getOffsetText = useCallback(() => {
     return process.platform === 'darwin'
@@ -189,6 +196,7 @@ SearchResultItem.defaultProps = {
   autocomplete: undefined,
   extensionDefaultIcon: undefined,
   icon: undefined,
+  itemDefaultIconColor: '#fff',
   noShowIcon: false,
   text: undefined,
   valid: true,

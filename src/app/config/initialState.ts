@@ -10,6 +10,7 @@ export default {
   ui_config: {
     icon_right_margin: 10,
     item_background_color: '#272727',
+    item_default_icon_color: '#FFFFFF',
     item_font_color: '#C9C9C9',
     item_height: 67,
     item_left_padding: 15,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Dispatch as ReduxDispatch, Store as ReduxStore, Action } from 'redux';
 
 export type StateType = {
@@ -11,15 +12,16 @@ export type StateType = {
   ui_config: {
     icon_right_margin: number;
     item_background_color: string;
+    item_default_icon_color: string;
     item_font_color: string;
     item_height: number;
     item_left_padding: number;
     item_title_subtitle_margin: number;
     searchbar_automatch_font_color: string;
+    searchbar_dragger_color: string;
     searchbar_font_color: string;
     searchbar_font_size: number;
     searchbar_height: number;
-    searchbar_dragger_color: string;
     search_window_border_radius: number;
     search_window_footer_height: number;
     search_window_scrollbar_color: string;
@@ -45,7 +47,6 @@ export type StateType = {
     hotkey: string;
     max_show: number;
     max_size: number;
-    // eslint-disable-next-line @typescript-eslint/ban-types
     store: object[];
   };
 };

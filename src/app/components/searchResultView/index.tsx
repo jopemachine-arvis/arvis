@@ -13,6 +13,7 @@ type IProps = {
   footerHeight: number;
   iconRightMargin: number;
   itemBackgroundColor: string;
+  itemDefaultIconColor: string;
   itemFontColor: string;
   itemHeight: number;
   itemLeftPadding: number;
@@ -41,6 +42,7 @@ const SearchResultView = (props: IProps) => {
     footerHeight,
     iconRightMargin,
     itemBackgroundColor,
+    itemDefaultIconColor,
     itemFontColor,
     itemHeight,
     itemLeftPadding,
@@ -95,6 +97,7 @@ const SearchResultView = (props: IProps) => {
               extensionDefaultIcon={Core.determineDefaultIconPath(command)}
               iconRightMargin={iconRightMargin}
               itemBackgroundColor={itemBackgroundColor}
+              itemDefaultIconColor={itemDefaultIconColor}
               itemFontColor={itemFontColor}
               itemHeight={itemHeight}
               itemLeftPadding={itemLeftPadding}

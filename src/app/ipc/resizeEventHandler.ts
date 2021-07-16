@@ -1,6 +1,7 @@
 import { WindowManager } from '../windows/windowManager';
 
 /**
+ * @param  {number} windowWidth
  * @param  {number} itemCount
  * @param  {number} maxItemCount
  * @param  {number} itemHeight

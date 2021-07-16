@@ -3,6 +3,7 @@ import makeActionCreator from '@utils/makeActionCreator';
 export const actionTypes = {
   SET_ICON_RIGHT_MARGIN: '@UI_CONFIG/SET_ICON_RIGHT_MARGIN',
   SET_ITEM_BACKGROUND_COLOR: '@UI_CONFIG/SET_ITEM_BACKGROUND_COLOR',
+  SET_ITEM_DEFAULT_ICON_COLOR: '@UI_CONFIG/SET_ITEM_DEFAULT_ICON_COLOR',
   SET_ITEM_FONT_COLOR: '@UI_CONFIG/SET_ITEM_FONT_COLOR',
   SET_ITEM_HEIGHT: '@UI_CONFIG/SET_ITEM_HEIGHT',
   SET_ITEM_LEFT_PADDING: '@UI_CONFIG/SET_ITEM_LEFT_PADDING',
@@ -30,6 +31,11 @@ export const actionTypes = {
 
 export const setSearchWindowScrollbarColor = makeActionCreator(
   actionTypes.SET_SEARCH_WINDOW_SCROLLBAR_COLOR,
+  'arg'
+);
+
+export const setIconDefaultIconColor = makeActionCreator(
+  actionTypes.SET_ITEM_DEFAULT_ICON_COLOR,
   'arg'
 );
 

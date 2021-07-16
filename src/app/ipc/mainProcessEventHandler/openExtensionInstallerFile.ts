@@ -3,9 +3,6 @@
 import { app, IpcMainEvent } from 'electron';
 import { openArvisFile } from '../../helper/openArvisFileHandler';
 
-/**
- * @param  {string} modifier
- */
 export const openExtensionInstallerFile = (
   e: IpcMainEvent,
   { path }: { path: string }
