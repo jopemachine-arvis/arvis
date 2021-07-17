@@ -140,6 +140,12 @@ export default (mainWindow: BrowserWindow) => {
           );
         },
       },
+      {
+        label: 'Chat on Gitter',
+        click() {
+          shell.openExternal('https://gitter.im/arvis-gitter/community');
+        },
+      },
     ],
   };
 
