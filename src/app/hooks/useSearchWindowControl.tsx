@@ -150,7 +150,7 @@ const useSearchWindowControl = ({
   }) => {
     // auto script filter executing should be started from first item
     if (itemArr.length === 0) return;
-    const firstItem = itemArr[0];
+    const firstItem = itemArr[0] as Command;
     if (firstItem.type !== 'scriptFilter') return;
 
     const hasRequiredArg =
@@ -211,15 +211,15 @@ const useSearchWindowControl = ({
       else if (actionFlowManager.getTopTrigger().type === 'scriptFilter') {
         const scriptfilterShouldBeReRun =
           Core.hasRequiredArg({
-            item: actionFlowManager.getTopTrigger().actionTrigger,
+            item: actionFlowManager.getTopTrigger().actionTrigger as Command,
             inputStr: updatedInput,
           }) &&
           Core.isInputMeetWithspaceCond({
-            item: actionFlowManager.getTopTrigger().actionTrigger,
+            item: actionFlowManager.getTopTrigger().actionTrigger as Command,
             inputStr: updatedInput,
           }) &&
           !Core.isArgTypeNoButHaveArg({
-            item: actionFlowManager.getTopTrigger().actionTrigger,
+            item: actionFlowManager.getTopTrigger().actionTrigger as Command,
             inputStr: updatedInput,
           });
 

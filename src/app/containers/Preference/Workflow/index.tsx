@@ -19,6 +19,7 @@ import fse from 'fs-extra';
 import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Button } from 'reactstrap';
 import { JsonEditor } from 'jsoneditor-react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
@@ -626,16 +627,25 @@ export default function Workflow() {
               }}
             >
               {webviewUrl && (
-                <webview
-                  id="webview"
-                  src={webviewUrl}
-                  allowFullScreen={false}
-                  style={{
-                    marginTop: 16,
-                    width: '90%',
-                    height: '100%',
-                  }}
-                />
+                <>
+                  <webview
+                    id="webview"
+                    src={webviewUrl}
+                    allowFullScreen={false}
+                    style={{
+                      marginTop: 16,
+                      width: '90%',
+                      height: '100%',
+                    }}
+                  />
+                  <Button
+                    size="sm"
+                    style={style.openWebButton}
+                    onClick={() => open(webviewUrl)}
+                  >
+                    Open with your browser
+                  </Button>
+                </>
               )}
               {!webviewUrl && <div>There is no web address</div>}
             </TabPanel>

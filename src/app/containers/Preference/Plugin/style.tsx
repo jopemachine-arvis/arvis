@@ -63,6 +63,18 @@ export const defaultIconStyle: React.CSSProperties = {
   left: 15,
 };
 
+export const openWebButton: React.CSSProperties = {
+  width: '90%',
+  marginTop: 10,
+  flexDirection: 'row',
+  fontSize: 14,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#fff',
+  color: '#000',
+};
+
 export const searchBarStyle = {
   itemHeight: 35,
   footerHeight: 15,

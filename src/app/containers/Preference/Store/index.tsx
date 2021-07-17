@@ -13,6 +13,7 @@ import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { IoMdRefresh } from 'react-icons/io';
 import semver from 'semver';
+import { Button } from 'reactstrap';
 import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { SpinnerContext } from '@helper/spinnerContext';
@@ -307,16 +308,25 @@ export default function Store(props: IProps) {
               }}
             >
               {webviewUrl && (
-                <webview
-                  id="webview"
-                  src={webviewUrl}
-                  allowFullScreen={false}
-                  style={{
-                    marginTop: 16,
-                    width: '90%',
-                    height: '100%',
-                  }}
-                />
+                <>
+                  <webview
+                    id="webview"
+                    src={webviewUrl}
+                    allowFullScreen={false}
+                    style={{
+                      marginTop: 16,
+                      width: '90%',
+                      height: '100%',
+                    }}
+                  />
+                  <Button
+                    size="sm"
+                    style={style.openWebButton}
+                    onClick={() => open(webviewUrl)}
+                  >
+                    Open with your browser
+                  </Button>
+                </>
               )}
               {!webviewUrl && <div>There is no web address</div>}
             </TabPanel>

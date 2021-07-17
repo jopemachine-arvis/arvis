@@ -388,6 +388,20 @@ export default function Appearance() {
           </FormGroup>
 
           <FormGroup style={formGroupStyle}>
+            <Label style={labelStyle}>Default item icon color</Label>
+            <StyledInput
+              type="color"
+              value={item_default_icon_color}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                configChangeHandler(
+                  e,
+                  UIActionTypes.SET_ITEM_DEFAULT_ICON_COLOR
+                )
+              }
+            />
+          </FormGroup>
+
+          <FormGroup style={formGroupStyle}>
             <Label style={labelStyle}>Selected item background color</Label>
             <StyledInput
               type="color"

@@ -2855,10 +2855,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.8.7:
-  version "0.8.7"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.8.7.tgz#75b7f7f2e544400dfbbef9d523be713909148835"
-  integrity sha512-5/40SH/bIdmzbhj0tSNh8sySWOSj+pNwWIfnP1BUG6WwIoz2eQlbqgpcKFxeJaZRap81w/NEXaEQ9Kih/NKtkw==
+arvis-core@^0.8.8:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.8.8.tgz#5f846a0445c1d5ca0fc2f6475ca21086aae0d055"
+  integrity sha512-luoPtam7hWG7uXz1VziYg72kvnkBbGBW7jjSQK0nuCCYqdOWSyJOThzSoOyLu9rN9d4+7vkaR9zy0L+UOdXoiA==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
@@ -2899,10 +2899,10 @@ arvis-extension-validator@^0.2.2:
     jsonschema "^1.4.0"
     meow "^5.0.0"
 
-arvis-store@^0.2.8:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.2.9.tgz#39992b50728c422a643743077d2d861d06694496"
-  integrity sha512-gl+etvwCyod4LyFAwWsGlr3i4dpubN75Ymv/cUQAJNjkz1faTis1wiaji8aRAFeyyDrVdnCWkDSiYRW3aQOONQ==
+arvis-store@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.2.10.tgz#ce2d567f06052e0ec9d38d8095c0a3f7f021b350"
+  integrity sha512-YqbaTCa6t5HQHv6yt3YytPcPRf25HH+S/1qHRpsucTd+k6wrJV01qjHt9/0UWuFcCnCa5vrhGnkuGHo2Jo3TzA==
   dependencies:
     "@octokit/core" "^3.5.1"
     "@octokit/rest" "^18.6.6"
