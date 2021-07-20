@@ -8,6 +8,8 @@ Use the environment variables below to make your extension easier.
 
 ## Arvis extension environment variables
 
+Meta informations about Arvis and the extensions.
+
 ### arvis_version
 
 Version of arvis

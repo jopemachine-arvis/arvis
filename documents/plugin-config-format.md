@@ -21,9 +21,9 @@ Example:
 
 ### variables
 
-You can set `variables` in your scriptfilter's script or workflow-config file.
+You can set `variables` in your scriptfilter's script or plugin-config file.
 
-All variable could be used in form of `{var:some_var}`.
+All variable could be used in form of `{var:some_var}` in the config file.
 
 ## Json schema
 
@@ -84,6 +84,8 @@ Used to default icon in the plugin.
 type: `string`
 
 required: `false`
+
+Category of the extension.
 
 ### description
 

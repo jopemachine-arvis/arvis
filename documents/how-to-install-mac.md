@@ -1,4 +1,4 @@
-## 🌈 How to Install
+# 🌈 How to Install
 
 1. Install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.
 
@@ -12,6 +12,6 @@
 
 ![](./imgs/build-macos-description-1.png)
 
-### Tip
+## Tip
 
 * If the extensions you want to install is uploaded to npm, you can also install them by `npm install` command.

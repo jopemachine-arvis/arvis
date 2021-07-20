@@ -8,6 +8,8 @@ So first, recommend looking for useful extensions.
 
 You can look for and install lots of extensions through `store` page.
 
+First, recommend searching for `plugins`.
+
 ## Preference window
 
 You can manage your extensions or change config, appearance of search window on preference window.
@@ -36,6 +38,26 @@ You can also disable the extension by right-clicking on them, select `Disable`.
 
 Disabled extensions are not used on your search.
 
+#### Basic info
+
+You can check the extension's basic information like creator, name, description, version.
+
+#### Trigger table
+
+In the trigger table, you can change or add triggers for specific commands
+
+#### User config
+
+You can set the extension's User config value (variables) like API key.
+
+#### README
+
+You can check README of the extension.
+
+#### Web page
+
+You can check web page of the extension.
+
 ### Plugins
 
 ![](./imgs/plugin-page.png)
@@ -50,6 +72,22 @@ You can also disable the extension by right-clicking on them, select `Disable`.
 
 Disabled extensions are not used on your search.
 
+#### Basic info
+
+You can check the extension's basic information like creator, name, description, version.
+
+#### User config
+
+You can set the extension's User config value (variables) like API key.
+
+#### README
+
+You can check README of the extension.
+
+#### Web page
+
+You can check web page of the extension.
+
 ### Appearence
 
 ![](./imgs/appearance-page.png)
@@ -58,13 +96,17 @@ Change search window's style to your style.
 
 You can see search window's style update according to their setting values.
 
+You can also import the `arvistheme` file to set predetermined setting values.
+
+Or just click `theme` button to set predetermined setting values.
+
 ### Store
 
 ![](./imgs/store-page.png)
 
 You can look for and install lots of extensions through `store` page.
 
-Check the extension information on the web page and install the extension.
+Check the extension information on the web page and install, update the extension.
 
 ### Clipboard History
 

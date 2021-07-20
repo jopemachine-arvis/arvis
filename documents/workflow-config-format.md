@@ -34,7 +34,7 @@ and `$1` is `abc`, `$2` is `def`.
 
 You can set `variables` in your scriptfilter's script or workflow-config file.
 
-All variable could be used in form of `{var:some_var}`.
+All variable could be used in form of `{var:some_var}` in the config file.
 
 Example:
 ```json
@@ -108,11 +108,7 @@ type: `string`
 
 required: `false`
 
-### category
-
-type: `string`
-
-required: `false`
+Category of the extension.
 
 ### description
 

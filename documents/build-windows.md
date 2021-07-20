@@ -1,4 +1,4 @@
-# How to build on Windows 10
+# How to build on Windows
 
 ## Prerequisite
 
