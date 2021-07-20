@@ -40,7 +40,15 @@ You can use the variables you want in your script
 
 [Click me to check Environment variables](./extension-env-description.md)
 
-## Convert alfredworkflow to arvisworkflow
+## Alfred-workflow Compatibility
+
+* Basically, `Arvis` use same [JSON Scriptfilter Format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
+
+* This means you may easily change the alfred-workflow to arvis-workflow. 
+
+* Especially if the workflow is builded on [alfy](https://github.com/sindresorhus/alfy), you can convert workflow more easily using [arvish](https://github.com/jopemachine/arvish), the clone version of alfy. 
+
+### Convert alfredworkflow to arvisworkflow
 
 Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [alfred-to-arvis](https://github.com/jopemachine/alfred-to-arvis) 
 

@@ -9,7 +9,7 @@
 
 Arvis is cross-platform launcher application that aims to help you run, edit, create any workflow simple.
 
-## 🔆 Hightlights
+## 🔆 Highlights
 
 * Runs on cross-platform.
 
@@ -36,7 +36,8 @@ Arvis is still in the construction and there could be lots of bugs.
 - [3. What is Workflow, Plugin?](#-what-is-workflow-plugin)
 - [4. Take a look at useful Workflows, Plugins](#-take-a-look-useful-workflows-plugins)
 - [5. How to create new Workflows, Plugins](#-how-to-create-new-extensions)
-- [6. Build and development](#-build-and-development)
+- [6. Change appearance](#-change-appearance)
+- [7. Build and development](#-build-and-development)
 
 ## 💬 What is Arvis? why it is needed?
 
@@ -49,20 +50,6 @@ I've thought many useful alfred-workflows can run in "cross-platform", that's wh
 `Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
 * [Click me to check basic usage of Arvis](./documents/basic-usage.md)
-
-### 📝 Alfred-workflow Compatibility
-
-* Basically, `Arvis` use same [JSON Scriptfilter Format](https://www.alfredapp.com/help/workflows/inputs/script-filter/) with Alfred-workflows.
-
-* This means you may easily change the alfred-workflow to arvis-workflow. 
-
-* Especially if the workflow is builded on [alfy](https://github.com/sindresorhus/alfy), you can convert workflow more easily using [arvish](https://github.com/jopemachine/arvish), the clone version of alfy. 
-
-### ✨ Change appearance
-
-You can change Arvis search window's appearance to some extent.
-
-Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
 ## 🌈 How to Install
 
@@ -84,15 +71,21 @@ Note that you should install some [Extensions](#take-a-look-at-useful-workflows-
 
 ## 🌟 Take a look useful Workflows, Plugins
 
-* [Click me to check available Workflows](https://github.com/jopemachine/arvis-store/blob/master/docs/workflow-links.md)
+* [Click me to check useful Workflows](https://github.com/jopemachine/arvis-store/blob/master/docs/workflow-links.md)
 
-* [Click me to check available Plugins](https://github.com/jopemachine/arvis-store/blob/master/docs/plugin-links.md)
+* [Click me to check useful Plugins](https://github.com/jopemachine/arvis-store/blob/master/docs/plugin-links.md)
 
 ## 🔨 How to create new extensions
 
 * [Click me to check how to create new Workflows](./documents/workflow-develop.md)
 
 * [Click me to check how to create new Plugins](./documents/plugin-develop.md)
+
+## ✨ Change appearance
+
+You can change Arvis search window's appearance to some extent.
+
+Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
 ## 🔧 Build and development
 
