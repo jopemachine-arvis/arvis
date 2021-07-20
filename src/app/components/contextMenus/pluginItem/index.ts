@@ -22,7 +22,7 @@ class PluginContextMenu extends Menu {
       super.append(
         new MenuItem({
           type: 'normal',
-          label: targetItem.pluginEnabled ? `Disable` : 'Enable',
+          label: targetItem.pluginEnabled ? 'Disable' : 'Enable',
           toolTip: targetItem.pluginEnabled
             ? 'Disable selected plugin'
             : 'Enable selected plugin',

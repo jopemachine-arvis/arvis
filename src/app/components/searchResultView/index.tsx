@@ -91,10 +91,10 @@ const SearchResultView = (props: IProps) => {
             <SearchResultItem
               arg={command.arg}
               autocomplete={command.autocomplete}
+              extensionDefaultIcon={Core.determineDefaultIconPath(command)}
               icon={Core.determineIconPath(command, {
                 supportedImgFormats,
               })}
-              extensionDefaultIcon={Core.determineDefaultIconPath(command)}
               iconRightMargin={iconRightMargin}
               itemBackgroundColor={itemBackgroundColor}
               itemDefaultIconColor={itemDefaultIconColor}

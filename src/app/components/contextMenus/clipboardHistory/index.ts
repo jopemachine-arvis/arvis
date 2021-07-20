@@ -30,6 +30,7 @@ class ClipboardHistoryContextMenu extends Menu {
             WindowManager.getInstance()
               .getClipboardHistoryWindow()
               .setAlwaysOnTop(false);
+
             WindowManager.getInstance()
               .getClipboardHistoryWindow()
               .on('blur', blurEventHandler);

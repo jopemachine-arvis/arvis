@@ -6,7 +6,7 @@
 
 3. Right click Arvis icon and click `Open as administrator`.
 
-4. Right click Arvis's tray icon and click preference.
+4. Right click Arvis's tray icon and click `Preference`.
 
 5. Click Store page and install extensions you want.
 

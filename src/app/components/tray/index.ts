@@ -63,12 +63,6 @@ export default class TrayBuilder {
     const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
     this.tray.setContextMenu(contextMenu);
 
-    this.tray.on('click', (e: Electron.KeyboardEvent) => {
-      if (process.platform !== 'darwin') {
-        toggleSearchWindow({ showsUp: true });
-      }
-    });
-
     this.tray.on('double-click', () => {
       if (process.platform !== 'darwin') {
         const preferenceWindow =

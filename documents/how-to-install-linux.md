@@ -8,6 +8,6 @@
 
 3. Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
-4. Right click Arvis's tray icon and click preference.
+4. Right click Arvis's tray icon and click `Preference`.
 
 5. Click Store page and install extensions you want.

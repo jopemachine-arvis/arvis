@@ -23,7 +23,7 @@ class WorkflowItemContextMenu extends Menu {
       super.append(
         new MenuItem({
           type: 'normal',
-          label: targetItem.workflowEnabled ? `Disable` : 'Enable',
+          label: targetItem.workflowEnabled ? 'Disable' : 'Enable',
           toolTip: targetItem.workflowEnabled
             ? 'Disable selected workflow'
             : 'Enable selected workflow',
