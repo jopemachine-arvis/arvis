@@ -1,6 +1,6 @@
 # Scriptfilter item JSON format
 
-`Arvis` use scriptfilter JSON format same with `Alfred-workflow`
+`Arvis` use same scriptfilter JSON format with `Alfred-workflow`
 
 ## title
 

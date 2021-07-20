@@ -22,4 +22,6 @@ $ yarn replace-prebuilt
 
 ## How to package app
 
+Some features must also be tested separately in production.
+
 1. `yarn package`

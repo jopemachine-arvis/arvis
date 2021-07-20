@@ -72,4 +72,4 @@ This logic is incomplete and not necessary in new extensions.
 
 ## Arvish
 
-If you are familiar with `Alfy`, you can try to use [arvish](https://github.com/jopemachine/arvish) in your js scripts.
+If you are using node in your workflow, you can try to use [arvish](https://github.com/jopemachine/arvish) in your js scripts.

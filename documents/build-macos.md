@@ -22,5 +22,7 @@ $ yarn replace-prebuilt
 
 ## How to package app
 
-1. `yarn package-dev`
+Some features must also be tested separately in production.
+
+1. `export CSC_IDENTITY_AUTO_DISCOVERY=false && yarn package`
 

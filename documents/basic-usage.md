@@ -8,7 +8,6 @@ So first, recommend looking for useful extensions.
 
 You can look for and install lots of extensions through `store` page.
 
-
 ## Preference window
 
 You can manage your extensions or change config, appearance of search window on preference window.
