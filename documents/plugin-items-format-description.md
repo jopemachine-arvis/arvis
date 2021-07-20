@@ -1,5 +1,7 @@
 # Plugin items format
 
+The `main` function of the plug-in must return an array of below format.
+
 ## title
 
 type: `string`

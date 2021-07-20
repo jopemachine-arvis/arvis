@@ -69,6 +69,8 @@ required: `true`
 
 Entry js file of the plugin.
 
+Must return item array of [plugin item format](./plugin-items-format-description.md).
+
 ### defaultIcon
 
 type: `string`
@@ -89,11 +91,17 @@ type: `string`
 
 required: `false`
 
+Description item displayed in the Store
+
 ### readme
 
 type: `string`
 
 required: `false`
+
+README string.
+
+Users can view README in their README view
 
 ### version
 
@@ -101,7 +109,7 @@ type: `string`
 
 required: `false`
 
-Recommend to using semantic versioning.
+Extension's semantic version.
 
 ### latest
 
@@ -113,17 +121,21 @@ If `latest` exists, and this is latest than `version`,
 
 Arvis notify this extension is updatable when user Arvis started up.
 
-Assume to use semantic versioning.
-
 ### webAddress
 
 type: `string`
 
 required: `false`
 
+Extension's webAddress.
+
+Recommend to set extension's README webpage.
+
+Users can view extension's information from the store on this web page.
+
 ### enabled
 
-type: `string`
+type: `boolean`
 
 required: `true`
 
@@ -134,6 +146,8 @@ If `enabled` is false, arvis exclude the plugin from the user search result.
 type: `object (Action [])`
 
 required: `true`
+
+Actions to execute when the plugin item is pressed by the enter.
 
 ### variables
 
