@@ -2,7 +2,7 @@
 
 ## Template
 
-This package is builded on [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+Arvis is builted with [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
 ## Other packages
 
@@ -18,7 +18,7 @@ Arvis module not directly related to electron, renderer
 
 ## module aliasing
 
-Currently, module aliasing is applied on only `renderer process`'s scripts.
+Currently, module aliasing is applied on `renderer process`'s scripts.
 
 To apply module aliasing on main process, you might need to update some webpack config.
 

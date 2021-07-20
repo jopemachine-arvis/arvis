@@ -101,9 +101,13 @@ You can give `true` or `shell name` to `shell` option
 }
 ```
 
+Note: The first argument is the `program` to run, and the other arguments are parsed into the program's `arguments`.
+
+If you want to use script like in shell, use `shell` option. 
+
 ## args
 
-Extract selected `variable` to `query`
+Extract and replace selected `variable` or some value with `query`
 
 Example :
 

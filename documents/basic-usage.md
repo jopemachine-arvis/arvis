@@ -8,7 +8,7 @@ So first, recommend looking for useful extensions.
 
 You can look for and install lots of extensions through `store` page.
 
-First, recommend searching for `plugins`.
+First, recommend searching for useful `plugins`.
 
 ## Preference window
 
@@ -115,6 +115,12 @@ Check the extension information on the web page and install, update the extensio
 Change Clipboard History's setting.
 
 ### Advanced
+
+#### History
+
+#### Plugin
+
+#### Debugging
 
 ![](./imgs/debugging-page.png)
 

@@ -91,8 +91,10 @@ Click `Appearance` in the Preference window and import the `arvistheme` file or 
 
 ## 🔧 Build and development
 
+You can check how to build Arvis on below link.
+
 [Build and development](./src/README.md)
 
 ## Contribution
 
-* Contributions of any kind welcome, Feel free to create `bug`, `feature request` or other things in issue.
+Contributions of any kind welcome, Feel free to create `bug`, `feature request` or other things in issue.
