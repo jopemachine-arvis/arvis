@@ -10,7 +10,7 @@ All changes in workflow, plugin folders's changes are being watched and reflecte
 
 2. Write some scripts to use in your `plugin`
 
-3. type `arvish build` on your project root.
+3. Type `arvish build` on your project root.
 
 ## Manual (not recommend)
 

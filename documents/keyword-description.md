@@ -63,7 +63,7 @@ If `argType` is `optional`, the actions are triggered with or without `arg`
 
 type: `actions (object)`
 
-actions to be triggered by the `keyword`.
+Actions to be triggered by the `keyword`.
 
 [Click to view "actions" type](./documents/actions-description.md)
 

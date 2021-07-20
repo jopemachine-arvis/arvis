@@ -1,6 +1,8 @@
 # Plugin items format
 
-The `main` function of the plug-in must return an array of below format.
+The `main` function of the plugin must return an array of below format as `items`.
+
+You can check minimal example of plugin in [here](https://github.com/jopemachine/arvis-calculator-plugin-example)
 
 ## title
 

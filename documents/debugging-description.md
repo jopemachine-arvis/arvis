@@ -8,9 +8,9 @@ You can check the debugging information of arvis, including information about `w
 
 ![](./imgs/debugging-description-1.png)
 
-2. You can activate or unactivate log types to focus on your debugging on `Advanced` page.
+2. You can activate or unactivate log types to focus on your debugging on `Advanced > Debugging` page.
 
-Currently, you can select
+You can select
 
 - Action types
 
@@ -24,4 +24,4 @@ Currently, you can select
 
 ![](./imgs/debugging-page.png)
 
-3. The debugger does not display information unrelated to extension development, such as redux state because it is only meaningful in Arvis development. To check this debugging information, clone Arvis and execute Arvis in development mode.
+3. The debugger does not display information unrelated to extension development, such as redux state because it is only meaningful in Arvis development. If you want to check this debugging information, clone Arvis and run Arvis in development mode.

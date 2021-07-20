@@ -312,7 +312,7 @@ Example :
   {
     "modifiers": "normal",
     "type": "clipboard",
-    "text": "{var:url}"
+    "text": "{query}"
   }
 ]
 ```
@@ -341,7 +341,7 @@ type: `string`
 
 required: `false`
 
-Text to copy.
+Text to copy in clipboard.
 
 ## keyword
 

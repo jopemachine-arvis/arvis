@@ -54,9 +54,9 @@ type: `string | object`
 
 required: `false`
 
-When user focus the item, press ctrl (or cmd) + c, user get copied `text`.
+When user focus the item, press `ctrl (or cmd) + c`, user get copied `text`.
 
-And when user focus the item, press ctrl (or cmd) + l, the text will be displayed in Large text window.
+And when user focus the item, press `ctrl (or cmd) + l`, the text will be displayed in Large text window.
 
 You can give these texts in below way.
 
@@ -89,7 +89,7 @@ type: `string`
 
 required: `false`
 
-You can press the shift key above the item to open the quicklook window.
+Users can press the `shift + space` key above the item to open the quicklook window.
 
 The window displays the file path or url that was passed on.
 
