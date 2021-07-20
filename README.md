@@ -7,6 +7,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/jopemachine/arvis.svg)](https://GitHub.com/jopemachine/arvis/issues/)
 [![Join the chat at https://gitter.im/arvis-gitter/community](https://badges.gitter.im/arvis-gitter/community.svg)](https://gitter.im/arvis-gitter/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+https://user-images.githubusercontent.com/18283033/126311865-1fce968a-8fec-44d6-8fdb-40efcc2d3c4a.mp4
+
 ## 🚧🚧🚧  Note that it's alpha version yet. 🚧 🚧🚧
 
 Arvis is still in the construction and there could be lots of bugs.
