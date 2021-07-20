@@ -40,6 +40,10 @@ You can use the variables you want in your script
 
 [Click me to check Environment variables](./extension-env-description.md)
 
+## Convert alfredworkflow to arvisworkflow
+
+Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [alfred-to-arvis](https://github.com/jopemachine/alfred-to-arvis) 
+
 ## Scriptfilter JSON format
 
 Check the format of `scriptFilter` to use `scriptFilter` in your `workflow`, `plugin`.

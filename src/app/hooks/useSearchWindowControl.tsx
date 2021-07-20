@@ -632,10 +632,8 @@ const useSearchWindowControl = ({
   const checkShouldBeHided = (forceHide?: boolean) => {
     if (isPinned) return;
 
-    // After cleanUp
     if (forceHide || shouldBeHided === true) {
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
-      // Give some time to remove Afterimage
       ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
     }
   };

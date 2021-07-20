@@ -1,13 +1,13 @@
 ## 🌈 How to Install
 
-Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+1. Install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.
 
-Note that you should install some [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
+2. Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher). 
 
-### Installation issues
+> You can ignore this, but auto start feature will not working.
 
-* Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) before install arvis.
+3. Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
-### Recommends
+4. Right click Arvis's tray icon and click preference.
 
-* Recommend to install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.
+5. Click Store page and install extensions you want.

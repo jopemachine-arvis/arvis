@@ -7,9 +7,23 @@
 [![GitHub issues](https://img.shields.io/github/issues/jopemachine/arvis.svg)](https://GitHub.com/jopemachine/arvis/issues/)
 [![Join the chat at https://gitter.im/arvis-gitter/community](https://badges.gitter.im/arvis-gitter/community.svg)](https://gitter.im/arvis-gitter/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+Arvis is cross-platform launcher application that aims to help you run, edit, create any workflow simple.
+
+## 🔆 Hightlights
+
+* Runs on cross-platform.
+
+* Easily compatable with lots of Alfred workflows.
+
+* Search and install the extension from store simplely.
+
+* Publish new extension to store.
+
+* Make your own search window style.
+
 https://user-images.githubusercontent.com/18283033/126311865-1fce968a-8fec-44d6-8fdb-40efcc2d3c4a.mp4
 
-## 🚧🚧🚧  Note that it's alpha version yet. 🚧 🚧🚧
+## 🚧 Still alpha version.
 
 Arvis is still in the construction and there could be lots of bugs.
 
@@ -80,16 +94,10 @@ Note that you should install some [Extensions](#take-a-look-at-useful-workflows-
 
 * [Click me to check how to create new Plugins](./documents/plugin-develop.md)
 
-### 🔖 Convert alfredworkflow to arvisworkflow
-
-Convert alfred workflow's `info.plist` to `arvis-workflow.json` using [alfred-to-arvis](https://github.com/jopemachine/alfred-to-arvis) 
-
 ## 🔧 Build and development
 
 [Build and development](./src/README.md)
 
 ## Contribution
 
-* Arvis is opened to all kinds of contributions.
-
-* Please feel free to create `bug`, `feature request` or other things in issue.
+* Contributions of any kind welcome, Feel free to create `bug`, `feature request` or other things in issue.

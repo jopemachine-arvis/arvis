@@ -1,11 +1,11 @@
 ## 🌈 How to Install
 
-Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+1. Ensure [Node 12](https://nodejs.org/ko/download/) or higher is installed because lots of extensions use Node.
 
-Note that you should install some [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
+2. Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
-* Open mac's preference and `give appropriate permissions` to Arvis. (Including `Notification permissions` `Full disk access permission`)
+3. Right click Arvis's tray icon and click preference.
 
-### Recommends
+4. Click Store page and install extensions you want.
 
-* Recommend to install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.
+5. Open mac's preference and `give appropriate permissions` to Arvis. (Including `Notification permissions` `Full disk access permission`)
