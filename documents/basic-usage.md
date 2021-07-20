@@ -10,6 +10,14 @@ You can look for and install lots of extensions through `store` page.
 
 First, recommend searching for useful `plugins`.
 
+## General
+
+### Extension update notification
+
+![](./imgs/extension-update-notification.png)
+
+You can be notified if a particular extension is backward in version.
+
 ## Preference window
 
 You can manage your extensions or change config, appearance of search window on preference window.
@@ -44,13 +52,19 @@ You can check the extension's basic information like creator, name, description,
 
 #### Trigger table
 
+![](./imgs/trigger-table.png)
+
 In the trigger table, you can change or add triggers for specific commands
 
 #### User config
 
+![](./imgs/user-config-table.png)
+
 You can set the extension's User config value (variables) like API key.
 
 #### README
+
+![](./imgs/readme-table.png)
 
 You can check README of the extension.
 
@@ -143,6 +157,8 @@ Search window is resizable horizontally.
 (Linux not support)
 
 ### Pin window
+
+![](./imgs/pin-window.png)
 
 You can pin search window if you want.
 
