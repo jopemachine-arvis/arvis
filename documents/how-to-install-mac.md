@@ -11,3 +11,7 @@
 5. Open mac's preference and `give appropriate permissions` to Arvis. (Including `Notification permissions` `Full disk access permission`)
 
 ![](./imgs/build-macos-description-1.png)
+
+### Tip
+
+* If the extensions you want to install is uploaded to npm, you can also install them by `npm install` command.

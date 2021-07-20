@@ -244,9 +244,15 @@ type: `string`
 
 required: `true`
 
+String to Open.
+
+Should be file path or url string.
+
+If `target` is not valid, it is not opened.
+
 ## notification
 
-Create notification with the notification feature of the OS.
+Create notification with the notification feature of the platform.
 
 Example :
 
@@ -285,11 +291,15 @@ type: `string`
 
 required: `true`
 
+Title string of the notification
+
 ### text
 
 type: `string`
 
 required: `false`
+
+Body string of the notification
 
 ## clipboard
 
@@ -331,6 +341,8 @@ type: `string`
 
 required: `false`
 
+Text to copy.
+
 ## keyword
 
 `keyword` is a trigger, but it can also be used as an `actions`.
@@ -338,7 +350,6 @@ required: `false`
 In this case, you can attach command optionally to the child `keyword`.
 
 If child `keyword` also has command, child `keyword` also belongs to seperate triggers.
-
 
 Example :
 

@@ -11,3 +11,7 @@
 4. Right click Arvis's tray icon and click `Preference`.
 
 5. Click Store page and install extensions you want.
+
+### Tip
+
+* If the extensions you want to install is uploaded to npm, you can also install them by `npm install` command.

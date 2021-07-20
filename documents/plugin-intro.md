@@ -32,6 +32,8 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 
 ## About Workflow
 
+You can also check other extension type.
+
 [Click me to check Workflow](./workflow-intro.md)
 
 ## Plugin links

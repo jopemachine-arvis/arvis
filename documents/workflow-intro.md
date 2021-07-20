@@ -32,6 +32,6 @@ and the items returned by the script appear in searchWindow, and the `action` is
 
 ## About Plugin
 
-If you want to put your script as javascript module, you can try to build `plugin`.
+You can also check other extension type.
 
 [Click me to check Plugin](./plugin-intro.md)

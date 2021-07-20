@@ -147,5 +147,3 @@ The key-value pairs in the `variables` object are put in form of `{var:key} = va
 1. In, `variables`, the keys becomes `{var:key}`
 
 2. `variables` is saved in environment variables. So, you can use the variable values in your scripts too. (`arg` cannot be used).
-
-3. You can set `variables` in your config file too.

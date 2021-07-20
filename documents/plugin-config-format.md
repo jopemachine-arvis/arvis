@@ -155,9 +155,15 @@ type: `object`
 
 required: `false`
 
-You can set variables by here
+You can set variables by here.
 
-This value can be used in `arvis-plugin.json`, and your scripts in form of environment variables
+This value can be used in `arvis-plugin.json`, and your scripts in form of environment variables.
+
+Users can set their variables value in their `User-config` view.
+
+The `variables` values don't change though the extension is updated.
+
+Therefore, it is useful when you ask users for information such as API keys.
 
 #### Action
 
