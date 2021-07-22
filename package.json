@@ -299,7 +299,7 @@
     "electron-log": "^4.2.4",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.10",
-    "electron-util": "^0.16.0",
+    "electron-util": "^0.17.0",
     "encodeurl": "^1.0.2",
     "execa": "5.1.1",
     "font-list": "^1.2.15",
