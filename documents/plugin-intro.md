@@ -16,11 +16,19 @@ However, `workflow` cannot create tasks such as fuzzy file search in the arvis s
 
 * Because `plugin` is loaded in advance, `plugin` is much faster than `workflow` using process-communication.
 
-* You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin`.
-
-* If async plugin continues work after some specified time (currently, it is set on `100ms`), the plugin async will be forcibly shut down to avoid slowing down arvis performance.
-
 * If you should put heavy async operation, consider replacing it with `workflow`
+
+## Async plugin
+
+* You can use async await statement in `plugin`, but do not recommend to put heavy asynchronous operation in the `plugin` if possible.
+
+## Defered async plugin
+
+* If async plugin continues work after `specified time`, the async plugins will be `defered`.
+
+* If there are some plugins that does not return after a certain amount of time, Arvis shows only the items returned by then, And when all the defered plugin ends work, The rest of the items will be shown below.
+
+Note: The results of Deferred plugins are shown below normal items regardless of sorting. (Otherwise, it can cause confusion for users.)
 
 ## Action
 
