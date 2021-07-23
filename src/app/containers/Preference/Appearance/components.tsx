@@ -58,6 +58,7 @@ export const ThemeListContainer = styled.div`
 export const ThemeItemContainer = styled.div`
   height: 65px;
   background-color: #222;
+  border: 1px solid #333;
   border-radius: 10px;
   text-align: left;
   justify-content: center;
@@ -80,9 +81,9 @@ export const ThemeItemTitle = styled.div`
 `;
 
 export const ThemeItemSubtitle = styled.div`
-  margin-top: 5px;
+  margin-top: 8px;
   font-size: 10px;
-  color: #cccccc;
+  color: #888;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -91,10 +92,10 @@ export const ThemeItemSubtitle = styled.div`
 export const ThemeList = styled.div`
   background-color: #1f2228;
   border-radius: 10px;
-  margin-left: 15px;
+  margin-left: 10px;
   padding-bottom: 20px;
-  padding-right: 5px;
-  padding-left: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
   padding-top: 20px;
   overflow: auto;
   height: 78%;

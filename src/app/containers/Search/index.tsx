@@ -117,10 +117,10 @@ export default function SearchWindow() {
   const registerWindowUpdater = useCallback(() => {
     Core.setStoreAvailabiltyChecker((available) => setSpinning(!available));
 
-    actionFlowManager.onInputShouldBeUpdate = onInputShouldBeUpdate;
-    actionFlowManager.onItemPressHandler = onItemPressHandler;
-    actionFlowManager.onItemShouldBeUpdate = onItemShouldBeUpdate;
-    actionFlowManager.onWorkEndHandler = onWorkEndHandler;
+    Core.Renderer.setOnInputShouldBeUpdate(onInputShouldBeUpdate);
+    Core.Renderer.setOnItemPressHandler(onItemPressHandler);
+    Core.Renderer.setOnItemShouldBeUpdate(onItemShouldBeUpdate);
+    Core.Renderer.setOnWorkEndHandler(onWorkEndHandler);
   }, []);
 
   const initializeCustomActions = () => {
@@ -286,7 +286,7 @@ export default function SearchWindow() {
 
     Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()])
       .then(() => {
-        console.log('resource initialzed successfully.');
+        console.log('Resource initialzed successfully.');
         return null;
       })
       .catch(console.error)

@@ -8,5 +8,10 @@
         "title": "Arvis mac white",
         "subtitle": "Arvis Default Theme",
         "icon_color": "#fff"
+    },
+    "alfred": {
+        "title": "Alfred-like",
+        "subtitle": "Arvis Default Theme",
+        "icon_color": "#5C1C79"
     }
 }

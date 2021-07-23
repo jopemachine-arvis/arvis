@@ -6,6 +6,7 @@ import { ipcRenderer, clipboard } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd } from '@utils/index';
 import _ from 'lodash';
+import PCancelable from 'p-cancelable';
 import useKey from '../../use-key-capture/src';
 
 type IndexInfo = {
@@ -56,6 +57,8 @@ const useSearchWindowControl = ({
   const hideSearchWindowByBlurCbRef = useRef<any>();
 
   const isPinnedRef = useRef<boolean>(isPinned);
+
+  let unresolvedPluginPromises: PCancelable<PluginExectionResult>[] = [];
 
   useEffect(() => {
     isPinnedRef.current = isPinned;
@@ -175,6 +178,17 @@ const useSearchWindowControl = ({
     }
   };
 
+  const cancelUnresolvedPluginPromises = (): void => {
+    unresolvedPluginPromises.forEach(
+      (item: PCancelable<PluginExectionResult>) => {
+        if (!item.isCanceled) {
+          console.log('Cancel prev unresolvedPluginPromises', item);
+          item.cancel();
+        }
+      }
+    );
+  };
+
   /**
    * @param {string} updatedInput
    */
@@ -191,12 +205,36 @@ const useSearchWindowControl = ({
       setBestMatch('');
     }
 
+    cancelUnresolvedPluginPromises();
+
     const handler = async () => {
       clearTimeout(timer);
 
       const searchCommands = async () => {
-        const itemArr = await Core.findCommands(updatedInput);
+        const { items: itemArr, unresolved: unresolvedPluginItems } =
+          await Core.findCommands(updatedInput);
+
         setItems(itemArr.slice(0, maxRetrieveCount));
+
+        unresolvedPluginPromises = unresolvedPluginItems;
+
+        unresolvedPluginItems.forEach((notResolvedItemPromise) => {
+          notResolvedItemPromise
+            .then((updatedItems) => {
+              Core.pluginWorkspace.appendPluginItemAttr(inputStr, [
+                updatedItems,
+              ]);
+
+              setItems(
+                [...itemArr, ...updatedItems.items].slice(0, maxRetrieveCount)
+              );
+              return null;
+            })
+            .catch((err) => {
+              if (err.name !== 'CancelError') throw new Error(err);
+            });
+        });
+
         handleScriptFilterAutoExecute({
           itemArr,
           updatedInput,
@@ -253,7 +291,7 @@ const useSearchWindowControl = ({
 
   /**
    * @param  {string} str
-   * @param  {needItemsUpdate} boolean
+   * @param  {boolean} needItemsUpdate
    */
   const setInputStr = ({
     str,
@@ -359,7 +397,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {number} index
+   * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e
    */
   const onDoubleClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -379,6 +417,7 @@ const useSearchWindowControl = ({
 
   /**
    * @param {boolean} alreadyCleanedUp
+   * @param {boolean} searchWindowIsPinned
    * @description To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @summary
    */
@@ -603,7 +642,8 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any[]} itemsToSet
+   * @param {any[]} items
+   * @param {boolean} needIndexInfoClear
    */
   const onItemShouldBeUpdate = ({
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -633,6 +673,7 @@ const useSearchWindowControl = ({
     if (isPinned) return;
 
     if (forceHide || shouldBeHided === true) {
+      cancelUnresolvedPluginPromises();
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
       ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
     }

@@ -49,6 +49,7 @@ const themes = require('./themes.json');
 const themeInfos = {
   default: require('./Themes/default.json'),
   macOsWhite: require('./Themes/macos-white.json'),
+  alfred: require('./Themes/alfred.json'),
 };
 
 const mockItems = [
