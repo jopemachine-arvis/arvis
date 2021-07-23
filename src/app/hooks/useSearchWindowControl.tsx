@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lonely-if */
+/* eslint-disable promise/catch-or-return */
 import React, { useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';
@@ -150,11 +151,11 @@ const useSearchWindowControl = ({
   }: {
     itemArr: any[];
     updatedInput: string;
-  }) => {
+  }): boolean => {
     // auto script filter executing should be started from first item
-    if (itemArr.length === 0) return;
+    if (itemArr.length === 0) return false;
     const firstItem = itemArr[0] as Command;
-    if (firstItem.type !== 'scriptFilter') return;
+    if (firstItem.type !== 'scriptFilter') return false;
 
     const hasRequiredArg =
       Core.hasRequiredArg({
@@ -175,7 +176,49 @@ const useSearchWindowControl = ({
       });
 
       Core.scriptFilterExcute(updatedInput, commandOnStackIsEmpty);
+      return true;
     }
+
+    return false;
+  };
+
+  const handleDelayedAsyncPluginItems = (
+    normalItemArr: (Command | PluginItem)[],
+    unresolvedPluginItems: PCancelable<PluginExectionResult>[]
+  ) => {
+    unresolvedPluginPromises = unresolvedPluginItems;
+
+    let delayedResolved: PluginItem[] = [];
+    let progress = 0;
+
+    // To do:: To avoid flickering, renewals were made only after all the primes.
+    // If there is some method to avoid window flickering, change below logic to renew one by one.
+    unresolvedPluginItems.forEach(
+      (notResolvedItemPromise: PCancelable<PluginExectionResult>) => {
+        notResolvedItemPromise
+          .then((updatedItems: PluginExectionResult) => {
+            Core.pluginWorkspace.appendPluginItemAttr(inputStr, [updatedItems]);
+
+            delayedResolved = [...delayedResolved, ...updatedItems.items];
+            return null;
+          })
+          .catch((err) => {
+            if (err.name !== 'CancelError') console.error(err);
+          })
+          .finally(() => {
+            progress += 1;
+
+            if (progress >= unresolvedPluginItems.length) {
+              setItems(
+                [...normalItemArr, ...delayedResolved].slice(
+                  0,
+                  maxRetrieveCount
+                )
+              );
+            }
+          });
+      }
+    );
   };
 
   const cancelUnresolvedPluginPromises = (): void => {
@@ -216,29 +259,14 @@ const useSearchWindowControl = ({
 
         setItems(itemArr.slice(0, maxRetrieveCount));
 
-        unresolvedPluginPromises = unresolvedPluginItems;
-
-        unresolvedPluginItems.forEach((notResolvedItemPromise) => {
-          notResolvedItemPromise
-            .then((updatedItems) => {
-              Core.pluginWorkspace.appendPluginItemAttr(inputStr, [
-                updatedItems,
-              ]);
-
-              setItems(
-                [...itemArr, ...updatedItems.items].slice(0, maxRetrieveCount)
-              );
-              return null;
-            })
-            .catch((err) => {
-              if (err.name !== 'CancelError') throw new Error(err);
-            });
-        });
-
-        handleScriptFilterAutoExecute({
+        const scriptfilterExecuted = handleScriptFilterAutoExecute({
           itemArr,
           updatedInput,
         });
+
+        if (!scriptfilterExecuted) {
+          handleDelayedAsyncPluginItems(itemArr, unresolvedPluginItems);
+        }
       };
 
       // Search workflow commands, builtInCommands
