@@ -21,7 +21,7 @@ Arvis is extendable cross-platform launcher application that aims to help you ru
 
 * Make your own search window style.
 
-:point_right: [Visit arvis.com](https://jopemachine.github.io/arvis.com/) (WIP)
+:point_right: [Visit arvis.com (WIP)](https://jopemachine.github.io/arvis.com/)
 
 :video_camera: [View Arvis intro video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 
@@ -53,7 +53,7 @@ I've thought many useful alfred-workflows can run in "cross-platform", that's wh
 
 `Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
-* [Click me to check basic usage of Arvis](./documents/basic-usage.md)
+* [:control_knobs: Click me to check basic usage of Arvis](./documents/basic-usage.md)
 
 ## :rainbow: How to Install
 
