@@ -2,7 +2,7 @@ import { IpcMainEvent } from 'electron';
 import { WorkflowItemContextMenu } from '../../../components/contextMenus';
 
 /**
- * @param  {string} path
+ * @param path
  * @summary Used to popup context menu
  */
 export const popupWorkflowItemMenu = (

@@ -6,8 +6,8 @@ import { isNumeric } from './isNumeric';
 import { IPCRendererEnum } from '../ipc/ipcEventEnum';
 
 /**
- * @param  {string} destWindow
- * @param  {Dispatch<any>} dispatch
+ * @param destWindow
+ * @param {Dispatch<any>} dispatch
  * @summary
  */
 export const createGlobalConfigChangeHandler =

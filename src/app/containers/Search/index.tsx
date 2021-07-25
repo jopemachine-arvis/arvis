@@ -95,6 +95,7 @@ export default function SearchWindow() {
   const {
     bestMatch,
     getInputProps,
+    hasUnresolvedPluginPromises,
     indexInfo,
     onDoubleClickHandler,
     onInputShouldBeUpdate,
@@ -376,6 +377,7 @@ export default function SearchWindow() {
           itemTitleSubtitleMargin={item_title_subtitle_margin}
           maxItemCount={max_item_count_to_show}
           noShowIcon={false}
+          haveUnresolvedItems={hasUnresolvedPluginPromises}
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
           searchbarHeight={searchbar_height}

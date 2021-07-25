@@ -67,7 +67,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @return {number} changed selectedItemIdx
+   * @return changed selectedItemIdx
    * @summary
    */
   const handleUpArrow = () => {
@@ -105,7 +105,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @return {number} changed selectedItemIdx
+   * @return changed selectedItemIdx
    * @summary
    */
   const handleDownArrow = () => {
@@ -132,8 +132,8 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {string} pressedKey
-   * @param {string} updatedInput
+   * @param pressedKey
+   * @param updatedInput
    */
   const handleNormalInput = async (
     _originalItems: any[],
@@ -156,8 +156,8 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param  {string} str
-   * @param  {needItemsUpdate} boolean
+   * @param str
+   * @param {needItemsUpdate} boolean
    */
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {
@@ -166,8 +166,8 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {number} selectedItemIdx
-   * @param {any} modifiers Selected modifier keys
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
    */
   const handleReturn = ({
     selectedItemIdx,
@@ -217,7 +217,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {number} index
+   * @param index
    */
   const onMouseoverHandler = (index: number) => {
     if (applyMouseHoverEventRef.current === true) {
@@ -229,7 +229,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {number} index
+   * @param index
    */
   const onDoubleClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -248,7 +248,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {number} selectedItemIdx
+   * @param selectedItemIdx
    */
   const onHandleReturnByNumberKey = (selectedItemIdx: number) => {
     if (selectedItemIdx === 0 || selectedItemIdx >= items.length) {
@@ -267,7 +267,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @param {KeyboardEvent} e
+   * @param e
    */
   const onKeyupHandler = (e: KeyboardEvent) => {
     const exceptionKeys = [

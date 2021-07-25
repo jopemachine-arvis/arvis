@@ -4,7 +4,7 @@ import { IpcMainEvent } from 'electron';
 import { doubleKeyPressHandler } from '../iohookShortcutCallbacks';
 
 /**
- * @param  {string} modifier
+ * @param modifier
  */
 export const triggerDoubleModifierKey = (
   e: IpcMainEvent,

@@ -25,7 +25,7 @@ const watchOpts = {
 };
 
 /**
- * @param  {string[]} bundleIds?
+ * @param {string[]} bundleIds?
  * @summary Update store of each singletons for each renderer processes
  */
 const requestReloadWorkflows = (bundleIds?: string[]) => {
@@ -42,7 +42,7 @@ const requestReloadWorkflows = (bundleIds?: string[]) => {
 };
 
 /**
- * @param  {string[]} bundleIds?
+ * @param {string[]} bundleIds?
  * @summary Update store of each singletons for each renderer processes
  */
 const requestReloadPlugins = (bundleIds?: string[]) => {
@@ -59,7 +59,7 @@ const requestReloadPlugins = (bundleIds?: string[]) => {
 };
 
 /**
- * @param  {string} changedFilePath
+ * @param changedFilePath
  */
 const getBundleIdFromFilePath = (changedFilePath: string) => {
   return changedFilePath.split(path.sep)[0];

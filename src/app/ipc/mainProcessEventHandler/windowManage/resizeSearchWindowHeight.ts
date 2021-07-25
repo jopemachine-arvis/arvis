@@ -1,13 +1,15 @@
 import { IpcMainEvent } from 'electron';
-import resizeEventHandler from '../../resizeEventHandler';
+import resizeEventHandler from '../../searchWindowResizeEventHandler';
 
 /**
- * @param {number} itemCount
- * @param {number} maxItemCount
- * @param {number} itemHeight
- * @param {number} searchbarHeight
- * @param {number} footerHeight
- * @summary Used to automatically change the height of searchWindow
+ * Used to automatically change the height of searchWindow
+ * @param windowWidth
+ * @param itemCount
+ * @param maxItemCount
+ * @param itemHeight
+ * @param searchbarHeight
+ * @param footerHeight
+ * @param haveUnresolvedItems
  */
 export const resizeSearchWindowHeight = (
   e: IpcMainEvent,
@@ -18,6 +20,7 @@ export const resizeSearchWindowHeight = (
     itemHeight,
     searchbarHeight,
     footerHeight,
+    haveUnresolvedItems,
   }: {
     windowWidth: number;
     itemCount: number;
@@ -25,6 +28,7 @@ export const resizeSearchWindowHeight = (
     itemHeight: number;
     searchbarHeight: number;
     footerHeight: number;
+    haveUnresolvedItems: boolean;
   }
 ) => {
   resizeEventHandler({
@@ -34,5 +38,6 @@ export const resizeSearchWindowHeight = (
     itemHeight,
     maxItemCount,
     searchbarHeight,
+    haveUnresolvedItems,
   });
 };

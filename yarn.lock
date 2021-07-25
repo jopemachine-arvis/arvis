@@ -2855,10 +2855,10 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.9.0.tgz#077eac022da603040b3d4e6ec52620b29e9cb2db"
-  integrity sha512-12jtWD3PpgROfnnCrz/oyV2YwLapwdRRqskqTPl6hKmNgX3pauwXjV8ne7ccEfzT2Aosu+8cPuQL6Pn8XHZzYg==
+arvis-core@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.9.1.tgz#e059798e9ab59b98ccd578f17ba22679fbdb048f"
+  integrity sha512-/J6PnplUzCH/DyO5a+DcCejAg7Na3oW812rfwpnu+R/wMFPDR2DDcl0l8vc4zPdo9uzstXMAvMY+mnOJGgmuTQ==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"

@@ -3,7 +3,7 @@ import { IpcMainEvent } from 'electron';
 import autoLauncher from '../../../config/autoLaunch';
 
 /**
- * @param  {boolean} autoLaunch
+ * @param autoLaunch
  * @summary Used to set autolaunch
  */
 export const setAutoLaunch = (

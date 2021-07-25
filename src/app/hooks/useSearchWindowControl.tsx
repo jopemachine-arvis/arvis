@@ -60,6 +60,8 @@ const useSearchWindowControl = ({
   const isPinnedRef = useRef<boolean>(isPinned);
 
   let unresolvedPluginPromises: PCancelable<PluginExectionResult>[] = [];
+  const [hasUnresolvedPluginPromises, setHasUnresolvedPluginPromises] =
+    useState<boolean>(false);
 
   useEffect(() => {
     isPinnedRef.current = isPinned;
@@ -76,7 +78,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @return {number} changed selectedItemIdx
+   * @return changed selectedItemIdx
    * @summary
    */
   const handleUpArrow = () => {
@@ -112,7 +114,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @return {number} changed selectedItemIdx
+   * @returns changed selectedItemIdx
    * @summary
    */
   const handleDownArrow = () => {
@@ -139,10 +141,10 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any[]} itemArr
-   * @param {string} updatedInput
-   * @summary scriptfilter must be able to run automatically when a command is entered
-   *          This function handle scriptfilter's auto run.
+   * scriptfilter must be able to run automatically when a command is entered
+   * This function handle scriptfilter's auto run.
+   * @param itemArr
+   * @param updatedInput
    * @description Must be called when first script filter is triggered
    */
   const handleScriptFilterAutoExecute = ({
@@ -186,6 +188,9 @@ const useSearchWindowControl = ({
     normalItemArr: (Command | PluginItem)[],
     unresolvedPluginItems: PCancelable<PluginExectionResult>[]
   ) => {
+    if (unresolvedPluginItems.length <= 0) return;
+
+    setHasUnresolvedPluginPromises(true);
     unresolvedPluginPromises = unresolvedPluginItems;
 
     let delayedResolved: PluginItem[] = [];
@@ -215,6 +220,9 @@ const useSearchWindowControl = ({
                   maxRetrieveCount
                 )
               );
+
+              unresolvedPluginPromises = [];
+              setHasUnresolvedPluginPromises(false);
             }
           });
       }
@@ -233,7 +241,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {string} updatedInput
+   * @param updatedInput
    */
   const handleNormalInput = async (updatedInput: string) => {
     let timer: NodeJS.Timeout;
@@ -318,8 +326,8 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param  {string} str
-   * @param  {boolean} needItemsUpdate
+   * @param str
+   * @param needItemsUpdate
    */
   const setInputStr = ({
     str,
@@ -338,8 +346,8 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {number} selectedItemIdx
-   * @param {any} modifiers Selected modifier keys
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
    */
   const handleReturn = async ({
     selectedItemIdx,
@@ -415,7 +423,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {number} index
+   * @param index
    */
   const onMouseoverHandler = (index: number) => {
     setIndexInfo({
@@ -444,8 +452,8 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {boolean} alreadyCleanedUp
-   * @param {boolean} searchWindowIsPinned
+   * @param alreadyCleanedUp
+   * @param searchWindowIsPinned
    * @description To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @summary
    */
@@ -466,7 +474,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {number} selectedItemIdx
+   * @param selectedItemIdx
    */
   const onHandleReturnByNumberKey = async (selectedItemIdx: number) => {
     if (spinning) return;
@@ -486,7 +494,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {KeyboardEvent} e
+   * @param e
    */
   const onKeyupHandler = (e: KeyboardEvent) => {
     const exceptionKeys = [
@@ -521,7 +529,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any} item
+   * @param item
    */
   const autoCompleteHandler = (item: any) => {
     if (!item) return;
@@ -536,7 +544,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any} item
+   * @param item
    */
   const quicklookHandler = (item: any) => {
     if (!item) return;
@@ -548,7 +556,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any} item
+   * @param item
    */
   const showTextLargeTypeHandler = (item: any) => {
     if (!item) return;
@@ -570,7 +578,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any} item
+   * @param item
    */
   const itemCopyHandler = (item: any) => {
     if (!item) return;
@@ -670,8 +678,8 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {any[]} items
-   * @param {boolean} needIndexInfoClear
+   * @param items
+   * @param needIndexInfoClear
    */
   const onItemShouldBeUpdate = ({
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -717,8 +725,8 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {string} str
-   * @param {boolean} needItemsUpdate
+   * @param str
+   * @param needItemsUpdate
    */
   const onInputShouldBeUpdate = ({
     str,
@@ -767,6 +775,7 @@ const useSearchWindowControl = ({
     bestMatch,
     setInputStr,
     indexInfo,
+    hasUnresolvedPluginPromises,
     onWheelHandler,
     onMouseoverHandler,
     onDoubleClickHandler,

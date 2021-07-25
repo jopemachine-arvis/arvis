@@ -106,21 +106,25 @@ const SearchResultItem = (props: IProps) => {
         style={iconStyle}
         src={icon ?? extensionDefaultIcon}
         onError={async (e) => {
-          if (
-            extensionDefaultIcon &&
-            (await pathExists(extensionDefaultIcon))
-          ) {
-            (
-              document.getElementById(
-                `searchResultItemIcon-${offset}`
-              )! as HTMLImageElement
-            ).src = extensionDefaultIcon;
-          } else {
-            (
-              document.getElementById(
-                `searchResultItemIcon-${offset}`
-              )! as HTMLImageElement
-            ).src = IconNotFoundImg;
+          try {
+            if (
+              extensionDefaultIcon &&
+              (await pathExists(extensionDefaultIcon))
+            ) {
+              (
+                document.getElementById(
+                  `searchResultItemIcon-${offset}`
+                )! as HTMLImageElement
+              ).src = extensionDefaultIcon;
+            } else {
+              (
+                document.getElementById(
+                  `searchResultItemIcon-${offset}`
+                )! as HTMLImageElement
+              ).src = IconNotFoundImg;
+            }
+          } catch (err) {
+            console.error(err);
           }
         }}
       />

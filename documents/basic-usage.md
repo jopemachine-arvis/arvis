@@ -1,4 +1,4 @@
-# Arvis Basic usage
+# :control_knobs: Arvis Basic usage
 
 Arvis cannot do anything without installing extensions.
 

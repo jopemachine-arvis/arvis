@@ -10,7 +10,7 @@ import toggleSearchWindow from './toggleSearchWindow';
 import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
 
 /**
- * @param  {any} hotKeyAction
+ * @param hotKeyAction
  */
 const getWorkflowHotkeyPressHandler = ({
   hotKeyAction,
@@ -39,7 +39,7 @@ const getWorkflowHotkeyPressHandler = ({
 };
 
 /**
- * @param  {string} shortcut
+ * @param shortcut
  */
 const extractShortcutName = (shortcut: string): string => {
   const target = shortcut.replaceAll('+', ' ').toLowerCase().trim();
@@ -74,8 +74,8 @@ const extractShortcutName = (shortcut: string): string => {
 };
 
 /**
- * @param  {string} shortcut
- * @param  {() => void} callback
+ * @param shortcut
+ * @param callback
  */
 const registerShortcut = (shortcut: string, callback: () => void): boolean => {
   console.log(chalk.cyanBright(`Shortcut registered.. '${shortcut}'`));
@@ -116,7 +116,7 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
 };
 
 /**
- * @param  {any} workflowHotkeyTbl
+ * @param workflowHotkeyTbl
  */
 const registerWorkflowHotkeys = ({
   workflowHotkeyTbl,
@@ -146,8 +146,8 @@ const registerWorkflowHotkeys = ({
 };
 
 /**
- * @param  {any} callbackTable
- * @param  {any} workflowHotkeyTbl
+ * @param callbackTable
+ * @param workflowHotkeyTbl
  */
 export default ({
   callbackTable,

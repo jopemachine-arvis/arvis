@@ -30,6 +30,7 @@ type IProps = {
   subtitleFontSize: number;
   titleFontSize: number;
   noShowIcon: boolean;
+  haveUnresolvedItems: boolean;
   onDoubleClickHandler: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void;
@@ -59,6 +60,7 @@ const SearchResultView = (props: IProps) => {
     subtitleFontSize,
     titleFontSize,
     noShowIcon,
+    haveUnresolvedItems,
     onDoubleClickHandler,
     onMouseoverHandler,
   } = props;
@@ -70,6 +72,8 @@ const SearchResultView = (props: IProps) => {
 
   useEffect(() => {
     if (!demo) {
+      console.log(haveUnresolvedItems);
+
       ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
         itemCount: searchResult.length,
         windowWidth: searchWindowWidth,
@@ -77,9 +81,10 @@ const SearchResultView = (props: IProps) => {
         itemHeight,
         searchbarHeight,
         footerHeight,
+        haveUnresolvedItems,
       });
     }
-  }, [searchResult]);
+  }, [searchResult, haveUnresolvedItems]);
 
   return (
     <OuterContainer id="searchResultView">

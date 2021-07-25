@@ -2,7 +2,7 @@
 // https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number
 
 /**
- * @param  {string} str
+ * @param str
  */
 export function isNumeric(str: string) {
   if (typeof str !== 'string') return false; // we only process strings!

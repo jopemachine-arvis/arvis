@@ -26,7 +26,7 @@ type IProps = {
 };
 
 /**
- * @param  {string} windowName
+ * @param windowName
  */
 const windowRoute = (windowName: string) => {
   switch (windowName) {
@@ -59,10 +59,10 @@ const handleLoggerSetting = () => {
 };
 
 /**
- * @param  {Store} store
- * @param  {any} persistor
- * @param  {History<State>} history
- * @param  {string} windowName
+ * @param {Store} store
+ * @param persistor
+ * @param {History<State>} history
+ * @param windowName
  */
 const RootRouter = ({ store, persistor, history, windowName }: IProps) => {
   handleLoggerSetting();

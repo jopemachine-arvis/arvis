@@ -2,8 +2,8 @@ import { IpcMainEvent } from 'electron';
 import globalShortcutHandler from '../../globalShortcutHandler';
 
 /**
- * @param  {string} callbackTable
- * @param  {string} workflowHotkeyTbl
+ * @param callbackTable
+ * @param workflowHotkeyTbl
  * @summary Used to register global shortcuts
  */
 export const setGlobalShortcut = (

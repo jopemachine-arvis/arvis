@@ -2,7 +2,7 @@ import { IpcMainEvent } from 'electron';
 import { WindowManager } from '../../../windows';
 
 /**
- * @param  {number} width
+ * @param width
  */
 export const setSearchWindowWidth = (
   e: IpcMainEvent,

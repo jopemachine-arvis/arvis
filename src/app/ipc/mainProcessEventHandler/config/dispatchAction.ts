@@ -3,9 +3,9 @@ import { getDestWindow } from '../../getDestWindow';
 import { IPCMainEnum } from '../../ipcEventEnum';
 
 /**
- * @param  {string} destWindow
- * @param  {string} actionType
- * @param  {any} args
+ * @param destWindow
+ * @param actionType
+ * @param args
  * @summary When some action is dispatched from some window, the action is not dispatched to other windows.
  *          So, therefore, this function should be used to dispatch to target windows via ipc.
  */

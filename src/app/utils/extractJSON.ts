@@ -1,5 +1,5 @@
 /**
- * @param  {string} str
+ * @param str
  * @summary Return all json candidates from string
  *          https://stackoverflow.com/questions/10574520/extract-json-from-text
  */

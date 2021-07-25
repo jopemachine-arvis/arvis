@@ -63,7 +63,7 @@ const useStoreSearchControl = ({
   }, [originalItems]);
 
   /**
-   * @param  {string} str
+   * @param str
    */
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {
@@ -72,7 +72,7 @@ const useStoreSearchControl = ({
   };
 
   /**
-   * @param {KeyboardEvent} e
+   * @param e
    */
   const onKeyupHandler = (e: KeyboardEvent) => {
     const exceptionKeys = [

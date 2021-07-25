@@ -3,7 +3,7 @@ import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { WindowManager } from '../windows';
 
 /**
- * @param  {string} file
+ * @param file
  * @summary Open Handler for arvisplugin, arvisworkflow, arvistheme files
  */
 export const openArvisFile = (file: string) => {

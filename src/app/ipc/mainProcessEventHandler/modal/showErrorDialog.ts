@@ -1,8 +1,8 @@
 import { dialog, IpcMainEvent } from 'electron';
 
 /**
- * @param  {string} title
- * @param  {string} content
+ * @param title
+ * @param content
  * @summary Used to show errors
  */
 export const showErrorDialog = (

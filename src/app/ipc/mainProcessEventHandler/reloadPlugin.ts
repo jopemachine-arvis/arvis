@@ -3,8 +3,8 @@ import { getDestWindow } from '../getDestWindow';
 import { IPCMainEnum } from '../ipcEventEnum';
 
 /**
- * @param  {string} destWindow?
- * @param  {string} bundleId?
+ * @param destWindow?
+ * @param bundleId?
  */
 export const reloadPlugin = (
   e: IpcMainEvent,

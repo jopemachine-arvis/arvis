@@ -196,6 +196,7 @@ export default function ClipboardHistoryWindow() {
         <SearchResultView
           demo
           footerHeight={style.footerHeight}
+          haveUnresolvedItems={false}
           iconRightMargin={0}
           itemDefaultIconColor="#fff"
           itemBackgroundColor="#ccc"

@@ -37,9 +37,9 @@ const useExtensionSearchControl = ({
   };
 
   /**
-   * @param {any[]} _originalItems
-   * @param {string} pressedKey
-   * @param {string} updatedInput
+   * @param _originalItems
+   * @param pressedKey
+   * @param updatedInput
    */
   const handleNormalInput = async (
     _originalItems: any[],
@@ -74,8 +74,8 @@ const useExtensionSearchControl = ({
   };
 
   /**
-   * @param  {string} str
-   * @param  {needItemsUpdate} boolean
+   * @param str
+   * @param {needItemsUpdate} boolean
    */
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {
@@ -84,7 +84,7 @@ const useExtensionSearchControl = ({
   };
 
   /**
-   * @param {KeyboardEvent} e
+   * @param e
    */
   const onKeyupHandler = (e: KeyboardEvent) => {
     const exceptionKeys = [

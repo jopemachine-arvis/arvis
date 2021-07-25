@@ -2,7 +2,7 @@ import { BrowserWindow } from 'electron';
 import { WindowManager } from '../windows';
 
 /**
- * @param  {string} windowName
+ * @param windowName
  * @return {BrowserWindow}
  */
 export const getDestWindow = (windowName: string): BrowserWindow => {
