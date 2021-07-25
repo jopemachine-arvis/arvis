@@ -11,6 +11,7 @@ import { InnerContainer, OuterContainer } from './components';
 type IProps = {
   demo: boolean;
   footerHeight: number;
+  haveUnresolvedItems: boolean;
   iconRightMargin: number;
   itemBackgroundColor: string;
   itemDefaultIconColor: string;
@@ -19,18 +20,17 @@ type IProps = {
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
   maxItemCount: number;
+  noShowIcon: boolean;
   searchbarHeight: number;
   searchResult: any[];
-  searchWindowWidth: number;
   searchWindowTransparency: number;
+  searchWindowWidth: number;
   selectedItemBackgroundColor: string;
   selectedItemFontColor: string;
   selectedItemIdx: number;
   startIdx: number;
   subtitleFontSize: number;
   titleFontSize: number;
-  noShowIcon: boolean;
-  haveUnresolvedItems: boolean;
   onDoubleClickHandler: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void;
@@ -41,6 +41,7 @@ const SearchResultView = (props: IProps) => {
   const {
     demo,
     footerHeight,
+    haveUnresolvedItems,
     iconRightMargin,
     itemBackgroundColor,
     itemDefaultIconColor,
@@ -49,18 +50,17 @@ const SearchResultView = (props: IProps) => {
     itemLeftPadding,
     itemTitleSubtitleMargin,
     maxItemCount,
+    noShowIcon,
     searchbarHeight,
     searchResult,
-    searchWindowWidth,
     searchWindowTransparency,
+    searchWindowWidth,
     selectedItemBackgroundColor,
     selectedItemFontColor,
     selectedItemIdx,
     startIdx,
     subtitleFontSize,
     titleFontSize,
-    noShowIcon,
-    haveUnresolvedItems,
     onDoubleClickHandler,
     onMouseoverHandler,
   } = props;
@@ -118,7 +118,7 @@ const SearchResultView = (props: IProps) => {
               subtitleFontSize={subtitleFontSize}
               text={command.text}
               // If there is no title, shows command
-              title={command.title ?? command.command}
+              title={command.title ?? command.command ?? '(no title)'}
               titleFontSize={titleFontSize}
               valid={command.valid}
               variables={command.variables}

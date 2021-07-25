@@ -5,7 +5,7 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 [![GitHub issues](https://img.shields.io/github/issues/jopemachine/arvis.svg)](https://GitHub.com/jopemachine/arvis/issues/)
-[![Join the chat at https://gitter.im/arvis-gitter/community](https://badges.gitter.im/arvis-gitter/community.svg)](https://gitter.im/arvis-gitter/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/arvis-gitter/community.svg)](https://gitter.im/arvis-gitter/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Arvis is extendable cross-platform launcher application that aims to help you run, edit, create any workflow simple.
 

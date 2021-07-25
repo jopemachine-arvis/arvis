@@ -306,6 +306,7 @@
     "encodeurl": "^1.0.2",
     "execa": "5.1.1",
     "font-list": "^1.2.15",
+    "got": "11.8.0",
     "history": "^5.0.0",
     "is-admin": "^3.0.0",
     "jsoneditor": "^9.5.1",
