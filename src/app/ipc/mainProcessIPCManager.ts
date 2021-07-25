@@ -15,12 +15,10 @@ import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEve
 import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
-import { hideQuicklookWindow } from './mainProcessEventHandler/windowManage/hideQuicklookWindow';
 import { hideClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/hideClipboardHistoryWindow';
 import { resizeSearchWindowHeight } from './mainProcessEventHandler/windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './mainProcessEventHandler/windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/showLargeTextWindow';
-import { showQuicklookWindow } from './mainProcessEventHandler/windowManage/showQuicklookWindow';
 
 import { openPluginInstallFileDialog } from './mainProcessEventHandler/modal/openPluginInstallFileDialog';
 import { openWorkflowInstallFileDialog } from './mainProcessEventHandler/modal/openWorkflowInstallFileDialog';
@@ -54,7 +52,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.getElectronEnvs, getElectronEnvs);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
   ipcMain.on(IPCRendererEnum.hideLargeTextWindow, hideLargeTextWindow);
-  ipcMain.on(IPCRendererEnum.hideQuicklookWindow, hideQuicklookWindow);
   ipcMain.on(IPCRendererEnum.hideSearchWindow, hideSearchWindow);
   ipcMain.on(IPCRendererEnum.importTheme, importTheme);
   ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
@@ -73,7 +70,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.showErrorDialog, showErrorDialog);
   ipcMain.on(IPCRendererEnum.showLargeTextWindow, showLargeTextWindow);
   ipcMain.on(IPCRendererEnum.showNotification, showNotification);
-  ipcMain.on(IPCRendererEnum.showQuicklookWindow, showQuicklookWindow);
   ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);

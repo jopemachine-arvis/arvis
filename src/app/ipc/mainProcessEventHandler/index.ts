@@ -16,13 +16,11 @@ import { saveFile } from './modal/saveFile';
 import { showErrorDialog } from './modal/showErrorDialog';
 
 import { hideLargeTextWindow } from './windowManage/hideLargeTextWindow';
-import { hideQuicklookWindow } from './windowManage/hideQuicklookWindow';
 import { hideClipboardHistoryWindow } from './windowManage/hideClipboardHistoryWindow';
 import { hideSearchWindow } from './windowManage/hideSearchWindow';
 import { resizeSearchWindowHeight } from './windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './windowManage/showLargeTextWindow';
-import { showQuicklookWindow } from './windowManage/showQuicklookWindow';
 
 import { reloadWorkflow } from './reloadWorkflow';
 import { showNotification } from './showNotification';
@@ -34,7 +32,6 @@ export {
   getSystemFont,
   hideClipboardHistoryWindow,
   hideLargeTextWindow,
-  hideQuicklookWindow,
   hideSearchWindow,
   importTheme,
   openPluginInstallFileDialog,
@@ -53,7 +50,6 @@ export {
   showErrorDialog,
   showLargeTextWindow,
   showNotification,
-  showQuicklookWindow,
   triggerDoubleModifierKey,
   triggerKeyDownEvent,
 };

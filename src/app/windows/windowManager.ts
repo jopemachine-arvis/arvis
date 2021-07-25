@@ -2,7 +2,6 @@
 import { BrowserWindow } from 'electron';
 import { createLargeTextWindow } from './largeTextWindow';
 import { createPreferenceWindow } from './preferenceWindow';
-import { createQuicklookWindow } from './quicklookWindow';
 import { createSearchWindow } from './searchWindow';
 import { createClipboardHistoryWindow } from './clipboardHistoryWindow';
 
@@ -12,19 +11,15 @@ export class WindowManager {
   private static readonly eventHandlers: Map<string, Function> = new Map();
 
   private constructor() {
-    this.quicklookWindow = createQuicklookWindow();
     this.largeTextWindow = createLargeTextWindow();
     this.preferenceWindow = createPreferenceWindow();
     this.clipboardHistoryWindow = createClipboardHistoryWindow(
       WindowManager.eventHandlers
     );
     this.searchWindow = createSearchWindow({
-      quicklookWindow: this.quicklookWindow,
       largeTextWindow: this.largeTextWindow,
     });
   }
-
-  private quicklookWindow: BrowserWindow;
 
   private largeTextWindow: BrowserWindow;
 
@@ -50,10 +45,6 @@ export class WindowManager {
     return WindowManager.instance;
   }
 
-  public getQuicklookWindow() {
-    return this.quicklookWindow;
-  }
-
   public getLargeTextWindow() {
     return this.largeTextWindow;
   }
@@ -73,9 +64,6 @@ export class WindowManager {
   public windowAllClose() {
     if (this.searchWindow && this.searchWindow.closable) {
       this.searchWindow.close();
-    }
-    if (this.quicklookWindow && this.quicklookWindow.closable) {
-      this.quicklookWindow.close();
     }
     if (this.largeTextWindow && this.largeTextWindow.closable) {
       this.largeTextWindow.close();

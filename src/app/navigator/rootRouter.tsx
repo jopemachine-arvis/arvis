@@ -11,7 +11,6 @@ import { Store } from '../redux/reducers/types';
 import {
   Preference as PreferenceContainer,
   Search as SearchContainer,
-  Quicklook as QuicklookContainer,
   LargeText as LargeTextContainer,
   ClipboardHistory as ClipboardHistoryContainer,
 } from '../containers';
@@ -36,8 +35,6 @@ const windowRoute = (windowName: string) => {
       return <SearchContainer />;
     case 'largeTextWindow':
       return <LargeTextContainer />;
-    case 'quicklookWindow':
-      return <QuicklookContainer />;
     case 'clipboardHistoryWindow':
       return <ClipboardHistoryContainer />;
     default:

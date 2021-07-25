@@ -549,9 +549,9 @@ const useSearchWindowControl = ({
   const quicklookHandler = (item: any) => {
     if (!item) return;
     if (item.quicklookurl) {
-      ipcRenderer.send(IPCRendererEnum.showQuicklookWindow, {
-        url: item.quicklookurl,
-      });
+      // ipcRenderer.send(IPCRendererEnum.showQuicklookWindow, {
+      //   url: item.quicklookurl,
+      // });
     }
   };
 

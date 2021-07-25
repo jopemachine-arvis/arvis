@@ -4,10 +4,8 @@ import constants from '../constants';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 
 const createSearchWindow = ({
-  quicklookWindow,
   largeTextWindow,
 }: {
-  quicklookWindow: BrowserWindow;
   largeTextWindow: BrowserWindow;
 }) => {
   const searchWindow = new BrowserWindow({
@@ -39,8 +37,8 @@ const createSearchWindow = ({
       plugins: false,
       scrollBounce: false,
       spellcheck: false,
-      webviewTag: false,
       enableRemoteModule: true,
+      webviewTag: true,
     },
   });
 
@@ -69,7 +67,7 @@ const createSearchWindow = ({
 
   searchWindow.on('blur', (e: any) => {
     e.preventDefault();
-    if (!quicklookWindow.isFocused() && !largeTextWindow.isFocused()) {
+    if (!largeTextWindow.isFocused()) {
       searchWindow.webContents.send(IPCMainEnum.hideSearchWindowByBlurEvent);
     }
   });

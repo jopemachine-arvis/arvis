@@ -232,14 +232,6 @@ export default (mainWindow: BrowserWindow) => {
         },
       },
       {
-        label: 'Open Quicklook Window Debugger',
-        click() {
-          WindowManager.getInstance()
-            .getQuicklookWindow()
-            .webContents.openDevTools();
-        },
-      },
-      {
         type: 'separator',
       },
       {
