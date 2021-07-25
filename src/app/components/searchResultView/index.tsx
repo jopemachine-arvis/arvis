@@ -72,8 +72,6 @@ const SearchResultView = (props: IProps) => {
 
   useEffect(() => {
     if (!demo) {
-      console.log(haveUnresolvedItems);
-
       ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
         itemCount: searchResult.length,
         windowWidth: searchWindowWidth,

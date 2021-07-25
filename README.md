@@ -21,7 +21,7 @@ Arvis is extendable cross-platform launcher application that aims to help you ru
 
 * Make your own search window style.
 
-:point_right: [Visit arvis.com](https://jopemachine.github.io/arvis.com/)
+:point_right: [Visit arvis.com](https://jopemachine.github.io/arvis.com/) (WIP)
 
 :video_camera: [View Arvis intro video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 
