@@ -1,17 +1,20 @@
+import HotkeyRecordForm from './hotkeyRecordForm';
 import MenuBuilder from './menus';
-import TrayBuilder from './tray';
+import Quicklook from './quicklook';
+import ScreenCover from './screenCover';
 import SearchBar from './searchBar';
 import SearchResultItem from './searchResultItem';
 import SearchResultView from './searchResultView';
-import StyledInput from './styledInput';
-import Spinner from './spinner';
-import ScreenCover from './screenCover';
 import SearchWindowScrollbar from './searchWindowScrollbar';
 import SearchWindowSpinner from './searchWindowSpinner';
-import HotkeyRecordForm from './hotkeyRecordForm';
+import Spinner from './spinner';
+import StyledInput from './styledInput';
+import TrayBuilder from './tray';
 
 export {
+  HotkeyRecordForm,
   MenuBuilder,
+  Quicklook,
   ScreenCover,
   SearchBar,
   SearchResultItem,
@@ -21,5 +24,4 @@ export {
   Spinner,
   StyledInput,
   TrayBuilder,
-  HotkeyRecordForm,
 };

@@ -5,9 +5,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { isWithCtrlOrCmd } from '@utils/index';
+import { isWithCtrlOrCmd, isSupportedImageFormat } from '@utils/index';
 import _ from 'lodash';
 import PCancelable from 'p-cancelable';
+import path from 'path';
+import isUrl from 'is-url';
 import useKey from '../../use-key-capture/src';
 
 type IndexInfo = {
@@ -25,6 +27,8 @@ const useSearchWindowControl = ({
   maxRetrieveCount,
   isPinned,
   setIsPinned,
+  quicklookModalData,
+  setQuicklookModalData,
   spinning,
 }: {
   items: any[];
@@ -33,6 +37,8 @@ const useSearchWindowControl = ({
   maxRetrieveCount: number;
   isPinned: boolean;
   setIsPinned: (bool: boolean) => void;
+  quicklookModalData: any;
+  setQuicklookModalData: (data: any) => void;
   spinning: boolean;
 }) => {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
@@ -401,7 +407,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {React.WheelEvent<HTMLInputElement>} e
+   * @param e
    * @summary mouse wheel event handler
    */
   const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
@@ -433,7 +439,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e
+   * @param e
    */
   const onDoubleClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -548,11 +554,11 @@ const useSearchWindowControl = ({
    */
   const quicklookHandler = (item: any) => {
     if (!item) return;
-    if (item.quicklookurl) {
-      // ipcRenderer.send(IPCRendererEnum.showQuicklookWindow, {
-      //   url: item.quicklookurl,
-      // });
-    }
+
+    setQuicklookModalData({
+      ...quicklookModalData,
+      active: !quicklookModalData.active,
+    });
   };
 
   /**
@@ -709,6 +715,11 @@ const useSearchWindowControl = ({
     if (isPinned) return;
 
     if (forceHide || shouldBeHided === true) {
+      setQuicklookModalData({
+        type: undefined,
+        data: undefined,
+        active: false,
+      });
       cancelUnresolvedPluginPromises();
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
       ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
@@ -737,6 +748,49 @@ const useSearchWindowControl = ({
   }) => {
     setInputStr({ str, needItemsUpdate });
   };
+
+  const inferQuicklookData = (item: any) => {
+    if (item.quicklookurl) {
+      return {
+        type: 'url',
+        data: item.quicklookurl,
+      };
+    }
+    if (item.arg) {
+      if (
+        path.isAbsolute(item.arg) &&
+        isSupportedImageFormat(path.extname(item.arg))
+      ) {
+        return {
+          type: 'url',
+          data: item.arg,
+        };
+      }
+
+      if (isUrl(item.arg)) {
+        return {
+          type: 'url',
+          data: item.arg,
+        };
+      }
+    }
+
+    return {
+      type: undefined,
+      data: undefined,
+    };
+  };
+
+  useEffect(() => {
+    const target = items[indexInfo.selectedItemIdx];
+
+    if (target) {
+      setQuicklookModalData({
+        active: quicklookModalData.active,
+        ...inferQuicklookData(target),
+      });
+    }
+  }, [items, indexInfo]);
 
   useEffect(() => {
     hideSearchWindowByBlurCbRef.current = () => {

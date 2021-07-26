@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
@@ -9,6 +10,7 @@ import {
   SearchBar,
   SearchResultView,
   SearchWindowScrollbar,
+  Quicklook,
 } from '@components/index';
 import { useSearchWindowControl, useIoHook } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
@@ -69,6 +71,12 @@ export default function SearchWindow() {
   const [isSpinning, setSpinning] = useState<boolean>(false);
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
+  const [quicklookModalData, setQuicklookModalData] = useState<any>({
+    type: undefined,
+    data: undefined,
+    active: false,
+  });
+
   const [items, setItems] = useState<any[]>([]);
 
   const actionFlowManager = Core.ActionFlowManager.getInstance();
@@ -112,6 +120,8 @@ export default function SearchWindow() {
     maxRetrieveCount: max_item_count_to_search,
     isPinned,
     setIsPinned,
+    quicklookModalData,
+    setQuicklookModalData,
     spinning: isSpinning,
   });
 
@@ -350,6 +360,8 @@ export default function SearchWindow() {
       }}
       onWheel={onWheelHandler}
     >
+      <Quicklook {...quicklookModalData} searchbarHeight={searchbar_height} />
+
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <SearchBar
           alwaysFocus
@@ -368,6 +380,7 @@ export default function SearchWindow() {
         <SearchResultView
           demo={false}
           footerHeight={search_window_footer_height}
+          haveUnresolvedItems={hasUnresolvedPluginPromises}
           iconRightMargin={icon_right_margin}
           itemBackgroundColor={item_background_color}
           itemDefaultIconColor={item_default_icon_color}
@@ -377,7 +390,6 @@ export default function SearchWindow() {
           itemTitleSubtitleMargin={item_title_subtitle_margin}
           maxItemCount={max_item_count_to_show}
           noShowIcon={false}
-          haveUnresolvedItems={hasUnresolvedPluginPromises}
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
           searchbarHeight={searchbar_height}

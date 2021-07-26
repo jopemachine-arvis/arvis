@@ -1,7 +1,10 @@
 import makeActionCreator from './makeActionCreator';
 import { isNumeric } from './isNumeric';
 import extractJson from './extractJSON';
-import { supportedImageFormats } from './isSupportedImage';
+import {
+  supportedImageFormats,
+  isSupportedImageFormat,
+} from './isSupportedImage';
 import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 import { sleep } from './sleep';
@@ -24,6 +27,7 @@ export {
   getRandomColor,
   hideWindowAndRestoreFocus,
   isNumeric,
+  isSupportedImageFormat,
   isWithCtrlOrCmd,
   makeActionCreator,
   onNumberChangeHandler,
