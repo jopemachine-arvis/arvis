@@ -8,8 +8,8 @@ import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Form, FormGroup, Label } from 'reactstrap';
 import { StyledInput } from '@components/index';
-import './index.global.css';
 import * as style from './style';
+import './index.css';
 
 type IProps = {
   info: any;

@@ -7,7 +7,7 @@ import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input, AutoMatch } from './components';
 import SearchbarDragger from './dragger';
-import './index.global.css';
+import './index.css';
 
 type IProps = {
   alwaysFocus: boolean;

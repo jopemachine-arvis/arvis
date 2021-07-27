@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StyledInput from '@components/styledInput';
 import HotkeyRecordForm from '@components/hotkeyRecordForm';
-import './index.global.css';
+import './index.css';
 
 export const EditableCell = ({
   value: initialValue,

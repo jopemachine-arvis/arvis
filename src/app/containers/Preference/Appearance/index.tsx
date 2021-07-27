@@ -13,7 +13,7 @@ import fse from 'fs-extra';
 import { homedir } from 'os';
 import path from 'path';
 import { StateType } from '@redux/reducers/types';
-import './index.global.css';
+import './index.css';
 import { SearchBar, SearchResultView, StyledInput } from '@components/index';
 import { actionTypes as UIActionTypes } from '@redux/actions/uiConfig';
 import {

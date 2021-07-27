@@ -750,9 +750,13 @@ const useSearchWindowControl = ({
   };
 
   const inferQuicklookData = (item: any) => {
+    if (item.quicklook) {
+      return item.quicklook;
+    }
+
     if (item.quicklookurl) {
       return {
-        type: 'url',
+        type: 'html',
         data: item.quicklookurl,
       };
     }
@@ -762,14 +766,14 @@ const useSearchWindowControl = ({
         isSupportedImageFormat(path.extname(item.arg))
       ) {
         return {
-          type: 'url',
+          type: 'image',
           data: item.arg,
         };
       }
 
       if (isUrl(item.arg)) {
         return {
-          type: 'url',
+          type: 'html',
           data: item.arg,
         };
       }

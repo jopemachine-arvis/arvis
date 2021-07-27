@@ -9,7 +9,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { StyledInput } from '@components/index';
-import './index.global.css';
+import './index.css';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { Core } from 'arvis-core';
 import semver from 'semver';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './index.global.css';
+import './index.css';
 
 type IProps = {
   style?: any;

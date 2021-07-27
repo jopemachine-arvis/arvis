@@ -1,4 +1,5 @@
 import HotkeyRecordForm from './hotkeyRecordForm';
+import MarkdownRenderer from './markdownRenderer';
 import MenuBuilder from './menus';
 import Quicklook from './quicklook';
 import ScreenCover from './screenCover';
@@ -13,6 +14,7 @@ import TrayBuilder from './tray';
 
 export {
   HotkeyRecordForm,
+  MarkdownRenderer,
   MenuBuilder,
   Quicklook,
   ScreenCover,

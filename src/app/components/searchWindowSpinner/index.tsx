@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
-import './index.global.css';
+import './index.css';
 
 const Spinner = (props: any) => {
   return (

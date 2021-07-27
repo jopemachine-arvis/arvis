@@ -25,10 +25,9 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { useExtensionSearchControl } from '@hooks/index';
 import { isWithCtrlOrCmd, range } from '@utils/index';
-import { SearchBar } from '@components/index';
+import { SearchBar, MarkdownRenderer } from '@components/index';
 import { WorkflowTriggerTable } from './workflowTriggerTable';
 import WorkflowInfoTable from './infoTable';
-import ReadMeTable from './readme';
 import {
   Header,
   OuterContainer,
@@ -44,7 +43,7 @@ import {
   WorkflowListViewFooter,
 } from './components';
 import * as style from './style';
-import './index.global.css';
+import './index.css';
 
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
@@ -613,11 +612,18 @@ export default function Workflow() {
               )}
             </TabPanel>
             <TabPanel>
-              <ReadMeTable
-                readme={
+              <MarkdownRenderer
+                width="50%"
+                height="70%"
+                style={{
+                  marginTop: 8,
+                  borderRadius: 10,
+                  padding: 45,
+                }}
+                data={
                   workflows[workflowBundleId]
-                    ? workflows[workflowBundleId].readme
-                    : null
+                    ? workflows[workflowBundleId].readme ?? ''
+                    : ''
                 }
               />
             </TabPanel>

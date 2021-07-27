@@ -5,8 +5,10 @@ import { IconContext } from 'react-icons';
 import RootRouter from './app/navigator/rootRouter';
 import { configureStore, history } from './app/store/configureStore';
 import initialState from './app/config/initialState';
+import 'react-tabs/style/react-tabs.css';
+
 import './app.global.css';
-import './external/react-tabs/index.global.css';
+import './external/react-pro-sidebar/index.global.css';
 import './external/jsoneditor/index.global.css';
 import './external/github-markdown.css/index.global.css';
 

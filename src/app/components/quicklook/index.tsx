@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { QuicklookWebview } from './quicklookWebview';
+import { QuicklookText } from './quicklookText';
+import MarkdownRenderer from '../markdownRenderer';
 
 const outerStyle: any = {
   backgroundColor: '#888',
@@ -16,7 +18,7 @@ const outerStyle: any = {
 };
 
 type IProps = {
-  type?: 'url' | 'image';
+  type?: 'html' | 'image' | 'markdown' | 'text';
   data?: string;
   active: boolean;
   searchbarHeight: number;
@@ -60,8 +62,20 @@ export default (props: IProps) => {
   const renderInnerContainer = () => {
     if (!type || !data) return <div>No data to display</div>;
     switch (type) {
-      case 'url':
+      case 'html':
+      case 'image':
         return <QuicklookWebview data={data} />;
+      case 'text':
+        return <QuicklookText>{data}</QuicklookText>;
+      case 'markdown':
+        return (
+          <MarkdownRenderer
+            width="100%"
+            height="100%"
+            data={data}
+            padding={15}
+          />
+        );
       default:
         break;
     }
@@ -102,7 +116,6 @@ export default (props: IProps) => {
       onDragEnd={onDragEndEventHandler}
       style={{
         ...outerStyle,
-        cursor: 'w-resize',
         borderRadius: modalAnimation.borderRadius,
         marginTop: searchbarHeight,
         opacity: modalAnimation.opacity,

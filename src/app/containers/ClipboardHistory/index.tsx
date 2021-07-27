@@ -23,7 +23,7 @@ import {
   CopyDateTime,
 } from './components';
 import { style } from './style';
-import './index.global.css';
+import './index.css';
 
 const maxShowOnScreen = 15;
 

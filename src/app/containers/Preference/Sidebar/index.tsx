@@ -15,8 +15,6 @@ import {
   AiOutlineAppstore,
   AiTwotoneThunderbolt,
 } from 'react-icons/ai';
-import './index.global.css';
-import './sidebar.global.css';
 import styled from 'styled-components';
 import { BiMenuAltLeft, BiStore } from 'react-icons/bi';
 import { FaGithub } from 'react-icons/fa';
@@ -25,6 +23,7 @@ import { BsClipboardData } from 'react-icons/bs';
 import sidebarBg from '../../../../../assets/images/sidebar_bg.jpg';
 import SidebarTitle from './sidebarTitle';
 import { PreferencePage } from '../preferencePageEnum';
+import './index.css';
 
 type IProps = {
   page: PreferencePage;

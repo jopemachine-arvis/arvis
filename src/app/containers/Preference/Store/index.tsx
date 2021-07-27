@@ -41,7 +41,7 @@ import {
   SearchResultText,
   SearchbarDescriptionContainer,
 } from './components';
-import './index.global.css';
+import './index.css';
 import * as style from './style';
 
 type IProps = {

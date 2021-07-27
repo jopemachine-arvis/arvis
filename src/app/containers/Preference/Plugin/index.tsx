@@ -24,10 +24,9 @@ import { JsonEditor } from 'jsoneditor-react';
 import { useExtensionSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
-import { SearchBar } from '@components/index';
+import { SearchBar, MarkdownRenderer } from '@components/index';
 import { isWithCtrlOrCmd, range } from '@utils/index';
 import PluginInfoTable from './infoTable';
-import ReadMeTable from './readme';
 import {
   Header,
   OuterContainer,
@@ -42,7 +41,7 @@ import {
   SearchbarContainer,
   TabNavigatorContainer,
 } from './components';
-import './index.global.css';
+import './index.css';
 import * as style from './style';
 
 export default function Plugin() {
@@ -588,11 +587,18 @@ export default function Plugin() {
               )}
             </TabPanel>
             <TabPanel>
-              <ReadMeTable
-                readme={
+              <MarkdownRenderer
+                width="50%"
+                height="70%"
+                style={{
+                  marginTop: 8,
+                  borderRadius: 10,
+                  padding: 45,
+                }}
+                data={
                   plugins[pluginBundleId]
-                    ? plugins[pluginBundleId].readme
-                    : null
+                    ? plugins[pluginBundleId].readme ?? ''
+                    : ''
                 }
               />
             </TabPanel>

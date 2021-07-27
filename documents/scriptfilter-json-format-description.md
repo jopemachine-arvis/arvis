@@ -1,6 +1,8 @@
 # Scriptfilter item JSON format
 
-`Arvis` use same scriptfilter JSON format with `Alfred-workflow`
+`Arvis` use almost same scriptfilter JSON format with `Alfred-workflow`
+
+Marked `arvisOnly: true` for items that are not supported by alfred.
 
 ## title
 
@@ -81,7 +83,37 @@ default value is `true`.
 
 If valid is `false`, the item is treated error messages.
 
-You can show error message through setting `valid` to false.  
+You can show error message through setting `valid` to false.
+
+## quicklook
+
+type: `object`
+
+required: `false`
+
+arvisOnly: `true`
+
+Users can press the `shift + space` key above the item to open the quicklook.
+
+The data handed over is explicitly displayed in the quicklook.
+
+If you do not specify a quicklook, the arvis will infer the data to display.
+
+Recommend specifying `quicklook` value for explicit data display.
+
+### type
+
+type: `string (enum)`
+
+required: `true`
+
+values: `html`, `image`, `markdown`, `text`
+
+### data
+
+type: `string`
+
+required: `true`
 
 ## quicklookurl
 
@@ -89,9 +121,9 @@ type: `string`
 
 required: `false`
 
-Users can press the `shift + space` key above the item to open the quicklook window.
+Users can press the `shift + space` key above the item to open the quicklook.
 
-The window displays the file path or url that was passed on.
+You can consider `quicklookurl` as shortcut of `quicklook` object with html type.
 
 ## mods
 

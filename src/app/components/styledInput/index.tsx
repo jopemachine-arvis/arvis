@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input as ReactStrapInput } from 'reactstrap';
-import './index.global.css';
+import './index.css';
 
 const StyledInput = (props: any) => {
   const { style, className } = props;
