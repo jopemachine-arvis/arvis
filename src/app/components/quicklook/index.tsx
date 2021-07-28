@@ -1,6 +1,8 @@
 /* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
+import fse from 'fs-extra';
+import Spinner from '../searchWindowSpinner';
 import { QuicklookWebview } from './quicklookWebview';
 import { QuicklookText } from './quicklookText';
 import MarkdownRenderer from '../markdownRenderer';
@@ -10,7 +12,6 @@ const outerStyle: any = {
   position: 'absolute',
   right: 0,
   width: 350,
-  height: '100%',
   zIndex: 2000,
   display: 'flex',
   justifyContent: 'center',
@@ -22,7 +23,6 @@ type IProps = {
   type?: 'html' | 'image' | 'markdown' | 'text';
   data?: string;
   active: boolean;
-  backgroundColor: string;
   searchbarHeight: number;
 };
 
@@ -51,7 +51,7 @@ const useModalAnimation = ({
   });
 
 export default (props: IProps) => {
-  const { type, data, active, searchbarHeight, backgroundColor } = props;
+  const { type, data, active, searchbarHeight } = props;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
   const [hovering, setHovering] = useState<boolean>(false);
@@ -61,14 +61,26 @@ export default (props: IProps) => {
     reverse: !active && !hovering,
   });
 
-  const renderInnerContainer = () => {
+  const [contents, setContents] = useState<any>();
+
+  const getInnerContainer = async () => {
     if (!type || !data) return <div>No data to display</div>;
     switch (type) {
       case 'html':
       case 'image':
         return <QuicklookWebview data={data} />;
-      case 'text':
-        return <QuicklookText>{data}</QuicklookText>;
+      case 'text': {
+        const fileSize = (await fse.stat(data)).size;
+        if (fileSize >= 1024 * 100) {
+          return <div>Too big text file</div>;
+        }
+
+        return (
+          <QuicklookText>
+            {await fse.readFile(data, { encoding: 'utf-8' })}
+          </QuicklookText>
+        );
+      }
       case 'markdown':
         return (
           <MarkdownRenderer
@@ -100,6 +112,16 @@ export default (props: IProps) => {
 
   const onDragEventHandler = () => {};
 
+  const renderLoading = () => {
+    return (
+      <Spinner
+        style={{
+          top: '50%',
+        }}
+      />
+    );
+  };
+
   useEffect(() => {
     if (initialRendering) {
       setInitialRendering(false);
@@ -114,6 +136,11 @@ export default (props: IProps) => {
     modalAnimation.horizontalOffset.start();
   }, [active]);
 
+  useEffect(() => {
+    setContents(renderLoading());
+    getInnerContainer().then(setContents).catch(console.error);
+  }, [data]);
+
   return (
     <animated.div
       onMouseEnter={onMouseEnterEventHandler}
@@ -123,6 +150,8 @@ export default (props: IProps) => {
       onDragEnd={onDragEndEventHandler}
       style={{
         ...outerStyle,
+        color: '#000',
+        height: `calc(100% - ${searchbarHeight}px)`,
         backgroundColor: '#fff',
         borderRadius: modalAnimation.borderRadius,
         marginTop: searchbarHeight,
@@ -132,7 +161,7 @@ export default (props: IProps) => {
         ),
       }}
     >
-      {renderInnerContainer()}
+      {contents}
     </animated.div>
   );
 };

@@ -3347,10 +3347,10 @@ binary@~0.3.0:
     buffers "~0.1.1"
     chainsaw "~0.1.0"
 
-binaryextensions@^4.15.0:
-  version "4.15.0"
-  resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-4.15.0.tgz#c63a502e0078ff1b0e9b00a9f74d3c2b0f8bd32e"
-  integrity sha512-MkUl3szxXolQ2scI1PM14WOT951KnaTNJ0eMKg7WzOI4kvSxyNo/Cygx4LOBNhwyINhAuSQpJW1rYD9aBSxGaw==
+binaryextensions@^4.15.0, binaryextensions@^4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-4.16.0.tgz#f4b9aeba3a23a2fb3da9ab3e8bae73075c9a6d71"
+  integrity sha512-fgdnKp0fV6qog/wGLNC2OD5DosRgt6TibuIAg5XuS6KRtsjmkMx8W7nYOoTXkvWQ02FqR+9bZ4dR1/JJnTY3hQ==
 
 bindings@^1.5.0:
   version "1.5.0"
@@ -7919,14 +7919,13 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-istextorbinary@^5.12.0:
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/istextorbinary/-/istextorbinary-5.12.0.tgz#2f84777838668fdf524c305a2363d6057aaeec84"
-  integrity sha512-wLDRWD7qpNTYubk04+q3en1+XZGS4vYWK0+SxNSXJLaITMMEK+J3o/TlOMyULeH1qozVZ9uUkKcyMA8odyxz8w==
+istextorbinary@^5.12.0, istextorbinary@^5.13.0:
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/istextorbinary/-/istextorbinary-5.13.0.tgz#d97173c64c616c8ddfe1fe619bdfad3cf0db92af"
+  integrity sha512-QI9ey2lar78uXnETojEFe50DtnlTcv5lpvVlF+z17ilwcNaUTsxxQ5XUeHi+fIrvOs4PzLm1DzwPojlcMWEyXg==
   dependencies:
-    binaryextensions "^4.15.0"
-    editions "^6.1.0"
-    textextensions "^5.11.0"
+    binaryextensions "^4.16.0"
+    textextensions "^5.12.0"
 
 jake@^10.6.1:
   version "10.8.2"
@@ -12940,10 +12939,10 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-textextensions@^5.11.0:
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-5.12.0.tgz#b908120b5c1bd4bb9eba41423d75b176011ab68a"
-  integrity sha512-IYogUDaP65IXboCiPPC0jTLLBzYlhhw2Y4b0a2trPgbHNGGGEfuHE6tds+yDcCf4mpNDaGISFzwSSezcXt+d6w==
+textextensions@^5.11.0, textextensions@^5.12.0:
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-5.13.0.tgz#74d122f7fa1eb45b0f3e95fdb08f9683e3c07897"
+  integrity sha512-srLdv6DnJWdrddd4j6GcVmExwaydgbWsmTsxeW8OkZv6/2Je/SwkjHYdrhosImPQPiXzNT2kyjak4xh2TVccgA==
 
 throat@^5.0.0:
   version "5.0.0"

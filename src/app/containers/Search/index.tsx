@@ -363,7 +363,6 @@ export default function SearchWindow() {
       <Quicklook
         {...quicklookModalData}
         searchbarHeight={searchbar_height}
-        backgroundColor={item_background_color}
         style={{
           backgroundColor: 'transparent',
         }}

@@ -10,6 +10,7 @@ import _ from 'lodash';
 import PCancelable from 'p-cancelable';
 import path from 'path';
 import isUrl from 'is-url';
+import { isText } from 'istextorbinary';
 import useKey from '../../external/use-key-capture/src';
 
 type IndexInfo = {
@@ -239,7 +240,6 @@ const useSearchWindowControl = ({
     unresolvedPluginPromises.forEach(
       (item: PCancelable<PluginExectionResult>) => {
         if (!item.isCanceled) {
-          console.log('Cancel prev unresolvedPluginPromises', item);
           item.cancel();
         }
       }
@@ -760,15 +760,22 @@ const useSearchWindowControl = ({
         data: item.quicklookurl,
       };
     }
+
     if (item.arg) {
-      if (
-        path.isAbsolute(item.arg) &&
-        isSupportedImageFormat(path.extname(item.arg))
-      ) {
-        return {
-          type: 'image',
-          data: item.arg,
-        };
+      if (path.isAbsolute(item.arg)) {
+        if (isSupportedImageFormat(path.extname(item.arg))) {
+          return {
+            type: 'image',
+            data: item.arg,
+          };
+        }
+
+        if (isText(item.arg)) {
+          return {
+            type: 'text',
+            data: item.arg,
+          };
+        }
       }
 
       if (isUrl(item.arg)) {

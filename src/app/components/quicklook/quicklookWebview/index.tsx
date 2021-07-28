@@ -22,6 +22,7 @@ const OuterContainer = styled.div`
     width: 100% !important;
     height: 100% !important;
     display: inline-flex !important;
+    padding: 0px;
   }
 `;
 
@@ -58,13 +59,14 @@ export function QuicklookWebview(props: IProps) {
           id="webview"
           useragent={userAgent}
           // Off webview src change in dev mode due to GUEST_VIEW_MANAGER_CALL errors
-          src={process.env.NODE_ENV !== 'development' ? src : undefined}
+          src={process.env.NODE_ENV !== 'development' ? src : src}
           onFocus={preventFocus}
           onBlur={preventFocus}
           allowFullScreen={false}
+          preload="window.alert = console.log"
           style={{
-            width: '95%',
-            height: '95%',
+            width: '100%',
+            height: '100%',
             margin: 0,
             padding: 0,
           }}

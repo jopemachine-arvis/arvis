@@ -312,6 +312,7 @@
     "history": "^5.0.0",
     "is-admin": "^3.0.0",
     "is-url": "^1.2.4",
+    "istextorbinary": "^5.13.0",
     "jsoneditor": "^9.5.1",
     "jsoneditor-react": "^3.1.1",
     "open": "^8.2.1",
