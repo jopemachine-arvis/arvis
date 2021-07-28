@@ -5,8 +5,8 @@ import { QuicklookWebview } from './quicklookWebview';
 import { QuicklookText } from './quicklookText';
 import MarkdownRenderer from '../markdownRenderer';
 
+// Ref: For better boxShadow styles, refer to https://getcssscan.com/css-box-shadow-examples
 const outerStyle: any = {
-  backgroundColor: '#888',
   position: 'absolute',
   right: 0,
   width: 350,
@@ -15,16 +15,18 @@ const outerStyle: any = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px',
 };
 
 type IProps = {
   type?: 'html' | 'image' | 'markdown' | 'text';
   data?: string;
   active: boolean;
+  backgroundColor: string;
   searchbarHeight: number;
 };
 
-const deactivedModalWindowWidth = 5;
+const deactivedModalWindowWidth = 15;
 
 const useModalAnimation = ({
   initialRendering,
@@ -35,7 +37,7 @@ const useModalAnimation = ({
 }) =>
   useSpring({
     from: {
-      opacity: 0.25,
+      opacity: 0,
       horizontalOffset: 350 - deactivedModalWindowWidth,
       borderRadius: 0,
     },
@@ -49,7 +51,7 @@ const useModalAnimation = ({
   });
 
 export default (props: IProps) => {
-  const { type, data, active, searchbarHeight } = props;
+  const { type, data, active, searchbarHeight, backgroundColor } = props;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
   const [hovering, setHovering] = useState<boolean>(false);
@@ -70,6 +72,7 @@ export default (props: IProps) => {
       case 'markdown':
         return (
           <MarkdownRenderer
+            dark={false}
             width="100%"
             height="100%"
             data={data}
@@ -103,6 +106,10 @@ export default (props: IProps) => {
       return;
     }
 
+    if (!active) {
+      setHovering(false);
+    }
+
     modalAnimation.opacity.start();
     modalAnimation.horizontalOffset.start();
   }, [active]);
@@ -116,6 +123,7 @@ export default (props: IProps) => {
       onDragEnd={onDragEndEventHandler}
       style={{
         ...outerStyle,
+        backgroundColor: '#fff',
         borderRadius: modalAnimation.borderRadius,
         marginTop: searchbarHeight,
         opacity: modalAnimation.opacity,

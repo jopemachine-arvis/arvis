@@ -128,6 +128,7 @@ app.on('ready', () => {
   };
 
   if (process.platform === 'linux') {
+    // Should be some delay for applying transparent windows on Linux.
     setTimeout(onReadyHandler, 300);
   } else {
     onReadyHandler();

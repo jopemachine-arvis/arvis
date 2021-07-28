@@ -360,7 +360,14 @@ export default function SearchWindow() {
       }}
       onWheel={onWheelHandler}
     >
-      <Quicklook {...quicklookModalData} searchbarHeight={searchbar_height} />
+      <Quicklook
+        {...quicklookModalData}
+        searchbarHeight={searchbar_height}
+        backgroundColor={item_background_color}
+        style={{
+          backgroundColor: 'transparent',
+        }}
+      />
 
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <SearchBar

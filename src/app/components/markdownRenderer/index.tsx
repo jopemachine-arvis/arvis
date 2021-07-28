@@ -16,18 +16,17 @@ type IProps = {
   width: string;
   height: string;
   data: string;
+  dark?: boolean;
   padding?: number;
   style?: any;
-  bodyStyle?: any;
 };
 
-// Assume dark theme
 export default function Markdown(props: IProps) {
-  const { width, height, data, padding } = props;
-  const { style, bodyStyle } = props;
+  const { width, height, data, padding, dark } = props;
+  let { style } = props;
+  if (!style) style = {};
 
   const OuterContainer = styled.div`
-    background-color: #202228;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -41,8 +40,18 @@ export default function Markdown(props: IProps) {
       margin: 0 auto;
       min-width: 200px;
       max-width: 980px;
-      color: #fff !important;
       padding: ${padding || 0}px;
+      color: ${dark ? '#fff' : '#000'};
+    }
+
+    .markdown-body h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      color: ${dark ? '#fff' : '#000'} !important;
     }
 
     .markdown-body p {
@@ -50,7 +59,7 @@ export default function Markdown(props: IProps) {
     }
 
     .markdown-body pre {
-      background-color: #111;
+      background-color: ${dark ? '#111' : '#f6f8fa'};
     }
   `;
 

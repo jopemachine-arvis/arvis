@@ -590,10 +590,12 @@ export default function Plugin() {
               <MarkdownRenderer
                 width="50%"
                 height="70%"
+                dark
                 style={{
                   marginTop: 8,
                   borderRadius: 10,
                   padding: 45,
+                  backgroundColor: '#202228',
                 }}
                 data={
                   plugins[pluginBundleId]
