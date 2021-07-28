@@ -1,0 +1,15 @@
+.react-tabs__tab {
+    color: #fff;
+}
+
+.react-tabs__tab--selected {
+    color: #000 !important;
+}
+
+.react-tabs__tab-panel--selected {
+    color: #fff !important;
+}
+
+.react-tabs__tab-list {
+    font-size: 14px !important;
+}
