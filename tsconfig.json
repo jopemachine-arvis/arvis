@@ -46,6 +46,6 @@
     "dll",
     "src/main.js",
     "src/main.js.map",
-    "src/external"
+    "src/external/use-key-capture"
   ]
 }
