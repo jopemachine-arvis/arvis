@@ -13,9 +13,9 @@ import 'react-pro-sidebar/dist/css/styles.css';
 
 // Apply external package's modified styles
 import './app.global.css';
+import './external/jsoneditor/index.global.css';
 import './external/react-tabs/index.global.css';
 import './external/react-pro-sidebar/index.global.css';
-import './external/jsoneditor/index.global.css';
 
 const { store, persistor } = configureStore(initialState);
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;

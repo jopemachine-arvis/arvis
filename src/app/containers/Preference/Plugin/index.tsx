@@ -595,7 +595,7 @@ export default function Plugin() {
                   marginTop: 8,
                   borderRadius: 10,
                   padding: 45,
-                  backgroundColor: '#202228',
+                  backgroundColor: '#0D1118',
                 }}
                 data={
                   plugins[pluginBundleId]

@@ -10,6 +10,8 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import 'github-markdown-css';
+// To do:: Replace below css with 'github-markdown-css' dark theme file after dark theme PR is merged
+import '../../../external/github-markdown-css/dark.css';
 
 type IProps = {
   width: string;
@@ -25,6 +27,7 @@ export default function Markdown(props: IProps) {
   let { style } = props;
   if (!style) style = {};
 
+  // Overwrite existing app's styles
   const OuterContainer = styled.div`
     position: absolute;
     width: 100%;
@@ -40,31 +43,32 @@ export default function Markdown(props: IProps) {
       min-width: 200px;
       max-width: 980px;
       padding: ${padding || 0}px;
-      color: ${dark ? '#fff' : '#000'};
-    }
-
-    .markdown-body h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p {
-      color: ${dark ? '#fff' : '#000'} !important;
     }
 
     .markdown-body p {
       font-size: 100% !important;
     }
 
-    .markdown-body pre {
-      background-color: ${dark ? '#111' : '#f6f8fa'};
+    .markdown-body-dark p {
+      font-size: 100% !important;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+      color: #000 !important;
     }
   `;
 
   return (
     <OuterContainer style={{ width, height, ...style }}>
-      <ReactMarkdown className="markdown-body" skipHtml={false}>
+      <ReactMarkdown
+        className={dark ? 'markdown-body-dark' : 'markdown-body'}
+        skipHtml={false}
+      >
         {data}
       </ReactMarkdown>
     </OuterContainer>
