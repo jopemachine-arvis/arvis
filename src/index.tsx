@@ -5,8 +5,13 @@ import { IconContext } from 'react-icons';
 import RootRouter from './app/navigator/rootRouter';
 import { configureStore, history } from './app/store/configureStore';
 import initialState from './app/config/initialState';
-import 'react-tabs/style/react-tabs.css';
 
+// Apply external package's default styles
+import 'jsoneditor/dist/jsoneditor.css';
+import 'react-tabs/style/react-tabs.css';
+import 'react-pro-sidebar/dist/css/styles.css';
+
+// Apply external package's modified styles
 import './app.global.css';
 import './external/react-tabs/index.global.css';
 import './external/react-pro-sidebar/index.global.css';
