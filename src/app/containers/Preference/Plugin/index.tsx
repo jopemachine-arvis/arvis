@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
+/* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
@@ -45,6 +46,8 @@ import {
 import './index.css';
 import * as style from './style';
 
+const tabInfo = ['Basic Info', 'User Config', 'README', 'Web Page'];
+
 export default function Plugin() {
   const plugins = Core.getPluginList();
   const allPluginBundleIds = Object.keys(plugins).sort((a, b) =>
@@ -66,6 +69,8 @@ export default function Plugin() {
   const [webviewUrl, setWebviewUrl] = useState<string>('');
 
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
+
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
@@ -499,27 +504,10 @@ export default function Plugin() {
     }
   };
 
-  useEffect(() => {
-    pluginBundleIdsRef.current = pluginBundleIds;
-    selectedPluginIdxRef.current = selectedPluginIdx;
-  });
-
-  useEffect(() => {
-    Core.Store.onStoreUpdate = () => {
-      forceUpdate();
-    };
-
-    deletePluginEventHandler.current = () => {
-      deleteSelectedPlugin(
-        pluginBundleIdsRef.current,
-        selectedPluginIdxRef.current
-      );
-    };
-  }, []);
-
-  useEffect(() => {
+  const fetchAndSetReadme = () => {
     if (selectedPluginIdx === -1) return;
     if (!pluginBundleIds.length) return;
+    if (tabIndex !== tabInfo.indexOf('README')) return;
 
     const { bundleId, creator, name, readme } = plugins[pluginBundleId];
 
@@ -543,13 +531,35 @@ export default function Plugin() {
             return;
           }
           if (err.status === 403) {
-            setPluginReadme('Rate limit exceeded.');
+            setPluginReadme('Rate limit exceeded. Please try again later.');
             return;
           }
           console.error(err);
         });
     }
-  }, [plugins, pluginBundleId]);
+  };
+
+  useEffect(() => {
+    pluginBundleIdsRef.current = pluginBundleIds;
+    selectedPluginIdxRef.current = selectedPluginIdx;
+  });
+
+  useEffect(() => {
+    Core.Store.onStoreUpdate = () => {
+      forceUpdate();
+    };
+
+    deletePluginEventHandler.current = () => {
+      deleteSelectedPlugin(
+        pluginBundleIdsRef.current,
+        selectedPluginIdxRef.current
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchAndSetReadme();
+  }, [tabIndex, plugins, pluginBundleId]);
 
   return (
     <OuterContainer
@@ -589,15 +599,16 @@ export default function Plugin() {
       <PluginDescContainer>
         <TabNavigatorContainer>
           <Tabs
+            selectedIndex={tabIndex}
+            onSelect={setTabIndex}
             style={{
               width: '100%',
             }}
           >
             <TabList>
-              <Tab>Basic info</Tab>
-              <Tab>User config</Tab>
-              <Tab>README</Tab>
-              <Tab>Web page</Tab>
+              {tabInfo.map((title, index) => (
+                <Tab key={`tab-${index}`}>{title}</Tab>
+              ))}
             </TabList>
             <TabPanel>
               <PluginInfoTable info={plugins[pluginBundleId]} />

@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
+/* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
@@ -46,6 +47,14 @@ import {
 import * as style from './style';
 import './index.css';
 
+const tabInfo = [
+  'Basic Info',
+  'Trigger Table',
+  'User Config',
+  'README',
+  'Web Page',
+];
+
 export default function Workflow() {
   // object with bundleId as key and workflow info in value
   const workflows = Core.getWorkflowList();
@@ -71,6 +80,8 @@ export default function Workflow() {
   const [webviewUrl, setWebviewUrl] = useState<string>('');
 
   const [workflowReadme, setWorkflowReadme] = useState<string>('');
+
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
@@ -512,27 +523,10 @@ export default function Workflow() {
     }
   };
 
-  useEffect(() => {
-    workflowBundleIdsRef.current = workflowBundleIds;
-    selectedWorkflowIdxRef.current = selectedWorkflowIdx;
-  });
-
-  useEffect(() => {
-    Core.Store.onStoreUpdate = () => {
-      forceUpdate();
-    };
-
-    deleteWorkflowEventHandler.current = () => {
-      deleteSelectedWorkflow(
-        workflowBundleIdsRef.current,
-        selectedWorkflowIdxRef.current
-      );
-    };
-  }, []);
-
-  useEffect(() => {
+  const fetchAndSetReadme = () => {
     if (selectedWorkflowIdx === -1) return;
     if (!workflowBundleIds.length) return;
+    if (tabIndex !== tabInfo.indexOf('README')) return;
 
     const { bundleId, creator, name, readme } = workflows[workflowBundleId];
 
@@ -559,13 +553,35 @@ export default function Workflow() {
             return;
           }
           if (err.status === 403) {
-            setWorkflowReadme('Rate limit exceeded.');
+            setWorkflowReadme('Rate limit exceeded. Please try again later.');
             return;
           }
           console.error(err);
         });
     }
-  }, [workflows, workflowBundleId]);
+  };
+
+  useEffect(() => {
+    workflowBundleIdsRef.current = workflowBundleIds;
+    selectedWorkflowIdxRef.current = selectedWorkflowIdx;
+  });
+
+  useEffect(() => {
+    Core.Store.onStoreUpdate = () => {
+      forceUpdate();
+    };
+
+    deleteWorkflowEventHandler.current = () => {
+      deleteSelectedWorkflow(
+        workflowBundleIdsRef.current,
+        selectedWorkflowIdxRef.current
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchAndSetReadme();
+  }, [tabInfo, workflows, workflowBundleId]);
 
   return (
     <OuterContainer
@@ -606,16 +622,16 @@ export default function Workflow() {
       <WorkflowDescContainer>
         <TabNavigatorContainer>
           <Tabs
+            selectedIndex={tabIndex}
+            onSelect={setTabIndex}
             style={{
               width: '100%',
             }}
           >
             <TabList>
-              <Tab>Basic info</Tab>
-              <Tab>Trigger table</Tab>
-              <Tab>User config</Tab>
-              <Tab>README</Tab>
-              <Tab>Web page</Tab>
+              {tabInfo.map((title, index) => (
+                <Tab key={`tab-${index}`}>{title}</Tab>
+              ))}
             </TabList>
             <TabPanel>
               <WorkflowInfoTable info={workflows[workflowBundleId]} />
