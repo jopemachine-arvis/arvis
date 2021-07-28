@@ -1,7 +1,8 @@
 import TestRenderer from 'react-test-renderer';
-const { act } = TestRenderer;
 import { cleanup, fireEvent } from '@testing-library/react';
 import { setUpHook, initialStateValues } from './utils/testUtils';
+
+const { act } = TestRenderer;
 
 describe('useKeyCapture updates on action', () => {
   afterEach(() => cleanup());
@@ -12,7 +13,7 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'UNKNOWN_KEY'
+          key: 'UNKNOWN_KEY',
         });
       });
 
@@ -26,14 +27,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'Enter'
+          key: 'Enter',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isEnter: true,
-        key: 'Enter'
+        key: 'Enter',
       });
     });
   });
@@ -44,14 +45,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'Escape'
+          key: 'Escape',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isEscape: true,
-        key: 'Escape'
+        key: 'Escape',
       });
     });
 
@@ -60,14 +61,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'Shift'
+          key: 'Shift',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isShift: true,
-        key: 'Shift'
+        key: 'Shift',
       });
     });
 
@@ -76,14 +77,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'Tab'
+          key: 'Tab',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isTab: true,
-        key: 'Tab'
+        key: 'Tab',
       });
     });
     it('should update the key property value to "Backspace", if backspace key is pressed', () => {
@@ -91,14 +92,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'Backspace'
+          key: 'Backspace',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isBackspace: true,
-        key: 'Backspace'
+        key: 'Backspace',
       });
     });
     it('should update the key property value to "Backspace", if backspace key is pressed', () => {
@@ -106,14 +107,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'CapsLock'
+          key: 'CapsLock',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isCapsLock: true,
-        key: 'CapsLock'
+        key: 'CapsLock',
       });
     });
 
@@ -122,14 +123,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: ' '
+          key: ' ',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         isSpace: true,
-        key: ' '
+        key: ' ',
       });
     });
   });
@@ -141,7 +142,7 @@ describe('useKeyCapture updates on action', () => {
       act(() => {
         fireEvent.keyDown(document, {
           key: 'a',
-          shiftKey: true
+          shiftKey: true,
         });
       });
 
@@ -149,7 +150,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'a',
         isSmall: true,
-        isWithShift: true
+        isWithShift: true,
       });
     });
 
@@ -159,7 +160,7 @@ describe('useKeyCapture updates on action', () => {
       act(() => {
         fireEvent.keyDown(document, {
           key: 'a',
-          ctrlKey: true
+          ctrlKey: true,
         });
       });
 
@@ -167,7 +168,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'a',
         isSmall: true,
-        isWithCtrl: true
+        isWithCtrl: true,
       });
     });
 
@@ -177,7 +178,7 @@ describe('useKeyCapture updates on action', () => {
       act(() => {
         fireEvent.keyDown(document, {
           key: 'a',
-          metaKey: true
+          metaKey: true,
         });
       });
 
@@ -185,7 +186,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'a',
         isSmall: true,
-        isWithMeta: true
+        isWithMeta: true,
       });
     });
 
@@ -195,7 +196,7 @@ describe('useKeyCapture updates on action', () => {
       act(() => {
         fireEvent.keyDown(document, {
           key: 'a',
-          altKey: true
+          altKey: true,
         });
       });
 
@@ -203,7 +204,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'a',
         isSmall: true,
-        isWithAlt: true
+        isWithAlt: true,
       });
     });
   });
@@ -214,14 +215,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'A'
+          key: 'A',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         key: 'A',
-        isCaps: true
+        isCaps: true,
       });
     });
 
@@ -230,14 +231,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'c'
+          key: 'c',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         key: 'c',
-        isSmall: true
+        isSmall: true,
       });
     });
   });
@@ -248,14 +249,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'A'
+          key: 'A',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         key: 'A',
-        isCaps: true
+        isCaps: true,
       });
 
       act(() => {
@@ -263,7 +264,7 @@ describe('useKeyCapture updates on action', () => {
       });
 
       expect(result.current.keyData).toEqual({
-        ...initialStateValues
+        ...initialStateValues,
       });
     });
   });
@@ -274,14 +275,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: '.'
+          key: '.',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         key: '.',
-        isSpecialCharacter: true
+        isSpecialCharacter: true,
       });
     });
 
@@ -290,14 +291,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: '%'
+          key: '%',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         key: '%',
-        isSpecialCharacter: true
+        isSpecialCharacter: true,
       });
     });
 
@@ -306,14 +307,14 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: '1'
+          key: '1',
         });
       });
 
       expect(result.current.keyData).toEqual({
         ...initialStateValues,
         key: '1',
-        isNumber: true
+        isNumber: true,
       });
     });
   });
@@ -324,7 +325,7 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'ArrowLeft'
+          key: 'ArrowLeft',
         });
       });
 
@@ -332,7 +333,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'ArrowLeft',
         isArrow: true,
-        isArrowLeft: true
+        isArrowLeft: true,
       });
     });
     it('should update isArrow and isArrowRight to true, if any of the right arrow key is pressed', () => {
@@ -340,7 +341,7 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'ArrowRight'
+          key: 'ArrowRight',
         });
       });
 
@@ -348,7 +349,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'ArrowRight',
         isArrow: true,
-        isArrowRight: true
+        isArrowRight: true,
       });
     });
 
@@ -357,7 +358,7 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'ArrowUp'
+          key: 'ArrowUp',
         });
       });
 
@@ -365,7 +366,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'ArrowUp',
         isArrow: true,
-        isArrowUp: true
+        isArrowUp: true,
       });
     });
     it('should update isArrow and isArrowRight to true, if any of the down arrow key is pressed', () => {
@@ -373,7 +374,7 @@ describe('useKeyCapture updates on action', () => {
 
       act(() => {
         fireEvent.keyDown(document, {
-          key: 'ArrowDown'
+          key: 'ArrowDown',
         });
       });
 
@@ -381,7 +382,7 @@ describe('useKeyCapture updates on action', () => {
         ...initialStateValues,
         key: 'ArrowDown',
         isArrow: true,
-        isArrowDown: true
+        isArrowDown: true,
       });
     });
   });

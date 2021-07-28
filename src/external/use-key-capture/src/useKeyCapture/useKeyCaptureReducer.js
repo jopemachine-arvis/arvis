@@ -6,7 +6,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isEscape: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -14,7 +14,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isEnter: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -22,7 +22,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isCapsLock: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -30,7 +30,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isBackspace: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -38,7 +38,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isShift: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -46,7 +46,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isCaps: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -54,7 +54,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isSmall: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -62,7 +62,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isNumber: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -70,7 +70,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isSpace: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -78,7 +78,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isTab: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -86,7 +86,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isSpecialCharacter: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -94,7 +94,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isArrow: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -102,7 +102,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isControl: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -110,7 +110,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isAlt: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -118,7 +118,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isMeta: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 
@@ -126,7 +126,7 @@ export default function keyReducer(state, action) {
       return {
         ...initialState,
         isShift: true,
-        ...action.payload
+        ...action.payload,
       };
     }
 

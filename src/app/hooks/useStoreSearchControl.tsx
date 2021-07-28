@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 import { isWithCtrlOrCmd } from '@utils/index';
 import _ from 'lodash';
-import useKey from '../../use-key-capture/src';
+import useKey from '../../external/use-key-capture/src';
 
 /**
  * @description

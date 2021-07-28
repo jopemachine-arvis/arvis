@@ -42,13 +42,10 @@
     "src/main.prod.js.map",
     "src/renderer.prod.js",
     "src/renderer.prod.js.map",
-    "src/style.css",
-    "src/style.css.map",
     "src/dist",
     "dll",
     "src/main.js",
     "src/main.js.map",
-    "src/use-key-capture",
-    "src/font-list"
+    "src/external"
   ]
 }

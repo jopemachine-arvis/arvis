@@ -6,7 +6,7 @@ import { isWithCtrlOrCmd } from '@utils/index';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
 import alphaSort from 'alpha-sort';
-import useKey from '../../use-key-capture/src';
+import useKey from '../../external/use-key-capture/src';
 
 /**
  * @description

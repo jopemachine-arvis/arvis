@@ -10,7 +10,7 @@ import _ from 'lodash';
 import PCancelable from 'p-cancelable';
 import path from 'path';
 import isUrl from 'is-url';
-import useKey from '../../use-key-capture/src';
+import useKey from '../../external/use-key-capture/src';
 
 type IndexInfo = {
   selectedItemIdx: number;

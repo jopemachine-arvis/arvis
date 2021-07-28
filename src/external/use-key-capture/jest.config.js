@@ -7,10 +7,10 @@ const ignores = [
   '__mocks__',
   'docz',
   '.docz',
-  'dist'
+  'dist',
 ];
 
 module.exports = {
   testMatch: ['**/__tests__/**/*.+(js|jsx|ts|tsx)'],
-  testPathIgnorePatterns: [...ignores]
+  testPathIgnorePatterns: [...ignores],
 };

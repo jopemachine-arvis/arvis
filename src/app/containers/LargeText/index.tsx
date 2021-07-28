@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd } from '@utils/index';
-import useKey from '../../../use-key-capture/src';
+import useKey from '../../../external/use-key-capture/src';
 
 const OuterContainer = styled.div`
   align-items: center;

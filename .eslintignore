@@ -1,5 +1,5 @@
 tests/
-src/use-key-capture
+src/external
 
 # Logs
 logs

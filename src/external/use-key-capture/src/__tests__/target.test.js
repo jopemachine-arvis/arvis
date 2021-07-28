@@ -16,7 +16,7 @@ describe('component with target', () => {
     expect(displayDOM).toBeNull();
 
     fireEvent.keyDown(targetInput, {
-      key: 'Shift'
+      key: 'Shift',
     });
 
     displayDOM = queryByTestId('displayDOM');
@@ -34,7 +34,7 @@ describe('component with target', () => {
     expect(displayDOM).toBeNull();
 
     fireEvent.keyDown(targetInput, {
-      key: 'Shift'
+      key: 'Shift',
     });
 
     displayDOM = queryByTestId('displayDOM');

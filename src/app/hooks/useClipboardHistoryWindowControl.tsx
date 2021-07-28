@@ -6,7 +6,7 @@ import { clipboard, ipcRenderer } from 'electron';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import _ from 'lodash';
-import useKey from '../../use-key-capture/src';
+import useKey from '../../external/use-key-capture/src';
 
 type IndexInfo = {
   selectedItemIdx: number;

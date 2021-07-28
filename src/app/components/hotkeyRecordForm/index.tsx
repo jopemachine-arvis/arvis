@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { getHotkeyNameOnThisPlatform } from '@utils/index';
 import StyledInput from '../styledInput';
-import useKey from '../../../use-key-capture/src';
+import useKey from '../../../external/use-key-capture/src';
 
 type IProps = {
   hotkey: string;

@@ -43,7 +43,7 @@ const initialState = {
   // For special character
   isSpecialCharacter: false,
 
-  doubleKeyPressed: false
+  doubleKeyPressed: false,
 };
 
 const useKeyActionTypes = {
@@ -63,14 +63,14 @@ const useKeyActionTypes = {
 
   CONTROL: 'CONTROL',
   ALT: 'ALT',
-  META: 'META'
+  META: 'META',
 };
 
 const modifierKeys = {
   ctrlKey: 'Ctrl',
   shiftKey: 'Shift',
   altKey: 'Alt',
-  metaKey: 'Meta'
+  metaKey: 'Meta',
 };
 
 const keyCodeMapper = {
@@ -84,26 +84,26 @@ const keyCodeMapper = {
   META: useKeyActionTypes.META,
   ALT: useKeyActionTypes.ALT,
   // eslint-disable-next-line no-useless-computed-key
-  [' ']: useKeyActionTypes.SPACE
+  [' ']: useKeyActionTypes.SPACE,
 };
 
-const getArrowKeysPayload = key => {
+const getArrowKeysPayload = (key) => {
   return {
-    [`is${key}`]: true
+    [`is${key}`]: true,
   };
 };
 
-const isCapitalLetterPressed = key => /^[A-Z]$/.test(key);
-const isSmallLetterPressed = key => /^[a-z]$/.test(key);
-const isNumberPressed = key => /^[0-9]/.test(key);
-const isSpecialCharacter = key =>
+const isCapitalLetterPressed = (key) => /^[A-Z]$/.test(key);
+const isSmallLetterPressed = (key) => /^[a-z]$/.test(key);
+const isNumberPressed = (key) => /^[0-9]/.test(key);
+const isSpecialCharacter = (key) =>
   /^[!@#$%^&*()_+<>?:"{}[\]';.,|/\-\\=_+~`]/.test(key);
-const isControl = key => key === 'Control';
-const isAlt = key => key === 'Alt';
-const isMeta = key => key === 'Meta';
-const isShift = key => key === 'Shift';
+const isControl = (key) => key === 'Control';
+const isAlt = (key) => key === 'Alt';
+const isMeta = (key) => key === 'Meta';
+const isShift = (key) => key === 'Shift';
 
-const isSpecialCharacterPressed = key => {
+const isSpecialCharacterPressed = (key) => {
   return (
     !isCapitalLetterPressed(key) &&
     !isSmallLetterPressed(key) &&
@@ -113,11 +113,11 @@ const isSpecialCharacterPressed = key => {
   );
 };
 
-const getModifierPayload = eventDetails => {
-  let modifierPayloadObj = {};
+const getModifierPayload = (eventDetails) => {
+  const modifierPayloadObj = {};
   const modifierObjKeys = Object.keys(modifierKeys);
 
-  for (let key of modifierObjKeys) {
+  for (const key of modifierObjKeys) {
     if (eventDetails[key]) {
       modifierPayloadObj[`isWith${modifierKeys[key]}`] = true;
     }
@@ -131,7 +131,7 @@ const getModifierPayload = eventDetails => {
  * @param {KeyboardEvent} eventDetails keyboard event object
  * @return {String}  action type
  */
-const getAction = eventDetails => {
+const getAction = (eventDetails) => {
   if (!eventDetails) {
     throw new Error('Event called with no details');
   }
@@ -149,8 +149,8 @@ const getAction = eventDetails => {
       payload: {
         ...getArrowKeysPayload(key),
         ...getModifierPayload(eventDetails),
-        key
-      }
+        key,
+      },
     };
   }
 
@@ -200,17 +200,17 @@ const getAction = eventDetails => {
 
   return {
     type,
-    payload: { ...getModifierPayload(eventDetails), key }
+    payload: { ...getModifierPayload(eventDetails), key },
   };
 };
 
 const targetItemPropsDefaultValue = {
-  type: 'text'
+  type: 'text',
 };
 
 function handleRefAssignment(...refs) {
-  return node => {
-    refs.forEach(ref => {
+  return (node) => {
+    refs.forEach((ref) => {
       if (typeof ref === 'function') {
         ref(node);
       } else if (ref) {
@@ -220,7 +220,7 @@ function handleRefAssignment(...refs) {
   };
 }
 
-const useEnhancedReducer = reducer =>
+const useEnhancedReducer = (reducer) =>
   useCallback(
     (state, action) => {
       return reducer(state, action);
@@ -234,5 +234,5 @@ export {
   targetItemPropsDefaultValue,
   useKeyActionTypes,
   useEnhancedReducer,
-  handleRefAssignment
+  handleRefAssignment,
 };

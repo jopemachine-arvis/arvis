@@ -15,7 +15,7 @@ const TestComponent = () => {
       <input
         data-testid="input"
         {...getTargetProps({
-          ref: inputRef
+          ref: inputRef,
         })}
       />
       <input data-testid="secondary_input" />

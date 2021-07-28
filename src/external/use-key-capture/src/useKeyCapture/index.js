@@ -9,7 +9,7 @@ import {
   useKeyActionTypes,
   useEnhancedReducer,
   targetItemPropsDefaultValue,
-  handleRefAssignment
+  handleRefAssignment,
 } from './useKeyCaptureUtils';
 
 const doubleKeyRecognitionInterval = 200;
@@ -30,9 +30,8 @@ function useKeys() {
   const doubleKeyTimerValidRef = useRef(doubleKeyTimerValid);
   doubleKeyTimerValidRef.current = doubleKeyTimerValid;
 
-  const [doubleKeyRecognitionTimer, setDoubleKeyRecognitionTimer] = useState(
-    null
-  );
+  const [doubleKeyRecognitionTimer, setDoubleKeyRecognitionTimer] =
+    useState(null);
 
   const targetItemRef = useRef(null);
 
@@ -54,7 +53,7 @@ function useKeys() {
     return action;
   };
 
-  const dispatchWithActionDetails = event => {
+  const dispatchWithActionDetails = (event) => {
     dispatch(doubleKeyPressHandler(event, getAction(event)));
   };
 
@@ -63,7 +62,7 @@ function useKeys() {
    */
   const resetKeyData = () => {
     dispatch({
-      type: useKeyActionTypes.RESET_CAPTURES
+      type: useKeyActionTypes.RESET_CAPTURES,
     });
 
     if (targetItemRef && targetItemRef.current) {
@@ -95,10 +94,10 @@ function useKeys() {
   const getTargetProps = ({ ref, type } = {}) => {
     return {
       type: type || targetItemPropsDefaultValue.type,
-      ref: handleRefAssignment(ref, targetItemNode => {
+      ref: handleRefAssignment(ref, (targetItemNode) => {
         targetItemRef.current = targetItemNode;
       }),
-      originalRef: targetItemRef
+      originalRef: targetItemRef,
     };
   };
 
