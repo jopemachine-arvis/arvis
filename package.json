@@ -335,7 +335,6 @@
     "redux-persist-electron-storage": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.8",
-    "remark-gfm": "^1.0.0",
     "semver": "^7.3.5",
     "source-map-support": "^0.5.19",
     "styled-components": "^5.3.0",

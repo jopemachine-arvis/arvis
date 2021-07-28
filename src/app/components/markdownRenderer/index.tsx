@@ -9,7 +9,6 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 import 'github-markdown-css';
 
 type IProps = {
@@ -65,11 +64,7 @@ export default function Markdown(props: IProps) {
 
   return (
     <OuterContainer style={{ width, height, ...style }}>
-      <ReactMarkdown
-        className="markdown-body"
-        remarkPlugins={[gfm]}
-        skipHtml={false}
-      >
+      <ReactMarkdown className="markdown-body" skipHtml={false}>
         {data}
       </ReactMarkdown>
     </OuterContainer>
