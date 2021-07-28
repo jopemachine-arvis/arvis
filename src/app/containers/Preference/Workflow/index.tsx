@@ -556,8 +556,11 @@ export default function Workflow() {
         .catch((err) => {
           if (err.status === 404) {
             setWorkflowReadme('Readme data not found.');
-          } else if (err.status === 403) {
-            setWorkflowReadme('Rate limit reached.');
+            return;
+          }
+          if (err.status === 403) {
+            setWorkflowReadme('Rate limit exceeded.');
+            return;
           }
           console.error(err);
         });

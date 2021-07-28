@@ -540,8 +540,11 @@ export default function Plugin() {
         .catch((err) => {
           if (err.status === 404) {
             setPluginReadme('Readme data not found.');
-          } else if (err.status === 403) {
-            setPluginReadme('Rate limit reached.');
+            return;
+          }
+          if (err.status === 403) {
+            setPluginReadme('Rate limit exceeded.');
+            return;
           }
           console.error(err);
         });
