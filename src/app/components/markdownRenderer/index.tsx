@@ -10,6 +10,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import 'github-markdown-css';
 
 type IProps = {
   width: string;
@@ -20,6 +21,7 @@ type IProps = {
   bodyStyle?: any;
 };
 
+// Assume dark theme
 export default function Markdown(props: IProps) {
   const { width, height, data, padding } = props;
   const { style, bodyStyle } = props;

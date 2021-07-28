@@ -10,7 +10,7 @@ import 'react-tabs/style/react-tabs.css';
 import './app.global.css';
 import './external/react-pro-sidebar/index.global.css';
 import './external/jsoneditor/index.global.css';
-import './external/github-markdown-css/index.global.css';
+// import './external/github-markdown-css/index.global.css';
 
 const { store, persistor } = configureStore(initialState);
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
