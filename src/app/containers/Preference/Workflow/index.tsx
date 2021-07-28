@@ -21,10 +21,11 @@ import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button } from 'reactstrap';
 import { JsonEditor } from 'jsoneditor-react';
+import pAny from 'p-any';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { useExtensionSearchControl } from '@hooks/index';
-import { isWithCtrlOrCmd, range } from '@utils/index';
+import { getGithubReadmeContent, isWithCtrlOrCmd, range } from '@utils/index';
 import { SearchBar, MarkdownRenderer } from '@components/index';
 import { WorkflowTriggerTable } from './workflowTriggerTable';
 import WorkflowInfoTable from './infoTable';
@@ -68,6 +69,8 @@ export default function Workflow() {
   const workflowBundleIdRef = useRef<string>(workflowBundleId);
 
   const [webviewUrl, setWebviewUrl] = useState<string>('');
+
+  const [workflowReadme, setWorkflowReadme] = useState<string>('');
 
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
@@ -527,6 +530,40 @@ export default function Workflow() {
     };
   }, []);
 
+  useEffect(() => {
+    if (selectedWorkflowIdx === -1) return;
+    if (!workflowBundleIds.length) return;
+
+    const { bundleId, creator, name, readme } = workflows[workflowBundleId];
+
+    if (readme) {
+      setWorkflowReadme(readme);
+    } else {
+      pAny([
+        getGithubReadmeContent(creator, name),
+        getGithubReadmeContent('arvis-workflows', name),
+      ])
+        .then((readmeContent) => {
+          setWorkflowReadme(readmeContent);
+          Core.overwriteExtensionInfo(
+            'workflow',
+            bundleId!,
+            'readme',
+            readmeContent
+          );
+          return null;
+        })
+        .catch((err) => {
+          if (err.status === 404) {
+            setWorkflowReadme('Readme data not found.');
+          } else if (err.status === 403) {
+            setWorkflowReadme('Rate limit reached.');
+          }
+          console.error(err);
+        });
+    }
+  }, [workflows, workflowBundleId]);
+
   return (
     <OuterContainer
       id="workflow-page-container"
@@ -622,11 +659,7 @@ export default function Workflow() {
                   padding: 45,
                   backgroundColor: '#0D1118',
                 }}
-                data={
-                  workflows[workflowBundleId]
-                    ? workflows[workflowBundleId].readme ?? ''
-                    : ''
-                }
+                data={workflowReadme}
               />
             </TabPanel>
             <TabPanel

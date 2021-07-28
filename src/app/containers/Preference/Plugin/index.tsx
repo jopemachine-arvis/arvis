@@ -21,11 +21,12 @@ import open from 'open';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Button } from 'reactstrap';
 import { JsonEditor } from 'jsoneditor-react';
+import pAny from 'p-any';
 import { useExtensionSearchControl } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { SearchBar, MarkdownRenderer } from '@components/index';
-import { isWithCtrlOrCmd, range } from '@utils/index';
+import { getGithubReadmeContent, isWithCtrlOrCmd, range } from '@utils/index';
 import PluginInfoTable from './infoTable';
 import {
   Header,
@@ -67,6 +68,8 @@ export default function Plugin() {
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
+
+  const [pluginReadme, setPluginReadme] = useState<string>('');
 
   const forceUpdate = useForceUpdate();
   const deletePluginEventHandler = useRef<any>();
@@ -514,6 +517,37 @@ export default function Plugin() {
     };
   }, []);
 
+  useEffect(() => {
+    if (selectedPluginIdx === -1) return;
+    if (!pluginBundleIds.length) return;
+
+    const { bundleId, creator, name, readme } = plugins[pluginBundleId];
+
+    if (readme) {
+      setPluginReadme(readme);
+    } else {
+      pAny([getGithubReadmeContent(creator, name)])
+        .then((readmeContent) => {
+          setPluginReadme(readmeContent);
+          Core.overwriteExtensionInfo(
+            'plugin',
+            bundleId!,
+            'readme',
+            readmeContent
+          );
+          return null;
+        })
+        .catch((err) => {
+          if (err.status === 404) {
+            setPluginReadme('Readme data not found.');
+          } else if (err.status === 403) {
+            setPluginReadme('Rate limit reached.');
+          }
+          console.error(err);
+        });
+    }
+  }, [plugins, pluginBundleId]);
+
   return (
     <OuterContainer
       id="plugin-page-container"
@@ -597,11 +631,7 @@ export default function Plugin() {
                   padding: 45,
                   backgroundColor: '#0D1118',
                 }}
-                data={
-                  plugins[pluginBundleId]
-                    ? plugins[pluginBundleId].readme ?? ''
-                    : ''
-                }
+                data={pluginReadme}
               />
             </TabPanel>
             <TabPanel
