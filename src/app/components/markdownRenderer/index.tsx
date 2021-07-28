@@ -33,7 +33,6 @@ export default function Markdown(props: IProps) {
 
     word-wrap: break-word !important;
     word-break: break-word !important;
-    white-space: pre-wrap !important;
 
     .markdown-body {
       box-sizing: border-box;
@@ -47,11 +46,19 @@ export default function Markdown(props: IProps) {
     .markdown-body p {
       font-size: 100% !important;
     }
+
+    .markdown-body pre {
+      background-color: #111;
+    }
   `;
 
   return (
     <OuterContainer style={{ width, height, ...style }}>
-      <ReactMarkdown remarkPlugins={[gfm]} skipHtml={false}>
+      <ReactMarkdown
+        className="markdown-body"
+        remarkPlugins={[gfm]}
+        skipHtml={false}
+      >
         {data}
       </ReactMarkdown>
     </OuterContainer>

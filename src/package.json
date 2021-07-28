@@ -8,7 +8,7 @@
   "author": {
     "name": "jopemachine",
     "email": "jopemachine@gmail.com",
-    "url": "https://jopemachine.github.io/arvis-intro"
+    "url": "https://jopemachine.github.io/arvis.com/"
   },
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
