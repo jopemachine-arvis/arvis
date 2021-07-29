@@ -2,6 +2,8 @@
 
 ## Prerequisite
 
+* `Node` version should be more than `12.20` to develop Arvis.
+
 * [robotjs](https://github.com/octalmage/robotjs#Building) dependencies
 
 ## How to build

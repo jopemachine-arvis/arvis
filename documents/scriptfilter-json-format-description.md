@@ -111,9 +111,15 @@ values: `html`, `image`, `markdown`, `text`
 
 ### data
 
-type: `string`
+type: `string | Promise<string>`
 
 required: `true`
+
+You can forward Promise returning string to data.
+
+Then the promise is resolved when user opens the quicklook.
+
+This is useful you don't want to execute the rendering script because it has some heavy async operations.
 
 ## quicklookurl
 

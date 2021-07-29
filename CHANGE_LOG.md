@@ -1,3 +1,27 @@
+# 0.8.2
+
+## What’s Changed
+
+* Fix scrolling on quicklook bug
+* Implement promise handling in quicklook
+
+# 0.8.1
+
+## What’s Changed
+
+* Fix icon errors using lru cache (#19) @jopemachine
+* [Snyk] Upgrade got from 11.8.0 to 11.8.2 (#16) @snyk-bot
+* Improve readme feature handling on workflow, plugin page
+* Apply dark theme to readme of workflow, plguin page
+* Implement quicklook feature
+* Remove quicklook window feature
+* Remove vertical size change limit of search window
+
+![스크린샷 2021-07-29 오후 5 40 59](https://user-images.githubusercontent.com/18283033/127460823-02115fc9-680a-4e6c-a760-3f9713df1b95.png)
+![스크린샷 2021-07-29 오후 5 41 18](https://user-images.githubusercontent.com/18283033/127460829-7b2eaa89-018a-484f-a110-2a8bfc56e1e2.png)
+![스크린샷 2021-07-29 오후 5 41 38](https://user-images.githubusercontent.com/18283033/127460834-04dffd68-addd-4869-b412-2023aaa516cc.png)
+![스크린샷 2021-07-29 오후 9 09 42](https://user-images.githubusercontent.com/18283033/127489285-34c0a02b-1f68-4240-a015-09669baa3a31.png)
+
 # 0.7.2
 
 ## What’s Changed

@@ -29,6 +29,7 @@ const useSearchWindowControl = ({
   isPinned,
   setIsPinned,
   quicklookModalData,
+  hoveringOnQuicklook,
   setQuicklookModalData,
   spinning,
 }: {
@@ -39,6 +40,7 @@ const useSearchWindowControl = ({
   isPinned: boolean;
   setIsPinned: (bool: boolean) => void;
   quicklookModalData: any;
+  hoveringOnQuicklook: boolean;
   setQuicklookModalData: (data: any) => void;
   spinning: boolean;
 }) => {
@@ -411,6 +413,8 @@ const useSearchWindowControl = ({
    * @summary mouse wheel event handler
    */
   const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
+    if (hoveringOnQuicklook) return;
+
     if (e.deltaY > 0) {
       if (indexInfo.itemStartIdx + maxItemCount < items.length) {
         setIndexInfo({

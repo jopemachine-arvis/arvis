@@ -79,6 +79,9 @@ export default function SearchWindow() {
 
   const [items, setItems] = useState<any[]>([]);
 
+  const [hoveringOnQuicklook, setHoveringOnQuicklook] =
+    useState<boolean>(false);
+
   const actionFlowManager = Core.ActionFlowManager.getInstance();
 
   const setDebuggingOptions = () => {
@@ -120,6 +123,7 @@ export default function SearchWindow() {
     maxRetrieveCount: max_item_count_to_search,
     isPinned,
     setIsPinned,
+    hoveringOnQuicklook,
     quicklookModalData,
     setQuicklookModalData,
     spinning: isSpinning,
@@ -363,6 +367,8 @@ export default function SearchWindow() {
       <Quicklook
         {...quicklookModalData}
         searchbarHeight={searchbar_height}
+        hovering={hoveringOnQuicklook}
+        setHovering={setHoveringOnQuicklook}
         style={{
           backgroundColor: 'transparent',
         }}

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import fse from 'fs-extra';
+import isPromise from 'is-promise';
 import Spinner from '../searchWindowSpinner';
 import { QuicklookWebview } from './quicklookWebview';
 import { QuicklookText } from './quicklookText';
@@ -21,8 +22,10 @@ const outerStyle: any = {
 
 type IProps = {
   type?: 'html' | 'image' | 'markdown' | 'text';
-  data?: string;
+  data?: string | Promise<string>;
   active: boolean;
+  hovering: boolean;
+  setHovering: (bool: boolean) => void;
   searchbarHeight: number;
 };
 
@@ -51,10 +54,9 @@ const useModalAnimation = ({
   });
 
 export default (props: IProps) => {
-  const { type, data, active, searchbarHeight } = props;
+  const { type, data, active, searchbarHeight, hovering, setHovering } = props;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
-  const [hovering, setHovering] = useState<boolean>(false);
 
   const modalAnimation = useModalAnimation({
     initialRendering,
@@ -64,20 +66,30 @@ export default (props: IProps) => {
   const [contents, setContents] = useState<any>();
 
   const getInnerContainer = async () => {
-    if (!type || !data) return <div>No data to display</div>;
+    let targetData = data;
+
+    if (!type || !targetData) return <div>No data to display</div>;
+    if (isPromise(targetData)) {
+      try {
+        targetData = await (data as Promise<string>);
+      } catch (err) {
+        return <div>{err}</div>;
+      }
+    }
+
     switch (type) {
       case 'html':
       case 'image':
-        return <QuicklookWebview data={data} />;
+        return <QuicklookWebview data={targetData as string} />;
       case 'text': {
-        const fileSize = (await fse.stat(data)).size;
+        const fileSize = (await fse.stat(targetData as string)).size;
         if (fileSize >= 1024 * 100) {
           return <div>Too big text file</div>;
         }
 
         return (
           <QuicklookText>
-            {await fse.readFile(data, { encoding: 'utf-8' })}
+            {await fse.readFile(targetData as string, { encoding: 'utf-8' })}
           </QuicklookText>
         );
       }
@@ -87,7 +99,7 @@ export default (props: IProps) => {
             dark={false}
             width="100%"
             height="100%"
-            data={data}
+            data={targetData as string}
             padding={15}
           />
         );

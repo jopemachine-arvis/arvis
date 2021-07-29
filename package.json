@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -311,6 +311,7 @@
     "got": "11.8.2",
     "history": "^5.0.0",
     "is-admin": "^3.0.0",
+    "is-promise": "^4.0.0",
     "is-url": "^1.2.4",
     "istextorbinary": "^5.13.0",
     "jsoneditor": "^9.5.1",
