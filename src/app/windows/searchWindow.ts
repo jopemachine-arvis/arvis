@@ -25,7 +25,7 @@ const createSearchWindow = ({
     enableLargerThanScreen: false,
     minimizable: false,
     maximizable: false,
-    resizable: process.platform !== 'linux',
+    resizable: true,
     width: constants.searchWindowWidth,
     height: constants.searchWindowHeight,
     webPreferences: {
@@ -49,13 +49,6 @@ const createSearchWindow = ({
 
   searchWindow.loadFile(filePath, {
     query: { window: 'searchWindow' },
-  });
-
-  searchWindow.on('will-resize', (e: any, newBounds: Electron.Rectangle) => {
-    // Prevent height change
-    if (newBounds.height - searchWindow.getSize()[1] !== 0) {
-      e.preventDefault();
-    }
   });
 
   searchWindow.on('close', (e) => {
