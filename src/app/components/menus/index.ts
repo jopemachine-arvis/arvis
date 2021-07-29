@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { Menu } from 'electron';
 
-import getWindowsTemplate from './windows';
+import getWindowsTemplate from './others';
 import getDarwinTemplate from './darwin';
 import { WindowManager } from '../../windows';
 

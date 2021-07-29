@@ -91,6 +91,14 @@ export default (mainWindow: BrowserWindow) => [
         },
       },
       {
+        label: 'Change Logs',
+        click() {
+          shell.openExternal(
+            'https://github.com/jopemachine/arvis/blob/master/CHANGE_LOG.md'
+          );
+        },
+      },
+      {
         label: 'Search Issues',
         click() {
           shell.openExternal('https://github.com/jopemachine/arvis/issues');
