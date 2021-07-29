@@ -3,10 +3,14 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { Core } from 'arvis-core';
 import _ from 'lodash';
+import QuickLRU from 'quick-lru';
 import { supportedImageFormats as supportedImgFormats } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import SearchResultItem from '../searchResultItem';
 import { InnerContainer, OuterContainer } from './components';
+
+// Store icon paths occuring not found errors to prevent continuously occuring not found error
+const cache: QuickLRU<string, boolean> = new QuickLRU({ maxSize: 1000 });
 
 type IProps = {
   demo: boolean;
@@ -94,6 +98,7 @@ const SearchResultView = (props: IProps) => {
             <SearchResultItem
               arg={command.arg}
               autocomplete={command.autocomplete}
+              errorIcons={cache}
               extensionDefaultIcon={Core.determineDefaultIconPath(command)}
               icon={Core.determineIconPath(command, {
                 supportedImgFormats,

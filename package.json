@@ -319,6 +319,7 @@
     "p-any": "^4.0.0",
     "p-cancelable": "2.1.1",
     "path-exists": "^4.0.0",
+    "quick-lru": "^6.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",

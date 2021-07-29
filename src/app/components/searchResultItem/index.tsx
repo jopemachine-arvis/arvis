@@ -6,6 +6,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
 import pathExists from 'path-exists';
+import QuickLRU from 'quick-lru';
 import DefaultImg from './defaultIcon';
 import IconNotFoundImg from '../../../../assets/images/iconNotFound.png';
 import {
@@ -20,6 +21,7 @@ import {
 type IProps = {
   arg?: any;
   autocomplete?: string;
+  errorIcons?: QuickLRU<string, boolean>;
   extensionDefaultIcon?: string | undefined;
   icon?: string | undefined;
   iconRightMargin: number;
@@ -51,8 +53,8 @@ type IProps = {
 
 const SearchResultItem = (props: IProps) => {
   const {
+    errorIcons,
     extensionDefaultIcon,
-    icon,
     iconRightMargin,
     itemDefaultIconColor,
     itemFontColor,
@@ -74,6 +76,8 @@ const SearchResultItem = (props: IProps) => {
     onMouseoverHandler,
     onDoubleClickHandler,
   } = props;
+
+  let { icon } = props;
 
   const iconSize = useMemo(() => itemHeight - 20, [itemHeight]);
 
@@ -99,6 +103,10 @@ const SearchResultItem = (props: IProps) => {
       return <DefaultImg styleProp={iconStyle} color={itemDefaultIconColor} />;
     }
 
+    if (icon && errorIcons && errorIcons.has(icon)) {
+      icon = undefined;
+    }
+
     return (
       <IconImg
         id={`searchResultItemIcon-${offset}`}
@@ -107,6 +115,11 @@ const SearchResultItem = (props: IProps) => {
         src={icon ?? extensionDefaultIcon}
         onError={async (e) => {
           try {
+            if (icon && errorIcons) {
+              console.log(`'${icon}' is not found.`);
+              errorIcons.set(icon, false);
+            }
+
             if (
               extensionDefaultIcon &&
               (await pathExists(extensionDefaultIcon))
@@ -198,6 +211,7 @@ const SearchResultItem = (props: IProps) => {
 SearchResultItem.defaultProps = {
   arg: undefined,
   autocomplete: undefined,
+  errorIcons: undefined,
   extensionDefaultIcon: undefined,
   icon: undefined,
   itemDefaultIconColor: '#fff',
