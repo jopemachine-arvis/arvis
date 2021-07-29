@@ -13,12 +13,12 @@ export class WindowManager {
   private constructor() {
     this.largeTextWindow = createLargeTextWindow();
     this.preferenceWindow = createPreferenceWindow();
-    this.clipboardHistoryWindow = createClipboardHistoryWindow(
-      WindowManager.eventHandlers
-    );
     this.searchWindow = createSearchWindow({
       largeTextWindow: this.largeTextWindow,
     });
+    this.clipboardHistoryWindow = createClipboardHistoryWindow(
+      WindowManager.eventHandlers
+    );
   }
 
   private largeTextWindow: BrowserWindow;
