@@ -6,9 +6,11 @@ The json file consists of the following attributes.
 
 Certain values in the Json file are replaced by arvis.
 
-### `{query}`, `$1`, `$2`..
+### Special variables (`{query}`, `{clipboard}`, `$1`, `$2`..)
 
 `{query}` is replaced with user's input (query not including the `command`).
+
+`{clipboard}` is replaced with user's clipboard string.
 
 Example:
 ```json
@@ -19,9 +21,9 @@ Example:
 }
 ```
 
-### variables
+### Variables
 
-You can set `variables` in your scriptfilter's script or plugin-config file.
+You can set `variables` in your scriptfilter's script or `arvis-plugin.json` config file.
 
 All variable could be used in form of `{var:some_var}` in the config file.
 

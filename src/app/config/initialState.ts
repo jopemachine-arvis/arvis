@@ -34,6 +34,7 @@ export default {
   advanced_config: {
     async_plugin_timer: 200,
     debugging_action: true,
+    debugging_variables: true,
     debugging_plugin: true,
     debugging_script: true,
     debugging_scriptfilter: true,

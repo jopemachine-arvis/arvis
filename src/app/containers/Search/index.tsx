@@ -87,6 +87,7 @@ export default function SearchWindow() {
   const setDebuggingOptions = () => {
     actionFlowManager.loggerColorType = 'gui';
     actionFlowManager.printActionType = debuggingConfig.debugging_action;
+    actionFlowManager.printVariables = debuggingConfig.debugging_variables;
     actionFlowManager.printPluginItems = debuggingConfig.debugging_plugin;
     actionFlowManager.printScriptfilter =
       debuggingConfig.debugging_scriptfilter;

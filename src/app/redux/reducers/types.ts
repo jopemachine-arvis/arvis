@@ -36,6 +36,7 @@ export type StateType = {
   advanced_config: {
     async_plugin_timer: number;
     debugging_action: boolean;
+    debugging_variables: boolean;
     debugging_plugin: boolean;
     debugging_script: boolean;
     debugging_scriptfilter: boolean;

@@ -58,6 +58,25 @@ export default function AdvancedDebugging() {
           <Label checked style={labelStyle}>
             <Input
               type="checkbox"
+              checked={debugging_action}
+              onChange={() =>
+                toggleState(
+                  AdvancedActionTypes.SET_DEBUGGING_VARIABLES,
+                  debugging_action
+                )
+              }
+            />
+            Variables (Arguments, query, variables info)
+          </Label>
+          <FormDescription>
+            Print variable informations on devtools
+          </FormDescription>
+        </FormGroup>
+
+        <FormGroup check style={formGroupStyle}>
+          <Label checked style={labelStyle}>
+            <Input
+              type="checkbox"
               checked={debugging_script}
               onChange={() =>
                 toggleState(

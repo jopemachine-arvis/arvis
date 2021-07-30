@@ -11,6 +11,11 @@ export default (state = {}, action: any) => {
         ...state,
         debugging_action: payload.arg,
       };
+    case AdvancedConfigActionTypes.SET_DEBUGGING_VARIABLES:
+      return {
+        ...state,
+        debugging_variables: payload.arg,
+      };
     case AdvancedConfigActionTypes.SET_DEBUGGING_SCRIPT:
       return {
         ...state,

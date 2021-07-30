@@ -14,9 +14,11 @@ You can select
 
 - Action types
 
+- Variables (Arguments, query, variables info)
+
 - Script output
 
-- Trigger stack (Including argument, query, variables info)
+- Trigger stack
 
 - Scriptfilter
 

@@ -1,3 +1,10 @@
+# 0.8.4
+
+## What’s Changed
+
+* Add variable debugging support back
+* Implement clipboard variable support
+
 # 0.8.3
 
 ## What’s Changed

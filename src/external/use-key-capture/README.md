@@ -45,7 +45,7 @@ yarn add use-key-capture
 
 ## Usage
 
-This same working demo is [here](https://use-key-capture.netlify.com/demo).
+This same working demo is [Here](https://use-key-capture.netlify.com/demo).
 
 ```jsx
 import React from 'react';
