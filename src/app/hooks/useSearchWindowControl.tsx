@@ -87,7 +87,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @return changed selectedItemIdx
+   * @returns changed selectedItemIdx
    * @summary
    */
   const handleUpArrow = () => {
@@ -193,19 +193,30 @@ const useSearchWindowControl = ({
     return false;
   };
 
+  const cancelUnresolvedPluginPromises = (): void => {
+    unresolvedPluginPromises.forEach(
+      (item: PCancelable<PluginExectionResult>) => {
+        if (!item.isCanceled) {
+          item.cancel();
+        }
+      }
+    );
+  };
+
   const handleDelayedAsyncPluginItems = (
     normalItemArr: (Command | PluginItem)[],
     unresolvedPluginItems: PCancelable<PluginExectionResult>[]
   ) => {
     if (unresolvedPluginItems.length <= 0) return;
 
+    cancelUnresolvedPluginPromises();
     setHasUnresolvedPluginPromises(true);
     unresolvedPluginPromises = unresolvedPluginItems;
 
     let delayedResolved: PluginItem[] = [];
     let progress = 0;
 
-    // To do:: To avoid flickering, renewals were made only after all the primes.
+    // To do:: To avoid flickering, renewal would be made only after all the primises are resolved.
     // If there is some method to avoid window flickering, change below logic to renew one by one.
     unresolvedPluginItems.forEach(
       (notResolvedItemPromise: PCancelable<PluginExectionResult>) => {
@@ -234,16 +245,6 @@ const useSearchWindowControl = ({
               setHasUnresolvedPluginPromises(false);
             }
           });
-      }
-    );
-  };
-
-  const cancelUnresolvedPluginPromises = (): void => {
-    unresolvedPluginPromises.forEach(
-      (item: PCancelable<PluginExectionResult>) => {
-        if (!item.isCanceled) {
-          item.cancel();
-        }
       }
     );
   };

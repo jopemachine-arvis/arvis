@@ -33,9 +33,19 @@ export default function Markdown(props: IProps) {
     width: 100%;
     height: 100%;
     overflow-x: hidden !important;
+    overflow-y: scroll !important;
 
     word-wrap: break-word !important;
     word-break: break-word !important;
+
+    ::-webkit-scrollbar {
+      width: 7px;
+      background: #fff !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888 !important;
+    }
 
     .markdown-body {
       box-sizing: border-box;

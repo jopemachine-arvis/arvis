@@ -67,7 +67,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @return changed selectedItemIdx
+   * @returns changed selectedItemIdx
    * @summary
    */
   const handleUpArrow = () => {
@@ -105,7 +105,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @return changed selectedItemIdx
+   * @returns changed selectedItemIdx
    * @summary
    */
   const handleDownArrow = () => {

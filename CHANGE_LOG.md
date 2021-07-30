@@ -1,3 +1,10 @@
+# 0.8.3
+
+## What’s Changed
+
+* Add scroll bar to markdown renderer of quicklook
+* Fix intermittent delayed async plugin error
+
 # 0.8.2
 
 ## What’s Changed
