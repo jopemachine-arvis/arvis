@@ -15,7 +15,6 @@ const cache: QuickLRU<string, boolean> = new QuickLRU({ maxSize: 1000 });
 type IProps = {
   demo: boolean;
   footerHeight: number;
-  haveUnresolvedItems: boolean;
   iconRightMargin: number;
   itemBackgroundColor: string;
   itemDefaultIconColor: string;
@@ -45,7 +44,6 @@ const SearchResultView = (props: IProps) => {
   const {
     demo,
     footerHeight,
-    haveUnresolvedItems,
     iconRightMargin,
     itemBackgroundColor,
     itemDefaultIconColor,
@@ -83,10 +81,9 @@ const SearchResultView = (props: IProps) => {
         itemHeight,
         searchbarHeight,
         footerHeight,
-        haveUnresolvedItems,
       });
     }
-  }, [searchResult, haveUnresolvedItems]);
+  }, [searchResult]);
 
   return (
     <OuterContainer id="searchResultView">

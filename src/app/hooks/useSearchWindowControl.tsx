@@ -69,8 +69,6 @@ const useSearchWindowControl = ({
   const isPinnedRef = useRef<boolean>(isPinned);
 
   let unresolvedPluginPromises: PCancelable<PluginExectionResult>[] = [];
-  const [hasUnresolvedPluginPromises, setHasUnresolvedPluginPromises] =
-    useState<boolean>(false);
 
   useEffect(() => {
     isPinnedRef.current = isPinned;
@@ -210,7 +208,6 @@ const useSearchWindowControl = ({
     if (unresolvedPluginItems.length <= 0) return;
 
     cancelUnresolvedPluginPromises();
-    setHasUnresolvedPluginPromises(true);
     unresolvedPluginPromises = unresolvedPluginItems;
 
     let delayedResolved: PluginItem[] = [];
@@ -242,7 +239,6 @@ const useSearchWindowControl = ({
               );
 
               unresolvedPluginPromises = [];
-              setHasUnresolvedPluginPromises(false);
             }
           });
       }
@@ -845,7 +841,6 @@ const useSearchWindowControl = ({
     bestMatch,
     setInputStr,
     indexInfo,
-    hasUnresolvedPluginPromises,
     onWheelHandler,
     onMouseoverHandler,
     onDoubleClickHandler,

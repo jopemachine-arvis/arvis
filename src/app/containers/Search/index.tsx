@@ -107,7 +107,6 @@ export default function SearchWindow() {
   const {
     bestMatch,
     getInputProps,
-    hasUnresolvedPluginPromises,
     indexInfo,
     onDoubleClickHandler,
     onInputShouldBeUpdate,
@@ -393,7 +392,6 @@ export default function SearchWindow() {
         <SearchResultView
           demo={false}
           footerHeight={search_window_footer_height}
-          haveUnresolvedItems={hasUnresolvedPluginPromises}
           iconRightMargin={icon_right_margin}
           itemBackgroundColor={item_background_color}
           itemDefaultIconColor={item_default_icon_color}

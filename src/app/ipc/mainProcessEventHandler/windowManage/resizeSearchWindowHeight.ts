@@ -20,7 +20,6 @@ export const resizeSearchWindowHeight = (
     itemHeight,
     searchbarHeight,
     footerHeight,
-    haveUnresolvedItems,
   }: {
     windowWidth: number;
     itemCount: number;
@@ -28,7 +27,6 @@ export const resizeSearchWindowHeight = (
     itemHeight: number;
     searchbarHeight: number;
     footerHeight: number;
-    haveUnresolvedItems: boolean;
   }
 ) => {
   resizeEventHandler({
@@ -38,6 +36,5 @@ export const resizeSearchWindowHeight = (
     itemHeight,
     maxItemCount,
     searchbarHeight,
-    haveUnresolvedItems,
   });
 };
