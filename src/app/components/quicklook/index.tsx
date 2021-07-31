@@ -80,7 +80,13 @@ export default (props: IProps) => {
     switch (type) {
       case 'html':
       case 'image':
-        return <QuicklookWebview data={targetData as string} />;
+        return (
+          <QuicklookWebview
+            visible={hovering || active}
+            data={targetData as string}
+          />
+        );
+
       case 'text': {
         const fileSize = (await fse.stat(targetData as string)).size;
         if (fileSize >= 1024 * 100) {
@@ -93,6 +99,7 @@ export default (props: IProps) => {
           </QuicklookText>
         );
       }
+
       case 'markdown':
         return (
           <MarkdownRenderer
@@ -103,6 +110,7 @@ export default (props: IProps) => {
             padding={15}
           />
         );
+
       default:
         break;
     }
@@ -148,10 +156,34 @@ export default (props: IProps) => {
     modalAnimation.horizontalOffset.start();
   }, [active]);
 
-  useEffect(() => {
+  const updateContent = () => {
     setContents(renderLoading());
     getInnerContainer().then(setContents).catch(console.error);
+  };
+
+  useEffect(() => {
+    updateContent();
   }, [data]);
+
+  useEffect(() => {
+    if (active && !hovering) {
+      updateContent();
+    } else if (!active && !hovering) {
+      setTimeout(() => {
+        updateContent();
+      }, 200);
+    }
+  }, [active]);
+
+  useEffect(() => {
+    if (!active && hovering) {
+      updateContent();
+    } else if (!active && !hovering) {
+      setTimeout(() => {
+        updateContent();
+      }, 200);
+    }
+  }, [hovering]);
 
   return (
     <animated.div

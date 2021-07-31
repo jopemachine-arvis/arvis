@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/destructuring-assignment */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import encodeUrl from 'encodeurl';
@@ -32,29 +33,32 @@ const userAgent =
 
 type IProps = {
   data: string;
+  visible: boolean;
 };
 
 export function QuicklookWebview(props: IProps) {
   const { data } = props;
+  const visible = !isUrl(data) ? true : props.visible;
+
   let src = data;
-
-  if (isUrl(data)) {
-    src = encodeUrl(data.split(' ').join('%20'));
-  }
-
   const preventFocus = () => {
     // Focus always should be on searchBar.
     (document.getElementById('searchBar') as HTMLInputElement).focus();
   };
 
   useEffect(() => {
+    if (!visible) return;
     const webview = document.querySelector('webview');
     webview!.addEventListener('focus', preventFocus);
   }, []);
 
+  if (isUrl(data)) {
+    src = encodeUrl(data.split(' ').join('%20'));
+  }
+
   return (
     <OuterContainer>
-      {!_.isUndefined(data) && (
+      {visible && !_.isUndefined(data) && (
         <webview
           id="webview"
           useragent={userAgent}
@@ -63,7 +67,6 @@ export function QuicklookWebview(props: IProps) {
           onFocus={preventFocus}
           onBlur={preventFocus}
           allowFullScreen={false}
-          preload="window.alert = console.log"
           style={{
             width: '100%',
             height: '100%',
@@ -72,6 +75,7 @@ export function QuicklookWebview(props: IProps) {
           }}
         />
       )}
+      {!visible && <div />}
     </OuterContainer>
   );
 }
