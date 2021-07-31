@@ -258,7 +258,7 @@ const useSearchWindowControl = ({
     try {
       if (actionFlowManager.hasEmptyTriggerStk()) {
         setBestMatch(
-          (Core.history.getBestMatch(updatedInput)! as Log).inputStr!
+          (Core.history.getLatestMatch(updatedInput)! as Log).inputStr!
         );
       }
     } catch {

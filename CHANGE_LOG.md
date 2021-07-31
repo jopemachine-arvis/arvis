@@ -1,3 +1,9 @@
+# 0.8.5
+
+## What’s Changed
+
+* Implement sorting item feature by most recent usage
+
 # 0.8.4
 
 ## What’s Changed

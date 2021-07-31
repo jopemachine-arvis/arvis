@@ -41,12 +41,12 @@ Some files are used as flags to forward command to Arvis.
 
 1. `arvis-redux-store-reset`
 
-Path: `data` path of the [env-paths]
+Path: `data` path of the [env-paths](https://github.com/sindresorhus/env-paths)
 
 Used to reset redux store.
 
 2. `arvis-extension-renew`
 
-Path: `data` path of the [env-paths]
+Path: `data` path of the [env-paths](https://github.com/sindresorhus/env-paths)
 
 Used to renew extensions.
