@@ -581,7 +581,7 @@ export default function Workflow() {
 
   useEffect(() => {
     fetchAndSetReadme();
-  }, [tabInfo, workflows, workflowBundleId]);
+  }, [tabIndex, workflows, workflowBundleId]);
 
   return (
     <OuterContainer
