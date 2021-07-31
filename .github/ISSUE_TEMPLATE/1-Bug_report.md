@@ -4,8 +4,6 @@ about: You're having technical issues.
 labels: 'bug'
 ---
 
-<!-- Please use the following issue template or your issue will be closed. -->
-
 <!--- Provide a general summary of the issue in the Title above -->
 
 ## Expected Behavior
@@ -17,11 +15,6 @@ labels: 'bug'
 
 <!--- If describing a bug, tell us what happens instead of the expected behavior -->
 <!--- If suggesting a change/improvement, explain the difference from current behavior -->
-
-## Possible Solution
-
-<!--- Not obligatory, but suggest a fix/reason for the bug, -->
-<!--- or ideas how to implement the addition or change -->
 
 ## Steps to Reproduce (for bugs)
 

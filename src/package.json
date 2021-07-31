@@ -38,7 +38,12 @@
     "windows",
     "macos",
     "linux",
-    "electron"
+    "electron",
+    "electron-app",
+    "alfred-analogue",
+    "automation",
+    "launcher",
+    "productivity"
   ],
   "license": "MIT",
   "dependencies": {

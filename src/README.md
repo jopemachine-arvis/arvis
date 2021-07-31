@@ -32,8 +32,8 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 
 [Click to view config file pathes](./config-file-paths.md)
 
-## [use-key-capture](https://github.com/pranesh239/use-key-capture)
+## External packages
 
 Arvis edits and uses some libraries.
 
-These codes are separated from `src/app`.
+These codes are in `src/external` separated from `src/app`.

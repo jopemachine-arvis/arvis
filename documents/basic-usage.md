@@ -180,6 +180,10 @@ Example:
 
 ![](./imgs/quicklook.png)
 
+You can also open quicklook by hovering your mouse to the right side of the search window.
+
+In this case, if you left the mouse out of your quicklook, the quicklook disappears.
+
 ### LargeText window
 
 To view your item in larger window, press `cmd (or ctrl) + L`
