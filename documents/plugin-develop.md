@@ -52,7 +52,7 @@ module.exports = ({ inputStr, history }) => {
 };
 ```
 
-You can check very simple [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
+You can check minimal working [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
 
 #### Arguments
 

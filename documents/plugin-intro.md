@@ -2,9 +2,9 @@
 
 You can replace repetitive task with using `workflow`.
 
-However, `workflow` cannot create tasks such as fuzzy file search in the arvis search window without trigger.
+However, `workflow` cannot create tasks such as fuzzy file search in the arvis search window **without trigger**.
 
-`plugin` allows you to customize features that are usually provided as `built-in features`.
+`plugin` allows you to customize features that are usually provided as **built-in features**.
 
 ## Differences between plugins and workflows
 

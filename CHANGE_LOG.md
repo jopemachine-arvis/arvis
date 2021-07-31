@@ -5,6 +5,7 @@
 * [fix] Filter not proper withspace items on workflow items
 * [fix] Fix plugin items not executed bug occuring since 0.8.4
 * [optimize] Optimize webview related feature on quicklook
+* [remove] Remove dynamic window height change
 
 # 0.8.6
 

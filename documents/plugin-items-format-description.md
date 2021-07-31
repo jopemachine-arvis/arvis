@@ -2,7 +2,7 @@
 
 The `main` function of the plugin must return an array of below format as `items`.
 
-You can check minimal example of plugin in [Here](https://github.com/jopemachine/arvis-calculator-plugin-example)
+You can check minimal working example of plugin in [Here](https://github.com/jopemachine/arvis-calculator-plugin-example)
 
 ## title
 
@@ -105,15 +105,31 @@ If valid is `false`, the item is treated error messages.
 
 You can show error message through setting `valid` to false.  
 
+## quicklook
+
+type: `object`
+
+required: `false`
+
+arvisOnly: `true`
+
+Users can press the `shift + space` key above the item to open the quicklook.
+
+The data handed over is explicitly displayed in the quicklook.
+
+If you do not specify a quicklook, the arvis will infer the data to display.
+
+Recommend specifying `quicklook` value for explicit data display.
+
 ## quicklookurl
 
 type: `string`
 
 required: `false`
 
-You can press the shift key above the item to open the quicklook window.
+Users can press the `shift + space` key above the item to open the quicklook.
 
-The window displays the file path or url that was passed on.
+You can consider `quicklookurl` as shortcut of `quicklook` object with html type.
 
 ## mods
 

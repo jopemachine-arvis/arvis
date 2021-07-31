@@ -32,7 +32,7 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 
 ## Config file pathes
 
-[Click to view config file pathes](./config-file-paths.md)
+[Click to view config file pathes](../documents/config-file-paths.md)
 
 ## External packages
 
