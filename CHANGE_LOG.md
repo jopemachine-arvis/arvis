@@ -1,3 +1,7 @@
+# 0.8.6
+
+* [hotfix] Fix plugin bug occurred in 0.8.5.
+
 # 0.8.5
 
 ## What’s Changed

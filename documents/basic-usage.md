@@ -168,11 +168,17 @@ Right click on search window, and select `Pin window`.
 
 Your search window would be set `always on top`, and never disappear when you click other window.
 
-### Quicklook window
+### Quicklook
 
-To view your item on quicklook window (Browser), press `shift + space`
+To view information about your selected item, press `shift + space`.
+
+You can check the item's information on `markdown`, `html (webview)`, `text` renderer.
 
 (Need to extension support)
+
+Example:
+
+![](./imgs/quicklook.png)
 
 ### LargeText window
 

@@ -152,9 +152,9 @@ const useSearchWindowControl = ({
   /**
    * scriptfilter must be able to run automatically when a command is entered
    * This function handle scriptfilter's auto run.
+   * Must be called when first script filter is triggered
    * @param itemArr
    * @param updatedInput
-   * @description Must be called when first script filter is triggered
    */
   const handleScriptFilterAutoExecute = ({
     itemArr,
@@ -410,8 +410,8 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * Mouse wheel event handler
    * @param e
-   * @summary mouse wheel event handler
    */
   const onWheelHandler = (e: React.WheelEvent<HTMLInputElement>) => {
     if (hoveringOnQuicklook) return;
@@ -463,9 +463,9 @@ const useSearchWindowControl = ({
   };
 
   /**
+   * To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @param alreadyCleanedUp
    * @param searchWindowIsPinned
-   * @description To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @summary
    */
   const cleanUpBeforeHide = ({
