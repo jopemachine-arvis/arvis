@@ -514,7 +514,10 @@ export default function Plugin() {
     if (readme) {
       setPluginReadme(readme);
     } else {
-      pAny([getGithubReadmeContent(creator, name)])
+      pAny([
+        getGithubReadmeContent(creator, name),
+        getGithubReadmeContent('arvis-plugins', name),
+      ])
         .then((readmeContent) => {
           setPluginReadme(readmeContent);
           Core.overwriteExtensionInfo(

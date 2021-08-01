@@ -12,6 +12,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import 'github-markdown-css';
+import rehypeRaw from 'rehype-raw';
 // To do:: Replace below css with 'github-markdown-css' dark theme file after dark theme PR is merged
 import '../../../external/github-markdown-css/dark.css';
 
@@ -81,6 +82,7 @@ export default function Markdown(props: IProps) {
     <OuterContainer style={{ width, height, ...style }} padding={padding}>
       <ReactMarkdown
         className={dark ? 'markdown-body-dark' : 'markdown-body'}
+        rehypePlugins={[rehypeRaw]}
         skipHtml={false}
       >
         {data}

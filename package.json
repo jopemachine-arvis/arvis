@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -341,6 +341,7 @@
     "redux-persist-electron-storage": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.8",
+    "rehype-raw": "^5.1.0",
     "semver": "^7.3.5",
     "source-map-support": "^0.5.19",
     "styled-components": "^5.3.0",

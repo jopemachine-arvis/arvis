@@ -1,3 +1,10 @@
+# 0.8.10
+
+## What’s Changed
+
+* [feature] Add rehype-raw for adding raw html to markdown renderer
+* [feature] Add arvis-plugin org's readme download
+
 # 0.8.9
 
 ## What’s Changed

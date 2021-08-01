@@ -38,4 +38,4 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 
 Arvis edits and uses some libraries.
 
-These codes are in `src/external` separated from `src/app`.
+These libraries are in `src/external` separated from `src/app`.
