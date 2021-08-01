@@ -1,11 +1,12 @@
 /* eslint-disable react/require-default-props */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import fse from 'fs-extra';
 import isPromise from 'is-promise';
 import Spinner from '../searchWindowSpinner';
 import { QuicklookWebview } from './quicklookWebview';
 import { QuicklookText } from './quicklookText';
+import { HandleBar } from './components';
 import MarkdownRenderer from '../markdownRenderer';
 
 // Ref: For better boxShadow styles, refer to https://getcssscan.com/css-box-shadow-examples
@@ -53,6 +54,8 @@ const useModalAnimation = ({
     reverse,
   });
 
+let handleBarOriginalPos = -1;
+
 export default (props: IProps) => {
   const { type, data, active, searchbarHeight, hovering, setHovering } = props;
 
@@ -64,6 +67,9 @@ export default (props: IProps) => {
   });
 
   const [contents, setContents] = useState<any>();
+
+  const [onResizing, setOnResizing] = useState<boolean>(false);
+  const onResizingRef = useRef<boolean>(onResizing);
 
   const getInnerContainer = async () => {
     let targetData = data;
@@ -122,15 +128,31 @@ export default (props: IProps) => {
     setHovering(true);
   };
 
-  const onMouseLeaveEnterHandler = () => {
+  const onMouseLeaveEventHandler = () => {
     setHovering(false);
   };
 
-  const onDragStartEventHandler = () => {};
+  const onMouseDownEventHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+    setOnResizing(true);
+    onResizingRef.current = true;
+    if (handleBarOriginalPos === -1) {
+      handleBarOriginalPos = e.clientX;
+    }
+  };
 
-  const onDragEndEventHandler = () => {};
+  const onMouseUpEventHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+    onResizingRef.current = false;
+    setOnResizing(false);
+  };
 
-  const onDragEventHandler = () => {};
+  const onMouseMoveEventHandler = (e: MouseEvent) => {
+    if (!onResizingRef.current) return;
+    const offset = handleBarOriginalPos - e.clientX;
+
+    (document.getElementById('quicklook') as HTMLDivElement).style.width = `${
+      350 + offset
+    }px`;
+  };
 
   const renderLoading = () => {
     return (
@@ -141,6 +163,11 @@ export default (props: IProps) => {
       />
     );
   };
+
+  useEffect(() => {
+    (document.getElementById('searchWindow') as HTMLDivElement).onmousemove =
+      onMouseMoveEventHandler;
+  }, []);
 
   useEffect(() => {
     if (initialRendering) {
@@ -187,11 +214,9 @@ export default (props: IProps) => {
 
   return (
     <animated.div
+      id="quicklook"
       onMouseEnter={onMouseEnterEventHandler}
-      onMouseLeave={onMouseLeaveEnterHandler}
-      onDragStart={onDragStartEventHandler}
-      onDrag={onDragEventHandler}
-      onDragEnd={onDragEndEventHandler}
+      onMouseLeave={onMouseLeaveEventHandler}
       style={{
         ...outerStyle,
         color: '#000',
@@ -206,6 +231,10 @@ export default (props: IProps) => {
       }}
     >
       {contents}
+      <HandleBar
+        onMouseDown={onMouseDownEventHandler}
+        onMouseUp={onMouseUpEventHandler}
+      />
     </animated.div>
   );
 };

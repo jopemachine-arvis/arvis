@@ -1,3 +1,12 @@
+# 0.8.8
+
+## What’s Changed
+
+* [feature] Implement quicklook resizing
+* [fix] Remove useless console comment
+* [fix] Remove styled component dynamic created bug
+* [fix] Fix Readme page not updated bug on workflow page
+
 # 0.8.7
 
 ## What’s Changed

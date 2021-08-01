@@ -353,6 +353,7 @@ export default function SearchWindow() {
 
   return (
     <OuterContainer
+      id="searchWindow"
       style={{
         borderRadius: search_window_border_radius,
         fontFamily: global_font,
