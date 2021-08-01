@@ -1,3 +1,9 @@
+# 0.8.9
+
+## What’s Changed
+
+* [fix, revert] Revert window's toggle searchwindow hack causing intermittent freezing. This cause letter afterimage on Windows again.
+
 # 0.8.8
 
 ## What’s Changed
