@@ -33,8 +33,8 @@ const keyDispatchingActionHandler = (action: any) => {
   logCustomAction(action);
 
   ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
-    key: action.key,
-    modifiers: JSON.stringify(action.modifiers),
+    key: action.target.key,
+    modifiers: JSON.stringify(action.target.modifiers),
   });
 };
 

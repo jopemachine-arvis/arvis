@@ -1,3 +1,9 @@
+# 0.8.12
+
+## What’s Changed
+
+* [fix] Bug fixed of Key-dispatching action
+
 # 0.8.11
 
 ## What’s Changed

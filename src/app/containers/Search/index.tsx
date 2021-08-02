@@ -20,6 +20,7 @@ import { SpinnerContext } from '@helper/spinnerContext';
 import {
   clipboardActionHandler,
   notificationActionHandler,
+  keyDispatchingActionHandler,
 } from '@helper/customActionHandler';
 import { OuterContainer } from './components';
 
@@ -141,7 +142,7 @@ export default function SearchWindow() {
   const initializeCustomActions = () => {
     Core.registerCustomAction('notification', notificationActionHandler);
     Core.registerCustomAction('clipboard', clipboardActionHandler);
-    Core.registerCustomAction('keyDispatching', (action: any) => {});
+    Core.registerCustomAction('keyDispatching', keyDispatchingActionHandler);
   };
 
   const registerAllGlobalHotkey = () => {
