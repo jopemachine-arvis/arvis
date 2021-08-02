@@ -2958,14 +2958,14 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-arvis-core@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.10.5.tgz#b499a723582914cbcd7cd53e8f993e6b07c48ca4"
-  integrity sha512-nDaxcqiZeu7O5XUIsjB2CdQwRNx2BuPviWawkgfg1RWQva/ZZQjFCc1SXSFq5YpP80e0EpyBMP6KwNnfnU6riw==
+arvis-core@^0.10.6:
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/arvis-core/-/arvis-core-0.10.6.tgz#bbb52c090610cf3f49bcc78352ddd395f4e0bcaf"
+  integrity sha512-tnnkjCvrc2Ia8eF/1X3Zi4uNl11A5DTPjsVCOVJwifSB4c2RQA21ivdpswT9qFJhcXleVhOJRswaNlMt1CU6Kg==
   dependencies:
     alpha-sort "^4.0.0"
     archiver "^5.3.0"
-    arvis-extension-validator "^0.2.2"
+    arvis-extension-validator "^0.2.3"
     chalk "^4.1.0"
     chmodr "^1.2.0"
     clipboardy "^2.3.0"
@@ -2991,10 +2991,10 @@ arvis-core@^0.10.5:
     uuid "^8.3.2"
     xml-js "^1.6.11"
 
-arvis-extension-validator@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.2.2.tgz#3d437adc4ef9c375f1eb927f477f60bc17e53003"
-  integrity sha512-acT7Dca2TR/bRF194QbQATi4c1NcxUhokuq0ah9JSxTeddZuccU9TW+JR48xXyNaISc736upi4eIaZd1njnNRA==
+arvis-extension-validator@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/arvis-extension-validator/-/arvis-extension-validator-0.2.3.tgz#1a1274eed2beff5bbd2df0025812a87479128cc4"
+  integrity sha512-0rBrZyJRFJM6bWL9pvj15T+2p6Zu30UrF+X30QNtLusXSBX1aJZM+tsD8cESp47TXT4aE/Veanf41H9v5XnXNA==
   dependencies:
     chalk "^4.1.1"
     fs-extra "^10.0.0"
@@ -3002,15 +3002,15 @@ arvis-extension-validator@^0.2.2:
     jsonschema "^1.4.0"
     meow "^5.0.0"
 
-arvis-store@^0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.2.10.tgz#ce2d567f06052e0ec9d38d8095c0a3f7f021b350"
-  integrity sha512-YqbaTCa6t5HQHv6yt3YytPcPRf25HH+S/1qHRpsucTd+k6wrJV01qjHt9/0UWuFcCnCa5vrhGnkuGHo2Jo3TzA==
+arvis-store@^0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/arvis-store/-/arvis-store-0.2.11.tgz#eebbdb82dae814d77a77969a9c02b85f92d8973f"
+  integrity sha512-XU0O52VMIBYx/Wld16ZL5H2eI6e72a1BjdXHGN5t8NBrlmhEezvLPjJ22S0Fgibi7xEm6Aa+dXP52yFJ73FIMw==
   dependencies:
     "@octokit/core" "^3.5.1"
     "@octokit/rest" "^18.6.6"
     alpha-sort "^4.0.0"
-    arvis-extension-validator "^0.2.2"
+    arvis-extension-validator "^0.2.3"
     chalk "^4.1.1"
     clean-stack "^2.2.0"
     conf "^10.0.1"

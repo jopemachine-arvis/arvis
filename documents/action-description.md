@@ -21,6 +21,7 @@ For example, If you put some action in `script` action, the action is triggered 
 - [keyword](#keyword)
 - [scriptFilter](#scriptFilter)
 - [resetInput](#resetInput)
+- [keyDispatching](#keyDispatching)
 
 ## script
 
@@ -513,3 +514,25 @@ type: `string`
 required: `true`
 
 User input is replaced by `newInput`
+
+## keyDispatching
+
+Dispatch key combination through [robotjs](https://github.com/octalmage/robotjs)
+
+### target
+
+type: `object`
+
+required: `true`
+
+#### key
+
+type: `string`
+
+required: `true`
+
+#### modifiers
+
+type: `string[]`
+
+required: `false`

@@ -2,16 +2,20 @@ import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { Core } from 'arvis-core';
 import { clipboard, ipcRenderer } from 'electron';
 
-const notificationActionHandler = (action: any) => {
+const logCustomAction = (action: any) => {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
   if (actionFlowManager.printActionType) {
     console.log(
-      '%c[Action: notification]%c ',
+      `%c[Action: ${action.type}]%c `,
       'color: cyan',
       'color: unset',
       action
     );
   }
+};
+
+const notificationActionHandler = (action: any) => {
+  logCustomAction(action);
 
   ipcRenderer.send(IPCRendererEnum.showNotification, {
     title: action.title,
@@ -20,17 +24,22 @@ const notificationActionHandler = (action: any) => {
 };
 
 const clipboardActionHandler = (action: any) => {
-  const actionFlowManager = Core.ActionFlowManager.getInstance();
-  if (actionFlowManager.printActionType) {
-    console.log(
-      '%c[Action: clipboard]%c ',
-      'color: cyan',
-      'color: unset',
-      action
-    );
-  }
+  logCustomAction(action);
 
   clipboard.writeText(action.text);
 };
 
-export { clipboardActionHandler, notificationActionHandler };
+const keyDispatchingActionHandler = (action: any) => {
+  logCustomAction(action);
+
+  ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
+    key: action.key,
+    modifiers: JSON.stringify(action.modifiers),
+  });
+};
+
+export {
+  clipboardActionHandler,
+  notificationActionHandler,
+  keyDispatchingActionHandler,
+};
