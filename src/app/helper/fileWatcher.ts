@@ -25,7 +25,7 @@ const watchOpts = {
 };
 
 /**
- * @param {string[]} bundleIds?
+ * @param bundleIds?
  * @summary Update store of each singletons for each renderer processes
  */
 const requestReloadWorkflows = (bundleIds?: string[]) => {
@@ -42,7 +42,7 @@ const requestReloadWorkflows = (bundleIds?: string[]) => {
 };
 
 /**
- * @param {string[]} bundleIds?
+ * @param bundleIds?
  * @summary Update store of each singletons for each renderer processes
  */
 const requestReloadPlugins = (bundleIds?: string[]) => {
