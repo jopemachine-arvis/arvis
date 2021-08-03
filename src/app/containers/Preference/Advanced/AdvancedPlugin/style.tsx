@@ -1,9 +1,9 @@
-export const formGroupStyle = {
+export const formGroupStyle: Record<string, any> = {
   marginBottom: 35,
   minWidth: 280,
 };
 
-export const labelStyle = {
+export const labelStyle: Record<string, any> = {
   color: '#ffffff',
   marginBottom: 10,
 };

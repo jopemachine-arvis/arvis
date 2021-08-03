@@ -2,7 +2,7 @@
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -78,7 +78,9 @@ export default function SearchWindow() {
     active: false,
   });
 
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<
+    (Command | PluginItem | ScriptFilterItem)[]
+  >([]);
 
   const [hoveringOnQuicklook, setHoveringOnQuicklook] =
     useState<boolean>(false);
@@ -130,7 +132,7 @@ export default function SearchWindow() {
     spinning: isSpinning,
   });
 
-  const registerWindowUpdater = useCallback(() => {
+  const registerRendererUpdater = useCallback(() => {
     Core.setStoreAvailabiltyChecker((available) => setSpinning(!available));
 
     Core.Renderer.setOnInputShouldBeUpdate(onInputShouldBeUpdate);
@@ -298,7 +300,7 @@ export default function SearchWindow() {
   useEffect(() => {
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
-    registerWindowUpdater();
+    registerRendererUpdater();
 
     Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()])
       .then(() => {
@@ -328,14 +330,7 @@ export default function SearchWindow() {
     });
   }, [search_window_width]);
 
-  const firstRun = useRef(true);
-
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      return;
-    }
-
     if (
       (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') ||
       (clipboard_history_hotkey && clipboard_history_hotkey !== '')
