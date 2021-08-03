@@ -23,13 +23,12 @@ export default function LargeTextWindow() {
   };
 
   const onWheelEventHandler = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (
-      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
-      e.deltaY > 0
-    ) {
-      setFontSize(fontSize + 1);
-    } else {
-      setFontSize(fontSize - 1);
+    if (isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey })) {
+      if (e.deltaY > 0) {
+        setFontSize(fontSize + 1);
+      } else {
+        setFontSize(fontSize - 1);
+      }
     }
   };
 
@@ -62,10 +61,9 @@ export default function LargeTextWindow() {
   }, [keyData]);
 
   return (
-    <OuterContainer>
+    <OuterContainer onWheel={onWheelEventHandler}>
       {text && (
         <InnerContainer
-          onWheel={onWheelEventHandler}
           id="largeText"
           style={{
             fontSize,

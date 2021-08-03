@@ -134,6 +134,10 @@ export default function ClipboardHistoryWindow() {
     );
 
     return () => {
+      ipcRenderer.off(
+        IPCMainEnum.pinClipboardHistoryWindow,
+        ipcCallbackTbl.pinClipboardHistoryWindow
+      );
       ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
       ipcRenderer.off(
         IPCMainEnum.renewClipboardStore,

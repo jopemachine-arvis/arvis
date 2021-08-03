@@ -188,6 +188,14 @@ In this case, if you left the mouse out of your quicklook, the quicklook disappe
 
 To view your item in larger window, press `cmd (or ctrl) + L`
 
+You can move your LargeText window by dragging non-text area.
+
+You can adjust the size of the text of LargeText window by mou`se wheeling with pressing `cmd (or ctrl)` key.
+
+![](./imgs/largetext-window.png)
+
+LargeText window is useful when your item have too long title. (For example, item displays some error message)
+
 ### Autocomplete
 
 To autocomplete command, press `tab`.
