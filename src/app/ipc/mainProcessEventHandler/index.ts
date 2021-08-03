@@ -4,8 +4,8 @@ import { importTheme } from './config/importTheme';
 import { setAutoLaunch } from './config/setAutoLaunch';
 import { setGlobalShortcut } from './config/setGlobalShortcut';
 
-import { popupPluginItemMenu } from './contextMenu/popupPluginItemMenu';
-import { popupWorkflowItemMenu } from './contextMenu/popupWorkflowItemMenu';
+import { popupPluginItemMenu } from './contextMenu/popupPluginPageItemMenu';
+import { popupWorkflowItemMenu } from './contextMenu/popupWorkflowPageItemMenu';
 import { popupSearchbarItemMenu } from './contextMenu/popupSearchbarItemMenu';
 import { popupClipboardHistoryContextMenu } from './contextMenu/popupClipboardHistoryContextMenu';
 

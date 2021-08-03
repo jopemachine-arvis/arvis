@@ -190,7 +190,7 @@ To view your item in larger window, press `cmd (or ctrl) + L`
 
 You can move your LargeText window by dragging non-text area.
 
-You can adjust the size of the text of LargeText window by mou`se wheeling with pressing `cmd (or ctrl)` key.
+You can adjust the size of the text of LargeText window by `mouse wheeling` with pressing `cmd (or ctrl)` key.
 
 ![](./imgs/largetext-window.png)
 

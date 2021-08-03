@@ -37,8 +37,8 @@ import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
 import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
 
-import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginItemMenu';
-import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowItemMenu';
+import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginPageItemMenu';
+import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowPageItemMenu';
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/contextMenu/popupClipboardHistoryContextMenu';
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';

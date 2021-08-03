@@ -1,5 +1,5 @@
 /**
- * @summary Events sent from renderer process to main process
+ * Events sent from renderer process to main process
  */
 export enum IPCRendererEnum {
   autoFitSearchWindowSize = '@ipcRenderer/autoFitSearchWindowSize',
@@ -40,7 +40,7 @@ export enum IPCRendererEnum {
 }
 
 /**
- * @summary Events sent from main process to renderer process
+ * Events sent from main process to renderer process
  */
 export enum IPCMainEnum {
   autoFitSearchWindowSizeRet = '@ipcMain/autoFitSearchWindowSizeRet',

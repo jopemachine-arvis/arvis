@@ -170,7 +170,8 @@ export const startFileWatcher = () => {
 };
 
 /**
- * @summary
+ * Stop file watching.
+ * Watch out without filewatcher, arvis cannot detect new extension install.
  */
 export const stopFileWatcher = () => {
   if (!workflowWatcher || !pluginWatcher || !otherFilesWatcher) {
