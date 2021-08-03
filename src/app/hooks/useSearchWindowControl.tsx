@@ -33,8 +33,8 @@ const useSearchWindowControl = ({
   setQuicklookModalData,
   spinning,
 }: {
-  items: any[];
-  setItems: (items: any[]) => void;
+  items: (Command | ScriptFilterItem | PluginItem)[];
+  setItems: (items: (Command | ScriptFilterItem | PluginItem)[]) => void;
   maxItemCount: number;
   maxRetrieveCount: number;
   isPinned: boolean;
@@ -122,7 +122,6 @@ const useSearchWindowControl = ({
 
   /**
    * @returns changed selectedItemIdx
-   * @summary
    */
   const handleDownArrow = () => {
     const selectedItemIdx = (indexInfo.selectedItemIdx + 1) % items.length;
@@ -158,7 +157,7 @@ const useSearchWindowControl = ({
     itemArr,
     updatedInput,
   }: {
-    itemArr: any[];
+    itemArr: (Command | ScriptFilterItem | PluginItem)[];
     updatedInput: string;
   }): boolean => {
     // auto script filter executing should be started from first item
@@ -180,7 +179,7 @@ const useSearchWindowControl = ({
       const commandOnStackIsEmpty = firstItem;
 
       actionFlowManager.setRunningScriptfilterItem({
-        selectedItem: itemArr[0],
+        selectedItem: itemArr[0] as Command,
         setRunningText: true,
       });
 
@@ -370,25 +369,25 @@ const useSearchWindowControl = ({
 
     const hasRequiredArg = item
       ? Core.hasRequiredArg({
-          item,
+          item: item as Command,
           inputStr,
         })
       : true;
 
-    if (selectedItem.type === 'scriptFilter') {
+    if ((selectedItem as Command).type === 'scriptFilter') {
       const newInputStr =
-        hasRequiredArg || selectedItem.withspace
-          ? `${selectedItem.command} `
-          : selectedItem.command;
+        hasRequiredArg || (selectedItem as Command).withspace
+          ? `${(selectedItem as Command).command} `
+          : (selectedItem as Command).command;
 
       setInputStr({ str: newInputStr, needItemsUpdate: false });
 
       actionFlowManager.setRunningScriptfilterItem({
-        selectedItem: items[selectedItemIdx],
+        selectedItem: items[selectedItemIdx] as Command,
         setRunningText: hasRequiredArg,
       });
 
-      Core.scriptFilterExcute(newInputStr, items[selectedItemIdx]);
+      Core.scriptFilterExcute(newInputStr!, items[selectedItemIdx] as Command);
     } else {
       if (hasRequiredArg) {
         setIsPinned(false);
@@ -398,7 +397,10 @@ const useSearchWindowControl = ({
           modifiers
         );
       } else {
-        setInputStr({ str: `${selectedItem.command} `, needItemsUpdate: true });
+        setInputStr({
+          str: `${(selectedItem as Command).command} `,
+          needItemsUpdate: true,
+        });
       }
     }
 
@@ -462,7 +464,6 @@ const useSearchWindowControl = ({
    * To avoid duplicate cleanup issue, If alreadyCleanedUp is true, do nothing.
    * @param alreadyCleanedUp
    * @param searchWindowIsPinned
-   * @summary
    */
   const cleanUpBeforeHide = ({
     alreadyCleanedUp,
@@ -538,22 +539,27 @@ const useSearchWindowControl = ({
   /**
    * @param item
    */
-  const autoCompleteHandler = (item: any) => {
+  const autoCompleteHandler = (
+    item: Command | ScriptFilterItem | PluginItem
+  ) => {
     if (!item) return;
-    if (actionFlowManager.hasEmptyTriggerStk() && item.command) {
-      setInputStr({ str: item.command, needItemsUpdate: true });
+    if (actionFlowManager.hasEmptyTriggerStk() && (item as Command).command) {
+      setInputStr({ str: (item as Command).command, needItemsUpdate: true });
     } else if (
       actionFlowManager.getTopTrigger().type === 'scriptFilter' &&
-      item.autocomplete
+      (item as ScriptFilterItem).autocomplete
     ) {
-      setInputStr({ str: item.autocomplete, needItemsUpdate: true });
+      setInputStr({
+        str: (item as ScriptFilterItem).autocomplete,
+        needItemsUpdate: true,
+      });
     }
   };
 
   /**
    * @param item
    */
-  const quicklookHandler = (item: any) => {
+  const quicklookHandler = (item: Command | ScriptFilterItem | PluginItem) => {
     if (!item) return;
 
     setQuicklookModalData({
@@ -565,18 +571,26 @@ const useSearchWindowControl = ({
   /**
    * @param item
    */
-  const showTextLargeTypeHandler = (item: any) => {
+  const showTextLargeTypeHandler = (
+    item: Command | ScriptFilterItem | PluginItem
+  ) => {
     if (!item) return;
     let text = '(no target)';
 
-    if (item.text && typeof item.text === 'string') {
-      text = item.text;
-    } else if (item.text && item.text.largetype) {
-      text = item.text.largetype;
+    if (
+      (item as ScriptFilterItem).text &&
+      typeof (item as ScriptFilterItem).text === 'string'
+    ) {
+      text = (item as ScriptFilterItem).text as string;
+    } else if (
+      (item as ScriptFilterItem).text &&
+      (item as ScriptFilterItem).text!.largetype
+    ) {
+      text = (item as ScriptFilterItem).text!.largetype as string;
     } else if (item.title) {
       text = item.title;
-    } else if (item.command) {
-      text = item.command;
+    } else if ((item as Command).command) {
+      text = (item as Command).command!;
     }
 
     ipcRenderer.send(IPCRendererEnum.showLargeTextWindow, {
@@ -587,18 +601,24 @@ const useSearchWindowControl = ({
   /**
    * @param item
    */
-  const itemCopyHandler = (item: any) => {
+  const itemCopyHandler = (item: Command | ScriptFilterItem | PluginItem) => {
     if (!item) return;
     let text = '(no copy target)';
 
-    if (item.text && typeof item.text === 'string') {
-      text = item.text;
-    } else if (item.text && item.text.copy) {
-      text = item.text.copy;
+    if (
+      (item as ScriptFilterItem).text &&
+      typeof (item as ScriptFilterItem).text === 'string'
+    ) {
+      text = (item as ScriptFilterItem).text as string;
+    } else if (
+      (item as ScriptFilterItem).text &&
+      (item as ScriptFilterItem).text!.copy
+    ) {
+      text = (item as ScriptFilterItem).text!.copy!;
     } else if (item.title) {
       text = item.title;
-    } else if (item.command) {
-      text = item.command;
+    } else if ((item as Command).command) {
+      text = (item as Command).command!;
     }
 
     clipboard.writeText(text);
@@ -693,7 +713,7 @@ const useSearchWindowControl = ({
     items,
     needIndexInfoClear,
   }: {
-    items: any[];
+    items: (Command | ScriptFilterItem | PluginItem)[];
     needIndexInfoClear: boolean;
   }) => {
     setItems(items.slice(0, maxRetrieveCount));
@@ -710,7 +730,7 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @summary Check that the window should be closed, and close the window if it should be closed
+   * Check that the window should be closed, and close the window if it should be closed
    */
   const checkShouldBeHided = (forceHide?: boolean) => {
     if (isPinned) return;
@@ -794,17 +814,6 @@ const useSearchWindowControl = ({
   };
 
   useEffect(() => {
-    const target = items[indexInfo.selectedItemIdx];
-
-    if (target) {
-      setQuicklookModalData({
-        active: quicklookModalData.active,
-        ...inferQuicklookData(target),
-      });
-    }
-  }, [items, indexInfo]);
-
-  useEffect(() => {
     hideSearchWindowByBlurCbRef.current = () => {
       cleanUpBeforeHide({
         alreadyCleanedUp: alreadyClearedRef.current,
@@ -815,7 +824,9 @@ const useSearchWindowControl = ({
     if (inputRef.current) {
       (inputRef.current! as HTMLInputElement).onkeyup = onKeyupHandler;
     }
+  }, []);
 
+  useEffect(() => {
     ipcRenderer.on(IPCMainEnum.searchWindowShowCallback, () => {
       alreadyClearedRef.current = false;
       setShouldBeHided(false);
@@ -825,6 +836,17 @@ const useSearchWindowControl = ({
       hideSearchWindowByBlurCbRef.current();
     });
   }, []);
+
+  useEffect(() => {
+    const target = items[indexInfo.selectedItemIdx];
+
+    if (target) {
+      setQuicklookModalData({
+        active: quicklookModalData.active,
+        ...inferQuicklookData(target),
+      });
+    }
+  }, [items, indexInfo]);
 
   useEffect(() => {
     // Ignore Initial Mount
