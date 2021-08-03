@@ -2,7 +2,7 @@
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -330,7 +330,15 @@ export default function SearchWindow() {
     });
   }, [search_window_width]);
 
+  const firstRun = useRef(true);
+
   useEffect(() => {
+    // Prevent renewHotkeys call when when arvis start to run
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+
     if (
       (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') ||
       (clipboard_history_hotkey && clipboard_history_hotkey !== '')
