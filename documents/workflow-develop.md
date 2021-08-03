@@ -1,5 +1,7 @@
 # How to write workflow
 
+:video_camera: Check this [video tutorial](https://www.youtube.com/watch?v=VHddWNPjlp8) for overview how to create arvis-workflow
+
 ## Support hotload
 
 All changes in workflow, plugin folders's changes are being watched and reflected when they are created.

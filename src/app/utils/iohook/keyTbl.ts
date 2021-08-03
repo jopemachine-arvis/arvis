@@ -8,8 +8,8 @@ const objectFlip = (obj: any) => {
 };
 
 /**
+ * Ref: https://github.com/wilix-team/iohook/issues/74
  * @param keycode
- * @description Ref: https://github.com/wilix-team/iohook/issues/74
  */
 export const keyCodeToString = (keycode: number): string => {
   const tbl = {
