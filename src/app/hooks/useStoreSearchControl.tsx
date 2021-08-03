@@ -24,7 +24,6 @@ const useStoreSearchControl = ({
   const originalItemsRef = useRef<any[]>(originalItems);
 
   /**
-   * @summary
    */
   const focusSearchbar = () => {
     if (inputRef.current) {
@@ -33,7 +32,6 @@ const useStoreSearchControl = ({
   };
 
   /**
-   * @summary
    */
   const handleNormalInput = async (
     _originalItems: any[],
@@ -99,7 +97,6 @@ const useStoreSearchControl = ({
   };
 
   /**
-   * @summary
    */
   const onKeydownHandler = async () => {
     const input: string | undefined | null = keyData.key;

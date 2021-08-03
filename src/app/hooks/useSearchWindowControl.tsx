@@ -75,7 +75,6 @@ const useSearchWindowControl = ({
   }, [isPinned]);
 
   /**
-   * @summary
    */
   const clearIndexInfo = () => {
     setIndexInfo({
@@ -86,7 +85,6 @@ const useSearchWindowControl = ({
 
   /**
    * @returns changed selectedItemIdx
-   * @summary
    */
   const handleUpArrow = () => {
     let selectedItemIdx =
@@ -351,7 +349,7 @@ const useSearchWindowControl = ({
 
   /**
    * @param selectedItemIdx
-   * @param modifiers Selected modifier keys
+   * @param modifiers
    */
   const handleReturn = async ({
     selectedItemIdx,
@@ -748,7 +746,6 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @summary
    */
   const onWorkEndHandler = () => {
     setShouldBeHided(true);

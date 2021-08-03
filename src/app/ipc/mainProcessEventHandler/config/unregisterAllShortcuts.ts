@@ -5,7 +5,6 @@ import { IpcMainEvent, globalShortcut } from 'electron';
 import { doubleKeyPressHandler } from '../../iohookShortcutCallbacks';
 
 /**
- * @summary
  */
 export const unregisterAllShortcuts = (e: IpcMainEvent) => {
   console.log(chalk.magentaBright('All registered shortcuts are released..'));

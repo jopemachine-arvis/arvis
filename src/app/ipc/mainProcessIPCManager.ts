@@ -44,7 +44,7 @@ import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/cont
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
 
 /**
- * @summary Register ipc callbacks
+ * Register ipc callbacks
  */
 export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.autoFitSearchWindowSize, autoFitSearchWindowSize);
@@ -117,7 +117,6 @@ export const initIPCHandlers = () => {
 };
 
 /**
- * @summary
  */
 export const cleanUpIPCHandlers = () => {
   ipcMain.removeAllListeners();

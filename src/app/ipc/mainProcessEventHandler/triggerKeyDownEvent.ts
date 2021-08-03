@@ -2,7 +2,6 @@ import { IpcMainEvent } from 'electron';
 import robot from 'robotjs';
 
 /**
- * @summary
  */
 export const triggerKeyDownEvent = (
   e: IpcMainEvent,

@@ -1,6 +1,6 @@
 /**
  * @param type
- * @param ...argNames
+ * @param argNames
  */
 export default function makeActionCreator(type: string, ...argNames: string[]) {
   return function actionCreator(...args: any[]) {

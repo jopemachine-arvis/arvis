@@ -4,7 +4,7 @@ import { externalEnvs } from '../../../config/externalEnvs';
 import { getDestWindow } from '../../getDestWindow';
 
 /**
- * @summary
+ * Get electron app.getPath info
  */
 export const getElectronEnvs = (
   e: IpcMainEvent,

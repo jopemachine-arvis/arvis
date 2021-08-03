@@ -217,7 +217,7 @@ export default function SearchWindow() {
           title: '',
         },
         '',
-        {}
+        { normal: true }
       );
     },
 

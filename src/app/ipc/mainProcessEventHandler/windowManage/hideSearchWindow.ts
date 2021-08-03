@@ -2,7 +2,6 @@ import { IpcMainEvent } from 'electron';
 import { WindowManager } from '../../../windows';
 
 /**
- * @summary
  */
 export const hideSearchWindow = (e: IpcMainEvent) => {
   // Bug:: On Windows, below function cause not showing search window bug.

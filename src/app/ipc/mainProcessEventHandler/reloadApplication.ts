@@ -9,11 +9,14 @@ export const reloadApplication = (e: IpcMainEvent) => {
   // So just alert user restart arvis
   // app.relaunch();
 
-  console.log('Should restart..');
+  const errorMsg =
+    'Force terminate due to some updates that can only take effect after Arvis restarted. Please just restart Arvis.';
+
+  console.log(errorMsg);
 
   new Notification({
     title: 'Restart Arvis',
-    body: 'Force termination due to some updates that can only take effect when Arvis is restarted. Please just restart Arvis.',
+    body: errorMsg,
   }).show();
 
   app.quit();

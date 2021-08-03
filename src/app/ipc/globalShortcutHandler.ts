@@ -15,10 +15,10 @@ import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
 const getWorkflowHotkeyPressHandler = ({
   hotKeyAction,
 }: {
-  hotKeyAction: any;
+  hotKeyAction: Command;
 }) => {
   const searchWindow = WindowManager.getInstance().getSearchWindow();
-  const actionTypes: string[] = hotKeyAction.actions.map(
+  const actionTypes: string[] = hotKeyAction.actions!.map(
     (item: any) => item.type
   );
 
@@ -29,8 +29,8 @@ const getWorkflowHotkeyPressHandler = ({
   // Force action to be executed after window shows up
   setTimeout(() => {
     searchWindow.webContents.send(IPCMainEnum.executeAction, {
-      action: hotKeyAction.actions.map((item: any) => {
-        item.bundleId = hotKeyAction.bundleId;
+      action: hotKeyAction.actions!.map((item: Action) => {
+        (item as Command).bundleId = hotKeyAction.bundleId!;
         return item;
       }),
       bundleId: hotKeyAction.bundleId,
@@ -121,7 +121,7 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
 const registerWorkflowHotkeys = ({
   workflowHotkeyTbl,
 }: {
-  workflowHotkeyTbl: any;
+  workflowHotkeyTbl: Record<string, Command>;
 }) => {
   const hotkeys = Object.keys(workflowHotkeyTbl);
   for (const hotkey of hotkeys) {
@@ -153,8 +153,8 @@ export default ({
   callbackTable,
   workflowHotkeyTbl,
 }: {
-  callbackTable: any;
-  workflowHotkeyTbl: any;
+  callbackTable: Record<string, string>;
+  workflowHotkeyTbl: Record<string, Command>;
 }) => {
   const shortcuts = Object.keys(callbackTable);
 

@@ -14,7 +14,6 @@ type IndexInfo = {
 };
 
 /**
- * @description
  */
 const useClipboardHistoryWindowControl = ({
   items,

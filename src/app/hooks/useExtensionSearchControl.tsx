@@ -9,7 +9,6 @@ import alphaSort from 'alpha-sort';
 import useKey from '../../external/use-key-capture/src';
 
 /**
- * @description
  */
 const useExtensionSearchControl = ({
   items,
