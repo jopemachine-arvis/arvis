@@ -75,7 +75,6 @@ const useExtensionSearchControl = ({
 
   /**
    * @param str
-   * @param {needItemsUpdate} boolean
    */
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {

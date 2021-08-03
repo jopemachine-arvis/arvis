@@ -53,6 +53,12 @@ type IProps = {
 
 const SearchResultItem = (props: IProps) => {
   const {
+    // * Unused props
+    // arg,
+    // autocomplete,
+    // text,
+    // variables,
+    // itemBackgroundColor,
     errorIcons,
     extensionDefaultIcon,
     iconRightMargin,

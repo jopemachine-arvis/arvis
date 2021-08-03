@@ -1,9 +1,9 @@
 import { IpcMainEvent, Notification } from 'electron';
 
 /**
+ * Used to show notification
  * @param title
  * @param body
- * @summary Used to show notification
  */
 export const showNotification = (
   e: IpcMainEvent,

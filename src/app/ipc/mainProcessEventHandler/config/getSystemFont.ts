@@ -4,7 +4,7 @@ import { WindowManager } from '../../../windows';
 import { IPCMainEnum } from '../../ipcEventEnum';
 
 /**
- * @summary Used to get all system fonts
+ * Used to get all system fonts
  */
 export const getSystemFont = async (e: IpcMainEvent) => {
   try {

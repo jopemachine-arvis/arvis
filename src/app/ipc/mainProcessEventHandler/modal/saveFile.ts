@@ -3,10 +3,10 @@ import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
 /**
+ * Used to select file to save
  * @param title
  * @param message
  * @param defaultPath
- * @summary Used to select file to save
  */
 export const saveFile = async (
   e: IpcMainEvent,

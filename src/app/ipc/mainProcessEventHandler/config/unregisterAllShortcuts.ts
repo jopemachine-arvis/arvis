@@ -13,6 +13,6 @@ export const unregisterAllShortcuts = (e: IpcMainEvent) => {
   globalShortcut.unregisterAll();
 
   for (const key of Object.keys(doubleKeyPressHandler)) {
-    doubleKeyPressHandler[key] = undefined;
+    (doubleKeyPressHandler as any)[key] = undefined;
   }
 };

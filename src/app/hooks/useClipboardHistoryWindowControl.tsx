@@ -68,7 +68,6 @@ const useClipboardHistoryWindowControl = ({
 
   /**
    * @returns changed selectedItemIdx
-   * @summary
    */
   const handleUpArrow = () => {
     let selectedItemIdx =
@@ -106,7 +105,6 @@ const useClipboardHistoryWindowControl = ({
 
   /**
    * @returns changed selectedItemIdx
-   * @summary
    */
   const handleDownArrow = () => {
     const selectedItemIdx = (indexInfo.selectedItemIdx + 1) % items.length;
@@ -132,8 +130,10 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
+   * @param _originalItems
    * @param pressedKey
    * @param updatedInput
+   * @param _maxShowOnWindow
    */
   const handleNormalInput = async (
     _originalItems: any[],
@@ -157,7 +157,6 @@ const useClipboardHistoryWindowControl = ({
 
   /**
    * @param str
-   * @param {needItemsUpdate} boolean
    */
   const setInputStr = (str: string) => {
     if (inputRef && inputRef.current) {
@@ -196,7 +195,7 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @summary mouse wheel event handler
+   * Mouse wheel event handler
    */
   const onWheelHandler = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY > 0) {

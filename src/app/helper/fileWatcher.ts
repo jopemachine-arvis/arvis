@@ -131,13 +131,13 @@ const pluginChangeHandler = async (filePath: string) => {
 };
 
 /**
- * @summary Initialize watcher.
- *          It detects workflow config file change and
- *          loads new workflow config file if it detects a change.
+ * Initialize watcher.
+ * It detects workflow config file change and
+ * loads new workflow config file if it detects a change.
  *
- * @description Even if there is a proper file event,
- *              should send a renew request for a second after
- *              because the change should be reflected in the in-memory store.
+ * Even if there is a proper file event,
+ * should send a renew request for a second after
+ * because the change should be reflected in the in-memory store.
  */
 export const startFileWatcher = () => {
   console.log(chalk.whiteBright('Start file watching...'));

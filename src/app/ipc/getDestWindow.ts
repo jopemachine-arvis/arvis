@@ -3,7 +3,6 @@ import { WindowManager } from '../windows';
 
 /**
  * @param windowName
- * @returns
  */
 export const getDestWindow = (windowName: string): BrowserWindow => {
   if (windowName === 'searchWindow') {

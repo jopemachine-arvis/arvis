@@ -3,9 +3,9 @@ import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
 /**
+ * Used to open yesno modal box
  * @param msg
  * @param icon?
- * @summary Used to open yesno modal box
  */
 export const openYesnoDialog = async (
   e: IpcMainEvent,

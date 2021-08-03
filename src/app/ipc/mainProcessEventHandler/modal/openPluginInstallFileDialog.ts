@@ -3,7 +3,7 @@ import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
 /**
- * @summary Used to select plugin installer file
+ * Used to select arvisplugin file
  */
 export const openPluginInstallFileDialog = async (e: IpcMainEvent) => {
   const extensions = ['arvisplugin'];

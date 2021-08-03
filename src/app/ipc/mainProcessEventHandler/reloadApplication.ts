@@ -1,5 +1,8 @@
 import { IpcMainEvent, app, Notification } from 'electron';
 
+/**
+ * @param e
+ */
 export const reloadApplication = (e: IpcMainEvent) => {
   // On linux, reloading not works (just quit the app)
   // Reload cause several bugs.
@@ -10,7 +13,7 @@ export const reloadApplication = (e: IpcMainEvent) => {
 
   new Notification({
     title: 'Restart Arvis',
-    body: 'Force termination due to some updates that can only take effect when Arvis is restarted. Just restart Arvis.',
+    body: 'Force termination due to some updates that can only take effect when Arvis is restarted. Please just restart Arvis.',
   }).show();
 
   app.quit();

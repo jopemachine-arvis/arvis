@@ -2,7 +2,7 @@ import toggleSearchWindow from './toggleSearchWindow';
 import toggleClipboardHistoryWindow from './toggleClipboardHistoryWindow';
 
 /**
- * @summary This is a table of callback functions that always require key binding, such as calling searchWindow.
+ * This is a table of callback functions that always require key binding, such as calling searchWindow.
  */
 export default {
   toggleSearchWindow: () => () => {

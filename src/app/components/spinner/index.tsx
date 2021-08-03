@@ -8,7 +8,7 @@ type IProps = {
 };
 
 /**
- * @description Ref: https://projects.lukehaas.me/css-loaders/
+ * Ref: https://projects.lukehaas.me/css-loaders/
  */
 export default function Spinner(props: IProps) {
   let { style } = props;
