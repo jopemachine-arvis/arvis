@@ -2,6 +2,8 @@
 import useForceUpdate from 'use-force-update';
 import { sleep } from '@utils/index';
 
+/**
+ */
 export const useReserveForceUpdate = () => {
   const forceUpdate = useForceUpdate();
   return (checkIntervals: number[]) => {

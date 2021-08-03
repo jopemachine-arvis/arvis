@@ -12,7 +12,7 @@ import * as style from './style';
 import './index.css';
 
 type IProps = {
-  info: any;
+  info: PluginConfigFile;
 };
 
 export default function PluginInfoTable(props: IProps) {

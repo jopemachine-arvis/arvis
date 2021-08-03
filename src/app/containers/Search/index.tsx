@@ -72,7 +72,7 @@ export default function SearchWindow() {
   const [isSpinning, setSpinning] = useState<boolean>(false);
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
-  const [quicklookModalData, setQuicklookModalData] = useState<any>({
+  const [quicklookData, setQuicklookData] = useState<QuicklookData>({
     type: undefined,
     data: undefined,
     active: false,
@@ -127,8 +127,8 @@ export default function SearchWindow() {
     isPinned,
     setIsPinned,
     hoveringOnQuicklook,
-    quicklookModalData,
-    setQuicklookModalData,
+    quicklookData,
+    setQuicklookData,
     spinning: isSpinning,
   });
 
@@ -370,13 +370,10 @@ export default function SearchWindow() {
       onWheel={onWheelHandler}
     >
       <Quicklook
-        {...quicklookModalData}
+        {...quicklookData}
         searchbarHeight={searchbar_height}
         hovering={hoveringOnQuicklook}
         setHovering={setHoveringOnQuicklook}
-        style={{
-          backgroundColor: 'transparent',
-        }}
       />
 
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>

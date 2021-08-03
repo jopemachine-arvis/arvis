@@ -47,7 +47,6 @@ const useClipboardHistoryWindowControl = ({
   const applyMouseHoverEventRef = useRef<boolean>(applyMouseHoverEvent);
 
   /**
-   * @summary
    */
   const clearIndexInfo = () => {
     setIndexInfo({
@@ -57,7 +56,6 @@ const useClipboardHistoryWindowControl = ({
   };
 
   /**
-   * @summary
    */
   const focusSearchbar = () => {
     if (inputRef.current) {

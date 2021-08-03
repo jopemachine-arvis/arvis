@@ -56,7 +56,6 @@ const tabInfo = [
 ];
 
 export default function Workflow() {
-  // object with bundleId as key and workflow info in value
   const workflows = Core.getWorkflowList();
   const allWorkflowBundleIds = Object.keys(workflows).sort((a, b) =>
     alphaSort({
@@ -156,7 +155,6 @@ export default function Workflow() {
   };
 
   /**
-   * @summary
    */
   const ipcCallbackTbl = {
     openWorkflowInstallFileDialogRet: (

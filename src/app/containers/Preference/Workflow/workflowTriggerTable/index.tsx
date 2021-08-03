@@ -72,10 +72,12 @@ const OuterContainer = styled.div`
   }
 `;
 
-const transformData = (trigger: any) => {
+const transformData = (trigger: Command) => {
   let desc;
   if (trigger.type === 'hotkey') {
-    desc = trigger.actions[0] ? trigger.actions[0].title : '';
+    desc = trigger.actions![0]
+      ? (trigger.actions![0] as KeywordAction | ScriptFilterAction).title
+      : '';
   } else {
     desc = trigger.title || trigger.subtitle || '';
   }
@@ -83,7 +85,7 @@ const transformData = (trigger: any) => {
   return {
     type: trigger.type,
     command: trigger.hotkey || trigger.command || '',
-    triggerPath: trigger.triggerPath,
+    triggerPath: (trigger as any).triggerPath,
     description: desc,
   };
 };

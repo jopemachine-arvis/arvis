@@ -12,7 +12,7 @@ import './index.css';
 import * as style from './style';
 
 type IProps = {
-  info: any;
+  info: WorkflowConfigFile;
 };
 
 export default function WorkflowInfoTable(props: IProps) {

@@ -4,7 +4,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Core } from 'arvis-core';
@@ -31,26 +30,11 @@ import ClipboardHistoryPage from './ClipboardHistory';
 import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
 import AdvancedPluginPage from './Advanced/AdvancedPlugin';
+import { MainContainer, OuterContainer } from './components';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
 const INITIAL_PAGE = PreferencePage.General;
-
-const OuterContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  overflow-x: hidden;
-`;
-
-const MainContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
 
 export default function PreferenceWindow() {
   const [page, setPage] = useState<PreferencePage>(INITIAL_PAGE);

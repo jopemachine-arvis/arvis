@@ -10,7 +10,7 @@ import { HandleBar } from './components';
 import MarkdownRenderer from '../markdownRenderer';
 
 // Ref: For better boxShadow styles, refer to https://getcssscan.com/css-box-shadow-examples
-const outerStyle: any = {
+const outerStyle: Record<string, any> = {
   position: 'absolute',
   right: 0,
   width: 350,

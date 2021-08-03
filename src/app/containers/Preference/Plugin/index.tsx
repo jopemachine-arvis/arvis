@@ -144,9 +144,6 @@ export default function Plugin() {
     }
   };
 
-  /**
-   * @summary
-   */
   const ipcCallbackTbl = {
     openPluginInstallFileDialogRet: (
       e: Electron.IpcRendererEvent,

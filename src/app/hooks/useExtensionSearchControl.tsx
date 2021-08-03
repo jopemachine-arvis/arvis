@@ -27,7 +27,6 @@ const useExtensionSearchControl = ({
   const originalItemsRef = useRef<any[]>(originalItems);
 
   /**
-   * @summary
    */
   const focusSearchbar = () => {
     if (inputRef.current) {
@@ -109,7 +108,6 @@ const useExtensionSearchControl = ({
   };
 
   /**
-   * @summary
    */
   const onKeydownHandler = async () => {
     const input: string | undefined | null = keyData.key;

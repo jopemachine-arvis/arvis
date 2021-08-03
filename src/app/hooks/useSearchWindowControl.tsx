@@ -28,9 +28,9 @@ const useSearchWindowControl = ({
   maxRetrieveCount,
   isPinned,
   setIsPinned,
-  quicklookModalData,
+  quicklookData,
+  setQuicklookData,
   hoveringOnQuicklook,
-  setQuicklookModalData,
   spinning,
 }: {
   items: (Command | ScriptFilterItem | PluginItem)[];
@@ -39,9 +39,9 @@ const useSearchWindowControl = ({
   maxRetrieveCount: number;
   isPinned: boolean;
   setIsPinned: (bool: boolean) => void;
-  quicklookModalData: any;
+  quicklookData: any;
+  setQuicklookData: (data: any) => void;
   hoveringOnQuicklook: boolean;
-  setQuicklookModalData: (data: any) => void;
   spinning: boolean;
 }) => {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
@@ -560,9 +560,9 @@ const useSearchWindowControl = ({
   const quicklookHandler = (item: Command | ScriptFilterItem | PluginItem) => {
     if (!item) return;
 
-    setQuicklookModalData({
-      ...quicklookModalData,
-      active: !quicklookModalData.active,
+    setQuicklookData({
+      ...quicklookData,
+      active: !quicklookData.active,
     });
   };
 
@@ -623,7 +623,6 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @summary
    */
   const bestMatchKeyAvailable = () => {
     return (
@@ -634,7 +633,6 @@ const useSearchWindowControl = ({
   };
 
   /**
-   * @summary
    */
   const onKeydownHandler = async () => {
     if (spinning) return;
@@ -734,7 +732,7 @@ const useSearchWindowControl = ({
     if (isPinned) return;
 
     if (forceHide || shouldBeHided === true) {
-      setQuicklookModalData({
+      setQuicklookData({
         type: undefined,
         data: undefined,
         active: false,
@@ -838,8 +836,8 @@ const useSearchWindowControl = ({
     const target = items[indexInfo.selectedItemIdx];
 
     if (target) {
-      setQuicklookModalData({
-        active: quicklookModalData.active,
+      setQuicklookData({
+        active: quicklookData.active,
         ...inferQuicklookData(target),
       });
     }

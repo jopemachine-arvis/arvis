@@ -103,10 +103,10 @@ const HotkeyRecordForm = (props: IProps) => {
       className={className}
       type="text"
       onChange={() => {}}
-      onBlur={(e: any) => {
+      onBlur={(e: React.MouseEvent) => {
         setHotkeyFormFocused(false);
       }}
-      onFocus={(e: any) => {
+      onFocus={(e: React.MouseEvent) => {
         setHotkeyFormFocused(true);
       }}
       value={getHotkeyNameOnThisPlatform(hotkey)}
