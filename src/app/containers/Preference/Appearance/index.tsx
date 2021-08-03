@@ -251,7 +251,6 @@ export default function Appearance() {
           <SearchResultView
             demo
             footerHeight={search_window_footer_height}
-            haveUnresolvedItems={false}
             iconRightMargin={icon_right_margin}
             itemBackgroundColor={item_background_color}
             itemDefaultIconColor={item_default_icon_color}

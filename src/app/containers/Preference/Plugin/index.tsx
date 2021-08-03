@@ -372,7 +372,7 @@ export default function Plugin() {
     forceUpdate();
   };
 
-  const renderItem = (pluginInfo: any, idx: number) => {
+  const renderItem = (pluginInfo: PluginConfigFile, idx: number) => {
     if (!pluginInfo) return <React.Fragment key={`pluginItem-${idx}`} />;
     const { creator, name, enabled, bundleId: itemBundleId } = pluginInfo;
 
@@ -382,7 +382,7 @@ export default function Plugin() {
       : {};
 
     let icon;
-    const defaultIconPath = getDefaultIcon(itemBundleId);
+    const defaultIconPath = getDefaultIcon(itemBundleId!);
     if (defaultIconPath) {
       icon = <PluginImg style={applyDisabledStyle} src={defaultIconPath} />;
     } else {
@@ -416,7 +416,10 @@ export default function Plugin() {
     ipcRenderer.send(IPCRendererEnum.openPluginInstallFileDialog);
   };
 
-  const deleteSelectedPlugin = (_pluginBundleIds: any, idxToRemove: number) => {
+  const deleteSelectedPlugin = (
+    _pluginBundleIds: string[],
+    idxToRemove: number
+  ) => {
     if (!_pluginBundleIds.length) return;
 
     const targetBundleId = _pluginBundleIds[idxToRemove];

@@ -3,8 +3,8 @@ import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { WindowManager } from '../windows';
 
 /**
+ * Open Handler for arvisplugin, arvisworkflow, arvistheme files
  * @param file
- * @summary Open Handler for arvisplugin, arvisworkflow, arvistheme files
  */
 export const openArvisFile = (file: string) => {
   const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();

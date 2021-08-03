@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.div`
+export const SidebarTitle = styled.div`
   padding: 24px;
   font-size: 14;
   letter-spacing: 1px;

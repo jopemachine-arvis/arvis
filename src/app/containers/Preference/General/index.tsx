@@ -25,7 +25,7 @@ import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
 type IProps = {
-  fontList: any[];
+  fontList: string[];
 };
 
 export default function General(props: IProps) {

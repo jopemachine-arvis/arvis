@@ -7,7 +7,7 @@ import { IPCRendererEnum } from '../ipc/ipcEventEnum';
 
 /**
  * @param destWindow
- * @param {Dispatch<any>} dispatch
+ * @param dispatch
  * @summary
  */
 export const createGlobalConfigChangeHandler =

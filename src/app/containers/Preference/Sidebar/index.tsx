@@ -21,7 +21,7 @@ import { FaGithub } from 'react-icons/fa';
 import open from 'open';
 import { BsClipboardData } from 'react-icons/bs';
 import sidebarBg from '../../../../../assets/images/sidebar_bg.jpg';
-import SidebarTitle from './sidebarTitle';
+import { SidebarTitle } from './components';
 import { PreferencePage } from '../preferencePageEnum';
 import './index.css';
 

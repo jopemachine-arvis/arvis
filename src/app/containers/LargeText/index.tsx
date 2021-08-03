@@ -3,37 +3,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd } from '@utils/index';
 import useKey from '../../../external/use-key-capture/src';
-
-const OuterContainer = styled.div`
-  align-items: center;
-  background-color: #111111cc;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  height: 100vh;
-  justify-content: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  text-align: center;
-  width: 100%;
-  word-break: break-word;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 15px;
-  -webkit-app-region: drag;
-`;
-
-const InnerContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-app-region: none;
-`;
+import { InnerContainer, OuterContainer } from './components';
 
 export default function LargeTextWindow() {
   const [text, setText] = useState<string | undefined>('');

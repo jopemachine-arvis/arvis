@@ -5,7 +5,7 @@ import { Core } from 'arvis-core';
 import isAdmin from 'is-admin';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 
-const checkPermissionOnWindows = async () => {
+const checkPermissionOnWindows = async (): Promise<boolean> => {
   if (process.platform === 'win32') {
     if ((await isAdmin()) === false) {
       ipcRenderer.send(IPCRendererEnum.showErrorDialog, {

@@ -9,7 +9,6 @@ const createSearchWindow = ({
   largeTextWindow: BrowserWindow;
 }) => {
   const searchWindow = new BrowserWindow({
-    // Need to be tested
     paintWhenInitiallyHidden: true,
     title: 'SearchWindow',
     show: false,

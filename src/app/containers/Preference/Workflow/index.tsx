@@ -388,7 +388,7 @@ export default function Workflow() {
     forceUpdate();
   };
 
-  const renderItem = (workflowInfo: any, idx: number) => {
+  const renderItem = (workflowInfo: WorkflowConfigFile, idx: number) => {
     if (!workflowInfo) return <React.Fragment key={`workflowItem-${idx}`} />;
     const { creator, name, enabled, bundleId: itemBundleId } = workflowInfo;
 
@@ -398,7 +398,7 @@ export default function Workflow() {
       : {};
 
     let icon;
-    const defaultIconPath = getDefaultIcon(itemBundleId);
+    const defaultIconPath = getDefaultIcon(itemBundleId!);
     if (defaultIconPath) {
       icon = <WorkflowImg style={applyDisabledStyle} src={defaultIconPath} />;
     } else {
@@ -433,7 +433,7 @@ export default function Workflow() {
   };
 
   const deleteSelectedWorkflow = (
-    _workflowBundleIds: any,
+    _workflowBundleIds: string[],
     idxToRemove: number
   ) => {
     if (!_workflowBundleIds.length) return;

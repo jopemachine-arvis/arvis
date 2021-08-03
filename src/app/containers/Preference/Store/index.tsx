@@ -48,7 +48,7 @@ type IProps = {
   allStoreExtensions: any[];
 };
 
-const sortTxtDict: any = {
+const sortTxtDict: Record<string, string> = {
   dt: '▼ Total download',
   dw: '▼ Last week download',
   uploaded: '▼ Uploaded time',

@@ -204,7 +204,7 @@ export default function SearchWindow() {
 
     executeAction: (
       e: IpcRendererEvent,
-      { bundleId, action }: { bundleId: string; action: any }
+      { bundleId, action }: { bundleId: string; action: Action[] }
     ) => {
       actionFlowManager.isInitialTrigger = false;
       actionFlowManager.handleItemPressEvent(

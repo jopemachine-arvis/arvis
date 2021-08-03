@@ -75,7 +75,7 @@ export const openWebButton: React.CSSProperties = {
   color: '#000',
 };
 
-export const searchBarStyle = {
+export const searchBarStyle: Record<string, any> = {
   itemHeight: 35,
   footerHeight: 15,
   itemLeftPadding: 10,

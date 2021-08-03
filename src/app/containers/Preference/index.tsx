@@ -111,7 +111,7 @@ export default function PreferenceWindow() {
   };
 
   /**
-   * @summary Used to receive dispatched action from different window
+   * Used to receive dispatched action from different window
    */
   const ipcCallbackTbl = {
     reloadWorkflow: (
@@ -252,7 +252,9 @@ export default function PreferenceWindow() {
     ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
       sourceWindow: 'preferenceWindow',
     });
+  }, []);
 
+  useEffect(() => {
     ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
