@@ -3,7 +3,7 @@
   "productName": "Arvis",
   "version": "0.8.13",
   "description": "Cross-platform launcher application that help you run, edit, create any workflow simple",
-  "homepage": "https://github.com/jopemachine/arvis#readme",
+  "homepage": "https://jopemachine.github.io/arvis.com/",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
     "build:main": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.main.prod.babel.js",

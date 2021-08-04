@@ -121,8 +121,11 @@ Then the promise is resolved when user opens the quicklook.
 
 This is useful you don't want to execute the rendering script because it has some heavy async operations.
 
-* html, image, pdf : file path (or url) to display
-* markdown, text: text string
+Note that:
+
+* html, image, pdf, text : file path (or url) to display
+
+* markdown
 
 ## quicklookurl
 

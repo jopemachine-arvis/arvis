@@ -4,7 +4,7 @@
   "version": "0.8.13",
   "description": "Cross-platform launcher application that help you run, edit, create any workflow simple",
   "main": "./main.prod.js",
-  "homepage": "https://github.com/jopemachine/arvis#readme",
+  "homepage": "https://jopemachine.github.io/arvis.com/",
   "author": {
     "name": "jopemachine",
     "email": "jopemachine@gmail.com",
