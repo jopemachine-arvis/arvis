@@ -10,7 +10,7 @@ import {
 import open from 'open';
 import path from 'path';
 import { debugInfo } from 'electron-util';
-import openAboutWindow from 'about-window';
+import { openAboutWindow } from '../../../helper/openAboutWindow';
 import {
   arvisReduxStoreResetFlagPath,
   arvisRenewExtensionFlagFilePath,
@@ -114,18 +114,7 @@ export default (mainWindow: BrowserWindow) => {
       {
         label: 'About',
         click() {
-          openAboutWindow({
-            icon_path: path.resolve(process.cwd(), 'src', 'icon.png'),
-            copyright: 'Copyright (c) 2021 jopemachine',
-            package_json_dir: __dirname,
-            homepage: 'https://jopemachine.github.io/arvis.com/',
-            bug_report_url:
-              'https://github.com/jopemachine/arvis/issues/new/choose',
-            license: 'https://github.com/jopemachine/arvis/blob/master/LICENSE',
-            use_version_info: true,
-            open_devtools: false,
-            bug_link_text: 'found bug?',
-          });
+          openAboutWindow();
         },
       },
       {

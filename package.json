@@ -2,7 +2,7 @@
   "name": "arvis",
   "productName": "Arvis",
   "version": "0.8.13",
-  "description": "Arvis (alpha)",
+  "description": "Cross-platform launcher application that help you run, edit, create any workflow simple",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
@@ -85,7 +85,8 @@
       "main.prod.js.map",
       "package.json",
       "fontlist",
-      "fonts.vbs"
+      "fonts.vbs",
+      "external/about-window/"
     ],
     "afterSign": ".erb/scripts/Notarize.js",
     "mac": {
