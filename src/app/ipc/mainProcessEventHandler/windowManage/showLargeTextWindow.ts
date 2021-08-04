@@ -17,9 +17,13 @@ export const showLargeTextWindow = (
   const largeTextWindow = WindowManager.getInstance().getLargeTextWindow();
 
   largeTextWindow.setBounds(
-    { width: width * 0.6, height: height * 0.6 },
+    {
+      width: Math.floor(width * 0.6),
+      height: Math.floor(height * 0.6),
+    },
     false
   );
+
   largeTextWindow.center();
   largeTextWindow.show();
   largeTextWindow.focus();

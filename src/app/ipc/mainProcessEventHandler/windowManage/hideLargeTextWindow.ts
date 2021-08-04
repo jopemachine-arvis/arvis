@@ -8,5 +8,7 @@ export const hideLargeTextWindow = (e: IpcMainEvent) => {
 
   if (WindowManager.getInstance().getSearchWindow().isVisible()) {
     WindowManager.getInstance().getSearchWindow().focus();
+  } else {
+    WindowManager.getInstance().getSearchWindow().hide();
   }
 };

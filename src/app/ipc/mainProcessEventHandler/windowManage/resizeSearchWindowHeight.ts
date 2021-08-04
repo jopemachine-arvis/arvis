@@ -9,7 +9,6 @@ import resizeEventHandler from '../../searchWindowResizeEventHandler';
  * @param itemHeight
  * @param searchbarHeight
  * @param footerHeight
- * @param haveUnresolvedItems
  */
 export const resizeSearchWindowHeight = (
   e: IpcMainEvent,

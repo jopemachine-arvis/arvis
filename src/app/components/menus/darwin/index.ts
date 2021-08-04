@@ -30,7 +30,9 @@ export default (mainWindow: BrowserWindow) => {
     submenu: [
       {
         label: 'About Arvis',
-        selector: 'orderFrontStandardAboutPanel:',
+        click: () => {
+          openAboutWindow();
+        },
       },
       { type: 'separator' },
       { label: 'Services', submenu: [] },

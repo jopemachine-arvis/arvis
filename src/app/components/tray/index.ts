@@ -7,6 +7,7 @@ import {
   MenuItem,
 } from 'electron';
 import { WindowManager } from '../../windows';
+import toggleSearchWindow from '../../ipc/toggleSearchWindow';
 
 export default class TrayBuilder {
   trayFilePath: string;
@@ -14,6 +15,14 @@ export default class TrayBuilder {
   tray: Tray | null = null;
 
   trayTemplate: Array<MenuItemConstructorOptions | MenuItem> = [
+    {
+      label: 'Toggle Arvis..',
+      type: 'normal',
+      toolTip: 'Open Search Window',
+      click: () => {
+        toggleSearchWindow({ showsUp: true });
+      },
+    },
     {
       label: 'Preference..',
       accelerator: `${process.platform === 'darwin' ? 'Cmd' : 'Ctrl'} + ,`,
@@ -27,7 +36,7 @@ export default class TrayBuilder {
       },
     },
     {
-      label: 'Open Debugging Window',
+      label: 'Debugging Window..',
       type: 'normal',
       accelerator: 'F11',
       toolTip: 'Open Debugging Window',
@@ -61,6 +70,7 @@ export default class TrayBuilder {
     this.tray = new Tray(nativeImage.createFromPath(this.trayFilePath));
     const contextMenu = Menu.buildFromTemplate(this.trayTemplate);
     this.tray.setContextMenu(contextMenu);
+    this.tray.setToolTip('Arvis');
 
     this.tray.on('double-click', () => {
       if (process.platform !== 'darwin') {

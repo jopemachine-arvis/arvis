@@ -41,5 +41,5 @@ if (windowName) {
     )
   );
 } else {
-  throw new Error('urlParams "windowName" is not set!');
+  throw new Error("urlParams 'windowName' is not set!");
 }
