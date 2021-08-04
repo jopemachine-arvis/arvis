@@ -33,15 +33,13 @@ export default merge(baseConfig, {
   },
 
   optimization: {
-    // minimizer: [
-    //   new TerserPlugin({
-    //     parallel: true,
-    //   }),
-    // ]
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+    ]
 
     // Tip: For debugging, disable webpack minimizer
-    // minimizer is off on alpha version for debugging easily.
-    minimizer: [],
   },
 
   plugins: [
