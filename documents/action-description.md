@@ -23,7 +23,7 @@ For example, If you put some action in `script` action, the action is triggered 
 - [resetInput](#resetInput)
 - [keyDispatching](#keyDispatching)
 
-## script
+## `script`
 
 async: `true`
 
@@ -49,7 +49,7 @@ Example :
 ]
 ```
 
-### modifiers
+* ### modifiers
 
 type: `string (enum)`
 
@@ -61,13 +61,13 @@ If you do not give any modifiers, it would be handled by `normal` which means th
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### script
+* ### script
 
 type: `string | object`
 
@@ -106,7 +106,7 @@ Note: The first argument is the `program` to run, and the other arguments are pa
 
 If you want to use script like in shell, use `shell` option. 
 
-## args
+## `args`
 
 Extract and replace selected `variable` or some value with `query`
 
@@ -126,13 +126,13 @@ Example :
 ]
 ```
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### arg
+* ### arg
 
 type: `string`
 
@@ -142,7 +142,7 @@ Argument to select.
 
 This variable is forwarded to `{query}`.
 
-## cond, if
+## `cond`, `if`
 
 `cond` code is `evaluated` in runtime.
 
@@ -181,7 +181,7 @@ Example :
 
 ```
 
-### cond
+* ### cond
 
 type: `string (code)`
 
@@ -193,7 +193,7 @@ Here you can inspect variable condition to branch out.
 
 Note: If variables such as `{query}` are not evaluated, `cond` are evaluated as false.
 
-### then
+* ### then
 
 type: `object`
 
@@ -201,7 +201,7 @@ required: `true`
 
 if `cond` is true, then `actions` is executed.
 
-### else
+* ### else
 
 type: `object`
 
@@ -209,7 +209,7 @@ required: `false`
 
 if `cond` is false, else `actions` is executed.
 
-## open
+## `open`
 
 Open file path, web url by [open](https://github.com/sindresorhus/open)
 
@@ -225,7 +225,7 @@ Example :
 ]
 ```
 
-### modifiers
+* ### modifiers
 
 type: `string (enum)`
 
@@ -237,13 +237,13 @@ If you do not specify any modifiers, it would be handled by `normal` which means
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### target
+* ### target
 
 type: `string`
 
@@ -255,7 +255,7 @@ Should be file path or url string.
 
 If `target` is not valid, it is not opened.
 
-## notification
+## `notification`
 
 Create notification with the notification feature of the platform.
 
@@ -272,7 +272,7 @@ Example :
 ]
 ```
 
-### modifiers
+* ### modifiers
 
 type: `string (enum)`
 
@@ -284,13 +284,13 @@ If you do not give any modifiers, it would be handled by `normal` which means th
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### title
+* ### title
 
 type: `string`
 
@@ -298,7 +298,7 @@ required: `true`
 
 Title string of the notification
 
-### text
+* ### text
 
 type: `string`
 
@@ -322,7 +322,7 @@ Example :
 ]
 ```
 
-### modifiers
+* ### modifiers
 
 type: `string (enum)`
 
@@ -334,13 +334,13 @@ If you do not give any modifiers, it would be handled by `normal` which means th
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### text
+* ### text
 
 type: `string`
 
@@ -348,7 +348,7 @@ required: `false`
 
 Text to copy in clipboard.
 
-## keyword
+## `keyword`
 
 `keyword` is a trigger, but it can also be used as an `actions`.
 
@@ -385,13 +385,13 @@ Example :
 },
 ```
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### title
+* ### title
 
 type: `string`
 
@@ -399,7 +399,7 @@ required: `true`
 
 The biggest text in the item.
 
-### subtitle
+* ### subtitle
 
 type: `string`
 
@@ -407,7 +407,7 @@ required: `false`
 
 A additional description of the command to display in the search window.
 
-### modifiers
+* ### modifiers
 
 type: `string (enum)`
 
@@ -419,7 +419,7 @@ If you do not give any modifiers, it would be handled by `normal` which means th
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-### argType
+* ### argType
 
 type: `string (enum)`
 
@@ -431,7 +431,7 @@ If `argType` is `no`, the actions are triggered only when `arg` is not given.
 
 If `argType` is `optional`, the actions are triggered with or without `arg`
 
-## scriptFilter
+## `scriptFilter`
 
 `scriptFilter` is a trigger, but it can also be used as an `actions`.
 
@@ -467,13 +467,13 @@ Example :
 }
 ```
 
-### type
+* ### type
 
 type: `string`
 
 required: `true`
 
-### title
+* ### title
 
 type: `string`
 
@@ -481,7 +481,7 @@ required: `true`
 
 The biggest text in the item.
 
-### subtitle
+* ### subtitle
 
 type: `string`
 
@@ -489,7 +489,7 @@ required: `false`
 
 A additional description of the command to display in the search window.
 
-### modifiers
+* ### modifiers
 
 type: `string (enum)`
 
@@ -501,13 +501,13 @@ If you do not give any modifiers, it would be handled by `normal` which means th
 
 Possible modifier values: `shift`, `option (mac)`, `alt`, `cmd (mac)`, `win (windows)`.
 
-## resetInput
+## `resetInput`
 
 Reset user input string.
 
 If there would be scriptfilter in progress, it will be quited.
 
-### newInput
+* ### newInput
 
 type: `string`
 
@@ -515,23 +515,23 @@ required: `true`
 
 User input is replaced by `newInput`
 
-## keyDispatching
+## `keyDispatching`
 
 Dispatch key combination through [robotjs](https://github.com/octalmage/robotjs)
 
-### target
+* ### target
 
 type: `object`
 
 required: `true`
 
-#### key
+* #### key
 
 type: `string`
 
 required: `true`
 
-#### modifiers
+* #### modifiers
 
 type: `string[]`
 
