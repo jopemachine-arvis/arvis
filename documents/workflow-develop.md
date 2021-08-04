@@ -1,6 +1,6 @@
-# How to write workflow
+# How to write arvis workflow
 
-:video_camera: Check this [video tutorial](https://www.youtube.com/watch?v=VHddWNPjlp8) for overview how to create arvis-workflow
+:video_camera: You can check this [video tutorial](https://www.youtube.com/watch?v=VHddWNPjlp8) for overview how to create arvis-workflow.
 
 ## Support hotload
 
@@ -8,9 +8,9 @@ All changes in workflow, plugin folders's changes are being watched and reflecte
 
 ## Use [arvish](https://github.com/jopemachine/arvish) to build your plugin
 
-1. Write proper `arvis-workflow.json`
+1. Write proper `arvis-workflow.json`.
 
-2. Write some scripts to use in your `workflow`
+2. Write some scripts to use in your `workflow`.
 
 3. Type `arvish build` on your project root.
 
@@ -32,7 +32,9 @@ All changes in workflow, plugin folders's changes are being watched and reflecte
 
 ## JSON Schema
 
-Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extension-validator/blob/master/workflow-schema.json) below when creating workflows
+Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extension-validator/blob/master/workflow-schema.json) below when creating workflows.
+
+You can simply create arvis-workflow skeleton file using the schema by [arvish](https://github.com/jopemachine/arvish).
 
 ## Available Environment variable
 

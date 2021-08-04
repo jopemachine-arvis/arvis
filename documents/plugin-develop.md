@@ -1,4 +1,4 @@
-# How to write plugin
+# How to write arvis plugin
 
 ## Support hotload
 
@@ -6,9 +6,9 @@ All changes in workflow, plugin folders's changes are being watched and reflecte
 
 ## Use [arvish](https://github.com/jopemachine/arvish) to build your plugin
 
-1. Write proper `arvis-plugin.json`
+1. Write proper `arvis-plugin.json`.
 
-2. Write some scripts to use in your `plugin`
+2. Write some scripts to use in your `plugin`.
 
 3. Type `arvish build` on your project root.
 
@@ -52,7 +52,7 @@ module.exports = ({ inputStr, history }) => {
 };
 ```
 
-You can check minimal working [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here
+You can check minimal working [plugin example](https://github.com/jopemachine/arvis-calculator-plugin-example) here.
 
 #### Arguments
 
@@ -92,13 +92,15 @@ Note that `noSort` is true, your plugin items will be positioned most below posi
 
 ## JSON Schema
 
-Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extension-validator/blob/master/plugin-schema.json) below when creating `plugin`
+Recommend to use the [JSON schema](https://github.com/jopemachine/arvis-extension-validator/blob/master/plugin-schema.json) below when creating `plugin`.
+
+You can simply create arvis-plugin skeleton file using the schema by [arvish](https://github.com/jopemachine/arvish).
 
 ## Available Environment variable
 
 Both `workflows` and `plugin` set useful environment variables when running scripts.
 
-You can use the variables you want in your script
+You can use the variables you want in your script.
 
 [Click me to check Environment variables](./extension-env-description.md)
 

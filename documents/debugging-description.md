@@ -1,10 +1,10 @@
 # Debugging workflow, plugin
 
-1. You can debug your query, workflow, plugin's behaviors through [Chrome Devtools](https://developer.chrome.com/docs/devtools/).
+1. You can debug your query, workflow, plugin's behaviors through *[Chrome Devtools](https://developer.chrome.com/docs/devtools/)*.
 
 To open SearchWindow's debugger (Devtools), you can click your tray icon and select `Open Debugging Window`.
 
-You can check the debugging information of arvis, including information about `workflow`, `plugin` in the devtools.
+You can check the debugging information of Arvis, including information about `workflow`, `plugin` in the devtools.
 
 ![](./imgs/debugging-description-1.png)
 
@@ -12,17 +12,17 @@ You can check the debugging information of arvis, including information about `w
 
 You can select
 
-- Action types
+- `Action types`
 
-- Variables (Arguments, query, variables info)
+- `Variables` (Arguments, query, variables info)
 
-- Script output
+- `Script output`
 
-- Trigger stack
+- `Trigger stack`
 
-- Scriptfilter
+- `Scriptfilter`
 
-- Plugin
+- `Plugin`
 
 ![](./imgs/debugging-page.png)
 

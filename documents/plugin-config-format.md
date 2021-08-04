@@ -45,7 +45,7 @@ All variable could be used in form of `{var:some_var}` in the config file.
 - [actions](#actions)
 - [variables](#variables)
 
-### creator
+### `creator`
 
 type: `string`
 
@@ -53,7 +53,7 @@ required: `true`
 
 Required of consisting of bundleId, so cannot change this `creator` after install the plugin.
 
-### name
+### `name`
 
 type: `string`
 
@@ -63,7 +63,7 @@ Name of the plugin.
 
 Required of consisting of bundleId, so cannot change this `name` after install the plugin.
 
-### main
+### `main`
 
 type: `string`
 
@@ -73,7 +73,7 @@ Entry js file of the plugin.
 
 Must return item array of [plugin item format](./plugin-items-format-description.md).
 
-### defaultIcon
+### `defaultIcon`
 
 type: `string`
 
@@ -81,7 +81,7 @@ required: `false`
 
 Used to default icon in the plugin.
 
-### category
+### `category`
 
 type: `string`
 
@@ -89,7 +89,7 @@ required: `false`
 
 Category of the extension.
 
-### description
+### `description`
 
 type: `string`
 
@@ -97,7 +97,7 @@ required: `false`
 
 Description item displayed in the Store
 
-### readme
+### `readme`
 
 type: `string`
 
@@ -107,7 +107,7 @@ README string.
 
 Users can view README in their README view
 
-### version
+### `version`
 
 type: `string`
 
@@ -115,7 +115,7 @@ required: `false`
 
 Extension's semantic version.
 
-### latest
+### `latest`
 
 type: `string`
 
@@ -125,7 +125,7 @@ If `latest` exists, and this is latest than `version`,
 
 Arvis notify this extension is updatable when user Arvis started up.
 
-### webAddress
+### `webAddress`
 
 type: `string`
 
@@ -137,7 +137,7 @@ Recommend to set extension's README webpage.
 
 Users can view extension's information from the store on this web page.
 
-### enabled
+### `enabled`
 
 type: `boolean`
 
@@ -145,7 +145,7 @@ required: `true`
 
 If `enabled` is false, arvis exclude the plugin from the user search result.
 
-### actions
+### `actions`
 
 type: `object (Action [])`
 
@@ -153,7 +153,7 @@ required: `true`
 
 Actions to execute when the plugin item is pressed by the enter.
 
-### variables
+### `variables`
 
 type: `object`
 

@@ -2,7 +2,7 @@
 
 You can use `keyword`, `scriptFilter`, `hotkey` to trigger commands.
 
-## Keyword
+## `Keyword`
 
 Command to invoke a specific command (and actions).
 
@@ -39,7 +39,7 @@ In above screen, your pressing enter event trigger the 'Action', `script`.
 
 [Click me to check available attributes](./keyword-description.md)
 
-## scriptFilter
+## `scriptFilter`
 
 Unlike `keyword` type doesn't have a script on its own, `scriptFilter` type has its `scriptFilter` on its own.
 
@@ -88,7 +88,7 @@ And `actions` with `modifiers` key with other than `normal` is only triggered wh
 
 [Click me to check available attributes](./scriptfilter-description.md)
 
-## Hotkey
+## `Hotkey`
 
 You can register `hotkey` to run a specific `actions`.
 
