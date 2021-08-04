@@ -786,6 +786,13 @@ const useSearchWindowControl = ({
           };
         }
 
+        if (path.extname(item.arg) === '.pdf') {
+          return {
+            type: 'pdf',
+            data: item.arg,
+          };
+        }
+
         if (isText(item.arg)) {
           return {
             type: 'text',

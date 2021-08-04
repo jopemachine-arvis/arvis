@@ -121,6 +121,29 @@ If you do not specify a quicklook, the arvis will infer the data to display.
 
 Recommend specifying `quicklook` value for explicit data display.
 
+### type
+
+type: `string (enum)`
+
+required: `true`
+
+values: `html` | `image` | `markdown` | `text` | `pdf`
+
+### data
+
+type: `string | Promise<string>`
+
+required: `true`
+
+You can forward Promise returning string to data.
+
+Then the promise is resolved when user opens the quicklook.
+
+This is useful you don't want to execute the rendering script because it has some heavy async operations.
+
+* html, image, pdf : file path (or url) to display
+* markdown, text: text string
+
 ## quicklookurl
 
 type: `string`

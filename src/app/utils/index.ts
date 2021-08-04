@@ -14,12 +14,10 @@ import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 import { hideWindowAndRestoreFocus } from './hideWindowAndRestoreFocus';
 import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
 import { onNumberChangeHandler } from './onNumberChangeHandler';
-import { checkIsRendererProc } from './checkProcessType';
 import { getGithubReadmeContent } from './getGithubReadme';
 
 export {
   applyAlphaColor,
-  checkIsRendererProc,
   createGlobalConfigChangeHandler,
   extractJson,
   getGithubReadmeContent,

@@ -22,13 +22,13 @@ const outerStyle: Record<string, any> = {
 };
 
 type IProps = {
-  type?: 'html' | 'image' | 'markdown' | 'text';
-  data?: string | Promise<string>;
-  active: boolean;
+  quicklookData: QuicklookData;
   hovering: boolean;
   setHovering: (bool: boolean) => void;
   searchbarHeight: number;
 };
+
+let handleBarOriginalPos = -1;
 
 const deactivedModalWindowWidth = 15;
 
@@ -54,10 +54,9 @@ const useModalAnimation = ({
     reverse,
   });
 
-let handleBarOriginalPos = -1;
-
 export default (props: IProps) => {
-  const { type, data, active, searchbarHeight, hovering, setHovering } = props;
+  const { quicklookData, searchbarHeight, hovering, setHovering } = props;
+  const { active, data, type } = quicklookData;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
 
@@ -84,6 +83,7 @@ export default (props: IProps) => {
     }
 
     switch (type) {
+      case 'pdf':
       case 'html':
       case 'image':
         return (
@@ -164,6 +164,11 @@ export default (props: IProps) => {
     );
   };
 
+  const updateContent = () => {
+    setContents(renderLoading());
+    getInnerContainer().then(setContents).catch(console.error);
+  };
+
   useEffect(() => {
     (document.getElementById('searchWindow') as HTMLDivElement).onmousemove =
       onMouseMoveEventHandler;
@@ -182,11 +187,6 @@ export default (props: IProps) => {
     modalAnimation.opacity.start();
     modalAnimation.horizontalOffset.start();
   }, [active]);
-
-  const updateContent = () => {
-    setContents(renderLoading());
-    getInnerContainer().then(setContents).catch(console.error);
-  };
 
   useEffect(() => {
     updateContent();

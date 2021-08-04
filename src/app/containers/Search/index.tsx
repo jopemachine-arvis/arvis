@@ -370,7 +370,7 @@ export default function SearchWindow() {
       onWheel={onWheelHandler}
     >
       <Quicklook
-        {...quicklookData}
+        quicklookData={quicklookData}
         searchbarHeight={searchbar_height}
         hovering={hoveringOnQuicklook}
         setHovering={setHoveringOnQuicklook}

@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.8.12",
+  "version": "0.8.13",
   "description": "Arvis (alpha)",
   "homepage": "https://github.com/jopemachine/arvis#readme",
   "scripts": {
@@ -294,6 +294,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "about-window": "^1.14.0",
     "alpha-sort": "^5.0.0",
     "arvis-store": "^0.2.11",
     "bootstrap": "^5.0.2",
@@ -302,6 +303,7 @@
     "dot-prop": "^6.0.1",
     "easy-auto-launch": "^6.0.0",
     "electron-debug": "^3.1.0",
+    "electron-is": "^3.0.0",
     "electron-log": "^4.2.4",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.4.1",

@@ -107,7 +107,7 @@ type: `string (enum)`
 
 required: `true`
 
-values: `html`, `image`, `markdown`, `text`
+values: `html` | `image` | `markdown` | `text` | `pdf`
 
 ### data
 
@@ -120,6 +120,9 @@ You can forward Promise returning string to data.
 Then the promise is resolved when user opens the quicklook.
 
 This is useful you don't want to execute the rendering script because it has some heavy async operations.
+
+* html, image, pdf : file path (or url) to display
+* markdown, text: text string
 
 ## quicklookurl
 

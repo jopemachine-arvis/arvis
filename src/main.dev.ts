@@ -110,7 +110,7 @@ app.on('ready', () => {
     if (isFirstAppLaunch()) {
       console.log(
         chalk.yellowBright(
-          'Arvis first launched.. Initilize search window size..'
+          'Detect first launched. Initilized search window size.'
         )
       );
 

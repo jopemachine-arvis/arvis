@@ -10,6 +10,7 @@ import {
 import open from 'open';
 import path from 'path';
 import { debugInfo } from 'electron-util';
+import openAboutWindow from 'about-window';
 import {
   arvisReduxStoreResetFlagPath,
   arvisRenewExtensionFlagFilePath,
@@ -110,6 +111,23 @@ export default (mainWindow: BrowserWindow) => {
   const subMenuHelp: MenuItemConstructorOptions = {
     label: 'Help',
     submenu: [
+      {
+        label: 'About',
+        click() {
+          openAboutWindow({
+            icon_path: path.resolve(process.cwd(), 'src', 'icon.png'),
+            copyright: 'Copyright (c) 2021 jopemachine',
+            package_json_dir: __dirname,
+            homepage: 'https://jopemachine.github.io/arvis.com/',
+            bug_report_url:
+              'https://github.com/jopemachine/arvis/issues/new/choose',
+            license: 'https://github.com/jopemachine/arvis/blob/master/LICENSE',
+            use_version_info: true,
+            open_devtools: false,
+            bug_link_text: 'found bug?',
+          });
+        },
+      },
       {
         label: 'License',
         click() {
@@ -247,31 +265,31 @@ export default (mainWindow: BrowserWindow) => {
         enabled: false,
       },
       {
-        label: 'Open installed extension folder',
+        label: 'Open Installed Extension Folder',
         click() {
           open(Core.path.installedDataPath);
         },
       },
       {
-        label: "Open installed extension's cache folder",
+        label: "Open Installed Extension's Cache Folder",
         click() {
           open(Core.path.cachePath);
         },
       },
       {
-        label: 'Open arvis history file path',
+        label: 'Open Arvis History File Path',
         click() {
           open(path.dirname(Core.path.getExtensionHistoryPath()));
         },
       },
       {
-        label: 'Open user config (variables) file path',
+        label: 'Open User Config (Variables) File Path',
         click() {
           open(path.dirname(Core.path.userConfigPath));
         },
       },
       {
-        label: 'Open arvis-gui-config file path',
+        label: 'Open arvis-gui-config File Path',
         click() {
           open(path.dirname(electronStore.path));
         },

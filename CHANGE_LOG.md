@@ -1,3 +1,12 @@
+# 0.8.13
+
+## What’s Changed
+
+* [feature] Support pdf viewer in quicklook
+* [feature] Add 'About' window to menu
+* [fix] Bug fixed of LargeText window mouse wheeling event
+* [fix] Fix possible memory lick of clipboardHistory window
+
 # 0.8.12
 
 ## What’s Changed
