@@ -1,4 +1,4 @@
-# `arvis-workflow-json` format
+# [How to write arvis workflow](./workflow-develop.md) → `arvis-workflow.json` format
 
 The json file consists of the following attributes.
 

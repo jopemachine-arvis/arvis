@@ -1,4 +1,4 @@
-# `arvis-plugin-json` format
+# [How to write arvis plugin](./plugin-develop.md) → `arvis-plugin.json` format
 
 The json file consists of the following attributes.
 

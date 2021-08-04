@@ -1,4 +1,4 @@
-# How to write arvis workflow
+# [Workflows intro](./workflow-intro.md) → How to write arvis workflow
 
 :video_camera: You can check this [video tutorial](https://www.youtube.com/watch?v=VHddWNPjlp8) for overview how to create arvis-workflow.
 

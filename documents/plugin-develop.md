@@ -1,4 +1,4 @@
-# How to write arvis plugin
+# [Plugins intro](./plugin-intro.md) → How to write arvis plugin
 
 ## Support hotload
 

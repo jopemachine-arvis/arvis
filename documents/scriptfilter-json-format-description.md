@@ -4,7 +4,7 @@
 
 Marked `arvisOnly: true` for items that are not supported by alfred.
 
-## title
+## `title`
 
 type: `string`
 
@@ -12,7 +12,7 @@ required: `true`
 
 The most visible text in the item.
 
-## subtitle
+## `subtitle`
 
 type: `string`
 
@@ -20,7 +20,7 @@ required: `false`
 
 A additional description of the command to display in the search window.
 
-## arg
+## `arg`
 
 type: `string | object`
 
@@ -32,7 +32,7 @@ If arg is `string`, replace `{query}` with forwared `arg`.
 
 If arg is `object`, enables the key value pairs to be used.
 
-## icon
+## `icon`
 
 type: `string | object`
 
@@ -50,7 +50,7 @@ icon: {
 }
 ```
 
-## text
+## `text`
 
 type: `string | object`
 
@@ -73,7 +73,7 @@ text: {
 
 If `text` is `string`, it would be `copy` and `largeType` both.
 
-## valid
+## `valid`
 
 type: `boolean`
 
@@ -85,7 +85,7 @@ If valid is `false`, the item is treated error messages.
 
 You can show error message through setting `valid` to false.
 
-## quicklook
+## `quicklook`
 
 type: `object`
 
@@ -125,9 +125,9 @@ Note that:
 
 * html, image, pdf, text : file path (or url) to display
 
-* markdown
+* markdown: markdown text string
 
-## quicklookurl
+## `quicklookurl`
 
 type: `string`
 
@@ -137,7 +137,7 @@ Users can press the `shift + space` key above the item to open the quicklook.
 
 You can consider `quicklookurl` as shortcut of `quicklook` object with html type.
 
-## mods
+## `mods`
 
 type: `object`
 
@@ -158,7 +158,7 @@ mods: {
 }
 ```
 
-## variables
+## `variables`
 
 type: `object`
 
@@ -174,22 +174,22 @@ The key-value pairs in the `variables` object are put in form of `{var:key} = va
 
 3. You can set `variables` in your config file too.
 
-## uid
+## `uid`
 
 type: `string`
 
 Not implemented yet
 
-## match
+## `match`
 
 type: `string`
 
 Not implemented yet
 
-## actions
+## `actions`
 
 Not implemented yet
 
-## type
+## `type`
 
 Not implemented yet

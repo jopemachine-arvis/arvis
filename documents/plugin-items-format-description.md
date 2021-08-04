@@ -1,10 +1,10 @@
-# Plugin items format
+# [How to write arvis plugin](./plugin-develop.md) → Plugin items format
 
 The `main` function of the plugin must return an array of below format as `items`.
 
 You can check minimal working example of plugin in [Here](https://github.com/jopemachine/arvis-calculator-plugin-example)
 
-## title
+## `title`
 
 type: `string`
 
@@ -20,7 +20,7 @@ If you want to not sort your plugin item, use `noSort` option.
 
 Note that `noSort` is true, your plugin items will be positioned most below position.
 
-## command
+## `command`
 
 type: `string`
 
@@ -32,7 +32,7 @@ If command is specified, Arvis sort plugin items by command, not title.
 
 But note that the difference between commands and titles can cause confusion to users.
 
-## subtitle
+## `subtitle`
 
 type: `string`
 
@@ -40,7 +40,7 @@ required: `false`
 
 A additional description of the command to display in the search window.
 
-## arg
+## `arg`
 
 type: `string | object`
 
@@ -52,7 +52,7 @@ If arg is `string`, replace `{query}` with forwared `arg`.
 
 If arg is `object`, enables the key value pairs to be used.
 
-## icon
+## `icon`
 
 type: `string | object`
 
@@ -70,7 +70,7 @@ icon: {
 }
 ```
 
-## text
+## `text`
 
 type: `string | object`
 
@@ -93,7 +93,7 @@ text: {
 
 If `text` is `string`, it would be `copy` and `largeType` both.
 
-## valid
+## `valid`
 
 type: `boolean`
 
@@ -105,7 +105,7 @@ If valid is `false`, the item is treated error messages.
 
 You can show error message through setting `valid` to false.  
 
-## quicklook
+## `quicklook`
 
 type: `object`
 
@@ -145,9 +145,9 @@ Note that:
 
 * html, image, pdf, text : file path (or url) to display
 
-* markdown
+* markdown: markdown text string
 
-## quicklookurl
+## `quicklookurl`
 
 type: `string`
 
@@ -157,7 +157,7 @@ Users can press the `shift + space` key above the item to open the quicklook.
 
 You can consider `quicklookurl` as shortcut of `quicklook` object with html type.
 
-## mods
+## `mods`
 
 type: `object`
 
@@ -178,7 +178,7 @@ mods: {
 }
 ```
 
-## variables
+## `variables`
 
 type: `object`
 
