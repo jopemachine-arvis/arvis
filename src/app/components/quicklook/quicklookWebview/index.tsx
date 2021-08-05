@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import encodeUrl from 'encodeurl';
 import _ from 'lodash';
 import isUrl from 'is-url';
+import { shell } from 'electron';
 
 const OuterContainer = styled.div`
   flex-direction: column;
@@ -38,18 +39,26 @@ type IProps = {
 
 export function QuicklookWebview(props: IProps) {
   const { data } = props;
-  const visible = !isUrl(data) ? true : props.visible;
+  const { visible } = props;
 
   let src = data;
-  const preventFocus = () => {
+  const preventFocus = (e: any) => {
     // Focus always should be on searchBar.
+    e.preventDefault();
     (document.getElementById('searchBar') as HTMLInputElement).focus();
   };
 
   useEffect(() => {
     if (!visible) return;
     const webview = document.querySelector('webview');
-    webview!.addEventListener('focus', preventFocus);
+    webview!.addEventListener('did-start-loading', preventFocus);
+    webview!.addEventListener('did-finish-loading', preventFocus);
+
+    webview!.addEventListener('will-navigate', (e) => {
+      if ((e as any).url !== src) {
+        shell.openExternal((e as any).url);
+      }
+    });
   }, []);
 
   if (isUrl(data)) {
@@ -62,8 +71,7 @@ export function QuicklookWebview(props: IProps) {
         <webview
           id="webview"
           useragent={userAgent}
-          // Off webview src change in dev mode due to GUEST_VIEW_MANAGER_CALL errors
-          src={process.env.NODE_ENV !== 'development' ? src : src}
+          src={src}
           onFocus={preventFocus}
           onBlur={preventFocus}
           allowFullScreen={false}
@@ -75,7 +83,6 @@ export function QuicklookWebview(props: IProps) {
           }}
         />
       )}
-      {!visible && <div />}
     </OuterContainer>
   );
 }

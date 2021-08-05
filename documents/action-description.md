@@ -6,7 +6,7 @@ If there is one more action in `actions`, the actions are all executed sequentia
 
 You can also put `actions` in some `action`.
 
-In case of the `action` is async action, next actions are executed after the async action is ended.
+In case of the `action` is *async action*, next actions are executed after the *async action* is ended.
 
 For example, If you put some action in `script` action, the action is triggered when the script execution ends.
 
