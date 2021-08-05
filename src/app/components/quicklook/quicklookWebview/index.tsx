@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import encodeUrl from 'encodeurl';
 import _ from 'lodash';
 import isUrl from 'is-url';
-import { shell } from 'electron';
+import { remote, shell } from 'electron';
 
 const OuterContainer = styled.div`
   flex-direction: column;
@@ -35,11 +35,12 @@ const userAgent =
 type IProps = {
   data: string;
   visible: boolean;
+  setVisible: (visible: boolean) => void;
 };
 
 export function QuicklookWebview(props: IProps) {
-  const { data } = props;
-  const { visible } = props;
+  const { data, visible, setVisible } = props;
+  const visibleRef = useRef<boolean>(visible);
 
   let src = data;
   const preventFocus = (e: any) => {
@@ -47,6 +48,31 @@ export function QuicklookWebview(props: IProps) {
     e.preventDefault();
     (document.getElementById('searchBar') as HTMLInputElement).focus();
   };
+
+  const emulatedKeyboardEvent = (e: any, input: any) => {
+    if (input.type !== 'keyDown') {
+      return;
+    }
+
+    // Create a fake KeyboardEvent from the data provided
+    const ev = new KeyboardEvent('keydown', {
+      code: input.code,
+      key: input.key,
+      shiftKey: input.shift,
+      altKey: input.alt,
+      ctrlKey: input.control,
+      metaKey: input.meta,
+      repeat: input.isAutoRepeat,
+    });
+
+    if (visibleRef.current && ev.shiftKey && ev.key === ' ') {
+      setVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    visibleRef.current = visible;
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -59,6 +85,13 @@ export function QuicklookWebview(props: IProps) {
         shell.openExternal((e as any).url);
       }
     });
+
+    webview!.addEventListener('dom-ready', () => {
+      const webviewContents = remote.webContents.fromId(
+        (webview! as any).getWebContentsId()
+      );
+      webviewContents.on('before-input-event', emulatedKeyboardEvent);
+    });
   }, []);
 
   if (isUrl(data)) {
@@ -69,6 +102,9 @@ export function QuicklookWebview(props: IProps) {
     <OuterContainer>
       {visible && !_.isUndefined(data) && (
         <webview
+          // allowpopups
+          // disablewebsecurity
+          autoFocus={false}
           id="webview"
           useragent={userAgent}
           src={src}

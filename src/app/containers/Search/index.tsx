@@ -371,6 +371,7 @@ export default function SearchWindow() {
     >
       <Quicklook
         quicklookData={quicklookData}
+        setQuicklookData={setQuicklookData}
         searchbarHeight={searchbar_height}
         hovering={hoveringOnQuicklook}
         setHovering={setHoveringOnQuicklook}

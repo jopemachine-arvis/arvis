@@ -23,14 +23,16 @@ const outerStyle: Record<string, any> = {
 
 type IProps = {
   quicklookData: QuicklookData;
+  setQuicklookData: (data: QuicklookData) => void;
   hovering: boolean;
   setHovering: (bool: boolean) => void;
   searchbarHeight: number;
 };
 
 let handleBarOriginalPos = -1;
+let handleBarOffset = 0;
 
-const deactivedModalWindowWidth = 15;
+const quicklookEdgeWidth = 45;
 
 const useModalAnimation = ({
   initialRendering,
@@ -42,7 +44,7 @@ const useModalAnimation = ({
   useSpring({
     from: {
       opacity: 0,
-      horizontalOffset: 350 - deactivedModalWindowWidth,
+      horizontalOffset: 350 - quicklookEdgeWidth + handleBarOffset,
       borderRadius: 0,
     },
     to: {
@@ -55,7 +57,13 @@ const useModalAnimation = ({
   });
 
 export default (props: IProps) => {
-  const { quicklookData, searchbarHeight, hovering, setHovering } = props;
+  const {
+    quicklookData,
+    setQuicklookData,
+    searchbarHeight,
+    hovering,
+    setHovering,
+  } = props;
   const { active, data, type } = quicklookData;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
@@ -89,6 +97,12 @@ export default (props: IProps) => {
         return (
           <QuicklookWebview
             visible={hovering || active}
+            setVisible={(visible) =>
+              setQuicklookData({
+                ...quicklookData,
+                active: visible,
+              })
+            }
             data={targetData as string}
           />
         );
@@ -147,10 +161,10 @@ export default (props: IProps) => {
 
   const onMouseMoveEventHandler = (e: MouseEvent) => {
     if (!onResizingRef.current) return;
-    const offset = handleBarOriginalPos - e.clientX;
+    handleBarOffset = handleBarOriginalPos - e.clientX;
 
     (document.getElementById('quicklook') as HTMLDivElement).style.width = `${
-      350 + offset
+      350 + handleBarOffset
     }px`;
   };
 
