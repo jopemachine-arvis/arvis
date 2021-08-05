@@ -12,7 +12,7 @@ First, recommend searching for useful `plugins`.
 
 ## General
 
-### Extension update notification
+* ### Extension update notification
 
 ![](./imgs/extension-update-notification.png)
 
@@ -22,7 +22,7 @@ You can be notified if a particular extension is backward in version.
 
 You can manage your extensions or change config, appearance of search window on preference window.
 
-### General
+* ### General
 
 ![](./imgs/general-page.png)
 
@@ -32,7 +32,7 @@ You can change the Arvis shortcut, the maximum number of items, and fonts.
 
 Font can be set up system fonts installed in your OS.
 
-### Workflows
+* ### Workflows
 
 ![](./imgs/workflow-page.png)
 
@@ -72,7 +72,7 @@ You can check README of the extension.
 
 You can check web page of the extension.
 
-### Plugins
+* ### Plugins
 
 ![](./imgs/plugin-page.png)
 
@@ -114,7 +114,7 @@ You can also import the `arvistheme` file to set predetermined setting values.
 
 Or just click `theme` button to set predetermined setting values.
 
-### Store
+* ### Store
 
 ![](./imgs/store-page.png)
 
@@ -122,13 +122,13 @@ You can look for and install lots of extensions through `store` page.
 
 Check the extension information on the web page and install, update the extension.
 
-### Clipboard History
+* ### Clipboard History
 
 ![](./imgs/clipboard-history-page.png)
 
 Change Clipboard History's setting.
 
-### Advanced
+* ### Advanced
 
 #### History
 
@@ -146,17 +146,15 @@ You can use your extension through this window.
 
 To shows up search window, press `ctrl + space` (on mac, `cmd + space`)
 
-### Window handle
+* ### Window handle
 
 You can drag your search window by holding press the handle.
 
-### Window resize
+* ### Window resize
 
-Search window is resizable horizontally.
+Search window is resizable.
 
-(Linux not support)
-
-### Pin window
+* ### Pin window
 
 ![](./imgs/pin-window.png)
 
@@ -168,7 +166,7 @@ Right click on search window, and select `Pin window`.
 
 Your search window would be set `always on top`, and never disappear when you click other window.
 
-### Quicklook
+* ### Quicklook
 
 To view information about your selected item, press `shift + space`.
 
@@ -184,7 +182,7 @@ You can also open quicklook by hovering your mouse to the right side of the sear
 
 In this case, if you left the mouse out of your quicklook, the quicklook disappears.
 
-### LargeText window
+* ### LargeText window
 
 To view your item in larger window, press `cmd (or ctrl) + L`
 
@@ -196,7 +194,7 @@ You can adjust the size of the text of LargeText window by `mouse wheeling` with
 
 LargeText window is useful when your item have too long title. (For example, item displays some error message)
 
-### Autocomplete
+* ### Autocomplete
 
 To autocomplete command, press `tab`.
 

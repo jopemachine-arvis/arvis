@@ -2,13 +2,13 @@
 
 Arvis supports providing `history log`.
 
-In `plugin`, it would be provided as `second argument` of entry function,
+In `plugin`, it would be provided as `history` of main function,
 
 In `workflow`, you can access the history file's path with environment variable and use it by reading the history json.
 
 ## History file path
 
-[Config file paths](./config-file-paths.md)
+Check [Config file paths](./config-file-paths.md)
 
 ## History json schema
 

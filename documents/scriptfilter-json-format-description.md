@@ -101,7 +101,7 @@ If you do not specify a quicklook, the arvis will infer the data to display.
 
 Recommend specifying `quicklook` value for explicit data display.
 
-### type
+* ### type
 
 type: `string (enum)`
 
@@ -109,7 +109,7 @@ required: `true`
 
 values: `html` | `image` | `markdown` | `text` | `pdf`
 
-### data
+* ### data
 
 type: `string | Promise<string>`
 

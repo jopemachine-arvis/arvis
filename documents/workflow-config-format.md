@@ -78,7 +78,7 @@ Example:
 - [commands](#commands)
 - [variables](#variables)
 
-### creator
+### `creator`
 
 type: `string`
 
@@ -86,7 +86,7 @@ required: `true`
 
 Required of consisting of `bundleId` of the extension, so cannot be changed this `creator` after install the workflow.
 
-### name
+### `name`
 
 type: `string`
 
@@ -96,7 +96,7 @@ Name of the workflow.
 
 Required of consisting of `bundleId` of the extension, so cannot be changed this `name` after install the workflow.
 
-### defaultIcon
+### `defaultIcon`
 
 type: `string`
 
@@ -104,7 +104,7 @@ required: `false`
 
 Used to default icon in the workflow.
 
-### category
+### `category`
 
 type: `string`
 
@@ -112,7 +112,7 @@ required: `false`
 
 Category of the extension.
 
-### description
+### `description`
 
 type: `string`
 
@@ -120,7 +120,7 @@ required: `false`
 
 Description item displayed in the Store
 
-### readme
+### `readme`
 
 type: `string`
 
@@ -130,7 +130,7 @@ README string.
 
 Users can view README in their README view
 
-### version
+### `version`
 
 type: `string`
 
@@ -138,7 +138,7 @@ required: `false`
 
 Extension's semantic version.
 
-### latest
+### `latest`
 
 type: `string`
 
@@ -148,7 +148,7 @@ If `latest` exists, and this is latest than `version`,
 
 Arvis notify this extension is updatable when user Arvis started up.
 
-### webAddress
+### `webAddress`
 
 type: `string`
 
@@ -160,7 +160,7 @@ Recommend to set extension's README webpage.
 
 Users can view extension's information from the store on this web page.
 
-### enabled
+### `enabled`
 
 type: `boolean`
 
@@ -168,7 +168,7 @@ required: `true`
 
 If `enabled` is false, arvis exclude the workflow from the user search result.
 
-### commands
+### `commands`
 
 type: `array`
 
@@ -178,7 +178,7 @@ commands consist of `trigger-action` pairs.
 
 You can check both in below links.
 
-### variables
+### `variables`
 
 type: `object`
 

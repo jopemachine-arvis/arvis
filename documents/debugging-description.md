@@ -26,4 +26,6 @@ You can select
 
 ![](./imgs/debugging-page.png)
 
-3. The debugger does not display information unrelated to extension development, such as redux state because it is only meaningful in Arvis development. If you want to check this debugging information, clone Arvis and run Arvis in development mode.
+3. The debugger does not display information unrelated to extension development, such as redux state because it is only meaningful in Arvis development.
+
+If you want to check this debugging information, clone Arvis and run Arvis in development mode.
