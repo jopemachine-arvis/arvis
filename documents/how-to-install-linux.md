@@ -2,11 +2,9 @@
 
 1. Install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.
 
-2. Install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher).
+2. Click [this link](https://github.com/jopemachine/arvis/releases) and `AppImage` file.
 
-> You can ignore this, but auto start feature will not working.
-
-3. Click [this link](https://github.com/jopemachine/arvis/releases) and `AppImage` file.
+3. Move downloaded `AppImage` file to `~/Applications` folder manually.
 
 4. Right click Arvis's tray icon and click `Preference`.
 
