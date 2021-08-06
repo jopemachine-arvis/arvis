@@ -30,27 +30,26 @@ type IProps = {
 };
 
 let handleBarOriginalPos = -1;
-let handleBarOffset = 0;
 
 const quicklookEdgeWidth = 45;
 
 const useModalAnimation = ({
   initialRendering,
   reverse,
+  handleBarOffset,
 }: {
   initialRendering: boolean;
   reverse: boolean;
+  handleBarOffset: number;
 }) =>
   useSpring({
     from: {
       opacity: 0,
       horizontalOffset: 350 - quicklookEdgeWidth + handleBarOffset,
-      borderRadius: 0,
     },
     to: {
       opacity: 1,
       horizontalOffset: 0,
-      borderRadius: 5,
     },
     immediate: initialRendering,
     reverse,
@@ -68,9 +67,12 @@ export default (props: IProps) => {
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
 
+  const [handleBarOffset, setHandlerBarOffset] = useState<number>(0);
+
   const modalAnimation = useModalAnimation({
     initialRendering,
     reverse: !active && !hovering,
+    handleBarOffset,
   });
 
   const [contents, setContents] = useState<any>();
@@ -82,6 +84,7 @@ export default (props: IProps) => {
     let targetData = data;
 
     if (!type || !targetData) return <div>No data to display</div>;
+
     if (isPromise(targetData)) {
       try {
         targetData = await (data as Promise<string>);
@@ -96,6 +99,7 @@ export default (props: IProps) => {
       case 'image':
         return (
           <QuicklookWebview
+            data={targetData as string}
             visible={hovering || active}
             setVisible={(visible) =>
               setQuicklookData({
@@ -103,7 +107,6 @@ export default (props: IProps) => {
                 active: visible,
               })
             }
-            data={targetData as string}
           />
         );
 
@@ -159,13 +162,13 @@ export default (props: IProps) => {
     setOnResizing(false);
   };
 
-  const onMouseMoveEventHandler = (e: MouseEvent) => {
-    if (!onResizingRef.current) return;
-    handleBarOffset = handleBarOriginalPos - e.clientX;
+  const quicklookResizeHandler = (clientX: number) => {
+    setHandlerBarOffset(handleBarOriginalPos - clientX);
+  };
 
-    (document.getElementById('quicklook') as HTMLDivElement).style.width = `${
-      350 + handleBarOffset
-    }px`;
+  const onMouseMoveEventHandler = (e: MouseEvent) => {
+    if (!onResizingRef.current || handleBarOriginalPos === -1) return;
+    quicklookResizeHandler(e.clientX);
   };
 
   const renderLoading = () => {
@@ -189,6 +192,10 @@ export default (props: IProps) => {
   }, []);
 
   useEffect(() => {
+    updateContent();
+  }, [data]);
+
+  useEffect(() => {
     if (initialRendering) {
       setInitialRendering(false);
       return;
@@ -203,16 +210,14 @@ export default (props: IProps) => {
   }, [active]);
 
   useEffect(() => {
-    updateContent();
-  }, [data]);
-
-  useEffect(() => {
     if (active && !hovering) {
       updateContent();
     } else if (!active && !hovering) {
       setTimeout(() => {
         updateContent();
       }, 200);
+
+      setHandlerBarOffset(0);
     }
   }, [active]);
 
@@ -223,6 +228,8 @@ export default (props: IProps) => {
       setTimeout(() => {
         updateContent();
       }, 200);
+
+      setHandlerBarOffset(0);
     }
   }, [hovering]);
 
@@ -234,13 +241,13 @@ export default (props: IProps) => {
       style={{
         ...outerStyle,
         color: '#000',
-        height: `calc(100% - ${searchbarHeight}px)`,
         backgroundColor: '#fff',
-        borderRadius: modalAnimation.borderRadius,
         marginTop: searchbarHeight,
+        width: 350 + handleBarOffset,
+        height: `calc(100% - ${searchbarHeight}px)`,
         opacity: modalAnimation.opacity,
         transform: modalAnimation.horizontalOffset.to(
-          (offset) => `translate(${offset}px, 0px)`
+          (offset: number) => `translate(${offset}px, 0px)`
         ),
       }}
     >
