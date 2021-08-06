@@ -2,7 +2,7 @@
 
 1. Install [Node 12](https://nodejs.org/ko/download/) or higher because lots of extensions use Node.
 
-2. Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+2. Click [this link](https://github.com/jopemachine/arvis/releases) and download `dmg` file.
 
 3. Right click Arvis's tray icon and click `Preference`.
 
