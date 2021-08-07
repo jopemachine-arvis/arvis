@@ -1,6 +1,10 @@
-import { pascalCase } from 'pascal-case';
+import { range } from '../range';
+import { objectFlip } from '../index';
 
-const keycodeTable = {
+/**
+ * Ref: https://github.com/wilix-team/iohook/issues/74
+ */
+export const keycodeTable = {
   0: '§',
   1: 'Esc',
   2: '1',
@@ -109,83 +113,13 @@ const keycodeTable = {
   57421: '→',
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const objectFlip = (obj: any) => {
-  const ret: any = {};
-  Object.keys(obj).forEach((key) => {
-    ret[obj[key]] = key;
-  });
-  return ret;
-};
+export const normalKeys: number[] = [
+  ...range(2, 13),
+  ...range(16, 27),
+  ...range(30, 41),
+  ...range(44, 53),
+  ...range(57419, 57424),
+  57,
+];
 
-const isRange = (start: number, end: number) => (number: number) => {
-  return number >= start && number <= end;
-};
-
-export const isNormalKey = (keycode: number) => {
-  return (
-    isRange(2, 13)(keycode) ||
-    isRange(16, 27)(keycode) ||
-    isRange(30, 41)(keycode) ||
-    isRange(44, 53)(keycode) ||
-    isRange(57419, 57424)(keycode) ||
-    keycode === 57
-  );
-};
-
-const keycodeTableFliped = objectFlip(keycodeTable);
-
-export const matchKeyToIoHookKey = (key: string) => {
-  switch (key) {
-    case 'alt':
-      return 'Left Alt';
-    case 'shift':
-      return 'Left Shift';
-    case 'cmd':
-      return 'Left Win';
-    case 'ctrl':
-      return 'Left Ctrl';
-    default: {
-      if (key.length === 1) {
-        return key;
-      }
-      return pascalCase(key).replaceAll('_', ' ');
-    }
-  }
-};
-
-export const matchIoHookKeyToKey = (key: string) => {
-  switch (key) {
-    case 'Left Alt':
-    case 'Right Alt':
-      return 'alt';
-
-    case 'Left Shift':
-    case 'Right Shift':
-      return 'shift';
-
-    case 'Left Win':
-    case 'Right Win':
-      return 'cmd';
-
-    case 'Left Ctrl':
-    case 'Right Ctrl':
-      return 'ctrl';
-
-    default: {
-      return key;
-    }
-  }
-};
-
-/**
- * Ref: https://github.com/wilix-team/iohook/issues/74
- * @param keycode
- */
-export const keyCodeToString = (keycode: number): string => {
-  return (keycodeTable as any)[keycode];
-};
-
-export const stringToKeyCode = (key: string) => {
-  return keycodeTableFliped[key];
-};
+export const keycodeTableFliped = objectFlip(keycodeTable);

@@ -5,16 +5,14 @@ import React, { useEffect } from 'react';
 import { ipcRenderer, clipboard } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import {
-  keyCodeToString,
-  stringToKeyCode,
-  matchKeyToIoHookKey,
-} from '@utils/iohook/keyTbl';
-import {
   isAltKey,
   isCtrlKey,
   isMetaKey,
   isShiftKey,
-} from '@utils/iohook/modifierKeys';
+  keyCodeToString,
+  stringToKeyCode,
+  matchKeyToIoHookKey,
+} from '@utils/iohook/keyUtils';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { extractShortcutName } from '@helper/extractShortcutName';
 import { actionTypes } from '@redux/actions/clipboardHistory';

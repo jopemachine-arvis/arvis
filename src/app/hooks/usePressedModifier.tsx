@@ -5,7 +5,7 @@ import {
   isCtrlKey,
   isMetaKey,
   isShiftKey,
-} from '@utils/iohook/modifierKeys';
+} from '@utils/iohook/keyUtils';
 import useIoHook, { IOHookKeyEvent } from './useIoHook';
 
 export default () => {

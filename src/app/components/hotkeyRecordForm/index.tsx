@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { getHotkeyNameOnThisPlatform } from '@utils/index';
 import useKeyRecord from '@hooks/useKeyRecord';
-import { keyCodeToString, isNormalKey } from '@utils/iohook/keyTbl';
+import { keyCodeToString, isNormalKey } from '@utils/iohook/keyUtils';
 import StyledInput from '../styledInput';
 
 type IProps = {

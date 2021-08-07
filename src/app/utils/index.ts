@@ -9,6 +9,7 @@ import getRandomColor from './getRandomColor';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 import { sleep } from './sleep';
 import { range } from './range';
+import { objectFlip } from './objectFlip';
 import { applyAlphaColor } from './applyAlphaColor';
 import { isWithCtrlOrCmd } from './isWithCtrlOrCmd';
 import { hideWindowAndRestoreFocus } from './hideWindowAndRestoreFocus';
@@ -28,6 +29,7 @@ export {
   isSupportedImageFormat,
   isWithCtrlOrCmd,
   makeActionCreator,
+  objectFlip,
   onNumberChangeHandler,
   range,
   sleep,
