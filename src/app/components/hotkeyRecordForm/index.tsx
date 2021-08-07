@@ -5,7 +5,11 @@
 import React, { useEffect, useState } from 'react';
 import { getHotkeyNameOnThisPlatform } from '@utils/index';
 import useKeyRecord from '@hooks/useKeyRecord';
-import { keyCodeToString, isNormalKey } from '@utils/iohook/keyUtils';
+import {
+  keyCodeToString,
+  isNormalKey,
+  matchIoHookKeyToKey,
+} from '@utils/iohook/keyUtils';
 import StyledInput from '../styledInput';
 
 type IProps = {
@@ -25,9 +29,17 @@ const HotkeyRecordForm = (props: IProps) => {
 
   const hotkeyChangedEventHandler = () => {
     if (recordedKeyData && hotkeyFormFocused) {
-      if (!isNormalKey(recordedKeyData.keycode)) return;
+      console.log('recordedKeyData', recordedKeyData);
 
-      const normalKey = keyCodeToString(recordedKeyData.keycode);
+      if (
+        !isNormalKey(recordedKeyData.keycode) &&
+        !recordedKeyData.doubleKeyPressed
+      )
+        return;
+
+      const normalKey = recordedKeyData.doubleKeyPressed
+        ? ''
+        : matchIoHookKeyToKey(keyCodeToString(recordedKeyData.keycode));
 
       if (canBeEmpty && normalKey === 'Backspace') {
         onHotkeyChange({
@@ -35,6 +47,7 @@ const HotkeyRecordForm = (props: IProps) => {
             value: '',
           },
         } as React.FormEvent<HTMLInputElement>);
+        return;
       }
 
       let result = '';

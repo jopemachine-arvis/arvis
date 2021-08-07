@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import {
+  isAltKey,
+  isCtrlKey,
+  isMetaKey,
+  isShiftKey,
+} from '@utils/iohook/keyUtils';
 import useIoHook, { IOHookKeyEvent } from './useIoHook';
 import { isDoubleKeyPressed } from './utils/doubleKeyUtils';
 
@@ -20,12 +26,19 @@ export default (props: IProps) => {
     useState<RecorededKeyData | undefined>(undefined);
 
   const useKeyRecord = (e: IOHookKeyEvent) => {
-    const isDouble =
-      isDoubleKeyPressed('alt') ||
-      isDoubleKeyPressed('ctrl') ||
-      isDoubleKeyPressed('meta') ||
-      isDoubleKeyPressed('shift');
+    let isDouble = false;
 
+    if (isAltKey(e)) {
+      isDouble = isDoubleKeyPressed('alt');
+    } else if (isCtrlKey(e)) {
+      isDouble = isDoubleKeyPressed('ctrl');
+    } else if (isMetaKey(e)) {
+      isDouble = isDoubleKeyPressed('meta');
+    } else if (isShiftKey(e)) {
+      isDouble = isDoubleKeyPressed('shift');
+    }
+
+    console.log('isDouble', isDouble);
     setRecoredKeyData({
       ...e,
       doubleKeyPressed: isDouble,

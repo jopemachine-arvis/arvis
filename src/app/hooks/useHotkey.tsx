@@ -36,9 +36,6 @@ export default (registeredHotkeys: string[]) => {
       if (doubleKeyPressHandlers.has(doubledKeyModifier)) {
         doubleKeyPressHandlers.get(doubledKeyModifier)!();
       }
-    } else {
-      (doubleKeyPressedTimers as any)[doubledKeyModifier] =
-        new Date().getTime();
     }
   };
 

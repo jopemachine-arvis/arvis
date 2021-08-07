@@ -17,7 +17,7 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
 
   // Double modifier shortcut
   if (loweredCaseShortcut.includes('double')) {
-    throw new Error('In dev mode, double hotkeys are not supported.');
+    // Double modifier shortcut is handled with iohook
   }
   // Normal modifier shortcut
   else {
@@ -48,6 +48,8 @@ export const setGlobalShortcut = (
   const callbacks = JSON.parse(callbackTable);
 
   for (const hotkey of Object.keys(callbacks)) {
+    if (hotkey.toLowerCase().includes('double')) continue;
+
     if (globalShortcut.isRegistered(hotkey)) {
       continue;
     }

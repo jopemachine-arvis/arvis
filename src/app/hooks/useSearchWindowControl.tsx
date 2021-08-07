@@ -12,6 +12,7 @@ import path from 'path';
 import isUrl from 'is-url';
 import { isText } from 'istextorbinary';
 import useKey from '../../external/use-key-capture/src';
+import usePressedModifier from './usePressedModifier';
 
 type IndexInfo = {
   selectedItemIdx: number;
@@ -67,6 +68,15 @@ const useSearchWindowControl = ({
   const hideSearchWindowByBlurCbRef = useRef<any>();
 
   const isPinnedRef = useRef<boolean>(isPinned);
+
+  const pressingModifiers = usePressedModifier();
+
+  const {
+    alt: pressingAlt,
+    ctrl: pressingCtrl,
+    meta: pressingMeta,
+    shift: pressingShift,
+  } = pressingModifiers;
 
   let unresolvedPluginPromises: PCancelable<PluginExectionResult>[] = [];
 
@@ -639,7 +649,6 @@ const useSearchWindowControl = ({
     const input: string | undefined | null = keyData.key;
 
     const modifiers = {
-      // On mac, cmd key is handled by meta;
       cmd: keyData.isWithMeta,
       ctrl: keyData.isWithCtrl,
       shift: keyData.isWithShift,
@@ -689,14 +698,6 @@ const useSearchWindowControl = ({
       searchByNextInput();
     } else if (keyData.isArrowRight && bestMatchKeyAvailable()) {
       setInputStr({ str: bestMatch, needItemsUpdate: true });
-    }
-
-    // on Macos, option key not detected!! -> maybe this logic need to be migrated to iohook
-    if (modifiers.alt || modifiers.cmd || modifiers.ctrl || modifiers.shift) {
-      actionFlowManager.setModifierOnScriptFilterItem(
-        selectedItemIdx,
-        modifiers
-      );
     }
   };
 
@@ -856,6 +857,27 @@ const useSearchWindowControl = ({
 
     onKeydownHandler();
   }, [keyData]);
+
+  useEffect(() => {
+    const modifiers = {
+      cmd: pressingMeta,
+      ctrl: pressingCtrl,
+      shift: pressingShift,
+      alt: pressingAlt,
+    };
+
+    if (modifiers.alt || modifiers.cmd || modifiers.ctrl || modifiers.shift) {
+      actionFlowManager.setModifierOnScriptFilterItem(
+        indexInfo.selectedItemIdx,
+        modifiers
+      );
+    }
+  }, [
+    pressingModifiers.alt,
+    pressingModifiers.ctrl,
+    pressingModifiers.meta,
+    pressingModifiers.shift,
+  ]);
 
   useEffect(() => {
     checkShouldBeHided();
