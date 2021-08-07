@@ -6,9 +6,11 @@ import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
  */
 export default {
   toggleSearchWindow: () => () => {
-    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow);
+    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, { showsUp: false });
   },
   toggleClipboardHistoryWindow: () => () => {
-    ipcRenderer.send(IPCRendererEnum.toggleClipboardHistoryWindow);
+    ipcRenderer.send(IPCRendererEnum.toggleClipboardHistoryWindow, {
+      showsUp: false,
+    });
   },
 };

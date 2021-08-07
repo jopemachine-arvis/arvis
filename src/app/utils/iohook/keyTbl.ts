@@ -118,6 +118,21 @@ const objectFlip = (obj: any) => {
   return ret;
 };
 
+const isRange = (start: number, end: number) => (number: number) => {
+  return number >= start && number <= end;
+};
+
+export const isNormalKey = (keycode: number) => {
+  return (
+    isRange(2, 13)(keycode) ||
+    isRange(16, 27)(keycode) ||
+    isRange(30, 41)(keycode) ||
+    isRange(44, 53)(keycode) ||
+    isRange(57419, 57424)(keycode) ||
+    keycode === 57
+  );
+};
+
 const keycodeTableFliped = objectFlip(keycodeTable);
 
 export const matchKeyToIoHookKey = (key: string) => {
@@ -135,6 +150,30 @@ export const matchKeyToIoHookKey = (key: string) => {
         return key;
       }
       return pascalCase(key).replaceAll('_', ' ');
+    }
+  }
+};
+
+export const matchIoHookKeyToKey = (key: string) => {
+  switch (key) {
+    case 'Left Alt':
+    case 'Right Alt':
+      return 'alt';
+
+    case 'Left Shift':
+    case 'Right Shift':
+      return 'shift';
+
+    case 'Left Win':
+    case 'Right Win':
+      return 'cmd';
+
+    case 'Left Ctrl':
+    case 'Right Ctrl':
+      return 'ctrl';
+
+    default: {
+      return key;
     }
   }
 };

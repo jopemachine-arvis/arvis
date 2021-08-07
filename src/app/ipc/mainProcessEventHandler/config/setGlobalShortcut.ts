@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax */
+/* eslint-disable no-continue */
 
 import chalk from 'chalk';
 import { dialog, globalShortcut, IpcMainEvent } from 'electron';
@@ -47,6 +48,10 @@ export const setGlobalShortcut = (
   const callbacks = JSON.parse(callbackTable);
 
   for (const hotkey of Object.keys(callbacks)) {
+    if (globalShortcut.isRegistered(hotkey)) {
+      continue;
+    }
+
     if (callbacks[hotkey] === 'toggleSearchWindow') {
       registerShortcut(hotkey, () => toggleSearchWindow({ showsUp: false }));
     }

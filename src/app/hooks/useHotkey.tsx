@@ -23,23 +23,21 @@ import {
   singleKeyPressHandlers,
 } from '@config/shortcuts/iohookShortcutCallbacks';
 import useIoHook, { IOHookKeyEvent } from './useIoHook';
+import {
+  doubleKeyPressedTimers,
+  isDoubleKeyPressed,
+} from './utils/doubleKeyUtils';
 
 export default (registeredHotkeys: string[]) => {
   const ioHook = useIoHook();
 
-  const doubleKeyPressElapse = 200;
-
-  const doubleKeyPressedTimers = {};
-
-  const handleDoubleKeyModifier = (doubledKeyModifier: string) => {
-    if (
-      (doubleKeyPressedTimers as any)[doubledKeyModifier] &&
-      Date.now() - (doubleKeyPressedTimers as any)[doubledKeyModifier] <
-        doubleKeyPressElapse
-    ) {
-      doubleKeyPressHandlers[
-        doubledKeyModifier as 'cmd' | 'shift' | 'alt' | 'ctrl'
-      ]!();
+  const handleDoubleKeyModifier = (
+    doubledKeyModifier: 'cmd' | 'shift' | 'alt' | 'ctrl'
+  ) => {
+    if (isDoubleKeyPressed(doubledKeyModifier)) {
+      if (doubleKeyPressHandlers.has(doubledKeyModifier)) {
+        doubleKeyPressHandlers.get(doubledKeyModifier)!();
+      }
     } else {
       (doubleKeyPressedTimers as any)[doubledKeyModifier] =
         new Date().getTime();
@@ -96,15 +94,13 @@ export default (registeredHotkeys: string[]) => {
   }, []);
 
   useEffect(() => {
-    ioHook.unregisterShortcutByKeys();
+    ioHook.unregisterAllShortcuts();
 
     for (const hotkey of registeredHotkeys) {
       const keys = extractShortcutName(hotkey) as string[];
-
-      const keycodes = [];
-      for (const key of keys) {
-        keycodes.push(stringToKeyCode(matchKeyToIoHookKey(key)));
-      }
+      const keycodes = keys.map((key) =>
+        stringToKeyCode(matchKeyToIoHookKey(key))
+      );
 
       // Double will be 'undefined', so double modifier keys are filtered here.
       if (!keycodes.includes(undefined)) {

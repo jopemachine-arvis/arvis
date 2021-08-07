@@ -10,6 +10,7 @@ import { extractShortcutName } from '../../helper/extractShortcutName';
 import {
   singleKeyPressHandlers,
   doubleKeyPressHandlers,
+  initializeKeyHandler,
 } from './iohookShortcutCallbacks';
 
 /**
@@ -62,16 +63,14 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
   if (loweredCaseShortcut.includes('double')) {
     const doubledKeyModifier = extractShortcutName(
       loweredCaseShortcut.split('double')[1]
-    ) as string;
+    ) as 'shift' | 'alt' | 'cmd' | 'ctrl';
 
     // Already used shortcut
     if ((doubleKeyPressHandlers as any)[doubledKeyModifier]) {
       return false;
     }
 
-    doubleKeyPressHandlers[
-      doubledKeyModifier as 'shift' | 'alt' | 'cmd' | 'ctrl'
-    ] = callback;
+    doubleKeyPressHandlers.set(doubledKeyModifier, callback);
   }
   // Normal modifier shortcut
   else if (!singleKeyPressHandlers.has(loweredCaseShortcut)) {
@@ -132,6 +131,7 @@ export default ({
   callbackTable: Record<string, string>;
   workflowHotkeyTbl: Record<string, Command>;
 }) => {
+  initializeKeyHandler();
   const shortcuts = Object.keys(callbackTable);
 
   const registeredHotkeys = registerWorkflowHotkeys({ workflowHotkeyTbl });
