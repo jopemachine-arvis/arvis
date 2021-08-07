@@ -1,10 +1,10 @@
 import { IpcMainEvent } from 'electron';
 import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows/windowManager';
-import globalShortcutHandler from '../../../config/globalShortcutHandler';
+import globalShortcutHandler from '../../../config/shortcuts/globalShortcutHandler';
 
 /**
- * Used to register global shortcuts
+ * Used to register electron global shortcuts in dev mode
  * @param callbackTable
  * @param workflowHotkeyTbl
  */

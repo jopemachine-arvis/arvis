@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { IPCRendererEnum } from './ipcEventEnum';
+import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 
 /**
  * This is a table of callback functions that always require key binding, such as calling searchWindow.

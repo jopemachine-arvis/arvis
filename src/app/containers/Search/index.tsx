@@ -22,7 +22,7 @@ import {
   notificationActionHandler,
   keyDispatchingActionHandler,
 } from '@helper/customActionHandler';
-import globalShortcutHandler from '@config/globalShortcutHandler';
+import globalShortcutHandler from '@config/shortcuts/globalShortcutHandler';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {

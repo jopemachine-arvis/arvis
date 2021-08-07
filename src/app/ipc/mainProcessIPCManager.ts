@@ -9,8 +9,6 @@ import { reloadPlugin } from './mainProcessEventHandler/reloadPlugin';
 import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
-import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
-import { triggerSingleKeyPressEvent } from './mainProcessEventHandler/triggerSingleKeyPressEvent';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
 
 import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
@@ -35,7 +33,6 @@ import { resumeFileWatch } from './mainProcessEventHandler/config/resumeFileWatc
 import { setAutoLaunch } from './mainProcessEventHandler/config/setAutoLaunch';
 import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalShortcut';
 import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
-import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginPageItemMenu';
@@ -77,11 +74,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(
-    IPCRendererEnum.triggerSingleKeyPressEvent,
-    triggerSingleKeyPressEvent
-  );
-  ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
-  ipcMain.on(
     IPCRendererEnum.toggleClipboardHistoryWindow,
     toggleClipboardHistoryWindow
   );
@@ -110,11 +102,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,
     openWorkflowInstallFileDialog
-  );
-
-  ipcMain.on(
-    IPCRendererEnum.triggerDoubleModifierKey,
-    triggerDoubleModifierKey
   );
 
   ipcMain.on(

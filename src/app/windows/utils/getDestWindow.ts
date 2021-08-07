@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import { WindowManager } from '../windows';
+import { WindowManager } from '..';
 
 /**
  * @param windowName

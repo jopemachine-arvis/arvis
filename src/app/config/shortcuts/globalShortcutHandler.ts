@@ -3,15 +3,15 @@
 /* eslint-disable no-restricted-syntax */
 import chalk from 'chalk';
 import { ipcRenderer } from 'electron';
-import defaultShortcutCallbackTbl from '../ipc/defaultShortcutCallbackTable';
-import { IPCMainEnum, IPCRendererEnum } from '../ipc/ipcEventEnum';
-import { WindowManager } from '../windows';
-import toggleSearchWindow from '../ipc/toggleSearchWindow';
-import { extractShortcutName } from '../helper/extractShortcutName';
+import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
+import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
+import { WindowManager } from '../../windows';
+import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
+import { extractShortcutName } from '../../helper/extractShortcutName';
 import {
   singleKeyPressHandlers,
   doubleKeyPressHandlers,
-} from '../ipc/iohookShortcutCallbacks';
+} from './iohookShortcutCallbacks';
 
 /**
  * @param hotKeyAction

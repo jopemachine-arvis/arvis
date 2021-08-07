@@ -24,7 +24,6 @@ import { showLargeTextWindow } from './windowManage/showLargeTextWindow';
 
 import { reloadWorkflow } from './reloadWorkflow';
 import { showNotification } from './showNotification';
-import { triggerDoubleModifierKey } from './triggerDoubleModifierKey';
 import { triggerKeyDownEvent } from './triggerKeyDownEvent';
 
 export {
@@ -50,6 +49,5 @@ export {
   showErrorDialog,
   showLargeTextWindow,
   showNotification,
-  triggerDoubleModifierKey,
   triggerKeyDownEvent,
 };

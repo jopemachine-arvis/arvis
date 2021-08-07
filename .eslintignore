@@ -1,5 +1,6 @@
 tests/
 src/external
+src/app/ipc/ipcEventEnum.ts
 
 # Logs
 logs

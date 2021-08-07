@@ -7,7 +7,7 @@ import {
   MenuItem,
 } from 'electron';
 import { WindowManager } from '../../windows';
-import toggleSearchWindow from '../../ipc/toggleSearchWindow';
+import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
 
 export default class TrayBuilder {
   trayFilePath: string;

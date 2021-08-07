@@ -1,5 +1,5 @@
 import { IpcMainEvent } from 'electron';
-import toggleWindow from '../../toggleClipboardHistoryWindow';
+import toggleWindow from '../../../windows/utils/toggleClipboardHistoryWindow';
 
 /**
  */

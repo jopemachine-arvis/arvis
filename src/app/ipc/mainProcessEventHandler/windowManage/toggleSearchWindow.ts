@@ -1,5 +1,5 @@
 import { IpcMainEvent } from 'electron';
-import toggleWindow from '../../toggleSearchWindow';
+import toggleWindow from '../../../windows/utils/toggleSearchWindow';
 
 /**
  */

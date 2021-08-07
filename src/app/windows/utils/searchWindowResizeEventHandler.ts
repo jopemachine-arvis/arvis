@@ -1,4 +1,4 @@
-import { WindowManager } from '../windows/windowManager';
+import { WindowManager } from '../windowManager';
 
 /**
  * @param windowWidth

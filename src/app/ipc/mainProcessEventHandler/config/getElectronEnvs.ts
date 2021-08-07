@@ -1,7 +1,7 @@
 import { IpcMainEvent } from 'electron';
 import { IPCMainEnum } from '../../ipcEventEnum';
 import { externalEnvs } from '../../../config/externalEnvs';
-import { getDestWindow } from '../../getDestWindow';
+import { getDestWindow } from '../../../windows/utils/getDestWindow';
 
 /**
  * Get electron app.getPath info

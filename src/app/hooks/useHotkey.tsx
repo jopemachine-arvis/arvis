@@ -22,7 +22,7 @@ import { actionTypes } from '@redux/actions/clipboardHistory';
 import {
   doubleKeyPressHandlers,
   singleKeyPressHandlers,
-} from '@ipc/iohookShortcutCallbacks';
+} from '@config/shortcuts/iohookShortcutCallbacks';
 import useIoHook, { IOHookKeyEvent } from './useIoHook';
 
 export default (registeredHotkeys: string[]) => {
