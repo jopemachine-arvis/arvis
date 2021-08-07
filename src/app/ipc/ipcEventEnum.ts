@@ -67,7 +67,6 @@ export enum IPCMainEnum {
   resetReduxStore                            = '@ipcMain/resetReduxStore',
   saveFileRet                                = '@ipcMain/saveFileRet',
   searchWindowShowCallback                   = '@ipcMain/searchWindowShowCallback',
-  setGlobalShortcutRet                       = '@ipcMain/setGlobalShortcutRet',
   setPreferencePage                          = '@ipcMain/setPreferencePage',
   setSearchbarInput                          = '@ipcMain/setSearchbarInput',
   togglePluginsEnabled                       = '@ipcMain/togglePluginsEnabled',

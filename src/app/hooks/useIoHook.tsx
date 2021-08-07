@@ -16,6 +16,9 @@ let cleanedUp = false;
 // const debug = process.env.NODE_ENV === 'development';
 const debug = false;
 
+/**
+ * Use iohook as singleton
+ */
 export default (): any => {
   useEffect(() => {
     if (!started) {

@@ -153,14 +153,6 @@ export default function SearchWindow() {
   const registerAllGlobalHotkey = () => {
     const hotkeys = Core.findHotkeys();
 
-    // ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-    //   workflowHotkeyTbl: JSON.stringify(hotkeys),
-    //   callbackTable: {
-    //     [toggle_search_window_hotkey]: 'toggleSearchWindow',
-    //     [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
-    //   },
-    // });
-
     const registeredShortcuts = globalShortcutHandler({
       workflowHotkeyTbl: hotkeys,
       callbackTable: {
@@ -170,6 +162,16 @@ export default function SearchWindow() {
     });
 
     setRegisteredHotkeys(registeredShortcuts);
+
+    if (process.env.NODE_ENV === 'development') {
+      // Remove below function after iohook issue is resolved
+      ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+        callbackTable: JSON.stringify({
+          [toggle_search_window_hotkey]: 'toggleSearchWindow',
+          [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
+        }),
+      });
+    }
   };
 
   const renewHotkeys = () => {
@@ -178,14 +180,6 @@ export default function SearchWindow() {
   };
 
   const ipcCallbackTbl = {
-    setGlobalShortcutRet: (
-      e: IpcRendererEvent,
-      { registeredShortcuts }: { registeredShortcuts: string[] }
-    ) => {
-      console.log('registeredShortcuts array', registeredShortcuts);
-      setRegisteredHotkeys(registeredShortcuts);
-    },
-
     fetchAction: (
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
@@ -259,10 +253,6 @@ export default function SearchWindow() {
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
-    ipcRenderer.on(
-      IPCMainEnum.setGlobalShortcutRet,
-      ipcCallbackTbl.setGlobalShortcutRet
-    );
     ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
@@ -283,10 +273,6 @@ export default function SearchWindow() {
   }, []);
 
   const unsubscribe = useCallback(() => {
-    ipcRenderer.off(
-      IPCMainEnum.setGlobalShortcutRet,
-      ipcCallbackTbl.setGlobalShortcutRet
-    );
     ipcRenderer.off(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);

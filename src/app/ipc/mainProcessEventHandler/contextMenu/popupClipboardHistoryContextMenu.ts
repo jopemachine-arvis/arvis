@@ -3,7 +3,6 @@ import { ClipboardHistoryWindowContextMenu } from '../../../components/contextMe
 
 /**
  * Used to popup context menu
- * @param path
  */
 export const popupClipboardHistoryContextMenu = (
   e: IpcMainEvent,

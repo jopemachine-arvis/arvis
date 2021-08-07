@@ -3,7 +3,6 @@ import { PluginPageItemContextMenu } from '../../../components/contextMenus';
 
 /**
  * Used to popup context menu
- * @param path
  */
 export const popupPluginItemMenu = (
   e: IpcMainEvent,

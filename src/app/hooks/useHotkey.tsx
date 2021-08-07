@@ -16,7 +16,6 @@ import {
   isShiftKey,
 } from '@utils/iohook/modifierKeys';
 import { isWithCtrlOrCmd } from '@utils/index';
-
 import { extractShortcutName } from '@helper/extractShortcutName';
 import { actionTypes } from '@redux/actions/clipboardHistory';
 import {
@@ -31,31 +30,6 @@ export default (registeredHotkeys: string[]) => {
   const doubleKeyPressElapse = 200;
 
   const doubleKeyPressedTimers = {};
-
-  useEffect(() => {
-    ioHook.unregisterShortcutByKeys();
-
-    for (const hotkey of registeredHotkeys) {
-      const keys = extractShortcutName(hotkey) as string[];
-      console.log('keys', keys);
-
-      const keycodes = [];
-      for (const key of keys) {
-        keycodes.push(stringToKeyCode(matchKeyToIoHookKey(key)));
-      }
-
-      if (!keycodes.includes(undefined)) {
-        console.log('keycodes', keycodes);
-
-        ioHook.registerShortcut(
-          keycodes,
-          singleKeyPressHandlers.get(hotkey.toLowerCase())
-        );
-      } else {
-        //
-      }
-    }
-  }, [registeredHotkeys]);
 
   const handleDoubleKeyModifier = (doubledKeyModifier: string) => {
     if (
@@ -72,16 +46,6 @@ export default (registeredHotkeys: string[]) => {
     }
   };
 
-  const cpyKeyPressed = (e: IOHookKeyEvent) => {
-    return (
-      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
-      keyCodeToString(e.keycode) === 'c' &&
-      !e.shiftKey &&
-      !e.altKey &&
-      ((e.metaKey && !e.ctrlKey) || (!e.metaKey && e.ctrlKey))
-    );
-  };
-
   const doubleKeyPressHandler = (e: IOHookKeyEvent) => {
     if (isShiftKey(e)) {
       handleDoubleKeyModifier('shift');
@@ -92,6 +56,16 @@ export default (registeredHotkeys: string[]) => {
     } else if (isMetaKey(e)) {
       handleDoubleKeyModifier('cmd');
     }
+  };
+
+  const isCpyKeyPressed = (e: IOHookKeyEvent) => {
+    return (
+      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
+      keyCodeToString(e.keycode) === 'c' &&
+      !e.shiftKey &&
+      !e.altKey &&
+      ((e.metaKey && !e.ctrlKey) || (!e.metaKey && e.ctrlKey))
+    );
   };
 
   const copyKeyPressedHandler = (e: IOHookKeyEvent) => {
@@ -112,7 +86,7 @@ export default (registeredHotkeys: string[]) => {
 
   useEffect(() => {
     ioHook.on('keydown', (e: IOHookKeyEvent) => {
-      if (cpyKeyPressed(e)) {
+      if (isCpyKeyPressed(e)) {
         copyKeyPressedHandler(e);
         return;
       }
@@ -120,4 +94,30 @@ export default (registeredHotkeys: string[]) => {
       doubleKeyPressHandler(e);
     });
   }, []);
+
+  useEffect(() => {
+    ioHook.unregisterShortcutByKeys();
+
+    for (const hotkey of registeredHotkeys) {
+      const keys = extractShortcutName(hotkey) as string[];
+
+      const keycodes = [];
+      for (const key of keys) {
+        keycodes.push(stringToKeyCode(matchKeyToIoHookKey(key)));
+      }
+
+      // Double will be 'undefined', so double modifier keys are filtered here.
+      if (!keycodes.includes(undefined)) {
+        console.log('Registered keys', keys);
+        console.log('Registered keycodes', keycodes);
+
+        ioHook.registerShortcut(
+          keycodes,
+          singleKeyPressHandlers.get(hotkey.toLowerCase())
+        );
+      } else {
+        //
+      }
+    }
+  }, [registeredHotkeys]);
 };

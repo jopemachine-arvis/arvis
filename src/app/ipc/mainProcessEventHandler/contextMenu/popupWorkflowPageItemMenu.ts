@@ -3,7 +3,6 @@ import { WorkflowPageItemContextMenu } from '../../../components/contextMenus';
 
 /**
  * Used to popup context menu
- * @param path
  */
 export const popupWorkflowItemMenu = (
   e: IpcMainEvent,
