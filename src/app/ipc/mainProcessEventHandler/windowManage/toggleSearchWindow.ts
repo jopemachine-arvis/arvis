@@ -3,6 +3,9 @@ import toggleWindow from '../../../windows/utils/toggleSearchWindow';
 
 /**
  */
-export const toggleSearchWindow = (e: IpcMainEvent) => {
-  toggleWindow({ showsUp: false });
+export const toggleSearchWindow = (
+  e: IpcMainEvent,
+  { showsUp }: { showsUp?: boolean }
+) => {
+  toggleWindow({ showsUp: showsUp ?? false });
 };

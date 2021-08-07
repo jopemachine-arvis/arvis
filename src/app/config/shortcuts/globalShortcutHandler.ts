@@ -3,10 +3,9 @@
 /* eslint-disable no-restricted-syntax */
 import chalk from 'chalk';
 import { ipcRenderer } from 'electron';
+import { Core } from 'arvis-core';
 import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
-import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
-import { WindowManager } from '../../windows';
-import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
+import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { extractShortcutName } from '../../helper/extractShortcutName';
 import {
   singleKeyPressHandlers,
@@ -21,24 +20,32 @@ const getWorkflowHotkeyPressHandler = ({
 }: {
   hotKeyAction: Command;
 }) => {
-  const searchWindow = WindowManager.getInstance().getSearchWindow();
   const actionTypes: string[] = hotKeyAction.actions!.map(
     (item: any) => item.type
   );
 
   if (actionTypes.includes('keyword') || actionTypes.includes('scriptFilter')) {
-    toggleSearchWindow({ showsUp: true });
+    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, { showsUp: true });
   }
 
   // Force action to be executed after window shows up
   setTimeout(() => {
-    searchWindow.webContents.send(IPCMainEnum.executeAction, {
-      action: hotKeyAction.actions!.map((item: Action) => {
-        (item as Command).bundleId = hotKeyAction.bundleId!;
-        return item;
-      }),
-      bundleId: hotKeyAction.bundleId,
-    });
+    const actionFlowManager = Core.ActionFlowManager.getInstance();
+
+    actionFlowManager.isInitialTrigger = false;
+    actionFlowManager.handleItemPressEvent(
+      {
+        actions: hotKeyAction.actions!.map((item: Action) => {
+          (item as Command).bundleId = hotKeyAction.bundleId!;
+          return item;
+        }),
+        bundleId: hotKeyAction.bundleId,
+        type: 'hotkey',
+        title: '',
+      },
+      '',
+      { normal: true }
+    );
   }, 100);
 };
 
