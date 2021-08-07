@@ -1,5 +1,7 @@
 import { IpcMainEvent } from 'electron';
-import globalShortcutHandler from '../../globalShortcutHandler';
+import { IPCMainEnum } from '../../ipcEventEnum';
+import { WindowManager } from '../../../windows/windowManager';
+import globalShortcutHandler from '../../../config/globalShortcutHandler';
 
 /**
  * Used to register global shortcuts
@@ -13,8 +15,14 @@ export const setGlobalShortcut = (
     workflowHotkeyTbl,
   }: { callbackTable: any; workflowHotkeyTbl: string }
 ) => {
-  globalShortcutHandler({
+  const hotkeys = globalShortcutHandler({
     callbackTable,
     workflowHotkeyTbl: JSON.parse(workflowHotkeyTbl),
   });
+
+  WindowManager.getInstance()
+    .getSearchWindow()
+    .webContents.send(IPCMainEnum.setGlobalShortcutRet, {
+      registeredShortcuts: hotkeys,
+    });
 };

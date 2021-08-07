@@ -1,14 +1,14 @@
 import { useReserveForceUpdate } from './useReserveForceUpdate';
 import useSearchWindowControl from './useSearchWindowControl';
 import useClipboardHistoryWindowControl from './useClipboardHistoryWindowControl';
-import useIoHook from './useIoHook';
+import useHotkey from './useHotkey';
 import useStoreSearchControl from './useStoreSearchControl';
 import useExtensionSearchControl from './useExtensionSearchControl';
 
 export {
   useClipboardHistoryWindowControl,
   useExtensionSearchControl,
-  useIoHook,
+  useHotkey,
   useReserveForceUpdate,
   useSearchWindowControl,
   useStoreSearchControl,

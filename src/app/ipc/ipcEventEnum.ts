@@ -36,7 +36,10 @@ export enum IPCRendererEnum {
   toggleMacDock = '@ipcRenderer/toggleMacDock',
   triggerDoubleModifierKey = '@ipcRenderer/triggerDoubleModifierKey',
   triggerKeyDownEvent = '@ipcRenderer/triggerKeyDownEvent',
+  triggerSingleKeyPressEvent = '@ipcRenderer/triggerSingleKeyPressEvent',
   unregisterAllShortcuts = '@ipcRenderer/unregisterAllShortcuts',
+  toggleClipboardHistoryWindow = '@ipcRenderer/toggleClipboardHistoryWindow',
+  toggleSearchWindow = '@ipcRenderer/toggleSearchWindow',
 }
 
 /**
@@ -62,6 +65,7 @@ export enum IPCMainEnum {
   reloadPlugin = '@ipcMain/reloadPlugin',
   reloadWorkflow = '@ipcMain/reloadWorkflow',
   resetReduxStore = '@ipcMain/resetReduxStore',
+  setGlobalShortcutRet = '@ipcMain/setGlobalShortcutRet',
   saveFileRet = '@ipcMain/saveFileRet',
   searchWindowShowCallback = '@ipcMain/searchWindowShowCallback',
   setPreferencePage = '@ipcMain/setPreferencePage',

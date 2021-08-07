@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
-import { globalShortcut, dialog } from 'electron';
 import chalk from 'chalk';
-import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
-import { IPCMainEnum } from './ipcEventEnum';
+import { ipcRenderer } from 'electron';
+import defaultShortcutCallbackTbl from '../ipc/defaultShortcutCallbackTable';
+import { IPCMainEnum, IPCRendererEnum } from '../ipc/ipcEventEnum';
 import { WindowManager } from '../windows';
-import toggleSearchWindow from './toggleSearchWindow';
-import { doubleKeyPressHandler } from './iohookShortcutCallbacks';
+import toggleSearchWindow from '../ipc/toggleSearchWindow';
+import { extractShortcutName } from '../helper/extractShortcutName';
+import {
+  singleKeyPressHandlers,
+  doubleKeyPressHandlers,
+} from '../ipc/iohookShortcutCallbacks';
 
 /**
  * @param hotKeyAction
@@ -40,41 +44,6 @@ const getWorkflowHotkeyPressHandler = ({
 
 /**
  * @param shortcut
- */
-const extractShortcutName = (shortcut: string): string => {
-  const target = shortcut.replaceAll('+', ' ').toLowerCase().trim();
-
-  switch (target) {
-    case 'option':
-    case 'opt':
-    case 'alt':
-      return 'alt';
-
-    case 'shift':
-      return 'shift';
-
-    case 'windows':
-    case 'window':
-    case 'win':
-    case 'cmd':
-    case 'command':
-    case 'meta':
-      return 'cmd';
-
-    case 'control':
-    case 'ctl':
-    case 'ctrl':
-      return 'ctrl';
-
-    default:
-      console.error(`${shortcut} is not valid shortcut`);
-  }
-
-  throw new Error('Not valid operation occurs in convertShortcutName');
-};
-
-/**
- * @param shortcut
  * @param callback
  */
 const registerShortcut = (shortcut: string, callback: () => void): boolean => {
@@ -86,30 +55,25 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
   if (loweredCaseShortcut.includes('double')) {
     const doubledKeyModifier = extractShortcutName(
       loweredCaseShortcut.split('double')[1]
-    );
+    ) as string;
 
     // Already used shortcut
-    if ((doubleKeyPressHandler as any)[doubledKeyModifier]) {
+    if ((doubleKeyPressHandlers as any)[doubledKeyModifier]) {
       return false;
     }
 
-    doubleKeyPressHandler[
+    doubleKeyPressHandlers[
       doubledKeyModifier as 'shift' | 'alt' | 'cmd' | 'ctrl'
     ] = callback;
   }
   // Normal modifier shortcut
-  else {
-    try {
-      if (globalShortcut.isRegistered(loweredCaseShortcut)) {
-        return false;
-      }
-      globalShortcut.register(loweredCaseShortcut, callback as () => void);
-    } catch (err) {
-      dialog.showErrorBox(
-        'Invalid Shortcut Assign',
-        `'${loweredCaseShortcut}' is not invalid hotkeys. Please reassign this hotkey`
-      );
-    }
+  else if (!singleKeyPressHandlers.has(loweredCaseShortcut)) {
+    singleKeyPressHandlers.set(loweredCaseShortcut, callback as () => void);
+  } else {
+    ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+      title: 'Invalid Shortcut Assign',
+      content: `'${loweredCaseShortcut}' is not invalid hotkeys. Please reassign this hotkey`,
+    });
   }
 
   return true;
@@ -123,6 +87,7 @@ const registerWorkflowHotkeys = ({
 }: {
   workflowHotkeyTbl: Record<string, Command>;
 }) => {
+  const registered = [];
   const hotkeys = Object.keys(workflowHotkeyTbl);
   for (const hotkey of hotkeys) {
     // Skip hotkey assigning if empty
@@ -137,12 +102,16 @@ const registerWorkflowHotkeys = ({
     };
 
     if (!registerShortcut(hotkey, cb)) {
-      dialog.showErrorBox(
-        'Duplicated Shortcuts Found',
-        `'${hotkey}' has been assigned as duplicate. Please reassign hotkeys`
-      );
+      ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+        title: 'Duplicated Shortcuts Found',
+        content: `'${hotkey}' has been assigned as duplicate. Please reassign hotkeys`,
+      });
     }
+
+    registered.push(hotkey);
   }
+
+  return registered;
 };
 
 /**
@@ -158,7 +127,7 @@ export default ({
 }) => {
   const shortcuts = Object.keys(callbackTable);
 
-  registerWorkflowHotkeys({ workflowHotkeyTbl });
+  const registeredHotkeys = registerWorkflowHotkeys({ workflowHotkeyTbl });
 
   for (const shortcut of shortcuts) {
     const action = callbackTable[shortcut];
@@ -166,10 +135,16 @@ export default ({
     if (
       !registerShortcut(shortcut, (defaultShortcutCallbackTbl as any)[action]())
     ) {
-      dialog.showErrorBox(
-        'Duplicated Shortcuts Found',
-        `'${shortcut}' has been assigned as duplicate. Please reassign hotkeys`
-      );
+      ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+        title: 'Duplicated Shortcuts Found',
+        content: `'${shortcut}' has been assigned as duplicate. Please reassign hotkeys`,
+      });
+
+      continue;
     }
+
+    registeredHotkeys.push(shortcut);
   }
+
+  return registeredHotkeys;
 };

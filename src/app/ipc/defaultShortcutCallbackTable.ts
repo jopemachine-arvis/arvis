@@ -1,14 +1,14 @@
-import toggleSearchWindow from './toggleSearchWindow';
-import toggleClipboardHistoryWindow from './toggleClipboardHistoryWindow';
+import { ipcRenderer } from 'electron';
+import { IPCRendererEnum } from './ipcEventEnum';
 
 /**
  * This is a table of callback functions that always require key binding, such as calling searchWindow.
  */
 export default {
   toggleSearchWindow: () => () => {
-    toggleSearchWindow({ showsUp: false });
+    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow);
   },
   toggleClipboardHistoryWindow: () => () => {
-    toggleClipboardHistoryWindow({ showsUp: false });
+    ipcRenderer.send(IPCRendererEnum.toggleClipboardHistoryWindow);
   },
 };

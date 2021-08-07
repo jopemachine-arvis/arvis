@@ -12,7 +12,7 @@ import {
   SearchWindowScrollbar,
   Quicklook,
 } from '@components/index';
-import { useSearchWindowControl, useIoHook } from '@hooks/index';
+import { useSearchWindowControl, useHotkey } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -22,6 +22,7 @@ import {
   notificationActionHandler,
   keyDispatchingActionHandler,
 } from '@helper/customActionHandler';
+import globalShortcutHandler from '@config/globalShortcutHandler';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -87,6 +88,8 @@ export default function SearchWindow() {
 
   const actionFlowManager = Core.ActionFlowManager.getInstance();
 
+  const [registeredHotkeys, setRegisteredHotkeys] = useState<string[]>([]);
+
   const setDebuggingOptions = () => {
     actionFlowManager.loggerColorType = 'gui';
     actionFlowManager.printActionType = debuggingConfig.debugging_action;
@@ -105,7 +108,7 @@ export default function SearchWindow() {
 
   const dispatch = useDispatch();
 
-  useIoHook();
+  useHotkey(registeredHotkeys);
 
   const {
     bestMatch,
@@ -150,13 +153,23 @@ export default function SearchWindow() {
   const registerAllGlobalHotkey = () => {
     const hotkeys = Core.findHotkeys();
 
-    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-      workflowHotkeyTbl: JSON.stringify(hotkeys),
+    // ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+    //   workflowHotkeyTbl: JSON.stringify(hotkeys),
+    //   callbackTable: {
+    //     [toggle_search_window_hotkey]: 'toggleSearchWindow',
+    //     [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
+    //   },
+    // });
+
+    const registeredShortcuts = globalShortcutHandler({
+      workflowHotkeyTbl: hotkeys,
       callbackTable: {
         [toggle_search_window_hotkey]: 'toggleSearchWindow',
         [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
       },
     });
+
+    setRegisteredHotkeys(registeredShortcuts);
   };
 
   const renewHotkeys = () => {
@@ -165,6 +178,14 @@ export default function SearchWindow() {
   };
 
   const ipcCallbackTbl = {
+    setGlobalShortcutRet: (
+      e: IpcRendererEvent,
+      { registeredShortcuts }: { registeredShortcuts: string[] }
+    ) => {
+      console.log('registeredShortcuts array', registeredShortcuts);
+      setRegisteredHotkeys(registeredShortcuts);
+    },
+
     fetchAction: (
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
@@ -238,6 +259,10 @@ export default function SearchWindow() {
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
+    ipcRenderer.on(
+      IPCMainEnum.setGlobalShortcutRet,
+      ipcCallbackTbl.setGlobalShortcutRet
+    );
     ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
@@ -258,6 +283,10 @@ export default function SearchWindow() {
   }, []);
 
   const unsubscribe = useCallback(() => {
+    ipcRenderer.off(
+      IPCMainEnum.setGlobalShortcutRet,
+      ipcCallbackTbl.setGlobalShortcutRet
+    );
     ipcRenderer.off(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);

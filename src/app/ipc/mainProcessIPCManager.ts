@@ -10,6 +10,7 @@ import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
+import { triggerSingleKeyPressEvent } from './mainProcessEventHandler/triggerSingleKeyPressEvent';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
 
 import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
@@ -42,6 +43,8 @@ import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/pop
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/contextMenu/popupClipboardHistoryContextMenu';
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
+import { toggleClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/toggleClipboardHistoryWindow';
+import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggleSearchWindow';
 
 /**
  * Register ipc callbacks
@@ -73,7 +76,16 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
+  ipcMain.on(
+    IPCRendererEnum.triggerSingleKeyPressEvent,
+    triggerSingleKeyPressEvent
+  );
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+  ipcMain.on(
+    IPCRendererEnum.toggleClipboardHistoryWindow,
+    toggleClipboardHistoryWindow
+  );
+  ipcMain.on(IPCRendererEnum.toggleSearchWindow, toggleSearchWindow);
 
   ipcMain.on(
     IPCRendererEnum.popupWorkflowTriggerTableItem,
