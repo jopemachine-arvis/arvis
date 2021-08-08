@@ -19,6 +19,7 @@ import { sleep } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
+import ioHook from 'iohook';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
 import GeneralPage from './General';
@@ -211,6 +212,13 @@ export default function PreferenceWindow() {
       return console.error(message);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      ioHook.removeAllListeners();
+      ioHook.unload();
+    };
+  }, []);
 
   useEffect(() => {
     preventInvalidReduxState();

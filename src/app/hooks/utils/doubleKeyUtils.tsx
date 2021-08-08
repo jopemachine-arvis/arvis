@@ -1,15 +1,17 @@
 export const doubleKeyPressElapse = 200;
 
-export const doubleKeyPressedTimers = {};
-
 export const updateDoubleKeyPressedTimer = (
+  doubleKeyPressedTimers: Record<string, number>,
   doubledKeyModifier: string,
   time: number
 ) => {
   (doubleKeyPressedTimers as any)[doubledKeyModifier] = time;
 };
 
-export const isDoubleKeyPressed = (doubledKeyModifier: string) => {
+export const isDoubleKeyPressed = (
+  doubleKeyPressedTimers: Record<string, number>,
+  doubledKeyModifier: string
+) => {
   if (
     (doubleKeyPressedTimers as any)[doubledKeyModifier] &&
     Date.now() - (doubleKeyPressedTimers as any)[doubledKeyModifier] <
@@ -17,6 +19,10 @@ export const isDoubleKeyPressed = (doubledKeyModifier: string) => {
   ) {
     return true;
   }
-  updateDoubleKeyPressedTimer(doubledKeyModifier, new Date().getTime());
+  updateDoubleKeyPressedTimer(
+    doubleKeyPressedTimers,
+    doubledKeyModifier,
+    new Date().getTime()
+  );
   return false;
 };

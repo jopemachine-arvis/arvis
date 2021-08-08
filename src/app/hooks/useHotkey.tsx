@@ -20,11 +20,11 @@ import {
   doubleKeyPressHandlers,
   singleKeyPressHandlers,
 } from '@config/shortcuts/iohookShortcutCallbacks';
-import useIoHook, { IOHookKeyEvent } from './useIoHook';
-import {
-  doubleKeyPressedTimers,
-  isDoubleKeyPressed,
-} from './utils/doubleKeyUtils';
+import useIoHook from './useIoHook';
+
+import { isDoubleKeyPressed } from './utils/doubleKeyUtils';
+
+const doubleKeyPressedTimers = {};
 
 export default (registeredHotkeys: string[]) => {
   const ioHook = useIoHook();
@@ -32,7 +32,7 @@ export default (registeredHotkeys: string[]) => {
   const handleDoubleKeyModifier = (
     doubledKeyModifier: 'cmd' | 'shift' | 'alt' | 'ctrl'
   ) => {
-    if (isDoubleKeyPressed(doubledKeyModifier)) {
+    if (isDoubleKeyPressed(doubleKeyPressedTimers, doubledKeyModifier)) {
       if (doubleKeyPressHandlers.has(doubledKeyModifier)) {
         doubleKeyPressHandlers.get(doubledKeyModifier)!();
       }
@@ -102,9 +102,13 @@ export default (registeredHotkeys: string[]) => {
         console.log('Registered keys', keys);
         console.log('Registered keycodes', keycodes);
 
+        if (!singleKeyPressHandlers.has(hotkey.toLowerCase())) {
+          throw new Error(`${hotkey} is registered but not found in handlers!`);
+        }
+
         ioHook.registerShortcut(
           keycodes,
-          singleKeyPressHandlers.get(hotkey.toLowerCase())
+          singleKeyPressHandlers.get(hotkey.toLowerCase())!
         );
       } else {
         //

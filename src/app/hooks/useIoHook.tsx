@@ -12,7 +12,6 @@ export interface IOHookKeyEvent {
 }
 
 let started = false;
-let cleanedUp = false;
 // const debug = process.env.NODE_ENV === 'development';
 const debug = false;
 
@@ -22,20 +21,10 @@ const debug = false;
 export default (): any => {
   useEffect(() => {
     if (!started) {
-      ioHook.start();
+      ioHook.start(debug);
       started = true;
     }
-
-    return () => {
-      if (!cleanedUp) {
-        ioHook.removeAllListeners();
-        ioHook.unload();
-        cleanedUp = true;
-      }
-    };
   }, []);
-
-  ioHook.start(debug);
 
   return ioHook;
 };

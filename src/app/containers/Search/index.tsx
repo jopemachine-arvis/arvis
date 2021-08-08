@@ -23,6 +23,7 @@ import {
   keyDispatchingActionHandler,
 } from '@helper/customActionHandler';
 import globalShortcutHandler from '@config/shortcuts/globalShortcutHandler';
+import ioHook from 'iohook';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -369,6 +370,13 @@ export default function SearchWindow() {
   useEffect(() => {
     Core.history.setMaxLogCnt(max_action_log_count);
   }, [max_action_log_count]);
+
+  useEffect(() => {
+    return () => {
+      ioHook.removeAllListeners();
+      ioHook.unload();
+    };
+  }, []);
 
   return (
     <OuterContainer

@@ -108,7 +108,14 @@ const HotkeyRecordForm = (props: IProps) => {
     if (recordedKeyData) {
       hotkeyChangedEventHandler();
     }
-  }, [recordedKeyData]);
+  }, [
+    recordedKeyData.keycode,
+    recordedKeyData.altKey,
+    recordedKeyData.ctrlKey,
+    recordedKeyData.doubleKeyPressed,
+    recordedKeyData.metaKey,
+    recordedKeyData.shiftKey,
+  ]);
 
   return (
     <StyledInput

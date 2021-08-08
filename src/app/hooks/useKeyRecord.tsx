@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   isAltKey,
   isCtrlKey,
   isMetaKey,
   isShiftKey,
 } from '@utils/iohook/keyUtils';
-import useIoHook, { IOHookKeyEvent } from './useIoHook';
+import useIoHook from './useIoHook';
 import { isDoubleKeyPressed } from './utils/doubleKeyUtils';
 
 type IProps = {
@@ -17,28 +17,40 @@ type RecorededKeyData = IOHookKeyEvent & {
   doubleKeyPressed: boolean;
 };
 
+const doubleKeyPressedTimers = {};
+
 export default (props: IProps) => {
   const { actived } = props;
 
+  const activedRef = useRef<boolean>(actived);
+
   const ioHook = useIoHook();
 
-  const [recordedKeyData, setRecoredKeyData] =
-    useState<RecorededKeyData | undefined>(undefined);
+  const [recordedKeyData, setRecoredKeyData] = useState<RecorededKeyData>({
+    keycode: -1,
+    altKey: false,
+    ctrlKey: false,
+    doubleKeyPressed: false,
+    metaKey: false,
+    shiftKey: false,
+    type: 'keydown',
+  });
 
-  const useKeyRecord = (e: IOHookKeyEvent) => {
+  const startRecord = (e: IOHookKeyEvent) => {
+    if (!activedRef.current) return;
+
     let isDouble = false;
 
     if (isAltKey(e)) {
-      isDouble = isDoubleKeyPressed('alt');
+      isDouble = isDoubleKeyPressed(doubleKeyPressedTimers, 'alt');
     } else if (isCtrlKey(e)) {
-      isDouble = isDoubleKeyPressed('ctrl');
+      isDouble = isDoubleKeyPressed(doubleKeyPressedTimers, 'ctrl');
     } else if (isMetaKey(e)) {
-      isDouble = isDoubleKeyPressed('meta');
+      isDouble = isDoubleKeyPressed(doubleKeyPressedTimers, 'meta');
     } else if (isShiftKey(e)) {
-      isDouble = isDoubleKeyPressed('shift');
+      isDouble = isDoubleKeyPressed(doubleKeyPressedTimers, 'shift');
     }
 
-    console.log('isDouble', isDouble);
     setRecoredKeyData({
       ...e,
       doubleKeyPressed: isDouble,
@@ -46,11 +58,14 @@ export default (props: IProps) => {
   };
 
   useEffect(() => {
-    if (actived) {
-      ioHook.on('keydown', useKeyRecord);
-    } else {
-      ioHook.off('keydown', useKeyRecord);
-    }
+    ioHook.on('keydown', startRecord);
+    return () => {
+      ioHook.off('keydown', startRecord);
+    };
+  }, []);
+
+  useEffect(() => {
+    activedRef.current = actived;
   }, [actived]);
 
   return {

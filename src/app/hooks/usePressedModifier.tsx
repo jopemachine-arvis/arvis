@@ -6,7 +6,7 @@ import {
   isMetaKey,
   isShiftKey,
 } from '@utils/iohook/keyUtils';
-import useIoHook, { IOHookKeyEvent } from './useIoHook';
+import useIoHook from './useIoHook';
 
 export default () => {
   const ioHook = useIoHook();
