@@ -20,6 +20,7 @@ export enum IPCRendererEnum {
   popupWorkflowItemMenu                      = '@ipcRenderer/popupWorkflowItemMenu',
   popupWorkflowTriggerTableItem              = '@ipcRenderer/popupWorkflowTriggerTableItem',
   registerAllShortcuts                       = '@ipcRenderer/registerAllShortcuts',
+  registerWorkflowHotkeys                    = '@ipcRenderer/registerWorkflowHotkeys',
   reloadApplication                          = '@ipcRenderer/reloadApplication',
   reloadPlugin                               = '@ipcRenderer/reloadPlugin',
   reloadWorkflow                             = '@ipcRenderer/reloadWorkflow',

@@ -34,6 +34,7 @@ import { setAutoLaunch } from './mainProcessEventHandler/config/setAutoLaunch';
 import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalShortcut';
 import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
+import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterGlobalShortcuts';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginPageItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowPageItemMenu';
@@ -73,6 +74,7 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.stopFileWatch, stopFileWatch);
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
+  ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
   ipcMain.on(
     IPCRendererEnum.toggleClipboardHistoryWindow,
     toggleClipboardHistoryWindow

@@ -12,7 +12,7 @@ import {
   SearchWindowScrollbar,
   Quicklook,
 } from '@components/index';
-import { useSearchWindowControl, useHotkey } from '@hooks/index';
+import { useSearchWindowControl, useDoubleHotkey } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -22,8 +22,13 @@ import {
   notificationActionHandler,
   keyDispatchingActionHandler,
 } from '@helper/customActionHandler';
-import globalShortcutHandler from '@config/shortcuts/globalShortcutHandler';
+import {
+  registerWorkflowHotkeys,
+  registerDefaultGlobalShortcuts,
+} from '@config/shortcuts/globalShortcutHandler';
+
 import ioHook from 'iohook';
+import { initializeDoubleKeyShortcuts } from '@config/shortcuts/iohookShortcutCallbacks';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -89,8 +94,6 @@ export default function SearchWindow() {
 
   const actionFlowManager = Core.ActionFlowManager.getInstance();
 
-  const [registeredHotkeys, setRegisteredHotkeys] = useState<string[]>([]);
-
   const setDebuggingOptions = () => {
     actionFlowManager.loggerColorType = 'gui';
     actionFlowManager.printActionType = debuggingConfig.debugging_action;
@@ -109,7 +112,7 @@ export default function SearchWindow() {
 
   const dispatch = useDispatch();
 
-  useHotkey(registeredHotkeys);
+  useDoubleHotkey();
 
   const {
     bestMatch,
@@ -151,33 +154,27 @@ export default function SearchWindow() {
     Core.registerCustomAction('keyDispatching', keyDispatchingActionHandler);
   };
 
-  const registerAllGlobalHotkey = () => {
-    const hotkeys = Core.findHotkeys();
+  const registerAllGlobalHotkeys = () => {
+    const defaultHotkeyTbls = {
+      [toggle_search_window_hotkey]: 'toggleSearchWindow',
+      [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
+    };
 
-    const registeredShortcuts = globalShortcutHandler({
-      workflowHotkeyTbl: hotkeys,
-      callbackTable: {
-        [toggle_search_window_hotkey]: 'toggleSearchWindow',
-        [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
-      },
+    // Register only double key press handler in renderer process.
+    // Other hotkeys are registered in main process.
+    registerWorkflowHotkeys(Core.findHotkeys());
+    registerDefaultGlobalShortcuts(defaultHotkeyTbls);
+
+    ipcRenderer.send(IPCRendererEnum.registerWorkflowHotkeys);
+    ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
+      defaultCallbackTable: JSON.stringify(defaultHotkeyTbls),
     });
-
-    setRegisteredHotkeys(registeredShortcuts);
-
-    if (process.env.NODE_ENV === 'development') {
-      // Remove below function after iohook issue is resolved
-      ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-        callbackTable: JSON.stringify({
-          [toggle_search_window_hotkey]: 'toggleSearchWindow',
-          [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
-        }),
-      });
-    }
   };
 
   const renewHotkeys = () => {
+    initializeDoubleKeyShortcuts();
     ipcRenderer.send(IPCRendererEnum.unregisterAllShortcuts);
-    registerAllGlobalHotkey();
+    registerAllGlobalHotkeys();
   };
 
   const ipcCallbackTbl = {
@@ -238,7 +235,7 @@ export default function SearchWindow() {
     },
 
     registerAllShortcuts: (e: IpcRendererEvent) => {
-      registerAllGlobalHotkey();
+      registerAllGlobalHotkeys();
     },
 
     pinSearchWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
@@ -303,7 +300,7 @@ export default function SearchWindow() {
       })
       .catch(console.error)
       .finally(() => {
-        registerAllGlobalHotkey();
+        registerAllGlobalHotkeys();
       });
   }, []);
 
@@ -323,8 +320,7 @@ export default function SearchWindow() {
         console.log('Resource initialzed successfully.');
         return null;
       })
-      .catch(console.error)
-      .finally(() => {});
+      .catch(console.error);
 
     ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
       sourceWindow: 'searchWindow',

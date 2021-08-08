@@ -2,64 +2,125 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 import chalk from 'chalk';
-import { ipcRenderer } from 'electron';
+import is from 'electron-is';
+import { ipcRenderer, dialog, globalShortcut } from 'electron';
 import { Core } from 'arvis-core';
 import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
-import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
+import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { extractShortcutName } from '../../helper/extractShortcutName';
-import {
-  singleKeyPressHandlers,
-  doubleKeyPressHandlers,
-  initializeKeyHandler,
-} from './iohookShortcutCallbacks';
+import { WindowManager } from '../../windows/windowManager';
+import { doubleKeyPressHandlers } from './iohookShortcutCallbacks';
+
+/**
+ * In renderer process, double keys should be registered.
+ * In main process, remaining keys should be registered.
+ * @param hotkeys
+ */
+const filterTargetHotkeys = (hotkeys: string[]): string[] => {
+  return hotkeys.filter(
+    (hotkey) => hotkey.toLowerCase().includes('double') === is.renderer()
+  );
+};
+
+/**
+ * @param title
+ * @param content
+ */
+const showErrorDialog = ({
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+}) => {
+  if (is.main()) {
+    dialog.showErrorBox(title, content);
+  } else {
+    ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+      title,
+      content,
+    });
+  }
+};
+
+/**
+ * @param actionTypes
+ */
+const shouldShowSearchWindow = (actionTypes: string[]) => {
+  return (
+    actionTypes.includes('keyword') || actionTypes.includes('scriptFilter')
+  );
+};
 
 /**
  * @param hotKeyAction
  */
-const getWorkflowHotkeyPressHandler = ({
-  hotKeyAction,
-}: {
-  hotKeyAction: Command;
-}) => {
-  const actionTypes: string[] = hotKeyAction.actions!.map(
-    (item: any) => item.type
-  );
-
-  if (actionTypes.includes('keyword') || actionTypes.includes('scriptFilter')) {
-    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, { showsUp: true });
-  }
-
-  // Force action to be executed after window shows up
-  setTimeout(() => {
-    const actionFlowManager = Core.ActionFlowManager.getInstance();
-
-    actionFlowManager.isInitialTrigger = false;
-    actionFlowManager.handleItemPressEvent(
-      {
-        actions: hotKeyAction.actions!.map((item: Action) => {
-          (item as Command).bundleId = hotKeyAction.bundleId!;
-          return item;
-        }),
-        bundleId: hotKeyAction.bundleId,
-        type: 'hotkey',
-        title: '',
-      },
-      '',
-      { normal: true }
+const getWorkflowHotkeyPressHandler =
+  ({ hotKeyAction }: { hotKeyAction: Command }) =>
+  () => {
+    const actionTypes: string[] = hotKeyAction.actions!.map(
+      (item: any) => item.type
     );
-  }, 100);
-};
+
+    if (shouldShowSearchWindow(actionTypes)) {
+      ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, { showsUp: true });
+    }
+
+    const callback = is.renderer()
+      ? () => {
+          const actionFlowManager = Core.ActionFlowManager.getInstance();
+
+          actionFlowManager.isInitialTrigger = false;
+          actionFlowManager.handleItemPressEvent(
+            {
+              actions: hotKeyAction.actions!.map((item: Action) => {
+                (item as Command).bundleId = hotKeyAction.bundleId!;
+                return item;
+              }),
+              bundleId: hotKeyAction.bundleId,
+              type: 'hotkey',
+              title: '',
+            },
+            '',
+            { normal: true }
+          );
+        }
+      : () => {
+          const searchWindow = WindowManager.getInstance().getSearchWindow();
+          searchWindow.webContents.send(IPCMainEnum.executeAction, {
+            action: hotKeyAction.actions!.map((item: Action) => {
+              (item as Command).bundleId = hotKeyAction.bundleId!;
+              return item;
+            }),
+            bundleId: hotKeyAction.bundleId,
+          });
+        };
+
+    // Force action to be executed after window shows up
+    setTimeout(() => {
+      callback();
+    }, 100);
+  };
 
 /**
  * @param shortcut
  * @param callback
  */
-const registerShortcut = (shortcut: string, callback: () => void): boolean => {
-  console.log(chalk.cyanBright(`Shortcut registered.. '${shortcut}'`));
+export const registerDoubleShortcut = (
+  shortcut: string,
+  callback: () => void
+): boolean => {
+  if (!is.renderer()) {
+    throw new Error(
+      'registerDoubleShortcut should be called in renderer process!'
+    );
+  }
+
+  console.log(chalk.cyanBright(`Double shortcut registered.. '${shortcut}'`));
 
   const loweredCaseShortcut = shortcut.toLowerCase();
 
-  // Double modifier shortcut
+  // Double modifier shortcut should be handled in renderer process.
   if (loweredCaseShortcut.includes('double')) {
     const doubledKeyModifier = extractShortcutName(
       loweredCaseShortcut.split('double')[1]
@@ -70,16 +131,37 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
       return false;
     }
 
+    console.log('shortcut registered', shortcut);
     doubleKeyPressHandlers.set(doubledKeyModifier, callback);
   }
-  // Normal modifier shortcut
-  else if (!singleKeyPressHandlers.has(loweredCaseShortcut)) {
-    singleKeyPressHandlers.set(loweredCaseShortcut, callback as () => void);
-  } else {
-    ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
-      title: 'Invalid Shortcut Assign',
-      content: `'${loweredCaseShortcut}' is not invalid hotkeys. Please reassign this hotkey`,
-    });
+
+  return true;
+};
+
+/**
+ * @param shortcut
+ * @param callback
+ */
+export const registerGlobalShortcut = (
+  shortcut: string,
+  callback: () => void
+): boolean => {
+  if (!is.main()) {
+    throw new Error('registerGlobalShortcut should be called in main process!');
+  }
+
+  const loweredCaseShortcut = shortcut.toLowerCase();
+
+  try {
+    if (globalShortcut.isRegistered(loweredCaseShortcut)) {
+      return false;
+    }
+    globalShortcut.register(loweredCaseShortcut, callback as () => void);
+  } catch (err) {
+    dialog.showErrorBox(
+      'Invalid Shortcut Assign',
+      `'${loweredCaseShortcut}' is not invalid hotkeys. Please reassign this hotkey`
+    );
   }
 
   return true;
@@ -88,70 +170,64 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
 /**
  * @param workflowHotkeyTbl
  */
-const registerWorkflowHotkeys = ({
-  workflowHotkeyTbl,
-}: {
-  workflowHotkeyTbl: Record<string, Command>;
-}) => {
-  const registered = [];
-  const hotkeys = Object.keys(workflowHotkeyTbl);
+export const registerWorkflowHotkeys = (
+  workflowHotkeyTbl: Record<string, Command>
+): void => {
+  const register = is.renderer()
+    ? registerDoubleShortcut
+    : registerGlobalShortcut;
+  const hotkeys = filterTargetHotkeys(Object.keys(workflowHotkeyTbl));
+
+  console.log('filterTargetHotkeys', hotkeys);
+
   for (const hotkey of hotkeys) {
     // Skip hotkey assigning if empty
     if (hotkey.trim() === '') {
       continue;
     }
 
-    const cb = () => {
-      getWorkflowHotkeyPressHandler({
-        hotKeyAction: workflowHotkeyTbl[hotkey],
-      });
-    };
+    const hotkeyPressHandler = getWorkflowHotkeyPressHandler({
+      hotKeyAction: workflowHotkeyTbl[hotkey],
+    });
 
-    if (!registerShortcut(hotkey, cb)) {
-      ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+    if (!register(hotkey, hotkeyPressHandler)) {
+      showErrorDialog({
         title: 'Duplicated Shortcuts Found',
         content: `'${hotkey}' has been assigned as duplicate. Please reassign hotkeys`,
       });
     }
-
-    registered.push(hotkey);
   }
-
-  return registered;
 };
 
 /**
  * @param callbackTable
- * @param workflowHotkeyTbl
  */
-export default ({
-  callbackTable,
-  workflowHotkeyTbl,
-}: {
-  callbackTable: Record<string, string>;
-  workflowHotkeyTbl: Record<string, Command>;
-}) => {
-  initializeKeyHandler();
-  const shortcuts = Object.keys(callbackTable);
+export const registerDefaultGlobalShortcuts = (
+  callbackTable: Record<string, string>
+): void => {
+  const register = is.renderer()
+    ? registerDoubleShortcut
+    : registerGlobalShortcut;
 
-  const registeredHotkeys = registerWorkflowHotkeys({ workflowHotkeyTbl });
+  const shortcuts = filterTargetHotkeys(Object.keys(callbackTable));
 
   for (const shortcut of shortcuts) {
+    if (
+      shortcut.toLowerCase().includes('double') &&
+      register !== registerDoubleShortcut
+    ) {
+      continue;
+    }
+
     const action = callbackTable[shortcut];
 
-    if (
-      !registerShortcut(shortcut, (defaultShortcutCallbackTbl as any)[action]())
-    ) {
-      ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+    if (!register(shortcut, (defaultShortcutCallbackTbl as any)[action]())) {
+      showErrorDialog({
         title: 'Duplicated Shortcuts Found',
         content: `'${shortcut}' has been assigned as duplicate. Please reassign hotkeys`,
       });
 
       continue;
     }
-
-    registeredHotkeys.push(shortcut);
   }
-
-  return registeredHotkeys;
 };

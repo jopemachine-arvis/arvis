@@ -10,23 +10,16 @@ import {
   isMetaKey,
   isShiftKey,
   keyCodeToString,
-  stringToKeyCode,
-  matchKeyToIoHookKey,
 } from '@utils/iohook/keyUtils';
 import { isWithCtrlOrCmd } from '@utils/index';
-import { extractShortcutName } from '@helper/extractShortcutName';
 import { actionTypes } from '@redux/actions/clipboardHistory';
-import {
-  doubleKeyPressHandlers,
-  singleKeyPressHandlers,
-} from '@config/shortcuts/iohookShortcutCallbacks';
+import { doubleKeyPressHandlers } from '@config/shortcuts/iohookShortcutCallbacks';
 import useIoHook from './useIoHook';
-
 import { isDoubleKeyPressed } from './utils/doubleKeyUtils';
 
 const doubleKeyPressedTimers = {};
 
-export default (registeredHotkeys: string[]) => {
+export default () => {
   const ioHook = useIoHook();
 
   const handleDoubleKeyModifier = (
@@ -40,6 +33,8 @@ export default (registeredHotkeys: string[]) => {
   };
 
   const doubleKeyPressHandler = (e: IOHookKeyEvent) => {
+    console.log('doubleKeyPressHandler');
+
     if (isShiftKey(e)) {
       handleDoubleKeyModifier('shift');
     } else if (isAltKey(e)) {
@@ -87,32 +82,4 @@ export default (registeredHotkeys: string[]) => {
       doubleKeyPressHandler(e);
     });
   }, []);
-
-  useEffect(() => {
-    ioHook.unregisterAllShortcuts();
-
-    for (const hotkey of registeredHotkeys) {
-      const keys = extractShortcutName(hotkey) as string[];
-      const keycodes = keys.map((key) =>
-        stringToKeyCode(matchKeyToIoHookKey(key))
-      );
-
-      // Double will be 'undefined', so double modifier keys are filtered here.
-      if (!keycodes.includes(undefined)) {
-        console.log('Registered keys', keys);
-        console.log('Registered keycodes', keycodes);
-
-        if (!singleKeyPressHandlers.has(hotkey.toLowerCase())) {
-          throw new Error(`${hotkey} is registered but not found in handlers!`);
-        }
-
-        ioHook.registerShortcut(
-          keycodes,
-          singleKeyPressHandlers.get(hotkey.toLowerCase())!
-        );
-      } else {
-        //
-      }
-    }
-  }, [registeredHotkeys]);
 };

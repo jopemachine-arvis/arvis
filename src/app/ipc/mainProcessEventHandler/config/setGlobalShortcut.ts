@@ -3,8 +3,7 @@
 
 import chalk from 'chalk';
 import { dialog, globalShortcut, IpcMainEvent } from 'electron';
-import toggleSearchWindow from '../../../windows/utils/toggleSearchWindow';
-import toggleClipboardHistoryWindow from '../../../windows/utils/toggleClipboardHistoryWindow';
+import defaultShortcutCallbackTbl from '../../../config/shortcuts/defaultShortcutCallbackTable';
 
 /**
  * @param shortcut
@@ -38,28 +37,23 @@ const registerShortcut = (shortcut: string, callback: () => void): boolean => {
 };
 
 /**
- * Used to register electron global shortcuts in dev mode
- * @param callbackTable
+ * Used to register electron global shortcuts
+ * @param defaultCallbackTable
  */
 export const setGlobalShortcut = (
   e: IpcMainEvent,
-  { callbackTable }: { callbackTable: any }
+  { defaultCallbackTable }: { defaultCallbackTable: any }
 ) => {
-  const callbacks = JSON.parse(callbackTable);
+  const callbackTable = JSON.parse(defaultCallbackTable);
 
-  for (const hotkey of Object.keys(callbacks)) {
-    if (hotkey.toLowerCase().includes('double')) continue;
+  for (const shortcut in callbackTable) {
+    if (shortcut.toLowerCase().includes('double')) continue;
+    const callbackName = callbackTable[shortcut];
 
-    if (globalShortcut.isRegistered(hotkey)) {
-      continue;
-    }
-
-    if (callbacks[hotkey] === 'toggleSearchWindow') {
-      registerShortcut(hotkey, () => toggleSearchWindow({ showsUp: false }));
-    }
-    if (callbacks[hotkey] === 'toggleClipboardHistoryWindow') {
-      registerShortcut(hotkey, () =>
-        toggleClipboardHistoryWindow({ showsUp: false })
+    if (!registerShortcut(shortcut, (callbackTable as any)[callbackName]())) {
+      dialog.showErrorBox(
+        'Duplicated Shortcuts Found',
+        `'${shortcut}' has been assigned as duplicate. Please reassign hotkeys`
       );
     }
   }
