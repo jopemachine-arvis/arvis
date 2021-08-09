@@ -21,9 +21,11 @@ Arvis is extendable cross-platform launcher application that aims to help you ru
 
 * Make your own search window style.
 
+:point_right: [View Arvis overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
+
 :point_right: [Visit arvis.com for check simple overview](https://jopemachine.github.io/arvis.com/)
 
-:video_camera: [View Arvis overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
+:point_right: [Check arvis documentations](https://jopemachine.github.io/arvis-docs/)
 
 https://user-images.githubusercontent.com/18283033/126311865-1fce968a-8fec-44d6-8fdb-40efcc2d3c4a.mp4
 
@@ -61,17 +63,17 @@ Click [this link](https://github.com/jopemachine/arvis/releases) and download yo
 
 Note that you should install some [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
-* [Windows](./documents/how-to-install-windows.md)
+* [Windows](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-windows/)
 
-* [Mac](./documents/how-to-install-mac.md)
+* [Mac](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-mac/)
 
-* [Linux](./documents/how-to-install-linux.md)
+* [Linux](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-linux/)
 
 ## 📓 What is Workflow, Plugin?
 
-* [What is Workflow?](./documents/workflow-intro.md)
+* [What is Workflow?](https://jopemachine.github.io/arvis-docs/documents/extension/workflow-intro/)
 
-* [What is Plugin?](./documents/plugin-intro.md)
+* [What is Plugin?](https://jopemachine.github.io/arvis-docs/documents/extension/plugin-intro/)
 
 ## 🌟 Take a look useful Workflows, Plugins
 
@@ -81,9 +83,9 @@ Note that you should install some [Extensions](#take-a-look-at-useful-workflows-
 
 ## 🔨 How to create new extensions
 
-* [Click me to check how to create new Workflows](./documents/workflow-develop.md)
+* [Click me to check how to create new Workflows](https://jopemachine.github.io/arvis-docs/documents/extension-development/workflow/)
 
-* [Click me to check how to create new Plugins](./documents/plugin-develop.md)
+* [Click me to check how to create new Plugins](https://jopemachine.github.io/arvis-docs/documents/extension-development/plugin/)
 
 ## ✨ Change appearance
 
