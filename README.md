@@ -55,7 +55,7 @@ I've thought many useful alfred-workflows can run in "cross-platform", that's wh
 
 `Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
-* [:control_knobs: Click me to check basic usage of Arvis](./documents/basic-usage.md)
+* [:control_knobs: Click me to check basic usage of Arvis](https://jopemachine.github.io/arvis-docs/documents/basic-usage/)
 
 ## 🌈 How to Install
 
