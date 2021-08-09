@@ -167,12 +167,17 @@ export default function SearchWindow() {
       [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
     };
 
+    const hotkeys = Core.findHotkeys();
+
     // Register only double key press handler in renderer process.
     // Other hotkeys are registered in main process.
-    registerWorkflowHotkeys(Core.findHotkeys());
+    registerWorkflowHotkeys(hotkeys);
     registerDefaultGlobalShortcuts(defaultHotkeyTbls);
 
-    ipcRenderer.send(IPCRendererEnum.registerWorkflowHotkeys);
+    ipcRenderer.send(IPCRendererEnum.registerWorkflowHotkeys, {
+      hotkeys: JSON.stringify(hotkeys),
+    });
+
     ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
       defaultCallbackTable: JSON.stringify(defaultHotkeyTbls),
     });

@@ -35,6 +35,7 @@ import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalSho
 import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
 import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterGlobalShortcuts';
+import { registerWorkflowHotkeys } from './mainProcessEventHandler/config/registerWorkflowHotkeys';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginPageItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowPageItemMenu';
@@ -60,6 +61,7 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
+  ipcMain.on(IPCRendererEnum.registerWorkflowHotkeys, registerWorkflowHotkeys);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.reloadPlugin, reloadPlugin);
   ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);

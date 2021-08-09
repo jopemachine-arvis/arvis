@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import is from 'electron-is';
 import { ipcRenderer, dialog, globalShortcut } from 'electron';
 import { Core } from 'arvis-core';
+import toggleSearchWindow from '@windows/utils/toggleSearchWindow';
 import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
 import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { extractShortcutName } from '../../helper/extractShortcutName';
@@ -63,7 +64,11 @@ const getWorkflowHotkeyPressHandler =
     );
 
     if (shouldShowSearchWindow(actionTypes)) {
-      ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, { showsUp: true });
+      if (is.renderer()) {
+        ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, { showsUp: true });
+      } else {
+        toggleSearchWindow({ showsUp: false });
+      }
     }
 
     const callback = is.renderer()
@@ -116,8 +121,6 @@ export const registerDoubleShortcut = (
     );
   }
 
-  console.log(chalk.cyanBright(`Double shortcut registered.. '${shortcut}'`));
-
   const loweredCaseShortcut = shortcut.toLowerCase();
 
   // Double modifier shortcut should be handled in renderer process.
@@ -131,7 +134,12 @@ export const registerDoubleShortcut = (
       return false;
     }
 
-    console.log('shortcut registered', shortcut);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        chalk.cyanBright(`Double shortcut registered.. '${shortcut}'`)
+      );
+    }
+
     doubleKeyPressHandlers.set(doubledKeyModifier, callback);
   }
 
