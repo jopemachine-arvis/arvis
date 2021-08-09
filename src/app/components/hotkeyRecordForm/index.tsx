@@ -4,8 +4,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect, useState } from 'react';
 import { getHotkeyNameOnThisPlatform } from '@utils/index';
+import useKeyRecord from '@hooks/useKeyRecord';
+import {
+  keyCodeToString,
+  isNormalKey,
+  matchIoHookKeyToKey,
+} from '@utils/iohook/keyUtils';
 import StyledInput from '../styledInput';
-import useKey from '../../../external/use-key-capture/src';
 
 type IProps = {
   hotkey: string;
@@ -18,29 +23,42 @@ type IProps = {
 const HotkeyRecordForm = (props: IProps) => {
   const { canBeEmpty, className, hotkey, onHotkeyChange, style } = props;
 
-  const { keyData } = useKey();
-
   const [hotkeyFormFocused, setHotkeyFormFocused] = useState<boolean>(false);
 
-  const hotkeyChangedEventHandler = () => {
-    if (hotkeyFormFocused) {
-      console.log('Recorded keyData', keyData);
+  const { recordedKeyData } = useKeyRecord({ actived: hotkeyFormFocused });
 
-      if (canBeEmpty && keyData.isBackspace) {
+  const hotkeyChangedEventHandler = () => {
+    if (recordedKeyData && hotkeyFormFocused) {
+      console.log('recordedKeyData', recordedKeyData);
+
+      if (
+        !isNormalKey(recordedKeyData.keycode) &&
+        !recordedKeyData.doubleKeyPressed
+      ) {
+        return;
+      }
+
+      const normalKey = recordedKeyData.doubleKeyPressed
+        ? ''
+        : matchIoHookKeyToKey(keyCodeToString(recordedKeyData.keycode));
+
+      if (canBeEmpty && normalKey === 'Backspace') {
         onHotkeyChange({
           currentTarget: {
             value: '',
           },
         } as React.FormEvent<HTMLInputElement>);
+        return;
       }
 
       let result = '';
+
       const modifiers = {
         // On mac, cmd key is handled by meta;
-        cmd: keyData.isWithMeta,
-        ctrl: keyData.isWithCtrl,
-        shift: keyData.isWithShift,
-        alt: keyData.isWithAlt,
+        cmd: recordedKeyData.metaKey,
+        ctrl: recordedKeyData.ctrlKey,
+        shift: recordedKeyData.shiftKey,
+        alt: recordedKeyData.altKey,
       };
 
       if (
@@ -58,16 +76,15 @@ const HotkeyRecordForm = (props: IProps) => {
         }
       }
 
-      const normalKey = keyData.key;
       if (normalKey) {
-        if (keyData.isSpace) {
+        if (normalKey === 'Space') {
           result += 'Space';
         } else {
           result += normalKey;
         }
       }
       // Modifier key without normal key is not allowed
-      else if (!normalKey && !keyData.doubleKeyPressed) {
+      else if (!normalKey && !recordedKeyData.doubleKeyPressed) {
         return;
       }
       // Double modifier key
@@ -76,7 +93,7 @@ const HotkeyRecordForm = (props: IProps) => {
         result = result.substring(0, result.length - 3);
       }
 
-      const doubledStr = keyData.doubleKeyPressed ? 'Double ' : '';
+      const doubledStr = recordedKeyData.doubleKeyPressed ? 'Double ' : '';
 
       if (doubledStr + result !== hotkey) {
         onHotkeyChange({
@@ -89,8 +106,17 @@ const HotkeyRecordForm = (props: IProps) => {
   };
 
   useEffect(() => {
-    hotkeyChangedEventHandler();
-  }, [keyData]);
+    if (recordedKeyData) {
+      hotkeyChangedEventHandler();
+    }
+  }, [
+    recordedKeyData.keycode,
+    recordedKeyData.altKey,
+    recordedKeyData.ctrlKey,
+    recordedKeyData.doubleKeyPressed,
+    recordedKeyData.metaKey,
+    recordedKeyData.shiftKey,
+  ]);
 
   return (
     <StyledInput

@@ -2,7 +2,7 @@ import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { Core } from 'arvis-core';
 import { clipboard, ipcRenderer } from 'electron';
 
-const logCustomAction = (action: Action) => {
+export const logCustomAction = (action: Action) => {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
   if (actionFlowManager.printActionType) {
     console.log(
@@ -14,7 +14,7 @@ const logCustomAction = (action: Action) => {
   }
 };
 
-const notificationActionHandler = (action: Action) => {
+export const notificationActionHandler = (action: Action) => {
   logCustomAction(action);
 
   ipcRenderer.send(IPCRendererEnum.showNotification, {
@@ -23,13 +23,13 @@ const notificationActionHandler = (action: Action) => {
   });
 };
 
-const clipboardActionHandler = (action: Action) => {
+export const clipboardActionHandler = (action: Action) => {
   logCustomAction(action);
 
   clipboard.writeText((action as ClipboardAction).text);
 };
 
-const keyDispatchingActionHandler = (action: Action) => {
+export const keyDispatchingActionHandler = (action: Action) => {
   logCustomAction(action);
 
   ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
@@ -38,10 +38,4 @@ const keyDispatchingActionHandler = (action: Action) => {
       (action as KeyDispatchingAction).target.modifiers
     ),
   });
-};
-
-export {
-  clipboardActionHandler,
-  notificationActionHandler,
-  keyDispatchingActionHandler,
 };

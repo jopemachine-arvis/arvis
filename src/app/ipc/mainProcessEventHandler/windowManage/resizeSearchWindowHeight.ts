@@ -1,5 +1,5 @@
 import { IpcMainEvent } from 'electron';
-import resizeEventHandler from '../../searchWindowResizeEventHandler';
+import resizeEventHandler from '../../../windows/utils/searchWindowResizeEventHandler';
 
 /**
  * Used to automatically change the height of searchWindow

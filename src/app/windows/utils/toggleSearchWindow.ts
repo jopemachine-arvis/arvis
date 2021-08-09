@@ -1,6 +1,6 @@
 import { screen } from 'electron';
-import { WindowManager } from '../windows';
-import { IPCMainEnum } from './ipcEventEnum';
+import { WindowManager } from '../windowManager';
+import { IPCMainEnum } from '../../ipc/ipcEventEnum';
 
 const handleMacOs = ({ showsUp }: { showsUp?: boolean }) => {
   const searchWindow = WindowManager.getInstance().getSearchWindow();

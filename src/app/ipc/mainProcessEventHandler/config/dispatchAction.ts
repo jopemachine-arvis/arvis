@@ -1,5 +1,5 @@
 import { IpcMainEvent } from 'electron';
-import { getDestWindow } from '../../getDestWindow';
+import { getDestWindow } from '../../../windows/utils/getDestWindow';
 import { IPCMainEnum } from '../../ipcEventEnum';
 
 /**

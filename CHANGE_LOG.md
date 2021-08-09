@@ -1,3 +1,13 @@
+# 0.9.0
+
+## What’s Changed
+
+* [fix] Fix bug that some key are not recorded in hotkeyRecordForm
+* [fix] Fix option key not working bug in search window
+* [fix] Improve quicklook html view resizing
+* [feature] Improve quicklook animation
+* [feature] Make quicklook webview navigate-preventable (Instead go to external link)
+
 # 0.8.13
 
 ## What’s Changed

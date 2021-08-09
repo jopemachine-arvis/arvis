@@ -3,7 +3,7 @@ import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
 /**
- * Used to select arvisplugin file
+ * Used to select 'arvisplugin' file
  */
 export const openPluginInstallFileDialog = async (e: IpcMainEvent) => {
   const extensions = ['arvisplugin'];
@@ -12,7 +12,7 @@ export const openPluginInstallFileDialog = async (e: IpcMainEvent) => {
     properties: ['openFile'],
     filters: [
       {
-        name: 'Arvis workflow install files',
+        name: 'Arvis plugin install files',
         extensions,
       },
     ],

@@ -92,9 +92,7 @@ export default (mainWindow: BrowserWindow) => [
       {
         label: 'Documentation',
         click() {
-          shell.openExternal(
-            'https://github.com/jopemachine/arvis/blob/master/README.md'
-          );
+          shell.openExternal('https://jopemachine.github.io/arvis-docs/');
         },
       },
       {

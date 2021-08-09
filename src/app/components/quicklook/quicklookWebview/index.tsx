@@ -77,6 +77,7 @@ export function QuicklookWebview(props: IProps) {
   useEffect(() => {
     if (!visible) return;
     const webview = document.querySelector('webview');
+
     webview!.addEventListener('did-start-loading', preventFocus);
     webview!.addEventListener('did-finish-loading', preventFocus);
 
@@ -115,7 +116,7 @@ export function QuicklookWebview(props: IProps) {
             width: '100%',
             height: '100%',
             margin: 0,
-            padding: 0,
+            paddingLeft: 10,
           }}
         />
       )}

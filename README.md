@@ -9,7 +9,7 @@
 
 Arvis is extendable cross-platform launcher application that aims to help you run, edit, create any workflow simple.
 
-## :high_brightness: Highlights
+## 🔆 Highlights
 
 * Runs on cross-platform.
 
@@ -27,7 +27,7 @@ Arvis is extendable cross-platform launcher application that aims to help you ru
 
 https://user-images.githubusercontent.com/18283033/126311865-1fce968a-8fec-44d6-8fdb-40efcc2d3c4a.mp4
 
-## :construction_worker: Still alpha version.
+## 👷 Still alpha version.
 
 Arvis is still in the construction and there could be lots of bugs.
 
@@ -55,7 +55,7 @@ I've thought many useful alfred-workflows can run in "cross-platform", that's wh
 
 * [:control_knobs: Click me to check basic usage of Arvis](./documents/basic-usage.md)
 
-## :rainbow: How to Install
+## 🌈 How to Install
 
 Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
 
@@ -67,13 +67,13 @@ Note that you should install some [Extensions](#take-a-look-at-useful-workflows-
 
 * [Linux](./documents/how-to-install-linux.md)
 
-## :notebook: What is Workflow, Plugin?
+## 📓 What is Workflow, Plugin?
 
 * [What is Workflow?](./documents/workflow-intro.md)
 
 * [What is Plugin?](./documents/plugin-intro.md)
 
-## :star2: Take a look useful Workflows, Plugins
+## 🌟 Take a look useful Workflows, Plugins
 
 * [Click me to check useful Workflows](https://github.com/jopemachine/arvis-store/blob/master/docs/workflow-links.md)
 
@@ -91,7 +91,7 @@ You can change Arvis search window's appearance to some extent.
 
 Click `Appearance` in the Preference window and import the `arvistheme` file or set values on your own.
 
-## :wrench: Build and development
+## 🔧 Build and development
 
 You can check how to build Arvis on below link.
 

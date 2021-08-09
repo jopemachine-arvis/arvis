@@ -1,5 +1,7 @@
 # How to build on Linux
 
+> This is not required for regular users. You should follow this page only if you want to build the source files yourself.
+
 ## Prerequisite
 
 * `Node` version should be more than `12.20` to develop Arvis.

@@ -3,7 +3,7 @@ import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
 /**
- * Used to select arvisworkflow file
+ * Used to select 'arvisworkflow' file
  */
 export const openWorkflowInstallFileDialog = async (e: IpcMainEvent) => {
   const extensions = ['arvisworkflow'];

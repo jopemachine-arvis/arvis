@@ -9,7 +9,6 @@ import { reloadPlugin } from './mainProcessEventHandler/reloadPlugin';
 import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
-import { triggerDoubleModifierKey } from './mainProcessEventHandler/triggerDoubleModifierKey';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
 
 import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
@@ -34,14 +33,17 @@ import { resumeFileWatch } from './mainProcessEventHandler/config/resumeFileWatc
 import { setAutoLaunch } from './mainProcessEventHandler/config/setAutoLaunch';
 import { setGlobalShortcut } from './mainProcessEventHandler/config/setGlobalShortcut';
 import { stopFileWatch } from './mainProcessEventHandler/config/stopFileWatch';
-import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterAllShortcuts';
 import { getElectronEnvs } from './mainProcessEventHandler/config/getElectronEnvs';
+import { unregisterAllShortcuts } from './mainProcessEventHandler/config/unregisterGlobalShortcuts';
+import { registerWorkflowHotkeys } from './mainProcessEventHandler/config/registerWorkflowHotkeys';
 
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginPageItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowPageItemMenu';
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/contextMenu/popupClipboardHistoryContextMenu';
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
+import { toggleClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/toggleClipboardHistoryWindow';
+import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggleSearchWindow';
 
 /**
  * Register ipc callbacks
@@ -59,6 +61,7 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
+  ipcMain.on(IPCRendererEnum.registerWorkflowHotkeys, registerWorkflowHotkeys);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.reloadPlugin, reloadPlugin);
   ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);
@@ -74,6 +77,11 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+  ipcMain.on(
+    IPCRendererEnum.toggleClipboardHistoryWindow,
+    toggleClipboardHistoryWindow
+  );
+  ipcMain.on(IPCRendererEnum.toggleSearchWindow, toggleSearchWindow);
 
   ipcMain.on(
     IPCRendererEnum.popupWorkflowTriggerTableItem,
@@ -98,11 +106,6 @@ export const initIPCHandlers = () => {
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,
     openWorkflowInstallFileDialog
-  );
-
-  ipcMain.on(
-    IPCRendererEnum.triggerDoubleModifierKey,
-    triggerDoubleModifierKey
   );
 
   ipcMain.on(

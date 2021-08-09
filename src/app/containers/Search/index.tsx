@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
+import ioHook from 'iohook';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import {
@@ -12,7 +13,11 @@ import {
   SearchWindowScrollbar,
   Quicklook,
 } from '@components/index';
-import { useSearchWindowControl, useIoHook } from '@hooks/index';
+import {
+  useSearchWindowControl,
+  useDoubleHotkey,
+  useCopyKeyCapture,
+} from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -22,6 +27,13 @@ import {
   notificationActionHandler,
   keyDispatchingActionHandler,
 } from '@helper/customActionHandler';
+import {
+  registerWorkflowHotkeys,
+  registerDefaultGlobalShortcuts,
+} from '@config/shortcuts/globalShortcutHandler';
+import { executeAction } from '@helper/executeAction';
+import { initializeDoubleKeyShortcuts } from '@config/shortcuts/iohookShortcutCallbacks';
+import { unloadIOHook } from '@utils/iohook/unloadIOHook';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -105,7 +117,9 @@ export default function SearchWindow() {
 
   const dispatch = useDispatch();
 
-  useIoHook();
+  useDoubleHotkey();
+
+  useCopyKeyCapture();
 
   const {
     bestMatch,
@@ -147,21 +161,32 @@ export default function SearchWindow() {
     Core.registerCustomAction('keyDispatching', keyDispatchingActionHandler);
   };
 
-  const registerAllGlobalHotkey = () => {
+  const registerAllGlobalHotkeys = () => {
+    const defaultHotkeyTbls = {
+      [toggle_search_window_hotkey]: 'toggleSearchWindow',
+      [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
+    };
+
     const hotkeys = Core.findHotkeys();
 
+    // Register only double key press handler in renderer process.
+    // Other hotkeys are registered in main process.
+    registerWorkflowHotkeys(hotkeys);
+    registerDefaultGlobalShortcuts(defaultHotkeyTbls);
+
+    ipcRenderer.send(IPCRendererEnum.registerWorkflowHotkeys, {
+      hotkeys: JSON.stringify(hotkeys),
+    });
+
     ipcRenderer.send(IPCRendererEnum.setGlobalShortcut, {
-      workflowHotkeyTbl: JSON.stringify(hotkeys),
-      callbackTable: {
-        [toggle_search_window_hotkey]: 'toggleSearchWindow',
-        [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
-      },
+      defaultCallbackTable: JSON.stringify(defaultHotkeyTbls),
     });
   };
 
   const renewHotkeys = () => {
+    initializeDoubleKeyShortcuts();
     ipcRenderer.send(IPCRendererEnum.unregisterAllShortcuts);
-    registerAllGlobalHotkey();
+    registerAllGlobalHotkeys();
   };
 
   const ipcCallbackTbl = {
@@ -208,21 +233,11 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { bundleId, action }: { bundleId: string; action: Action[] }
     ) => {
-      actionFlowManager.isInitialTrigger = false;
-      actionFlowManager.handleItemPressEvent(
-        {
-          actions: action,
-          bundleId,
-          type: 'hotkey',
-          title: '',
-        },
-        '',
-        { normal: true }
-      );
+      executeAction(bundleId, action);
     },
 
     registerAllShortcuts: (e: IpcRendererEvent) => {
-      registerAllGlobalHotkey();
+      registerAllGlobalHotkeys();
     },
 
     pinSearchWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
@@ -287,7 +302,7 @@ export default function SearchWindow() {
       })
       .catch(console.error)
       .finally(() => {
-        registerAllGlobalHotkey();
+        registerAllGlobalHotkeys();
       });
   }, []);
 
@@ -307,8 +322,7 @@ export default function SearchWindow() {
         console.log('Resource initialzed successfully.');
         return null;
       })
-      .catch(console.error)
-      .finally(() => {});
+      .catch(console.error);
 
     ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
       sourceWindow: 'searchWindow',
@@ -354,6 +368,10 @@ export default function SearchWindow() {
   useEffect(() => {
     Core.history.setMaxLogCnt(max_action_log_count);
   }, [max_action_log_count]);
+
+  useEffect(() => {
+    return unloadIOHook;
+  }, []);
 
   return (
     <OuterContainer

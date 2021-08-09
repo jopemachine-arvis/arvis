@@ -1,13 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import ioHook from 'iohook';
-import { ipcRenderer, clipboard } from 'electron';
-import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { keyCodeToString } from '@utils/iohook/keyTbl';
-import { isWithCtrlOrCmd } from '@utils/index';
-import { actionTypes } from '@redux/actions/clipboardHistory';
 
-interface IOHookKeyEvent {
+export interface IOHookKeyEvent {
   altKey: boolean;
   ctrlKey: boolean;
   metaKey: boolean;
@@ -16,92 +11,20 @@ interface IOHookKeyEvent {
   type: string;
 }
 
-export default () => {
-  const doubleKeyPressElapse = 200;
+let started = false;
+// const debug = process.env.NODE_ENV === 'development';
+const debug = false;
 
-  const doubleKeyPressedTimers = {};
-
-  const handleDoubleKeyModifier = (doubledKeyModifier: string) => {
-    if (
-      (doubleKeyPressedTimers as any)[doubledKeyModifier] &&
-      Date.now() - (doubleKeyPressedTimers as any)[doubledKeyModifier] <
-        doubleKeyPressElapse
-    ) {
-      ipcRenderer.send(IPCRendererEnum.triggerDoubleModifierKey, {
-        modifier: doubledKeyModifier,
-      });
-    } else {
-      (doubleKeyPressedTimers as any)[doubledKeyModifier] =
-        new Date().getTime();
-    }
-  };
-
-  const isMetaKey = (e: IOHookKeyEvent) => {
-    if (process.platform === 'darwin') {
-      // On Mac, right cmd key is double triggered. One of them's keycode is not 3676.
-      return e.keycode === 3675 || e.keycode === 3676;
-    }
-    return e.metaKey;
-  };
-
-  const isAltKey = (e: IOHookKeyEvent) => {
-    return e.altKey && (e.keycode === 56 || e.keycode === 3640);
-  };
-
-  const isShiftKey = (e: IOHookKeyEvent) => {
-    return e.shiftKey && (e.keycode === 42 || e.keycode === 54);
-  };
-
-  const isCtrlKey = (e: IOHookKeyEvent) => {
-    return e.ctrlKey && (e.keycode === 29 || e.keycode === 3613);
-  };
-
-  const cpyKeyPressed = (e: IOHookKeyEvent) => {
-    return (
-      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey }) &&
-      keyCodeToString(e.keycode) === 'c' &&
-      !e.shiftKey &&
-      !e.altKey &&
-      ((e.metaKey && !e.ctrlKey) || (!e.metaKey && e.ctrlKey))
-    );
-  };
-
+/**
+ * Use iohook as singleton
+ */
+export default (): any => {
   useEffect(() => {
-    // Currently, there is a bug that does not recognize normal keys, but only modifiers are recognized
-    ioHook.on('keydown', (e: IOHookKeyEvent) => {
-      if (cpyKeyPressed(e)) {
-        setTimeout(() => {
-          const copiedText = clipboard.readText();
-          if (copiedText !== '') {
-            ipcRenderer.send(IPCRendererEnum.dispatchAction, {
-              destWindow: 'clipboardHistoryWindow',
-              actionType: actionTypes.PUSH_CLIPBOARD_STORE,
-              args: JSON.stringify({
-                text: copiedText,
-                date: new Date().getTime(),
-              }),
-            });
-          }
-        }, 25);
-        return;
-      }
-
-      if (isShiftKey(e)) {
-        handleDoubleKeyModifier('shift');
-      } else if (isAltKey(e)) {
-        handleDoubleKeyModifier('alt');
-      } else if (isCtrlKey(e)) {
-        handleDoubleKeyModifier('ctrl');
-      } else if (isMetaKey(e)) {
-        handleDoubleKeyModifier('cmd');
-      }
-    });
-
-    ioHook.start();
-
-    return () => {
-      ioHook.removeAllListeners();
-      ioHook.unload();
-    };
+    if (!started) {
+      ioHook.start(debug);
+      started = true;
+    }
   }, []);
+
+  return ioHook;
 };

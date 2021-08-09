@@ -3,7 +3,6 @@ import { WorkflowTriggerTableItemContextMenu } from '../../../components/context
 
 /**
  * Used to popup context menu
- * @param path
  */
 export const popupWorkflowTriggerTableItem = (
   e: IpcMainEvent,

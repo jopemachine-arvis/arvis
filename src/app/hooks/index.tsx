@@ -1,14 +1,20 @@
-import { useReserveForceUpdate } from './useReserveForceUpdate';
-import useSearchWindowControl from './useSearchWindowControl';
 import useClipboardHistoryWindowControl from './useClipboardHistoryWindowControl';
-import useIoHook from './useIoHook';
-import useStoreSearchControl from './useStoreSearchControl';
 import useExtensionSearchControl from './useExtensionSearchControl';
+import useDoubleHotkey from './useDoubleHotkey';
+import useCopyKeyCapture from './useCopyKeyCapture';
+import useKeyRecord from './useKeyRecord';
+import usePressedModifier from './usePressedModifier';
+import useSearchWindowControl from './useSearchWindowControl';
+import useStoreSearchControl from './useStoreSearchControl';
+import { useReserveForceUpdate } from './useReserveForceUpdate';
 
 export {
   useClipboardHistoryWindowControl,
+  useCopyKeyCapture,
+  useDoubleHotkey,
   useExtensionSearchControl,
-  useIoHook,
+  useKeyRecord,
+  usePressedModifier,
   useReserveForceUpdate,
   useSearchWindowControl,
   useStoreSearchControl,

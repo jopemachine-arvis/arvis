@@ -3,7 +3,6 @@ import { WindowManager } from '../../../windows';
 import { IPCMainEnum } from '../../ipcEventEnum';
 
 /**
- * @summary
  */
 export const importTheme = async (e: IpcMainEvent) => {
   const extensions = ['arvistheme'];
