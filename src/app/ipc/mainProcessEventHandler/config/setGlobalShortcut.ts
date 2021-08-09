@@ -50,7 +50,12 @@ export const setGlobalShortcut = (
     if (shortcut.toLowerCase().includes('double')) continue;
     const callbackName = callbackTable[shortcut];
 
-    if (!registerShortcut(shortcut, (callbackTable as any)[callbackName]())) {
+    if (
+      !registerShortcut(
+        shortcut,
+        (defaultShortcutCallbackTbl as any)[callbackName]()
+      )
+    ) {
       dialog.showErrorBox(
         'Duplicated Shortcuts Found',
         `'${shortcut}' has been assigned as duplicate. Please reassign hotkeys`

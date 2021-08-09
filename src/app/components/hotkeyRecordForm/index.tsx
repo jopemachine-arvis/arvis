@@ -34,8 +34,9 @@ const HotkeyRecordForm = (props: IProps) => {
       if (
         !isNormalKey(recordedKeyData.keycode) &&
         !recordedKeyData.doubleKeyPressed
-      )
+      ) {
         return;
+      }
 
       const normalKey = recordedKeyData.doubleKeyPressed
         ? ''

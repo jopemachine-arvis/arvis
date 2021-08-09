@@ -178,8 +178,6 @@ export const registerWorkflowHotkeys = (
     : registerGlobalShortcut;
   const hotkeys = filterTargetHotkeys(Object.keys(workflowHotkeyTbl));
 
-  console.log('filterTargetHotkeys', hotkeys);
-
   for (const hotkey of hotkeys) {
     // Skip hotkey assigning if empty
     if (hotkey.trim() === '') {

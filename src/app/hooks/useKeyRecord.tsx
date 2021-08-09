@@ -21,7 +21,6 @@ const doubleKeyPressedTimers = {};
 
 export default (props: IProps) => {
   const { actived } = props;
-
   const activedRef = useRef<boolean>(actived);
 
   const ioHook = useIoHook();

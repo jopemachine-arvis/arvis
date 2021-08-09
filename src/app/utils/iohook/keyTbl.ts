@@ -113,13 +113,48 @@ export const keycodeTable = {
   57421: '→',
 };
 
+const alphatbetKeys: number[] = [
+  ...range(16, 25), // Alphabet
+  ...range(30, 38), // Alphabet
+  ...range(44, 50), // Alphabet
+];
+
+const numberKeys: number[] = [
+  ...range(2, 11), // Number
+];
+
+const specialCharKeys: number[] = [
+  12,
+  13, // -, =
+  26,
+  27, // [, ]
+  39,
+  40,
+  41, // ;, ', `,
+  51,
+  52,
+  53, // ',' , . , /
+];
+
+const arrowKeys: number[] = [
+  ...range(57419, 57424), // Arrow Keys
+  61008,
+  61005,
+  61003,
+  61000,
+];
+
 export const normalKeys: number[] = [
-  ...range(2, 13),
-  ...range(16, 27),
-  ...range(30, 41),
-  ...range(44, 53),
-  ...range(57419, 57424),
-  57,
+  ...alphatbetKeys,
+  ...numberKeys,
+  ...specialCharKeys,
+  ...arrowKeys,
+  14, // Backspace
+  57, // Space
+];
+
+export const modifierKeys = [
+  54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 87, 88,
 ];
 
 export const keycodeTableFliped = objectFlip(keycodeTable);
