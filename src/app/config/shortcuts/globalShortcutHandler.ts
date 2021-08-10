@@ -168,7 +168,7 @@ export const registerGlobalShortcut = (
   } catch (err) {
     dialog.showErrorBox(
       'Invalid Shortcut Assign',
-      `'${loweredCaseShortcut}' is not invalid hotkeys. Please reassign this hotkey`
+      `'${loweredCaseShortcut}' is not valid hotkeys. Please reassign this hotkey`
     );
   }
 
