@@ -5,10 +5,10 @@ import chalk from 'chalk';
 import is from 'electron-is';
 import { ipcRenderer, dialog, globalShortcut } from 'electron';
 import { Core } from 'arvis-core';
-import toggleSearchWindow from '@windows/utils/toggleSearchWindow';
 import defaultShortcutCallbackTbl from './defaultShortcutCallbackTable';
 import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { extractShortcutName } from '../../helper/extractShortcutName';
+import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
 import { WindowManager } from '../../windows/windowManager';
 import { doubleKeyPressHandlers } from './iohookShortcutCallbacks';
 
