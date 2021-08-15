@@ -36,6 +36,10 @@
   border: thin solid #282828;
 }
 
+div.jsoneditor-tree {
+  background: #12151A;
+}
+
 div.jsoneditor-value.jsoneditor-string {
   color: #fff;
 }
