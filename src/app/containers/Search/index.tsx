@@ -121,7 +121,7 @@ export default function SearchWindow() {
   useCopyKeyCapture();
 
   const {
-    bestMatch,
+    autoSuggestion,
     getInputProps,
     indexInfo,
     onDoubleClickHandler,
@@ -132,6 +132,7 @@ export default function SearchWindow() {
     onWheelHandler,
     onWorkEndHandler,
     setInputStr,
+    hasDeferedPlugins,
   } = useSearchWindowControl({
     items,
     setItems,
@@ -406,11 +407,10 @@ export default function SearchWindow() {
         hovering={hoveringOnQuicklook}
         setHovering={setHoveringOnQuicklook}
       />
-
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <SearchBar
           alwaysFocus
-          bestMatch={bestMatch}
+          autoSuggestion={autoSuggestion}
           hasDragger
           draggerColor={searchbar_dragger_color}
           getInputProps={getInputProps}
@@ -420,7 +420,7 @@ export default function SearchWindow() {
           searchbarFontColor={searchbar_font_color}
           searchbarFontSize={searchbar_font_size}
           searchbarHeight={searchbar_height}
-          spinning={isSpinning}
+          spinning={isSpinning || hasDeferedPlugins}
         />
         <SearchResultView
           demo={false}

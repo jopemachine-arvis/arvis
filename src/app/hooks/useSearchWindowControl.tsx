@@ -57,7 +57,7 @@ const useSearchWindowControl = ({
     selectedItemIdx: 0,
   });
 
-  const [bestMatch, setBestMatch] = useState<string>('');
+  const [autoSuggestion, setAutoSuggestion] = useState<string>('');
 
   const inputStr = inputRef.current
     ? (inputRef.current! as HTMLInputElement).value
@@ -70,6 +70,9 @@ const useSearchWindowControl = ({
   const isPinnedRef = useRef<boolean>(isPinned);
 
   const pressingModifiers = usePressedModifier();
+
+  const [hasDeferedPlugins, setHasDeferedPlugins] =
+    useState<boolean>(false);
 
   const {
     alt: pressingAlt,
@@ -208,12 +211,13 @@ const useSearchWindowControl = ({
     );
   };
 
-  const handleDelayedAsyncPluginItems = (
+  const handleDeferedPluginItems = (
     normalItemArr: (Command | PluginItem)[],
     unresolvedPluginItems: PCancelable<PluginExectionResult>[]
   ) => {
     if (unresolvedPluginItems.length <= 0) return;
 
+    setHasDeferedPlugins(true);
     cancelUnresolvedPluginPromises();
     unresolvedPluginPromises = unresolvedPluginItems;
 
@@ -246,6 +250,7 @@ const useSearchWindowControl = ({
               );
 
               unresolvedPluginPromises = [];
+              setHasDeferedPlugins(false);
             }
           });
       }
@@ -260,12 +265,12 @@ const useSearchWindowControl = ({
 
     try {
       if (actionFlowManager.hasEmptyTriggerStk()) {
-        setBestMatch(
+        setAutoSuggestion(
           (Core.history.getLatestMatch(updatedInput)! as Log).inputStr!
         );
       }
     } catch {
-      setBestMatch('');
+      setAutoSuggestion('');
     }
 
     cancelUnresolvedPluginPromises();
@@ -285,7 +290,7 @@ const useSearchWindowControl = ({
         });
 
         if (!scriptfilterExecuted) {
-          handleDelayedAsyncPluginItems(itemArr, unresolvedPluginItems);
+          handleDeferedPluginItems(itemArr, unresolvedPluginItems);
         }
       };
 
@@ -414,7 +419,7 @@ const useSearchWindowControl = ({
       }
     }
 
-    setBestMatch('');
+    setAutoSuggestion('');
   };
 
   /**
@@ -488,7 +493,7 @@ const useSearchWindowControl = ({
     clearIndexInfo();
     actionFlowManager.clearTriggerStk();
     setShouldBeHided(true);
-    setBestMatch('');
+    setAutoSuggestion('');
   };
 
   /**
@@ -636,10 +641,10 @@ const useSearchWindowControl = ({
 
   /**
    */
-  const bestMatchKeyAvailable = () => {
+  const autoSuggestionIsAvailable = () => {
     return (
       actionFlowManager.hasEmptyTriggerStk() &&
-      bestMatch !== '' &&
+      autoSuggestion !== '' &&
       (inputRef.current as any).selectionStart === inputStr.length
     );
   };
@@ -698,8 +703,8 @@ const useSearchWindowControl = ({
       searchByNextInput();
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'Z') {
       searchByNextInput();
-    } else if (keyData.isArrowRight && bestMatchKeyAvailable()) {
-      setInputStr({ str: bestMatch, needItemsUpdate: true });
+    } else if (keyData.isArrowRight && autoSuggestionIsAvailable()) {
+      setInputStr({ str: autoSuggestion, needItemsUpdate: true });
     }
   };
 
@@ -886,17 +891,18 @@ const useSearchWindowControl = ({
   }, [shouldBeHided]);
 
   return {
-    bestMatch,
-    setInputStr,
+    autoSuggestion,
+    getInputProps: getTargetProps,
+    hasDeferedPlugins,
     indexInfo,
-    onWheelHandler,
-    onMouseoverHandler,
     onDoubleClickHandler,
+    onInputShouldBeUpdate,
     onItemPressHandler,
     onItemShouldBeUpdate,
+    onMouseoverHandler,
+    onWheelHandler,
     onWorkEndHandler,
-    onInputShouldBeUpdate,
-    getInputProps: getTargetProps,
+    setInputStr,
   };
 };
 

@@ -10,7 +10,6 @@ const Spinner = (props: any) => {
         zIndex: 100,
         position: 'absolute',
         left: '50%',
-        top: '40%',
         ...props.style,
       }}
     />

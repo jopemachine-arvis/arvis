@@ -8,7 +8,7 @@ export const Input = styled.input`
   z-index: 100;
 `;
 
-export const AutoMatch = styled.span`
+export const AutoSuggestion = styled.span`
   position: absolute;
 `;
 

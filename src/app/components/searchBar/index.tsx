@@ -5,13 +5,13 @@ import { ipcRenderer } from 'electron';
 import React, { useEffect } from 'react';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
-import { OuterContainer, Input, AutoMatch } from './components';
+import { OuterContainer, Input, AutoSuggestion } from './components';
 import SearchbarDragger from './dragger';
 import './index.css';
 
 type IProps = {
   alwaysFocus: boolean;
-  bestMatch?: string;
+  autoSuggestion?: string;
   hasDragger?: boolean;
   draggerColor?: string;
   getInputProps?: Function;
@@ -28,7 +28,7 @@ type IProps = {
 const SearchBar = (props: IProps) => {
   const {
     alwaysFocus,
-    bestMatch,
+    autoSuggestion,
     draggerColor,
     getInputProps,
     hasContextMenu,
@@ -89,7 +89,9 @@ const SearchBar = (props: IProps) => {
         height: searchbarHeight,
       }}
     >
-      {spinning && <SearchWindowSpinner />}
+      {spinning && (
+        <SearchWindowSpinner style={{ left: undefined, right: '55px' }} />
+      )}
       <Input
         id="searchBar"
         className="searchBar"
@@ -106,16 +108,16 @@ const SearchBar = (props: IProps) => {
         onContextMenu={rightClickHandler}
         onBlur={alwaysFocus ? preventBlur : () => {}}
       />
-      {bestMatch && (
-        <AutoMatch
+      {autoSuggestion && (
+        <AutoSuggestion
           style={{
             left: itemLeftPadding,
             fontSize: searchbarFontSize,
             color: searchbarAutomatchFontColor,
           }}
         >
-          {bestMatch}
-        </AutoMatch>
+          {autoSuggestion}
+        </AutoSuggestion>
       )}
       {hasDragger && <SearchbarDragger color={draggerColor} />}
     </OuterContainer>
@@ -123,7 +125,7 @@ const SearchBar = (props: IProps) => {
 };
 
 SearchBar.defaultProps = {
-  bestMatch: '',
+  autoSuggestion: '',
   draggerColor: '#fff',
   getInputProps: undefined,
   hasContextMenu: true,
