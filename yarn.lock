@@ -8583,10 +8583,10 @@ jsoneditor-react@^3.1.1:
   dependencies:
     prop-types "^15.7.2"
 
-jsoneditor@^9.5.1:
-  version "9.5.1"
-  resolved "https://registry.yarnpkg.com/jsoneditor/-/jsoneditor-9.5.1.tgz#a84788838eb54ee54087cf289076b628281d2116"
-  integrity sha512-Kz6+Yk5L0tgrqCDMLio5QzLm0BdKMtBsWmRy3QQ1x9BhROB9OcPE2B3lHWRmgbi1GqSQ3/iKzI6YyAzZqZRiXA==
+jsoneditor@^9.5.2:
+  version "9.5.3"
+  resolved "https://registry.yarnpkg.com/jsoneditor/-/jsoneditor-9.5.3.tgz#a44cce2556a21e13db360865ed4d4224908df3da"
+  integrity sha512-KW893jRnh/s41n7Is4aNFg5Gh2h4HhE9W8L2rP1Okue3aW5Aov9SRqXs/5rmAABmlBGx1yzyPMlj4Oqw5nXQcQ==
   dependencies:
     ace-builds "^1.4.12"
     ajv "^6.12.6"
