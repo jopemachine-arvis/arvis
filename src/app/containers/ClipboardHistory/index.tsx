@@ -189,6 +189,7 @@ export default function ClipboardHistoryWindow() {
           draggerColor="#fff"
           getInputProps={getInputProps}
           hasContextMenu={false}
+          hasDragger
           isPinned={false}
           itemLeftPadding={style.itemLeftPadding}
           searchbarAutomatchFontColor="#fff"
@@ -198,8 +199,6 @@ export default function ClipboardHistoryWindow() {
           spinning={false}
         />
         <SearchResultView
-          demo
-          footerHeight={style.footerHeight}
           iconRightMargin={0}
           itemDefaultIconColor="#fff"
           itemBackgroundColor="#ccc"
@@ -211,7 +210,6 @@ export default function ClipboardHistoryWindow() {
           noShowIcon
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
-          searchbarHeight={style.searchbarHeight}
           searchResult={items}
           searchWindowTransparency={100}
           searchWindowWidth={1200}

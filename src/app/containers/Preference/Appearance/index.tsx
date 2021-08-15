@@ -249,8 +249,6 @@ export default function Appearance() {
             searchbarHeight={searchbar_height}
           />
           <SearchResultView
-            demo
-            footerHeight={search_window_footer_height}
             iconRightMargin={icon_right_margin}
             itemBackgroundColor={item_background_color}
             itemDefaultIconColor={item_default_icon_color}
@@ -262,7 +260,6 @@ export default function Appearance() {
             noShowIcon={false}
             onDoubleClickHandler={() => {}}
             onMouseoverHandler={() => {}}
-            searchbarHeight={searchbar_height}
             searchResult={mockItems}
             searchWindowTransparency={search_window_transparency}
             searchWindowWidth={search_window_width}

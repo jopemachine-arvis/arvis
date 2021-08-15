@@ -13,8 +13,6 @@ import { InnerContainer, OuterContainer } from './components';
 const cache: QuickLRU<string, boolean> = new QuickLRU({ maxSize: 1000 });
 
 type IProps = {
-  demo: boolean;
-  footerHeight: number;
   iconRightMargin: number;
   itemBackgroundColor: string;
   itemDefaultIconColor: string;
@@ -24,7 +22,6 @@ type IProps = {
   itemTitleSubtitleMargin: number;
   maxItemCount: number;
   noShowIcon: boolean;
-  searchbarHeight: number;
   searchResult: (Command | PluginItem | ScriptFilterItem)[];
   searchWindowTransparency: number;
   searchWindowWidth: number;
@@ -42,8 +39,6 @@ type IProps = {
 
 const SearchResultView = (props: IProps) => {
   const {
-    demo,
-    footerHeight,
     iconRightMargin,
     itemBackgroundColor,
     itemDefaultIconColor,
@@ -53,7 +48,6 @@ const SearchResultView = (props: IProps) => {
     itemTitleSubtitleMargin,
     maxItemCount,
     noShowIcon,
-    searchbarHeight,
     searchResult,
     searchWindowTransparency,
     searchWindowWidth,
@@ -71,19 +65,6 @@ const SearchResultView = (props: IProps) => {
     () => searchResult.slice(startIdx, startIdx + maxItemCount),
     [props]
   );
-
-  useEffect(() => {
-    if (!demo) {
-      ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
-        itemCount: searchResult.length,
-        windowWidth: searchWindowWidth,
-        maxItemCount,
-        itemHeight,
-        searchbarHeight,
-        footerHeight,
-      });
-    }
-  }, [searchResult]);
 
   return (
     <OuterContainer id="searchResultView">

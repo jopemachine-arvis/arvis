@@ -374,6 +374,18 @@ export default function SearchWindow() {
   }, []);
 
   useEffect(() => {
+    ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
+      itemCount: items.length,
+      windowWidth: search_window_width,
+      maxItemCount: max_item_count_to_show,
+      itemHeight: item_height,
+      searchbarHeight: searchbar_height,
+      footerHeight: search_window_footer_height,
+      forceMaxHeight: quicklookData.active,
+    });
+  }, [items, quicklookData.active]);
+
+  useEffect(() => {
     const scriptExecutorPath =
       process.env.NODE_ENV === 'development'
         ? require.resolve('arvis-core/scripts/scriptExecutor.js')
@@ -401,19 +413,19 @@ export default function SearchWindow() {
       onWheel={onWheelHandler}
     >
       <Quicklook
-        quicklookData={quicklookData}
-        setQuicklookData={setQuicklookData}
-        searchbarHeight={searchbar_height}
         hovering={hoveringOnQuicklook}
+        quicklookData={quicklookData}
+        searchbarHeight={searchbar_height}
         setHovering={setHoveringOnQuicklook}
+        setQuicklookData={setQuicklookData}
       />
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <SearchBar
           alwaysFocus
           autoSuggestion={autoSuggestion}
-          hasDragger
           draggerColor={searchbar_dragger_color}
           getInputProps={getInputProps}
+          hasDragger
           isPinned={isPinned}
           itemLeftPadding={item_left_padding}
           searchbarAutomatchFontColor={searchbar_automatch_font_color}
@@ -423,8 +435,6 @@ export default function SearchWindow() {
           spinning={isSpinning || hasDeferedPlugins}
         />
         <SearchResultView
-          demo={false}
-          footerHeight={search_window_footer_height}
           iconRightMargin={icon_right_margin}
           itemBackgroundColor={item_background_color}
           itemDefaultIconColor={item_default_icon_color}
@@ -436,7 +446,6 @@ export default function SearchWindow() {
           noShowIcon={false}
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
-          searchbarHeight={searchbar_height}
           searchResult={items}
           searchWindowTransparency={search_window_transparency}
           searchWindowWidth={search_window_width}

@@ -71,8 +71,7 @@ const useSearchWindowControl = ({
 
   const pressingModifiers = usePressedModifier();
 
-  const [hasDeferedPlugins, setHasDeferedPlugins] =
-    useState<boolean>(false);
+  const [hasDeferedPlugins, setHasDeferedPlugins] = useState<boolean>(false);
 
   const {
     alt: pressingAlt,

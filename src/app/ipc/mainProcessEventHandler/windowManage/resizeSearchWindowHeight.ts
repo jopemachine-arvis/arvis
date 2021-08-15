@@ -3,12 +3,6 @@ import resizeEventHandler from '../../../windows/utils/searchWindowResizeEventHa
 
 /**
  * Used to automatically change the height of searchWindow
- * @param windowWidth
- * @param itemCount
- * @param maxItemCount
- * @param itemHeight
- * @param searchbarHeight
- * @param footerHeight
  */
 export const resizeSearchWindowHeight = (
   e: IpcMainEvent,
@@ -19,6 +13,7 @@ export const resizeSearchWindowHeight = (
     itemHeight,
     searchbarHeight,
     footerHeight,
+    forceMaxHeight,
   }: {
     windowWidth: number;
     itemCount: number;
@@ -26,6 +21,7 @@ export const resizeSearchWindowHeight = (
     itemHeight: number;
     searchbarHeight: number;
     footerHeight: number;
+    forceMaxHeight: boolean;
   }
 ) => {
   resizeEventHandler({
@@ -35,5 +31,6 @@ export const resizeSearchWindowHeight = (
     itemHeight,
     maxItemCount,
     searchbarHeight,
+    forceMaxHeight,
   });
 };

@@ -7,6 +7,7 @@ import { WindowManager } from '../windowManager';
  * @param itemHeight
  * @param searchbarHeight
  * @param footerHeight
+ * @param forceMaxHeight
  */
 export default ({
   windowWidth,
@@ -15,6 +16,7 @@ export default ({
   itemHeight,
   searchbarHeight,
   footerHeight,
+  forceMaxHeight,
 }: {
   windowWidth: number;
   itemCount: number;
@@ -22,6 +24,7 @@ export default ({
   itemHeight: number;
   searchbarHeight: number;
   footerHeight: number;
+  forceMaxHeight: boolean;
 }) => {
   const searchWindow = WindowManager.getInstance().getSearchWindow();
 
@@ -31,8 +34,10 @@ export default ({
 
   if (itemCount === 0) {
     heightToSet = searchbarHeight;
-  } else {
+  } else if (itemCount >= maxItemCount || forceMaxHeight) {
     heightToSet = maxItemCount * itemHeight + searchbarHeight + footerHeight;
+  } else {
+    heightToSet = itemCount * itemHeight + searchbarHeight + footerHeight;
   }
 
   searchWindow.setBounds({ width: windowWidth, height: heightToSet }, false);
