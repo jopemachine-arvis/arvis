@@ -7,7 +7,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/jopemachine/arvis.svg)](https://GitHub.com/jopemachine/arvis/issues/)
 [![Gitter](https://badges.gitter.im/arvis-gitter/community.svg)](https://gitter.im/arvis-gitter/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Arvis is extendable cross-platform launcher application that aims to help you run, edit, create any workflow simple.
+Arvis is extendable cross-platform launcher that aims to help you run, edit, create any workflow simple.
 
 ## 🔆 Highlights
 

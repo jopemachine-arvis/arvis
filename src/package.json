@@ -43,7 +43,8 @@
     "alfred-analogue",
     "automation",
     "launcher",
-    "productivity"
+    "productivity",
+    "spotlight"
   ],
   "license": "MIT",
   "dependencies": {
