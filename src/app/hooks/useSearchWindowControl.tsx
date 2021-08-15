@@ -314,11 +314,13 @@ const useSearchWindowControl = ({
           scriptfilterShouldBeReRun &&
           updatedInput.startsWith(actionFlowManager.getTopTrigger().input)
         ) {
-          actionFlowManager.setRunningScriptfilterItem({
-            selectedItem: actionFlowManager.getTopTrigger()
-              .actionTrigger as Command,
-            setRunningText: true,
-          });
+          // console.log('setRunningScriptfilterItem!!!!!', actionFlowManager.triggerStk);
+
+          // actionFlowManager.setRunningScriptfilterItem({
+          //   selectedItem: actionFlowManager.getTopTrigger()
+          //     .actionTrigger as Command,
+          //   setRunningText: true,
+          // });
 
           Core.scriptFilterExcute(updatedInput);
         }

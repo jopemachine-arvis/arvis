@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
-import ioHook from 'iohook';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import {
@@ -319,7 +318,7 @@ export default function SearchWindow() {
 
     Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()])
       .then(() => {
-        console.log('Resource initialzed successfully.');
+        console.log('Resource initialized successfully.');
         return null;
       })
       .catch(console.error);
@@ -371,6 +370,19 @@ export default function SearchWindow() {
 
   useEffect(() => {
     return unloadIOHook;
+  }, []);
+
+  useEffect(() => {
+    const scriptExecutorPath =
+      process.env.NODE_ENV === 'development'
+        ? require.resolve('arvis-core/scripts/scriptExecutor.js')
+        : `${__dirname}/external/arvis-core/scriptExecutor.js`;
+
+    Core.startScriptExecutor(scriptExecutorPath).catch(console.error);
+
+    return () => {
+      Core.endScriptExecutor();
+    };
   }, []);
 
   return (

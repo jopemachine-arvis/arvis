@@ -81,12 +81,6 @@ export function QuicklookWebview(props: IProps) {
     webview!.addEventListener('did-start-loading', preventFocus);
     webview!.addEventListener('did-finish-loading', preventFocus);
 
-    webview!.addEventListener('will-navigate', (e) => {
-      if ((e as any).url !== src) {
-        shell.openExternal((e as any).url);
-      }
-    });
-
     webview!.addEventListener('dom-ready', () => {
       const webviewContents = remote.webContents.fromId(
         (webview! as any).getWebContentsId()

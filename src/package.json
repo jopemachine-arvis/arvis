@@ -1,8 +1,8 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.9.0",
-  "description": "Cross-platform launcher application that help you run, edit, create any workflow simple",
+  "version": "0.10.0",
+  "description": "Cross-platform launcher that help you run, edit, create any workflow simple",
   "main": "./main.prod.js",
   "homepage": "https://jopemachine.github.io/arvis.com/",
   "author": {

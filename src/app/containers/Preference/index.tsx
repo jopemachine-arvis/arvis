@@ -232,7 +232,7 @@ export default function PreferenceWindow() {
       setMacSystemPaths(),
     ])
       .then(() => {
-        console.log('resource initialzed successfully.');
+        console.log('resource initialized successfully.');
         return null;
       })
       .catch(console.error)

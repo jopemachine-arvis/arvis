@@ -1,8 +1,8 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.9.0",
-  "description": "Cross-platform launcher application that help you run, edit, create any workflow simple",
+  "version": "0.10.0",
+  "description": "Cross-platform launcher that help you run, edit, create any workflow simple",
   "homepage": "https://jopemachine.github.io/arvis.com/",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
@@ -86,7 +86,8 @@
       "package.json",
       "fontlist",
       "fonts.vbs",
-      "external/about-window/"
+      "external/about-window/",
+      "external/arvis-core/"
     ],
     "afterSign": ".erb/scripts/Notarize.js",
     "mac": {
@@ -227,7 +228,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "arvis-core": "^0.10.8",
+    "arvis-core": "^0.12.3",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.2.2",
