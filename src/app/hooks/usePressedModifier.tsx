@@ -16,30 +16,38 @@ export default () => {
   const [meta, setMeta] = useState<boolean>(false);
   const [ctrl, setCtrl] = useState<boolean>(false);
 
-  useEffect(() => {
-    ioHook.on('keydown', (e: IOHookKeyEvent) => {
-      if (isAltKey(e)) {
-        setAlt(true);
-      } else if (isShiftKey(e)) {
-        setShift(true);
-      } else if (isCtrlKey(e)) {
-        setCtrl(true);
-      } else if (isMetaKey(e)) {
-        setMeta(true);
-      }
-    });
+  const onKeydownHandler = (e: IOHookKeyEvent) => {
+    if (isAltKey(e)) {
+      setAlt(true);
+    } else if (isShiftKey(e)) {
+      setShift(true);
+    } else if (isCtrlKey(e)) {
+      setCtrl(true);
+    } else if (isMetaKey(e)) {
+      setMeta(true);
+    }
+  };
 
-    ioHook.on('keyup', (e: IOHookKeyEvent) => {
-      if (isAltKey(e)) {
-        setAlt(false);
-      } else if (isShiftKey(e)) {
-        setShift(false);
-      } else if (isCtrlKey(e)) {
-        setCtrl(false);
-      } else if (isMetaKey(e)) {
-        setMeta(false);
-      }
-    });
+  const onKeyupHandler = (e: IOHookKeyEvent) => {
+    if (isAltKey(e)) {
+      setAlt(false);
+    } else if (isShiftKey(e)) {
+      setShift(false);
+    } else if (isCtrlKey(e)) {
+      setCtrl(false);
+    } else if (isMetaKey(e)) {
+      setMeta(false);
+    }
+  };
+
+  useEffect(() => {
+    ioHook.on('keydown', onKeydownHandler);
+    ioHook.on('keyup', onKeyupHandler);
+
+    return () => {
+      ioHook.off('keydown', onKeydownHandler);
+      ioHook.off('keyup', onKeyupHandler);
+    };
   }, []);
 
   return {

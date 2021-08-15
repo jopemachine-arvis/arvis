@@ -28,7 +28,7 @@ const OuterContainer = styled.div`
   }
 `;
 
-// Simulating mobile phone
+// Simulating mobile phone if possible
 const userAgent =
   'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko; googleweblight) Chrome/38.0.1025.166 Mobile Safari/535.19';
 
@@ -49,7 +49,7 @@ export function QuicklookWebview(props: IProps) {
     (document.getElementById('searchBar') as HTMLInputElement).focus();
   };
 
-  const emulatedKeyboardEvent = (e: any, input: any) => {
+  const emulateKeyboardEvent = (e: any, input: any) => {
     if (input.type !== 'keyDown') {
       return;
     }
@@ -85,7 +85,11 @@ export function QuicklookWebview(props: IProps) {
       const webviewContents = remote.webContents.fromId(
         (webview! as any).getWebContentsId()
       );
-      webviewContents.on('before-input-event', emulatedKeyboardEvent);
+      webviewContents.on('before-input-event', emulateKeyboardEvent);
+      webviewContents.on('new-window', (e, url) => {
+        e.preventDefault();
+        shell.openExternal(url);
+      });
     });
   }, []);
 
@@ -110,7 +114,6 @@ export function QuicklookWebview(props: IProps) {
             width: '100%',
             height: '100%',
             margin: 0,
-            paddingLeft: 10,
           }}
         />
       )}

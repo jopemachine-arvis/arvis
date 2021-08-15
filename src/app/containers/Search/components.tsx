@@ -6,4 +6,6 @@ export const OuterContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  border-right: 2px solid #444;
+  border-bottom: 2px solid #444;
 `;

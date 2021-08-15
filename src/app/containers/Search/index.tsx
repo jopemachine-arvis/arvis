@@ -313,6 +313,18 @@ export default function SearchWindow() {
   }, []);
 
   useEffect(() => {
+    return unloadIOHook;
+  }, []);
+
+  useEffect(() => {
+    Core.setAsyncPluginTimer(async_plugin_timer);
+  }, [async_plugin_timer]);
+
+  useEffect(() => {
+    Core.history.setMaxLogCnt(max_action_log_count);
+  }, [max_action_log_count]);
+
+  useEffect(() => {
     initializeCustomActions();
     initilizeSearchWindowIPCHandler();
     registerRendererUpdater();
@@ -362,18 +374,6 @@ export default function SearchWindow() {
   }, [toggle_search_window_hotkey, clipboard_history_hotkey]);
 
   useEffect(() => {
-    Core.setAsyncPluginTimer(async_plugin_timer);
-  }, [async_plugin_timer]);
-
-  useEffect(() => {
-    Core.history.setMaxLogCnt(max_action_log_count);
-  }, [max_action_log_count]);
-
-  useEffect(() => {
-    return unloadIOHook;
-  }, []);
-
-  useEffect(() => {
     ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {
       itemCount: items.length,
       windowWidth: search_window_width,
@@ -412,13 +412,15 @@ export default function SearchWindow() {
       }}
       onWheel={onWheelHandler}
     >
-      <Quicklook
-        hovering={hoveringOnQuicklook}
-        quicklookData={quicklookData}
-        searchbarHeight={searchbar_height}
-        setHovering={setHoveringOnQuicklook}
-        setQuicklookData={setQuicklookData}
-      />
+      {items.length > 0 && (
+        <Quicklook
+          hovering={hoveringOnQuicklook}
+          quicklookData={quicklookData}
+          searchbarHeight={searchbar_height}
+          setHovering={setHoveringOnQuicklook}
+          setQuicklookData={setQuicklookData}
+        />
+      )}
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <SearchBar
           alwaysFocus

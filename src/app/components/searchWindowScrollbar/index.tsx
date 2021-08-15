@@ -58,7 +58,7 @@ const SearchWindowScrollbar = (props: IProps) => {
 SearchWindowScrollbar.defaultProps = {
   positionStyle: {
     position: 'absolute',
-    right: 2,
+    right: 4,
   },
 };
 

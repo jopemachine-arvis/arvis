@@ -6,7 +6,7 @@ import isPromise from 'is-promise';
 import Spinner from '../searchWindowSpinner';
 import { QuicklookWebview } from './quicklookWebview';
 import { QuicklookText } from './quicklookText';
-import { HandleBar } from './components';
+import { HandleBar, InnerHandleBarColor } from './components';
 import MarkdownRenderer from '../markdownRenderer';
 
 // Ref: For better boxShadow styles, refer to https://getcssscan.com/css-box-shadow-examples
@@ -157,7 +157,9 @@ export default (props: IProps) => {
     }
   };
 
-  const onMouseUpEventHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+  const onMouseUpEventHandler = (
+    e: React.MouseEvent<HTMLInputElement> | MouseEvent
+  ) => {
     onResizingRef.current = false;
     setOnResizing(false);
   };
@@ -189,6 +191,8 @@ export default (props: IProps) => {
   useEffect(() => {
     (document.getElementById('searchWindow') as HTMLDivElement).onmousemove =
       onMouseMoveEventHandler;
+    (document.getElementById('searchWindow') as HTMLDivElement).onmouseup =
+      onMouseUpEventHandler;
   }, []);
 
   useEffect(() => {
@@ -254,8 +258,11 @@ export default (props: IProps) => {
       {contents}
       <HandleBar
         onMouseDown={onMouseDownEventHandler}
-        onMouseUp={onMouseUpEventHandler}
-      />
+        onMouseUp={onMouseUpEventHandler as (e: React.MouseEvent) => void}
+      >
+        <InnerHandleBarColor />
+        <InnerHandleBarColor style={{ marginLeft: 2 }} />
+      </HandleBar>
     </animated.div>
   );
 };
