@@ -17,7 +17,7 @@ import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
 import chalk from 'chalk';
 import { isFirstAppLaunch } from 'electron-util';
-import { IPCMainEnum, IPCRendererEnum } from './app/ipc/ipcEventEnum';
+import { IPCMainEnum } from './app/ipc/ipcEventEnum';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {
@@ -30,6 +30,7 @@ import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
 import { reduxStoreResetHandler } from './app/store/reduxStoreResetHandler';
+import { autoFitSearchWindowSize } from './app/windows/utils/autoFitSearchWindowSize';
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -114,9 +115,7 @@ app.on('ready', () => {
         )
       );
 
-      windowManager
-        .getSearchWindow()
-        .webContents.send(IPCMainEnum.autoFitSearchWindowSize);
+      autoFitSearchWindowSize();
 
       windowManager
         .getPreferenceWindow()

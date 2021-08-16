@@ -83,6 +83,9 @@ export default function SearchWindow() {
   const [isSpinning, setSpinning] = useState<boolean>(false);
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
+  const [resizedSearchWindowWidth, setResizedWindowWidth] =
+    useState<number>(search_window_width);
+
   const [quicklookData, setQuicklookData] = useState<QuicklookData>({
     type: undefined,
     data: undefined,
@@ -250,6 +253,13 @@ export default function SearchWindow() {
     ) => {
       Core.setExternalEnvs(JSON.parse(externalEnvs));
     },
+
+    resizeCurrentSearchWindowWidth: (
+      e: IpcRendererEvent,
+      { width }: { width: number }
+    ) => {
+      setResizedWindowWidth(width);
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
@@ -258,6 +268,10 @@ export default function SearchWindow() {
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
     ipcRenderer.on(IPCMainEnum.pinSearchWindow, ipcCallbackTbl.pinSearchWindow);
+    ipcRenderer.on(
+      IPCMainEnum.resizeCurrentSearchWindowWidth,
+      ipcCallbackTbl.resizeCurrentSearchWindowWidth
+    );
     ipcRenderer.on(
       IPCMainEnum.getElectronEnvsRet,
       ipcCallbackTbl.getElectronEnvsRet
@@ -277,6 +291,10 @@ export default function SearchWindow() {
     ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.off(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
+    ipcRenderer.off(
+      IPCMainEnum.resizeCurrentSearchWindowWidth,
+      ipcCallbackTbl.resizeCurrentSearchWindowWidth
+    );
     ipcRenderer.off(
       IPCMainEnum.getElectronEnvsRet,
       ipcCallbackTbl.getElectronEnvsRet
@@ -401,6 +419,7 @@ export default function SearchWindow() {
   return (
     <OuterContainer
       id="searchWindow"
+      onWheel={onWheelHandler}
       style={{
         borderRadius: search_window_border_radius,
         fontFamily: global_font,
@@ -410,13 +429,14 @@ export default function SearchWindow() {
           search_window_transparency
         ),
       }}
-      onWheel={onWheelHandler}
     >
       {items.length > 0 && (
         <Quicklook
           hovering={hoveringOnQuicklook}
           quicklookData={quicklookData}
+          resizedSearchWindowWidth={resizedSearchWindowWidth}
           searchbarHeight={searchbar_height}
+          searchWindowWidth={search_window_width}
           setHovering={setHoveringOnQuicklook}
           setQuicklookData={setQuicklookData}
         />

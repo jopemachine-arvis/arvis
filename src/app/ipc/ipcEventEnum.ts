@@ -47,7 +47,6 @@ export enum IPCRendererEnum {
  */
 export enum IPCMainEnum {
   autoFitSearchWindowSize                    = '@ipcMain/autoFitSearchWindowSize',
-  autoFitSearchWindowSizeRet                 = '@ipcMain/autoFitSearchWindowSizeRet',
   executeAction                              = '@ipcMain/executeAction',
   fetchAction                                = '@ipcMain/fetchAction',
   forwardClipboardData                       = '@ipcMain/forwardClipboardData',
@@ -73,4 +72,5 @@ export enum IPCMainEnum {
   togglePluginsEnabled                       = '@ipcMain/togglePluginsEnabled',
   toggleWorkflowsEnabled                     = '@ipcMain/toggleWorkflowsEnabled',
   openWalkThroughModalbox                    = '@ipcMain/openWalkThroughModalbox',
+  resizeCurrentSearchWindowWidth             = '@ipcMain/resizeCurrentSearchWindowWidth',
 }

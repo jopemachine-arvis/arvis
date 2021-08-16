@@ -68,6 +68,13 @@ const createSearchWindow = ({
     searchWindow.webContents.send(IPCMainEnum.searchWindowShowCallback);
   });
 
+  searchWindow.on('resize', () => {
+    const [width] = searchWindow.getSize();
+    searchWindow.webContents.send(IPCMainEnum.resizeCurrentSearchWindowWidth, {
+      width,
+    });
+  });
+
   return searchWindow;
 };
 

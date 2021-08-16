@@ -1,12 +1,12 @@
-import { IpcMainEvent, screen } from 'electron';
-import { IPCMainEnum } from '../../ipcEventEnum';
-import { WindowManager } from '../../../windows';
+import { screen } from 'electron';
+import { IPCMainEnum } from '../../ipc/ipcEventEnum';
+import { WindowManager } from '..';
 
 /**
  * Adjust the setting value to match the size of the user screen
  * Only called when arvis run first time.
  */
-export const autoFitSearchWindowSize = (e: IpcMainEvent) => {
+export const autoFitSearchWindowSize = () => {
   const screenWidth = screen.getPrimaryDisplay().size.width;
 
   const minWidth = 450;
@@ -23,5 +23,5 @@ export const autoFitSearchWindowSize = (e: IpcMainEvent) => {
 
   WindowManager.getInstance()
     .getPreferenceWindow()
-    .webContents.send(IPCMainEnum.autoFitSearchWindowSizeRet, { width });
+    .webContents.send(IPCMainEnum.autoFitSearchWindowSize, { width });
 };

@@ -134,7 +134,7 @@ export default function PreferenceWindow() {
       setFontList(fonts);
     },
 
-    autoFitSearchWindowSizeRet: (
+    autoFitSearchWindowSize: (
       e: Electron.IpcRendererEvent,
       { width }: { width: number }
     ) => {
@@ -262,8 +262,8 @@ export default function PreferenceWindow() {
       ipcCallbackTbl.resetReduxStoreCallback
     );
     ipcRenderer.on(
-      IPCMainEnum.autoFitSearchWindowSizeRet,
-      ipcCallbackTbl.autoFitSearchWindowSizeRet
+      IPCMainEnum.autoFitSearchWindowSize,
+      ipcCallbackTbl.autoFitSearchWindowSize
     );
     ipcRenderer.on(
       IPCMainEnum.getElectronEnvsRet,
@@ -294,8 +294,8 @@ export default function PreferenceWindow() {
         ipcCallbackTbl.getElectronEnvsRet
       );
       ipcRenderer.off(
-        IPCMainEnum.autoFitSearchWindowSizeRet,
-        ipcCallbackTbl.autoFitSearchWindowSizeRet
+        IPCMainEnum.autoFitSearchWindowSize,
+        ipcCallbackTbl.autoFitSearchWindowSize
       );
       ipcRenderer.off(
         IPCMainEnum.setPreferencePage,

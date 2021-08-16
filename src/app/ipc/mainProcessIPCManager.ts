@@ -11,7 +11,6 @@ import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
 
-import { autoFitSearchWindowSize } from './mainProcessEventHandler/windowManage/autoFitSearchWindowSize';
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
 import { hideClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/hideClipboardHistoryWindow';
@@ -49,7 +48,6 @@ import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggl
  * Register ipc callbacks
  */
 export const initIPCHandlers = () => {
-  ipcMain.on(IPCRendererEnum.autoFitSearchWindowSize, autoFitSearchWindowSize);
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getElectronEnvs, getElectronEnvs);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);

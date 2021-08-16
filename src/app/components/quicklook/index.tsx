@@ -9,11 +9,17 @@ import { QuicklookText } from './quicklookText';
 import { HandleBar, InnerHandleBarColor } from './components';
 import MarkdownRenderer from '../markdownRenderer';
 
+let handleBarOriginalPos = -1;
+let resizedWindowOffset = 0;
+
+const quicklookEdgeWidth = 45;
+const quicklookWidth = 350;
+
 // Ref: For better boxShadow styles, refer to https://getcssscan.com/css-box-shadow-examples
 const outerStyle: Record<string, any> = {
   position: 'absolute',
   right: 0,
-  width: 350,
+  width: quicklookWidth,
   zIndex: 2000,
   display: 'flex',
   justifyContent: 'center',
@@ -27,11 +33,9 @@ type IProps = {
   hovering: boolean;
   setHovering: (bool: boolean) => void;
   searchbarHeight: number;
+  resizedSearchWindowWidth: number;
+  searchWindowWidth: number;
 };
-
-let handleBarOriginalPos = -1;
-
-const quicklookEdgeWidth = 45;
 
 const useModalAnimation = ({
   initialRendering,
@@ -45,7 +49,7 @@ const useModalAnimation = ({
   useSpring({
     from: {
       opacity: 0,
-      horizontalOffset: 350 - quicklookEdgeWidth + handleBarOffset,
+      horizontalOffset: quicklookWidth - quicklookEdgeWidth + handleBarOffset,
     },
     to: {
       opacity: 1,
@@ -57,28 +61,31 @@ const useModalAnimation = ({
 
 export default (props: IProps) => {
   const {
-    quicklookData,
-    setQuicklookData,
-    searchbarHeight,
     hovering,
+    quicklookData,
+    resizedSearchWindowWidth,
+    searchbarHeight,
+    searchWindowWidth,
     setHovering,
+    setQuicklookData,
   } = props;
+
   const { active, data, type } = quicklookData;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
 
   const [handleBarOffset, setHandlerBarOffset] = useState<number>(0);
 
+  const [contents, setContents] = useState<any>();
+
+  const [onResizing, setOnResizing] = useState<boolean>(false);
+  const onResizingRef = useRef<boolean>(onResizing);
+
   const modalAnimation = useModalAnimation({
     initialRendering,
     reverse: !active && !hovering,
     handleBarOffset,
   });
-
-  const [contents, setContents] = useState<any>();
-
-  const [onResizing, setOnResizing] = useState<boolean>(false);
-  const onResizingRef = useRef<boolean>(onResizing);
 
   const getInnerContainer = async () => {
     let targetData = data;
@@ -165,7 +172,7 @@ export default (props: IProps) => {
   };
 
   const quicklookResizeHandler = (clientX: number) => {
-    setHandlerBarOffset(handleBarOriginalPos - clientX);
+    setHandlerBarOffset(handleBarOriginalPos - clientX + resizedWindowOffset);
   };
 
   const onMouseMoveEventHandler = (e: MouseEvent) => {
@@ -194,6 +201,10 @@ export default (props: IProps) => {
     (document.getElementById('searchWindow') as HTMLDivElement).onmouseup =
       onMouseUpEventHandler;
   }, []);
+
+  useEffect(() => {
+    resizedWindowOffset = resizedSearchWindowWidth - searchWindowWidth;
+  }, [resizedSearchWindowWidth]);
 
   useEffect(() => {
     updateContent();
@@ -247,7 +258,7 @@ export default (props: IProps) => {
         color: '#000',
         backgroundColor: '#fff',
         marginTop: searchbarHeight,
-        width: 350 + handleBarOffset,
+        width: quicklookWidth + handleBarOffset,
         height: `calc(100% - ${searchbarHeight}px)`,
         opacity: modalAnimation.opacity,
         transform: modalAnimation.horizontalOffset.to(
