@@ -2,7 +2,6 @@
  * Events sent from renderer process to main process
  */
 export enum IPCRendererEnum {
-  autoFitSearchWindowSize                    = '@ipcRenderer/autoFitSearchWindowSize',
   dispatchAction                             = '@ipcRenderer/dispatchAction',
   getElectronEnvs                            = '@ipcRenderer/getElectronEnvs',
   getSystemFont                              = '@ipcRenderer/getSystemFont',
@@ -47,6 +46,7 @@ export enum IPCRendererEnum {
  * Events sent from main process to renderer process
  */
 export enum IPCMainEnum {
+  autoFitSearchWindowSize                    = '@ipcMain/autoFitSearchWindowSize',
   autoFitSearchWindowSizeRet                 = '@ipcMain/autoFitSearchWindowSizeRet',
   executeAction                              = '@ipcMain/executeAction',
   fetchAction                                = '@ipcMain/fetchAction',
@@ -72,4 +72,5 @@ export enum IPCMainEnum {
   setSearchbarInput                          = '@ipcMain/setSearchbarInput',
   togglePluginsEnabled                       = '@ipcMain/togglePluginsEnabled',
   toggleWorkflowsEnabled                     = '@ipcMain/toggleWorkflowsEnabled',
+  openWalkThroughModalbox                    = '@ipcMain/openWalkThroughModalbox',
 }

@@ -25,7 +25,7 @@ export const installExtension = async ({
 }: {
   extensionType: 'workflow' | 'plugin';
   bundleId: string;
-  installType: string;
+  installType: 'npm' | 'local';
 }): Promise<void> => {
   if (!(await checkPermissionOnWindows())) return;
 
@@ -56,6 +56,7 @@ export const installExtension = async ({
         break;
     }
   } catch (err) {
+    console.log('error!!!!', err);
     ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
       title: 'Error occurs during installation!',
       content: err.message,
@@ -70,7 +71,7 @@ export const uninstallExtension = async ({
 }: {
   extensionType: string;
   bundleId: string;
-  installType: string;
+  installType: 'npm' | 'local';
 }): Promise<void> => {
   if (!(await checkPermissionOnWindows())) return;
 

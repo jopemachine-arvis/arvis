@@ -17,12 +17,12 @@ import { Button } from 'reactstrap';
 import { SearchBar, StyledInput } from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { SpinnerContext } from '@helper/spinnerContext';
-import ExtensionInfoTable from './infoTable';
-import ExtensionDefaultImg from '../../../../../assets/images/extensionDefaultIcon.svg';
 import {
   installExtension,
   uninstallExtension,
-} from './extensionDownloadHandler';
+} from '@helper/extensionDownloadHandler';
+import ExtensionInfoTable from './infoTable';
+import ExtensionDefaultImg from '../../../../../assets/images/extensionDefaultIcon.svg';
 import {
   Header,
   OuterContainer,

@@ -11,6 +11,7 @@ import SearchWindowSpinner from './searchWindowSpinner';
 import Spinner from './spinner';
 import StyledInput from './styledInput';
 import TrayBuilder from './tray';
+import WalkThroughModal from './walkThrough';
 
 export {
   HotkeyRecordForm,
@@ -26,4 +27,5 @@ export {
   Spinner,
   StyledInput,
   TrayBuilder,
+  WalkThroughModal,
 };

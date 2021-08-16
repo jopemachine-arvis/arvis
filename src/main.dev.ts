@@ -17,7 +17,7 @@ import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
 import chalk from 'chalk';
 import { isFirstAppLaunch } from 'electron-util';
-import { IPCRendererEnum } from './app/ipc/ipcEventEnum';
+import { IPCMainEnum, IPCRendererEnum } from './app/ipc/ipcEventEnum';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {
@@ -116,7 +116,11 @@ app.on('ready', () => {
 
       windowManager
         .getSearchWindow()
-        .webContents.send(IPCRendererEnum.autoFitSearchWindowSize);
+        .webContents.send(IPCMainEnum.autoFitSearchWindowSize);
+
+      windowManager
+        .getPreferenceWindow()
+        .webContents.send(IPCMainEnum.openWalkThroughModalbox);
     }
 
     startFileWatcher();

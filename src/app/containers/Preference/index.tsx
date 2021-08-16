@@ -11,7 +11,7 @@ import fse from 'fs-extra';
 import _ from 'lodash';
 import { searchMostTotalDownload } from 'arvis-store';
 import { StateType } from '@redux/reducers/types';
-import { ScreenCover, Spinner } from '@components/index';
+import { ScreenCover, Spinner, WalkThroughModal } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
@@ -47,6 +47,9 @@ export default function PreferenceWindow() {
   const [fontList, setFontList] = useState<string[]>([]);
 
   const [allStoreExtensions, setAllStoreExtensions] = useState<any[]>([]);
+
+  const [walkThroughModalOpened, setWalkThroughModalOpened] =
+    useState<boolean>(false);
 
   const store = useStore();
 
@@ -154,6 +157,10 @@ export default function PreferenceWindow() {
 
     resetReduxStoreCallback: (e: IpcRendererEvent) => {
       resetReduxStore({ resetOnlyInvalid: false });
+    },
+
+    openWalkThroughModalbox: (e: IpcRendererEvent) => {
+      setWalkThroughModalOpened(true);
     },
   };
 
@@ -266,6 +273,10 @@ export default function PreferenceWindow() {
       IPCMainEnum.setPreferencePage,
       ipcCallbackTbl.setPreferencePage
     );
+    ipcRenderer.on(
+      IPCMainEnum.openWalkThroughModalbox,
+      ipcCallbackTbl.openWalkThroughModalbox
+    );
 
     return () => {
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
@@ -289,6 +300,10 @@ export default function PreferenceWindow() {
       ipcRenderer.off(
         IPCMainEnum.setPreferencePage,
         ipcCallbackTbl.setPreferencePage
+      );
+      ipcRenderer.off(
+        IPCMainEnum.openWalkThroughModalbox,
+        ipcCallbackTbl.openWalkThroughModalbox
       );
     };
   }, []);
@@ -335,6 +350,11 @@ export default function PreferenceWindow() {
     return <MainContainer>{mainContent}</MainContainer>;
   };
 
+  useEffect(() => {
+    // For debugging
+    ipcCallbackTbl.openWalkThroughModalbox(undefined as any);
+  }, []);
+
   return (
     <OuterContainer
       style={{
@@ -346,6 +366,10 @@ export default function PreferenceWindow() {
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <Sidebar page={page} setPage={setPage} />
         {renderMain()}
+        <WalkThroughModal
+          opened={walkThroughModalOpened}
+          setOpened={setWalkThroughModalOpened}
+        />
       </SpinnerContext.Provider>
     </OuterContainer>
   );

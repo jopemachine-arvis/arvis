@@ -1,3 +1,6 @@
+// arvis-core
+// last edited: '0.12.4'
+
 const execa = require('execa');
 
 let executionTimer;
@@ -26,7 +29,7 @@ const clearExecutionTimer = () => {
 const handleExecute = (id, scriptStr, executorOptions) => {
   let payload;
 
-  // Cleer previous script execution timer.
+  // Clear previous script execution timer.
   clearExecutionTimer();
 
   const handler = () => {

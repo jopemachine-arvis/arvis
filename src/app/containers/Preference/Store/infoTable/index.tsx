@@ -25,7 +25,7 @@ type IProps = {
   }: {
     extensionType: 'workflow' | 'plugin';
     bundleId: string;
-    installType: string;
+    installType: 'npm' | 'local';
   }) => Promise<void>;
   uninstallExtension: ({
     extensionType,
@@ -34,7 +34,7 @@ type IProps = {
   }: {
     extensionType: 'workflow' | 'plugin';
     bundleId: string;
-    installType: string;
+    installType: 'npm' | 'local';
   }) => Promise<void>;
 };
 
