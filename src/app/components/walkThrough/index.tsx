@@ -131,7 +131,6 @@ const WalkThroughModal = (props: IProps) => {
       recommendList
         .filter((_extension: string, idx: number) => extensionCheckedList[idx])
         .map((extension: string) => {
-          console.log(`Try to install '${extension}' ..`);
           return installExtension({
             installType: 'npm',
             bundleId: extension,

@@ -29,8 +29,6 @@ const HotkeyRecordForm = (props: IProps) => {
 
   const hotkeyChangedEventHandler = () => {
     if (recordedKeyData && hotkeyFormFocused) {
-      console.log('recordedKeyData', recordedKeyData);
-
       if (
         !isNormalKey(recordedKeyData.keycode) &&
         !recordedKeyData.doubleKeyPressed

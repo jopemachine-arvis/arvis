@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
+import fse from 'fs-extra';
 import {
   SearchBar,
   SearchResultView,
@@ -409,7 +410,11 @@ export default function SearchWindow() {
         ? require.resolve('arvis-core/scripts/scriptExecutor.js')
         : `${__dirname}/external/arvis-core/scriptExecutor.js`;
 
-    Core.startScriptExecutor(scriptExecutorPath).catch(console.error);
+    if (!fse.pathExistsSync(scriptExecutorPath)) {
+      throw new Error('ScriptExecutor script not found!');
+    }
+
+    Core.startScriptExecutor(scriptExecutorPath);
 
     return () => {
       Core.endScriptExecutor();

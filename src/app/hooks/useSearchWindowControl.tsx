@@ -318,8 +318,6 @@ const useSearchWindowControl = ({
           scriptfilterShouldBeReRun &&
           updatedInput.startsWith(actionFlowManager.getTopTrigger().input)
         ) {
-          // console.log('setRunningScriptfilterItem!!!!!', actionFlowManager.triggerStk);
-
           // actionFlowManager.setRunningScriptfilterItem({
           //   selectedItem: actionFlowManager.getTopTrigger()
           //     .actionTrigger as Command,

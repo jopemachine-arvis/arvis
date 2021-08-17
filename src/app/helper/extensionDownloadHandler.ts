@@ -56,7 +56,6 @@ export const installExtension = async ({
         break;
     }
   } catch (err) {
-    console.log('error!!!!', err);
     ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
       title: 'Error occurs during installation!',
       content: err.message,
