@@ -1,3 +1,20 @@
+# 0.10.1
+
+## What’s Changed
+
+* [fix] Fix some typos on error messages
+* [fix] Fix search window auto fit bug when first launched
+* [fix] Add dragger to clipboardHistory window
+* [fix] Fix auto launch feature bug on linux
+* [fix, optimize] Fix [severe performance issue on script execution on macos](https://github.com/jopemachine/arvis-core/issues/2)
+* [fix, revert] Improve search window resizing
+* [revert] Revert navigate-preventable quicklook webview
+* [feature] Implement open browser feature by clicking link with pressing modifier key in quicklook webview
+* [feature] Update search window's spinner style 
+* [feature] Indicate search window's spinner when deferred async plugin is executing
+* [feature] Add right, bottom border color to search window
+* [feature] Implement walkthrough modalbox when first run
+
 # 0.9.0
 
 ## What’s Changed

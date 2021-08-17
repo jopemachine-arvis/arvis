@@ -106,7 +106,7 @@ app.on('ready', () => {
       openArvisFile(openFile);
     }
 
-    if (true) {
+    if (isFirstAppLaunch()) {
       windowManager.registerFirstRunCallback(handleFirstRun);
     }
 
