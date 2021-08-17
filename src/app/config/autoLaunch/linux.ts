@@ -10,11 +10,15 @@ export const linuxAutoLauncher = {
   enable: () => {
     return fse
       .readdir(`${os.homedir()}/Applications`)
-      .then((files) => {
+      .then(async (files) => {
+        if (!(await pathExists(`${os.homedir}/.config/autostart`))) {
+          await fse.mkdir(`${os.homedir}/.config/autostart`);
+        }
+
         for (const fileName of files) {
           if (fileName.startsWith('Arvis')) {
             const data = `[Desktop Entry]
-Type=Application
+Type=Applicationcd
 Version=1.0
 Name=Arvis
 Comment=Arvis startup script
@@ -36,11 +40,11 @@ Terminal=false`;
   },
 
   disable: () => {
-    pathExists(`${os.homedir}/.config/autostart/arvis`)
+    pathExists(`${os.homedir}/.config/autostart/arvis.desktop`)
       .then((exist) => {
         exist &&
           fse
-            .remove(`${os.homedir}/.config/autostart/arvis`)
+            .remove(`${os.homedir}/.config/autostart/arvis.desktop`)
             .catch(console.error);
         return null;
       })
