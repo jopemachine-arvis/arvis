@@ -31,7 +31,7 @@ import {
   registerDefaultGlobalShortcuts,
 } from '@config/shortcuts/globalShortcutHandler';
 import { executeAction } from '@helper/executeAction';
-import { initializeDoubleKeyShortcuts } from '@config/shortcuts/iohookShortcutCallbacks';
+import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcutCallbacks';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
 import { OuterContainer } from './components';
 

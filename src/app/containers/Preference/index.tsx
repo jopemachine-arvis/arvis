@@ -15,7 +15,7 @@ import { ScreenCover, Spinner, WalkThroughModal } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
-import { sleep } from '@utils/index';
+import { makeActionCreator, sleep } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
@@ -102,6 +102,13 @@ export default function PreferenceWindow() {
    * Used to receive dispatched action from different window
    */
   const ipcCallbackTbl = {
+    fetchAction: (
+      e: IpcRendererEvent,
+      { actionType, args }: { actionType: string; args: any }
+    ) => {
+      dispatch(makeActionCreator(actionType, 'arg')(args));
+    },
+
     reloadWorkflow: (
       e: IpcRendererEvent,
       { bundleIds }: { bundleIds: string }
@@ -254,6 +261,7 @@ export default function PreferenceWindow() {
   }, []);
 
   useEffect(() => {
+    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
@@ -279,6 +287,7 @@ export default function PreferenceWindow() {
     );
 
     return () => {
+      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
       ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
       ipcRenderer.off(
@@ -349,11 +358,6 @@ export default function PreferenceWindow() {
   const renderMain = () => {
     return <MainContainer>{mainContent}</MainContainer>;
   };
-
-  useEffect(() => {
-    // For debugging
-    ipcCallbackTbl.openWalkThroughModalbox(undefined as any);
-  }, []);
 
   return (
     <OuterContainer

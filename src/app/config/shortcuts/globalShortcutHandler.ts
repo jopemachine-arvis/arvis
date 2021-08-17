@@ -10,7 +10,7 @@ import { IPCMainEnum, IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { extractShortcutName } from '../../helper/extractShortcutName';
 import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
 import { WindowManager } from '../../windows/windowManager';
-import { doubleKeyPressHandlers } from './iohookShortcutCallbacks';
+import { doubleKeyPressHandlers } from './doubleKeyShortcutCallbacks';
 
 /**
  * In renderer process, double keys should be registered.

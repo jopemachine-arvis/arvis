@@ -57,6 +57,12 @@ export class WindowManager {
     return this.preferenceWindow;
   }
 
+  public registerFirstRunCallback(callback: any) {
+    if (!this.preferenceWindow)
+      throw new Error('preference window not registered!');
+    this.preferenceWindow.webContents.addListener('did-finish-load', callback);
+  }
+
   public getClipboardHistoryWindow() {
     return this.clipboardHistoryWindow;
   }

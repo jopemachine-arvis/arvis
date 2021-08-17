@@ -15,9 +15,7 @@ import path from 'path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import { Core } from 'arvis-core';
-import chalk from 'chalk';
 import { isFirstAppLaunch } from 'electron-util';
-import { IPCMainEnum } from './app/ipc/ipcEventEnum';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
 import {
@@ -28,9 +26,9 @@ import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
 import { arvisRenewExtensionFlagFilePath } from './app/config/path';
 import AppUpdater from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
+import { handleFirstRun } from './app/helper/handleFirstRun';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
 import { reduxStoreResetHandler } from './app/store/reduxStoreResetHandler';
-import { autoFitSearchWindowSize } from './app/windows/utils/autoFitSearchWindowSize';
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -108,18 +106,8 @@ app.on('ready', () => {
       openArvisFile(openFile);
     }
 
-    if (isFirstAppLaunch()) {
-      console.log(
-        chalk.yellowBright(
-          'Detect first launched. Initilized search window size.'
-        )
-      );
-
-      autoFitSearchWindowSize();
-
-      windowManager
-        .getPreferenceWindow()
-        .webContents.send(IPCMainEnum.openWalkThroughModalbox);
+    if (true) {
+      windowManager.registerFirstRunCallback(handleFirstRun);
     }
 
     startFileWatcher();

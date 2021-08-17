@@ -1,6 +1,6 @@
 import { screen } from 'electron';
-import { IPCMainEnum } from '../../ipc/ipcEventEnum';
-import { WindowManager } from '..';
+import { dispatchAction } from '../../ipc/mainProcessEventHandler/config/dispatchAction';
+import { WindowManager } from '../windowManager';
 
 /**
  * Adjust the setting value to match the size of the user screen
@@ -10,7 +10,7 @@ export const autoFitSearchWindowSize = () => {
   const screenWidth = screen.getPrimaryDisplay().size.width;
 
   const minWidth = 450;
-  const evaluatedWidth = screenWidth * 0.35;
+  const evaluatedWidth = Math.floor(screenWidth * 0.35);
   const maxWidth = 2000;
 
   let width = evaluatedWidth;
@@ -21,7 +21,15 @@ export const autoFitSearchWindowSize = () => {
   const searchWindow = WindowManager.getInstance().getSearchWindow();
   searchWindow.setBounds({ width, height: searchWindow.getSize()[1] }, false);
 
-  WindowManager.getInstance()
-    .getPreferenceWindow()
-    .webContents.send(IPCMainEnum.autoFitSearchWindowSize, { width });
+  dispatchAction(undefined as any, {
+    args: width,
+    destWindow: 'preferenceWindow',
+    actionType: '@UI_CONFIG/SET_SEARCH_WINDOW_WIDTH',
+  });
+
+  dispatchAction(undefined as any, {
+    args: width,
+    destWindow: 'searchWindow',
+    actionType: '@UI_CONFIG/SET_SEARCH_WINDOW_WIDTH',
+  });
 };

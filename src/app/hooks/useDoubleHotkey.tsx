@@ -8,7 +8,7 @@ import {
   isMetaKey,
   isShiftKey,
 } from '@utils/iohook/keyUtils';
-import { doubleKeyPressHandlers } from '@config/shortcuts/iohookShortcutCallbacks';
+import { doubleKeyPressHandlers } from '@config/shortcuts/doubleKeyShortcutCallbacks';
 import useIoHook from './useIoHook';
 import { isDoubleKeyPressed } from './utils/doubleKeyUtils';
 
