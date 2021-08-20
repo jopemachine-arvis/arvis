@@ -1,3 +1,10 @@
+# 0.10.2
+
+## What’s Changed
+
+* [fix] Fix scriptExecutor bug on linux
+* [fix] Fix walkthrough modal box bug
+
 # 0.10.1
 
 ## What’s Changed

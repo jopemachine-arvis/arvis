@@ -77,11 +77,12 @@ const WalkThroughModal = (props: IProps) => {
 
   const renderWelcomePage = () => {
     return renderTexts([
-      `Welcome to the arvis.`,
-      `I would like to recommend you to read the basic usage of arvis.`,
+      `🎉 Welcome to the Arvis`,
+      `I'd like to recommend you to read the basic usage of Arvis`,
       `Now I'll set you up with some basic core extensions.`,
       `If you're not sure about which extension you need to, I'd recommend to
         try installing all these extensions.`,
+      `You can deactive or delete this extensions if you don't need these extensions.`,
     ]);
   };
 
@@ -104,7 +105,7 @@ const WalkThroughModal = (props: IProps) => {
     return renderTexts([
       `Done with installing some core extensions.`,
       `I'd appreciate it if you could leave me any kinds of feedback about arvis.`,
-      `Any kind of feedback is very helpful to me :)`,
+      `Any kind of feedback is very helpful to developing arvis :)`,
     ]);
   };
 
@@ -160,9 +161,12 @@ const WalkThroughModal = (props: IProps) => {
         installBasicExtensionsHandler()
           .then(() => {
             setPage(page + 1);
+            setOpened(true);
             return null;
           })
           .catch(console.error);
+
+        setOpened(false);
         break;
 
       case 'Quit':

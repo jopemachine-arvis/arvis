@@ -22,6 +22,7 @@ import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
+import { is } from 'electron-util';
 import {
   clipboardActionHandler,
   notificationActionHandler,
@@ -405,17 +406,23 @@ export default function SearchWindow() {
   }, [items, quicklookData.active]);
 
   useEffect(() => {
-    const scriptExecutorPath =
-      process.env.NODE_ENV === 'development'
-        ? require.resolve('arvis-core/scripts/scriptExecutor.js')
-        : `${__dirname}/external/arvis-core/scriptExecutor.js`;
+    if (is.linux) {
+      // On linux, ipc channel is closed due to unknown issue, so cannot use executorProcess
+      Core.setUseExecutorProcess(false);
+    } else {
+      Core.setUseExecutorProcess(true);
 
-    if (!fse.pathExistsSync(scriptExecutorPath)) {
-      throw new Error('ScriptExecutor script not found!');
+      const scriptExecutorPath =
+        process.env.NODE_ENV === 'development'
+          ? require.resolve('arvis-core/scripts/scriptExecutor.js')
+          : `${__dirname}/external/arvis-core/scriptExecutor.js`;
+
+      if (!fse.pathExistsSync(scriptExecutorPath)) {
+        throw new Error('ScriptExecutor script not found!');
+      }
+
+      Core.startScriptExecutor(scriptExecutorPath);
     }
-
-    Core.startScriptExecutor(scriptExecutorPath);
-
     return () => {
       Core.endScriptExecutor();
     };
