@@ -3370,6 +3370,11 @@ binaryextensions@^4.16.0:
   resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-4.16.0.tgz#f4b9aeba3a23a2fb3da9ab3e8bae73075c9a6d71"
   integrity sha512-fgdnKp0fV6qog/wGLNC2OD5DosRgt6TibuIAg5XuS6KRtsjmkMx8W7nYOoTXkvWQ02FqR+9bZ4dR1/JJnTY3hQ==
 
+binaryextensions@^4.18.0:
+  version "4.18.0"
+  resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-4.18.0.tgz#22aeada2d14de062c60e8ca59a504a5636a76ceb"
+  integrity sha512-PQu3Kyv9dM4FnwB7XGj1+HucW+ShvJzJqjuw1JkKVs1mWdwOKVcRjOi+pV9X52A0tNvrPCsPkbFFQb+wE1EAXw==
+
 bindings@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
@@ -8028,13 +8033,21 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-istextorbinary@^5.12.0, istextorbinary@^5.13.0:
+istextorbinary@^5.12.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/istextorbinary/-/istextorbinary-5.13.0.tgz#d97173c64c616c8ddfe1fe619bdfad3cf0db92af"
   integrity sha512-QI9ey2lar78uXnETojEFe50DtnlTcv5lpvVlF+z17ilwcNaUTsxxQ5XUeHi+fIrvOs4PzLm1DzwPojlcMWEyXg==
   dependencies:
     binaryextensions "^4.16.0"
     textextensions "^5.12.0"
+
+istextorbinary@^5.14.0:
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/istextorbinary/-/istextorbinary-5.15.0.tgz#6e726d1dbfb8c2c1c0a50b13fb57103259368c8d"
+  integrity sha512-4/Fz28VGgSCb5j6kGJqL1iU28WAFMkcx+uUWaa/pzpGqz5bMIoPzW4F6Nbf/7XFx7nSa+qD6HHprDrilB4RNzw==
+  dependencies:
+    binaryextensions "^4.18.0"
+    textextensions "^5.13.0"
 
 jake@^10.6.1:
   version "10.8.2"
@@ -13108,6 +13121,11 @@ textextensions@^5.12.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-5.13.0.tgz#74d122f7fa1eb45b0f3e95fdb08f9683e3c07897"
   integrity sha512-srLdv6DnJWdrddd4j6GcVmExwaydgbWsmTsxeW8OkZv6/2Je/SwkjHYdrhosImPQPiXzNT2kyjak4xh2TVccgA==
+
+textextensions@^5.13.0:
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-5.14.0.tgz#a6ff6aee5faaa751e6157d422c722a2bfd59eedf"
+  integrity sha512-4cAYwNFNYlIAHBUo7p6zw8POUvWbZor+/R0Tanv+rIhsauEyV9QSrEXL40pI+GfTQxKX8k6Tyw6CmdSDSmASrg==
 
 throat@^5.0.0:
   version "5.0.0"

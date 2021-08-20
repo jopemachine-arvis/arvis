@@ -320,7 +320,7 @@
     "is-admin": "^3.0.0",
     "is-promise": "^4.0.0",
     "is-url": "^1.2.4",
-    "istextorbinary": "^5.13.0",
+    "istextorbinary": "^5.14.0",
     "jsoneditor": "^9.5.2",
     "jsoneditor-react": "^3.1.1",
     "open": "^8.2.1",
