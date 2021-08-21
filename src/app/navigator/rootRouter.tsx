@@ -7,6 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { functions as loggerFunctions, transports } from 'electron-log';
 import { Core } from 'arvis-core';
 import { LogType } from 'arvis-core/dist/config/logger';
+import { logger as CustomLogger } from '../config/logger';
 import { Store } from '../redux/reducers/types';
 import {
   Preference as PreferenceContainer,
@@ -46,6 +47,8 @@ const windowRoute = (windowName: string) => {
  * @summary
  */
 const handleLoggerSetting = () => {
+  Core.logger.injectCustomConsole(CustomLogger);
+
   if (process.env.NODE_ENV === 'development') {
     transports.file.level = 'debug';
     Core.logger.setLogLevels([LogType.debug, LogType.info, LogType.error]);

@@ -20,9 +20,9 @@ export default class AppUpdater {
 
     autoUpdater.checkForUpdatesAndNotify();
 
-    // Check every 10 minutes for new updates
+    // Check every 5 hour for new updates
     setInterval(() => {
       autoUpdater.checkForUpdatesAndNotify();
-    }, 60 * 60 * 1000);
+    }, 60 * 60 * 1000 * 5);
   }
 }

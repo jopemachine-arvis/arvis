@@ -135,9 +135,9 @@ export const registerDoubleShortcut = (
     }
 
     if (process.env.NODE_ENV === 'development') {
-      console.log(
-        chalk.cyanBright(`Double shortcut registered.. '${shortcut}'`)
-      );
+      // console.log(
+      //   chalk.cyanBright(`Double shortcut registered.. '${shortcut}'`)
+      // );
     }
 
     doubleKeyPressHandlers.set(doubledKeyModifier, callback);

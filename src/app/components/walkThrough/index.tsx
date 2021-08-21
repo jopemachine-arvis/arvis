@@ -77,11 +77,14 @@ const WalkThroughModal = (props: IProps) => {
 
   const renderWelcomePage = () => {
     return renderTexts([
-      `🎉 Welcome to the Arvis`,
+      `🎉 Welcome to the Arvis!`,
+      '',
       `I'd like to recommend you to read the basic usage of Arvis`,
       `Now I'll set you up with some basic core extensions.`,
+      '',
       `If you're not sure about which extension you need to, I'd recommend to
         try installing all these extensions.`,
+      '',
       `You can deactive or delete this extensions if you don't need these extensions.`,
     ]);
   };

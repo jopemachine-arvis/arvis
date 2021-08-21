@@ -10,7 +10,7 @@ export const autoFitSearchWindowSize = () => {
   const screenWidth = screen.getPrimaryDisplay().size.width;
 
   const minWidth = 450;
-  const evaluatedWidth = Math.floor(screenWidth * 0.35);
+  const evaluatedWidth = Math.floor(screenWidth * 0.375);
   const maxWidth = 2000;
 
   let width = evaluatedWidth;

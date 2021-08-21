@@ -1,3 +1,10 @@
+# 0.10.4
+
+## What’s Changed
+
+* [fix] Minor tweaks
+* [feature] Improve logger's log styles
+
 # 0.10.3
 
 ## What’s Changed

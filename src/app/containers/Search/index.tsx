@@ -103,7 +103,6 @@ export default function SearchWindow() {
   const actionFlowManager = Core.ActionFlowManager.getInstance();
 
   const setDebuggingOptions = () => {
-    actionFlowManager.loggerColorType = 'gui';
     actionFlowManager.printActionType = debuggingConfig.debugging_action;
     actionFlowManager.printVariables = debuggingConfig.debugging_variables;
     actionFlowManager.printPluginItems = debuggingConfig.debugging_plugin;
@@ -359,7 +358,6 @@ export default function SearchWindow() {
 
     Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()])
       .then(() => {
-        console.log('Resource initialized successfully.');
         return null;
       })
       .catch(console.error);
