@@ -1,6 +1,7 @@
 # 0.10.3
 
 * [hotfix] Fix scriptExecutor bug
+* [fix] Improve search window border
 
 # 0.10.2
 
