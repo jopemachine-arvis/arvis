@@ -1,7 +1,10 @@
 # 0.10.3
 
+## What’s Changed
+
 * [hotfix] Fix scriptExecutor bug
 * [fix] Improve search window border
+* [fix] Fix auto start bug on linux
 
 # 0.10.2
 

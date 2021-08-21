@@ -6,7 +6,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import fse from 'fs-extra';
 import {
   SearchBar,
   SearchResultView,
@@ -22,7 +21,6 @@ import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
-import { is } from 'electron-util';
 import {
   clipboardActionHandler,
   notificationActionHandler,
@@ -338,8 +336,6 @@ export default function SearchWindow() {
 
     const rootPath = __dirname.split(path.sep).slice(0, -1).join(path.sep);
     const execaModulePath = `${rootPath}/assets/scripts/execa/index.js`;
-
-    console.log('execaModulePath', execaModulePath);
 
     Core.startScriptExecutor({ execa: execaModulePath });
   };

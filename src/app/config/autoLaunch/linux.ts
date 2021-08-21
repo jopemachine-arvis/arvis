@@ -40,7 +40,7 @@ Terminal=false`;
   },
 
   disable: () => {
-    pathExists(`${os.homedir}/.config/autostart/arvis.desktop`)
+    return pathExists(`${os.homedir}/.config/autostart/arvis.desktop`)
       .then((exist) => {
         exist &&
           fse
