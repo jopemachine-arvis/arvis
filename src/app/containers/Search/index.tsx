@@ -35,6 +35,7 @@ import {
 import { executeAction } from '@helper/executeAction';
 import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcutCallbacks';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
+import path from 'path';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -332,6 +333,17 @@ export default function SearchWindow() {
     );
   }, []);
 
+  const initializeScriptExecutor = () => {
+    Core.setUseExecutorProcess(true);
+
+    const rootPath = __dirname.split(path.sep).slice(0, -1).join(path.sep);
+    const execaModulePath = `${rootPath}/assets/scripts/execa/index.js`;
+
+    console.log('execaModulePath', execaModulePath);
+
+    Core.startScriptExecutor({ execa: execaModulePath });
+  };
+
   useEffect(() => {
     return unloadIOHook;
   }, []);
@@ -363,6 +375,7 @@ export default function SearchWindow() {
     Core.getSystemPaths()
       .then((result) => {
         Core.setMacPathsEnv(result);
+        initializeScriptExecutor();
         return null;
       })
       .catch(console.error);
@@ -406,23 +419,6 @@ export default function SearchWindow() {
   }, [items, quicklookData.active]);
 
   useEffect(() => {
-    if (is.linux) {
-      // On linux, ipc channel is closed due to unknown issue, so cannot use executorProcess
-      Core.setUseExecutorProcess(false);
-    } else {
-      Core.setUseExecutorProcess(true);
-
-      const scriptExecutorPath =
-        process.env.NODE_ENV === 'development'
-          ? require.resolve('arvis-core/scripts/scriptExecutor.js')
-          : `${__dirname}/external/arvis-core/scriptExecutor.js`;
-
-      if (!fse.pathExistsSync(scriptExecutorPath)) {
-        throw new Error('ScriptExecutor script not found!');
-      }
-
-      Core.startScriptExecutor(scriptExecutorPath);
-    }
     return () => {
       Core.endScriptExecutor();
     };

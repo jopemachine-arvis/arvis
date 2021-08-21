@@ -1,3 +1,7 @@
+# 0.10.3
+
+* [hotfix] Fix scriptExecutor bug
+
 # 0.10.2
 
 ## What’s Changed
