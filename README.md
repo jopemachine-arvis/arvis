@@ -33,8 +33,6 @@ https://user-images.githubusercontent.com/18283033/126311865-1fce968a-8fec-44d6-
 
 Arvis is still in the construction and there could be lots of bugs.
 
-* ⚠️ Currently has [severe performance issue](https://github.com/jopemachine/arvis-core/issues/2) on mac
-
 **Table of Contents**
 
 - [1. What is Arvis?](#-what-is-arvis-why-it-is-needed)
