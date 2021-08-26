@@ -1,3 +1,9 @@
+# 0.10.6
+
+## What’s Changed
+
+* [fix] Add 'Fix-path' linux support
+
 # 0.10.5
 
 ## What’s Changed
