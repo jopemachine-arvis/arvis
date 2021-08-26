@@ -366,9 +366,9 @@ export default function SearchWindow() {
       sourceWindow: 'searchWindow',
     });
 
-    Core.getSystemPaths()
+    Core.getShellPaths()
       .then((result) => {
-        Core.setMacPathsEnv(result);
+        Core.setShellPathEnv(result);
         initializeScriptExecutor();
         return null;
       })

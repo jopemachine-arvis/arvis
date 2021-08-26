@@ -5,9 +5,18 @@
 import fse from 'fs-extra';
 import os from 'os';
 import pathExists from 'path-exists';
+import { dialog } from 'electron';
 
 export const linuxAutoLauncher = {
-  enable: () => {
+  enable: async (): Promise<void | null> => {
+    if (!(await pathExists(`${os.homedir()}/Applications`))) {
+      dialog.showErrorBox(
+        "'/Application' directory not exist!",
+        "Please make '/Applications' and copy your Arvis.appimage to the folder before set auto launch"
+      );
+      return null;
+    }
+
     return fse
       .readdir(`${os.homedir()}/Applications`)
       .then(async (files) => {
@@ -39,7 +48,7 @@ Terminal=false`;
       .catch(console.error);
   },
 
-  disable: () => {
+  disable: async () => {
     return pathExists(`${os.homedir}/.config/autostart/arvis.desktop`)
       .then((exist) => {
         exist &&
