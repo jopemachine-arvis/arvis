@@ -1,3 +1,9 @@
+# 0.10.5
+
+## What’s Changed
+
+* [fix] Minor tweaks, dependencies update
+
 # 0.10.4
 
 ## What’s Changed
