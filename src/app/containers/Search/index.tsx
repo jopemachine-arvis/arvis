@@ -32,7 +32,7 @@ import {
 } from '@config/shortcuts/globalShortcutHandler';
 import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcutCallbacks';
 import { executeAction } from '@helper/executeAction';
-import { scriptExecutorPath } from '@config/path';
+import { getScriptExecutorPath } from '@config/path';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
 import { OuterContainer } from './components';
 
@@ -332,7 +332,7 @@ export default function SearchWindow() {
 
   const initializeScriptExecutor = () => {
     Core.setUseExecutorProcess(true);
-    Core.startScriptExecutor({ execa: scriptExecutorPath });
+    Core.startScriptExecutor({ execa: getScriptExecutorPath() });
   };
 
   useEffect(() => {

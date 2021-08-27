@@ -1,5 +1,6 @@
 import path from 'path';
 import { Core } from 'arvis-core';
+import { is } from 'electron-util';
 
 const workflowWatchPaths = [
   `${Core.path.workflowInstallPath}${path.sep}*${path.sep}arvis-workflow.json`,
@@ -21,18 +22,36 @@ const arvisRenewExtensionFlagFilePath = path.resolve(
   'arvis-extension-renew'
 );
 
-const arvisRootPath = __dirname.split(path.sep).slice(0, -1).join(path.sep);
+const getProjectRootPath = () => {
+  if (is.renderer) {
+    return __dirname.split(path.sep).slice(0, -1).join(path.sep);
+  }
 
-const arvisAssetsPath = path.resolve(arvisRootPath, 'assets');
+  if (process.platform === 'win32') {
+    return 'resources';
+  }
+  if (process.platform === 'darwin') {
+    return 'Resources';
+  }
+  if (process.platform === 'linux') {
+    return 'Resources';
+  }
 
-const arvisScriptsPath = path.resolve(arvisAssetsPath, 'scripts');
+  throw new Error('Unsupported platform');
+};
 
-const scriptExecutorPath = path.resolve(arvisScriptsPath, 'execa', 'index.js');
+const getArvisAssetsPath = () => path.resolve(getProjectRootPath(), 'assets');
+
+const getArvisScriptsPath = () => path.resolve(getArvisAssetsPath(), 'scripts');
+
+const getScriptExecutorPath = () =>
+  path.resolve(getArvisScriptsPath(), 'execa', 'index.js');
 
 export {
-  arvisAssetsPath,
-  arvisScriptsPath,
-  scriptExecutorPath,
+  getArvisAssetsPath,
+  getArvisScriptsPath,
+  getProjectRootPath,
+  getScriptExecutorPath,
   workflowWatchPaths,
   pluginWatchPaths,
   arvisReduxStoreResetFlagPath,

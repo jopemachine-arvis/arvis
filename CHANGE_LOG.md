@@ -3,6 +3,8 @@
 ## What’s Changed
 
 * [feature] Add icon to clipboardHistory items
+* [fix] Fix bug of Alert name in Windows
+* [fix] Fix icon not showing bug in Alert
 * [fix] Fix bugs of 'Fix-path'
 
 # 0.10.7

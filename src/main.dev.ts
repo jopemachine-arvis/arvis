@@ -116,6 +116,10 @@ app.on('ready', () => {
     if (process.platform === 'darwin') {
       app.dock.hide();
     }
+
+    if (process.platform === 'win32') {
+      app.setAppUserModelId(app.name);
+    }
   };
 
   if (process.platform === 'linux') {

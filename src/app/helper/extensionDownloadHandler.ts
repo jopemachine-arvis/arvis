@@ -55,7 +55,7 @@ export const installExtension = async ({
         console.error('Unsupported type');
         break;
     }
-  } catch (err) {
+  } catch (err: any) {
     ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
       title: 'Error occurs during installation!',
       content: err.message,
@@ -96,7 +96,7 @@ export const uninstallExtension = async ({
         console.error('Unsupported type');
         break;
     }
-  } catch (err) {
+  } catch (err: any) {
     ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
       title: 'Error occurs during installation!',
       content: err.message,
