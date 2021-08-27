@@ -3,7 +3,7 @@
 ## What’s Changed
 
 * [feature] Add icon to clipboardHistory items
-* [fix] Fix minor bug of 'Fix-path'
+* [fix] Fix bugs of 'Fix-path'
 
 # 0.10.7
 

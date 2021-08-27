@@ -30,10 +30,10 @@ import {
   registerWorkflowHotkeys,
   registerDefaultGlobalShortcuts,
 } from '@config/shortcuts/globalShortcutHandler';
-import { executeAction } from '@helper/executeAction';
 import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcutCallbacks';
+import { executeAction } from '@helper/executeAction';
+import { scriptExecutorPath } from '@config/path';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
-import path from 'path';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -332,11 +332,7 @@ export default function SearchWindow() {
 
   const initializeScriptExecutor = () => {
     Core.setUseExecutorProcess(true);
-
-    const rootPath = __dirname.split(path.sep).slice(0, -1).join(path.sep);
-    const execaModulePath = `${rootPath}/assets/scripts/execa/index.js`;
-
-    Core.startScriptExecutor({ execa: execaModulePath });
+    Core.startScriptExecutor({ execa: scriptExecutorPath });
   };
 
   useEffect(() => {

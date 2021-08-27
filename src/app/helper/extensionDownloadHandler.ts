@@ -31,8 +31,8 @@ export const installExtension = async ({
 
   const [creator, name] = bundleId.split('.');
   const env =
-    process.platform === 'darwin'
-      ? { PATH: Core.getMacPathsEnv() }
+    process.platform !== 'win32'
+      ? { PATH: Core.getShellPathsEnv() }
       : process.env;
 
   try {
@@ -76,8 +76,8 @@ export const uninstallExtension = async ({
 
   const [creator, name] = bundleId.split('.');
   const env =
-    process.platform === 'darwin'
-      ? { PATH: Core.getMacPathsEnv() }
+    process.platform !== 'win32'
+      ? { PATH: Core.getShellPathsEnv() }
       : process.env;
 
   try {

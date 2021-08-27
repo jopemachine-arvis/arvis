@@ -2,7 +2,7 @@ import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import constants from '../constants';
 import pkg from '../config/pkg';
-import installExtensions from '../config/extensionInstaller';
+import installExtensions from '../config/electronDevToolsInstaller';
 
 const createPreferenceWindow = () => {
   const preferenceWindow: BrowserWindow = new BrowserWindow({

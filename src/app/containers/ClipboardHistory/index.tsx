@@ -9,6 +9,7 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
 import { useClipboardHistoryWindowControl } from '@hooks/index';
+import { arvisAssetsPath } from '@config/path';
 import { useDispatch, useSelector } from 'react-redux';
 import path from 'path';
 import {
@@ -30,8 +31,7 @@ const maxShowOnScreen = 15;
 
 const transformStore = (store: any[]): any[] => {
   const iconPath = path.resolve(
-    __dirname.split(path.sep).slice(0, -1).join(path.sep),
-    'assets',
+    arvisAssetsPath,
     'images',
     'clipboardHistoryItem.svg'
   );

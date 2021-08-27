@@ -14,8 +14,9 @@ import { StateType } from '@redux/reducers/types';
 import { ScreenCover, Spinner, WalkThroughModal } from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
+import { checkExtensionsUpdate } from '@helper/extensionUpdateChecker';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
-import { makeActionCreator, sleep } from '@utils/index';
+import { makeActionCreator } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
@@ -169,35 +170,6 @@ export default function PreferenceWindow() {
     openWalkThroughModalbox: (e: IpcRendererEvent) => {
       setWalkThroughModalOpened(true);
     },
-  };
-
-  const checkExtensionsUpdate = async () => {
-    try {
-      const result = await Promise.all([
-        Core.checkUpdatableExtensions('workflow'),
-        Core.checkUpdatableExtensions('plugin'),
-      ]);
-      await sleep(100);
-      const updatable: any[] = _.flatten(result);
-
-      const updatableTexts = _.map(
-        updatable,
-        (item) => `${item.name}: ${item.current} → ${item.latest}.`
-      ).join('\n');
-
-      if (updatable.length > 0) {
-        ipcRenderer.send(IPCRendererEnum.showNotification, {
-          title:
-            updatable.length === 1
-              ? `${updatable.length} extension is updatable`
-              : `${updatable.length} extensions are updatable`,
-          body: updatableTexts,
-        });
-      }
-      return null;
-    } catch (message) {
-      return console.error(message);
-    }
   };
 
   const preventInvalidReduxState = () => {

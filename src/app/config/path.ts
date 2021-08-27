@@ -21,7 +21,18 @@ const arvisRenewExtensionFlagFilePath = path.resolve(
   'arvis-extension-renew'
 );
 
+const arvisRootPath = __dirname.split(path.sep).slice(0, -1).join(path.sep);
+
+const arvisAssetsPath = path.resolve(arvisRootPath, 'assets');
+
+const arvisScriptsPath = path.resolve(arvisAssetsPath, 'scripts');
+
+const scriptExecutorPath = path.resolve(arvisScriptsPath, 'execa', 'index.js');
+
 export {
+  arvisAssetsPath,
+  arvisScriptsPath,
+  scriptExecutorPath,
   workflowWatchPaths,
   pluginWatchPaths,
   arvisReduxStoreResetFlagPath,
