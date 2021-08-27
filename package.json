@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "description": "Cross-platform launcher that help you run, edit, create any workflow simple",
   "homepage": "https://jopemachine.github.io/arvis.com/",
   "scripts": {
@@ -13,7 +13,7 @@
     "package": "rm -rf src/dist && yarn build && electron-builder build --publish never",
     "package-dev": "export CSC_IDENTITY_AUTO_DISCOVERY=false && rm -rf src/dist && yarn build && electron-builder build --publish never",
     "package-pub": "yarn && yarn replace-prebuilt && rm -rf src/dist && yarn build && electron-builder build --publish always",
-    "postinstall": "node -r @babel/register .erb/scripts/CheckNativeDep.js && electron-builder install-app-deps && yarn cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.babel.js && yarn-deduplicate yarn.lock",
+    "postinstall": "node -r @babel/register .erb/scripts/CheckNativeDep.js && electron-builder install-app-deps && yarn cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.babel.js && yarn-deduplicate yarn.lock && yarn install-execa-dependencies",
     "start": "node -r @babel/register ./.erb/scripts/CheckPortInUse.js && yarn start:renderer",
     "start:main": "cross-env NODE_ENV=development ELECTRON_DISABLE_SECURITY_WARNINGS=true electron -r ./.erb/scripts/BabelRegister ./src/main.dev.ts --enable-transparent-visuals --disable-gpu",
     "start:renderer": "cross-env NODE_ENV=development webpack serve --config ./.erb/configs/webpack.config.renderer.dev.babel.js",
@@ -22,7 +22,8 @@
     "test-workflow": "mocha tests/workflow-integration/**/*.test.js --config=mocharc.json",
     "test-plugin": "mocha tests/plugin-integration/**/*.test.js --config=mocharc.json",
     "replace-node-modules": "rm -rf node_modules && yarn",
-    "replace-prebuilt": "node iohook-prebuilt-replace.js"
+    "replace-prebuilt": "node iohook-prebuilt-replace.js",
+    "install-execa-dependencies": "cd assets/scripts/execa && npm i --only=prod && cd ../../../"
   },
   "keywords": [
     "arvis",
@@ -229,7 +230,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "arvis-core": "^0.14.1",
+    "arvis-core": "^0.14.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.2.2",

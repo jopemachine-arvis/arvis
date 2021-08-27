@@ -1,3 +1,9 @@
+# 0.10.7
+
+* [fix] Fix scriptExecutor bug related execa dependencies
+
+Why: `spawn` cannot be applied to binary of `app.asar`. (Only execFile is possible)
+
 # 0.10.6
 
 ## What’s Changed
