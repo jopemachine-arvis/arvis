@@ -1,8 +1,15 @@
+# 0.10.8
+
+## What’s Changed
+
+* [feature] Add icon to clipboardHistory items
+* [fix] Fix minor bug of 'Fix-path'
+
 # 0.10.7
 
-* [fix] Fix scriptExecutor bug related execa dependencies
+## What’s Changed
 
-Why: `spawn` cannot be applied to binary of `app.asar`. (Only execFile is possible)
+* [fix] Fix scriptExecutor bug related execa dependencies
 
 # 0.10.6
 

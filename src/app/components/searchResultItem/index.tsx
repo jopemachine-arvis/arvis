@@ -31,7 +31,6 @@ type IProps = {
   itemHeight: number;
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
-  noShowIcon?: boolean;
   offset: number;
   searchWindowTransparency: number;
   searchWindowWidth: number;
@@ -67,7 +66,6 @@ const SearchResultItem = (props: IProps) => {
     itemHeight,
     itemLeftPadding,
     itemTitleSubtitleMargin,
-    noShowIcon,
     offset,
     searchWindowTransparency,
     searchWindowWidth,
@@ -173,7 +171,7 @@ const SearchResultItem = (props: IProps) => {
       onMouseOver={onMouseoverHandler}
       onDoubleClick={onDoubleClickHandler}
     >
-      {!noShowIcon && getIconElement()}
+      {getIconElement()}
       <InnerContainer
         style={{
           paddingLeft: iconRightMargin,
@@ -221,7 +219,6 @@ SearchResultItem.defaultProps = {
   extensionDefaultIcon: undefined,
   icon: undefined,
   itemDefaultIconColor: '#fff',
-  noShowIcon: false,
   text: undefined,
   valid: true,
   variables: undefined,

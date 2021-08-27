@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo } from 'react';
-import { ipcRenderer } from 'electron';
+import React, { useMemo } from 'react';
 import { Core } from 'arvis-core';
 import _ from 'lodash';
 import QuickLRU from 'quick-lru';
 import { supportedImageFormats as supportedImgFormats } from '@utils/index';
-import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import SearchResultItem from '../searchResultItem';
 import { InnerContainer, OuterContainer } from './components';
 
@@ -21,7 +19,6 @@ type IProps = {
   itemLeftPadding: number;
   itemTitleSubtitleMargin: number;
   maxItemCount: number;
-  noShowIcon: boolean;
   searchResult: (Command | PluginItem | ScriptFilterItem)[];
   searchWindowTransparency: number;
   searchWindowWidth: number;
@@ -47,7 +44,6 @@ const SearchResultView = (props: IProps) => {
     itemLeftPadding,
     itemTitleSubtitleMargin,
     maxItemCount,
-    noShowIcon,
     searchResult,
     searchWindowTransparency,
     searchWindowWidth,
@@ -92,7 +88,6 @@ const SearchResultView = (props: IProps) => {
                 itemHeight={itemHeight}
                 itemLeftPadding={itemLeftPadding}
                 itemTitleSubtitleMargin={itemTitleSubtitleMargin}
-                noShowIcon={noShowIcon}
                 offset={offset}
                 onDoubleClickHandler={onDoubleClickHandler}
                 onMouseoverHandler={() => onMouseoverHandler(itemIdx)}

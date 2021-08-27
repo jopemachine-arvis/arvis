@@ -257,7 +257,6 @@ export default function Appearance() {
             itemLeftPadding={item_left_padding}
             itemTitleSubtitleMargin={item_title_subtitle_margin}
             maxItemCount={mockItems.length}
-            noShowIcon={false}
             onDoubleClickHandler={() => {}}
             onMouseoverHandler={() => {}}
             searchResult={mockItems}

@@ -10,6 +10,7 @@ import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
 import { useClipboardHistoryWindowControl } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
+import path from 'path';
 import {
   SearchWindowScrollbar,
   SearchBar,
@@ -28,9 +29,20 @@ import './index.css';
 const maxShowOnScreen = 15;
 
 const transformStore = (store: any[]): any[] => {
+  const iconPath = path.resolve(
+    __dirname.split(path.sep).slice(0, -1).join(path.sep),
+    'assets',
+    'images',
+    'clipboardHistoryItem.svg'
+  );
+
   const items = store.map((item) => {
     return {
       title: item.text,
+      bundleId: 'arvis.clipboardHistory',
+      icon: {
+        path: iconPath,
+      },
       date: item.date,
     };
   });
@@ -199,7 +211,7 @@ export default function ClipboardHistoryWindow() {
           spinning={false}
         />
         <SearchResultView
-          iconRightMargin={0}
+          iconRightMargin={10}
           itemDefaultIconColor="#fff"
           itemBackgroundColor="#ccc"
           itemFontColor="#888888"
@@ -207,7 +219,6 @@ export default function ClipboardHistoryWindow() {
           itemLeftPadding={style.itemLeftPadding}
           itemTitleSubtitleMargin={0}
           maxItemCount={maxShowOnScreen}
-          noShowIcon
           onDoubleClickHandler={onDoubleClickHandler}
           onMouseoverHandler={onMouseoverHandler}
           searchResult={items}

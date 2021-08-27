@@ -219,8 +219,8 @@ export default function PreferenceWindow() {
 
   const setMacSystemPaths = async () => {
     try {
-      const pathEnv = await Core.getSystemPaths();
-      Core.setMacPathsEnv(pathEnv);
+      const pathEnv = await Core.getShellPaths();
+      Core.setShellPathEnv(pathEnv);
       return pathEnv;
     } catch (message) {
       return console.error(message);
