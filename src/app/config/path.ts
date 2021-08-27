@@ -27,17 +27,11 @@ const getProjectRootPath = () => {
     return __dirname.split(path.sep).slice(0, -1).join(path.sep);
   }
 
-  if (process.platform === 'win32') {
-    return 'resources';
-  }
-  if (process.platform === 'darwin') {
-    return 'Resources';
-  }
-  if (process.platform === 'linux') {
-    return 'Resources';
-  }
-
-  throw new Error('Unsupported platform');
+  return require('electron')
+    .app.getAppPath()
+    .split(path.sep)
+    .slice(0, -1)
+    .join(path.sep);
 };
 
 const getArvisAssetsPath = () => path.resolve(getProjectRootPath(), 'assets');
