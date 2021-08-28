@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import path from 'path';
 import { getArvisAssetsPath } from '@config/path';
 import { useSelector } from 'react-redux';
@@ -32,25 +32,25 @@ const transformStore = (store: any[]): any[] => {
 /**
  */
 const useClipboardHistory = ({
+  items,
+  setItems,
+  originalItems,
+  setOriginalItems,
   mode,
   renewHandler,
   maxShowOnScreen,
   maxShowOnWindow,
 }: {
-  mode: string;
-  renewHandler: () => void;
+  items: any[];
+  setItems: (items: any[]) => void;
+  originalItems: any[];
+  setOriginalItems: (items: any[]) => void;
+  mode: string | undefined;
+  renewHandler: React.MutableRefObject<() => void>;
   maxShowOnScreen: number;
   maxShowOnWindow: number;
 }) => {
   const { store } = useSelector((state: StateType) => state.clipboard_history);
-
-  const [items, setItems] = useState<any[]>(
-    transformStore(store).slice(0, maxShowOnWindow)
-  );
-
-  const [originalItems, setOriginalItems] = useState<any[]>(
-    transformStore(store)
-  );
 
   const maxShowOnWindowRef = useRef<number>(maxShowOnWindow);
 
@@ -68,15 +68,17 @@ const useClipboardHistory = ({
         const newItems = transformStore(storeRef.current);
         setItems(newItems.slice(0, maxShowOnWindowRef.current));
         setOriginalItems(transformStore(storeRef.current));
-        renewHandler();
+        renewHandler.current();
       }, 15);
     },
   };
 
   useEffect(() => {
-    setItems(transformStore(store).slice(0, maxShowOnWindow));
-    setOriginalItems(transformStore(store));
-  }, [maxShowOnScreen, maxShowOnWindow]);
+    if (mode === 'clipboardHistory') {
+      setItems(transformStore(store).slice(0, maxShowOnWindow));
+      setOriginalItems(transformStore(store));
+    }
+  }, [mode, maxShowOnScreen, maxShowOnWindow]);
 
   useEffect(() => {
     ipcRenderer.on(
@@ -91,17 +93,6 @@ const useClipboardHistory = ({
       );
     };
   }, []);
-
-  if (mode !== 'clipboardHistory') {
-    return {};
-  }
-
-  return {
-    items,
-    setItems,
-    originalItems,
-    setOriginalItems,
-  };
 };
 
 export default useClipboardHistory;

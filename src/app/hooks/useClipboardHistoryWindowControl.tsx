@@ -6,6 +6,7 @@ import { clipboard, ipcRenderer } from 'electron';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import _ from 'lodash';
+import useForceUpdate from 'use-force-update';
 import useKey from '../../external/use-key-capture/src';
 
 type IndexInfo = {
@@ -16,6 +17,7 @@ type IndexInfo = {
 /**
  */
 const useClipboardHistoryWindowControl = ({
+  mode,
   items,
   setItems,
   originalItems,
@@ -25,6 +27,7 @@ const useClipboardHistoryWindowControl = ({
   isPinned,
   setIsPinned,
 }: {
+  mode: string | undefined;
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
@@ -45,6 +48,8 @@ const useClipboardHistoryWindowControl = ({
   const originalItemsRef = useRef<any[]>(originalItems);
   const maxShowOnWindowRef = useRef<number>(maxShowOnWindow);
   const applyMouseHoverEventRef = useRef<boolean>(applyMouseHoverEvent);
+
+  const forceUpdate = useForceUpdate();
 
   /**
    */
@@ -150,6 +155,7 @@ const useClipboardHistoryWindowControl = ({
 
     clearIndexInfo();
     setItems(newItems.slice(0, _maxShowOnWindow));
+    forceUpdate();
   };
 
   /**

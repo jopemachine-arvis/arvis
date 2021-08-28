@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
@@ -23,7 +23,8 @@ import {
 } from './components';
 import { style } from './style';
 import './index.css';
-import useAssistanceMode from './mode';
+import useClipboardHistory from './mode/useClipboardHistory';
+import useUniversalAction from './mode/useUniversalAction';
 
 const maxShowOnScreen = 15;
 
@@ -39,6 +40,10 @@ export default function AssistanceWindow() {
     max_show: max_show_on_window,
   } = useSelector((state: StateType) => state.clipboard_history);
 
+  const [items, setItems] = useState<any[]>([]);
+
+  const [originalItems, setOriginalItems] = useState<any[]>([]);
+
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
 
@@ -46,18 +51,32 @@ export default function AssistanceWindow() {
 
   const dispatch = useDispatch();
 
-  let renewHandler = () => {};
+  const renewHandler = useRef<() => void>(() => {});
 
   const [mode, setMode] =
-    useState<'clipboardHistory' | 'universalAction'>('clipboardHistory');
+    useState<'clipboardHistory' | 'universalAction' | undefined>(undefined);
 
-  const { items, originalItems, setItems, setOriginalItems } =
-    useAssistanceMode({
-      mode,
-      renewHandler,
-      maxShowOnScreen,
-      maxShowOnWindow: max_show_on_window,
-    });
+  useClipboardHistory({
+    items,
+    setItems,
+    originalItems,
+    setOriginalItems,
+    mode,
+    maxShowOnScreen,
+    maxShowOnWindow: max_show_on_window,
+    renewHandler,
+  });
+
+  useUniversalAction({
+    items,
+    setItems,
+    originalItems,
+    setOriginalItems,
+    mode,
+    maxShowOnScreen,
+    maxShowOnWindow: max_show_on_window,
+    renewHandler,
+  });
 
   const {
     indexInfo,
@@ -69,6 +88,7 @@ export default function AssistanceWindow() {
     onWheelHandler,
     getInputProps,
   } = useClipboardHistoryWindowControl({
+    mode,
     items,
     originalItems,
     setItems,
@@ -79,13 +99,14 @@ export default function AssistanceWindow() {
     maxShowOnWindow: max_show_on_window,
   });
 
-  renewHandler = () => {
-    clearIndexInfo();
-    setInputStr('');
-    focusSearchbar();
-  };
-
   const ipcCallbackTbl = {
+    setMode: (
+      e: IpcRendererEvent,
+      { mode: modeToSet }: { mode: 'clipboardHistory' | 'universalAction' }
+    ) => {
+      setMode(modeToSet);
+    },
+
     fetchAction: (
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
@@ -93,25 +114,32 @@ export default function AssistanceWindow() {
       dispatch(makeActionCreator(actionType, 'arg')(args));
     },
 
-    pinClipboardHistoryWindow: (
-      e: IpcRendererEvent,
-      { bool }: { bool: boolean }
-    ) => {
+    pinAssistanceWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
       setIsPinned(bool);
     },
   };
 
   useEffect(() => {
+    renewHandler.current = () => {
+      clearIndexInfo();
+      setInputStr('');
+      focusSearchbar();
+    };
+  }, []);
+
+  useEffect(() => {
+    ipcRenderer.on(IPCMainEnum.setMode, ipcCallbackTbl.setMode);
     ipcRenderer.on(
       IPCMainEnum.pinAssistanceWindow,
-      ipcCallbackTbl.pinClipboardHistoryWindow
+      ipcCallbackTbl.pinAssistanceWindow
     );
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
 
     return () => {
+      ipcRenderer.off(IPCMainEnum.setMode, ipcCallbackTbl.setMode);
       ipcRenderer.off(
         IPCMainEnum.pinAssistanceWindow,
-        ipcCallbackTbl.pinClipboardHistoryWindow
+        ipcCallbackTbl.pinAssistanceWindow
       );
       ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     };

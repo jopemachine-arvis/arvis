@@ -189,7 +189,7 @@ export default function PreferenceWindow() {
     }
   };
 
-  const setMacSystemPaths = async () => {
+  const setShellPaths = async () => {
     try {
       const pathEnv = await Core.getShellPaths();
       Core.setShellPathEnv(pathEnv);
@@ -215,7 +215,7 @@ export default function PreferenceWindow() {
       loadPluginsInfo(),
       checkExtensionsUpdate(),
       fetchArvisStore(),
-      setMacSystemPaths(),
+      setShellPaths(),
     ])
       .then(() => {
         return null;

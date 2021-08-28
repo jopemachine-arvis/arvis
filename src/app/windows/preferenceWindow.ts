@@ -62,7 +62,10 @@ const createPreferenceWindow = () => {
       preferenceWindow.hide();
     }
 
-    if (process.platform === 'darwin') {
+    if (
+      process.platform === 'darwin' &&
+      process.env.NODE_ENV !== 'development'
+    ) {
       app.dock.hide();
     }
   });

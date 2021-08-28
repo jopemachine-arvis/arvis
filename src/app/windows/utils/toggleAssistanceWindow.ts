@@ -14,6 +14,8 @@ export default ({ mode, showsUp }: { mode: string; showsUp?: boolean }) => {
     assistanceWindow.focus();
   }
 
+  assistanceWindow.webContents.send(IPCMainEnum.setMode, { mode });
+
   if (mode === 'clipboardHistory') {
     assistanceWindow.webContents.send(IPCMainEnum.renewClipboardStore);
   }

@@ -70,6 +70,7 @@ export enum IPCMainEnum {
   resizeCurrentSearchWindowWidth             = '@ipcMain/resizeCurrentSearchWindowWidth',
   saveFileRet                                = '@ipcMain/saveFileRet',
   searchWindowShowCallback                   = '@ipcMain/searchWindowShowCallback',
+  setMode                                    = '@ipcMain/setMode',
   setPreferencePage                          = '@ipcMain/setPreferencePage',
   setSearchbarInput                          = '@ipcMain/setSearchbarInput',
   togglePluginsEnabled                       = '@ipcMain/togglePluginsEnabled',

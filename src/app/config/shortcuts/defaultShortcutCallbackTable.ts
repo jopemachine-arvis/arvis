@@ -15,13 +15,24 @@ export default {
       toggleSearchWindow({ showsUp: false });
     }
   },
-  toggleAssistanceWindow: () => () => {
+
+  toggleClipboardHistoryWindow: () => () => {
     if (is.renderer()) {
-      ipcRenderer.send(IPCRendererEnum.toggleAssistanceWindow, {
+      ipcRenderer.send(IPCRendererEnum.toggleClipboardHistoryWindow, {
         showsUp: false,
       });
     } else {
-      toggleAssistanceWindow({ showsUp: false });
+      toggleAssistanceWindow({ mode: 'clipboardHistory', showsUp: false });
+    }
+  },
+
+  toggleUniversalActionWindow: () => () => {
+    if (is.renderer()) {
+      ipcRenderer.send(IPCRendererEnum.toggleUniversalActionWindow, {
+        showsUp: false,
+      });
+    } else {
+      toggleAssistanceWindow({ mode: 'universalAction', showsUp: false });
     }
   },
 };

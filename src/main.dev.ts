@@ -113,7 +113,10 @@ app.on('ready', () => {
     startFileWatcher();
     initIPCHandlers();
 
-    if (process.platform === 'darwin') {
+    if (
+      process.platform === 'darwin' &&
+      process.env.NODE_ENV === 'production'
+    ) {
       app.dock.hide();
     }
 
