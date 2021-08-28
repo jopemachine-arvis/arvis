@@ -15,6 +15,6 @@ export const openAboutWindow = () => {
     adjust_window_size: true,
     use_version_info: true,
     open_devtools: process.env.NODE_ENV !== 'production',
-    bug_link_text: 'found bug?',
+    bug_link_text: 'Found bug?',
   });
 };

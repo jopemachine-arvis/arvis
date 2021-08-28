@@ -3,15 +3,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import React, { useEffect, useRef, useState } from 'react';
-import useForceUpdate from 'use-force-update';
+import React, { useEffect, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
 import { useClipboardHistoryWindowControl } from '@hooks/index';
-import { getArvisAssetsPath } from '@config/path';
 import { useDispatch, useSelector } from 'react-redux';
-import path from 'path';
 import {
   SearchWindowScrollbar,
   SearchBar,
@@ -26,64 +23,41 @@ import {
 } from './components';
 import { style } from './style';
 import './index.css';
+import useAssistanceMode from './mode';
 
 const maxShowOnScreen = 15;
 
-const transformStore = (store: any[]): any[] => {
-  const iconPath = path.resolve(
-    getArvisAssetsPath(),
-    'images',
-    'clipboardHistoryItem.svg'
-  );
-
-  const items = store.map((item) => {
-    return {
-      title: item.text,
-      bundleId: 'arvis.clipboardHistory',
-      icon: {
-        path: iconPath,
-      },
-      date: item.date,
-    };
-  });
-
-  return items.reverse();
-};
-
-export default function ClipboardHistoryWindow() {
+export default function AssistanceWindow() {
   const { global_font } = useSelector(
     (state: StateType) => state.global_config
   );
 
   const {
     apply_mouse_hover_event,
-    store,
+    // store,
     max_size,
     max_show: max_show_on_window,
   } = useSelector((state: StateType) => state.clipboard_history);
-
-  const [items, setItems] = useState<any[]>(
-    transformStore(store).slice(0, max_show_on_window)
-  );
-
-  const [originalItems, setOriginalItems] = useState<any[]>(
-    transformStore(store)
-  );
 
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
 
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
-  const forceUpdate = useForceUpdate();
-
   const dispatch = useDispatch();
 
-  const maxShowOnWindowRef = useRef<number>(max_show_on_window);
-  const storeRef = useRef<any>(store);
+  let renewHandler = () => {};
 
-  storeRef.current = store;
-  maxShowOnWindowRef.current = max_show_on_window;
+  const [mode, setMode] =
+    useState<'clipboardHistory' | 'universalAction'>('clipboardHistory');
+
+  const { items, originalItems, setItems, setOriginalItems } =
+    useAssistanceMode({
+      mode,
+      renewHandler,
+      maxShowOnScreen,
+      maxShowOnWindow: max_show_on_window,
+    });
 
   const {
     indexInfo,
@@ -105,25 +79,18 @@ export default function ClipboardHistoryWindow() {
     maxShowOnWindow: max_show_on_window,
   });
 
+  renewHandler = () => {
+    clearIndexInfo();
+    setInputStr('');
+    focusSearchbar();
+  };
+
   const ipcCallbackTbl = {
     fetchAction: (
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
       dispatch(makeActionCreator(actionType, 'arg')(args));
-    },
-
-    renewClipboardStore: (e: IpcRendererEvent) => {
-      forceUpdate();
-      // wait until force update is done.
-      setTimeout(() => {
-        const newItems = transformStore(storeRef.current);
-        setItems(newItems.slice(0, maxShowOnWindowRef.current));
-        setOriginalItems(transformStore(storeRef.current));
-        clearIndexInfo();
-        setInputStr('');
-        focusSearchbar();
-      }, 15);
     },
 
     pinClipboardHistoryWindow: (
@@ -136,32 +103,19 @@ export default function ClipboardHistoryWindow() {
 
   useEffect(() => {
     ipcRenderer.on(
-      IPCMainEnum.pinClipboardHistoryWindow,
+      IPCMainEnum.pinAssistanceWindow,
       ipcCallbackTbl.pinClipboardHistoryWindow
     );
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-    ipcRenderer.on(
-      IPCMainEnum.renewClipboardStore,
-      ipcCallbackTbl.renewClipboardStore
-    );
 
     return () => {
       ipcRenderer.off(
-        IPCMainEnum.pinClipboardHistoryWindow,
+        IPCMainEnum.pinAssistanceWindow,
         ipcCallbackTbl.pinClipboardHistoryWindow
       );
       ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-      ipcRenderer.off(
-        IPCMainEnum.renewClipboardStore,
-        ipcCallbackTbl.renewClipboardStore
-      );
     };
   }, []);
-
-  useEffect(() => {
-    setItems(transformStore(store).slice(0, max_show_on_window));
-    setOriginalItems(transformStore(store));
-  }, [max_size, max_show_on_window]);
 
   const infoContainerOnWheelHandler = () => {
     setSearchContainerScrollbarVisible(false);
@@ -171,20 +125,20 @@ export default function ClipboardHistoryWindow() {
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
     if (e.key === 'Escape') {
-      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+      ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
     }
   };
 
   const rightClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    ipcRenderer.send(IPCRendererEnum.popupClipboardHistoryContextMenu, {
+    ipcRenderer.send(IPCRendererEnum.popupAssistanceWindowContextMenu, {
       isPinned,
     });
   };
 
   return (
     <OuterContainer
-      id="clipboardHistoryOuterContainer"
+      id="assistanceWindowOuterContainer"
       tabIndex={0}
       style={{ fontFamily: global_font }}
       onContextMenu={rightClickHandler}
@@ -249,7 +203,7 @@ export default function ClipboardHistoryWindow() {
         )}
       </SearchContainer>
       <InfoContainer
-        id="clipboardHistory-textarea"
+        id="assistanceWindowTextarea"
         onWheel={infoContainerOnWheelHandler}
       >
         <InfoInnerContainer>

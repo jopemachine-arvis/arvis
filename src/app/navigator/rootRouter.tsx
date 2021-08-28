@@ -13,7 +13,7 @@ import {
   Preference as PreferenceContainer,
   Search as SearchContainer,
   LargeText as LargeTextContainer,
-  ClipboardHistory as ClipboardHistoryContainer,
+  AssistanceWindow as AssistanceWindowContainer,
 } from '../containers';
 
 Object.assign(console, loggerFunctions);
@@ -36,8 +36,8 @@ const windowRoute = (windowName: string) => {
       return <SearchContainer />;
     case 'largeTextWindow':
       return <LargeTextContainer />;
-    case 'clipboardHistoryWindow':
-      return <ClipboardHistoryContainer />;
+    case 'assistanceWindow':
+      return <AssistanceWindowContainer />;
     default:
       throw new Error(`windowName is not proper: '${windowName}'`);
   }

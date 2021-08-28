@@ -175,7 +175,7 @@ const useClipboardHistoryWindowControl = ({
     if (items[selectedItemIdx]) {
       clipboard.writeText(items[selectedItemIdx].title);
 
-      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+      ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
 
       setTimeout(() => {
         ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
@@ -345,7 +345,7 @@ const useClipboardHistoryWindowControl = ({
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
       if (!isPinned) {
-        ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+        ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
       }
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
       searchByNextInput();

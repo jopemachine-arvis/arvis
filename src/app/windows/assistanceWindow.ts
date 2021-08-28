@@ -3,9 +3,9 @@ import { BrowserWindow } from 'electron';
 import path from 'path';
 import constants from '../constants';
 
-const createClipboardHistoryWindow = (eventHandlers: Map<string, Function>) => {
-  const clipboardHistoryWindow = new BrowserWindow({
-    title: 'ClipboardHistoryWindow',
+const createAssistanceWindow = (eventHandlers: Map<string, Function>) => {
+  const assistanceWindow = new BrowserWindow({
+    title: 'AssistanceWindow',
     center: true,
     show: false,
     frame: false,
@@ -14,12 +14,12 @@ const createClipboardHistoryWindow = (eventHandlers: Map<string, Function>) => {
     skipTaskbar: true,
     movable: true,
     fullscreenable: false,
-    width: constants.clipboardHistoryWindowWidth,
-    height: constants.clipboardHistoryWindowHeight,
+    width: constants.assistanceWindowWidth,
+    height: constants.assistanceWindowHeight,
     alwaysOnTop: true,
     transparent: true,
     webPreferences: {
-      accessibleTitle: 'arvis-clipboard-history-window',
+      accessibleTitle: 'arvis-assistance-window',
       contextIsolation: false,
       experimentalFeatures: false,
       nodeIntegration: true,
@@ -36,26 +36,26 @@ const createClipboardHistoryWindow = (eventHandlers: Map<string, Function>) => {
       ? path.join(__dirname, '../../', 'app.html')
       : path.join(__dirname, 'app.html');
 
-  clipboardHistoryWindow.loadFile(filePath, {
-    query: { window: 'clipboardHistoryWindow' },
+  assistanceWindow.loadFile(filePath, {
+    query: { window: 'assistanceWindow' },
   });
 
-  clipboardHistoryWindow.on('close', (e) => {
+  assistanceWindow.on('close', (e) => {
     e.preventDefault();
-    if (clipboardHistoryWindow) {
-      clipboardHistoryWindow.hide();
+    if (assistanceWindow) {
+      assistanceWindow.hide();
     }
   });
 
-  const hideClipboardWindow = () => {
-    clipboardHistoryWindow.hide();
+  const hideAssistanceWindow = () => {
+    assistanceWindow.hide();
   };
 
-  eventHandlers.set('clipboardHistoryWindow#blur', hideClipboardWindow);
+  eventHandlers.set('assistanceWindow#blur', hideAssistanceWindow);
 
-  clipboardHistoryWindow.on('blur', hideClipboardWindow);
+  assistanceWindow.on('blur', hideAssistanceWindow);
 
-  return clipboardHistoryWindow;
+  return assistanceWindow;
 };
 
-export { createClipboardHistoryWindow };
+export { createAssistanceWindow };

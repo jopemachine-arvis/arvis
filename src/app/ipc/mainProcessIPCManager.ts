@@ -13,7 +13,7 @@ import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEve
 
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
-import { hideClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/hideClipboardHistoryWindow';
+import { hideAssistanceWindow } from './mainProcessEventHandler/windowManage/hideAssistanceWindow';
 import { resizeSearchWindowHeight } from './mainProcessEventHandler/windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './mainProcessEventHandler/windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/showLargeTextWindow';
@@ -39,9 +39,12 @@ import { registerWorkflowHotkeys } from './mainProcessEventHandler/config/regist
 import { popupPluginItemMenu } from './mainProcessEventHandler/contextMenu/popupPluginPageItemMenu';
 import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/popupWorkflowPageItemMenu';
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
-import { popupClipboardHistoryContextMenu } from './mainProcessEventHandler/contextMenu/popupClipboardHistoryContextMenu';
+import { popupAssistanceWindowContextMenu } from './mainProcessEventHandler/contextMenu/popupAssistanceWindowContextMenu';
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
-import { toggleClipboardHistoryWindow } from './mainProcessEventHandler/windowManage/toggleClipboardHistoryWindow';
+import {
+  toggleClipboardHistoryWindow,
+  toggleUniversalActionWindow,
+} from './mainProcessEventHandler/windowManage/toggleAssistanceWindow';
 import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggleSearchWindow';
 
 /**
@@ -79,6 +82,10 @@ export const initIPCHandlers = () => {
     IPCRendererEnum.toggleClipboardHistoryWindow,
     toggleClipboardHistoryWindow
   );
+  ipcMain.on(
+    IPCRendererEnum.toggleUniversalActionWindow,
+    toggleUniversalActionWindow
+  );
   ipcMain.on(IPCRendererEnum.toggleSearchWindow, toggleSearchWindow);
 
   ipcMain.on(
@@ -92,14 +99,11 @@ export const initIPCHandlers = () => {
   );
 
   ipcMain.on(
-    IPCRendererEnum.popupClipboardHistoryContextMenu,
-    popupClipboardHistoryContextMenu
+    IPCRendererEnum.popupAssistanceWindowContextMenu,
+    popupAssistanceWindowContextMenu
   );
 
-  ipcMain.on(
-    IPCRendererEnum.hideClipboardHistoryWindow,
-    hideClipboardHistoryWindow
-  );
+  ipcMain.on(IPCRendererEnum.hideAssistanceWindow, hideAssistanceWindow);
 
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,

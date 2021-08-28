@@ -4,8 +4,6 @@ import { hideWindowAndRestoreFocus } from '../../../utils';
 
 /**
  */
-export const hideClipboardHistoryWindow = (e: IpcMainEvent) => {
-  hideWindowAndRestoreFocus(
-    WindowManager.getInstance().getClipboardHistoryWindow()
-  );
+export const hideAssistanceWindow = (e: IpcMainEvent) => {
+  hideWindowAndRestoreFocus(WindowManager.getInstance().getAssistanceWindow());
 };

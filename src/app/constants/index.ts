@@ -6,8 +6,8 @@ export default {
   preferenceMinWindowHeight: 900,
 
   // Initial clipboardHistory window size
-  clipboardHistoryWindowWidth: 1600,
-  clipboardHistoryWindowHeight: 900,
+  assistanceWindowWidth: 1600,
+  assistanceWindowHeight: 900,
 
   // Initial search window size
   // (Meaningless values because the value changes with the user's screen)
