@@ -36,7 +36,7 @@ const useUniversalAction = ({
   setItems: (items: any[]) => void;
   originalItems: any[];
   setOriginalItems: (items: any[]) => void;
-  mode: 'clipboardHistory' | 'universalAction' | undefined;
+  mode: AssistanceWindowType | undefined;
   renewHandler: React.MutableRefObject<() => void>;
   maxShowOnScreen: number;
   maxShowOnWindow: number;

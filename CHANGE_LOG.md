@@ -3,7 +3,7 @@
 ## What’s Changed
 
 * [fix] Minor tweaks
-* [feature] Add Universal action window, preference page
+* [feature, experimental] Add Universal action window, preference page
 
 # 0.10.8
 

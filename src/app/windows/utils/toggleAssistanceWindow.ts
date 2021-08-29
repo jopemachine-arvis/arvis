@@ -47,7 +47,7 @@ export default ({
   mode,
   showsUp,
 }: {
-  mode: 'clipboardHistory' | 'universalAction';
+  mode: AssistanceWindowType;
   showsUp?: boolean;
 }) => {
   if (mode === 'clipboardHistory') {

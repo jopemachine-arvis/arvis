@@ -49,7 +49,7 @@ const useClipboardHistory = ({
   originalItems: any[];
   setOriginalItems: (items: any[]) => void;
   indexInfo: any;
-  mode: 'clipboardHistory' | 'universalAction' | undefined;
+  mode: AssistanceWindowType | undefined;
   renewHandler: React.MutableRefObject<() => void>;
   maxShowOnScreen: number;
   maxShowOnWindow: number;

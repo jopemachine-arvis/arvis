@@ -22,10 +22,7 @@ import useUniversalAction from './mode/useUniversalAction';
 
 const maxShowOnScreen = 15;
 
-const onWindowOpenEventHandlers = new Map<
-  'clipboardHistory' | 'universalAction',
-  () => void
->();
+const onWindowOpenEventHandlers = new Map<AssistanceWindowType, () => void>();
 
 export default function AssistanceWindow() {
   const { global_font } = useSelector(
@@ -49,8 +46,7 @@ export default function AssistanceWindow() {
 
   const renewHandler = useRef<() => void>(() => {});
 
-  const [mode, setMode] =
-    useState<'clipboardHistory' | 'universalAction' | undefined>(undefined);
+  const [mode, setMode] = useState<AssistanceWindowType | undefined>(undefined);
 
   const {
     indexInfo,
@@ -109,7 +105,7 @@ export default function AssistanceWindow() {
   const ipcCallbackTbl = {
     setMode: (
       e: IpcRendererEvent,
-      { mode: modeToSet }: { mode: 'clipboardHistory' | 'universalAction' }
+      { mode: modeToSet }: { mode: AssistanceWindowType }
     ) => {
       setMode(modeToSet);
       renewHandler.current();
