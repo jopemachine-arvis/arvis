@@ -3,10 +3,6 @@ import log from 'electron-log';
 
 export default class AppUpdater {
   constructor() {
-    if (process.env.NODE_ENV === 'development') {
-      return;
-    }
-
     autoUpdater.logger = log;
     autoUpdater.allowPrerelease = true;
     autoUpdater.allowDowngrade = false;

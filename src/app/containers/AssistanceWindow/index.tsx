@@ -7,20 +7,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
-import { useClipboardHistoryWindowControl } from '@hooks/index';
+import { useAssistanceWindowControl } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SearchWindowScrollbar,
   SearchBar,
   SearchResultView,
 } from '@components/index';
-import {
-  InfoContainer,
-  OuterContainer,
-  SearchContainer,
-  InfoInnerContainer,
-  CopyDateTime,
-} from './components';
+import { InfoContainer, OuterContainer, SearchContainer } from './components';
 import { style } from './style';
 import './index.css';
 import useClipboardHistory from './mode/useClipboardHistory';
@@ -56,28 +50,6 @@ export default function AssistanceWindow() {
   const [mode, setMode] =
     useState<'clipboardHistory' | 'universalAction' | undefined>(undefined);
 
-  useClipboardHistory({
-    items,
-    setItems,
-    originalItems,
-    setOriginalItems,
-    mode,
-    maxShowOnScreen,
-    maxShowOnWindow: max_show_on_window,
-    renewHandler,
-  });
-
-  useUniversalAction({
-    items,
-    setItems,
-    originalItems,
-    setOriginalItems,
-    mode,
-    maxShowOnScreen,
-    maxShowOnWindow: max_show_on_window,
-    renewHandler,
-  });
-
   const {
     indexInfo,
     clearIndexInfo,
@@ -87,7 +59,7 @@ export default function AssistanceWindow() {
     onMouseoverHandler,
     onWheelHandler,
     getInputProps,
-  } = useClipboardHistoryWindowControl({
+  } = useAssistanceWindowControl({
     mode,
     items,
     originalItems,
@@ -99,12 +71,44 @@ export default function AssistanceWindow() {
     maxShowOnWindow: max_show_on_window,
   });
 
+  const { renderInfoContent: renderClipboardHistoryInfoContent } =
+    useClipboardHistory({
+      items,
+      setItems,
+      originalItems,
+      setOriginalItems,
+      indexInfo,
+      mode,
+      maxShowOnScreen,
+      maxShowOnWindow: max_show_on_window,
+      renewHandler,
+    });
+
+  const { renderInfoContent: renderUniversalActionInfoContent } =
+    useUniversalAction({
+      items,
+      setItems,
+      originalItems,
+      setOriginalItems,
+      mode,
+      maxShowOnScreen,
+      maxShowOnWindow: max_show_on_window,
+      renewHandler,
+    });
+
+  const renderInfoContent = () => {
+    if (mode === 'clipboardHistory') return renderClipboardHistoryInfoContent();
+    if (mode === 'universalAction') return renderUniversalActionInfoContent();
+    return <></>;
+  };
+
   const ipcCallbackTbl = {
     setMode: (
       e: IpcRendererEvent,
       { mode: modeToSet }: { mode: 'clipboardHistory' | 'universalAction' }
     ) => {
       setMode(modeToSet);
+      renewHandler.current();
     },
 
     fetchAction: (
@@ -234,17 +238,7 @@ export default function AssistanceWindow() {
         id="assistanceWindowTextarea"
         onWheel={infoContainerOnWheelHandler}
       >
-        <InfoInnerContainer>
-          {items[indexInfo.selectedItemIdx]
-            ? items[indexInfo.selectedItemIdx].title
-            : ''}
-        </InfoInnerContainer>
-        <CopyDateTime>
-          {items[indexInfo.selectedItemIdx] &&
-            `Copied on ${new Date(
-              items[indexInfo.selectedItemIdx].date
-            ).toLocaleString()}`}
-        </CopyDateTime>
+        {renderInfoContent()}
       </InfoContainer>
     </OuterContainer>
   );

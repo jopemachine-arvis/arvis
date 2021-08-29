@@ -16,7 +16,7 @@ type IndexInfo = {
 
 /**
  */
-const useClipboardHistoryWindowControl = ({
+const useAssistanceWindowControl = ({
   mode,
   items,
   setItems,
@@ -171,7 +171,7 @@ const useClipboardHistoryWindowControl = ({
    * @param selectedItemIdx
    * @param modifiers Selected modifier keys
    */
-  const handleReturn = ({
+  const handleClipboardHistoryItemReturnEvent = ({
     selectedItemIdx,
     modifiers,
   }: {
@@ -194,6 +194,46 @@ const useClipboardHistoryWindowControl = ({
       }, 25);
 
       setIsPinned(false);
+    }
+  };
+
+  /**
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
+   */
+  const handleUniversalActionReturnEvent = ({
+    selectedItemIdx,
+    modifiers,
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    const capturedStr = (
+      document.getElementById('universalActionTarget') as HTMLPreElement
+    ).innerHTML;
+    const commandToExecute = `${items[selectedItemIdx].command} ${capturedStr}`;
+
+    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, {
+      showsUp: true,
+      command: commandToExecute,
+    });
+  };
+
+  /**
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
+   */
+  const handleReturn = ({
+    selectedItemIdx,
+    modifiers,
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    if (mode === 'clipboardHistory') {
+      handleClipboardHistoryItemReturnEvent({ selectedItemIdx, modifiers });
+    } else if (mode === 'universalAction') {
+      handleUniversalActionReturnEvent({ selectedItemIdx, modifiers });
     }
   };
 
@@ -391,4 +431,4 @@ const useClipboardHistoryWindowControl = ({
   };
 };
 
-export default useClipboardHistoryWindowControl;
+export default useAssistanceWindowControl;

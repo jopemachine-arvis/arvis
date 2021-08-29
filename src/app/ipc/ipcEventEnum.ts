@@ -48,6 +48,7 @@ export enum IPCRendererEnum {
  */
 export enum IPCMainEnum {
   autoFitSearchWindowSize                    = '@ipcMain/autoFitSearchWindowSize',
+  captureUniversalActionTarget               = '@ipcMain/captureUniversalActionTarget',
   executeAction                              = '@ipcMain/executeAction',
   fetchAction                                = '@ipcMain/fetchAction',
   forwardClipboardData                       = '@ipcMain/forwardClipboardData',

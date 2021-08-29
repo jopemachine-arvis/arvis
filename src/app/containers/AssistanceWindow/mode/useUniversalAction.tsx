@@ -1,14 +1,16 @@
 /* eslint-disable no-restricted-syntax */
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import useForceUpdate from 'use-force-update';
-import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { ipcRenderer } from 'electron';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { InfoInnerContainer } from '../components';
 
 const transformStore = (store: any[]): any[] => {
   const items = store.map((item) => {
     return {
       title: item.title || item.command,
+      command: item.command,
       icon: item.icon,
       bundleId: item.bundleId,
     };
@@ -38,10 +40,15 @@ const useUniversalAction = ({
   maxShowOnScreen: number;
   maxShowOnWindow: number;
 }) => {
+  const [target, setTarget] = useState<string>('');
+
   const forceUpdate = useForceUpdate();
 
   const setWorkflowCommandItems = useCallback(() => {
-    const commands = Core.findWorkflowCommands();
+    const commands = Core.findWorkflowCommands().filter(
+      (command) => command.argType !== 'no'
+    );
+
     setItems(transformStore(commands).slice(0, maxShowOnWindow));
     setOriginalItems(transformStore(commands));
 
@@ -58,16 +65,48 @@ const useUniversalAction = ({
     });
   }, []);
 
+  const ipcCallbackTbl = {
+    captureUniversalActionTarget: (
+      e: IpcRendererEvent,
+      { target: targetToSet }: { target: string }
+    ) => {
+      setTarget(targetToSet);
+    },
+  };
+
+  useEffect(() => {
+    ipcRenderer.on(
+      IPCMainEnum.captureUniversalActionTarget,
+      ipcCallbackTbl.captureUniversalActionTarget
+    );
+
+    return () => {
+      ipcRenderer.off(
+        IPCMainEnum.captureUniversalActionTarget,
+        ipcCallbackTbl.captureUniversalActionTarget
+      );
+    };
+  }, []);
+
   useEffect(() => {
     loadWorkflowsInfo();
   }, []);
 
   useEffect(() => {
     if (mode === 'universalAction') {
-      renewHandler.current();
       setWorkflowCommandItems();
+
+      setTimeout(() => {
+        renewHandler.current();
+      }, 50);
     }
   }, [mode]);
+
+  const renderInfoContent = () => (
+    <InfoInnerContainer id="universalActionTarget">{target}</InfoInnerContainer>
+  );
+
+  return { renderInfoContent };
 };
 
 export default useUniversalAction;

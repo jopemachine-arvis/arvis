@@ -1,23 +1,23 @@
 <div align="center">
   <h1>Arvis</h1>
+    <p>
+      <img src="https://www.codefactor.io/repository/github/jopemachine/arvis/badge" />
+      <img src="https://img.shields.io/github/downloads/jopemachine/arvis/total.svg" />
+      <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+      <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" />
+      <img src="https://img.shields.io/github/issues/jopemachine/arvis.svg" />
+      <img src="https://badges.gitter.im/arvis-gitter/community.svg" />
+    </p>
   <p>
-  <img src="https://www.codefactor.io/repository/github/jopemachine/arvis/badge" />
-  <img src="https://img.shields.io/github/downloads/jopemachine/arvis/total.svg" />
-  <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" />
-  <img src="https://img.shields.io/github/issues/jopemachine/arvis.svg" />
-  <img src="https://badges.gitter.im/arvis-gitter/community.svg" />
+    <b>Extendable cross-platform launcher that aims to help you run, edit, create any workflow simple</b>
   </p>
-	<p>
-		<b>Extendable cross-platform launcher that aims to help you run, edit, create any workflow simple</b>
-	</p>
-	<br>
-	<p>
-		<img src="https://user-images.githubusercontent.com/18283033/131144965-97a5b380-afcd-46c4-8298-55ac6b75bcce.gif" />
-	</p>
-	<br>
+  <br>
+  <p>
+    <img src="https://user-images.githubusercontent.com/18283033/131144965-97a5b380-afcd-46c4-8298-55ac6b75bcce.gif" />
+  </p>
+  <br>
 </div>
-	
+
 * Runs on cross-platform.
 
 * Easily compatable with lots of Alfred workflows.

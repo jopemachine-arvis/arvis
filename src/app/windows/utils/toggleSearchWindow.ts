@@ -88,7 +88,15 @@ const handleLinux = ({ showsUp }: { showsUp?: boolean }) => {
   }
 };
 
-export default ({ showsUp }: { showsUp?: boolean }) => {
+export default ({
+  showsUp,
+  command,
+}: {
+  showsUp?: boolean;
+  command?: string;
+}) => {
+  const searchWindow = WindowManager.getInstance().getSearchWindow();
+
   switch (process.platform) {
     case 'win32':
       handleWindows({ showsUp });
@@ -101,5 +109,11 @@ export default ({ showsUp }: { showsUp?: boolean }) => {
       break;
     default:
       throw new Error('Unsupported Platform!');
+  }
+
+  if (command && searchWindow.isVisible()) {
+    searchWindow.webContents.send(IPCMainEnum.setSearchbarInput, {
+      str: command,
+    });
   }
 };

@@ -7,6 +7,7 @@ import { StateType } from '@redux/reducers/types';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import useForceUpdate from 'use-force-update';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
+import { CopyDateTime, InfoInnerContainer } from '../components';
 
 const transformStore = (store: any[]): any[] => {
   const iconPath = path.resolve(
@@ -36,6 +37,7 @@ const useClipboardHistory = ({
   setItems,
   originalItems,
   setOriginalItems,
+  indexInfo,
   mode,
   renewHandler,
   maxShowOnScreen,
@@ -45,6 +47,7 @@ const useClipboardHistory = ({
   setItems: (items: any[]) => void;
   originalItems: any[];
   setOriginalItems: (items: any[]) => void;
+  indexInfo: any;
   mode: string | undefined;
   renewHandler: React.MutableRefObject<() => void>;
   maxShowOnScreen: number;
@@ -93,6 +96,24 @@ const useClipboardHistory = ({
       );
     };
   }, []);
+
+  const renderInfoContent = () => (
+    <>
+      <InfoInnerContainer>
+        {items[indexInfo.selectedItemIdx]
+          ? items[indexInfo.selectedItemIdx].title
+          : ''}
+      </InfoInnerContainer>
+      <CopyDateTime>
+        {items[indexInfo.selectedItemIdx] &&
+          `Copied on ${new Date(
+            items[indexInfo.selectedItemIdx].date
+          ).toLocaleString()}`}
+      </CopyDateTime>
+    </>
+  );
+
+  return { renderInfoContent };
 };
 
 export default useClipboardHistory;

@@ -1,4 +1,4 @@
-import useClipboardHistoryWindowControl from './useClipboardHistoryWindowControl';
+import useAssistanceWindowControl from './useAssistanceWindowControl';
 import useExtensionSearchControl from './useExtensionSearchControl';
 import useDoubleHotkey from './useDoubleHotkey';
 import useCopyKeyCapture from './useCopyKeyCapture';
@@ -9,7 +9,7 @@ import useStoreSearchControl from './useStoreSearchControl';
 import { useReserveForceUpdate } from './useReserveForceUpdate';
 
 export {
-  useClipboardHistoryWindowControl,
+  useAssistanceWindowControl,
   useCopyKeyCapture,
   useDoubleHotkey,
   useExtensionSearchControl,

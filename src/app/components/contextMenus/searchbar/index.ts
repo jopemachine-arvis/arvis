@@ -1,6 +1,7 @@
 import { Menu, MenuItem, app } from 'electron';
 import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
 import { WindowManager } from '../../../windows';
+import { openSearchWindowDevTools } from '../../../utils/devtoolsHandler';
 
 class SearchbarContextMenu extends Menu {
   constructor({ isPinned }: { isPinned: boolean }) {
@@ -45,12 +46,7 @@ class SearchbarContextMenu extends Menu {
         label: 'Open Debugger Window',
         toolTip: 'Open Search window Debugger Window',
         click() {
-          WindowManager.getInstance()
-            .getSearchWindow()
-            .webContents.openDevTools({
-              mode: 'undocked',
-              activate: true,
-            });
+          openSearchWindowDevTools();
         },
       })
     );
