@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable react/no-unescaped-entities */
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,7 +49,7 @@ export default function AdvancedDebugging() {
             Debugging actions
           </Label>
           <FormDescription>
-            Print executed action info on devtools
+            Print executed action information on devtools
           </FormDescription>
         </FormGroup>
 
@@ -66,10 +65,10 @@ export default function AdvancedDebugging() {
                 )
               }
             />
-            Variables (Arguments, query, variables info)
+            Variables (Arguments, query, variables information)
           </Label>
           <FormDescription>
-            Print variable informations on devtools
+            Print variable information on devtools
           </FormDescription>
         </FormGroup>
 
@@ -88,7 +87,7 @@ export default function AdvancedDebugging() {
             Debugging script
           </Label>
           <FormDescription>
-            Print executed script and script's stdout, stderr on devtools
+            Print executed script and script&lsquo;s stdout, stderr on devtools
           </FormDescription>
         </FormGroup>
 
@@ -107,7 +106,7 @@ export default function AdvancedDebugging() {
             Debugging scriptfilter
           </Label>
           <FormDescription>
-            Print executed scriptfilter's script devtools
+            Print executed scriptfilter&lsquo;s script devtools
           </FormDescription>
         </FormGroup>
 

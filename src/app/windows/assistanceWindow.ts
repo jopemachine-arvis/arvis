@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { BrowserWindow } from 'electron';
 import path from 'path';
-import constants from '../constants';
+import constants from '../config/constant';
 
 const createAssistanceWindow = (eventHandlers: Map<string, Function>) => {
   const assistanceWindow = new BrowserWindow({

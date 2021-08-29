@@ -1,6 +1,6 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
-import constants from '../constants';
+import constants from '../config/constant';
 import pkg from '../config/pkg';
 import installExtensions from '../config/electronDevToolsInstaller';
 

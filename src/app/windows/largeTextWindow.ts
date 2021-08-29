@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 import path from 'path';
-import constants from '../constants';
+import constants from '../config/constant';
 
 const createLargeTextWindow = () => {
   const largeTypeWindow = new BrowserWindow({

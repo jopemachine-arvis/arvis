@@ -42,9 +42,9 @@ export default function AdvancedHistory() {
             }
           />
           <FormDescription>
-            Arvis store action execution log, input log.
+            Arvis store User&lsquo;s usage.
             <br />
-            Set this logs max count to store.
+            Set logs max count to store.
           </FormDescription>
         </FormGroup>
       </Form>
