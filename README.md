@@ -18,15 +18,13 @@
   <br>
 </div>
 
-* Runs on cross-platform.
+* Fully support cross-platform.
 
-* Easily compatable with lots of Alfred workflows.
+* Compatable with lots of [Alfred workflows](https://www.alfredapp.com/workflows/).
 
 * Search and install the extension from store simplely.
 
-* Publish new extension to store.
-
-* Make your own search window style.
+* Make your own styles.
 
 * Support clipboard history and universal actions.
 
