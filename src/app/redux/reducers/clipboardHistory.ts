@@ -23,11 +23,6 @@ export default (state: any = {}, action: any) => {
       return {
         ...state,
       };
-    case ClipboardHistoryActionTypes.SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY:
-      return {
-        ...state,
-        hotkey: payload.arg,
-      };
     case ClipboardHistoryActionTypes.SET_MAX_CLIPBOARD_STORE_SIZE:
       return {
         ...state,
@@ -50,10 +45,6 @@ export default (state: any = {}, action: any) => {
 
 export function getApplyMouseHoverEvent(state: StateType) {
   return state.clipboard_history.apply_mouse_hover_event;
-}
-
-export function getClipboardHistoryHotkey(state: StateType) {
-  return state.clipboard_history.hotkey;
 }
 
 export function getMaxSize(state: StateType) {

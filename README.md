@@ -28,6 +28,8 @@
 
 * Make your own search window style.
 
+* Support clipboard history and universal actions.
+
 📹: [Overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 
 📚: [Check for more documentations](https://jopemachine.github.io/arvis-docs/)

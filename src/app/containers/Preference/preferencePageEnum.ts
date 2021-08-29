@@ -8,4 +8,5 @@ export enum PreferencePage {
   AdvancedPlugin = 'Plugin Setting',
   AdvancedDebugging = 'Debugger Setting',
   ClipboardHistory = 'Clipboard History',
+  UniversalAction = 'Universal Action',
 }

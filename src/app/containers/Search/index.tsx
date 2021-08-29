@@ -67,12 +67,10 @@ export default function SearchWindow() {
     global_font,
     max_item_count_to_search,
     max_item_count_to_show,
-    toggle_search_window_hotkey,
+    search_window_hotkey,
+    clipboard_history_window_hotkey,
+    universal_action_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
-
-  const { hotkey: clipboard_history_hotkey } = useSelector(
-    (state: StateType) => state.clipboard_history
-  );
 
   const debuggingConfig = useSelector(
     (state: StateType) => state.advanced_config
@@ -169,9 +167,9 @@ export default function SearchWindow() {
 
   const registerAllGlobalHotkeys = () => {
     const defaultHotkeyTbls = {
-      [toggle_search_window_hotkey]: 'toggleSearchWindow',
-      [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
-      'command + shift + .': 'toggleUniversalActionWindow',
+      [search_window_hotkey]: 'toggleSearchWindow',
+      [clipboard_history_window_hotkey]: 'toggleClipboardHistoryWindow',
+      [universal_action_window_hotkey]: 'toggleUniversalActionWindow',
     };
 
     const hotkeys = Core.findHotkeys();
@@ -400,12 +398,18 @@ export default function SearchWindow() {
     }
 
     if (
-      (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') ||
-      (clipboard_history_hotkey && clipboard_history_hotkey !== '')
+      (search_window_hotkey && search_window_hotkey !== '') ||
+      (clipboard_history_window_hotkey &&
+        clipboard_history_window_hotkey !== '') ||
+      (universal_action_window_hotkey && universal_action_window_hotkey !== '')
     ) {
       renewHotkeys();
     }
-  }, [toggle_search_window_hotkey, clipboard_history_hotkey]);
+  }, [
+    search_window_hotkey,
+    clipboard_history_window_hotkey,
+    universal_action_window_hotkey,
+  ]);
 
   useEffect(() => {
     ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {

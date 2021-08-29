@@ -29,6 +29,7 @@ import AppearancePage from './Appearance';
 import PluginPage from './Plugin';
 import StorePage from './Store';
 import ClipboardHistoryPage from './ClipboardHistory';
+import UniversalActionPage from './UniversalAction';
 import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
 import AdvancedPluginPage from './Advanced/AdvancedPlugin';
@@ -318,6 +319,9 @@ export default function PreferenceWindow() {
         break;
       case PreferencePage.ClipboardHistory:
         main = <ClipboardHistoryPage />;
+        break;
+      case PreferencePage.UniversalAction:
+        main = <UniversalActionPage />;
         break;
       default:
         throw new Error(`Error, page is not valid value, page: ${page}`);

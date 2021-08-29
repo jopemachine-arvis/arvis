@@ -5,8 +5,6 @@ export const actionTypes = {
   CLEAR_CLIPBOARD_STORE: '@CLIPBOARD_STORE/CLEAR_CLIPBOARD_STORE',
   SET_MAX_CLIPBOARD_STORE_SIZE: '@CLIPBOARD_STORE/SET_MAX_CLIPBOARD_STORE_SIZE',
   SET_MAX_SHOW_SIZE: '@CLIPBOARD_STORE/SET_MAX_SHOW_SIZE',
-  SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY:
-    '@CLIPBOARD_STORE/SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY',
   SET_APPLY_MOUSE_HOVER_EVENT_FLAG:
     '@CLIPBOARD_STORE/SET_APPLY_MOUSE_HOVER_EVENT_FLAG',
 };
@@ -31,11 +29,6 @@ export const clearClipboardStore = makeActionCreator(
 );
 
 export const setMaxClipboardStoreSize = makeActionCreator(
-  actionTypes.CLEAR_CLIPBOARD_STORE,
-  'arg'
-);
-
-export const setClipboardHistoryWindowHotkey = makeActionCreator(
   actionTypes.CLEAR_CLIPBOARD_STORE,
   'arg'
 );
