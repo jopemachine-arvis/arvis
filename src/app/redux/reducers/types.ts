@@ -7,7 +7,9 @@ export type StateType = {
     launch_at_login: boolean;
     max_item_count_to_search: number;
     max_item_count_to_show: number;
-    toggle_search_window_hotkey: string;
+    search_window_hotkey: string;
+    clipboard_history_window_hotkey: string;
+    universal_action_window_hotkey: string;
   };
   ui_config: {
     icon_right_margin: number;
@@ -45,7 +47,6 @@ export type StateType = {
   };
   clipboard_history: {
     apply_mouse_hover_event: boolean;
-    hotkey: string;
     max_show: number;
     max_size: number;
     store: object[];

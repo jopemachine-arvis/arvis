@@ -7,7 +7,7 @@ import { setGlobalShortcut } from './config/setGlobalShortcut';
 import { popupPluginItemMenu } from './contextMenu/popupPluginPageItemMenu';
 import { popupWorkflowItemMenu } from './contextMenu/popupWorkflowPageItemMenu';
 import { popupSearchbarItemMenu } from './contextMenu/popupSearchbarItemMenu';
-import { popupClipboardHistoryContextMenu } from './contextMenu/popupClipboardHistoryContextMenu';
+import { popupAssistanceWindowContextMenu } from './contextMenu/popupAssistanceWindowContextMenu';
 
 import { openPluginInstallFileDialog } from './modal/openPluginInstallFileDialog';
 import { openWorkflowInstallFileDialog } from './modal/openWorkflowInstallFileDialog';
@@ -16,7 +16,7 @@ import { saveFile } from './modal/saveFile';
 import { showErrorDialog } from './modal/showErrorDialog';
 
 import { hideLargeTextWindow } from './windowManage/hideLargeTextWindow';
-import { hideClipboardHistoryWindow } from './windowManage/hideClipboardHistoryWindow';
+import { hideAssistanceWindow } from './windowManage/hideAssistanceWindow';
 import { hideSearchWindow } from './windowManage/hideSearchWindow';
 import { resizeSearchWindowHeight } from './windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './windowManage/setSearchWindowWidth';
@@ -29,14 +29,14 @@ import { triggerKeyDownEvent } from './triggerKeyDownEvent';
 export {
   dispatchAction,
   getSystemFont,
-  hideClipboardHistoryWindow,
+  hideAssistanceWindow,
   hideLargeTextWindow,
   hideSearchWindow,
   importTheme,
   openPluginInstallFileDialog,
   openWorkflowInstallFileDialog,
   openYesnoDialog,
-  popupClipboardHistoryContextMenu,
+  popupAssistanceWindowContextMenu,
   popupPluginItemMenu,
   popupSearchbarItemMenu,
   popupWorkflowItemMenu,

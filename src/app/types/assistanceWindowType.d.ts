@@ -1,0 +1,1 @@
+type AssistanceWindowType = 'clipboardHistory' | 'universalAction';

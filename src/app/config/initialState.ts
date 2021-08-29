@@ -4,8 +4,12 @@ export default {
     launch_at_login: false,
     max_item_count_to_search: 100,
     max_item_count_to_show: 9,
-    toggle_search_window_hotkey:
+    search_window_hotkey:
       process.platform === 'darwin' ? 'Cmd + Space' : 'Ctrl + Space',
+    clipboard_history_window_hotkey:
+      process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
+    universal_action_window_hotkey:
+      process.platform === 'darwin' ? 'Meta + Shift + .' : 'Ctrl + Shift + .',
   },
   ui_config: {
     icon_right_margin: 10,
@@ -43,7 +47,6 @@ export default {
   },
   clipboard_history: {
     apply_mouse_hover_event: true,
-    hotkey: process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
     max_show: 50,
     max_size: 400,
     store: [],

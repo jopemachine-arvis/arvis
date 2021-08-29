@@ -234,7 +234,7 @@ export default (mainWindow: BrowserWindow) => {
         label: 'Open ClipboardHistory Window Debugger',
         click() {
           WindowManager.getInstance()
-            .getClipboardHistoryWindow()
+            .getAssistanceWindow()
             .webContents.openDevTools();
         },
       },

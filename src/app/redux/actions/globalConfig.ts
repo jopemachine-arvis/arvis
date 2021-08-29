@@ -5,8 +5,11 @@ export const actionTypes = {
   SET_MAX_ITEM_COUNT_TO_SEARCH: '@GLOBAL_CONFIG/SET_MAX_ITEM_COUNT_TO_SEARCH',
   SET_MAX_ITEM_COUNT_TO_SHOW: '@GLOBAL_CONFIG/SET_MAX_ITEM_COUNT_TO_SHOW',
   SET_GLOBAL_FONT: '@GLOBAL_CONFIG/SET_GLOBAL_FONT',
-  SET_TOGGLE_SEARCH_WINDOW_HOTKEY:
-    '@GLOBAL_CONFIG/SET_TOGGLE_SEARCH_WINDOW_HOTKEY',
+  SET_SEARCH_WINDOW_HOTKEY: '@GLOBAL_CONFIG/SET_SEARCH_WINDOW_HOTKEY',
+  SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY:
+    '@GLOBAL_CONFIG/SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY',
+  SET_UNIVERSAL_ACTION_WINDOW_HOTKEY:
+    '@GLOBAL_CONFIG/SET_UNIVERSAL_ACTION_WINDOW_HOTKEY',
 };
 
 export const setLaunchAtLogin = makeActionCreator(
@@ -14,8 +17,18 @@ export const setLaunchAtLogin = makeActionCreator(
   'arg'
 );
 
-export const setHotkey = makeActionCreator(
-  actionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY,
+export const setSearchWindowHotkey = makeActionCreator(
+  actionTypes.SET_SEARCH_WINDOW_HOTKEY,
+  'arg'
+);
+
+export const setClipboardHistoryWindowHotkey = makeActionCreator(
+  actionTypes.SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY,
+  'arg'
+);
+
+export const setUniversalActionWindowHotkey = makeActionCreator(
+  actionTypes.SET_UNIVERSAL_ACTION_WINDOW_HOTKEY,
   'arg'
 );
 

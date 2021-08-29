@@ -41,7 +41,7 @@ export const InfoInnerContainer = styled.pre`
   white-space: pre-wrap;
 `;
 
-export const CopyDateTime = styled.div`
+export const SubInfoText = styled.div`
   height: 6%;
   display: flex;
   font-size: 12px;

@@ -10,7 +10,7 @@ export const reloadApplication = (e: IpcMainEvent) => {
   // app.relaunch();
 
   const errorMsg =
-    'Force terminate due to some updates that can only take effect after Arvis restarted. Please just restart Arvis.';
+    'Arvis is forced to be terminated due to some updates that can only take effect after Arvis restarted. Please just restart Arvis.';
 
   console.log(errorMsg);
 

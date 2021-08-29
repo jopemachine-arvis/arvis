@@ -6,10 +6,20 @@ const { actionTypes: GlobalConfigActionTypes } = GlobalConfigActions;
 export default (state = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY:
+    case GlobalConfigActionTypes.SET_SEARCH_WINDOW_HOTKEY:
       return {
         ...state,
-        toggle_search_window_hotkey: payload.arg,
+        search_window_hotkey: payload.arg,
+      };
+    case GlobalConfigActionTypes.SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY:
+      return {
+        ...state,
+        clipboard_history_window_hotkey: payload.arg,
+      };
+    case GlobalConfigActionTypes.SET_UNIVERSAL_ACTION_WINDOW_HOTKEY:
+      return {
+        ...state,
+        universal_action_window_hotkey: payload.arg,
       };
     case GlobalConfigActionTypes.SET_LAUNCH_AT_LOGIN:
       return {
@@ -36,8 +46,16 @@ export default (state = {}, action: any) => {
   }
 };
 
-export function getToggleSearchWindowHotkey(state: StateType) {
-  return state.global_config.toggle_search_window_hotkey;
+export function getSearchWindowHotkey(state: StateType) {
+  return state.global_config.search_window_hotkey;
+}
+
+export function getClipboardHistoryWindowHotkey(state: StateType) {
+  return state.global_config.clipboard_history_window_hotkey;
+}
+
+export function getUniversalActionWindowHotkey(state: StateType) {
+  return state.global_config.universal_action_window_hotkey;
 }
 
 export function getItemMaxCountToShow(state: StateType) {

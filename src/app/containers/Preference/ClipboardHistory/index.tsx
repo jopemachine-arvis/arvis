@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { StyledInput, HotkeyRecordForm } from '@components/index';
 import { actionTypes as ClipboardHistoryActionTypes } from '@redux/actions/clipboardHistory';
+import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
 import { StateType } from '@redux/reducers/types';
 import {
   onNumberChangeHandler,
@@ -13,7 +14,11 @@ import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
 export default function ClipboardHistory() {
-  const { hotkey, max_size, max_show, apply_mouse_hover_event } = useSelector(
+  const hotkey = useSelector(
+    (state: StateType) => state.global_config
+  ).clipboard_history_window_hotkey;
+
+  const { max_size, max_show, apply_mouse_hover_event } = useSelector(
     (state: StateType) => state.clipboard_history
   );
 
@@ -28,7 +33,7 @@ export default function ClipboardHistory() {
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     configChangeHandler(['searchWindow'])(
       e,
-      ClipboardHistoryActionTypes.SET_CLIPBOARD_MANAGER_WINDOW_HOTKEY
+      GlobalConfigActionTypes.SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY
     );
   };
 

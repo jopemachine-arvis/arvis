@@ -4,86 +4,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
-import useForceUpdate from 'use-force-update';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
-import { useClipboardHistoryWindowControl } from '@hooks/index';
-import { getArvisAssetsPath } from '@config/path';
+import { useAssistanceWindowControl } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
-import path from 'path';
 import {
   SearchWindowScrollbar,
   SearchBar,
   SearchResultView,
 } from '@components/index';
-import {
-  InfoContainer,
-  OuterContainer,
-  SearchContainer,
-  InfoInnerContainer,
-  CopyDateTime,
-} from './components';
+import { InfoContainer, OuterContainer, SearchContainer } from './components';
 import { style } from './style';
 import './index.css';
+import useClipboardHistory from './mode/useClipboardHistory';
+import useUniversalAction from './mode/useUniversalAction';
 
 const maxShowOnScreen = 15;
 
-const transformStore = (store: any[]): any[] => {
-  const iconPath = path.resolve(
-    getArvisAssetsPath(),
-    'images',
-    'clipboardHistoryItem.svg'
-  );
+const onWindowOpenEventHandlers = new Map<AssistanceWindowType, () => void>();
 
-  const items = store.map((item) => {
-    return {
-      title: item.text,
-      bundleId: 'arvis.clipboardHistory',
-      icon: {
-        path: iconPath,
-      },
-      date: item.date,
-    };
-  });
-
-  return items.reverse();
-};
-
-export default function ClipboardHistoryWindow() {
+export default function AssistanceWindow() {
   const { global_font } = useSelector(
     (state: StateType) => state.global_config
   );
 
-  const {
-    apply_mouse_hover_event,
-    store,
-    max_size,
-    max_show: max_show_on_window,
-  } = useSelector((state: StateType) => state.clipboard_history);
-
-  const [items, setItems] = useState<any[]>(
-    transformStore(store).slice(0, max_show_on_window)
+  const { apply_mouse_hover_event, max_show: max_show_on_window } = useSelector(
+    (state: StateType) => state.clipboard_history
   );
 
-  const [originalItems, setOriginalItems] = useState<any[]>(
-    transformStore(store)
-  );
+  const [items, setItems] = useState<any[]>([]);
+
+  const [originalItems, setOriginalItems] = useState<any[]>([]);
 
   const [searchContainerScrollbarVisible, setSearchContainerScrollbarVisible] =
     useState<boolean>(true);
 
   const [isPinned, setIsPinned] = useState<boolean>(false);
 
-  const forceUpdate = useForceUpdate();
-
   const dispatch = useDispatch();
 
-  const maxShowOnWindowRef = useRef<number>(max_show_on_window);
-  const storeRef = useRef<any>(store);
+  const renewHandler = useRef<() => void>(() => {});
 
-  storeRef.current = store;
-  maxShowOnWindowRef.current = max_show_on_window;
+  const [mode, setMode] = useState<AssistanceWindowType | undefined>(undefined);
 
   const {
     indexInfo,
@@ -94,7 +57,8 @@ export default function ClipboardHistoryWindow() {
     onMouseoverHandler,
     onWheelHandler,
     getInputProps,
-  } = useClipboardHistoryWindowControl({
+  } = useAssistanceWindowControl({
+    mode,
     items,
     originalItems,
     setItems,
@@ -105,7 +69,52 @@ export default function ClipboardHistoryWindow() {
     maxShowOnWindow: max_show_on_window,
   });
 
+  const { renderInfoContent: renderClipboardHistoryInfoContent } =
+    useClipboardHistory({
+      items,
+      setItems,
+      originalItems,
+      setOriginalItems,
+      indexInfo,
+      mode,
+      maxShowOnScreen,
+      maxShowOnWindow: max_show_on_window,
+      renewHandler,
+      onWindowOpenEventHandlers,
+    });
+
+  const { renderInfoContent: renderUniversalActionInfoContent } =
+    useUniversalAction({
+      items,
+      setItems,
+      originalItems,
+      setOriginalItems,
+      mode,
+      maxShowOnScreen,
+      maxShowOnWindow: max_show_on_window,
+      renewHandler,
+      onWindowOpenEventHandlers,
+    });
+
+  const renderInfoContent = () => {
+    if (mode === 'clipboardHistory') return renderClipboardHistoryInfoContent();
+    if (mode === 'universalAction') return renderUniversalActionInfoContent();
+    return <></>;
+  };
+
   const ipcCallbackTbl = {
+    setMode: (
+      e: IpcRendererEvent,
+      { mode: modeToSet }: { mode: AssistanceWindowType }
+    ) => {
+      setMode(modeToSet);
+      renewHandler.current();
+
+      if (onWindowOpenEventHandlers.has(modeToSet)) {
+        onWindowOpenEventHandlers.get(modeToSet)!();
+      }
+    },
+
     fetchAction: (
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
@@ -113,55 +122,36 @@ export default function ClipboardHistoryWindow() {
       dispatch(makeActionCreator(actionType, 'arg')(args));
     },
 
-    renewClipboardStore: (e: IpcRendererEvent) => {
-      forceUpdate();
-      // wait until force update is done.
-      setTimeout(() => {
-        const newItems = transformStore(storeRef.current);
-        setItems(newItems.slice(0, maxShowOnWindowRef.current));
-        setOriginalItems(transformStore(storeRef.current));
-        clearIndexInfo();
-        setInputStr('');
-        focusSearchbar();
-      }, 15);
-    },
-
-    pinClipboardHistoryWindow: (
-      e: IpcRendererEvent,
-      { bool }: { bool: boolean }
-    ) => {
+    pinAssistanceWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
       setIsPinned(bool);
     },
   };
 
   useEffect(() => {
-    ipcRenderer.on(
-      IPCMainEnum.pinClipboardHistoryWindow,
-      ipcCallbackTbl.pinClipboardHistoryWindow
-    );
-    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-    ipcRenderer.on(
-      IPCMainEnum.renewClipboardStore,
-      ipcCallbackTbl.renewClipboardStore
-    );
-
-    return () => {
-      ipcRenderer.off(
-        IPCMainEnum.pinClipboardHistoryWindow,
-        ipcCallbackTbl.pinClipboardHistoryWindow
-      );
-      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
-      ipcRenderer.off(
-        IPCMainEnum.renewClipboardStore,
-        ipcCallbackTbl.renewClipboardStore
-      );
+    renewHandler.current = () => {
+      clearIndexInfo();
+      setInputStr('');
+      focusSearchbar();
     };
   }, []);
 
   useEffect(() => {
-    setItems(transformStore(store).slice(0, max_show_on_window));
-    setOriginalItems(transformStore(store));
-  }, [max_size, max_show_on_window]);
+    ipcRenderer.on(IPCMainEnum.setMode, ipcCallbackTbl.setMode);
+    ipcRenderer.on(
+      IPCMainEnum.pinAssistanceWindow,
+      ipcCallbackTbl.pinAssistanceWindow
+    );
+    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+
+    return () => {
+      ipcRenderer.off(IPCMainEnum.setMode, ipcCallbackTbl.setMode);
+      ipcRenderer.off(
+        IPCMainEnum.pinAssistanceWindow,
+        ipcCallbackTbl.pinAssistanceWindow
+      );
+      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
+    };
+  }, []);
 
   const infoContainerOnWheelHandler = () => {
     setSearchContainerScrollbarVisible(false);
@@ -171,20 +161,20 @@ export default function ClipboardHistoryWindow() {
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
     if (e.key === 'Escape') {
-      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+      ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
     }
   };
 
   const rightClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    ipcRenderer.send(IPCRendererEnum.popupClipboardHistoryContextMenu, {
+    ipcRenderer.send(IPCRendererEnum.popupAssistanceWindowContextMenu, {
       isPinned,
     });
   };
 
   return (
     <OuterContainer
-      id="clipboardHistoryOuterContainer"
+      id="assistanceWindowOuterContainer"
       tabIndex={0}
       style={{ fontFamily: global_font }}
       onContextMenu={rightClickHandler}
@@ -249,20 +239,10 @@ export default function ClipboardHistoryWindow() {
         )}
       </SearchContainer>
       <InfoContainer
-        id="clipboardHistory-textarea"
+        id="assistanceWindowTextarea"
         onWheel={infoContainerOnWheelHandler}
       >
-        <InfoInnerContainer>
-          {items[indexInfo.selectedItemIdx]
-            ? items[indexInfo.selectedItemIdx].title
-            : ''}
-        </InfoInnerContainer>
-        <CopyDateTime>
-          {items[indexInfo.selectedItemIdx] &&
-            `Copied on ${new Date(
-              items[indexInfo.selectedItemIdx].date
-            ).toLocaleString()}`}
-        </CopyDateTime>
+        {renderInfoContent()}
       </InfoContainer>
     </OuterContainer>
   );

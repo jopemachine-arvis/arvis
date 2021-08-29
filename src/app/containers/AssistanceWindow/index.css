@@ -6,19 +6,19 @@
   background-color: #fff !important;
 }
 
-#clipboardHistoryOuterContainer {
+#assistanceWindowOuterContainer {
   outline: none;
 }
 
-#clipboardHistory-textarea:focus {
+#assistanceWindowTextarea:focus {
   overflow-y: auto;
 }
 
-#clipboardHistory-textarea {
+#assistanceWindowTextarea {
   overflow-y: hidden;
 }
 
-#clipboardHistory-textarea pre::selection {
+#assistanceWindowTextarea pre::selection {
   color: white;
   background: #888888;
 }

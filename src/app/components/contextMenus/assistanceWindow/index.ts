@@ -2,43 +2,43 @@ import { Menu, MenuItem } from 'electron';
 import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
 import { WindowManager } from '../../../windows';
 
-class ClipboardHistoryContextMenu extends Menu {
+class AssistanceWindowContextMenu extends Menu {
   constructor({ isPinned }: { isPinned: boolean }) {
     super();
 
     super.append(
       new MenuItem({
         type: 'checkbox',
-        label: 'Pin Clipboard History Window',
-        toolTip: 'Pin Clipboard History Window',
+        label: 'Pin Window',
+        toolTip: 'Pin Window',
         checked: isPinned,
         click() {
           const blurEventHandler = WindowManager.getEventHandler(
-            'clipboardHistoryWindow',
+            'assistanceWindow',
             'blur'
           ) as () => void;
 
           if (!isPinned === true) {
             WindowManager.getInstance()
-              .getClipboardHistoryWindow()
+              .getAssistanceWindow()
               .setAlwaysOnTop(true, 'floating');
 
             WindowManager.getInstance()
-              .getClipboardHistoryWindow()
+              .getAssistanceWindow()
               .off('blur', blurEventHandler);
           } else {
             WindowManager.getInstance()
-              .getClipboardHistoryWindow()
+              .getAssistanceWindow()
               .setAlwaysOnTop(false);
 
             WindowManager.getInstance()
-              .getClipboardHistoryWindow()
+              .getAssistanceWindow()
               .on('blur', blurEventHandler);
           }
 
           WindowManager.getInstance()
-            .getClipboardHistoryWindow()
-            .webContents.send(IPCMainEnum.pinClipboardHistoryWindow, {
+            .getAssistanceWindow()
+            .webContents.send(IPCMainEnum.pinAssistanceWindow, {
               bool: !isPinned,
             });
         },
@@ -47,4 +47,4 @@ class ClipboardHistoryContextMenu extends Menu {
   }
 }
 
-export default ClipboardHistoryContextMenu;
+export default AssistanceWindowContextMenu;

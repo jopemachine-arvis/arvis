@@ -8,6 +8,7 @@ import {
 } from 'electron';
 import { WindowManager } from '../../windows';
 import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
+import { openSearchWindowDevTools } from '../../utils/devtoolsHandler';
 
 export default class TrayBuilder {
   trayFilePath: string;
@@ -41,11 +42,7 @@ export default class TrayBuilder {
       accelerator: 'F11',
       toolTip: 'Open Debugging Window',
       click: () => {
-        const searchWindow = WindowManager.getInstance().getSearchWindow();
-        searchWindow.webContents.openDevTools({
-          mode: 'undocked',
-          activate: true,
-        });
+        openSearchWindowDevTools();
       },
     },
     {

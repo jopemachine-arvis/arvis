@@ -6,6 +6,7 @@ import { clipboard, ipcRenderer } from 'electron';
 import { isWithCtrlOrCmd } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import _ from 'lodash';
+import useForceUpdate from 'use-force-update';
 import useKey from '../../external/use-key-capture/src';
 
 type IndexInfo = {
@@ -15,7 +16,8 @@ type IndexInfo = {
 
 /**
  */
-const useClipboardHistoryWindowControl = ({
+const useAssistanceWindowControl = ({
+  mode,
   items,
   setItems,
   originalItems,
@@ -25,6 +27,7 @@ const useClipboardHistoryWindowControl = ({
   isPinned,
   setIsPinned,
 }: {
+  mode: string | undefined;
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
@@ -45,6 +48,8 @@ const useClipboardHistoryWindowControl = ({
   const originalItemsRef = useRef<any[]>(originalItems);
   const maxShowOnWindowRef = useRef<number>(maxShowOnWindow);
   const applyMouseHoverEventRef = useRef<boolean>(applyMouseHoverEvent);
+
+  const forceUpdate = useForceUpdate();
 
   /**
    */
@@ -150,6 +155,7 @@ const useClipboardHistoryWindowControl = ({
 
     clearIndexInfo();
     setItems(newItems.slice(0, _maxShowOnWindow));
+    forceUpdate();
   };
 
   /**
@@ -165,7 +171,7 @@ const useClipboardHistoryWindowControl = ({
    * @param selectedItemIdx
    * @param modifiers Selected modifier keys
    */
-  const handleReturn = ({
+  const handleClipboardHistoryItemReturnEvent = ({
     selectedItemIdx,
     modifiers,
   }: {
@@ -175,7 +181,7 @@ const useClipboardHistoryWindowControl = ({
     if (items[selectedItemIdx]) {
       clipboard.writeText(items[selectedItemIdx].title);
 
-      ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+      ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
 
       setTimeout(() => {
         ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
@@ -188,6 +194,46 @@ const useClipboardHistoryWindowControl = ({
       }, 25);
 
       setIsPinned(false);
+    }
+  };
+
+  /**
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
+   */
+  const handleUniversalActionReturnEvent = ({
+    selectedItemIdx,
+    modifiers,
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    const capturedStr = (
+      document.getElementById('universalActionTarget') as HTMLPreElement
+    ).innerHTML;
+    const commandToExecute = `${items[selectedItemIdx].command} ${capturedStr}`;
+
+    ipcRenderer.send(IPCRendererEnum.toggleSearchWindow, {
+      showsUp: true,
+      command: commandToExecute,
+    });
+  };
+
+  /**
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
+   */
+  const handleReturn = ({
+    selectedItemIdx,
+    modifiers,
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    if (mode === 'clipboardHistory') {
+      handleClipboardHistoryItemReturnEvent({ selectedItemIdx, modifiers });
+    } else if (mode === 'universalAction') {
+      handleUniversalActionReturnEvent({ selectedItemIdx, modifiers });
     }
   };
 
@@ -345,7 +391,7 @@ const useClipboardHistoryWindowControl = ({
       selectedItemIdx = handleUpArrow();
     } else if (keyData.isEscape) {
       if (!isPinned) {
-        ipcRenderer.send(IPCRendererEnum.hideClipboardHistoryWindow);
+        ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
       }
     } else if (ctrlOrCmdKeyPressed && input && input.toUpperCase() === 'V') {
       searchByNextInput();
@@ -385,4 +431,4 @@ const useClipboardHistoryWindowControl = ({
   };
 };
 
-export default useClipboardHistoryWindowControl;
+export default useAssistanceWindowControl;

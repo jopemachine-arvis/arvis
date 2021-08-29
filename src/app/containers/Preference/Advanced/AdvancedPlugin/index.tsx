@@ -37,10 +37,17 @@ export default function AdvancedHistory() {
             }
           />
           <FormDescription>
-            If async plugin continues work after this time,
+            If async plugin continues work after this specified time, the async
+            plugins will be defered.
             <br />
-            async plugin will be quited forcibly to avoid slowing down
-            performance.
+            For details, please check{' '}
+            <a
+              target="_blank"
+              href="https://jopemachine.github.io/arvis-docs/documents/extension/plugin-intro/"
+              rel="noreferrer"
+            >
+              Arvis documentation
+            </a>
           </FormDescription>
         </FormGroup>
       </Form>

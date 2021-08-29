@@ -1,3 +1,10 @@
+# 0.11.0
+
+## What’s Changed
+
+* [fix] Minor tweaks
+* [feature, experimental] Add Universal action window, preference page
+
 # 0.10.8
 
 ## What’s Changed

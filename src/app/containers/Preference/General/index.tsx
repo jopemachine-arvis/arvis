@@ -35,7 +35,7 @@ export default function General(props: IProps) {
     launch_at_login,
     max_item_count_to_search,
     max_item_count_to_show,
-    toggle_search_window_hotkey,
+    search_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
 
   const [fontListDrawerOpen, setFontListDrawerOpen] = useState(false);
@@ -71,10 +71,7 @@ export default function General(props: IProps) {
   };
 
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    configChangeHandler(
-      e,
-      GlobalConfigActionTypes.SET_TOGGLE_SEARCH_WINDOW_HOTKEY
-    );
+    configChangeHandler(e, GlobalConfigActionTypes.SET_SEARCH_WINDOW_HOTKEY);
   };
 
   return (
@@ -94,7 +91,7 @@ export default function General(props: IProps) {
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Arvis Hotkey</Label>
           <HotkeyRecordForm
-            hotkey={toggle_search_window_hotkey}
+            hotkey={search_window_hotkey}
             onHotkeyChange={hotkeyChangeHandler}
           />
           <FormDescription>

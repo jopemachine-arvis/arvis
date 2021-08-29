@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import {
   SearchBar,
@@ -66,12 +67,10 @@ export default function SearchWindow() {
     global_font,
     max_item_count_to_search,
     max_item_count_to_show,
-    toggle_search_window_hotkey,
+    search_window_hotkey,
+    clipboard_history_window_hotkey,
+    universal_action_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
-
-  const { hotkey: clipboard_history_hotkey } = useSelector(
-    (state: StateType) => state.clipboard_history
-  );
 
   const debuggingConfig = useSelector(
     (state: StateType) => state.advanced_config
@@ -118,6 +117,8 @@ export default function SearchWindow() {
   }, [debuggingConfig]);
 
   const dispatch = useDispatch();
+
+  const store = useStore();
 
   useDoubleHotkey();
 
@@ -166,8 +167,9 @@ export default function SearchWindow() {
 
   const registerAllGlobalHotkeys = () => {
     const defaultHotkeyTbls = {
-      [toggle_search_window_hotkey]: 'toggleSearchWindow',
-      [clipboard_history_hotkey]: 'toggleClipboardHistoryWindow',
+      [search_window_hotkey]: 'toggleSearchWindow',
+      [clipboard_history_window_hotkey]: 'toggleClipboardHistoryWindow',
+      [universal_action_window_hotkey]: 'toggleUniversalActionWindow',
     };
 
     const hotkeys = Core.findHotkeys();
@@ -251,7 +253,14 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { externalEnvs }: { externalEnvs: string }
     ) => {
-      Core.setExternalEnvs(JSON.parse(externalEnvs));
+      const userUIConfig = store.getState().ui_config;
+      const arvisUIConfig: any = {};
+
+      for (const key of Object.keys(userUIConfig)) {
+        arvisUIConfig[`arvis_ui_${key}`] = userUIConfig[key];
+      }
+
+      Core.setExternalEnvs({ ...arvisUIConfig, ...JSON.parse(externalEnvs) });
     },
 
     resizeCurrentSearchWindowWidth: (
@@ -389,12 +398,18 @@ export default function SearchWindow() {
     }
 
     if (
-      (toggle_search_window_hotkey && toggle_search_window_hotkey !== '') ||
-      (clipboard_history_hotkey && clipboard_history_hotkey !== '')
+      (search_window_hotkey && search_window_hotkey !== '') ||
+      (clipboard_history_window_hotkey &&
+        clipboard_history_window_hotkey !== '') ||
+      (universal_action_window_hotkey && universal_action_window_hotkey !== '')
     ) {
       renewHotkeys();
     }
-  }, [toggle_search_window_hotkey, clipboard_history_hotkey]);
+  }, [
+    search_window_hotkey,
+    clipboard_history_window_hotkey,
+    universal_action_window_hotkey,
+  ]);
 
   useEffect(() => {
     ipcRenderer.send(IPCRendererEnum.resizeSearchWindowHeight, {

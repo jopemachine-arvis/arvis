@@ -55,7 +55,6 @@ export default {
     alias: {
       '@components': 'app/components',
       '@config': 'app/config',
-      '@constants': 'app/constants',
       '@containers': 'app/containers',
       '@helper': 'app/helper',
       '@hooks': 'app/hooks',
