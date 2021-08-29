@@ -30,12 +30,19 @@ const watchOpts = {
  */
 const requestReloadWorkflows = (bundleIds?: string[]) => {
   const windowManager = WindowManager.getInstance();
+
   windowManager.getSearchWindow().webContents.send(IPCMainEnum.reloadWorkflow, {
     bundleIds: JSON.stringify(bundleIds),
   });
 
   windowManager
     .getPreferenceWindow()
+    .webContents.send(IPCMainEnum.reloadWorkflow, {
+      bundleIds: JSON.stringify(bundleIds),
+    });
+
+  windowManager
+    .getAssistanceWindow()
     .webContents.send(IPCMainEnum.reloadWorkflow, {
       bundleIds: JSON.stringify(bundleIds),
     });

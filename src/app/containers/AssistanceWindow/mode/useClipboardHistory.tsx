@@ -7,7 +7,7 @@ import { StateType } from '@redux/reducers/types';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import useForceUpdate from 'use-force-update';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
-import { CopyDateTime, InfoInnerContainer } from '../components';
+import { SubInfoText, InfoInnerContainer } from '../components';
 
 const transformStore = (store: any[]): any[] => {
   const iconPath = path.resolve(
@@ -42,16 +42,18 @@ const useClipboardHistory = ({
   renewHandler,
   maxShowOnScreen,
   maxShowOnWindow,
+  onWindowOpenEventHandlers,
 }: {
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
   setOriginalItems: (items: any[]) => void;
   indexInfo: any;
-  mode: string | undefined;
+  mode: 'clipboardHistory' | 'universalAction' | undefined;
   renewHandler: React.MutableRefObject<() => void>;
   maxShowOnScreen: number;
   maxShowOnWindow: number;
+  onWindowOpenEventHandlers: Map<string, () => void>;
 }) => {
   const { store } = useSelector((state: StateType) => state.clipboard_history);
 
@@ -76,10 +78,20 @@ const useClipboardHistory = ({
     },
   };
 
+  const reload = () => {
+    setItems(
+      transformStore(storeRef.current).slice(0, maxShowOnWindowRef.current)
+    );
+    setOriginalItems(transformStore(storeRef.current));
+  };
+
+  useEffect(() => {
+    onWindowOpenEventHandlers.set('clipboardHistory', reload);
+  }, []);
+
   useEffect(() => {
     if (mode === 'clipboardHistory') {
-      setItems(transformStore(store).slice(0, maxShowOnWindow));
-      setOriginalItems(transformStore(store));
+      reload();
     }
   }, [mode, maxShowOnScreen, maxShowOnWindow]);
 
@@ -104,12 +116,12 @@ const useClipboardHistory = ({
           ? items[indexInfo.selectedItemIdx].title
           : ''}
       </InfoInnerContainer>
-      <CopyDateTime>
+      <SubInfoText>
         {items[indexInfo.selectedItemIdx] &&
           `Copied on ${new Date(
             items[indexInfo.selectedItemIdx].date
           ).toLocaleString()}`}
-      </CopyDateTime>
+      </SubInfoText>
     </>
   );
 

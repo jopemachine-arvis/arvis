@@ -22,17 +22,19 @@ import useUniversalAction from './mode/useUniversalAction';
 
 const maxShowOnScreen = 15;
 
+const onWindowOpenEventHandlers = new Map<
+  'clipboardHistory' | 'universalAction',
+  () => void
+>();
+
 export default function AssistanceWindow() {
   const { global_font } = useSelector(
     (state: StateType) => state.global_config
   );
 
-  const {
-    apply_mouse_hover_event,
-    // store,
-    max_size,
-    max_show: max_show_on_window,
-  } = useSelector((state: StateType) => state.clipboard_history);
+  const { apply_mouse_hover_event, max_show: max_show_on_window } = useSelector(
+    (state: StateType) => state.clipboard_history
+  );
 
   const [items, setItems] = useState<any[]>([]);
 
@@ -82,6 +84,7 @@ export default function AssistanceWindow() {
       maxShowOnScreen,
       maxShowOnWindow: max_show_on_window,
       renewHandler,
+      onWindowOpenEventHandlers,
     });
 
   const { renderInfoContent: renderUniversalActionInfoContent } =
@@ -94,6 +97,7 @@ export default function AssistanceWindow() {
       maxShowOnScreen,
       maxShowOnWindow: max_show_on_window,
       renewHandler,
+      onWindowOpenEventHandlers,
     });
 
   const renderInfoContent = () => {
@@ -109,6 +113,10 @@ export default function AssistanceWindow() {
     ) => {
       setMode(modeToSet);
       renewHandler.current();
+
+      if (onWindowOpenEventHandlers.has(modeToSet)) {
+        onWindowOpenEventHandlers.get(modeToSet)!();
+      }
     },
 
     fetchAction: (
