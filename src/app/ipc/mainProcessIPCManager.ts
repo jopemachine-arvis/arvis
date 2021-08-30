@@ -10,6 +10,7 @@ import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
+import { applySnippet } from './mainProcessEventHandler/applySnippet';
 
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
@@ -51,6 +52,7 @@ import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggl
  * Register ipc callbacks
  */
 export const initIPCHandlers = () => {
+  ipcMain.on(IPCRendererEnum.applySnippet, applySnippet);
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getElectronEnvs, getElectronEnvs);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);

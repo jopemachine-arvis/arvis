@@ -2,6 +2,7 @@
  * Events sent from renderer process to main process
  */
 export enum IPCRendererEnum {
+  applySnippet                               = '@ipcRenderer/applySnippet',
   dispatchAction                             = '@ipcRenderer/dispatchAction',
   getElectronEnvs                            = '@ipcRenderer/getElectronEnvs',
   getSystemFont                              = '@ipcRenderer/getSystemFont',

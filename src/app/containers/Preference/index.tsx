@@ -30,6 +30,7 @@ import PluginPage from './Plugin';
 import StorePage from './Store';
 import ClipboardHistoryPage from './ClipboardHistory';
 import UniversalActionPage from './UniversalAction';
+import SnippetPage from './Snippet';
 import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
 import AdvancedPluginPage from './Advanced/AdvancedPlugin';
@@ -322,6 +323,9 @@ export default function PreferenceWindow() {
         break;
       case PreferencePage.UniversalAction:
         main = <UniversalActionPage />;
+        break;
+      case PreferencePage.Snippet:
+        main = <SnippetPage />;
         break;
       default:
         throw new Error(`Error, page is not valid value, page: ${page}`);

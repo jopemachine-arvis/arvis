@@ -21,6 +21,7 @@ import { FaGithub } from 'react-icons/fa';
 import open from 'open';
 import { BsClipboardData } from 'react-icons/bs';
 import { IoArrowUndoCircleOutline } from 'react-icons/io5';
+import { GiFallingStar } from 'react-icons/gi';
 import sidebarBg from '../../../../../assets/images/sidebar_bg.jpg';
 import { SidebarTitle } from './components';
 import { PreferencePage } from '../preferencePageEnum';
@@ -103,6 +104,14 @@ export default function Sidebar(props: IProps) {
               active={page === PreferencePage.ClipboardHistory}
             >
               Clipboard History
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => setPage(PreferencePage.Snippet)}
+              icon={<GiFallingStar />}
+              active={page === PreferencePage.Snippet}
+            >
+              Snippet
             </MenuItem>
 
             <MenuItem

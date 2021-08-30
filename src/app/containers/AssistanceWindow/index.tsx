@@ -7,13 +7,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
-import { useAssistanceWindowControl } from '@hooks/index';
+import { useAssistanceWindowControl, useSnippet } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SearchWindowScrollbar,
   SearchBar,
   SearchResultView,
 } from '@components/index';
+import useSnippetKeywords from '@hooks/useSnippetKeywords';
 import { InfoContainer, OuterContainer, SearchContainer } from './components';
 import { style } from './style';
 import './index.css';
@@ -47,6 +48,10 @@ export default function AssistanceWindow() {
   const renewHandler = useRef<() => void>(() => {});
 
   const [mode, setMode] = useState<AssistanceWindowType | undefined>(undefined);
+
+  const { snippets } = useSnippet();
+
+  useSnippetKeywords(snippets);
 
   const {
     indexInfo,
