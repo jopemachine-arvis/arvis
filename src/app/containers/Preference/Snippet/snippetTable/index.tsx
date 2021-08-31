@@ -38,11 +38,11 @@ const OuterContainer = styled.div`
 
   td:nth-child(2) {
     min-width: 110px;
-    width: 22%;
+    width: 4%;
   }
 
   td:nth-child(3) {
-    width: 66%;
+    width: 18%;
   }
 
   table {
@@ -70,24 +70,6 @@ const OuterContainer = styled.div`
     }
   }
 `;
-
-const transformData = (trigger: Command) => {
-  let desc;
-  if (trigger.type === 'hotkey') {
-    desc = trigger.actions![0]
-      ? (trigger.actions![0] as KeywordAction | ScriptFilterAction).title
-      : '';
-  } else {
-    desc = trigger.title || trigger.subtitle || '';
-  }
-
-  return {
-    type: trigger.type,
-    command: trigger.hotkey || trigger.command || '',
-    triggerPath: (trigger as any).triggerPath,
-    description: desc,
-  };
-};
 
 function SnippetTable({
   columns,
@@ -170,17 +152,12 @@ function SnippetTable({
 }
 
 type IProps = {
-  snippets: Map<SnippetKeyword, SnippetItem>;
+  snippets: SnippetItem[];
   reloadSnippets: () => void;
 };
 
 export default function (props: IProps) {
   const { snippets } = props;
-
-  const data = React.useMemo(
-    () => (triggers ? triggers.map(transformData) : []),
-    [triggers]
-  );
 
   const columns = React.useMemo(
     () => [
@@ -208,8 +185,12 @@ export default function (props: IProps) {
 
   return (
     <OuterContainer>
-      {data.length > 0 && (
-        <SnippetTable columns={columns} data={data} updateJson={updateJson} />
+      {snippets.length > 0 && (
+        <SnippetTable
+          columns={columns}
+          data={snippets}
+          updateJson={updateJson}
+        />
       )}
     </OuterContainer>
   );

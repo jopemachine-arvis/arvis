@@ -1,56 +1,131 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Form, FormGroup, Label } from 'reactstrap';
-import { HotkeyRecordForm } from '@components/index';
-import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
-import { StateType } from '@redux/reducers/types';
-import { createGlobalConfigChangeHandler } from '@utils/index';
+import React, { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import useSnippet from '@hooks/useSnippet';
-import { OuterContainer, FormDescription } from './components';
-import { formGroupStyle, labelStyle } from './style';
+import './index.css';
+import {
+  AiOutlineAppstoreAdd,
+  AiOutlineBranches,
+  AiOutlineDelete,
+} from 'react-icons/ai';
+import _ from 'lodash';
+import { arvisSnippetCollectionPath } from '@config/path';
+import path from 'path';
+import fse from 'fs-extra';
+import * as style from './style';
 import SnippetTable from './snippetTable';
+import {
+  OuterContainer,
+  SnippetListOrderedList,
+  SnippetListViewFooter,
+  SnippetSettingContainer,
+  Header,
+  SnippetListView,
+  SnippetItemContainer,
+  SnippetImg,
+  SnippetItemTitle,
+  SnippetItemSubText,
+} from './components';
 
 export default function Snippet() {
-  const hotkey = useSelector(
-    (state: StateType) => state.global_config
-  ).universal_action_window_hotkey;
-
-  const dispatch = useDispatch();
-
   const { snippets, reloadSnippets } = useSnippet();
 
-  const configChangeHandler = (destWindows: string[]) =>
-    createGlobalConfigChangeHandler({
-      destWindows,
-      dispatch,
-    });
+  const snippetsByCollection = useMemo(
+    () => _.groupBy([...snippets.values()], 'collection'),
+    [snippets]
+  );
 
-  const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    configChangeHandler(['searchWindow'])(
-      e,
-      GlobalConfigActionTypes.SET_UNIVERSAL_ACTION_WINDOW_HOTKEY
+  const [selectedIdx, setSelectedIdx] = useState<number>(-1);
+
+  const selectedCollection =
+    selectedIdx !== -1
+      ? Object.keys(snippetsByCollection)[selectedIdx]
+      : undefined;
+
+  const getDefaultIcon = (collectionName: string) => {
+    const collectionPath = path.resolve(
+      arvisSnippetCollectionPath,
+      collectionName
+    );
+    const collectionIconPath = path.resolve(collectionPath, 'icon.png');
+    if (fse.existsSync(collectionIconPath)) {
+      return collectionIconPath;
+    }
+
+    return undefined;
+  };
+
+  const itemClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    setSelectedIdx(idx);
+  };
+
+  const renderItem = (collectionName: string, idx: number) => {
+    let icon;
+    const defaultIconPath = getDefaultIcon(collectionName);
+
+    if (defaultIconPath) {
+      icon = <SnippetImg src={defaultIconPath} />;
+    } else {
+      icon = <AiOutlineBranches style={style.defaultIconStyle} />;
+    }
+
+    return (
+      <SnippetItemContainer
+        key={`snippetItem-${idx}`}
+        onClick={(e) => itemClickHandler(e, idx)}
+        style={selectedIdx === idx ? style.selectedItemStyle : {}}
+      >
+        {icon}
+        <SnippetItemTitle>{collectionName}</SnippetItemTitle>
+        <SnippetItemSubText>
+          {`${snippetsByCollection[collectionName].length} Snippets`}
+        </SnippetItemSubText>
+      </SnippetItemContainer>
     );
   };
 
   return (
-    <OuterContainer>
-      <Form>
-        <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Snippet Hotkey</Label>
-          <HotkeyRecordForm
-            hotkey={hotkey}
-            onHotkeyChange={hotkeyChangeHandler}
+    <OuterContainer id="snippet-page-container" tabIndex={0}>
+      <Header
+        style={{
+          marginLeft: 40,
+        }}
+      >
+        Installed Snippets
+      </Header>
+      <SnippetListView>
+        <SnippetListOrderedList>
+          {Object.keys(snippetsByCollection).map((collection, idx) =>
+            renderItem(collection, idx)
+          )}
+        </SnippetListOrderedList>
+      </SnippetListView>
+      <SnippetSettingContainer>
+        {selectedCollection && (
+          <SnippetTable
+            snippets={snippetsByCollection[selectedCollection]}
+            reloadSnippets={reloadSnippets}
           />
-          <FormDescription>
-            Select the form and type the hotkey
-            <br />
-            you would like to use to show Snippet Window
-          </FormDescription>
-        </FormGroup>
-      </Form>
-      <SnippetTable snippets={snippets} reloadSnippets={reloadSnippets} />
+        )}
+      </SnippetSettingContainer>
+
+      {/* To do:: Add local installation support */}
+      <SnippetListViewFooter>
+        {/* <AiOutlineAppstoreAdd
+          className="snippet-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => requestAddNewSnippet()}
+        />
+        <AiOutlineDelete
+          className="snippet-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => callDeleteSnippetConfModal()}
+        /> */}
+      </SnippetListViewFooter>
     </OuterContainer>
   );
 }

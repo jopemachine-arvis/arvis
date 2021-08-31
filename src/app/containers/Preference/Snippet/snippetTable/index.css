@@ -1,8 +1,8 @@
-.workflowTriggerTableItem:focus {
+.snippetItem:focus {
   color: #fff !important;
 } 
 
-.workflowTriggerTableItem::selection {
+.snippetItem::selection {
   color: white;
   background: #888888;
 }

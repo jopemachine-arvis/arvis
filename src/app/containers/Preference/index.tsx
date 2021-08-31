@@ -35,6 +35,7 @@ import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
 import AdvancedPluginPage from './Advanced/AdvancedPlugin';
 import { MainContainer, OuterContainer } from './components';
+import './index.css';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
@@ -340,6 +341,7 @@ export default function PreferenceWindow() {
 
   return (
     <OuterContainer
+      id="preferenceOuterContainer"
       style={{
         fontFamily: global_font,
       }}

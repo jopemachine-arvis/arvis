@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   fetchSnippetCollection,
   loadSnippetCollection,
+  loadSnippetCollectionInfo,
 } from './utils/snippetLoader';
 /**
  * @description
@@ -11,21 +12,38 @@ const useSnippet = () => {
     new Map()
   );
 
-  const snippetsRef = useRef<Map<SnippetKeyword, SnippetItem>>(snippets);
-
-  snippetsRef.current = snippets;
+  const [snippetCollectionInfos, setSnippetCollectionInfos] =
+    useState<Map<CollectionName, SnippetCollectionInfo>>();
 
   const reloadSnippets = (): void => {
     fetchSnippetCollection()
-      .then(loadSnippetCollection)
-      .then((loadedSnippetData) => {
-        const snippetsToSet = new Map<string, SnippetItem>();
+      .then(({ collections, collectionInfos }) => {
+        loadSnippetCollection(collections)
+          .then((loadedSnippetData) => {
+            const snippetsToSet = new Map<string, SnippetItem>();
 
-        loadedSnippetData.forEach((snippet) => {
-          snippetsToSet.set(snippet.keyword, snippet);
-        });
+            loadedSnippetData.forEach((snippet) => {
+              snippetsToSet.set(snippet.keyword, snippet);
+            });
 
-        setSnippets(snippetsToSet);
+            setSnippets(snippetsToSet);
+            return null;
+          })
+          .catch(console.error);
+
+        loadSnippetCollectionInfo(collectionInfos)
+          .then((loadedCollectionInfos) => {
+            const infos = new Map<string, any>();
+
+            loadedCollectionInfos.forEach((collectionInfo) => {
+              infos.set(collectionInfo.collection, collectionInfo.info);
+            });
+
+            setSnippetCollectionInfos(infos);
+            return null;
+          })
+          .catch(console.error);
+
         return null;
       })
       .catch(console.error);
@@ -37,6 +55,7 @@ const useSnippet = () => {
 
   return {
     snippets,
+    snippetCollectionInfos,
     reloadSnippets,
   };
 };
