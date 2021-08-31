@@ -7,70 +7,11 @@ import React, { useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
-import styled from 'styled-components';
 import { Core } from 'arvis-core';
 import { ipcRenderer } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { EditableCell } from './editableCell';
-
-const OuterContainer = styled.div`
-  width: 95%;
-  height: 100%;
-
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 10px;
-
-  overflow-x: hidden;
-  overflow-y: auto !important;
-
-  tbody {
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto !important;
-  }
-
-  td:nth-child(1) {
-    min-width: 90px;
-    width: 12%;
-  }
-
-  td:nth-child(2) {
-    min-width: 110px;
-    width: 22%;
-  }
-
-  td:nth-child(3) {
-    width: 66%;
-  }
-
-  table {
-    color: #888;
-    border-color: #333;
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-
-      text-align: center;
-      white-space: nowrap;
-
-      input {
-        width: 100%;
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-left: 3;
-        padding-right: 3;
-        margin: 0;
-        border: 0;
-        background-color: #202228;
-      }
-    }
-  }
-`;
+import { OuterContainer } from './components';
 
 const transformData = (trigger: Command) => {
   let desc;

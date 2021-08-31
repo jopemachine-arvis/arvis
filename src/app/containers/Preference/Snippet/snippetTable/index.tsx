@@ -9,70 +9,11 @@ import React, { useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
-import styled from 'styled-components';
 import fse from 'fs-extra';
 import path from 'path';
 import { arvisSnippetCollectionPath } from '@config/path';
+import { OuterContainer } from './components';
 import { EditableCell } from './editableCell';
-
-const OuterContainer = styled.div`
-  width: 95%;
-  height: 100%;
-
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 10px;
-
-  overflow-x: hidden;
-  overflow-y: auto !important;
-
-  tbody {
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto !important;
-  }
-
-  td:nth-child(1) {
-    min-width: 90px;
-    width: 12%;
-  }
-
-  td:nth-child(2) {
-    min-width: 110px;
-    width: 4%;
-  }
-
-  td:nth-child(3) {
-    width: 18%;
-  }
-
-  table {
-    color: #888;
-    border-color: #333;
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-
-      text-align: center;
-      white-space: nowrap;
-
-      input {
-        width: 100%;
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-left: 3;
-        padding-right: 3;
-        margin: 0;
-        border: 0;
-        background-color: #202228;
-      }
-    }
-  }
-`;
 
 function SnippetTable({
   columns,
@@ -186,9 +127,15 @@ export default function (props: IProps) {
 
   const snippetNameChangeHandler = (snippet: SnippetItem, value: string) => {
     // Update snippet by changing file name
-    const oldPath = path.resolve(arvisSnippetCollectionPath, snippet.name);
-    const newPath = path.resolve(arvisSnippetCollectionPath, value);
-    fse.rename(oldPath, newPath);
+    const oldFileName = snippet.uid
+      ? `${snippet.name} [${snippet.uid}].json`
+      : `${snippet}.json`;
+    const newFileName = `${value}.json`;
+
+    const oldPath = path.resolve(arvisSnippetCollectionPath, oldFileName);
+    const newPath = path.resolve(arvisSnippetCollectionPath, newFileName);
+
+    fse.rename(oldPath, newPath).catch(console.error);
   };
 
   const snippetInfoChangeHandler = (
@@ -211,7 +158,7 @@ export default function (props: IProps) {
 
     data[target] = value;
 
-    fse.writeJson(snippetPath, data, { encoding: 'utf8' });
+    fse.writeJson(snippetPath, data, { encoding: 'utf8' }).catch(console.error);
   };
 
   const updateSnippet = (rowIndex: number, columnId: string, value: string) => {
@@ -220,7 +167,14 @@ export default function (props: IProps) {
     if (columnId === 'name') {
       snippetNameChangeHandler(snippet, value);
     } else {
-      snippetInfoChangeHandler(snippet, columnId, value);
+      let target;
+      if (columnId === 'A->') {
+        target = 'useAutoExpand';
+      } else {
+        target = columnId;
+      }
+
+      snippetInfoChangeHandler(snippet, target, value);
     }
 
     reloadSnippets();
