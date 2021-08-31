@@ -11159,10 +11159,10 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-quick-lru@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-6.0.0.tgz#c5a245a773c702694870828e5f09b28f7af087db"
-  integrity sha512-kQ3ACYYIALMi7x8xvMU+qSF6N6baMZms8/q3dn2XFiORhFrLbpR6vTRNGR80HwlakWSoY4RnGoCJWUgnyH6zZQ==
+quick-lru@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-6.0.1.tgz#3a3fabc74960d663222d04957634766d3447c562"
+  integrity sha512-IE0DNgU7LWaVHB3KqPwWwZ9QiBK9HqZ1Au1uOcLkoosOzehlhOq/v1LA3TUUSzjA98CCOfhug74rWb0L7sGwdw==
 
 raf@^3.4.1:
   version "3.4.1"
