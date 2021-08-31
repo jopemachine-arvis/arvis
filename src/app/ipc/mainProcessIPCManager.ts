@@ -21,6 +21,7 @@ import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/show
 
 import { openPluginInstallFileDialog } from './mainProcessEventHandler/modal/openPluginInstallFileDialog';
 import { openWorkflowInstallFileDialog } from './mainProcessEventHandler/modal/openWorkflowInstallFileDialog';
+import { openSnippetInstallFileDialog } from './mainProcessEventHandler/modal/openSnippetInstallFileDialog';
 import { openYesnoDialog } from './mainProcessEventHandler/modal/openYesnoDialog';
 import { saveFile } from './mainProcessEventHandler/modal/saveFile';
 import { showErrorDialog } from './mainProcessEventHandler/modal/showErrorDialog';
@@ -110,6 +111,11 @@ export const initIPCHandlers = () => {
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,
     openWorkflowInstallFileDialog
+  );
+
+  ipcMain.on(
+    IPCRendererEnum.openSnippetInstallFileDialog,
+    openSnippetInstallFileDialog
   );
 
   ipcMain.on(

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import React, { useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
 import useSnippet from '@hooks/useSnippet';
 import './index.css';
 import {
@@ -13,6 +12,9 @@ import _ from 'lodash';
 import { arvisSnippetCollectionPath } from '@config/path';
 import path from 'path';
 import fse from 'fs-extra';
+import { ipcRenderer } from 'electron';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { installSnippet } from '@helper/installSnippet';
 import * as style from './style';
 import SnippetTable from './snippetTable';
 import {
@@ -43,6 +45,26 @@ export default function Snippet() {
       ? Object.keys(snippetsByCollection)[selectedIdx]
       : undefined;
 
+  const ipcCallbackTbl = {
+    openSnippetInstallFileDialogRet: (
+      e: Electron.IpcRendererEvent,
+      { file }: { file: any }
+    ) => {
+      console.log('Open installer file: ', file);
+
+      installSnippet(file.filePaths[0]);
+    },
+
+    openYesnoDialogRet: (
+      e: Electron.IpcRendererEvent,
+      { yesPressed }: { yesPressed: boolean }
+    ) => {
+      if (yesPressed) {
+        //
+      }
+    },
+  };
+
   const getDefaultIcon = (collectionName: string) => {
     const collectionPath = path.resolve(
       arvisSnippetCollectionPath,
@@ -61,6 +83,19 @@ export default function Snippet() {
     idx: number
   ) => {
     setSelectedIdx(idx);
+  };
+
+  const requestAddNewSnippet = () => {
+    ipcRenderer.send(IPCRendererEnum.openSnippetInstallFileDialog);
+  };
+
+  const callDeleteSnippetConfModal = () => {
+    if (!selectedCollection) return;
+
+    ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
+      msg: `Are you sure you want to delete '${selectedCollection}'?`,
+      icon: getDefaultIcon(selectedCollection),
+    });
   };
 
   const renderItem = (collectionName: string, idx: number) => {
@@ -88,6 +123,30 @@ export default function Snippet() {
     );
   };
 
+  useEffect(() => {
+    ipcRenderer.on(
+      IPCMainEnum.openSnippetInstallFileDialogRet,
+      ipcCallbackTbl.openSnippetInstallFileDialogRet
+    );
+
+    ipcRenderer.on(
+      IPCMainEnum.openYesnoDialogRet,
+      ipcCallbackTbl.openYesnoDialogRet
+    );
+
+    return () => {
+      ipcRenderer.off(
+        IPCMainEnum.openSnippetInstallFileDialogRet,
+        ipcCallbackTbl.openSnippetInstallFileDialogRet
+      );
+
+      ipcRenderer.off(
+        IPCMainEnum.openYesnoDialogRet,
+        ipcCallbackTbl.openYesnoDialogRet
+      );
+    };
+  }, []);
+
   return (
     <OuterContainer id="snippet-page-container" tabIndex={0}>
       <Header
@@ -113,9 +172,8 @@ export default function Snippet() {
         )}
       </SnippetSettingContainer>
 
-      {/* To do:: Add local installation support */}
       <SnippetListViewFooter>
-        {/* <AiOutlineAppstoreAdd
+        <AiOutlineAppstoreAdd
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewSnippet()}
@@ -124,7 +182,7 @@ export default function Snippet() {
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => callDeleteSnippetConfModal()}
-        /> */}
+        />
       </SnippetListViewFooter>
     </OuterContainer>
   );

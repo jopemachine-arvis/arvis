@@ -1,12 +1,12 @@
-import { IpcMainEvent } from 'electron';
+import { dialog, IpcMainEvent } from 'electron';
 import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
 import { openFileDialog } from './utils/openFileDialog';
 
-export const openPluginInstallFileDialog = async (e: IpcMainEvent) => {
+export const openSnippetInstallFileDialog = async (e: IpcMainEvent) => {
   await openFileDialog({
-    filterName: 'Arvis plugin install files',
-    extensions: ['arvisplugin'],
+    filterName: 'Arvis snippet install files',
+    extensions: ['arvissnippet', 'alfredsnippet'],
     callback: (file) => {
       WindowManager.getInstance()
         .getPreferenceWindow()
