@@ -309,7 +309,7 @@
     "electron-is": "^3.0.0",
     "electron-log": "^4.4.0",
     "electron-store": "^8.0.0",
-    "electron-updater": "^4.4.1",
+    "electron-updater": "^4.4.4",
     "electron-util": "^0.17.0",
     "encodeurl": "^1.0.2",
     "execa": "5.1.1",
