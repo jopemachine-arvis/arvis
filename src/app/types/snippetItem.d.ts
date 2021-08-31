@@ -10,4 +10,5 @@ interface SnippetItem {
   snippet: string;
   useAutoExpand: boolean;
   collection: string;
+  uid?: string;
 }

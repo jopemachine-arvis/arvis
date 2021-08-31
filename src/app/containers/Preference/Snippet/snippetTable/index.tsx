@@ -10,6 +10,9 @@ import _ from 'lodash';
 import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
 import styled from 'styled-components';
+import fse from 'fs-extra';
+import path from 'path';
+import { arvisSnippetCollectionPath } from '@config/path';
 import { EditableCell } from './editableCell';
 
 const OuterContainer = styled.div`
@@ -74,11 +77,11 @@ const OuterContainer = styled.div`
 function SnippetTable({
   columns,
   data,
-  updateJson,
+  updateSnippet,
 }: {
   columns: any;
   data: any;
-  updateJson: any;
+  updateSnippet: any;
 }) {
   const dataRef = useRef<any>(data);
 
@@ -99,7 +102,7 @@ function SnippetTable({
         columns,
         data,
         defaultColumn,
-        updateJson,
+        updateSnippet,
       },
       useSortBy
     );
@@ -157,7 +160,7 @@ type IProps = {
 };
 
 export default function (props: IProps) {
-  const { snippets } = props;
+  const { snippets, reloadSnippets } = props;
 
   const columns = React.useMemo(
     () => [
@@ -181,7 +184,47 @@ export default function (props: IProps) {
     []
   );
 
-  const updateJson = (rowIndex: number, _columnId: number, value: string) => {};
+  const snippetNameChangeHandler = (snippet: SnippetItem, value: string) => {
+    // Update snippet by changing file name
+    const oldPath = path.resolve(arvisSnippetCollectionPath, snippet.name);
+    const newPath = path.resolve(arvisSnippetCollectionPath, value);
+    fse.rename(oldPath, newPath);
+  };
+
+  const snippetInfoChangeHandler = (
+    snippet: SnippetItem,
+    target: string,
+    value: string
+  ) => {
+    // Update snippet by updating json file
+    const snippetPath = path.resolve(arvisSnippetCollectionPath, snippet.name);
+    const data: Record<string, any> = {
+      snippet: snippet.snippet,
+      dontautoexpand: !snippet.useAutoExpand,
+      name: snippet.name,
+      keyword: snippet.keyword,
+    };
+
+    if (snippet.uid) {
+      data.uid = snippet.uid;
+    }
+
+    data[target] = value;
+
+    fse.writeJson(snippetPath, data, { encoding: 'utf8' });
+  };
+
+  const updateSnippet = (rowIndex: number, columnId: string, value: string) => {
+    const snippet = snippets[rowIndex];
+
+    if (columnId === 'name') {
+      snippetNameChangeHandler(snippet, value);
+    } else {
+      snippetInfoChangeHandler(snippet, columnId, value);
+    }
+
+    reloadSnippets();
+  };
 
   return (
     <OuterContainer>
@@ -189,7 +232,7 @@ export default function (props: IProps) {
         <SnippetTable
           columns={columns}
           data={snippets}
-          updateJson={updateJson}
+          updateSnippet={updateSnippet}
         />
       )}
     </OuterContainer>

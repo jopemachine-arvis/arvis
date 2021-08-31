@@ -2,20 +2,39 @@ import React, { useEffect, useRef } from 'react';
 import { keyCodeToString } from '@utils/iohook/keyUtils';
 import { ipcRenderer } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { specialCharTable } from '@utils/iohook/keyTbl';
 import { useIoHook } from '.';
 
-const snippetItemBuffers = new Map<SnippetKeyword, CharBuffer>();
+const snippetItemBuffers = new Map<
+  {
+    keyword: SnippetKeyword;
+    prefix: string;
+    suffix: string;
+  },
+  CharBuffer
+>();
 
-const keyCodeToStringAdapter = (keycode: number) => {
-  const str = keyCodeToString(keycode);
+// To do:: Add here other special character handling logic
+const keyCodeToStringAdapter = (e: IOHookKeyEvent) => {
+  const str = keyCodeToString(e.keycode);
   if (str === 'Space') return ' ';
+  if (e.shiftKey) {
+    return (specialCharTable as any)[str] ?? str;
+  }
+
   return str;
 };
 
 /**
  * @description
  */
-const useSnippetKeywords = (snippets: Map<SnippetKeyword, SnippetItem>) => {
+const useSnippetKeywords = ({
+  snippets,
+  collectionInfo,
+}: {
+  snippets: Map<SnippetKeyword, SnippetItem>;
+  collectionInfo: Map<CollectionName, SnippetCollectionInfo>;
+}) => {
   const snippetsRef = useRef<Map<SnippetKeyword, SnippetItem>>(snippets);
 
   snippetsRef.current = snippets;
@@ -28,39 +47,52 @@ const useSnippetKeywords = (snippets: Map<SnippetKeyword, SnippetItem>) => {
     });
   };
 
-  const applySnippet = (snippetItem: SnippetItem): void => {
+  const applySnippet = (keyword: string, snippet: string): void => {
     clearSnippetItemBuffers();
 
     ipcRenderer.send(IPCRendererEnum.applySnippet, {
-      snippetItemStr: JSON.stringify(snippetItem),
+      keyword,
+      snippet,
     });
   };
 
   const keyDownEventHandler = (e: IOHookKeyEvent): void => {
-    let longestMatchCompleted = '';
+    let longestMatchKeywordInfo = {
+      keyword: '',
+      prefix: '',
+      suffix: '',
+    };
+
+    const pressedKey = keyCodeToStringAdapter(e);
 
     [...snippetItemBuffers.keys()].forEach((snippetKeyword) => {
       let charBuffer = snippetItemBuffers.get(snippetKeyword)!;
-      const pressedKey = keyCodeToStringAdapter(e.keycode);
 
-      // To do:: Add here other special character handling logic
-      if (snippetKeyword[charBuffer.length] === pressedKey) {
+      const keywordWithPrefixAndSuffix = `${snippetKeyword.prefix}${snippetKeyword.keyword}${snippetKeyword.suffix}`;
+
+      if (keywordWithPrefixAndSuffix[charBuffer.length] === pressedKey) {
         charBuffer += pressedKey;
         snippetItemBuffers.set(snippetKeyword, charBuffer);
 
         if (
-          snippetKeyword === charBuffer &&
-          snippetKeyword.length > longestMatchCompleted.length
+          keywordWithPrefixAndSuffix === charBuffer &&
+          keywordWithPrefixAndSuffix.length >
+            longestMatchKeywordInfo.keyword.length
         ) {
-          longestMatchCompleted = snippetKeyword;
+          longestMatchKeywordInfo = snippetKeyword;
         }
       } else {
         snippetItemBuffers.set(snippetKeyword, '');
       }
     });
 
-    if (longestMatchCompleted.length !== 0) {
-      applySnippet(snippetsRef.current.get(longestMatchCompleted)!);
+    if (longestMatchKeywordInfo.keyword.length !== 0) {
+      const { prefix, keyword, suffix } = longestMatchKeywordInfo;
+      const keywordWithPrefixAndSuffix = `${prefix}${keyword}${suffix}`;
+      applySnippet(
+        keywordWithPrefixAndSuffix,
+        snippetsRef.current.get(keyword)!.snippet
+      );
     }
   };
 
@@ -69,10 +101,19 @@ const useSnippetKeywords = (snippets: Map<SnippetKeyword, SnippetItem>) => {
   };
 
   useEffect(() => {
-    [...snippets.keys()].forEach((snippetKeyword) => {
-      snippetItemBuffers.set(snippetKeyword, '');
-    });
-  }, [snippets]);
+    if (snippets && collectionInfo) {
+      snippetItemBuffers.clear();
+
+      [...snippets.keys()].forEach((snippetKeyword) => {
+        const info: any =
+          collectionInfo.get(snippets.get(snippetKeyword)!.collection) ?? {};
+        const prefix = info.snippetKeywordPrefix ?? '';
+        const suffix = info.snippetKeywordSuffix ?? '';
+
+        snippetItemBuffers.set({ keyword: snippetKeyword, prefix, suffix }, '');
+      });
+    }
+  }, [snippets, collectionInfo]);
 
   useEffect(() => {
     ioHook.on('keydown', keyDownEventHandler);

@@ -49,9 +49,9 @@ export default function AssistanceWindow() {
 
   const [mode, setMode] = useState<AssistanceWindowType | undefined>(undefined);
 
-  const { snippets } = useSnippet();
+  const { snippets, snippetCollectionInfos } = useSnippet();
 
-  useSnippetKeywords(snippets);
+  useSnippetKeywords({ snippets, collectionInfo: snippetCollectionInfos });
 
   const {
     indexInfo,

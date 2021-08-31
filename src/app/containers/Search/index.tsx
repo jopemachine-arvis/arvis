@@ -398,10 +398,9 @@ export default function SearchWindow() {
     }
 
     if (
-      (search_window_hotkey && search_window_hotkey !== '') ||
-      (clipboard_history_window_hotkey &&
-        clipboard_history_window_hotkey !== '') ||
-      (universal_action_window_hotkey && universal_action_window_hotkey !== '')
+      search_window_hotkey ||
+      clipboard_history_window_hotkey ||
+      universal_action_window_hotkey
     ) {
       renewHotkeys();
     }

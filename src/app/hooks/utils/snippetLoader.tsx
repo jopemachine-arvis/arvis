@@ -109,8 +109,10 @@ export const loadSnippetCollection = async (collectionFiles: string[]) => {
         collection,
         name: snippet.name,
         keyword: snippet.keyword,
-        useAutoExpand: snippet.useAutoExpand,
+        useAutoExpand:
+          !snippet.dontautoexpand ?? snippet.useAutoExpand ?? false,
         snippet: snippet.snippet,
+        uid: snippet.uid,
       });
     }
   });

@@ -90,6 +90,7 @@ export const SnippetSettingContainer = styled.div`
   margin-top: 95px;
   border-radius: 10px;
   flex-grow: 1;
+  height: 80%;
 `;
 
 export const SnippetImg = styled.img`

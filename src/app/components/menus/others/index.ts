@@ -192,7 +192,7 @@ export default (mainWindow: BrowserWindow) => [
         },
       },
       {
-        label: 'Open ClipboardHistory Window Debugger',
+        label: 'Open Assistance Window Debugger',
         click() {
           WindowManager.getInstance()
             .getAssistanceWindow()

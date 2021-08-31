@@ -12,8 +12,9 @@ const useSnippet = () => {
     new Map()
   );
 
-  const [snippetCollectionInfos, setSnippetCollectionInfos] =
-    useState<Map<CollectionName, SnippetCollectionInfo>>();
+  const [snippetCollectionInfos, setSnippetCollectionInfos] = useState<
+    Map<CollectionName, SnippetCollectionInfo>
+  >(new Map());
 
   const reloadSnippets = (): void => {
     fetchSnippetCollection()
@@ -33,7 +34,7 @@ const useSnippet = () => {
 
         loadSnippetCollectionInfo(collectionInfos)
           .then((loadedCollectionInfos) => {
-            const infos = new Map<string, any>();
+            const infos = new Map<string, SnippetCollectionInfo>();
 
             loadedCollectionInfos.forEach((collectionInfo) => {
               infos.set(collectionInfo.collection, collectionInfo.info);

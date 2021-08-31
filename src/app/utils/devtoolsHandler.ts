@@ -7,6 +7,4 @@ export const openSearchWindowDevTools = () => {
     mode: 'undocked',
     activate: true,
   });
-
-  searchWindow.webContents.devToolsWebContents!.focus();
 };

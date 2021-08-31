@@ -29,7 +29,7 @@ import {
 } from './components';
 
 export default function Snippet() {
-  const { snippets, reloadSnippets } = useSnippet();
+  const { snippets, snippetCollectionInfos, reloadSnippets } = useSnippet();
 
   const snippetsByCollection = useMemo(
     () => _.groupBy([...snippets.values()], 'collection'),

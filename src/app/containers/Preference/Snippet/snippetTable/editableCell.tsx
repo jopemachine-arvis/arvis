@@ -6,13 +6,13 @@ export const EditableCell = ({
   value: initialValue,
   row: { index },
   column: { id },
-  updateJson,
+  updateSnippet,
   type,
 }: {
   value: any;
   row: any;
   column: any;
-  updateJson: any;
+  updateSnippet: any;
   type: string;
 }) => {
   const [value, setValue] = useState<string>(initialValue);
@@ -24,7 +24,7 @@ export const EditableCell = ({
 
   const onBlurHandler = () => {
     if (focusedValue !== value) {
-      updateJson(index, id, value);
+      updateSnippet(index, id, value);
     }
   };
 

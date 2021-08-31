@@ -4,21 +4,18 @@
 
 import { IpcMainEvent, clipboard } from 'electron';
 import robot from 'robotjs';
-import parseJson from 'parse-json';
 
 /**
  */
 export const applySnippet = (
   e: IpcMainEvent,
-  { snippetItemStr }: { snippetItemStr: string }
+  { keyword, snippet }: { keyword: string; snippet: string }
 ) => {
-  const snippetItem: SnippetItem = parseJson(snippetItemStr);
-
-  for (let i = 0; i < snippetItem.keyword.length; ++i) {
+  for (let i = 0; i < keyword.length; ++i) {
     robot.keyTap('backspace');
   }
 
-  clipboard.writeText(snippetItem.snippet);
+  clipboard.writeText(snippet);
 
   robot.keyTap('v', [process.platform === 'darwin' ? 'command' : 'control']);
 };
