@@ -1,4 +1,4 @@
 interface SnippetCollectionInfo {
-  snippetKeywordPrefix: string;
-  snippetKeywordSuffix: string;
+  snippetKeywordPrefix?: string;
+  snippetKeywordSuffix?: string;
 }

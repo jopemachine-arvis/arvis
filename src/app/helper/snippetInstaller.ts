@@ -15,7 +15,6 @@ export const installSnippet = async (
   const collectionName = path
     .basename(installFile)
     .split(path.extname(installFile))[0];
-  console.log('collectionName', collectionName);
 
   const extractedPath: string = path.resolve(
     arvisSnippetCollectionPath,
@@ -34,5 +33,16 @@ export const installSnippet = async (
         return null;
       });
     });
+
+    unzipStream.on('error', reject);
   });
+};
+
+export const uninstallSnippet = async (collectionName: string) => {
+  const target: string = path.resolve(
+    arvisSnippetCollectionPath,
+    collectionName
+  );
+
+  return fse.remove(target);
 };

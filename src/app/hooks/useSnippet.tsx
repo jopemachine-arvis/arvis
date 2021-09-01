@@ -18,8 +18,8 @@ const useSnippet = () => {
 
   const reloadSnippets = (): void => {
     fetchSnippetCollection()
-      .then(({ collections, collectionInfos }) => {
-        loadSnippetCollection(collections)
+      .then(({ snippetFiles, collectionInfos, collectionNames }) => {
+        loadSnippetCollection(snippetFiles)
           .then((loadedSnippetData) => {
             const snippetsToSet = new Map<string, SnippetItem>();
 
@@ -38,6 +38,13 @@ const useSnippet = () => {
 
             loadedCollectionInfos.forEach((collectionInfo) => {
               infos.set(collectionInfo.collection, collectionInfo.info);
+            });
+
+            // In case of not existing info.plist
+            collectionNames.forEach((collectionName) => {
+              if (!infos.has(collectionName)) {
+                infos.set(collectionName, {});
+              }
             });
 
             setSnippetCollectionInfos(infos);

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable promise/catch-or-return */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import useSnippet from '@hooks/useSnippet';
 import './index.css';
 import {
@@ -14,7 +15,8 @@ import path from 'path';
 import fse from 'fs-extra';
 import { ipcRenderer } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { installSnippet } from '@helper/installSnippet';
+import { installSnippet, uninstallSnippet } from '@helper/snippetInstaller';
+import { SpinnerContext } from '@helper/spinnerContext';
 import * as style from './style';
 import SnippetTable from './snippetTable';
 import {
@@ -40,7 +42,11 @@ export default function Snippet() {
 
   const [selectedIdx, setSelectedIdx] = useState<number>(-1);
 
-  const selectedCollection =
+  const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
+
+  const selectedCollection = useRef<string>();
+
+  selectedCollection.current =
     selectedIdx !== -1
       ? Object.keys(snippetsByCollection)[selectedIdx]
       : undefined;
@@ -50,9 +56,14 @@ export default function Snippet() {
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
     ) => {
-      console.log('Open installer file: ', file);
+      setSpinning(true);
 
-      installSnippet(file.filePaths[0]);
+      installSnippet(file.filePaths[0])
+        .then(reloadSnippets)
+        .catch(console.error)
+        .finally(() => {
+          setSpinning(false);
+        });
     },
 
     openYesnoDialogRet: (
@@ -60,7 +71,13 @@ export default function Snippet() {
       { yesPressed }: { yesPressed: boolean }
     ) => {
       if (yesPressed) {
-        //
+        setSpinning(true);
+        uninstallSnippet(selectedCollection.current!)
+          .then(reloadSnippets)
+          .catch(console.error)
+          .finally(() => {
+            setSpinning(false);
+          });
       }
     },
   };
@@ -90,11 +107,11 @@ export default function Snippet() {
   };
 
   const callDeleteSnippetConfModal = () => {
-    if (!selectedCollection) return;
+    if (!selectedCollection.current) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
       msg: `Are you sure you want to delete '${selectedCollection}'?`,
-      icon: getDefaultIcon(selectedCollection),
+      icon: getDefaultIcon(selectedCollection.current),
     });
   };
 
@@ -164,9 +181,9 @@ export default function Snippet() {
         </SnippetListOrderedList>
       </SnippetListView>
       <SnippetSettingContainer>
-        {selectedCollection && (
+        {selectedCollection.current && (
           <SnippetTable
-            snippets={snippetsByCollection[selectedCollection]}
+            snippets={snippetsByCollection[selectedCollection.current]}
             reloadSnippets={reloadSnippets}
           />
         )}

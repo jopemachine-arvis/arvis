@@ -105,7 +105,7 @@ const useSnippetKeywords = ({
       snippetItemBuffers.clear();
 
       [...snippets.keys()].forEach((snippetKeyword) => {
-        const info: any =
+        const info: SnippetCollectionInfo =
           collectionInfo.get(snippets.get(snippetKeyword)!.collection) ?? {};
         const prefix = info.snippetKeywordPrefix ?? '';
         const suffix = info.snippetKeywordSuffix ?? '';

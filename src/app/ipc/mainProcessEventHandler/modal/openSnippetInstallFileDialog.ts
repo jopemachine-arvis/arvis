@@ -6,11 +6,11 @@ import { openFileDialog } from './utils/openFileDialog';
 export const openSnippetInstallFileDialog = async (e: IpcMainEvent) => {
   await openFileDialog({
     filterName: 'Arvis snippet install files',
-    extensions: ['arvissnippet', 'alfredsnippet'],
+    extensions: ['arvissnippets', 'alfredsnippets'],
     callback: (file) => {
       WindowManager.getInstance()
         .getPreferenceWindow()
-        .webContents.send(IPCMainEnum.openPluginInstallFileDialogRet, {
+        .webContents.send(IPCMainEnum.openSnippetInstallFileDialogRet, {
           file,
         });
     },
