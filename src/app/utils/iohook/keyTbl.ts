@@ -113,29 +113,6 @@ export const keycodeTable = {
   57421: '→',
 };
 
-export const specialCharTable = {
-  1: '!',
-  2: '@',
-  3: '#',
-  4: '$',
-  5: '%',
-  6: '^',
-  7: '&',
-  8: '*',
-  9: '(',
-  '-': '_',
-  '=': '+',
-  '`': '~',
-  '.': '>',
-  ',': '<',
-  '/': '?',
-  "'": '"',
-  ';': ':',
-  '[': '{',
-  ']': '}',
-  '\\': '|',
-};
-
 export const alphatbetKeys: number[] = [
   ...range(16, 25), // Alphabet
   ...range(30, 38), // Alphabet

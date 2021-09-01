@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { keyCodeToString } from '@utils/iohook/keyUtils';
 import { ipcRenderer } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { modifierKeys, specialCharTable } from '@utils/iohook/keyTbl';
+import { modifierKeys } from '@utils/iohook/keyTbl';
+import { shiftCharTable } from '@utils/shiftCharTable';
 import { useIoHook } from '.';
 
 const snippetItemBuffers = new Map<
@@ -19,7 +20,7 @@ const keyCodeToStringAdapter = (e: IOHookKeyEvent) => {
   const str = keyCodeToString(e.keycode);
   if (str === 'Space') return ' ';
   if (e.shiftKey) {
-    return (specialCharTable as any)[str] ?? str;
+    return (shiftCharTable as any)[str] ?? str;
   }
 
   return str;
