@@ -18,6 +18,7 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { installSnippet, uninstallSnippet } from '@helper/snippetInstaller';
 import { SpinnerContext } from '@helper/spinnerContext';
 import * as style from './style';
+import CollectionEditModal from './collectionEditModal';
 import SnippetTable from './snippetTable';
 import {
   OuterContainer,
@@ -45,6 +46,9 @@ export default function Snippet() {
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   const selectedCollection = useRef<string>();
+
+  const [collectionEditModalOpened, setCollectionEditModalOpend] =
+    useState<boolean>(false);
 
   selectedCollection.current =
     selectedIdx !== -1
@@ -129,6 +133,7 @@ export default function Snippet() {
       <SnippetItemContainer
         key={`snippetItem-${idx}`}
         onClick={(e) => itemClickHandler(e, idx)}
+        onDoubleClick={() => setCollectionEditModalOpend(true)}
         style={selectedIdx === idx ? style.selectedItemStyle : {}}
       >
         {icon}
@@ -201,6 +206,17 @@ export default function Snippet() {
           onClick={() => callDeleteSnippetConfModal()}
         />
       </SnippetListViewFooter>
+      {selectedCollection.current && (
+        <CollectionEditModal
+          opened={collectionEditModalOpened}
+          setOpened={setCollectionEditModalOpend}
+          collection={selectedCollection.current}
+          collectionInfo={
+            snippetCollectionInfos.get(selectedCollection.current)!
+          }
+          reloadSnippets={reloadSnippets}
+        />
+      )}
     </OuterContainer>
   );
 }

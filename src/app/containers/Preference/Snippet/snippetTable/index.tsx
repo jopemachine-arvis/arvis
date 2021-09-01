@@ -132,8 +132,16 @@ export default function (props: IProps) {
       : `${snippet}.json`;
     const newFileName = `${value}.json`;
 
-    const oldPath = path.resolve(arvisSnippetCollectionPath, oldFileName);
-    const newPath = path.resolve(arvisSnippetCollectionPath, newFileName);
+    const oldPath = path.resolve(
+      arvisSnippetCollectionPath,
+      snippet.collection,
+      oldFileName
+    );
+    const newPath = path.resolve(
+      arvisSnippetCollectionPath,
+      snippet.collection,
+      newFileName
+    );
 
     fse.rename(oldPath, newPath).catch(console.error);
   };
@@ -164,19 +172,15 @@ export default function (props: IProps) {
   const updateSnippet = (rowIndex: number, columnId: string, value: string) => {
     const snippet = snippets[rowIndex];
 
+    let target = columnId;
+
     if (columnId === 'name') {
       snippetNameChangeHandler(snippet, value);
-    } else {
-      let target;
-      if (columnId === 'A->') {
-        target = 'useAutoExpand';
-      } else {
-        target = columnId;
-      }
-
-      snippetInfoChangeHandler(snippet, target, value);
+    } else if (columnId === 'A->') {
+      target = 'useAutoExpand';
     }
 
+    snippetInfoChangeHandler(snippet, target, value);
     reloadSnippets();
   };
 

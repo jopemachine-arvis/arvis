@@ -24,6 +24,7 @@ export enum IPCRendererEnum {
   registerWorkflowHotkeys                    = '@ipcRenderer/registerWorkflowHotkeys',
   reloadApplication                          = '@ipcRenderer/reloadApplication',
   reloadPlugin                               = '@ipcRenderer/reloadPlugin',
+  reloadSnippet                              = '@ipcRenderer/reloadSnippet',
   reloadWorkflow                             = '@ipcRenderer/reloadWorkflow',
   resizeSearchWindowHeight                   = '@ipcRenderer/resizeSearchWindowHeight',
   resumeFileWatch                            = '@ipcRenderer/resumeFileWatch',

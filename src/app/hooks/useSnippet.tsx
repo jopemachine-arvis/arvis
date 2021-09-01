@@ -1,9 +1,12 @@
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useState } from 'react';
 import {
   fetchSnippetCollection,
   loadSnippetCollection,
   loadSnippetCollectionInfo,
 } from './utils/snippetLoader';
+
 /**
  * @description
  */
@@ -17,48 +20,67 @@ const useSnippet = () => {
   >(new Map());
 
   const reloadSnippets = (): void => {
-    fetchSnippetCollection()
-      .then(({ snippetFiles, collectionInfos, collectionNames }) => {
-        loadSnippetCollection(snippetFiles)
-          .then((loadedSnippetData) => {
-            const snippetsToSet = new Map<string, SnippetItem>();
+    ipcRenderer.send(IPCRendererEnum.reloadSnippet, {
+      destWindow: 'preferenceWindow',
+    });
+    ipcRenderer.send(IPCRendererEnum.reloadSnippet, {
+      destWindow: 'assistanceWindow',
+    });
+  };
 
-            loadedSnippetData.forEach((snippet) => {
-              snippetsToSet.set(snippet.keyword, snippet);
-            });
+  const ipcCallbackTbl = {
+    reloadSnippets: (e: IpcRendererEvent) => {
+      fetchSnippetCollection()
+        .then(({ snippetFiles, collectionInfos, collectionNames }) => {
+          loadSnippetCollection(snippetFiles)
+            .then((loadedSnippetData) => {
+              const snippetsToSet = new Map<string, SnippetItem>();
 
-            setSnippets(snippetsToSet);
-            return null;
-          })
-          .catch(console.error);
+              loadedSnippetData.forEach((snippet) => {
+                snippetsToSet.set(snippet.keyword, snippet);
+              });
 
-        loadSnippetCollectionInfo(collectionInfos)
-          .then((loadedCollectionInfos) => {
-            const infos = new Map<string, SnippetCollectionInfo>();
+              setSnippets(snippetsToSet);
+              return null;
+            })
+            .catch(console.error);
 
-            loadedCollectionInfos.forEach((collectionInfo) => {
-              infos.set(collectionInfo.collection, collectionInfo.info);
-            });
+          loadSnippetCollectionInfo(collectionInfos)
+            .then((loadedCollectionInfos) => {
+              const infos = new Map<string, SnippetCollectionInfo>();
 
-            // In case of not existing info.plist
-            collectionNames.forEach((collectionName) => {
-              if (!infos.has(collectionName)) {
-                infos.set(collectionName, {});
-              }
-            });
+              loadedCollectionInfos.forEach((collectionInfo) => {
+                infos.set(collectionInfo.collection, collectionInfo.info);
+              });
 
-            setSnippetCollectionInfos(infos);
-            return null;
-          })
-          .catch(console.error);
+              // In case of not existing info.plist
+              collectionNames.forEach((collectionName) => {
+                if (!infos.has(collectionName)) {
+                  infos.set(collectionName, {});
+                }
+              });
 
-        return null;
-      })
-      .catch(console.error);
+              setSnippetCollectionInfos(infos);
+              return null;
+            })
+            .catch(console.error);
+
+          return null;
+        })
+        .catch(console.error);
+    },
   };
 
   useEffect(() => {
     reloadSnippets();
+  }, []);
+
+  useEffect(() => {
+    ipcRenderer.on(IPCMainEnum.reloadSnippet, ipcCallbackTbl.reloadSnippets);
+
+    return () => {
+      ipcRenderer.off(IPCMainEnum.reloadSnippet, ipcCallbackTbl.reloadSnippets);
+    };
   }, []);
 
   return {

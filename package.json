@@ -71,6 +71,11 @@
         "role": "Config"
       },
       {
+        "ext": "arvissnippets",
+        "name": "Arvis Snippet Installer File",
+        "role": "Config"
+      },
+      {
         "ext": "arvistheme",
         "name": "Arvis Appearance Config File",
         "role": "Config"

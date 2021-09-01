@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -16,28 +16,40 @@ import plist from 'plist';
 import path from 'path';
 import { arvisSnippetCollectionPath } from '@config/path';
 import { OuterContainer } from './components';
+import * as styles from './style';
 
 type IProps = {
   opened: boolean;
   setOpened: (opened: boolean) => void;
   collection: string;
-  collectionInfo: SnippetCollectionInfo;
+  collectionInfo?: SnippetCollectionInfo;
+  reloadSnippets: () => void;
 };
 
 const CollectionEditModal = (props: IProps) => {
-  const { opened, setOpened, collection, collectionInfo } = props;
+  const { opened, setOpened, collection, collectionInfo, reloadSnippets } =
+    props;
 
   const toggle = () => setOpened(!opened);
 
-  const [name, setName] = useState<string>(collection);
+  const [name, setName] = useState<string>('');
 
-  const [prefix, setPrefix] = useState<string>(
-    collectionInfo.snippetKeywordPrefix
-  );
+  const [prefix, setPrefix] = useState<string>('');
 
-  const [suffix, setSuffix] = useState<string>(
-    collectionInfo.snippetKeywordSuffix
-  );
+  const [suffix, setSuffix] = useState<string>('');
+
+  useEffect(() => {
+    if (collection) {
+      setName(collection);
+    }
+  }, [collection]);
+
+  useEffect(() => {
+    if (collectionInfo) {
+      setPrefix(collectionInfo.snippetKeywordPrefix ?? '');
+      setSuffix(collectionInfo.snippetKeywordSuffix ?? '');
+    }
+  }, [collectionInfo]);
 
   const rebuildPlist = (plistPath: string) => {
     const plistStr = plist.build(
@@ -45,10 +57,13 @@ const CollectionEditModal = (props: IProps) => {
         snippetkeywordprefix: prefix,
         snippetkeywordsuffix: suffix,
       },
-      { allowEmpty: true, pretty: true, dontPrettyTextNodes: false }
+      {
+        allowEmpty: true,
+        pretty: true,
+        dontPrettyTextNodes: false,
+        indent: '\t',
+      }
     );
-
-    console.log('plistStr', plistStr);
 
     return fse.writeFile(plistPath, plistStr, { encoding: 'utf8' });
   };
@@ -66,11 +81,16 @@ const CollectionEditModal = (props: IProps) => {
           arvisSnippetCollectionPath,
           name
         );
+
         if (oldCollectionDirName !== newCollectionDirName) {
           fse
             .rename(oldCollectionDirName, newCollectionDirName)
+            .then(reloadSnippets)
             .catch(console.error);
+        } else {
+          reloadSnippets();
         }
+
         return null;
       })
       .catch(console.error);
@@ -89,38 +109,40 @@ const CollectionEditModal = (props: IProps) => {
           color: '#212529',
         }}
       >
-        <ModalHeader toggle={toggle}>{}</ModalHeader>
+        <ModalHeader toggle={toggle}>
+          Edit snippet collection information
+        </ModalHeader>
         <ModalBody>
           <FormGroup check>
-            <Label check>
+            <Label check style={styles.labelStyle}>
+              Name
               <Input
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
                 type="text"
-              />{' '}
-              Name
+              />
             </Label>
-            <Label check>
+            <Label check style={styles.labelStyle}>
+              Prefix
               <Input
                 value={prefix}
                 onChange={(e) => {
                   setPrefix(e.target.value);
                 }}
                 type="text"
-              />{' '}
-              Prefix
+              />
             </Label>
-            <Label check>
+            <Label check style={styles.labelStyle}>
+              Suffix
               <Input
                 value={suffix}
                 onChange={(e) => {
                   setSuffix(e.target.value);
                 }}
                 type="text"
-              />{' '}
-              Suffix
+              />
             </Label>
           </FormGroup>
         </ModalBody>
@@ -135,6 +157,10 @@ const CollectionEditModal = (props: IProps) => {
       </Modal>
     </OuterContainer>
   );
+};
+
+CollectionEditModal.defaultProps = {
+  collectionInfo: undefined,
 };
 
 export default CollectionEditModal;

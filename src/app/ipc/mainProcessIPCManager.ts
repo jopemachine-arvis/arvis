@@ -5,8 +5,11 @@ import { IPCRendererEnum } from './ipcEventEnum';
 
 import { openExtensionInstallerFile } from './mainProcessEventHandler/openExtensionInstallerFile';
 import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
-import { reloadPlugin } from './mainProcessEventHandler/reloadPlugin';
-import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
+import {
+  reloadWorkflow,
+  reloadPlugin,
+  reloadSnippet,
+} from './mainProcessEventHandler/reloadExtension';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
@@ -70,6 +73,7 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.reloadPlugin, reloadPlugin);
   ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);
+  ipcMain.on(IPCRendererEnum.reloadSnippet, reloadSnippet);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);

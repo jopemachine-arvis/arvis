@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { keyCodeToString } from '@utils/iohook/keyUtils';
 import { ipcRenderer } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { specialCharTable } from '@utils/iohook/keyTbl';
+import { modifierKeys, specialCharTable } from '@utils/iohook/keyTbl';
 import { useIoHook } from '.';
 
 const snippetItemBuffers = new Map<
@@ -57,6 +57,9 @@ const useSnippetKeywords = ({
   };
 
   const keyDownEventHandler = (e: IOHookKeyEvent): void => {
+    // Ignore single modifier key press event
+    if (modifierKeys.includes(e.keycode)) return;
+
     let longestMatchKeywordInfo = {
       keyword: '',
       prefix: '',

@@ -63,11 +63,7 @@ const useSnippetMode = ({
 
   snippetsRef.current = snippets;
 
-  const ipcCallbackTbl = {
-    reloadSnippet: (e: IpcRendererEvent) => {},
-  };
-
-  const reload = () => {
+  const reset = () => {
     setItems(
       transform(snippetsRef.current).slice(0, maxShowOnWindowRef.current)
     );
@@ -75,21 +71,14 @@ const useSnippetMode = ({
   };
 
   useEffect(() => {
-    onWindowOpenEventHandlers.set('snippet', reload);
+    onWindowOpenEventHandlers.set('snippet', reset);
   }, []);
 
   useEffect(() => {
     if (mode === 'snippet') {
-      reload();
+      reset();
     }
   }, [mode, maxShowOnScreen, maxShowOnWindow]);
-
-  useEffect(() => {
-    ipcRenderer.on(IPCMainEnum.reloadSnippet, ipcCallbackTbl.reloadSnippet);
-    return () => {
-      ipcRenderer.off(IPCMainEnum.reloadSnippet, ipcCallbackTbl.reloadSnippet);
-    };
-  }, []);
 
   const renderInfoContent = () => {
     if (!items[indexInfo.selectedItemIdx]) return <></>;
