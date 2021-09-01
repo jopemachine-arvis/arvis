@@ -27,7 +27,7 @@ export default () => {
       const copiedText = clipboard.readText();
       if (copiedText !== '') {
         ipcRenderer.send(IPCRendererEnum.dispatchAction, {
-          destWindow: 'clipboardHistoryWindow',
+          destWindow: 'assistanceWindow',
           actionType: actionTypes.PUSH_CLIPBOARD_STORE,
           args: JSON.stringify({
             text: copiedText,

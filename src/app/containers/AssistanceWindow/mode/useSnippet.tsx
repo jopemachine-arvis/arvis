@@ -94,14 +94,19 @@ const useSnippetMode = ({
   const renderInfoContent = () => {
     if (!items[indexInfo.selectedItemIdx]) return <></>;
     const { snippet } = items[indexInfo.selectedItemIdx];
+    if (!snippet) return <></>;
 
     return (
       <>
         <InfoInnerContainer>{snippet}</InfoInnerContainer>
-        <SubInfoText>
+        <SubInfoText
+          style={{
+            height: '9%',
+          }}
+        >
           {`${snippet.split(' ').length} Words, ${snippet.length} Characters`}
           <br />
-          {`Keyword: ${items[indexInfo.selectedItemIdx].keyword}`}
+          {`Keyword: ${items[indexInfo.selectedItemIdx].keyword ?? ''}`}
         </SubInfoText>
       </>
     );

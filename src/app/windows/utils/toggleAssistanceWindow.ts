@@ -1,5 +1,4 @@
 import robot from 'robotjs';
-import { clipboard } from 'electron';
 import { WindowManager } from '../windowManager';
 import { IPCMainEnum } from '../../ipc/ipcEventEnum';
 

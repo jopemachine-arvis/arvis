@@ -11,7 +11,7 @@ export const getDestWindow = (windowName: string): BrowserWindow => {
   if (windowName === 'preferenceWindow') {
     return WindowManager.getInstance().getPreferenceWindow();
   }
-  if (windowName === 'clipboardHistoryWindow') {
+  if (windowName === 'assistanceWindow') {
     return WindowManager.getInstance().getAssistanceWindow();
   }
   if (windowName === 'largeTextWindow') {

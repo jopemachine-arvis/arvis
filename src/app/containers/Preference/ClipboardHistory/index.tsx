@@ -66,7 +66,7 @@ export default function ClipboardHistory() {
                 actionType:
                   ClipboardHistoryActionTypes.SET_MAX_CLIPBOARD_STORE_SIZE,
                 dispatch,
-                destWindow: 'clipboardHistoryWindow',
+                destWindow: 'assistanceWindow',
               })
             }
           />
@@ -85,7 +85,7 @@ export default function ClipboardHistory() {
                 max: 500,
                 actionType: ClipboardHistoryActionTypes.SET_MAX_SHOW_SIZE,
                 dispatch,
-                destWindow: 'clipboardHistoryWindow',
+                destWindow: 'assistanceWindow',
               })
             }
           />
@@ -99,10 +99,7 @@ export default function ClipboardHistory() {
               type="checkbox"
               defaultChecked={apply_mouse_hover_event}
               onChange={(e) =>
-                configChangeHandler([
-                  'clipboardHistoryWindow',
-                  'preferenceWindow',
-                ])(
+                configChangeHandler(['assistanceWindow', 'preferenceWindow'])(
                   { currentTarget: { value: !apply_mouse_hover_event } } as any,
                   ClipboardHistoryActionTypes.SET_APPLY_MOUSE_HOVER_EVENT_FLAG
                 )
