@@ -10,6 +10,7 @@ export type StateType = {
     search_window_hotkey: string;
     clipboard_history_window_hotkey: string;
     universal_action_window_hotkey: string;
+    snippet_window_hotkey: string;
   };
   ui_config: {
     icon_right_margin: number;

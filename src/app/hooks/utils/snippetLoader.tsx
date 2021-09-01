@@ -7,11 +7,13 @@ import plist from 'plist';
 
 export const fetchSnippetCollection = async () => {
   return new Promise<{
-    collections: string[];
+    snippetFiles: string[];
+    collectionNames: string[];
     collectionInfos: string[];
   }>((resolve, reject) => {
-    const targetCollectionFiles: string[] = [];
+    const targetSnippetFiles: string[] = [];
     const targetCollectionInfoFiles: string[] = [];
+    const collectionNames = new Set<string>();
 
     readdirp(arvisSnippetCollectionPath, {
       fileFilter: [`*.json`, 'info.plist'],
@@ -20,17 +22,19 @@ export const fetchSnippetCollection = async () => {
     })
       .on('data', (entry) => {
         const filePath = path.resolve(arvisSnippetCollectionPath, entry.path);
+        collectionNames.add(path.basename(path.dirname(filePath)));
 
         if (entry.path.endsWith('info.plist')) {
           targetCollectionInfoFiles.push(filePath);
         } else {
-          targetCollectionFiles.push(filePath);
+          targetSnippetFiles.push(filePath);
         }
       })
       .on('error', reject)
       .on('end', () => {
         resolve({
-          collections: targetCollectionFiles,
+          snippetFiles: targetSnippetFiles,
+          collectionNames: [...collectionNames.values()],
           collectionInfos: targetCollectionInfoFiles,
         });
       });
@@ -72,9 +76,9 @@ export const loadSnippetCollectionInfo = async (
   return collectionInfos;
 };
 
-export const loadSnippetCollection = async (collectionFiles: string[]) => {
+export const loadSnippetCollection = async (snippetFiles: string[]) => {
   const result = await Promise.allSettled(
-    collectionFiles.map((filePath) => {
+    snippetFiles.map((filePath) => {
       return new Promise((resolve, reject) => {
         fse
           .readJSON(filePath, { encoding: 'utf8' })
@@ -102,7 +106,10 @@ export const loadSnippetCollection = async (collectionFiles: string[]) => {
   snippetJsons.forEach((data) => {
     const { collection, snippetJson } = data;
 
-    const snippet = snippetJson.alfredsnippet ?? snippetJson.arvissnippet;
+    const snippet =
+      snippetJson.arvissnippet ??
+      snippetJson.alfredsnippet ??
+      snippetJson.AlfredSnippet;
 
     if (snippet) {
       snippetsToSet.push({

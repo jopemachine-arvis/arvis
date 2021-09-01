@@ -1,1 +1,1 @@
-type AssistanceWindowType = 'clipboardHistory' | 'universalAction';
+type AssistanceWindowType = 'clipboardHistory' | 'universalAction' | 'snippet';

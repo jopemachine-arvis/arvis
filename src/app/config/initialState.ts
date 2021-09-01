@@ -10,6 +10,8 @@ export default {
       process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
     universal_action_window_hotkey:
       process.platform === 'darwin' ? 'Meta + Shift + .' : 'Ctrl + Shift + .',
+    snippet_window_hotkey:
+      process.platform === 'darwin' ? 'Meta + `' : 'Alt + `',
   },
   ui_config: {
     icon_right_margin: 10,

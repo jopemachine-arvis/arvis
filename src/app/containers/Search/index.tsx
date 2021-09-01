@@ -70,6 +70,7 @@ export default function SearchWindow() {
     search_window_hotkey,
     clipboard_history_window_hotkey,
     universal_action_window_hotkey,
+    snippet_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
 
   const debuggingConfig = useSelector(
@@ -170,6 +171,7 @@ export default function SearchWindow() {
       [search_window_hotkey]: 'toggleSearchWindow',
       [clipboard_history_window_hotkey]: 'toggleClipboardHistoryWindow',
       [universal_action_window_hotkey]: 'toggleUniversalActionWindow',
+      [snippet_window_hotkey]: 'toggleSnippetWindow',
     };
 
     const hotkeys = Core.findHotkeys();

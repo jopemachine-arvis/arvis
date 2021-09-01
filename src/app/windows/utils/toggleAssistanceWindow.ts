@@ -5,7 +5,7 @@ import { IPCMainEnum } from '../../ipc/ipcEventEnum';
 
 const assistanceWindowSize = { width: 1200, height: 580 };
 
-const toggleClipboardHistory = ({ showsUp }: { showsUp?: boolean }) => {
+const toggleAssistanceWindow = ({ showsUp }: { showsUp?: boolean }) => {
   const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
 
   if (!showsUp && assistanceWindow.isVisible()) {
@@ -17,6 +17,12 @@ const toggleClipboardHistory = ({ showsUp }: { showsUp?: boolean }) => {
     assistanceWindow.show();
     assistanceWindow.focus();
   }
+};
+
+const toggleClipboardHistory = ({ showsUp }: { showsUp?: boolean }) => {
+  const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
+
+  toggleAssistanceWindow({ showsUp });
 
   assistanceWindow.webContents.send(IPCMainEnum.renewClipboardStore);
 };
@@ -25,22 +31,12 @@ const toggleUniversalActionWindow = ({ showsUp }: { showsUp?: boolean }) => {
   robot.keyTap('c', process.platform === 'darwin' ? ['command'] : ['control']);
 
   setTimeout(() => {
-    const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
-    assistanceWindow.webContents.send(
-      IPCMainEnum.captureUniversalActionTarget,
-      { target: clipboard.readText() }
-    );
-
-    if (!showsUp && assistanceWindow.isVisible()) {
-      assistanceWindow.hide();
-    } else {
-      // Center the window and set y position.
-      assistanceWindow.setBounds(assistanceWindowSize, false);
-      assistanceWindow.center();
-      assistanceWindow.show();
-      assistanceWindow.focus();
-    }
+    toggleAssistanceWindow({ showsUp });
   }, 50);
+};
+
+const toggleSnippetWindow = ({ showsUp }: { showsUp?: boolean }) => {
+  toggleAssistanceWindow({ showsUp });
 };
 
 export default ({
@@ -56,6 +52,10 @@ export default ({
 
   if (mode === 'universalAction') {
     toggleUniversalActionWindow({ showsUp });
+  }
+
+  if (mode === 'snippet') {
+    toggleSnippetWindow({ showsUp });
   }
 
   const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();

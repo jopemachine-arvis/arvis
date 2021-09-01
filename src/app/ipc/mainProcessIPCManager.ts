@@ -45,6 +45,7 @@ import { popupAssistanceWindowContextMenu } from './mainProcessEventHandler/cont
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
 import {
   toggleClipboardHistoryWindow,
+  toggleSnippetWindow,
   toggleUniversalActionWindow,
 } from './mainProcessEventHandler/windowManage/toggleAssistanceWindow';
 import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggleSearchWindow';
@@ -81,14 +82,19 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+
   ipcMain.on(
     IPCRendererEnum.toggleClipboardHistoryWindow,
     toggleClipboardHistoryWindow
   );
+
   ipcMain.on(
     IPCRendererEnum.toggleUniversalActionWindow,
     toggleUniversalActionWindow
   );
+
+  ipcMain.on(IPCRendererEnum.toggleSnippetWindow, toggleSnippetWindow);
+
   ipcMain.on(IPCRendererEnum.toggleSearchWindow, toggleSearchWindow);
 
   ipcMain.on(

@@ -18,3 +18,12 @@ export const toggleUniversalActionWindow = (
 ) => {
   toggleWindow({ mode: 'universalAction', showsUp: showsUp ?? false });
 };
+
+/**
+ */
+export const toggleSnippetWindow = (
+  e: IpcMainEvent,
+  { showsUp }: { showsUp?: boolean }
+) => {
+  toggleWindow({ mode: 'snippet', showsUp: showsUp ?? false });
+};

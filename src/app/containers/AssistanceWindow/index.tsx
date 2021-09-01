@@ -18,8 +18,9 @@ import useSnippetKeywords from '@hooks/useSnippetKeywords';
 import { InfoContainer, OuterContainer, SearchContainer } from './components';
 import { style } from './style';
 import './index.css';
-import useClipboardHistory from './mode/useClipboardHistory';
-import useUniversalAction from './mode/useUniversalAction';
+import useClipboardHistoryMode from './mode/useClipboardHistory';
+import useUniversalActionMode from './mode/useUniversalAction';
+import useSnippetMode from './mode/useSnippet';
 
 const maxShowOnScreen = 15;
 
@@ -75,7 +76,7 @@ export default function AssistanceWindow() {
   });
 
   const { renderInfoContent: renderClipboardHistoryInfoContent } =
-    useClipboardHistory({
+    useClipboardHistoryMode({
       items,
       setItems,
       originalItems,
@@ -89,7 +90,7 @@ export default function AssistanceWindow() {
     });
 
   const { renderInfoContent: renderUniversalActionInfoContent } =
-    useUniversalAction({
+    useUniversalActionMode({
       items,
       setItems,
       originalItems,
@@ -101,9 +102,24 @@ export default function AssistanceWindow() {
       onWindowOpenEventHandlers,
     });
 
+  const { renderInfoContent: renderSnippetInfoContent } = useSnippetMode({
+    items,
+    setItems,
+    originalItems,
+    setOriginalItems,
+    indexInfo,
+    mode,
+    snippets: [...snippets.values()],
+    maxShowOnScreen,
+    maxShowOnWindow: max_show_on_window,
+    renewHandler,
+    onWindowOpenEventHandlers,
+  });
+
   const renderInfoContent = () => {
     if (mode === 'clipboardHistory') return renderClipboardHistoryInfoContent();
     if (mode === 'universalAction') return renderUniversalActionInfoContent();
+    if (mode === 'snippet') return renderSnippetInfoContent();
     return <></>;
   };
 
