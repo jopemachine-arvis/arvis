@@ -1,3 +1,4 @@
+import { clipboard } from 'electron';
 import robot from 'robotjs';
 import { WindowManager } from '../windowManager';
 import { IPCMainEnum } from '../../ipc/ipcEventEnum';
@@ -27,7 +28,13 @@ const toggleClipboardHistory = ({ showsUp }: { showsUp?: boolean }) => {
 };
 
 const toggleUniversalActionWindow = ({ showsUp }: { showsUp?: boolean }) => {
+  const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
+
   robot.keyTap('c', process.platform === 'darwin' ? ['command'] : ['control']);
+
+  assistanceWindow.webContents.send(IPCMainEnum.captureUniversalActionTarget, {
+    target: clipboard.readText(),
+  });
 
   setTimeout(() => {
     toggleAssistanceWindow({ showsUp });
