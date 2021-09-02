@@ -136,12 +136,12 @@ export default function (props: IProps) {
         snippet.uid
           ? `${snippet.name} [${snippet.uid}].json`
           : `${snippet}.json`,
-        { replacement: '' }
+        { replacement: ' ' }
       )
     );
 
     const newFileName = removeMultipleSpace(
-      filenamify(`${value}.json`, { replacement: '' })
+      filenamify(`${value}.json`, { replacement: ' ' })
     );
 
     const oldPath = path.resolve(
@@ -170,7 +170,7 @@ export default function (props: IProps) {
         snippet.uid
           ? `${snippet.name} [${snippet.uid}].json`
           : `${snippet}.json`,
-        { replacement: '' }
+        { replacement: ' ' }
       )
     );
 
