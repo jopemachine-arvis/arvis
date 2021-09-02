@@ -87,11 +87,12 @@ export default function Snippet() {
   };
 
   const getDefaultIcon = (collectionName: string) => {
-    const collectionPath = path.resolve(
+    const collectionIconPath = path.resolve(
       arvisSnippetCollectionPath,
-      collectionName
+      collectionName,
+      'icon.png'
     );
-    const collectionIconPath = path.resolve(collectionPath, 'icon.png');
+
     if (fse.existsSync(collectionIconPath)) {
       return collectionIconPath;
     }
