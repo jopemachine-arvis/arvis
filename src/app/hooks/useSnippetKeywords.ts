@@ -109,12 +109,19 @@ const useSnippetKeywords = ({
       snippetItemBuffers.clear();
 
       [...snippets.keys()].forEach((snippetKeyword) => {
-        const info: SnippetCollectionInfo =
-          collectionInfo.get(snippets.get(snippetKeyword)!.collection) ?? {};
-        const prefix = info.snippetKeywordPrefix ?? '';
-        const suffix = info.snippetKeywordSuffix ?? '';
+        const snippet = snippets.get(snippetKeyword)!;
 
-        snippetItemBuffers.set({ keyword: snippetKeyword, prefix, suffix }, '');
+        if (snippet.useAutoExpand && snippet.keyword) {
+          const info: SnippetCollectionInfo =
+            collectionInfo.get(snippet.collection) ?? {};
+          const prefix = info.snippetKeywordPrefix ?? '';
+          const suffix = info.snippetKeywordSuffix ?? '';
+
+          snippetItemBuffers.set(
+            { keyword: snippetKeyword, prefix, suffix },
+            ''
+          );
+        }
       });
     }
   }, [snippets, collectionInfo]);

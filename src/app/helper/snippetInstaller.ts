@@ -1,5 +1,3 @@
-/* eslint-disable promise/catch-or-return */
-
 import unzipper from 'unzipper';
 import path from 'path';
 import fse from 'fs-extra';

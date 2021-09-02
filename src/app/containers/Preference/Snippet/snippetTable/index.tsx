@@ -6,7 +6,6 @@
 /* eslint-disable react/display-name */
 
 import React, { useEffect, useRef } from 'react';
-import _ from 'lodash';
 import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
 import fse from 'fs-extra';
@@ -143,7 +142,7 @@ export default function (props: IProps) {
       newFileName
     );
 
-    fse.rename(oldPath, newPath).catch(console.error);
+    return fse.rename(oldPath, newPath);
   };
 
   const snippetInfoChangeHandler = (
@@ -152,7 +151,12 @@ export default function (props: IProps) {
     value: string
   ) => {
     // Update snippet by updating json file
-    const snippetPath = path.resolve(arvisSnippetCollectionPath, snippet.name);
+    const snippetPath = path.resolve(
+      arvisSnippetCollectionPath,
+      snippet.collection,
+      `${snippet.name}.json`
+    );
+
     const data: Record<string, any> = {
       snippet: snippet.snippet,
       dontautoexpand: !snippet.useAutoExpand,
@@ -166,7 +170,7 @@ export default function (props: IProps) {
 
     data[target] = value;
 
-    fse.writeJson(snippetPath, data, { encoding: 'utf8' }).catch(console.error);
+    return fse.writeJson(snippetPath, data, { encoding: 'utf8' });
   };
 
   const updateSnippet = (rowIndex: number, columnId: string, value: string) => {
@@ -174,14 +178,21 @@ export default function (props: IProps) {
 
     let target = columnId;
 
-    if (columnId === 'name') {
-      snippetNameChangeHandler(snippet, value);
-    } else if (columnId === 'A->') {
+    if (columnId === 'A->') {
       target = 'useAutoExpand';
     }
 
-    snippetInfoChangeHandler(snippet, target, value);
-    reloadSnippets();
+    snippetInfoChangeHandler(snippet, target, value).then(() => {
+      if (columnId === 'name') {
+        snippetNameChangeHandler(snippet, value)
+          .then(reloadSnippets)
+          .catch(console.error);
+      } else {
+        reloadSnippets();
+      }
+
+      return null;
+    });
   };
 
   return (

@@ -26,7 +26,7 @@ type IProps = {
   reloadSnippets: () => void;
 };
 
-const CollectionEditModal = (props: IProps) => {
+const CollectionInfoModal = (props: IProps) => {
   const { opened, setOpened, collection, collectionInfo, reloadSnippets } =
     props;
 
@@ -159,8 +159,8 @@ const CollectionEditModal = (props: IProps) => {
   );
 };
 
-CollectionEditModal.defaultProps = {
+CollectionInfoModal.defaultProps = {
   collectionInfo: undefined,
 };
 
-export default CollectionEditModal;
+export default CollectionInfoModal;

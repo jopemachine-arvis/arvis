@@ -18,7 +18,7 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { installSnippet, uninstallSnippet } from '@helper/snippetInstaller';
 import { SpinnerContext } from '@helper/spinnerContext';
 import * as style from './style';
-import CollectionEditModal from './collectionEditModal';
+import CollectionInfoModal from './collectionInfoModal';
 import SnippetTable from './snippetTable';
 import {
   OuterContainer,
@@ -207,7 +207,7 @@ export default function Snippet() {
         />
       </SnippetListViewFooter>
       {selectedCollection.current && (
-        <CollectionEditModal
+        <CollectionInfoModal
           opened={collectionEditModalOpened}
           setOpened={setCollectionEditModalOpend}
           collection={selectedCollection.current}
