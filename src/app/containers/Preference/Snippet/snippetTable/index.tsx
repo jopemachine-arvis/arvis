@@ -151,10 +151,14 @@ export default function (props: IProps) {
     value: string
   ) => {
     // Update snippet by updating json file
+    const snippetFileName = snippet.uid
+      ? `${snippet.name} [${snippet.uid}].json`
+      : `${snippet}.json`;
+
     const snippetPath = path.resolve(
       arvisSnippetCollectionPath,
       snippet.collection,
-      `${snippet.name}.json`
+      snippetFileName
     );
 
     const data: Record<string, any> = {
@@ -170,7 +174,11 @@ export default function (props: IProps) {
 
     data[target] = value;
 
-    return fse.writeJson(snippetPath, data, { encoding: 'utf8' });
+    return fse.writeJson(
+      snippetPath,
+      { arvissnippet: data },
+      { encoding: 'utf8', spaces: 4 }
+    );
   };
 
   const updateSnippet = (rowIndex: number, columnId: string, value: string) => {
