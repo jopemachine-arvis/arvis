@@ -4,6 +4,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/display-name */
+/* eslint-disable react/require-default-props */
 
 import React, { useEffect, useRef } from 'react';
 import { useTable, useSortBy } from 'react-table';
@@ -11,14 +12,14 @@ import { Table } from 'reactstrap';
 import fse from 'fs-extra';
 import path from 'path';
 import { arvisSnippetCollectionPath } from '@config/path';
-import filenamify from 'filenamify';
 import { OuterContainer } from './components';
 import { EditableCell } from './editableCell';
+import { filenamifyPath } from '../utils';
 
 type IProps = {
-  snippets: SnippetItem[];
+  snippets?: SnippetItem[];
   reloadSnippets: () => void;
-  collectionInfo: SnippetCollectionInfo;
+  collectionInfo?: SnippetCollectionInfo;
 };
 
 function SnippetTable({
@@ -30,10 +31,11 @@ function SnippetTable({
   columns: any;
   data: any;
   updateSnippet: any;
-  collectionInfo: SnippetCollectionInfo;
+  collectionInfo?: SnippetCollectionInfo;
 }) {
   const dataRef = useRef<any>(data);
-  const collectionInfoRef = useRef<SnippetCollectionInfo>(collectionInfo);
+  const collectionInfoRef =
+    useRef<SnippetCollectionInfo | undefined>(collectionInfo);
 
   const defaultColumn = React.useMemo(
     () => ({
@@ -135,24 +137,13 @@ export default function (props: IProps) {
     []
   );
 
-  const removeMultipleSpace = (str: string) => {
-    return str.replace(/\s\s+/g, ' ');
-  };
-
   const snippetNameChangeHandler = (snippet: SnippetItem, value: string) => {
     // Update snippet by changing file name
-    const oldFileName = removeMultipleSpace(
-      filenamify(
-        snippet.uid
-          ? `${snippet.name} [${snippet.uid}].json`
-          : `${snippet}.json`,
-        { replacement: ' ' }
-      )
+    const oldFileName = filenamifyPath(
+      snippet.uid ? `${snippet.name} [${snippet.uid}].json` : `${snippet}.json`
     );
 
-    const newFileName = removeMultipleSpace(
-      filenamify(`${value}.json`, { replacement: ' ' })
-    );
+    const newFileName = filenamifyPath(`${value}.json`);
 
     const oldPath = path.resolve(
       arvisSnippetCollectionPath,
@@ -175,13 +166,8 @@ export default function (props: IProps) {
     value: string | boolean
   ) => {
     // Update snippet by updating json file
-    const snippetFileName = removeMultipleSpace(
-      filenamify(
-        snippet.uid
-          ? `${snippet.name} [${snippet.uid}].json`
-          : `${snippet}.json`,
-        { replacement: ' ' }
-      )
+    const snippetFileName = filenamifyPath(
+      snippet.uid ? `${snippet.name} [${snippet.uid}].json` : `${snippet}.json`
     );
 
     const snippetPath = path.resolve(
@@ -219,7 +205,7 @@ export default function (props: IProps) {
     columnId: string,
     value: string | boolean
   ) => {
-    const snippet = snippets[rowIndex];
+    const snippet = snippets![rowIndex];
 
     snippetInfoChangeHandler(snippet, columnId, value).then(() => {
       if (columnId === 'name') {
@@ -236,7 +222,7 @@ export default function (props: IProps) {
 
   return (
     <OuterContainer>
-      {snippets.length > 0 && (
+      {snippets && (
         <SnippetTable
           columns={columns}
           data={snippets}

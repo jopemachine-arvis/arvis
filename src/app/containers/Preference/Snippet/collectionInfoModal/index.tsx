@@ -12,20 +12,22 @@ import {
   Label,
 } from 'reactstrap';
 import fse from 'fs-extra';
-import plist from 'plist';
 import path from 'path';
 import { arvisSnippetCollectionPath } from '@config/path';
 import { OuterContainer } from './components';
 import * as styles from './style';
+import { filenamifyPath, rebuildPlist, createEmptySnippet } from '../utils';
 
 type IProps = {
   opened: boolean;
   setOpened: (opened: boolean) => void;
-  collection: string;
+  collection?: string;
   collectionInfo?: SnippetCollectionInfo;
   reloadSnippets: () => void;
 };
 
+// If collection is undefined, make new collection.
+// Else, edit the collection's information
 const CollectionInfoModal = (props: IProps) => {
   const { opened, setOpened, collection, collectionInfo, reloadSnippets } =
     props;
@@ -41,6 +43,8 @@ const CollectionInfoModal = (props: IProps) => {
   useEffect(() => {
     if (collection) {
       setName(collection);
+    } else {
+      setName('');
     }
   }, [collection]);
 
@@ -48,38 +52,42 @@ const CollectionInfoModal = (props: IProps) => {
     if (collectionInfo) {
       setPrefix(collectionInfo.snippetKeywordPrefix ?? '');
       setSuffix(collectionInfo.snippetKeywordSuffix ?? '');
+    } else {
+      setPrefix('');
+      setSuffix('');
     }
   }, [collectionInfo]);
 
-  const rebuildPlist = (plistPath: string) => {
-    const plistStr = plist.build(
-      {
-        snippetkeywordprefix: prefix,
-        snippetkeywordsuffix: suffix,
-      },
-      {
-        allowEmpty: true,
-        pretty: true,
-        dontPrettyTextNodes: false,
-        indent: '\t',
-      }
+  const makeNewCollection = () => {
+    const collectionDirName = filenamifyPath(
+      path.resolve(arvisSnippetCollectionPath, name)
     );
 
-    return fse.writeFile(plistPath, plistStr, { encoding: 'utf8' });
+    return fse
+      .mkdir(collectionDirName)
+      .then(() => {
+        return createEmptySnippet(collectionDirName, reloadSnippets)
+          .then(reloadSnippets)
+          .catch(console.error);
+      })
+      .catch(console.error);
   };
 
-  const saveBtnHandler = () => {
+  const editCollectionInfo = () => {
     const oldCollectionDirName = path.resolve(
       arvisSnippetCollectionPath,
-      collection
+      collection!
     );
+
     const infoPlistPath = path.resolve(oldCollectionDirName, 'info.plist');
 
-    rebuildPlist(infoPlistPath)
+    rebuildPlist(infoPlistPath, {
+      snippetkeywordprefix: prefix,
+      snippetkeywordsuffix: suffix,
+    })
       .then(() => {
-        const newCollectionDirName = path.resolve(
-          arvisSnippetCollectionPath,
-          name
+        const newCollectionDirName = filenamifyPath(
+          path.resolve(arvisSnippetCollectionPath, name)
         );
 
         if (oldCollectionDirName !== newCollectionDirName) {
@@ -94,6 +102,20 @@ const CollectionInfoModal = (props: IProps) => {
         return null;
       })
       .catch(console.error);
+  };
+
+  const validate = () => {
+    return name.length > 0;
+  };
+
+  const saveBtnHandler = () => {
+    if (!validate()) return;
+
+    if (collection) {
+      editCollectionInfo();
+    } else {
+      makeNewCollection();
+    }
 
     toggle();
   };
@@ -128,7 +150,7 @@ const CollectionInfoModal = (props: IProps) => {
             <Label check style={styles.labelStyle}>
               Prefix
               <Input
-                placeholder="Set suffix after all keywords"
+                placeholder="Set prefix after all keywords"
                 value={prefix}
                 onChange={(e) => {
                   setPrefix(e.target.value);
@@ -139,7 +161,7 @@ const CollectionInfoModal = (props: IProps) => {
             <Label check style={styles.labelStyle}>
               Suffix
               <Input
-                placeholder="Set prefix before all keywords"
+                placeholder="Set suffix before all keywords"
                 value={suffix}
                 onChange={(e) => {
                   setSuffix(e.target.value);
@@ -167,6 +189,7 @@ const CollectionInfoModal = (props: IProps) => {
 };
 
 CollectionInfoModal.defaultProps = {
+  collection: undefined,
   collectionInfo: undefined,
 };
 

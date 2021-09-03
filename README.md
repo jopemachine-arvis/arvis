@@ -20,7 +20,7 @@
 
 * Fully support cross-platform.
 
-* Compatable with lots of [Alfred workflows](https://www.alfredapp.com/workflows/).
+* Compatable with lots of [Alfred 4 workflows](https://www.alfredapp.com/workflows/).
 
 * Search and install the extension from store simplely.
 

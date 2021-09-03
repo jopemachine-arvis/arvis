@@ -8,6 +8,7 @@ import {
   AiOutlineAppstoreAdd,
   AiOutlineBranches,
   AiOutlineDelete,
+  AiOutlinePlus,
 } from 'react-icons/ai';
 import _ from 'lodash';
 import { arvisSnippetCollectionPath } from '@config/path';
@@ -17,6 +18,7 @@ import { ipcRenderer } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { installSnippet, uninstallSnippet } from '@helper/snippetInstaller';
 import { SpinnerContext } from '@helper/spinnerContext';
+import useForceUpdate from 'use-force-update';
 import * as style from './style';
 import CollectionInfoModal from './collectionInfoModal';
 import SnippetTable from './snippetTable';
@@ -45,19 +47,26 @@ export default function Snippet() {
 
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
-  const selectedCollection = useRef<string>();
+  const selectedCollection = useRef<string | undefined>();
+  const selectedCollectionInfo = useRef<SnippetCollectionInfo | undefined>();
 
-  const [collectionEditModalOpened, setCollectionEditModalOpend] =
+  const [collectionEditModalOpened, setCollectionEditModalOpened] =
     useState<boolean>(false);
 
-  selectedCollection.current =
-    selectedIdx !== -1
-      ? Object.keys(snippetsByCollection)[selectedIdx]
+  const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    selectedCollection.current =
+      selectedIdx !== -1
+        ? Object.keys(snippetsByCollection)[selectedIdx]
+        : undefined;
+
+    selectedCollectionInfo.current = selectedCollection.current
+      ? snippetCollectionInfos.get(selectedCollection.current)
       : undefined;
 
-  const selectedCollectionInfo = selectedCollection.current
-    ? snippetCollectionInfos.get(selectedCollection.current)
-    : undefined;
+    forceUpdate();
+  }, [selectedIdx, snippetsByCollection]);
 
   const ipcCallbackTbl = {
     openSnippetInstallFileDialogRet: (
@@ -111,6 +120,11 @@ export default function Snippet() {
     setSelectedIdx(idx);
   };
 
+  const makeNewCollection = () => {
+    setSelectedIdx(-1);
+    setCollectionEditModalOpened(true);
+  };
+
   const requestAddNewSnippet = () => {
     ipcRenderer.send(IPCRendererEnum.openSnippetInstallFileDialog);
   };
@@ -138,7 +152,7 @@ export default function Snippet() {
       <SnippetItemContainer
         key={`snippetItem-${idx}`}
         onClick={(e) => itemClickHandler(e, idx)}
-        onDoubleClick={() => setCollectionEditModalOpend(true)}
+        onDoubleClick={() => setCollectionEditModalOpened(true)}
         style={selectedIdx === idx ? style.selectedItemStyle : {}}
       >
         {icon}
@@ -194,13 +208,18 @@ export default function Snippet() {
         {selectedCollection.current && (
           <SnippetTable
             snippets={snippetsByCollection[selectedCollection.current]}
-            collectionInfo={selectedCollectionInfo!}
+            collectionInfo={selectedCollectionInfo.current!}
             reloadSnippets={reloadSnippets}
           />
         )}
       </SnippetSettingContainer>
 
       <SnippetListViewFooter>
+        <AiOutlinePlus
+          className="snippet-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => makeNewCollection()}
+        />
         <AiOutlineAppstoreAdd
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
@@ -212,15 +231,13 @@ export default function Snippet() {
           onClick={() => callDeleteSnippetConfModal()}
         />
       </SnippetListViewFooter>
-      {selectedCollection.current && (
-        <CollectionInfoModal
-          opened={collectionEditModalOpened}
-          setOpened={setCollectionEditModalOpend}
-          collection={selectedCollection.current}
-          collectionInfo={selectedCollectionInfo}
-          reloadSnippets={reloadSnippets}
-        />
-      )}
+      <CollectionInfoModal
+        opened={collectionEditModalOpened}
+        setOpened={setCollectionEditModalOpened}
+        collection={selectedCollection.current}
+        collectionInfo={selectedCollectionInfo.current}
+        reloadSnippets={reloadSnippets}
+      />
     </OuterContainer>
   );
 }
