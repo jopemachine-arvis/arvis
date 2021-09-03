@@ -9,16 +9,27 @@ export const EditableCell = ({
   column: { id },
   updateSnippet,
   type,
+  collectionInfo,
 }: {
   value: any;
   row: any;
   column: any;
   updateSnippet: any;
   type: string;
+  collectionInfo?: SnippetCollectionInfo;
 }) => {
+  const prefix = collectionInfo
+    ? collectionInfo.snippetKeywordPrefix ?? ''
+    : '';
+  const suffix = collectionInfo
+    ? collectionInfo.snippetKeywordSuffix ?? ''
+    : '';
+
   const [value, setValue] = useState<string | boolean>(initialValue);
   const [focusedValue, setFocusedValue] =
     useState<string | boolean>(initialValue);
+
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const onCheckboxChangeHandler = (e: any) => {
     updateSnippet(index, id, value);
@@ -32,10 +43,12 @@ export const EditableCell = ({
     if (focusedValue !== value) {
       updateSnippet(index, id, value);
     }
+    setIsFocused(false);
   };
 
   const onFocusHandler = () => {
     setFocusedValue(value);
+    setIsFocused(true);
   };
 
   useEffect(() => {
@@ -56,6 +69,7 @@ export const EditableCell = ({
   if (id === 'useAutoExpand') {
     return (
       <Input
+        style={{ width: 16 }}
         type="checkbox"
         checked={value as boolean}
         onChange={onCheckboxChangeHandler}
@@ -63,14 +77,23 @@ export const EditableCell = ({
     );
   }
 
+  let targetValue = value;
+  if (id === 'keyword' && !isFocused) {
+    targetValue = `${prefix}${value}${suffix}`;
+  }
+
   return (
     <StyledInput
       className="snippetItem"
       style={style}
-      value={value}
+      value={targetValue}
       onChange={onChangeHandler}
       onBlur={onBlurHandler}
       onFocus={onFocusHandler}
     />
   );
+};
+
+EditableCell.defaultProps = {
+  collectionInfo: undefined,
 };

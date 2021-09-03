@@ -26,7 +26,11 @@
 
 * Make your own styles.
 
-* Support clipboard history and universal actions.
+* Support clipboard history.
+
+* Partially support universal actions.
+
+* (Experimental) Support snippet compatable with alfred snippets.
 
 📹: [Overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 

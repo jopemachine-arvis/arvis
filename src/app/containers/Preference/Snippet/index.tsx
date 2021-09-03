@@ -55,6 +55,10 @@ export default function Snippet() {
       ? Object.keys(snippetsByCollection)[selectedIdx]
       : undefined;
 
+  const selectedCollectionInfo = selectedCollection.current
+    ? snippetCollectionInfos.get(selectedCollection.current)
+    : undefined;
+
   const ipcCallbackTbl = {
     openSnippetInstallFileDialogRet: (
       e: Electron.IpcRendererEvent,
@@ -115,7 +119,7 @@ export default function Snippet() {
     if (!selectedCollection.current) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
-      msg: `Are you sure you want to delete '${selectedCollection}'?`,
+      msg: `Are you sure you want to delete '${selectedCollection.current}'?`,
       icon: getDefaultIcon(selectedCollection.current),
     });
   };
@@ -190,6 +194,7 @@ export default function Snippet() {
         {selectedCollection.current && (
           <SnippetTable
             snippets={snippetsByCollection[selectedCollection.current]}
+            collectionInfo={selectedCollectionInfo!}
             reloadSnippets={reloadSnippets}
           />
         )}
@@ -212,9 +217,7 @@ export default function Snippet() {
           opened={collectionEditModalOpened}
           setOpened={setCollectionEditModalOpend}
           collection={selectedCollection.current}
-          collectionInfo={
-            snippetCollectionInfos.get(selectedCollection.current)!
-          }
+          collectionInfo={selectedCollectionInfo}
           reloadSnippets={reloadSnippets}
         />
       )}

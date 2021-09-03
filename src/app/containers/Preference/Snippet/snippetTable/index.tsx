@@ -15,26 +15,40 @@ import filenamify from 'filenamify';
 import { OuterContainer } from './components';
 import { EditableCell } from './editableCell';
 
+type IProps = {
+  snippets: SnippetItem[];
+  reloadSnippets: () => void;
+  collectionInfo: SnippetCollectionInfo;
+};
+
 function SnippetTable({
   columns,
   data,
   updateSnippet,
+  collectionInfo,
 }: {
   columns: any;
   data: any;
   updateSnippet: any;
+  collectionInfo: SnippetCollectionInfo;
 }) {
   const dataRef = useRef<any>(data);
+  const collectionInfoRef = useRef<SnippetCollectionInfo>(collectionInfo);
 
   const defaultColumn = React.useMemo(
     () => ({
       Cell: (cellArgs: any) => {
         if (!dataRef.current[cellArgs.row.index]) return null;
         const { type } = dataRef.current[cellArgs.row.index];
-        return EditableCell({ type, ...cellArgs });
+
+        return EditableCell({
+          type,
+          ...cellArgs,
+          collectionInfo: collectionInfoRef.current,
+        });
       },
     }),
-    [data]
+    [data, collectionInfo]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -50,6 +64,7 @@ function SnippetTable({
 
   useEffect(() => {
     dataRef.current = data;
+    collectionInfoRef.current = collectionInfo;
   });
 
   return (
@@ -95,13 +110,8 @@ function SnippetTable({
   );
 }
 
-type IProps = {
-  snippets: SnippetItem[];
-  reloadSnippets: () => void;
-};
-
 export default function (props: IProps) {
-  const { snippets, reloadSnippets } = props;
+  const { snippets, reloadSnippets, collectionInfo } = props;
 
   const columns = React.useMemo(
     () => [
@@ -231,6 +241,7 @@ export default function (props: IProps) {
           columns={columns}
           data={snippets}
           updateSnippet={updateSnippet}
+          collectionInfo={collectionInfo}
         />
       )}
     </OuterContainer>

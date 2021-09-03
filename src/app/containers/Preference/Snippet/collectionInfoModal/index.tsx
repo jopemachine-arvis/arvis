@@ -117,6 +117,7 @@ const CollectionInfoModal = (props: IProps) => {
             <Label check style={styles.labelStyle}>
               Name
               <Input
+                placeholder="The name of the collection"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -127,6 +128,7 @@ const CollectionInfoModal = (props: IProps) => {
             <Label check style={styles.labelStyle}>
               Prefix
               <Input
+                placeholder="Set suffix after all keywords"
                 value={prefix}
                 onChange={(e) => {
                   setPrefix(e.target.value);
@@ -137,6 +139,7 @@ const CollectionInfoModal = (props: IProps) => {
             <Label check style={styles.labelStyle}>
               Suffix
               <Input
+                placeholder="Set prefix before all keywords"
                 value={suffix}
                 onChange={(e) => {
                   setSuffix(e.target.value);
@@ -147,10 +150,14 @@ const CollectionInfoModal = (props: IProps) => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={saveBtnHandler}>
+          <Button
+            style={styles.btnStyle}
+            color="primary"
+            onClick={saveBtnHandler}
+          >
             Save
           </Button>
-          <Button color="secondary" onClick={toggle}>
+          <Button style={styles.btnStyle} color="secondary" onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>

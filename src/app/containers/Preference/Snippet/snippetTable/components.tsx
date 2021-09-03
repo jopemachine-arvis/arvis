@@ -25,8 +25,6 @@ export const OuterContainer = styled.div`
   }
 
   td:nth-child(2) {
-    min-width: 110px;
-    width: 2%;
   }
 
   td:nth-child(3) {
