@@ -109,7 +109,7 @@ export default function AssistanceWindow() {
     setOriginalItems,
     indexInfo,
     mode,
-    snippets: [...snippets.values()],
+    snippets,
     maxShowOnScreen,
     maxShowOnWindow: max_show_on_window,
     renewHandler,

@@ -66,7 +66,7 @@ const CollectionInfoModal = (props: IProps) => {
     return fse
       .mkdir(collectionDirName)
       .then(() => {
-        return createEmptySnippet(collectionDirName, reloadSnippets)
+        return createEmptySnippet(collectionDirName)
           .then(reloadSnippets)
           .catch(console.error);
       })
@@ -120,6 +120,10 @@ const CollectionInfoModal = (props: IProps) => {
     toggle();
   };
 
+  const headerText = collection
+    ? 'Edit snippet collection information'
+    : 'Add new snippet collection';
+
   return (
     <OuterContainer>
       <Modal
@@ -131,9 +135,7 @@ const CollectionInfoModal = (props: IProps) => {
           color: '#212529',
         }}
       >
-        <ModalHeader toggle={toggle}>
-          Edit snippet collection information
-        </ModalHeader>
+        <ModalHeader toggle={toggle}>{headerText}</ModalHeader>
         <ModalBody>
           <FormGroup check>
             <Label check style={styles.labelStyle}>

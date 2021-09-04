@@ -2,14 +2,16 @@ import filenamify from 'filenamify';
 import path from 'path';
 import plist from 'plist';
 import fse from 'fs-extra';
+import unusedFilename from 'unused-filename';
 
-export const createEmptySnippet = (
-  collectionDirName: string,
-  callback: () => void
-) => {
+export const createEmptySnippet = async (collectionDirName: string) => {
+  const fileName = await unusedFilename(
+    path.resolve(collectionDirName, 'empty.json')
+  );
+
   return fse
     .writeJSON(
-      path.resolve(collectionDirName, 'empty.json'),
+      fileName,
       {
         arvissnippet: {
           snippet: 'empty',
@@ -20,7 +22,6 @@ export const createEmptySnippet = (
       },
       { encoding: 'utf8', spaces: 4 }
     )
-    .then(callback)
     .catch(console.error);
 };
 

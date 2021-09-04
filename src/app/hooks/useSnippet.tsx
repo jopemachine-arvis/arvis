@@ -11,9 +11,7 @@ import {
  * @description
  */
 const useSnippet = () => {
-  const [snippets, setSnippets] = useState<Map<SnippetKeyword, SnippetItem>>(
-    new Map()
-  );
+  const [snippets, setSnippets] = useState<SnippetItem[]>([]);
 
   const [snippetCollectionInfos, setSnippetCollectionInfos] = useState<
     Map<CollectionName, SnippetCollectionInfo>
@@ -34,10 +32,10 @@ const useSnippet = () => {
         .then(({ snippetFiles, collectionInfos, collectionNames }) => {
           loadSnippetCollection(snippetFiles)
             .then((loadedSnippetData) => {
-              const snippetsToSet = new Map<string, SnippetItem>();
+              const snippetsToSet: SnippetItem[] = [];
 
               loadedSnippetData.forEach((snippet) => {
-                snippetsToSet.set(snippet.keyword, snippet);
+                snippetsToSet.push(snippet);
               });
 
               setSnippets(snippetsToSet);
@@ -47,7 +45,7 @@ const useSnippet = () => {
 
           loadSnippetCollectionInfo(collectionInfos)
             .then((loadedCollectionInfos) => {
-              const infos = new Map<string, SnippetCollectionInfo>();
+              const infos = new Map<CollectionName, SnippetCollectionInfo>();
 
               loadedCollectionInfos.forEach((collectionInfo) => {
                 infos.set(collectionInfo.collection, collectionInfo.info);

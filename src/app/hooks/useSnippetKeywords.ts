@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { keyCodeToString } from '@utils/iohook/keyUtils';
 import { ipcRenderer } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { modifierKeys } from '@utils/iohook/keyTbl';
 import { shiftCharTable } from '@utils/shiftCharTable';
+import _ from 'lodash';
 import { useIoHook } from '.';
 
 const snippetItemBuffers = new Map<
@@ -33,14 +34,38 @@ const useSnippetKeywords = ({
   snippets,
   collectionInfo,
 }: {
-  snippets: Map<SnippetKeyword, SnippetItem>;
+  snippets: SnippetItem[];
   collectionInfo: Map<CollectionName, SnippetCollectionInfo>;
 }) => {
-  const snippetsRef = useRef<Map<SnippetKeyword, SnippetItem>>(snippets);
+  const snippetsByKeyword = useMemo(
+    () => _.groupBy(snippets, 'keyword'),
+    [snippets]
+  );
 
-  snippetsRef.current = snippets;
+  const snippetsByKeywordRef =
+    useRef<_.Dictionary<SnippetItem[]>>(snippetsByKeyword);
+
+  snippetsByKeywordRef.current = snippetsByKeyword;
 
   const ioHook = useIoHook();
+
+  const validateKeywords = () => {
+    let valid = true;
+    let payload = '';
+
+    Object.keys(snippetsByKeyword).forEach((keyword) => {
+      const matchingSnippets = snippetsByKeyword[keyword];
+      if (matchingSnippets.length > 1) {
+        valid = false;
+        payload = keyword;
+      }
+    });
+
+    return {
+      valid,
+      payload,
+    };
+  };
 
   const clearSnippetItemBuffers = (): void => {
     [...snippetItemBuffers.keys()].forEach((snippetKeyword) => {
@@ -93,9 +118,10 @@ const useSnippetKeywords = ({
     if (longestMatchKeywordInfo.keyword.length !== 0) {
       const { prefix, keyword, suffix } = longestMatchKeywordInfo;
       const keywordWithPrefixAndSuffix = `${prefix}${keyword}${suffix}`;
+
       applySnippet(
         keywordWithPrefixAndSuffix,
-        snippetsRef.current.get(keyword)!.snippet
+        snippetsByKeywordRef.current[keyword]![0].snippet
       );
     }
   };
@@ -108,8 +134,8 @@ const useSnippetKeywords = ({
     if (snippets && collectionInfo) {
       snippetItemBuffers.clear();
 
-      [...snippets.keys()].forEach((snippetKeyword) => {
-        const snippet = snippets.get(snippetKeyword)!;
+      Object.keys(snippetsByKeyword).forEach((snippetKeyword) => {
+        const snippet = snippetsByKeyword[snippetKeyword]![0];
 
         if (snippet.useAutoExpand && snippet.keyword) {
           const info: SnippetCollectionInfo =
@@ -124,7 +150,18 @@ const useSnippetKeywords = ({
         }
       });
     }
-  }, [snippets, collectionInfo]);
+  }, [snippetsByKeyword, collectionInfo]);
+
+  useEffect(() => {
+    const { valid, payload } = validateKeywords();
+
+    if (!valid) {
+      ipcRenderer.send(IPCRendererEnum.showErrorDialog, {
+        title: 'Duplicated snippet keyword',
+        content: `There is a duplicated keyword: '${payload}'. Please reassign these keyword.`,
+      });
+    }
+  }, [snippets]);
 
   useEffect(() => {
     ioHook.on('keydown', keyDownEventHandler);

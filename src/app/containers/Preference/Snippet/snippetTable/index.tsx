@@ -45,8 +45,8 @@ function SnippetTable({
 
         return EditableCell({
           type,
-          ...cellArgs,
           collectionInfo: collectionInfoRef.current,
+          ...cellArgs,
         });
       },
     }),

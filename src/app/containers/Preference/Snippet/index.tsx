@@ -19,6 +19,8 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { installSnippet, uninstallSnippet } from '@helper/snippetInstaller';
 import { SpinnerContext } from '@helper/spinnerContext';
 import useForceUpdate from 'use-force-update';
+import { BiListPlus } from 'react-icons/bi';
+import { MdDeleteSweep } from 'react-icons/md';
 import * as style from './style';
 import CollectionInfoModal from './collectionInfoModal';
 import SnippetTable from './snippetTable';
@@ -34,12 +36,13 @@ import {
   SnippetItemTitle,
   SnippetItemSubText,
 } from './components';
+import { createEmptySnippet, filenamifyPath } from './utils';
 
 export default function Snippet() {
   const { snippets, snippetCollectionInfos, reloadSnippets } = useSnippet();
 
   const snippetsByCollection = useMemo(
-    () => _.groupBy([...snippets.values()], 'collection'),
+    () => _.groupBy(snippets, 'collection'),
     [snippets]
   );
 
@@ -125,8 +128,32 @@ export default function Snippet() {
     setCollectionEditModalOpened(true);
   };
 
-  const requestAddNewSnippet = () => {
+  const requestInstallSnippet = () => {
     ipcRenderer.send(IPCRendererEnum.openSnippetInstallFileDialog);
+  };
+
+  const addNewSnippet = () => {
+    if (selectedCollection.current) {
+      const collectionDirName = filenamifyPath(
+        path.resolve(arvisSnippetCollectionPath, selectedCollection.current)
+      );
+
+      createEmptySnippet(collectionDirName)
+        .then(reloadSnippets)
+        .catch(console.error);
+    }
+  };
+
+  const removeSnippet = () => {
+    if (selectedCollection.current) {
+      const collectionDirName = filenamifyPath(
+        path.resolve(arvisSnippetCollectionPath, selectedCollection.current)
+      );
+
+      // createEmptySnippet(collectionDirName)
+      //   .then(reloadSnippets)
+      //   .catch(console.error);
+    }
   };
 
   const callDeleteSnippetConfModal = () => {
@@ -223,7 +250,17 @@ export default function Snippet() {
         <AiOutlineAppstoreAdd
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
-          onClick={() => requestAddNewSnippet()}
+          onClick={() => requestInstallSnippet()}
+        />
+        <BiListPlus
+          className="snippet-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => addNewSnippet()}
+        />
+        <MdDeleteSweep
+          className="snippet-page-buttons"
+          style={style.bottomFixedBarIconStyle}
+          onClick={() => removeSnippet()}
         />
         <AiOutlineDelete
           className="snippet-page-buttons"
