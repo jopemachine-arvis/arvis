@@ -54,10 +54,20 @@ const useSnippetKeywords = ({
     let payload = '';
 
     Object.keys(snippetsByKeyword).forEach((keyword) => {
-      const matchingSnippets = snippetsByKeyword[keyword];
-      if (matchingSnippets.length > 1) {
-        valid = false;
-        payload = keyword;
+      if (keyword !== '') {
+        const matchingSnippets = snippetsByKeyword[keyword].filter(
+          (snippet) => snippet.useAutoExpand
+        );
+
+        if (matchingSnippets.length > 1) {
+          valid = false;
+          payload = keyword;
+
+          console.log(
+            `Duplicated snippet keyword!`,
+            snippetsByKeyword[keyword]
+          );
+        }
       }
     });
 

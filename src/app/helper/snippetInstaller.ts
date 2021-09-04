@@ -24,8 +24,8 @@ export const installSnippet = async (
 
   return new Promise((resolve, reject) => {
     unzipStream!.on('finish', () => {
-      // even if the install pipe is finalized, there might be a short time when the file is not created yet.
-      // it's not clear, so change below logic if it matters later.
+      // Even if the install pipe is finalized, there might be a short time when the file is not created yet.
+      // It's not clear, so change below logic if it matters later.
       sleep(1000).then(() => {
         resolve();
         return null;

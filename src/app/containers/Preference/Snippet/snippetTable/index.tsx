@@ -154,7 +154,7 @@ export default function (props: IProps) {
   const snippetNameChangeHandler = (snippet: SnippetItem, value: string) => {
     // Update snippet by changing file name
     const oldFileName = filenamifyPath(`${snippet.name} [${snippet.uid}].json`);
-    const newFileName = filenamifyPath(`${value}.json [${snippet.uid}].json`);
+    const newFileName = filenamifyPath(`${value} [${snippet.uid}].json`);
 
     const oldPath = path.resolve(
       arvisSnippetCollectionPath,

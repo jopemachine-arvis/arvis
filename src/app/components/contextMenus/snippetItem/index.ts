@@ -17,6 +17,10 @@ class SnippetItemContextMenu extends Menu {
         toolTip: 'Add Snippet',
         click() {
           createEmptySnippet(snippet.collection).catch(console.error);
+
+          WindowManager.getInstance()
+            .getPreferenceWindow()
+            .webContents.send(IPCMainEnum.reloadSnippet);
         },
       })
     );
