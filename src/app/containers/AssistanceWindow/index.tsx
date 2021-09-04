@@ -5,7 +5,7 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { makeActionCreator } from '@utils/index';
+import { makeDefaultActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
 import { useAssistanceWindowControl, useSnippet } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
@@ -140,7 +140,7 @@ export default function AssistanceWindow() {
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
-      dispatch(makeActionCreator(actionType, 'arg')(args));
+      dispatch(makeDefaultActionCreator(actionType)(args));
     },
 
     pinAssistanceWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {

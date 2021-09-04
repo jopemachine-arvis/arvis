@@ -19,6 +19,7 @@ export const shiftCharTable = {
   '[': '{',
   ']': '}',
   '\\': '|',
+  // To do:: Fix me! not correct because caps lock is not considered
   a: 'A',
   b: 'B',
   c: 'C',

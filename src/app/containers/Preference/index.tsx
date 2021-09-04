@@ -16,7 +16,7 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { checkExtensionsUpdate } from '@helper/extensionUpdateChecker';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
-import { makeActionCreator } from '@utils/index';
+import { makeDefaultActionCreator } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
@@ -110,7 +110,7 @@ export default function PreferenceWindow() {
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
-      dispatch(makeActionCreator(actionType, 'arg')(args));
+      dispatch(makeDefaultActionCreator(actionType)(args));
     },
 
     reloadWorkflow: (

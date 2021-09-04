@@ -1,4 +1,4 @@
-import makeActionCreator from '@utils/makeActionCreator';
+import { makeActionCreator } from '@utils/makeActionCreator';
 
 export const actionTypes = {
   SET_LAUNCH_AT_LOGIN: '@GLOBAL_CONFIG/SET_SAVE_REGULAR',

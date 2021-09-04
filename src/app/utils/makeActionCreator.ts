@@ -2,7 +2,7 @@
  * @param type
  * @param argNames
  */
-export default function makeActionCreator(type: string, ...argNames: string[]) {
+export function makeActionCreator(type: string, ...argNames: string[]) {
   return function actionCreator(...args: any[]) {
     type ActionObj = {
       [key: string]: any;
@@ -13,4 +13,11 @@ export default function makeActionCreator(type: string, ...argNames: string[]) {
     });
     return { type, payload };
   };
+}
+
+/**
+ * @param type
+ */
+export function makeDefaultActionCreator(type: string) {
+  return makeActionCreator(type, 'arg');
 }

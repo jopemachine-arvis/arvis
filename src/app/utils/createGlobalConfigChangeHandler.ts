@@ -1,9 +1,9 @@
 /* eslint-disable no-restricted-syntax */
 import { ipcRenderer } from 'electron';
 import { Dispatch } from 'react';
-import makeActionCreator from './makeActionCreator';
-import { isNumeric } from './isNumeric';
+import { makeDefaultActionCreator } from './makeActionCreator';
 import { IPCRendererEnum } from '../ipc/ipcEventEnum';
+import { convertNumeric } from './convertNumeric';
 
 /**
  * @param destWindow
@@ -20,19 +20,17 @@ export const createGlobalConfigChangeHandler =
     dispatch: Dispatch<any>;
   }) =>
   (e: React.FormEvent<HTMLInputElement>, actionType: string) => {
-    const target: string | number = isNumeric(e.currentTarget.value)
-      ? Number(e.currentTarget.value)
-      : e.currentTarget.value;
+    const target: string | number = convertNumeric(e.currentTarget.value);
 
-    dispatch(makeActionCreator(actionType, 'arg')(target));
+    dispatch(makeDefaultActionCreator(actionType)(target));
     if (destWindows) {
-      for (const destWindowStr of destWindows) {
+      destWindows.forEach((destWindowStr) => {
         ipcRenderer.send(IPCRendererEnum.dispatchAction, {
           destWindow: destWindowStr,
           actionType,
           args: target,
         });
-      }
+      });
     } else {
       ipcRenderer.send(IPCRendererEnum.dispatchAction, {
         destWindow,

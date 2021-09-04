@@ -19,7 +19,7 @@ import {
   useCopyKeyCapture,
 } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
-import { applyAlphaColor, makeActionCreator } from '@utils/index';
+import { applyAlphaColor, makeDefaultActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import {
@@ -201,7 +201,7 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
-      dispatch(makeActionCreator(actionType, 'arg')(args));
+      dispatch(makeDefaultActionCreator(actionType)(args));
     },
 
     setSearchbarInput: (e: IpcRendererEvent, { str }: { str: string }) => {

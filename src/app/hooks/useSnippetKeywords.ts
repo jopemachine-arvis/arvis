@@ -104,24 +104,24 @@ const useSnippetKeywords = ({
 
     const pressedKey = keyCodeToStringAdapter(e);
 
-    [...snippetItemBuffers.keys()].forEach((snippetKeyword) => {
-      let charBuffer = snippetItemBuffers.get(snippetKeyword)!;
+    [...snippetItemBuffers.keys()].forEach((snippetBuffer) => {
+      let charBuffer = snippetItemBuffers.get(snippetBuffer)!;
 
-      const keywordWithPrefixAndSuffix = `${snippetKeyword.prefix}${snippetKeyword.keyword}${snippetKeyword.suffix}`;
+      const keywordWithPrefixAndSuffix = `${snippetBuffer.prefix}${snippetBuffer.keyword}${snippetBuffer.suffix}`;
 
       if (keywordWithPrefixAndSuffix[charBuffer.length] === pressedKey) {
         charBuffer += pressedKey;
-        snippetItemBuffers.set(snippetKeyword, charBuffer);
+        snippetItemBuffers.set(snippetBuffer, charBuffer);
 
         if (
           keywordWithPrefixAndSuffix === charBuffer &&
           keywordWithPrefixAndSuffix.length >
             longestMatchKeywordInfo.keyword.length
         ) {
-          longestMatchKeywordInfo = snippetKeyword;
+          longestMatchKeywordInfo = snippetBuffer;
         }
       } else {
-        snippetItemBuffers.set(snippetKeyword, '');
+        snippetItemBuffers.set(snippetBuffer, '');
       }
     });
 
@@ -144,8 +144,8 @@ const useSnippetKeywords = ({
     if (snippets && collectionInfo) {
       snippetItemBuffers.clear();
 
-      Object.keys(snippetsByKeyword).forEach((snippetKeyword) => {
-        const snippet = snippetsByKeyword[snippetKeyword]![0];
+      Object.keys(snippetsByKeyword).forEach((keyword) => {
+        const snippet = snippetsByKeyword[keyword]![0];
 
         if (snippet.useAutoExpand && snippet.keyword) {
           const info: SnippetCollectionInfo =
@@ -153,10 +153,7 @@ const useSnippetKeywords = ({
           const prefix = info.snippetKeywordPrefix ?? '';
           const suffix = info.snippetKeywordSuffix ?? '';
 
-          snippetItemBuffers.set(
-            { keyword: snippetKeyword, prefix, suffix },
-            ''
-          );
+          snippetItemBuffers.set({ keyword, prefix, suffix }, '');
         }
       });
     }
