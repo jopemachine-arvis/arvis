@@ -316,7 +316,7 @@
     "font-list": "^1.2.15",
     "github-markdown-css": "^4.0.0",
     "got": "11.8.2",
-    "history": "^5.0.0",
+    "history": "^5.0.1",
     "is-admin": "^3.0.0",
     "is-promise": "^4.0.0",
     "is-url": "^1.2.4",
