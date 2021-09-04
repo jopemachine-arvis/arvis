@@ -46,6 +46,8 @@ import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/pop
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 import { popupAssistanceWindowContextMenu } from './mainProcessEventHandler/contextMenu/popupAssistanceWindowContextMenu';
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
+import { popupSnippetItemMenu } from './mainProcessEventHandler/contextMenu/popupSnippetItemMenu';
+
 import {
   toggleClipboardHistoryWindow,
   toggleSnippetWindow,
@@ -67,13 +69,14 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
+  ipcMain.on(IPCRendererEnum.popupSnippetItemMenu, popupSnippetItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.registerWorkflowHotkeys, registerWorkflowHotkeys);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.reloadPlugin, reloadPlugin);
-  ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);
   ipcMain.on(IPCRendererEnum.reloadSnippet, reloadSnippet);
+  ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
   ipcMain.on(IPCRendererEnum.setAutoLaunch, setAutoLaunch);

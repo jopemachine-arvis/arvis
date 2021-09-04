@@ -55,17 +55,6 @@ export const EditableCell = ({
     setValue(initialValue);
   }, [initialValue]);
 
-  const style = {
-    height: 20,
-    padding: 3,
-    border: 1,
-    backgroundColor: '#1f2228',
-    fontSize: 14,
-    color: '#fff',
-    textAlign: 'left',
-    textShadow: undefined,
-  };
-
   if (id === 'useAutoExpand') {
     return (
       <Input
@@ -85,11 +74,20 @@ export const EditableCell = ({
   return (
     <StyledInput
       className="snippetItem"
-      style={style}
       value={targetValue}
       onChange={onChangeHandler}
       onBlur={onBlurHandler}
       onFocus={onFocusHandler}
+      style={{
+        height: 20,
+        padding: 3,
+        border: 1,
+        backgroundColor: '#1f2228',
+        fontSize: 14,
+        color: '#fff',
+        textAlign: 'left',
+        textShadow: undefined,
+      }}
     />
   );
 };

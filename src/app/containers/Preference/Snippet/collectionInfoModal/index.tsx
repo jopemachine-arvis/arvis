@@ -35,9 +35,7 @@ const CollectionInfoModal = (props: IProps) => {
   const toggle = () => setOpened(!opened);
 
   const [name, setName] = useState<string>('');
-
   const [prefix, setPrefix] = useState<string>('');
-
   const [suffix, setSuffix] = useState<string>('');
 
   useEffect(() => {

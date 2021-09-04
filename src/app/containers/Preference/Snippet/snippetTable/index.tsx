@@ -11,7 +11,9 @@ import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
 import fse from 'fs-extra';
 import path from 'path';
+import { ipcRenderer } from 'electron';
 import { arvisSnippetCollectionPath } from '@config/path';
+import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer } from './components';
 import { EditableCell } from './editableCell';
 import { filenamifyPath } from '../utils';
@@ -29,7 +31,7 @@ function SnippetTable({
   collectionInfo,
 }: {
   columns: any;
-  data: any;
+  data: SnippetItem[];
   updateSnippet: any;
   collectionInfo?: SnippetCollectionInfo;
 }) {
@@ -52,6 +54,15 @@ function SnippetTable({
     }),
     [data, collectionInfo]
   );
+
+  const onContextMenuHandler = (rowInfo: any) => {
+    const rowIdx = rowInfo.index;
+    const rowData = data[rowIdx];
+
+    ipcRenderer.send(IPCRendererEnum.popupSnippetItemMenu, {
+      snippetItemStr: JSON.stringify(rowData),
+    });
+  };
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -100,7 +111,10 @@ function SnippetTable({
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr
+              {...row.getRowProps()}
+              onContextMenu={() => onContextMenuHandler(row)}
+            >
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
               })}
@@ -139,11 +153,8 @@ export default function (props: IProps) {
 
   const snippetNameChangeHandler = (snippet: SnippetItem, value: string) => {
     // Update snippet by changing file name
-    const oldFileName = filenamifyPath(
-      snippet.uid ? `${snippet.name} [${snippet.uid}].json` : `${snippet}.json`
-    );
-
-    const newFileName = filenamifyPath(`${value}.json`);
+    const oldFileName = filenamifyPath(`${snippet.name} [${snippet.uid}].json`);
+    const newFileName = filenamifyPath(`${value}.json [${snippet.uid}].json`);
 
     const oldPath = path.resolve(
       arvisSnippetCollectionPath,
@@ -167,7 +178,7 @@ export default function (props: IProps) {
   ) => {
     // Update snippet by updating json file
     const snippetFileName = filenamifyPath(
-      snippet.uid ? `${snippet.name} [${snippet.uid}].json` : `${snippet}.json`
+      `${snippet.name} [${snippet.uid}].json`
     );
 
     const snippetPath = path.resolve(
@@ -181,11 +192,8 @@ export default function (props: IProps) {
       dontautoexpand: !snippet.useAutoExpand,
       name: snippet.name,
       keyword: snippet.keyword,
+      uid: snippet.uid,
     };
-
-    if (snippet.uid) {
-      data.uid = snippet.uid;
-    }
 
     if (target === 'useAutoExpand') {
       data.dontautoexpand = value;

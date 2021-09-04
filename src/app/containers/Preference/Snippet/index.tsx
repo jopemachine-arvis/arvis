@@ -3,13 +3,13 @@
 
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import useSnippet from '@hooks/useSnippet';
-import './index.css';
 import {
   AiOutlineAppstoreAdd,
   AiOutlineBranches,
   AiOutlineDelete,
   AiOutlinePlus,
 } from 'react-icons/ai';
+import { BiListPlus } from 'react-icons/bi';
 import _ from 'lodash';
 import { arvisSnippetCollectionPath } from '@config/path';
 import path from 'path';
@@ -19,8 +19,6 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { installSnippet, uninstallSnippet } from '@helper/snippetInstaller';
 import { SpinnerContext } from '@helper/spinnerContext';
 import useForceUpdate from 'use-force-update';
-import { BiListPlus } from 'react-icons/bi';
-import { MdDeleteSweep } from 'react-icons/md';
 import * as style from './style';
 import CollectionInfoModal from './collectionInfoModal';
 import SnippetTable from './snippetTable';
@@ -37,6 +35,7 @@ import {
   SnippetItemSubText,
 } from './components';
 import { createEmptySnippet, filenamifyPath } from './utils';
+import './index.css';
 
 export default function Snippet() {
   const { snippets, snippetCollectionInfos, reloadSnippets } = useSnippet();
@@ -144,18 +143,6 @@ export default function Snippet() {
     }
   };
 
-  const removeSnippet = () => {
-    if (selectedCollection.current) {
-      const collectionDirName = filenamifyPath(
-        path.resolve(arvisSnippetCollectionPath, selectedCollection.current)
-      );
-
-      // createEmptySnippet(collectionDirName)
-      //   .then(reloadSnippets)
-      //   .catch(console.error);
-    }
-  };
-
   const callDeleteSnippetConfModal = () => {
     if (!selectedCollection.current) return;
 
@@ -256,11 +243,6 @@ export default function Snippet() {
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => addNewSnippet()}
-        />
-        <MdDeleteSweep
-          className="snippet-page-buttons"
-          style={style.bottomFixedBarIconStyle}
-          onClick={() => removeSnippet()}
         />
         <AiOutlineDelete
           className="snippet-page-buttons"

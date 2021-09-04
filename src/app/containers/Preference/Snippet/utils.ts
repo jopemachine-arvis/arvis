@@ -1,28 +1,35 @@
 import filenamify from 'filenamify';
+import unusedFilename from 'unused-filename';
 import path from 'path';
 import plist from 'plist';
 import fse from 'fs-extra';
-import unusedFilename from 'unused-filename';
+import { v4 as generateUuid } from 'uuid';
+import { arvisSnippetCollectionPath } from '../../../config/path';
+
+export const generateSnippetUid = () => {
+  return generateUuid();
+};
 
 export const createEmptySnippet = async (collectionDirName: string) => {
+  const uid = generateSnippetUid();
+
   const fileName = await unusedFilename(
-    path.resolve(collectionDirName, 'empty.json')
+    path.resolve(collectionDirName, `empty [${uid}].json`)
   );
 
-  return fse
-    .writeJSON(
-      fileName,
-      {
-        arvissnippet: {
-          snippet: 'empty',
-          dontautoexpand: true,
-          name: '',
-          keyword: '',
-        },
+  return fse.writeJSON(
+    fileName,
+    {
+      arvissnippet: {
+        snippet: 'empty',
+        dontautoexpand: true,
+        name: '',
+        keyword: '',
+        uid,
       },
-      { encoding: 'utf8', spaces: 4 }
-    )
-    .catch(console.error);
+    },
+    { encoding: 'utf8', spaces: 4 }
+  );
 };
 
 export const removeMultipleSpace = (str: string) => {
@@ -50,4 +57,16 @@ export const filenamifyPath = (str: string, options?: any) => {
   }
 
   return removeMultipleSpace(filenamify(str));
+};
+
+export const deleteSnippet = (snippet: SnippetItem) => {
+  const snippetPath = filenamifyPath(
+    path.resolve(
+      arvisSnippetCollectionPath,
+      snippet.collection,
+      `${snippet.name} [${snippet.uid}].json`
+    )
+  );
+
+  return fse.remove(snippetPath);
 };
