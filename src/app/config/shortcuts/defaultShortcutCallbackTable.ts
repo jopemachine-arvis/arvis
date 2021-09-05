@@ -35,4 +35,14 @@ export default {
       toggleAssistanceWindow({ mode: 'universalAction', showsUp: false });
     }
   },
+
+  toggleSnippetWindow: () => () => {
+    if (is.renderer()) {
+      ipcRenderer.send(IPCRendererEnum.toggleUniversalActionWindow, {
+        showsUp: false,
+      });
+    } else {
+      toggleAssistanceWindow({ mode: 'snippet', showsUp: false });
+    }
+  },
 };

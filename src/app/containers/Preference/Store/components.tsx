@@ -20,9 +20,9 @@ export const ExtensionItemTitle = styled.div`
 `;
 
 export const ExtensionItemCreatorText = styled.div`
-  margin-top: 5px;
-  font-size: 12px;
-  color: #cccccc;
+  margin-top: 3px;
+  font-size: 10px;
+  color: #aaa;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -59,11 +59,10 @@ export const OuterContainer = styled.div`
 export const SearchbarContainer = styled.div`
   margin-left: 40px;
   margin-bottom: 20px;
+  margin-right: 40px;
   border-radius: 5px;
   background-color: #202228;
   padding-left: 30px;
-  min-width: 380px;
-  max-width: 380px;
 `;
 
 export const SearchResultText = styled.div`
@@ -79,9 +78,8 @@ export const SearchbarDescriptionContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 20px;
-  min-width: 380px;
-  max-width: 380px;
   margin-left: 40px;
+  margin-right: 40px;
 `;
 
 export const ExtensionListView = styled.div`
@@ -103,7 +101,7 @@ export const Header = styled.div`
 export const ExtensionListViewFooter = styled.div`
   overflow-y: auto;
   width: 100vh;
-  height: 7%;
+  height: 50px;
   background-color: #222222;
   position: fixed;
   bottom: 0px;
@@ -117,15 +115,13 @@ export const ExtensionListOrderedList = styled.div`
   background-color: #1f2228;
   border-radius: 10px;
   margin-left: 40px;
-  margin-right: 25px;
+  margin-right: 40px;
   padding-bottom: 20px;
   padding-right: 30px;
   padding-left: 30px;
   padding-top: 20px;
   overflow: auto;
   height: 73%;
-  min-width: 380px;
-  max-width: 380px;
 `;
 
 export const ExtensionItemContainer = styled.div`
@@ -139,12 +135,13 @@ export const ExtensionItemContainer = styled.div`
   margin-bottom: 7px;
   user-select: none;
   position: relative;
+  max-width: 380px;
 `;
 
 export const ExtensionDescContainer = styled.div`
   margin-top: 95px;
   margin-left: 50px;
-  flex-grow: 2;
+  flex-grow: 1;
 `;
 
 export const ExtensionImg = styled.img`

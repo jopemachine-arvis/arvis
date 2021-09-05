@@ -5,11 +5,15 @@ import { IPCRendererEnum } from './ipcEventEnum';
 
 import { openExtensionInstallerFile } from './mainProcessEventHandler/openExtensionInstallerFile';
 import { reloadApplication } from './mainProcessEventHandler/reloadApplication';
-import { reloadPlugin } from './mainProcessEventHandler/reloadPlugin';
-import { reloadWorkflow } from './mainProcessEventHandler/reloadWorkflow';
+import {
+  reloadWorkflow,
+  reloadPlugin,
+  reloadSnippet,
+} from './mainProcessEventHandler/reloadExtension';
 import { showNotification } from './mainProcessEventHandler/showNotification';
 import { toggleMacDock } from './mainProcessEventHandler/toggleMacDock';
 import { triggerKeyDownEvent } from './mainProcessEventHandler/triggerKeyDownEvent';
+import { applySnippet } from './mainProcessEventHandler/applySnippet';
 
 import { hideSearchWindow } from './mainProcessEventHandler/windowManage/hideSearchWindow';
 import { hideLargeTextWindow } from './mainProcessEventHandler/windowManage/hideLargeTextWindow';
@@ -20,6 +24,7 @@ import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/show
 
 import { openPluginInstallFileDialog } from './mainProcessEventHandler/modal/openPluginInstallFileDialog';
 import { openWorkflowInstallFileDialog } from './mainProcessEventHandler/modal/openWorkflowInstallFileDialog';
+import { openSnippetInstallFileDialog } from './mainProcessEventHandler/modal/openSnippetInstallFileDialog';
 import { openYesnoDialog } from './mainProcessEventHandler/modal/openYesnoDialog';
 import { saveFile } from './mainProcessEventHandler/modal/saveFile';
 import { showErrorDialog } from './mainProcessEventHandler/modal/showErrorDialog';
@@ -41,8 +46,11 @@ import { popupWorkflowItemMenu } from './mainProcessEventHandler/contextMenu/pop
 import { popupSearchbarItemMenu } from './mainProcessEventHandler/contextMenu/popupSearchbarItemMenu';
 import { popupAssistanceWindowContextMenu } from './mainProcessEventHandler/contextMenu/popupAssistanceWindowContextMenu';
 import { popupWorkflowTriggerTableItem } from './mainProcessEventHandler/contextMenu/popupWorkflowTriggerTableItem';
+import { popupSnippetItemMenu } from './mainProcessEventHandler/contextMenu/popupSnippetItemMenu';
+
 import {
   toggleClipboardHistoryWindow,
+  toggleSnippetWindow,
   toggleUniversalActionWindow,
 } from './mainProcessEventHandler/windowManage/toggleAssistanceWindow';
 import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggleSearchWindow';
@@ -51,6 +59,7 @@ import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggl
  * Register ipc callbacks
  */
 export const initIPCHandlers = () => {
+  ipcMain.on(IPCRendererEnum.applySnippet, applySnippet);
   ipcMain.on(IPCRendererEnum.dispatchAction, dispatchAction);
   ipcMain.on(IPCRendererEnum.getElectronEnvs, getElectronEnvs);
   ipcMain.on(IPCRendererEnum.getSystemFont, getSystemFont);
@@ -60,11 +69,13 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.openYesnoDialog, openYesnoDialog);
   ipcMain.on(IPCRendererEnum.popupPluginItemMenu, popupPluginItemMenu);
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
+  ipcMain.on(IPCRendererEnum.popupSnippetItemMenu, popupSnippetItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.registerWorkflowHotkeys, registerWorkflowHotkeys);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);
   ipcMain.on(IPCRendererEnum.reloadPlugin, reloadPlugin);
+  ipcMain.on(IPCRendererEnum.reloadSnippet, reloadSnippet);
   ipcMain.on(IPCRendererEnum.reloadWorkflow, reloadWorkflow);
   ipcMain.on(IPCRendererEnum.resumeFileWatch, resumeFileWatch);
   ipcMain.on(IPCRendererEnum.saveFile, saveFile);
@@ -78,14 +89,19 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+
   ipcMain.on(
     IPCRendererEnum.toggleClipboardHistoryWindow,
     toggleClipboardHistoryWindow
   );
+
   ipcMain.on(
     IPCRendererEnum.toggleUniversalActionWindow,
     toggleUniversalActionWindow
   );
+
+  ipcMain.on(IPCRendererEnum.toggleSnippetWindow, toggleSnippetWindow);
+
   ipcMain.on(IPCRendererEnum.toggleSearchWindow, toggleSearchWindow);
 
   ipcMain.on(
@@ -108,6 +124,11 @@ export const initIPCHandlers = () => {
   ipcMain.on(
     IPCRendererEnum.openWorkflowInstallFileDialog,
     openWorkflowInstallFileDialog
+  );
+
+  ipcMain.on(
+    IPCRendererEnum.openSnippetInstallFileDialog,
+    openSnippetInstallFileDialog
   );
 
   ipcMain.on(

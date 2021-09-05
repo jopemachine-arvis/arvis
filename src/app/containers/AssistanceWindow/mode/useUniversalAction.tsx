@@ -6,7 +6,7 @@ import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SubInfoText, InfoInnerContainer } from '../components';
 
-const transformStore = (store: any[]): any[] => {
+const transform = (store: any[]): any[] => {
   const items = store.map((item) => {
     return {
       title: item.title || item.command,
@@ -21,7 +21,7 @@ const transformStore = (store: any[]): any[] => {
 
 /**
  */
-const useUniversalAction = ({
+const useUniversalActionMode = ({
   items,
   setItems,
   originalItems,
@@ -51,8 +51,8 @@ const useUniversalAction = ({
       Core.findWorkflowCommands().filter((command) => command.argType !== 'no')
     );
 
-    setItems(transformStore(commands).slice(0, maxShowOnWindow));
-    setOriginalItems(transformStore(commands));
+    setItems(transform(commands).slice(0, maxShowOnWindow));
+    setOriginalItems(transform(commands));
 
     forceUpdate();
   };
@@ -134,4 +134,4 @@ const useUniversalAction = ({
   return { renderInfoContent };
 };
 
-export default useUniversalAction;
+export default useUniversalActionMode;

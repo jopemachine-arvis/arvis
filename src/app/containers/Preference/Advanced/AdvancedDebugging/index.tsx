@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
 import { StateType } from '@redux/reducers/types';
-import { makeActionCreator } from '@utils/index';
+import { makeDefaultActionCreator } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
@@ -22,7 +22,7 @@ export default function AdvancedDebugging() {
   const dispatch = useDispatch();
 
   const toggleState = (actionType: string, bool: boolean) => {
-    dispatch(makeActionCreator(actionType, 'arg')(!bool));
+    dispatch(makeDefaultActionCreator(actionType)(!bool));
 
     ipcRenderer.send(IPCRendererEnum.dispatchAction, {
       destWindow: 'searchWindow',

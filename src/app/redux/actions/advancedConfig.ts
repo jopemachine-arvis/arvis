@@ -1,4 +1,4 @@
-import makeActionCreator from '@utils/makeActionCreator';
+import { makeActionCreator } from '@utils/makeActionCreator';
 
 export const actionTypes = {
   SET_ASYNC_PLUGIN_TIMER: '@ADVANCED_CONFIG/SET_ASYNC_PLUGIN_TIMER',

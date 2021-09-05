@@ -22,7 +22,6 @@ import { resizeSearchWindowHeight } from './windowManage/resizeSearchWindowHeigh
 import { setSearchWindowWidth } from './windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './windowManage/showLargeTextWindow';
 
-import { reloadWorkflow } from './reloadWorkflow';
 import { showNotification } from './showNotification';
 import { triggerKeyDownEvent } from './triggerKeyDownEvent';
 
@@ -40,7 +39,6 @@ export {
   popupPluginItemMenu,
   popupSearchbarItemMenu,
   popupWorkflowItemMenu,
-  reloadWorkflow,
   resizeSearchWindowHeight,
   saveFile,
   setAutoLaunch,

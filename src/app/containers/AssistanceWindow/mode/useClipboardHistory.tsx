@@ -9,7 +9,7 @@ import useForceUpdate from 'use-force-update';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
 import { SubInfoText, InfoInnerContainer } from '../components';
 
-const transformStore = (store: any[]): any[] => {
+const transform = (store: any[]): any[] => {
   const iconPath = path.resolve(
     getArvisAssetsPath(),
     'images',
@@ -32,7 +32,7 @@ const transformStore = (store: any[]): any[] => {
 
 /**
  */
-const useClipboardHistory = ({
+const useClipboardHistoryMode = ({
   items,
   setItems,
   originalItems,
@@ -70,19 +70,17 @@ const useClipboardHistory = ({
       forceUpdate();
       // wait until force update is done.
       setTimeout(() => {
-        const newItems = transformStore(storeRef.current);
+        const newItems = transform(storeRef.current);
         setItems(newItems.slice(0, maxShowOnWindowRef.current));
-        setOriginalItems(transformStore(storeRef.current));
+        setOriginalItems(transform(storeRef.current));
         renewHandler.current();
       }, 15);
     },
   };
 
   const reload = () => {
-    setItems(
-      transformStore(storeRef.current).slice(0, maxShowOnWindowRef.current)
-    );
-    setOriginalItems(transformStore(storeRef.current));
+    setItems(transform(storeRef.current).slice(0, maxShowOnWindowRef.current));
+    setOriginalItems(transform(storeRef.current));
   };
 
   useEffect(() => {
@@ -128,4 +126,4 @@ const useClipboardHistory = ({
   return { renderInfoContent };
 };
 
-export default useClipboardHistory;
+export default useClipboardHistoryMode;

@@ -1,9 +1,43 @@
+import path from 'path';
 import { PreferencePage } from '../containers/Preference/preferencePageEnum';
 import { IPCMainEnum } from '../ipc/ipcEventEnum';
 import { WindowManager } from '../windows';
 
+const pageToOpen = {
+  workflow: PreferencePage.Workflow,
+  plugin: PreferencePage.Plugin,
+  snippet: PreferencePage.Snippet,
+  theme: PreferencePage.Appearance,
+};
+
+const eventToSend = {
+  workflow: IPCMainEnum.openWorkflowInstallFileDialogRet,
+  plugin: IPCMainEnum.openPluginInstallFileDialogRet,
+  snippet: IPCMainEnum.openSnippetInstallFileDialogRet,
+  theme: IPCMainEnum.importThemeRet,
+};
+
+const openHandler = (
+  type: 'workflow' | 'plugin' | 'snippet' | 'theme',
+  file: string
+) => {
+  const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
+
+  preferenceWindow.webContents.send(IPCMainEnum.setPreferencePage, {
+    pageToOpen: pageToOpen[type],
+  });
+
+  setTimeout(() => {
+    preferenceWindow.webContents.send(eventToSend[type], {
+      file: {
+        filePaths: [file],
+      },
+    });
+  }, 100);
+};
+
 /**
- * Open Handler for arvisplugin, arvisworkflow, arvistheme files
+ * Open Handler for arvis associated files
  * @param file
  */
 export const openArvisFile = (file: string) => {
@@ -11,51 +45,23 @@ export const openArvisFile = (file: string) => {
 
   preferenceWindow.show();
 
-  if (file.endsWith('arvisworkflow')) {
-    preferenceWindow.webContents.send(IPCMainEnum.setPreferencePage, {
-      pageToOpen: PreferencePage.Workflow,
-    });
-
-    setTimeout(() => {
-      preferenceWindow.webContents.send(
-        IPCMainEnum.openWorkflowInstallFileDialogRet,
-        {
-          file: {
-            filePaths: [file],
-          },
-        }
+  switch (path.extname(file)) {
+    case '.arvisworkflow':
+      openHandler('workflow', file);
+      break;
+    case '.arvisplugin':
+      openHandler('plugin', file);
+      break;
+    case '.alfredsnippets':
+    case '.arvissnippets':
+      openHandler('snippet', file);
+      break;
+    case '.arvistheme':
+      openHandler('theme', file);
+      break;
+    default:
+      throw new Error(
+        "This file seems not Arvis format. If it is, change the file's extension and try again"
       );
-    }, 100);
-  } else if (file.endsWith('arvisplugin')) {
-    preferenceWindow.webContents.send(IPCMainEnum.setPreferencePage, {
-      pageToOpen: PreferencePage.Plugin,
-    });
-
-    setTimeout(() => {
-      preferenceWindow.webContents.send(
-        IPCMainEnum.openPluginInstallFileDialogRet,
-        {
-          file: {
-            filePaths: [file],
-          },
-        }
-      );
-    }, 100);
-  } else if (file.endsWith('arvistheme')) {
-    preferenceWindow.webContents.send(IPCMainEnum.setPreferencePage, {
-      pageToOpen: PreferencePage.Appearance,
-    });
-
-    setTimeout(() => {
-      preferenceWindow.webContents.send(IPCMainEnum.importThemeRet, {
-        file: {
-          filePaths: [file],
-        },
-      });
-    }, 100);
-  } else {
-    throw new Error(
-      "This file seems not Arvis format. If it is, change the file's extension and try again"
-    );
   }
 };

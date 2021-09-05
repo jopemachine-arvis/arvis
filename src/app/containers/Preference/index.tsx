@@ -16,7 +16,7 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { checkExtensionsUpdate } from '@helper/extensionUpdateChecker';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
-import { makeActionCreator } from '@utils/index';
+import { makeDefaultActionCreator } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
@@ -30,10 +30,12 @@ import PluginPage from './Plugin';
 import StorePage from './Store';
 import ClipboardHistoryPage from './ClipboardHistory';
 import UniversalActionPage from './UniversalAction';
+import SnippetPage from './Snippet';
 import AdvancedHistoryPage from './Advanced/AdvancedHistory';
 import AdvancedDebuggingPage from './Advanced/AdvancedDebugging';
 import AdvancedPluginPage from './Advanced/AdvancedPlugin';
 import { MainContainer, OuterContainer } from './components';
+import './index.css';
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css';
 
@@ -108,7 +110,7 @@ export default function PreferenceWindow() {
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
-      dispatch(makeActionCreator(actionType, 'arg')(args));
+      dispatch(makeDefaultActionCreator(actionType)(args));
     },
 
     reloadWorkflow: (
@@ -323,6 +325,9 @@ export default function PreferenceWindow() {
       case PreferencePage.UniversalAction:
         main = <UniversalActionPage />;
         break;
+      case PreferencePage.Snippet:
+        main = <SnippetPage />;
+        break;
       default:
         throw new Error(`Error, page is not valid value, page: ${page}`);
     }
@@ -336,6 +341,7 @@ export default function PreferenceWindow() {
 
   return (
     <OuterContainer
+      id="preferenceOuterContainer"
       style={{
         fontFamily: global_font,
       }}

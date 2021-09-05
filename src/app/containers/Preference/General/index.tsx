@@ -46,7 +46,7 @@ export default function General(props: IProps) {
     setFontListDrawerOpen((prevState) => !prevState);
 
   const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindows: ['searchWindow', 'clipboardHistoryWindow'],
+    destWindows: ['searchWindow', 'assistanceWindow'],
     dispatch,
   });
 

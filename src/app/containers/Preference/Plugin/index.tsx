@@ -30,6 +30,7 @@ import { SearchBar, MarkdownRenderer } from '@components/index';
 import { getGithubReadmeContent, isWithCtrlOrCmd, range } from '@utils/index';
 import PluginInfoTable from './infoTable';
 import {
+  EmptyItemContainer,
   Header,
   OuterContainer,
   PluginDescContainer,
@@ -542,6 +543,20 @@ export default function Plugin() {
     }
   };
 
+  const renderPluginItems = () => {
+    if (pluginBundleIds.length === 0) {
+      return (
+        <EmptyItemContainer>
+          <PluginItemContainer>List is empty!</PluginItemContainer>
+        </EmptyItemContainer>
+      );
+    }
+
+    return _.map(pluginBundleIds, (bundleId, idx) => {
+      return renderItem(plugins[bundleId], idx);
+    });
+  };
+
   useEffect(() => {
     pluginBundleIdsRef.current = pluginBundleIds;
     selectedPluginIdxRef.current = selectedPluginIdx;
@@ -593,11 +608,7 @@ export default function Plugin() {
             spinning={false}
           />
         </SearchbarContainer>
-        <PluginListOrderedList>
-          {_.map(pluginBundleIds, (bundleId, idx) => {
-            return renderItem(plugins[bundleId], idx);
-          })}
-        </PluginListOrderedList>
+        <PluginListOrderedList>{renderPluginItems()}</PluginListOrderedList>
       </PluginListView>
       <PluginDescContainer>
         <TabNavigatorContainer>
@@ -630,9 +641,6 @@ export default function Plugin() {
                   onBlur={variableTblChangeHandler}
                   htmlElementProps={{
                     onBlur: variableTblChangeHandler,
-                    style: {
-                      height: 600,
-                    },
                   }}
                 />
               )}

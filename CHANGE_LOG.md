@@ -3,6 +3,8 @@
 ## What’s Changed
 
 * [fix] Minor tweaks
+* [feature] Improve preference window's overall design
+* [feature, experimental] Add snippet feature, window
 * [feature, experimental] Add Universal action window, preference page
 
 # 0.10.8

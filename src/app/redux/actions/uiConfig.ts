@@ -1,4 +1,4 @@
-import makeActionCreator from '@utils/makeActionCreator';
+import { makeActionCreator } from '@utils/makeActionCreator';
 
 export const actionTypes = {
   SET_ICON_RIGHT_MARGIN: '@UI_CONFIG/SET_ICON_RIGHT_MARGIN',

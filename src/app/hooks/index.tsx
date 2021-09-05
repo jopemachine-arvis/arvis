@@ -6,9 +6,12 @@ import useKeyRecord from './useKeyRecord';
 import usePressedModifier from './usePressedModifier';
 import useSearchWindowControl from './useSearchWindowControl';
 import useStoreSearchControl from './useStoreSearchControl';
+import useSnippet from './useSnippet';
+import useIoHook from './useIoHook';
 import { useReserveForceUpdate } from './useReserveForceUpdate';
 
 export {
+  useIoHook,
   useAssistanceWindowControl,
   useCopyKeyCapture,
   useDoubleHotkey,
@@ -17,5 +20,6 @@ export {
   usePressedModifier,
   useReserveForceUpdate,
   useSearchWindowControl,
+  useSnippet,
   useStoreSearchControl,
 };

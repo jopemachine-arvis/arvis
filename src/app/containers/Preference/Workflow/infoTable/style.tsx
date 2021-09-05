@@ -24,5 +24,6 @@ export const descriptionContainerStyle: React.CSSProperties = {
   borderRadius: 10,
   marginLeft: 20,
   marginRight: 60,
+  height: '100%',
   userSelect: 'none',
 };

@@ -1,4 +1,7 @@
-import makeActionCreator from './makeActionCreator';
+import {
+  makeActionCreator,
+  makeDefaultActionCreator,
+} from './makeActionCreator';
 import { isNumeric } from './isNumeric';
 import extractJson from './extractJSON';
 import {
@@ -29,6 +32,7 @@ export {
   isSupportedImageFormat,
   isWithCtrlOrCmd,
   makeActionCreator,
+  makeDefaultActionCreator,
   objectFlip,
   onNumberChangeHandler,
   range,
