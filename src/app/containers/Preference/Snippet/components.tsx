@@ -48,7 +48,7 @@ export const Header = styled.div`
 export const SnippetListViewFooter = styled.div`
   overflow-y: auto;
   width: 100vh;
-  height: 7%;
+  height: 50px;
   background-color: #222222;
   position: fixed;
   bottom: 0px;
@@ -62,15 +62,13 @@ export const SnippetListOrderedList = styled.div`
   background-color: #1f2228;
   border-radius: 10px;
   margin-left: 40px;
-  margin-right: 25px;
+  margin-right: 40px;
   padding-bottom: 20px;
   padding-right: 30px;
   padding-left: 30px;
   padding-top: 20px;
   overflow: auto;
   height: 78%;
-  min-width: 380px;
-  max-width: 380px;
 `;
 
 export const SnippetItemContainer = styled.div`
@@ -84,11 +82,11 @@ export const SnippetItemContainer = styled.div`
   margin-bottom: 7px;
   user-select: none;
   position: relative;
+  max-width: 380px;
 `;
 
 export const SnippetSettingContainer = styled.div`
   margin-top: 95px;
-  border-radius: 10px;
   flex-grow: 1;
   height: 80%;
 `;
@@ -104,9 +102,9 @@ export const SnippetImg = styled.img`
 `;
 
 export const SnippetItemSubText = styled.div`
-  margin-top: 5px;
-  font-size: 12px;
-  color: #cccccc;
+  margin-top: 3px;
+  font-size: 10px;
+  color: #aaa;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -119,4 +117,14 @@ export const TabNavigatorContainer = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: row;
+`;
+
+export const EmptyItemContainer = styled.div`
+  padding-left: 120px;
+  padding-right: 120px;
+  height: 65px;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  position: relative;
 `;

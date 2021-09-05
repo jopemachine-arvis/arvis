@@ -22,7 +22,6 @@ export default function PluginInfoTable(props: IProps) {
   const [extensionCreator, setExtensionCreator] = useState<string>('');
   const [extensionDescription, setExtensionDescription] = useState<string>('');
   const [extensionName, setExtensionName] = useState<string>('');
-  const [extensionReadme, setExtensionReadme] = useState<string>('');
   const [extensionVersion, setExtensionVersion] = useState<string>('');
   const [extensionWebsite, setExtensionWebsite] = useState<string>('');
 
@@ -42,7 +41,6 @@ export default function PluginInfoTable(props: IProps) {
       setExtensionCreator(creator);
       setExtensionDescription(description);
       setExtensionName(name);
-      setExtensionReadme(readme);
       setExtensionVersion(version);
       setExtensionWebsite(webAddress);
     }
@@ -97,20 +95,6 @@ export default function PluginInfoTable(props: IProps) {
           type="text"
           placeholder="Description"
           value={extensionDescription}
-        />
-      </FormGroup>
-
-      <FormGroup style={style.formGroupStyle}>
-        <Label style={style.labelStyle}>Read Me</Label>
-        <StyledInput
-          disabled
-          type="textarea"
-          className="extension-page-textarea"
-          placeholder="README"
-          style={{
-            height: 260,
-          }}
-          value={extensionReadme}
         />
       </FormGroup>
 

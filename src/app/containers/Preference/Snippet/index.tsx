@@ -33,6 +33,7 @@ import {
   SnippetImg,
   SnippetItemTitle,
   SnippetItemSubText,
+  EmptyItemContainer,
 } from './components';
 import { createEmptySnippet, filenamifyPath } from './utils';
 import './index.css';
@@ -75,14 +76,16 @@ export default function Snippet() {
       e: Electron.IpcRendererEvent,
       { file }: { file: any }
     ) => {
-      setSpinning(true);
+      if (file.filePaths[0]) {
+        setSpinning(true);
 
-      installSnippet(file.filePaths[0])
-        .then(reloadSnippets)
-        .catch(console.error)
-        .finally(() => {
-          setSpinning(false);
-        });
+        installSnippet(file.filePaths[0])
+          .then(reloadSnippets)
+          .catch(console.error)
+          .finally(() => {
+            setSpinning(false);
+          });
+      }
     },
 
     openYesnoDialogRet: (
@@ -178,6 +181,20 @@ export default function Snippet() {
     );
   };
 
+  const renderSnippetItems = () => {
+    if (Object.keys(snippetsByCollection).length === 0) {
+      return (
+        <EmptyItemContainer>
+          <SnippetItemContainer>List is empty!</SnippetItemContainer>
+        </EmptyItemContainer>
+      );
+    }
+
+    return Object.keys(snippetsByCollection).map((collection, idx) =>
+      renderItem(collection, idx)
+    );
+  };
+
   useEffect(() => {
     ipcRenderer.on(
       IPCMainEnum.openSnippetInstallFileDialogRet,
@@ -212,20 +229,18 @@ export default function Snippet() {
         Installed Snippets
       </Header>
       <SnippetListView>
-        <SnippetListOrderedList>
-          {Object.keys(snippetsByCollection).map((collection, idx) =>
-            renderItem(collection, idx)
-          )}
-        </SnippetListOrderedList>
+        <SnippetListOrderedList>{renderSnippetItems()}</SnippetListOrderedList>
       </SnippetListView>
       <SnippetSettingContainer>
-        {selectedCollection.current && (
-          <SnippetTable
-            snippets={snippetsByCollection[selectedCollection.current]}
-            collectionInfo={selectedCollectionInfo.current!}
-            reloadSnippets={reloadSnippets}
-          />
-        )}
+        <SnippetTable
+          snippets={
+            selectedCollection.current
+              ? snippetsByCollection[selectedCollection.current]
+              : undefined
+          }
+          collectionInfo={selectedCollectionInfo.current}
+          reloadSnippets={reloadSnippets}
+        />
       </SnippetSettingContainer>
 
       <SnippetListViewFooter>

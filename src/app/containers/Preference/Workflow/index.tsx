@@ -31,6 +31,7 @@ import { SearchBar, MarkdownRenderer } from '@components/index';
 import { WorkflowTriggerTable } from './workflowTriggerTable';
 import WorkflowInfoTable from './infoTable';
 import {
+  EmptyItemContainer,
   Header,
   OuterContainer,
   SearchbarContainer,
@@ -581,6 +582,20 @@ export default function Workflow() {
     fetchAndSetReadme();
   }, [tabIndex, workflows, workflowBundleId]);
 
+  const renderWorkflowItems = () => {
+    if (workflowBundleIds.length === 0) {
+      return (
+        <EmptyItemContainer>
+          <WorkflowItemTitle>List is empty!</WorkflowItemTitle>
+        </EmptyItemContainer>
+      );
+    }
+
+    return _.map(workflowBundleIds, (bundleId, idx) => {
+      return renderItem(workflows[bundleId], idx);
+    });
+  };
+
   return (
     <OuterContainer
       id="workflow-page-container"
@@ -612,9 +627,7 @@ export default function Workflow() {
         </SearchbarContainer>
 
         <WorkflowListOrderedList>
-          {_.map(workflowBundleIds, (bundleId, idx) => {
-            return renderItem(workflows[bundleId], idx);
-          })}
+          {renderWorkflowItems()}
         </WorkflowListOrderedList>
       </WorkflowListView>
       <WorkflowDescContainer>
@@ -658,9 +671,6 @@ export default function Workflow() {
                   onBlur={variableTblChangeHandler}
                   htmlElementProps={{
                     onBlur: variableTblChangeHandler,
-                    style: {
-                      height: 600,
-                    },
                   }}
                 />
               )}

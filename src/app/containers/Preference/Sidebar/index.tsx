@@ -3,7 +3,6 @@ import {
   ProSidebar,
   Menu,
   MenuItem,
-  SidebarHeader,
   SidebarContent,
   SidebarFooter,
   SubMenu,
@@ -15,15 +14,14 @@ import {
   AiOutlineAppstore,
   AiTwotoneThunderbolt,
 } from 'react-icons/ai';
-import styled from 'styled-components';
-import { BiMenuAltLeft, BiStore } from 'react-icons/bi';
+import { BiStore } from 'react-icons/bi';
 import { FaGithub } from 'react-icons/fa';
-import open from 'open';
 import { BsClipboardData } from 'react-icons/bs';
 import { IoArrowUndoCircleOutline } from 'react-icons/io5';
 import { GiFallingStar } from 'react-icons/gi';
+import open from 'open';
+import styled from 'styled-components';
 import sidebarBg from '../../../../../assets/images/sidebar_bg.jpg';
-import { SidebarTitle } from './components';
 import { PreferencePage } from '../preferencePageEnum';
 import './index.css';
 
@@ -34,6 +32,8 @@ type IProps = {
 
 const OuterContainer = styled.div`
   user-select: none;
+  position: relative;
+  height: 100vh;
 `;
 
 export default function Sidebar(props: IProps) {
@@ -43,29 +43,24 @@ export default function Sidebar(props: IProps) {
     props.setPage(pageToSet);
   };
 
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(true);
 
   return (
-    <OuterContainer>
+    <OuterContainer
+      onMouseEnter={() => {
+        setCollapsed(false);
+      }}
+      onMouseLeave={() => {
+        setCollapsed(true);
+      }}
+    >
       <ProSidebar image={sidebarBg} collapsed={collapsed}>
-        <SidebarHeader>
-          <SidebarTitle>{page}</SidebarTitle>
-        </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent
+          style={{
+            marginTop: 45,
+          }}
+        >
           <Menu iconShape="circle">
-            <MenuItem
-              style={{
-                marginBottom: 20,
-              }}
-              onClick={() => {
-                setCollapsed(!collapsed);
-              }}
-              icon={<BiMenuAltLeft />}
-              active={false}
-            >
-              Collapse sidebar
-            </MenuItem>
-
             <MenuItem
               onClick={() => setPage(PreferencePage.General)}
               icon={<AiOutlineSetting />}

@@ -230,14 +230,12 @@ export default function (props: IProps) {
 
   return (
     <OuterContainer>
-      {snippets && (
-        <SnippetTable
-          columns={columns}
-          data={snippets}
-          updateSnippet={updateSnippet}
-          collectionInfo={collectionInfo}
-        />
-      )}
+      <SnippetTable
+        columns={columns}
+        data={snippets ?? []}
+        updateSnippet={updateSnippet}
+        collectionInfo={collectionInfo}
+      />
     </OuterContainer>
   );
 }
