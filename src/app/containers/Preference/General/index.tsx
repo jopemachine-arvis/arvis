@@ -191,7 +191,9 @@ export default function General(props: IProps) {
               })}
             </DropdownMenu>
           </Dropdown>
-          <FormDescription>Available fonts</FormDescription>
+          <FormDescription>
+            Select custom font to apply to Arvis
+          </FormDescription>
         </FormGroup>
       </Form>
     </OuterContainer>

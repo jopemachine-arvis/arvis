@@ -16,6 +16,7 @@ export const formGroupStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  marginLeft: 25,
 };
 
 export const checkboxStyle: React.CSSProperties = {

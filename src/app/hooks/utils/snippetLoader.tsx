@@ -43,13 +43,13 @@ export const fetchSnippetCollection = async () => {
 
 export const loadSnippetCollectionInfo = async (
   collectionInfoFiles: string[]
-) => {
+): Promise<any[]> => {
   const result = await Promise.allSettled(
     collectionInfoFiles.map((filePath) => {
       return new Promise((resolve, reject) => {
         fse
           .readFile(filePath, { encoding: 'utf8' })
-          .then((info) => {
+          .then(async (info) => {
             const collectionInfo: any = plist.parse(info);
             const snippetKeywordPrefix = collectionInfo.snippetkeywordprefix;
             const snippetKeywordSuffix = collectionInfo.snippetkeywordsuffix;
@@ -58,7 +58,10 @@ export const loadSnippetCollectionInfo = async (
               collection: path
                 .basename(path.dirname(filePath))
                 .split('info.plist')[0],
-              info: { snippetKeywordPrefix, snippetKeywordSuffix },
+              info: {
+                snippetKeywordPrefix,
+                snippetKeywordSuffix,
+              },
             });
             return null;
           })

@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
 
 export const onNumberChangeHandler = (
@@ -13,7 +14,7 @@ export const onNumberChangeHandler = (
     min: number;
     max: number;
     actionType: string;
-    dispatch: any;
+    dispatch: Dispatch<any>;
     destWindow?: string;
     destWindows?: string[];
   }

@@ -402,7 +402,8 @@ export default function SearchWindow() {
     if (
       search_window_hotkey ||
       clipboard_history_window_hotkey ||
-      universal_action_window_hotkey
+      universal_action_window_hotkey ||
+      snippet_window_hotkey
     ) {
       renewHotkeys();
     }
@@ -410,6 +411,7 @@ export default function SearchWindow() {
     search_window_hotkey,
     clipboard_history_window_hotkey,
     universal_action_window_hotkey,
+    snippet_window_hotkey,
   ]);
 
   useEffect(() => {

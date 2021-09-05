@@ -24,6 +24,8 @@ import useSnippetMode from './mode/useSnippet';
 
 const maxShowOnScreen = 15;
 
+const maxShowOnWindow = 50;
+
 const onWindowOpenEventHandlers = new Map<AssistanceWindowType, () => void>();
 
 export default function AssistanceWindow() {
@@ -31,7 +33,7 @@ export default function AssistanceWindow() {
     (state: StateType) => state.global_config
   );
 
-  const { apply_mouse_hover_event, max_show: max_show_on_window } = useSelector(
+  const { apply_mouse_hover_event } = useSelector(
     (state: StateType) => state.clipboard_history
   );
 
@@ -72,7 +74,7 @@ export default function AssistanceWindow() {
     setIsPinned,
     applyMouseHoverEvent: apply_mouse_hover_event,
     maxShowOnScreen,
-    maxShowOnWindow: max_show_on_window,
+    maxShowOnWindow,
   });
 
   const { renderInfoContent: renderClipboardHistoryInfoContent } =
@@ -84,7 +86,7 @@ export default function AssistanceWindow() {
       indexInfo,
       mode,
       maxShowOnScreen,
-      maxShowOnWindow: max_show_on_window,
+      maxShowOnWindow,
       renewHandler,
       onWindowOpenEventHandlers,
     });
@@ -97,7 +99,7 @@ export default function AssistanceWindow() {
       setOriginalItems,
       mode,
       maxShowOnScreen,
-      maxShowOnWindow: max_show_on_window,
+      maxShowOnWindow,
       renewHandler,
       onWindowOpenEventHandlers,
     });
@@ -110,8 +112,9 @@ export default function AssistanceWindow() {
     indexInfo,
     mode,
     snippets,
+    snippetCollectionInfos,
     maxShowOnScreen,
-    maxShowOnWindow: max_show_on_window,
+    maxShowOnWindow,
     renewHandler,
     onWindowOpenEventHandlers,
   });

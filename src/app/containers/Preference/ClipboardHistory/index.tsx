@@ -18,7 +18,7 @@ export default function ClipboardHistory() {
     (state: StateType) => state.global_config
   ).clipboard_history_window_hotkey;
 
-  const { max_size, max_show, apply_mouse_hover_event } = useSelector(
+  const { max_size, apply_mouse_hover_event } = useSelector(
     (state: StateType) => state.clipboard_history
   );
 
@@ -71,27 +71,6 @@ export default function ClipboardHistory() {
             }
           />
           <FormDescription>Maximum number of logs to store</FormDescription>
-        </FormGroup>
-        <FormGroup style={formGroupStyle}>
-          <Label style={labelStyle}>Maximum log count to show</Label>
-          <StyledInput
-            type="number"
-            min={0}
-            max={500}
-            defaultValue={max_show}
-            onBlur={(e: React.FormEvent<HTMLInputElement>) =>
-              onNumberChangeHandler(e, {
-                min: 0,
-                max: 500,
-                actionType: ClipboardHistoryActionTypes.SET_MAX_SHOW_SIZE,
-                dispatch,
-                destWindow: 'assistanceWindow',
-              })
-            }
-          />
-          <FormDescription>
-            Maximum number of logs to display in the window
-          </FormDescription>
         </FormGroup>
         <FormGroup check style={formGroupStyle}>
           <Label checked style={labelStyle}>

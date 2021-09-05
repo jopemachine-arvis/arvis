@@ -1,5 +1,8 @@
+import { arvisSnippetCollectionPath } from '@config/path';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
+import path from 'path';
+import pathExists from 'path-exists';
 import React, { useEffect, useState } from 'react';
 import {
   fetchSnippetCollection,
@@ -51,11 +54,24 @@ const useSnippet = () => {
                 infos.set(collectionInfo.collection, collectionInfo.info);
               });
 
-              // In case of not existing info.plist
-              collectionNames.forEach((collectionName) => {
+              collectionNames.forEach(async (collectionName) => {
+                const hasIcon = await pathExists(
+                  path.resolve(
+                    arvisSnippetCollectionPath,
+                    collectionName,
+                    'icon.png'
+                  )
+                );
+
+                // In case of not existing info.plist
                 if (!infos.has(collectionName)) {
-                  infos.set(collectionName, {});
+                  infos.set(collectionName, { hasIcon });
                 }
+
+                infos.set(collectionName, {
+                  ...infos.get(collectionName)!,
+                  hasIcon,
+                });
               });
 
               setSnippetCollectionInfos(infos);

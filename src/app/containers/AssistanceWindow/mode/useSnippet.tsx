@@ -1,34 +1,8 @@
 /* eslint-disable no-restricted-syntax */
-import { getArvisAssetsPath } from '@config/path';
-import { IPCMainEnum } from '@ipc/ipcEventEnum';
-import { ipcRenderer } from 'electron';
-import { IpcRendererEvent } from 'electron/main';
 import path from 'path';
-import React, { useEffect, useRef } from 'react';
+import { arvisSnippetCollectionPath, getArvisAssetsPath } from '@config/path';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { SubInfoText, InfoInnerContainer } from '../components';
-
-const transform = (store: SnippetItem[]): any[] => {
-  const iconPath = path.resolve(
-    getArvisAssetsPath(),
-    'images',
-    'clipboardHistoryItem.svg'
-  );
-
-  const items = store.map((item) => {
-    return {
-      title: item.name,
-      bundleId: 'arvis.snippet',
-      snippet: item.snippet,
-      collection: item.collection,
-      keyword: item.keyword,
-      icon: {
-        path: iconPath,
-      },
-    };
-  });
-
-  return items;
-};
 
 /**
  */
@@ -40,6 +14,7 @@ const useSnippetMode = ({
   indexInfo,
   mode,
   snippets,
+  snippetCollectionInfos,
   renewHandler,
   maxShowOnScreen,
   maxShowOnWindow,
@@ -52,6 +27,7 @@ const useSnippetMode = ({
   indexInfo: any;
   mode: AssistanceWindowType | undefined;
   snippets: SnippetItem[];
+  snippetCollectionInfos: Map<CollectionName, SnippetCollectionInfo>;
   renewHandler: React.MutableRefObject<() => void>;
   maxShowOnScreen: number;
   maxShowOnWindow: number;
@@ -62,6 +38,38 @@ const useSnippetMode = ({
   const snippetsRef = useRef<SnippetItem[]>(snippets);
 
   snippetsRef.current = snippets;
+
+  const transform = useCallback(
+    (store: SnippetItem[]): any[] => {
+      const defaultIconPath = path.resolve(
+        getArvisAssetsPath(),
+        'images',
+        'clipboardHistoryItem.svg'
+      );
+
+      return store.map((snippet) => {
+        const iconPath = snippetCollectionInfos.get(snippet.collection)!.hasIcon
+          ? path.resolve(
+              arvisSnippetCollectionPath,
+              snippet.collection,
+              'icon.png'
+            )
+          : defaultIconPath;
+
+        return {
+          title: snippet.name,
+          bundleId: 'arvis.snippet',
+          snippet: snippet.snippet,
+          collection: snippet.collection,
+          keyword: snippet.keyword,
+          icon: {
+            path: iconPath,
+          },
+        };
+      });
+    },
+    [snippetCollectionInfos]
+  );
 
   const reset = () => {
     setItems(

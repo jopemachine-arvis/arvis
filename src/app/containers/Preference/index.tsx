@@ -20,6 +20,7 @@ import { makeDefaultActionCreator } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
+import { useSnippet } from '@hooks/index';
 import ioHook from 'iohook';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
@@ -47,6 +48,8 @@ export default function PreferenceWindow() {
   const [isSpinning, setSpinning] = useState<boolean>();
 
   const [initResourced, setInitResourced] = useState<boolean>(false);
+
+  const { snippets, snippetCollectionInfos, reloadSnippets } = useSnippet();
 
   const [fontList, setFontList] = useState<string[]>([]);
 
@@ -326,7 +329,13 @@ export default function PreferenceWindow() {
         main = <UniversalActionPage />;
         break;
       case PreferencePage.Snippet:
-        main = <SnippetPage />;
+        main = (
+          <SnippetPage
+            snippets={snippets}
+            snippetCollectionInfos={snippetCollectionInfos}
+            reloadSnippets={reloadSnippets}
+          />
+        );
         break;
       default:
         throw new Error(`Error, page is not valid value, page: ${page}`);
