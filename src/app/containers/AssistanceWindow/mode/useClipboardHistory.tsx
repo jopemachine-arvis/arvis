@@ -13,7 +13,7 @@ const transform = (store: any[]): any[] => {
   const iconPath = path.resolve(
     getArvisAssetsPath(),
     'images',
-    'clipboardHistoryItem.svg'
+    'clipboardIcon.svg'
   );
 
   const items = store.map((item) => {

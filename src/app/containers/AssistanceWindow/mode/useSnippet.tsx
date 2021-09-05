@@ -44,7 +44,7 @@ const useSnippetMode = ({
       const defaultIconPath = path.resolve(
         getArvisAssetsPath(),
         'images',
-        'clipboardHistoryItem.svg'
+        'clipboardIcon.svg'
       );
 
       return store.map((snippet) => {

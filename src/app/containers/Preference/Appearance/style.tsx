@@ -32,5 +32,5 @@ export const iconStyle: React.CSSProperties = {
   height: 30,
   position: 'absolute',
   bottom: 30,
-  left: 300,
+  left: 30,
 };

@@ -8,17 +8,16 @@ import {
   SubMenu,
 } from 'react-pro-sidebar';
 import {
-  AiOutlineSetting,
-  AiOutlineFormatPainter,
-  AiOutlineTool,
-  AiOutlineAppstore,
   AiTwotoneThunderbolt,
+  AiFillAppstore,
+  AiFillTool,
+  AiFillSetting,
+  AiFillFormatPainter,
+  AiFillInteraction,
 } from 'react-icons/ai';
 import { BiStore } from 'react-icons/bi';
-import { FaGithub } from 'react-icons/fa';
-import { BsClipboardData } from 'react-icons/bs';
-import { IoArrowUndoCircleOutline } from 'react-icons/io5';
-import { GiFallingStar } from 'react-icons/gi';
+import { FaClipboardList, FaGithub } from 'react-icons/fa';
+import { GrTextAlignFull } from 'react-icons/gr';
 import open from 'open';
 import styled from 'styled-components';
 import sidebarBg from '../../../../../assets/images/sidebar_bg.jpg';
@@ -63,7 +62,7 @@ export default function Sidebar(props: IProps) {
           <Menu iconShape="circle">
             <MenuItem
               onClick={() => setPage(PreferencePage.General)}
-              icon={<AiOutlineSetting />}
+              icon={<AiFillSetting />}
               active={page === PreferencePage.General}
             >
               General
@@ -71,7 +70,7 @@ export default function Sidebar(props: IProps) {
 
             <MenuItem
               onClick={() => setPage(PreferencePage.Workflow)}
-              icon={<AiOutlineAppstore />}
+              icon={<AiFillAppstore />}
               active={page === PreferencePage.Workflow}
             >
               Workflows
@@ -87,7 +86,7 @@ export default function Sidebar(props: IProps) {
 
             <MenuItem
               onClick={() => setPage(PreferencePage.Appearance)}
-              icon={<AiOutlineFormatPainter />}
+              icon={<AiFillFormatPainter />}
               active={page === PreferencePage.Appearance}
             >
               Appearance
@@ -95,7 +94,7 @@ export default function Sidebar(props: IProps) {
 
             <MenuItem
               onClick={() => setPage(PreferencePage.ClipboardHistory)}
-              icon={<BsClipboardData />}
+              icon={<FaClipboardList />}
               active={page === PreferencePage.ClipboardHistory}
             >
               Clipboard History
@@ -103,7 +102,7 @@ export default function Sidebar(props: IProps) {
 
             <MenuItem
               onClick={() => setPage(PreferencePage.Snippet)}
-              icon={<GiFallingStar />}
+              icon={<GrTextAlignFull />}
               active={page === PreferencePage.Snippet}
             >
               Snippet
@@ -111,7 +110,7 @@ export default function Sidebar(props: IProps) {
 
             <MenuItem
               onClick={() => setPage(PreferencePage.UniversalAction)}
-              icon={<IoArrowUndoCircleOutline />}
+              icon={<AiFillInteraction />}
               active={page === PreferencePage.UniversalAction}
             >
               Universal Action
@@ -125,7 +124,7 @@ export default function Sidebar(props: IProps) {
               Store
             </MenuItem>
 
-            <SubMenu title="Advanced" icon={<AiOutlineTool />}>
+            <SubMenu title="Advanced" icon={<AiFillTool />}>
               <MenuItem
                 onClick={() => setPage(PreferencePage.AdvancedHistory)}
                 active={page === PreferencePage.AdvancedHistory}
