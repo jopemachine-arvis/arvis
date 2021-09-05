@@ -75,6 +75,10 @@ const createSearchWindow = ({
     });
   });
 
+  if (process.platform === 'win32') {
+    searchWindow.setThumbnailToolTip('Arvis search window');
+  }
+
   return searchWindow;
 };
 

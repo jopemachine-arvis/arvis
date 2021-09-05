@@ -1,4 +1,4 @@
-import makeActionCreator from '@utils/makeActionCreator';
+import { makeActionCreator } from '@utils/makeActionCreator';
 
 export const actionTypes = {
   SET_LAUNCH_AT_LOGIN: '@GLOBAL_CONFIG/SET_SAVE_REGULAR',
@@ -10,6 +10,7 @@ export const actionTypes = {
     '@GLOBAL_CONFIG/SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY',
   SET_UNIVERSAL_ACTION_WINDOW_HOTKEY:
     '@GLOBAL_CONFIG/SET_UNIVERSAL_ACTION_WINDOW_HOTKEY',
+  SET_SNIPPET_WINDOW_HOTKEY: '@GLOBAL_CONFIG/SET_SNIPPET_WINDOW_HOTKEY',
 };
 
 export const setLaunchAtLogin = makeActionCreator(
@@ -19,6 +20,11 @@ export const setLaunchAtLogin = makeActionCreator(
 
 export const setSearchWindowHotkey = makeActionCreator(
   actionTypes.SET_SEARCH_WINDOW_HOTKEY,
+  'arg'
+);
+
+export const setSnippetHotkey = makeActionCreator(
+  actionTypes.SET_SNIPPET_WINDOW_HOTKEY,
   'arg'
 );
 

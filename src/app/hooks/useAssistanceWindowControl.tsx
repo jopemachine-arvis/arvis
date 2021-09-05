@@ -167,6 +167,22 @@ const useAssistanceWindowControl = ({
     }
   };
 
+  const pasteStrToMostfrontApp = (str: string) => {
+    clipboard.writeText(str);
+
+    ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
+
+    setTimeout(() => {
+      ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
+        key: 'v',
+        modifiers:
+          process.platform === 'darwin'
+            ? JSON.stringify(['command'])
+            : JSON.stringify(['control']),
+      });
+    }, 25);
+  };
+
   /**
    * @param selectedItemIdx
    * @param modifiers Selected modifier keys
@@ -179,20 +195,24 @@ const useAssistanceWindowControl = ({
     modifiers: any;
   }) => {
     if (items[selectedItemIdx]) {
-      clipboard.writeText(items[selectedItemIdx].title);
+      pasteStrToMostfrontApp(items[selectedItemIdx].title);
+      setIsPinned(false);
+    }
+  };
 
-      ipcRenderer.send(IPCRendererEnum.hideAssistanceWindow);
-
-      setTimeout(() => {
-        ipcRenderer.send(IPCRendererEnum.triggerKeyDownEvent, {
-          key: 'v',
-          modifiers:
-            process.platform === 'darwin'
-              ? JSON.stringify(['command'])
-              : JSON.stringify(['control']),
-        });
-      }, 25);
-
+  /**
+   * @param selectedItemIdx
+   * @param modifiers Selected modifier keys
+   */
+  const handleSnippetItemReturnEvent = ({
+    selectedItemIdx,
+    modifiers,
+  }: {
+    selectedItemIdx: number;
+    modifiers: any;
+  }) => {
+    if (items[selectedItemIdx]) {
+      pasteStrToMostfrontApp(items[selectedItemIdx].snippet);
       setIsPinned(false);
     }
   };
@@ -234,6 +254,8 @@ const useAssistanceWindowControl = ({
       handleClipboardHistoryItemReturnEvent({ selectedItemIdx, modifiers });
     } else if (mode === 'universalAction') {
       handleUniversalActionReturnEvent({ selectedItemIdx, modifiers });
+    } else if (mode === 'snippet') {
+      handleSnippetItemReturnEvent({ selectedItemIdx, modifiers });
     }
   };
 

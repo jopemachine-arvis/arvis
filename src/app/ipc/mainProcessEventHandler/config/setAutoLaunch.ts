@@ -1,4 +1,3 @@
-/* eslint-disable promise/catch-or-return */
 import { IpcMainEvent } from 'electron';
 import autoLauncher from '../../../config/autoLaunch';
 

@@ -1,0 +1,91 @@
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
+import React, { useEffect, useState } from 'react';
+import {
+  fetchSnippetCollection,
+  loadSnippetCollection,
+  loadSnippetCollectionInfo,
+} from './utils/snippetLoader';
+
+/**
+ * @description
+ */
+const useSnippet = () => {
+  const [snippets, setSnippets] = useState<SnippetItem[]>([]);
+
+  const [snippetCollectionInfos, setSnippetCollectionInfos] = useState<
+    Map<CollectionName, SnippetCollectionInfo>
+  >(new Map());
+
+  const reloadSnippets = (): void => {
+    ipcRenderer.send(IPCRendererEnum.reloadSnippet, {
+      destWindow: 'preferenceWindow',
+    });
+    ipcRenderer.send(IPCRendererEnum.reloadSnippet, {
+      destWindow: 'assistanceWindow',
+    });
+  };
+
+  const ipcCallbackTbl = {
+    reloadSnippets: (e: IpcRendererEvent) => {
+      fetchSnippetCollection()
+        .then(({ snippetFiles, collectionInfos, collectionNames }) => {
+          loadSnippetCollection(snippetFiles)
+            .then((loadedSnippetData) => {
+              const snippetsToSet: SnippetItem[] = [];
+
+              loadedSnippetData.forEach((snippet) => {
+                snippetsToSet.push(snippet);
+              });
+
+              setSnippets(snippetsToSet);
+              return null;
+            })
+            .catch(console.error);
+
+          loadSnippetCollectionInfo(collectionInfos)
+            .then((loadedCollectionInfos) => {
+              const infos = new Map<CollectionName, SnippetCollectionInfo>();
+
+              loadedCollectionInfos.forEach((collectionInfo) => {
+                infos.set(collectionInfo.collection, collectionInfo.info);
+              });
+
+              // In case of not existing info.plist
+              collectionNames.forEach((collectionName) => {
+                if (!infos.has(collectionName)) {
+                  infos.set(collectionName, {});
+                }
+              });
+
+              setSnippetCollectionInfos(infos);
+              return null;
+            })
+            .catch(console.error);
+
+          return null;
+        })
+        .catch(console.error);
+    },
+  };
+
+  useEffect(() => {
+    reloadSnippets();
+  }, []);
+
+  useEffect(() => {
+    ipcRenderer.on(IPCMainEnum.reloadSnippet, ipcCallbackTbl.reloadSnippets);
+
+    return () => {
+      ipcRenderer.off(IPCMainEnum.reloadSnippet, ipcCallbackTbl.reloadSnippets);
+    };
+  }, []);
+
+  return {
+    snippets,
+    snippetCollectionInfos,
+    reloadSnippets,
+  };
+};
+
+export default useSnippet;

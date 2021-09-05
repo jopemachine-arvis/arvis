@@ -20,13 +20,17 @@
 
 * Fully support cross-platform.
 
-* Compatable with lots of [Alfred workflows](https://www.alfredapp.com/workflows/).
+* Compatable with lots of [Alfred 4 workflows](https://www.alfredapp.com/workflows/).
 
 * Search and install the extension from store simplely.
 
 * Make your own styles.
 
-* Support clipboard history and universal actions.
+* Support clipboard history.
+
+* Partially support universal actions.
+
+* (Experimental) Support snippet compatable with alfred snippets.
 
 📹: [Overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 

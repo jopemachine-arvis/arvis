@@ -16,6 +16,11 @@ export default (state = {}, action: any) => {
         ...state,
         clipboard_history_window_hotkey: payload.arg,
       };
+    case GlobalConfigActionTypes.SET_SNIPPET_WINDOW_HOTKEY:
+      return {
+        ...state,
+        snippet_window_hotkey: payload.arg,
+      };
     case GlobalConfigActionTypes.SET_UNIVERSAL_ACTION_WINDOW_HOTKEY:
       return {
         ...state,

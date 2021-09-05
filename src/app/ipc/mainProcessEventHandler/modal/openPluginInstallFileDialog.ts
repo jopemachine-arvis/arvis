@@ -1,26 +1,18 @@
-import { dialog, IpcMainEvent } from 'electron';
+import { IpcMainEvent } from 'electron';
 import { IPCMainEnum } from '../../ipcEventEnum';
 import { WindowManager } from '../../../windows';
+import { openFileDialog } from './utils/openFileDialog';
 
-/**
- * Used to select 'arvisplugin' file
- */
 export const openPluginInstallFileDialog = async (e: IpcMainEvent) => {
-  const extensions = ['arvisplugin'];
-
-  const file: Electron.OpenDialogReturnValue = await dialog.showOpenDialog({
-    properties: ['openFile'],
-    filters: [
-      {
-        name: 'Arvis plugin install files',
-        extensions,
-      },
-    ],
+  await openFileDialog({
+    filterName: 'Arvis plugin install files',
+    extensions: ['arvisplugin'],
+    callback: (file) => {
+      WindowManager.getInstance()
+        .getPreferenceWindow()
+        .webContents.send(IPCMainEnum.openPluginInstallFileDialogRet, {
+          file,
+        });
+    },
   });
-
-  WindowManager.getInstance()
-    .getPreferenceWindow()
-    .webContents.send(IPCMainEnum.openPluginInstallFileDialogRet, {
-      file,
-    });
 };

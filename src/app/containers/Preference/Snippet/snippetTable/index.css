@@ -1,0 +1,8 @@
+.snippetItem:focus {
+  color: #fff !important;
+} 
+
+.snippetItem::selection {
+  color: white;
+  background: #888888;
+}

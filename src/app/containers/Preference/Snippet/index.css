@@ -1,0 +1,8 @@
+#snippet-page-container:focus {
+  outline: none;
+}
+
+.snippet-page-buttons:hover {
+  transform: scale(1.5);
+  transition: transform 0.2s;
+}

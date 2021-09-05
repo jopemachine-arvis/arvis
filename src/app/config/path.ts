@@ -12,6 +12,11 @@ const pluginWatchPaths = [
   `${Core.path.pluginInstallPath}${path.sep}*${path.sep}arvis-plugin.json`,
 ];
 
+const arvisSnippetCollectionPath = path.resolve(
+  Core.path.installedDataPath,
+  'snippets'
+);
+
 const arvisReduxStoreResetFlagPath = path.resolve(
   Core.path.installedDataPath,
   'arvis-redux-store-reset'
@@ -46,8 +51,9 @@ export {
   getArvisScriptsPath,
   getProjectRootPath,
   getScriptExecutorPath,
-  workflowWatchPaths,
-  pluginWatchPaths,
   arvisReduxStoreResetFlagPath,
   arvisRenewExtensionFlagFilePath,
+  arvisSnippetCollectionPath,
+  pluginWatchPaths,
+  workflowWatchPaths,
 };

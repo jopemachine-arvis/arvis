@@ -19,7 +19,7 @@ import {
   useCopyKeyCapture,
 } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
-import { applyAlphaColor, makeActionCreator } from '@utils/index';
+import { applyAlphaColor, makeDefaultActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import {
@@ -70,6 +70,7 @@ export default function SearchWindow() {
     search_window_hotkey,
     clipboard_history_window_hotkey,
     universal_action_window_hotkey,
+    snippet_window_hotkey,
   } = useSelector((state: StateType) => state.global_config);
 
   const debuggingConfig = useSelector(
@@ -170,6 +171,7 @@ export default function SearchWindow() {
       [search_window_hotkey]: 'toggleSearchWindow',
       [clipboard_history_window_hotkey]: 'toggleClipboardHistoryWindow',
       [universal_action_window_hotkey]: 'toggleUniversalActionWindow',
+      [snippet_window_hotkey]: 'toggleSnippetWindow',
     };
 
     const hotkeys = Core.findHotkeys();
@@ -199,7 +201,7 @@ export default function SearchWindow() {
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
-      dispatch(makeActionCreator(actionType, 'arg')(args));
+      dispatch(makeDefaultActionCreator(actionType)(args));
     },
 
     setSearchbarInput: (e: IpcRendererEvent, { str }: { str: string }) => {
@@ -398,10 +400,9 @@ export default function SearchWindow() {
     }
 
     if (
-      (search_window_hotkey && search_window_hotkey !== '') ||
-      (clipboard_history_window_hotkey &&
-        clipboard_history_window_hotkey !== '') ||
-      (universal_action_window_hotkey && universal_action_window_hotkey !== '')
+      search_window_hotkey ||
+      clipboard_history_window_hotkey ||
+      universal_action_window_hotkey
     ) {
       renewHotkeys();
     }

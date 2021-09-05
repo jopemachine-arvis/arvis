@@ -5,20 +5,22 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { makeActionCreator } from '@utils/index';
+import { makeDefaultActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
-import { useAssistanceWindowControl } from '@hooks/index';
+import { useAssistanceWindowControl, useSnippet } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SearchWindowScrollbar,
   SearchBar,
   SearchResultView,
 } from '@components/index';
+import useSnippetKeywords from '@hooks/useSnippetKeywords';
 import { InfoContainer, OuterContainer, SearchContainer } from './components';
 import { style } from './style';
 import './index.css';
-import useClipboardHistory from './mode/useClipboardHistory';
-import useUniversalAction from './mode/useUniversalAction';
+import useClipboardHistoryMode from './mode/useClipboardHistory';
+import useUniversalActionMode from './mode/useUniversalAction';
+import useSnippetMode from './mode/useSnippet';
 
 const maxShowOnScreen = 15;
 
@@ -48,6 +50,10 @@ export default function AssistanceWindow() {
 
   const [mode, setMode] = useState<AssistanceWindowType | undefined>(undefined);
 
+  const { snippets, snippetCollectionInfos } = useSnippet();
+
+  useSnippetKeywords({ snippets, collectionInfo: snippetCollectionInfos });
+
   const {
     indexInfo,
     clearIndexInfo,
@@ -70,7 +76,7 @@ export default function AssistanceWindow() {
   });
 
   const { renderInfoContent: renderClipboardHistoryInfoContent } =
-    useClipboardHistory({
+    useClipboardHistoryMode({
       items,
       setItems,
       originalItems,
@@ -84,7 +90,7 @@ export default function AssistanceWindow() {
     });
 
   const { renderInfoContent: renderUniversalActionInfoContent } =
-    useUniversalAction({
+    useUniversalActionMode({
       items,
       setItems,
       originalItems,
@@ -96,9 +102,24 @@ export default function AssistanceWindow() {
       onWindowOpenEventHandlers,
     });
 
+  const { renderInfoContent: renderSnippetInfoContent } = useSnippetMode({
+    items,
+    setItems,
+    originalItems,
+    setOriginalItems,
+    indexInfo,
+    mode,
+    snippets,
+    maxShowOnScreen,
+    maxShowOnWindow: max_show_on_window,
+    renewHandler,
+    onWindowOpenEventHandlers,
+  });
+
   const renderInfoContent = () => {
     if (mode === 'clipboardHistory') return renderClipboardHistoryInfoContent();
     if (mode === 'universalAction') return renderUniversalActionInfoContent();
+    if (mode === 'snippet') return renderSnippetInfoContent();
     return <></>;
   };
 
@@ -119,7 +140,7 @@ export default function AssistanceWindow() {
       e: IpcRendererEvent,
       { actionType, args }: { actionType: string; args: any }
     ) => {
-      dispatch(makeActionCreator(actionType, 'arg')(args));
+      dispatch(makeDefaultActionCreator(actionType)(args));
     },
 
     pinAssistanceWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
