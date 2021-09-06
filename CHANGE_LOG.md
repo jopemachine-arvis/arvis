@@ -1,3 +1,9 @@
+# 0.11.1
+
+## What’s Changed
+
+* [fix] Minor tweaks
+
 # 0.11.0
 
 ## What’s Changed

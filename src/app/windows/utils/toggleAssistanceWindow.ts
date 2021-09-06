@@ -30,13 +30,17 @@ const toggleClipboardHistory = ({ showsUp }: { showsUp?: boolean }) => {
 const toggleUniversalActionWindow = ({ showsUp }: { showsUp?: boolean }) => {
   const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
 
-  robot.keyTap('c', process.platform === 'darwin' ? ['command'] : ['control']);
-
-  assistanceWindow.webContents.send(IPCMainEnum.captureUniversalActionTarget, {
-    target: clipboard.readText(),
-  });
+  // To do:: Fix me! it seems that control + c not working
+  robot.keyTap('c', [process.platform === 'darwin' ? 'command' : 'control']);
 
   setTimeout(() => {
+    assistanceWindow.webContents.send(
+      IPCMainEnum.captureUniversalActionTarget,
+      {
+        target: clipboard.readText(),
+      }
+    );
+
     toggleAssistanceWindow({ showsUp });
   }, 50);
 };

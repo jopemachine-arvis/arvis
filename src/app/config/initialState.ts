@@ -9,7 +9,7 @@ export default {
     clipboard_history_window_hotkey:
       process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
     universal_action_window_hotkey:
-      process.platform === 'darwin' ? 'Meta + Shift + .' : 'Ctrl + Shift + .',
+      process.platform === 'darwin' ? 'Meta + Shift + .' : 'Alt + Shift + .',
     snippet_window_hotkey:
       process.platform === 'darwin' ? 'Meta + `' : 'Alt + `',
   },

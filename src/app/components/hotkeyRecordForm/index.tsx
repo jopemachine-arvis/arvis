@@ -133,7 +133,7 @@ const HotkeyRecordForm = (props: IProps) => {
       onFocus={(e: React.MouseEvent) => {
         setHotkeyFormFocused(true);
       }}
-      value={getHotkeyNameOnThisPlatform(hotkey)}
+      value={hotkey ? getHotkeyNameOnThisPlatform(hotkey) : ''}
     />
   );
 };
