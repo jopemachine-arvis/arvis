@@ -9,7 +9,7 @@
       <img src="https://badges.gitter.im/arvis-gitter/community.svg" />
     </p>
   <p>
-    <b>Extendable cross-platform launcher that aims to help you run, edit, create any workflow simple</b>
+    <b>Extendable cross-platform launcher that aims to help you run, edit, create any workflow simply</b>
   </p>
   <br>
   <p>
@@ -22,7 +22,7 @@
 
 * Compatable with lots of [Alfred 4 workflows](https://www.alfredapp.com/workflows/).
 
-* Search and install the extension from store simplely.
+* Search and install the extension from store easily.
 
 * Make your own styles.
 
@@ -30,7 +30,7 @@
 
 * Partially support universal actions.
 
-* (Experimental) Support snippet compatable with alfred snippets.
+* (Experimental) Support snippets compatible with Alfred.
 
 📹: [Overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 
@@ -38,11 +38,11 @@
 
 ## 💬 What is Arvis? why it is needed?
 
-`Arvis` aims to help you run any scripts or binarys very simple.
+`Arvis` aims to help you run any scripts or binaries very simply.
 
-I've thought many useful alfred-workflows can run in "cross-platform", that's why I started to work on this.
+I've thought many useful alfred-workflows can run in "cross-platform"; that's why I started to work on this.
 
-`Arvis` also aims to provide "librarys" to help create such `workflow`, `plugin` more easily.
+`Arvis` also aims to provide "libraries" to help create such `workflow` and `plugins` more easily.
 
 `Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
@@ -62,6 +62,6 @@ Note that you should install some [Extensions](#take-a-look-at-useful-workflows-
 
 ## 🌟 Contribution
 
-Contributions of any kind welcome, Feel free to create `bug`, `feature request` or other things in issue.
+Contributions of any kind are welcome: Feel free to create a `bug`, `feature request` or other things in the Issues section.
 
-If you like Arvis, don't forget to press star before leaving :)
+If you like Arvis, don't forget to click star before leaving :)
