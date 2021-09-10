@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
+import _ from 'lodash';
 import {
   SearchBar,
   SearchResultView,
@@ -167,12 +168,17 @@ export default function SearchWindow() {
   };
 
   const registerAllGlobalHotkeys = () => {
-    const defaultHotkeyTbls = {
-      [search_window_hotkey]: 'toggleSearchWindow',
-      [clipboard_history_window_hotkey]: 'toggleClipboardHistoryWindow',
-      [universal_action_window_hotkey]: 'toggleUniversalActionWindow',
-      [snippet_window_hotkey]: 'toggleSnippetWindow',
-    };
+    const defaultHotkeyTbls = _.pickBy(
+      {
+        [search_window_hotkey]: 'toggleSearchWindow',
+        [clipboard_history_window_hotkey]: 'toggleClipboardHistoryWindow',
+        [universal_action_window_hotkey]: 'toggleUniversalActionWindow',
+        [snippet_window_hotkey]: 'toggleSnippetWindow',
+      },
+      (value: string, key: string) => {
+        return key;
+      }
+    );
 
     const hotkeys = Core.findHotkeys();
 

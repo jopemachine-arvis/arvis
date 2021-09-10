@@ -35,6 +35,7 @@ export default function UniversalAction() {
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Universal Action Window Hotkey</Label>
           <HotkeyRecordForm
+            canBeEmpty
             hotkey={hotkey}
             onHotkeyChange={hotkeyChangeHandler}
           />

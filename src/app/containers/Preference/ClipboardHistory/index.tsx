@@ -43,6 +43,7 @@ export default function ClipboardHistory() {
         <FormGroup style={formGroupStyle}>
           <Label style={labelStyle}>Clipboard History Hotkey</Label>
           <HotkeyRecordForm
+            canBeEmpty
             hotkey={hotkey}
             onHotkeyChange={hotkeyChangeHandler}
           />

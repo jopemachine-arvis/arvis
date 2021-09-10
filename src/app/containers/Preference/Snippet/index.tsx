@@ -242,6 +242,7 @@ export default function Snippet(props: any) {
               Viewer hotkey
             </Label>
             <HotkeyRecordForm
+              canBeEmpty
               hotkey={snippet_window_hotkey}
               onHotkeyChange={hotkeyChangeHandler}
             />
