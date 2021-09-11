@@ -1,10 +1,5 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable promise/no-nesting */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable promise/catch-or-return */
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/require-default-props */
 
 import React from 'react';

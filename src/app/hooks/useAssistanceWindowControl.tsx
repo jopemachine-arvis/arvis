@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-lonely-if */
 import React, { useEffect, useRef, useState } from 'react';
 import { clipboard, ipcRenderer } from 'electron';
 import { isWithCtrlOrCmd } from '@utils/index';

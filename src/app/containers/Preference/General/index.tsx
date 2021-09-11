@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useState } from 'react';
 import {

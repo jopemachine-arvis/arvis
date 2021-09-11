@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';

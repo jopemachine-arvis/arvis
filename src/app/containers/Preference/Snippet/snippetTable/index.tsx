@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/destructuring-assignment */

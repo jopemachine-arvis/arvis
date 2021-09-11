@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-continue */
-
 export const extractModifier = (modifier: string) => {
   switch (modifier) {
     case 'option':

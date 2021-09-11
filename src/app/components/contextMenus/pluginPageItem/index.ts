@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { dialog, Menu, MenuItem } from 'electron';
 import _ from 'lodash';
 import open from 'open';

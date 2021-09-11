@@ -1,6 +1,4 @@
-/* eslint-disable no-continue */
 /* eslint-disable promise/no-nesting */
-/* eslint-disable no-restricted-syntax */
 import pathExists from 'path-exists';
 import fse from 'fs-extra';
 import parseJson from 'parse-json';

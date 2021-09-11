@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-restricted-syntax */
-
 import React, { useEffect } from 'react';
 import { ipcRenderer, clipboard } from 'electron';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';

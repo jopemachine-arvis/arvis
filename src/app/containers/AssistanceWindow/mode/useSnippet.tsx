@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import path from 'path';
 import { arvisSnippetCollectionPath, getArvisAssetsPath } from '@config/path';
 import React, { useCallback, useEffect, useRef } from 'react';

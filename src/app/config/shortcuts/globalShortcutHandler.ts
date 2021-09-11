@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable no-continue */
-/* eslint-disable no-restricted-syntax */
-import chalk from 'chalk';
 import is from 'electron-is';
 import { ipcRenderer, dialog, globalShortcut } from 'electron';
 import { Core } from 'arvis-core';

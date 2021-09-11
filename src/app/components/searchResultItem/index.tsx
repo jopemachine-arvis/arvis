@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/display-name */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unused-prop-types */
 import React, { useCallback, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';

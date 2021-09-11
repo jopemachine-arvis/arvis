@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable promise/catch-or-return */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo } from 'react';
 import { Core } from 'arvis-core';
 import _ from 'lodash';

@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { ipcRenderer } from 'electron';
 import { Dispatch } from 'react';
 import { makeDefaultActionCreator } from './makeActionCreator';

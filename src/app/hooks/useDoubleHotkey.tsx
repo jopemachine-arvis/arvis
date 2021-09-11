@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-restricted-syntax */
-
 import React, { useEffect } from 'react';
 import {
   isAltKey,

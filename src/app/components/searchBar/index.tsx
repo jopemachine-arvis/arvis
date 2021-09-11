@@ -72,7 +72,6 @@ const SearchBar = (props: IProps) => {
 
   const preventBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     e.preventDefault();
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     originalRef && originalRef.current && originalRef.current.focus();
   };
 

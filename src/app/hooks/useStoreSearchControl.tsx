@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-lonely-if */
 import React, { useEffect, useRef } from 'react';
 import { isWithCtrlOrCmd } from '@utils/index';
 import _ from 'lodash';

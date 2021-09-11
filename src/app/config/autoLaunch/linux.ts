@@ -1,6 +1,4 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable promise/no-nesting */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import fse from 'fs-extra';
 import os from 'os';

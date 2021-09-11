@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { StateType } from '@redux/reducers/types';
 import initialState from '@config/initialState';
 

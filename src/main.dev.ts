@@ -1,6 +1,4 @@
-/* eslint-disable no-lonely-if */
 /* eslint-disable import/no-mutable-exports */
-/* eslint-disable no-new */
 
 /**
  * This module executes inside of electron's main process. You can start

@@ -1,7 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable import/no-webpack-loader-syntax */
-/* eslint-disable promise/catch-or-return */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
 import { ipcRenderer, IpcRendererEvent } from 'electron';

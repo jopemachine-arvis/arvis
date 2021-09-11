@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Core } from 'arvis-core';
 import useForceUpdate from 'use-force-update';

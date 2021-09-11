@@ -1,9 +1,5 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable promise/no-nesting */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable promise/catch-or-return */
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Form, FormGroup, Label } from 'reactstrap';

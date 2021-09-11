@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable promise/catch-or-return */
 
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {

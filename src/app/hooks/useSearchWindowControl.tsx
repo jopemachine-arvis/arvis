@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-lonely-if */
-/* eslint-disable promise/catch-or-return */
 import React, { useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { ipcRenderer, clipboard } from 'electron';

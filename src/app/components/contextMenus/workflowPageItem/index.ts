@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-loop-func */
 import { dialog, Menu, MenuItem } from 'electron';
 import open from 'open';

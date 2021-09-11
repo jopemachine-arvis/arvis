@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import useForceUpdate from 'use-force-update';
 import { sleep } from '@utils/index';
 

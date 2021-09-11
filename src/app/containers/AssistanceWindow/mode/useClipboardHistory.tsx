@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import React, { useEffect, useRef } from 'react';
 import path from 'path';
 import { getArvisAssetsPath } from '@config/path';
