@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.div`
+  cursor: wait;
   width: 100%;
   height: 100%;
   opacity: 0.5;

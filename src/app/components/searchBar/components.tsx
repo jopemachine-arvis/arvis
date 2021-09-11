@@ -20,6 +20,7 @@ export const OuterContainer = styled.div`
 `;
 
 export const Dragger = styled.svg`
+  cursor: move;
   display: flex;
   justify-content: flex-end;
   margin-right: 20px;
