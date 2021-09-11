@@ -275,8 +275,9 @@ const useSearchWindowControl = ({
       clearTimeout(timer);
 
       const searchCommands = async () => {
-        const { items: itemArr, unresolved: unresolvedPluginItems } =
-          await Core.findCommands(updatedInput);
+        const { items: itemArr, deferedItems } = await Core.findCommands(
+          updatedInput
+        );
 
         setItems(itemArr.slice(0, maxRetrieveCount));
 
@@ -286,7 +287,7 @@ const useSearchWindowControl = ({
         });
 
         if (!scriptfilterExecuted) {
-          handleDeferedPluginItems(itemArr, unresolvedPluginItems);
+          handleDeferedPluginItems(itemArr, deferedItems);
         }
       };
 
@@ -370,7 +371,8 @@ const useSearchWindowControl = ({
     modifiers: any;
   }) => {
     const selectedItem = items[selectedItemIdx];
-    if (!selectedItem || spinning || hasDeferedPlugins) return;
+    if (!selectedItem || spinning || Core.pluginWorkspace.executingAsyncPlugins)
+      return;
 
     const item = actionFlowManager.hasEmptyTriggerStk()
       ? selectedItem

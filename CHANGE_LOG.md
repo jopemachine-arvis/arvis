@@ -1,3 +1,11 @@
+# 0.11.2
+
+## What’s Changed
+
+* [feature] Implement keydown event handler on Store page, Snippet page (refactoring)
+* [feature] Change mouse cursor on largeText window
+* [feature] Make default hotkeys could be empty 
+
 # 0.11.1
 
 ## What’s Changed
