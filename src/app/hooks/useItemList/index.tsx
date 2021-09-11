@@ -20,19 +20,34 @@ export interface ItemInfo {
 
 interface IProps {
   items: ItemInfo[];
-  itemDoubleClickHandler: (
+  itemDoubleClickHandler?: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     idx: number
   ) => void;
-  itemRightClickCallback: (
+  itemRightClickCallback?: (
     e: React.MouseEvent<HTMLInputElement>,
     clickedIdx: number,
     selectedIdxs: Set<number>
   ) => void;
+  renderItem?: (
+    itemInfo: any,
+    idx: number,
+    selectedIdx: number,
+    selectedIdxs: Set<number>,
+    itemClickHandler: (
+      e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+      idx: number
+    ) => void
+  ) => JSX.Element;
 }
 
 export default function useItemList(props: IProps) {
-  const { items, itemDoubleClickHandler, itemRightClickCallback } = props;
+  const {
+    items,
+    itemDoubleClickHandler,
+    itemRightClickCallback,
+    renderItem: custemRenderItem,
+  } = props;
 
   const [selectedItemIdx, setSelectedItemIdx] = useState<number>(-1);
   const selectedItemIdxRef = useRef<any>();
@@ -88,7 +103,8 @@ export default function useItemList(props: IProps) {
 
     setSelectedIdxs(targetIdxs);
 
-    itemRightClickCallback(e, clickedIdx, selectedIdxs);
+    itemRightClickCallback &&
+      itemRightClickCallback(e, clickedIdx, selectedIdxs);
     forceUpdate();
   };
 
@@ -105,9 +121,13 @@ export default function useItemList(props: IProps) {
         style={itemContainerStyle}
         key={`itemListItem-${idx}`}
         onClick={(e) => itemClickHandler(e, idx)}
-        onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
+        onDoubleClick={
+          itemDoubleClickHandler
+            ? (e) => itemDoubleClickHandler(e, idx)
+            : undefined
+        }
         onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
-          itemRightClickHandler(e, idx);
+          itemRightClickHandler && itemRightClickHandler(e, idx);
         }}
       >
         {itemInfo.icon}
@@ -180,7 +200,17 @@ export default function useItemList(props: IProps) {
       );
     }
 
-    return _.map(items, renderItem);
+    return _.map(items, (item, idx) => {
+      return custemRenderItem
+        ? custemRenderItem(
+            item,
+            idx,
+            selectedItemIdx,
+            selectedIdxs,
+            itemClickHandler
+          )
+        : renderItem(item, idx);
+    });
   };
 
   return {
@@ -192,3 +222,7 @@ export default function useItemList(props: IProps) {
     setSelectedIdxs,
   };
 }
+
+useItemList.defaultProps = {
+  renderItem: undefined,
+};

@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
-import useForceUpdate from 'use-force-update';
 import { constant, searchMostTotalDownload } from 'arvis-store';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -13,7 +12,7 @@ import {
   SearchBar,
   StyledInput,
 } from '@components/index';
-import { useStoreSearchControl } from '@hooks/index';
+import { useItemList, useStoreSearchControl } from '@hooks/index';
 import { SpinnerContext } from '@helper/spinnerContext';
 import {
   installExtension,
@@ -29,7 +28,6 @@ import {
   ExtensionItemContainer,
   ExtensionItemCreatorText,
   ExtensionItemTitle,
-  ExtensionListOrderedList,
   ExtensionListView,
   ExtensionListViewFooter,
   TabNavigatorContainer,
@@ -69,13 +67,10 @@ export default function Store(props: IProps) {
   );
 
   const [extensions, setExtensions] = useState<any[]>(allExtensions);
-
-  const [selectedExtensionIdx, setSelectedExtensionIdx] = useState<number>(-1);
-
   const [extensionBundleId, setExtensionBundleId] = useState<string>('');
   const [webviewUrl, setWebviewUrl] = useState<string | undefined>('');
 
-  const { setInputStr, getInputProps } = useStoreSearchControl({
+  const { getInputProps } = useStoreSearchControl({
     items: extensions,
     originalItems: allExtensions,
     setItems: setExtensions,
@@ -84,8 +79,6 @@ export default function Store(props: IProps) {
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   const [sortBy, setSortBy] = useState<string>('dt');
-
-  const forceUpdate = useForceUpdate();
 
   const installed = [
     ...Object.keys(Core.getWorkflowList()),
@@ -105,14 +98,6 @@ export default function Store(props: IProps) {
       .catch(console.error);
   };
 
-  const itemClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    idx: number
-  ) => {
-    setSelectedExtensionIdx(idx);
-    forceUpdate();
-  };
-
   const sortExtensions = () => {
     const [canSortItems, cannotSortItems] = _.partition(
       allExtensions,
@@ -125,31 +110,6 @@ export default function Store(props: IProps) {
     setAllExtensions(_.concat(sortedItems, cannotSortItems));
   };
 
-  useEffect(() => {
-    setExtensions(allStoreExtensions);
-  }, [allStoreExtensions]);
-
-  useEffect(() => {
-    sortExtensions();
-  }, [sortBy]);
-
-  useEffect(() => {
-    if (extensions.length) {
-      const info =
-        selectedExtensionIdx === -1 ? {} : extensions[selectedExtensionIdx];
-
-      if (!info) return;
-
-      const { creator = '', name = '', webAddress = '' } = info;
-
-      const bundleId =
-        selectedExtensionIdx === -1 ? '' : Core.getBundleId(creator, name);
-
-      setExtensionBundleId(bundleId);
-      setWebviewUrl(webAddress);
-    }
-  }, [selectedExtensionIdx, extensions]);
-
   const itemDoubleClickHandler = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     idx: number
@@ -157,13 +117,20 @@ export default function Store(props: IProps) {
     open(extensions[idx].webAddress);
   };
 
-  const renderItem = (extension: any, idx: number) => {
+  const renderItem = (
+    extension: any,
+    idx: number,
+    selectedExtensionIdx: number,
+    selectedIdxs: Set<number>,
+    defaultItemClickHandler: any
+  ) => {
     if (!extension) return <React.Fragment key={`extensionItem-${idx}`} />;
     const { creator, name, description, type, latest } = extension;
     const bundleId = Core.getBundleId(creator, name);
 
-    const extensionItemStyle =
-      selectedExtensionIdx === idx ? style.selectedItemStyle : {};
+    const itemContainerStyle = selectedIdxs.has(idx)
+      ? style.selectedItemStyle
+      : {};
 
     const installedExtensionInfo: any | undefined =
       type === 'workflow'
@@ -176,9 +143,9 @@ export default function Store(props: IProps) {
 
     return (
       <ExtensionItemContainer
-        style={extensionItemStyle}
+        style={itemContainerStyle}
         key={`extensionItem-${idx}`}
-        onClick={(e) => itemClickHandler(e, idx)}
+        onClick={(e) => defaultItemClickHandler(e, idx)}
         onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
       >
         <ExtensionImg
@@ -212,14 +179,47 @@ export default function Store(props: IProps) {
             </InstallMark>
           )}
         <ExtensionItemTitle>{name}</ExtensionItemTitle>
-        <ExtensionItemCreatorText>{`${creator}`}</ExtensionItemCreatorText>
-        <ExtensionItemDescText>{`${description}`}</ExtensionItemDescText>
+        <ExtensionItemCreatorText>{creator}</ExtensionItemCreatorText>
+        <ExtensionItemDescText>{description}</ExtensionItemDescText>
       </ExtensionItemContainer>
     );
   };
 
+  const { itemList, onKeyDownHandler, selectedItemIdx } = useItemList({
+    items: extensions,
+    renderItem,
+  });
+
+  useEffect(() => {
+    setExtensions(allStoreExtensions);
+  }, [allStoreExtensions]);
+
+  useEffect(() => {
+    sortExtensions();
+  }, [sortBy]);
+
+  useEffect(() => {
+    if (extensions.length) {
+      const info = selectedItemIdx === -1 ? {} : extensions[selectedItemIdx];
+
+      if (!info) return;
+
+      const { creator = '', name = '', webAddress = '' } = info;
+
+      const bundleId =
+        selectedItemIdx === -1 ? '' : Core.getBundleId(creator, name);
+
+      setExtensionBundleId(bundleId);
+      setWebviewUrl(webAddress);
+    }
+  }, [selectedItemIdx, extensions]);
+
   return (
-    <OuterContainer id="extension-page-container" tabIndex={0}>
+    <OuterContainer
+      id="extension-page-container"
+      tabIndex={0}
+      onKeyDown={onKeyDownHandler}
+    >
       <Header
         style={{
           marginLeft: 40,
@@ -272,11 +272,7 @@ export default function Store(props: IProps) {
             )}
           </StyledInput>
         </SearchbarDescriptionContainer>
-        <ExtensionListOrderedList>
-          {_.map(extensions, (extension, idx) => {
-            return renderItem(extension, idx);
-          })}
-        </ExtensionListOrderedList>
+        {itemList}
       </ExtensionListView>
       <ExtensionDescContainer>
         <TabNavigatorContainer>
@@ -291,11 +287,11 @@ export default function Store(props: IProps) {
             </TabList>
             <TabPanel>
               <ExtensionInfoTable
-                info={extensions[selectedExtensionIdx]}
+                info={extensions[selectedItemIdx]}
                 installExtension={installExtension}
                 uninstallExtension={uninstallExtension}
                 installed={
-                  extensionBundleId && selectedExtensionIdx !== -1
+                  extensionBundleId && selectedItemIdx !== -1
                     ? installed.includes(extensionBundleId)
                     : undefined
                 }
@@ -313,7 +309,7 @@ export default function Store(props: IProps) {
       </ExtensionDescContainer>
       <ExtensionListViewFooter>
         <IoMdRefresh
-          className="plugin-page-buttons"
+          className="extension-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => refreshStore()}
         />
