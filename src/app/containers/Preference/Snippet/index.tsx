@@ -21,22 +21,18 @@ import { SpinnerContext } from '@helper/spinnerContext';
 import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
 import HotkeyRecordForm from '@components/hotkeyRecordForm';
 import { StateType } from '@redux/reducers/types';
+import useItemList, { ItemInfo } from '@hooks/useItemList';
 import { createGlobalConfigChangeHandler } from '@utils/createGlobalConfigChangeHandler';
 import * as style from './style';
 import CollectionInfoModal from './collectionInfoModal';
 import SnippetTable from './snippetTable';
 import {
   OuterContainer,
-  SnippetListOrderedList,
   SnippetListViewFooter,
   SnippetSettingContainer,
   Header,
   SnippetListView,
-  SnippetItemContainer,
   SnippetImg,
-  SnippetItemTitle,
-  SnippetItemSubText,
-  EmptyItemContainer,
 } from './components';
 import './index.css';
 
@@ -47,8 +43,6 @@ export default function Snippet(props: any) {
     () => _.groupBy(snippets, 'collection'),
     [snippets]
   );
-
-  const [selectedIdx, setSelectedIdx] = useState<number>(-1);
 
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
@@ -65,19 +59,6 @@ export default function Snippet(props: any) {
   );
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    selectedCollection.current =
-      selectedIdx !== -1
-        ? Object.keys(snippetsByCollection)[selectedIdx]
-        : undefined;
-
-    selectedCollectionInfo.current = selectedCollection.current
-      ? snippetCollectionInfos.get(selectedCollection.current)
-      : undefined;
-
-    forceUpdate();
-  }, [selectedIdx, snippetsByCollection]);
 
   const ipcCallbackTbl = {
     openSnippetInstallFileDialogRet: (
@@ -127,15 +108,47 @@ export default function Snippet(props: any) {
     return undefined;
   };
 
-  const itemClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    idx: number
-  ) => {
-    setSelectedIdx(idx);
+  const makeItem = (collectionName: string): ItemInfo => {
+    let icon;
+    const defaultIconPath = getDefaultIcon(collectionName);
+    if (defaultIconPath) {
+      icon = <SnippetImg src={defaultIconPath} />;
+    } else {
+      icon = <AiOutlineBranches style={style.defaultIconStyle} />;
+    }
+
+    return {
+      icon,
+      enabled: true,
+      title: collectionName,
+      subtitle: `${snippetsByCollection[collectionName].length} Snippets`,
+    };
   };
 
+  const items = _.map(Object.keys(snippetsByCollection), makeItem);
+
+  const { itemList, onKeyDownHandler, selectedItemIdx, clearIndex } =
+    useItemList({
+      items,
+      itemDoubleClickHandler: () => setCollectionEditModalOpened(true),
+      itemRightClickCallback: () => {},
+    });
+
+  useEffect(() => {
+    selectedCollection.current =
+      selectedItemIdx !== -1
+        ? Object.keys(snippetsByCollection)[selectedItemIdx]
+        : undefined;
+
+    selectedCollectionInfo.current = selectedCollection.current
+      ? snippetCollectionInfos.get(selectedCollection.current)
+      : undefined;
+
+    forceUpdate();
+  }, [selectedItemIdx, snippetsByCollection]);
+
   const makeNewCollection = () => {
-    setSelectedIdx(-1);
+    clearIndex();
     setCollectionEditModalOpened(true);
   };
 
@@ -152,32 +165,6 @@ export default function Snippet(props: any) {
     });
   };
 
-  const renderItem = (collectionName: string, idx: number) => {
-    let icon;
-    const defaultIconPath = getDefaultIcon(collectionName);
-
-    if (defaultIconPath) {
-      icon = <SnippetImg src={defaultIconPath} />;
-    } else {
-      icon = <AiOutlineBranches style={style.defaultIconStyle} />;
-    }
-
-    return (
-      <SnippetItemContainer
-        key={`snippetItem-${idx}`}
-        onClick={(e) => itemClickHandler(e, idx)}
-        onDoubleClick={() => setCollectionEditModalOpened(true)}
-        style={selectedIdx === idx ? style.selectedItemStyle : {}}
-      >
-        {icon}
-        <SnippetItemTitle>{collectionName}</SnippetItemTitle>
-        <SnippetItemSubText>
-          {`${snippetsByCollection[collectionName].length} Snippets`}
-        </SnippetItemSubText>
-      </SnippetItemContainer>
-    );
-  };
-
   const configChangeHandler = createGlobalConfigChangeHandler({
     destWindows: ['searchWindow', 'preferenceWindow'],
     dispatch,
@@ -185,20 +172,6 @@ export default function Snippet(props: any) {
 
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     configChangeHandler(e, GlobalConfigActionTypes.SET_SNIPPET_WINDOW_HOTKEY);
-  };
-
-  const renderSnippetItems = () => {
-    if (Object.keys(snippetsByCollection).length === 0) {
-      return (
-        <EmptyItemContainer>
-          <SnippetItemContainer>List is empty!</SnippetItemContainer>
-        </EmptyItemContainer>
-      );
-    }
-
-    return Object.keys(snippetsByCollection).map((collection, idx) =>
-      renderItem(collection, idx)
-    );
   };
 
   useEffect(() => {
@@ -226,7 +199,11 @@ export default function Snippet(props: any) {
   }, []);
 
   return (
-    <OuterContainer id="snippet-page-container" tabIndex={0}>
+    <OuterContainer
+      id="snippet-page-container"
+      tabIndex={0}
+      onKeyDown={onKeyDownHandler}
+    >
       <Header
         style={{
           marginLeft: 40,
@@ -249,7 +226,7 @@ export default function Snippet(props: any) {
           </FormGroup>
         </Form>
 
-        <SnippetListOrderedList>{renderSnippetItems()}</SnippetListOrderedList>
+        {itemList}
       </SnippetListView>
       <SnippetSettingContainer>
         <SnippetTable

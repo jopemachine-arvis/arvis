@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
-/* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
@@ -20,28 +19,25 @@ import fse from 'fs-extra';
 import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button } from 'reactstrap';
-import { JsonEditor } from 'jsoneditor-react';
-import pAny from 'p-any';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
-import { useExtensionSearchControl } from '@hooks/index';
-import { getGithubReadmeContent, isWithCtrlOrCmd, range } from '@utils/index';
-import { SearchBar, MarkdownRenderer } from '@components/index';
+import { useExtensionSearchControl, useItemList } from '@hooks/index';
+import { ItemInfo } from '@hooks/useItemList';
+import {
+  SearchBar,
+  ExtensionInfoWebview,
+  ExtensionReadmeMarkdownRenderer,
+  ExtensionUserVariableTable,
+} from '@components/index';
 import { WorkflowTriggerTable } from './workflowTriggerTable';
 import WorkflowInfoTable from './infoTable';
 import {
-  EmptyItemContainer,
   Header,
   OuterContainer,
   SearchbarContainer,
   TabNavigatorContainer,
   WorkflowDescContainer,
   WorkflowImg,
-  WorkflowItemContainer,
-  WorkflowItemCreatorText,
-  WorkflowItemTitle,
-  WorkflowListOrderedList,
   WorkflowListView,
   WorkflowListViewFooter,
 } from './components';
@@ -69,10 +65,7 @@ export default function Workflow() {
     useState<string[]>(allWorkflowBundleIds);
 
   const workflowBundleIdsRef = useRef<any>(workflowBundleIds);
-  const [selectedWorkflowIdx, setSelectedWorkflowIdx] = useState<number>(-1);
   const selectedWorkflowIdxRef = useRef<any>();
-
-  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
 
   const [workflowBundleId, setWorkflowBundleId] = useState<string>('');
   const workflowBundleIdRef = useRef<string>(workflowBundleId);
@@ -91,6 +84,97 @@ export default function Workflow() {
   const workflowTriggers = Core.getTriggers();
 
   const variableTblRef = useRef<any>();
+
+  const getDefaultIcon = (bundleId: string) => {
+    const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
+    const { defaultIcon } = workflows[bundleId];
+
+    if (defaultIcon) {
+      const workflowDefaultIconPath = path.resolve(
+        workflowRootPath,
+        defaultIcon
+      );
+
+      if (fse.existsSync(workflowDefaultIconPath)) {
+        return workflowDefaultIconPath;
+      }
+    }
+
+    return undefined;
+  };
+
+  const makeItem = (workflowInfo: WorkflowConfigFile): ItemInfo => {
+    const { creator, name, enabled, bundleId: itemBundleId } = workflowInfo;
+    const applyDisabledStyle = enabled ? {} : style.disabledStyle;
+
+    let icon;
+    const defaultIconPath = getDefaultIcon(itemBundleId!);
+    if (defaultIconPath) {
+      icon = <WorkflowImg style={applyDisabledStyle} src={defaultIconPath} />;
+    } else {
+      icon = (
+        <AiOutlineBranches
+          style={{ ...applyDisabledStyle, ...style.defaultIconStyle }}
+        />
+      );
+    }
+
+    return {
+      icon,
+      enabled,
+      title: name,
+      subtitle: creator,
+    };
+  };
+
+  const items = workflowBundleIds
+    ? _.map(
+        _.map(workflowBundleIds, (bundleId) => workflows[bundleId]),
+        makeItem
+      )
+    : [];
+
+  const itemDoubleClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    open(
+      path.resolve(
+        Core.path.getWorkflowInstalledPath(workflowBundleIds[idx]),
+        'arvis-workflow.json'
+      )
+    );
+  };
+
+  const itemRightClickCallback = (
+    e: React.MouseEvent<HTMLInputElement>,
+    clickedIdx: number,
+    selectedIdxs: Set<number>
+  ) => {
+    e.preventDefault();
+
+    const selectedItemInfos = [];
+
+    for (const idx of selectedIdxs) {
+      const bundleId = workflowBundleIds[idx];
+      selectedItemInfos.push({
+        workflowPath: Core.path.getWorkflowInstalledPath(bundleId),
+        workflowEnabled: workflows[bundleId].enabled,
+        workflowWebAddress: workflows[bundleId].webAddress,
+      });
+    }
+
+    ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
+      items: JSON.stringify(selectedItemInfos),
+    });
+  };
+
+  const { itemList, clearIndex, selectedItemIdx, onKeyDownHandler } =
+    useItemList({
+      items,
+      itemDoubleClickHandler,
+      itemRightClickCallback,
+    });
 
   const { getInputProps } = useExtensionSearchControl({
     items: workflowBundleIds,
@@ -114,14 +198,6 @@ export default function Workflow() {
 
   const variableTblChangeHandler = (e: any) => {
     if (!workflowBundleId || _.isNil(variableTblRef.current)) return;
-    if (!e.target || !e.target.classList) return;
-
-    if (
-      !e.target.classList.contains('jsoneditor-field') &&
-      !e.target.classList.contains('jsoneditor-value') &&
-      !e.target.classList.contains('jsoneditor-remove')
-    )
-      return;
 
     if (
       !_.isEqual(
@@ -268,14 +344,14 @@ export default function Workflow() {
   }, []);
 
   useEffect(() => {
-    if (selectedWorkflowIdx === -1) {
+    if (selectedItemIdx === -1) {
       setWorkflowBundleId('');
       setWebviewUrl('');
       return;
     }
 
     if (workflowBundleIds.length) {
-      const info = workflows[workflowBundleIds[selectedWorkflowIdx]];
+      const info = workflows[workflowBundleIds[selectedItemIdx]];
       if (!info) return;
 
       const { creator = '', name = '', webAddress = '' } = info;
@@ -288,144 +364,15 @@ export default function Workflow() {
         variableTblRef.current.set(getVariableTbl(bundleId));
       }
     }
-  }, [selectedWorkflowIdx, workflows]);
+  }, [selectedItemIdx, workflows]);
 
   useEffect(() => {
     workflowBundleIdRef.current = workflowBundleId;
   }, [workflowBundleId]);
 
   useEffect(() => {
-    setSelectedIdxs(new Set([]));
-    setSelectedWorkflowIdx(-1);
+    clearIndex();
   }, [workflowBundleIds]);
-
-  const itemClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    idx: number
-  ) => {
-    const swap = new Set(selectedIdxs);
-    if (e.shiftKey) {
-      const from = selectedWorkflowIdx > idx ? idx : selectedWorkflowIdx;
-      const to = selectedWorkflowIdx < idx ? idx : selectedWorkflowIdx;
-      setSelectedIdxs(new Set(range(from, to, 1)));
-    } else if (
-      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey })
-    ) {
-      if (selectedIdxs.has(idx)) {
-        swap.delete(idx);
-      } else {
-        swap.add(idx);
-      }
-      setSelectedIdxs(swap);
-    } else {
-      setSelectedIdxs(new Set([idx]));
-      setSelectedWorkflowIdx(idx);
-    }
-    forceUpdate();
-  };
-
-  const itemDoubleClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    idx: number
-  ) => {
-    open(
-      path.resolve(
-        Core.path.getWorkflowInstalledPath(workflowBundleIds[idx]),
-        'arvis-workflow.json'
-      )
-    );
-  };
-
-  const getDefaultIcon = (bundleId: string) => {
-    const workflowRootPath = Core.path.getWorkflowInstalledPath(bundleId);
-    const { defaultIcon } = workflows[bundleId];
-
-    if (defaultIcon) {
-      const workflowDefaultIconPath = path.resolve(
-        workflowRootPath,
-        defaultIcon
-      );
-
-      if (fse.existsSync(workflowDefaultIconPath)) {
-        return workflowDefaultIconPath;
-      }
-    }
-
-    return undefined;
-  };
-
-  const workflowItemRightClickHandler = (
-    e: React.MouseEvent<HTMLInputElement>,
-    clickedIdx: number
-  ) => {
-    e.preventDefault();
-    let targetIdxs;
-
-    if (selectedIdxs.has(clickedIdx)) {
-      targetIdxs = new Set(selectedIdxs);
-      targetIdxs.add(clickedIdx);
-    } else {
-      targetIdxs = new Set([clickedIdx]);
-    }
-
-    setSelectedIdxs(targetIdxs);
-    const selectedItemInfos = [];
-
-    for (const idx of targetIdxs) {
-      const bundleId = workflowBundleIds[idx];
-      selectedItemInfos.push({
-        workflowPath: Core.path.getWorkflowInstalledPath(bundleId),
-        workflowEnabled: workflows[bundleId].enabled,
-        workflowWebAddress: workflows[bundleId].webAddress,
-      });
-    }
-
-    ipcRenderer.send(IPCRendererEnum.popupWorkflowItemMenu, {
-      items: JSON.stringify(selectedItemInfos),
-    });
-
-    forceUpdate();
-  };
-
-  const renderItem = (workflowInfo: WorkflowConfigFile, idx: number) => {
-    if (!workflowInfo) return <React.Fragment key={`workflowItem-${idx}`} />;
-    const { creator, name, enabled, bundleId: itemBundleId } = workflowInfo;
-
-    const applyDisabledStyle = enabled ? {} : style.disabledStyle;
-    const workflowItemStyle = selectedIdxs.has(idx)
-      ? style.selectedItemStyle
-      : {};
-
-    let icon;
-    const defaultIconPath = getDefaultIcon(itemBundleId!);
-    if (defaultIconPath) {
-      icon = <WorkflowImg style={applyDisabledStyle} src={defaultIconPath} />;
-    } else {
-      icon = (
-        <AiOutlineBranches
-          style={{ ...applyDisabledStyle, ...style.defaultIconStyle }}
-        />
-      );
-    }
-
-    return (
-      <WorkflowItemContainer
-        style={workflowItemStyle}
-        key={`workflowItem-${idx}`}
-        onClick={(e) => itemClickHandler(e, idx)}
-        onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
-        onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
-          workflowItemRightClickHandler(e, idx);
-        }}
-      >
-        {icon}
-        <WorkflowItemTitle style={applyDisabledStyle}>{name}</WorkflowItemTitle>
-        <WorkflowItemCreatorText style={applyDisabledStyle}>
-          {creator}
-        </WorkflowItemCreatorText>
-      </WorkflowItemContainer>
-    );
-  };
 
   const requestAddNewWorkflow = () => {
     ipcRenderer.send(IPCRendererEnum.openWorkflowInstallFileDialog);
@@ -447,8 +394,7 @@ export default function Workflow() {
         ipcRenderer.send(IPCRendererEnum.reloadWorkflow);
 
         if (idxToRemove !== 0) {
-          setSelectedWorkflowIdx(-1);
-          setSelectedIdxs(new Set());
+          clearIndex();
         }
 
         return null;
@@ -462,7 +408,7 @@ export default function Workflow() {
   };
 
   const callDeleteWorkflowConfModal = () => {
-    if (selectedWorkflowIdx === -1) return;
+    if (selectedItemIdx === -1) return;
     if (!workflowBundleIds.length) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
@@ -471,98 +417,9 @@ export default function Workflow() {
     });
   };
 
-  const onKeyDownHandler = (e: React.KeyboardEvent) => {
-    if (
-      (e.key === 'ArrowUp' || e.key === 'ArrowDown') &&
-      selectedWorkflowIdx === -1
-    ) {
-      setSelectedWorkflowIdx(0);
-      setSelectedIdxs(new Set([0]));
-      return;
-    }
-
-    if (e.shiftKey) {
-      const minIdx = Math.min(...selectedIdxs.values());
-      const maxIdx = Math.max(...selectedIdxs.values());
-
-      if (e.key === 'ArrowUp' && minIdx !== 0) {
-        if (selectedWorkflowIdx === maxIdx) {
-          setSelectedIdxs(new Set([...selectedIdxs.values(), minIdx - 1]));
-        } else {
-          const newSet = selectedIdxs;
-          newSet.delete(maxIdx);
-          setSelectedIdxs(newSet);
-          forceUpdate();
-        }
-      }
-      if (e.key === 'ArrowDown' && maxIdx !== workflowBundleIds.length - 1) {
-        if (selectedWorkflowIdx === minIdx) {
-          setSelectedIdxs(new Set([...selectedIdxs.values(), maxIdx + 1]));
-        } else {
-          const newSet = selectedIdxs;
-          newSet.delete(minIdx);
-          setSelectedIdxs(newSet);
-          forceUpdate();
-        }
-      }
-    } else {
-      if (e.key === 'ArrowUp' && selectedWorkflowIdx !== 0) {
-        const minIdx = Math.min(...selectedIdxs.values());
-        setSelectedWorkflowIdx(minIdx - 1);
-        setSelectedIdxs(new Set([minIdx - 1]));
-      }
-      if (
-        e.key === 'ArrowDown' &&
-        selectedWorkflowIdx !== workflowBundleIds.length - 1
-      ) {
-        const maxIdx = Math.max(...selectedIdxs.values());
-        setSelectedWorkflowIdx(maxIdx + 1);
-        setSelectedIdxs(new Set([maxIdx + 1]));
-      }
-    }
-  };
-
-  const fetchAndSetReadme = () => {
-    if (selectedWorkflowIdx === -1) return;
-    if (!workflowBundleIds.length) return;
-    if (tabIndex !== tabInfo.indexOf('README')) return;
-
-    const { bundleId, creator, name, readme } = workflows[workflowBundleId];
-
-    if (readme) {
-      setWorkflowReadme(readme);
-    } else {
-      pAny([
-        getGithubReadmeContent(creator, name),
-        getGithubReadmeContent('arvis-workflows', name),
-      ])
-        .then((readmeContent) => {
-          setWorkflowReadme(readmeContent);
-          Core.overwriteExtensionInfo(
-            'workflow',
-            bundleId!,
-            'readme',
-            readmeContent
-          );
-          return null;
-        })
-        .catch((err) => {
-          if (err.status === 404) {
-            setWorkflowReadme('Readme data not found.');
-            return;
-          }
-          if (err.status === 403) {
-            setWorkflowReadme('Rate limit exceeded. Please try again later.');
-            return;
-          }
-          console.error(err);
-        });
-    }
-  };
-
   useEffect(() => {
     workflowBundleIdsRef.current = workflowBundleIds;
-    selectedWorkflowIdxRef.current = selectedWorkflowIdx;
+    selectedWorkflowIdxRef.current = selectedItemIdx;
   });
 
   useEffect(() => {
@@ -577,24 +434,6 @@ export default function Workflow() {
       );
     };
   }, []);
-
-  useEffect(() => {
-    fetchAndSetReadme();
-  }, [tabIndex, workflows, workflowBundleId]);
-
-  const renderWorkflowItems = () => {
-    if (workflowBundleIds.length === 0) {
-      return (
-        <EmptyItemContainer>
-          <WorkflowItemTitle>List is empty!</WorkflowItemTitle>
-        </EmptyItemContainer>
-      );
-    }
-
-    return _.map(workflowBundleIds, (bundleId, idx) => {
-      return renderItem(workflows[bundleId], idx);
-    });
-  };
 
   return (
     <OuterContainer
@@ -625,10 +464,7 @@ export default function Workflow() {
             spinning={false}
           />
         </SearchbarContainer>
-
-        <WorkflowListOrderedList>
-          {renderWorkflowItems()}
-        </WorkflowListOrderedList>
+        {itemList}
       </WorkflowListView>
       <WorkflowDescContainer>
         <TabNavigatorContainer>
@@ -659,34 +495,20 @@ export default function Workflow() {
             </TabPanel>
             <TabPanel>
               {workflowBundleId && (
-                <JsonEditor
-                  ref={setVariableTblRef}
-                  statusBar={false}
-                  sortObjectKeys={false}
-                  navigationBar={false}
-                  history={false}
-                  search={false}
-                  onError={console.error}
+                <ExtensionUserVariableTable
                   value={getVariableTbl(workflowBundleId)}
-                  onBlur={variableTblChangeHandler}
-                  htmlElementProps={{
-                    onBlur: variableTblChangeHandler,
-                  }}
+                  setVariableTblRef={setVariableTblRef}
+                  variableTblChangeCallback={variableTblChangeHandler}
                 />
               )}
             </TabPanel>
             <TabPanel>
-              <MarkdownRenderer
-                width="50%"
-                height="70%"
-                dark
-                style={{
-                  marginTop: 8,
-                  borderRadius: 10,
-                  padding: 45,
-                  backgroundColor: '#0D1118',
-                }}
-                data={workflowReadme}
+              <ExtensionReadmeMarkdownRenderer
+                extensionInfo={workflows[workflowBundleId]}
+                readme={workflowReadme}
+                setReadme={setWorkflowReadme}
+                type="workflow"
+                useAutoFetch={tabIndex === tabInfo.indexOf('README')}
               />
             </TabPanel>
             <TabPanel
@@ -694,28 +516,7 @@ export default function Workflow() {
                 height: '85%',
               }}
             >
-              {webviewUrl && (
-                <>
-                  <webview
-                    id="webview"
-                    src={webviewUrl}
-                    allowFullScreen={false}
-                    style={{
-                      marginTop: 16,
-                      width: '90%',
-                      height: '100%',
-                    }}
-                  />
-                  <Button
-                    size="sm"
-                    style={style.openWebButton}
-                    onClick={() => open(webviewUrl)}
-                  >
-                    Open with your browser
-                  </Button>
-                </>
-              )}
-              {!webviewUrl && <div>There is no web address</div>}
+              <ExtensionInfoWebview url={webviewUrl} />
             </TabPanel>
           </Tabs>
         </TabNavigatorContainer>

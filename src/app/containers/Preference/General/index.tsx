@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useState } from 'react';
 import {

@@ -1,3 +1,6 @@
+import ExtensionInfoWebview from './extensionInfoWebview';
+import ExtensionReadmeMarkdownRenderer from './extensionReadmeMarkdownRenderer';
+import ExtensionUserVariableTable from './extensionUserVariableTable';
 import HotkeyRecordForm from './hotkeyRecordForm';
 import MarkdownRenderer from './markdownRenderer';
 import MenuBuilder from './menus';
@@ -14,6 +17,9 @@ import TrayBuilder from './tray';
 import WalkThroughModal from './walkThrough';
 
 export {
+  ExtensionUserVariableTable,
+  ExtensionReadmeMarkdownRenderer,
+  ExtensionInfoWebview,
   HotkeyRecordForm,
   MarkdownRenderer,
   MenuBuilder,

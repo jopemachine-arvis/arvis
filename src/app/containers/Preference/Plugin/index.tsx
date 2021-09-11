@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable promise/catch-or-return */
-/* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import { Core } from 'arvis-core';
@@ -20,25 +19,21 @@ import fse from 'fs-extra';
 import alphaSort from 'alpha-sort';
 import open from 'open';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { Button } from 'reactstrap';
-import { JsonEditor } from 'jsoneditor-react';
-import pAny from 'p-any';
-import { useExtensionSearchControl } from '@hooks/index';
+import { useExtensionSearchControl, useItemList } from '@hooks/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
-import { SearchBar, MarkdownRenderer } from '@components/index';
-import { getGithubReadmeContent, isWithCtrlOrCmd, range } from '@utils/index';
+import {
+  SearchBar,
+  ExtensionUserVariableTable,
+  ExtensionReadmeMarkdownRenderer,
+  ExtensionInfoWebview,
+} from '@components/index';
 import PluginInfoTable from './infoTable';
 import {
-  EmptyItemContainer,
   Header,
   OuterContainer,
   PluginDescContainer,
   PluginImg,
-  PluginItemContainer,
-  PluginItemCreatorText,
-  PluginItemTitle,
-  PluginListOrderedList,
   PluginListView,
   PluginListViewFooter,
   SearchbarContainer,
@@ -61,7 +56,6 @@ export default function Plugin() {
   const [pluginBundleIds, setPluginBundleIds] =
     useState<string[]>(allPluginBundleIds);
   const pluginBundleIdsRef = useRef<any>(pluginBundleIds);
-  const [selectedPluginIdx, setSelectedPluginIdx] = useState<number>(-1);
   const selectedPluginIdxRef = useRef<any>();
 
   const [pluginBundleId, setPluginBundleId] = useState<string>('');
@@ -73,14 +67,98 @@ export default function Plugin() {
 
   const [tabIndex, setTabIndex] = useState(0);
 
-  const [selectedIdxs, setSelectedIdxs] = useState<Set<number>>(new Set([]));
-
   const [pluginReadme, setPluginReadme] = useState<string>('');
 
   const forceUpdate = useForceUpdate();
   const deletePluginEventHandler = useRef<any>();
 
   const variableTblRef = useRef<any>();
+
+  const getDefaultIcon = (bundleId: string) => {
+    const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
+    const { defaultIcon } = plugins[bundleId];
+    if (defaultIcon) {
+      const pluginDefaultIconPath = path.resolve(pluginRootPath, defaultIcon);
+      if (fse.existsSync(pluginDefaultIconPath)) {
+        return pluginDefaultIconPath;
+      }
+    }
+
+    return undefined;
+  };
+
+  const makeItem = (pluginInfo: PluginConfigFile) => {
+    const { creator, name, enabled, bundleId: itemBundleId } = pluginInfo;
+    const applyDisabledStyle = enabled ? {} : style.disabledStyle;
+
+    let icon;
+    const defaultIconPath = getDefaultIcon(itemBundleId!);
+    if (defaultIconPath) {
+      icon = <PluginImg style={applyDisabledStyle} src={defaultIconPath} />;
+    } else {
+      icon = (
+        <AiOutlineBranches
+          style={{ ...applyDisabledStyle, ...style.defaultIconStyle }}
+        />
+      );
+    }
+
+    return {
+      icon,
+      enabled,
+      title: name,
+      subtitle: creator,
+    };
+  };
+
+  const items = pluginBundleIds
+    ? _.map(
+        _.map(pluginBundleIds, (bundleId) => plugins[bundleId]),
+        makeItem
+      )
+    : [];
+
+  const itemDoubleClickHandler = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    idx: number
+  ) => {
+    open(
+      path.resolve(
+        Core.path.getPluginInstalledPath(pluginBundleIds[idx]),
+        'arvis-plugin.json'
+      )
+    );
+  };
+
+  const itemRightClickCallback = (
+    e: React.MouseEvent<HTMLInputElement>,
+    clickedIdx: number,
+    selectedIdxs: Set<number>
+  ) => {
+    e.preventDefault();
+
+    const selectedItemInfos = [];
+
+    for (const idx of selectedIdxs) {
+      const bundleId = pluginBundleIds[idx];
+      selectedItemInfos.push({
+        pluginPath: Core.path.getPluginInstalledPath(bundleId),
+        pluginEnabled: plugins[bundleId].enabled,
+        pluginWebAddress: plugins[bundleId].webAddress,
+      });
+    }
+
+    ipcRenderer.send(IPCRendererEnum.popupPluginItemMenu, {
+      items: JSON.stringify(selectedItemInfos),
+    });
+  };
+
+  const { itemList, clearIndex, selectedItemIdx, onKeyDownHandler } =
+    useItemList({
+      items,
+      itemDoubleClickHandler,
+      itemRightClickCallback,
+    });
 
   const setVariableTblRef = (instance: any) => {
     if (instance) {
@@ -104,14 +182,6 @@ export default function Plugin() {
 
   const variableTblChangeHandler = (e: any) => {
     if (!pluginBundleId || _.isNil(variableTblRef.current)) return;
-    if (!e.target || !e.target.classList) return;
-
-    if (
-      !e.target.classList.contains('jsoneditor-field') &&
-      !e.target.classList.contains('jsoneditor-value') &&
-      !e.target.classList.contains('jsoneditor-remove')
-    )
-      return;
 
     if (
       !_.isEqual(
@@ -260,19 +330,18 @@ export default function Plugin() {
   }, [pluginBundleId]);
 
   useEffect(() => {
-    setSelectedIdxs(new Set([]));
-    setSelectedPluginIdx(-1);
+    clearIndex();
   }, [pluginBundleIds]);
 
   useEffect(() => {
-    if (selectedPluginIdx === -1) {
+    if (selectedItemIdx === -1) {
       setPluginBundleId('');
       setWebviewUrl('');
       return;
     }
 
     if (pluginBundleIds.length) {
-      const info = plugins[pluginBundleIds[selectedPluginIdx]];
+      const info = plugins[pluginBundleIds[selectedItemIdx]];
       if (!info) return;
 
       const { creator = '', name = '', webAddress = '' } = info;
@@ -285,130 +354,7 @@ export default function Plugin() {
         variableTblRef.current.set(getVariableTbl(bundleId));
       }
     }
-  }, [selectedPluginIdx, plugins]);
-
-  const itemClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    idx: number
-  ) => {
-    const swap = new Set(selectedIdxs);
-    if (e.shiftKey) {
-      const from = selectedPluginIdx > idx ? idx : selectedPluginIdx;
-      const to = selectedPluginIdx < idx ? idx : selectedPluginIdx;
-      setSelectedIdxs(new Set(range(from, to, 1)));
-    } else if (
-      isWithCtrlOrCmd({ isWithCmd: e.metaKey, isWithCtrl: e.ctrlKey })
-    ) {
-      if (selectedIdxs.has(idx)) {
-        swap.delete(idx);
-      } else {
-        swap.add(idx);
-      }
-      setSelectedIdxs(swap);
-    } else {
-      setSelectedIdxs(new Set([idx]));
-      setSelectedPluginIdx(idx);
-    }
-    forceUpdate();
-  };
-
-  const itemDoubleClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    idx: number
-  ) => {
-    open(
-      path.resolve(
-        Core.path.getPluginInstalledPath(pluginBundleIds[idx]),
-        'arvis-plugin.json'
-      )
-    );
-  };
-
-  const getDefaultIcon = (bundleId: string) => {
-    const pluginRootPath = Core.path.getPluginInstalledPath(bundleId);
-    const { defaultIcon } = plugins[bundleId];
-    if (defaultIcon) {
-      const pluginDefaultIconPath = path.resolve(pluginRootPath, defaultIcon);
-      if (fse.existsSync(pluginDefaultIconPath)) {
-        return pluginDefaultIconPath;
-      }
-    }
-
-    return undefined;
-  };
-
-  const pluginItemRightClickHandler = (
-    e: React.MouseEvent<HTMLInputElement>,
-    clickedIdx: number
-  ) => {
-    e.preventDefault();
-    let targetIdxs;
-
-    if (selectedIdxs.has(clickedIdx)) {
-      targetIdxs = new Set(selectedIdxs);
-      targetIdxs.add(clickedIdx);
-    } else {
-      targetIdxs = new Set([clickedIdx]);
-    }
-
-    setSelectedIdxs(targetIdxs);
-    const selectedItemInfos = [];
-
-    for (const idx of targetIdxs) {
-      const bundleId = pluginBundleIds[idx];
-      selectedItemInfos.push({
-        pluginPath: Core.path.getPluginInstalledPath(bundleId),
-        pluginEnabled: plugins[bundleId].enabled,
-        pluginWebAddress: plugins[bundleId].webAddress,
-      });
-    }
-
-    ipcRenderer.send(IPCRendererEnum.popupPluginItemMenu, {
-      items: JSON.stringify(selectedItemInfos),
-    });
-
-    forceUpdate();
-  };
-
-  const renderItem = (pluginInfo: PluginConfigFile, idx: number) => {
-    if (!pluginInfo) return <React.Fragment key={`pluginItem-${idx}`} />;
-    const { creator, name, enabled, bundleId: itemBundleId } = pluginInfo;
-
-    const applyDisabledStyle = enabled ? {} : style.disabledStyle;
-    const pluginItemStyle = selectedIdxs.has(idx)
-      ? style.selectedItemStyle
-      : {};
-
-    let icon;
-    const defaultIconPath = getDefaultIcon(itemBundleId!);
-    if (defaultIconPath) {
-      icon = <PluginImg style={applyDisabledStyle} src={defaultIconPath} />;
-    } else {
-      icon = (
-        <AiOutlineBranches
-          style={{ ...applyDisabledStyle, ...style.defaultIconStyle }}
-        />
-      );
-    }
-
-    return (
-      <PluginItemContainer
-        style={pluginItemStyle}
-        key={`pluginItem-${idx}`}
-        onClick={(e) => itemClickHandler(e, idx)}
-        onDoubleClick={(e) => itemDoubleClickHandler(e, idx)}
-        onContextMenu={(e: React.MouseEvent<HTMLInputElement>) => {
-          pluginItemRightClickHandler(e, idx);
-        }}
-      >
-        {icon}
-        <PluginItemTitle style={applyDisabledStyle}>{name}</PluginItemTitle>
-        <PluginItemCreatorText style={applyDisabledStyle}>
-          {creator}
-        </PluginItemCreatorText>
-      </PluginItemContainer>
-    );
-  };
+  }, [selectedItemIdx, plugins]);
 
   const requestAddNewPlugin = () => {
     ipcRenderer.send(IPCRendererEnum.openPluginInstallFileDialog);
@@ -430,8 +376,7 @@ export default function Plugin() {
         ipcRenderer.send(IPCRendererEnum.reloadPlugin);
 
         if (idxToRemove !== 0) {
-          setSelectedPluginIdx(-1);
-          setSelectedIdxs(new Set());
+          clearIndex();
         }
 
         return null;
@@ -445,7 +390,7 @@ export default function Plugin() {
   };
 
   const callDeletePluginConfModal = () => {
-    if (selectedPluginIdx === -1) return;
+    if (selectedItemIdx === -1) return;
     if (!pluginBundleIds.length) return;
 
     ipcRenderer.send(IPCRendererEnum.openYesnoDialog, {
@@ -454,112 +399,9 @@ export default function Plugin() {
     });
   };
 
-  const onKeyDownHandler = (e: React.KeyboardEvent) => {
-    if (
-      (e.key === 'ArrowUp' || e.key === 'ArrowDown') &&
-      selectedPluginIdx === -1
-    ) {
-      setSelectedPluginIdx(0);
-      setSelectedIdxs(new Set([0]));
-      return;
-    }
-
-    if (e.shiftKey) {
-      const minIdx = Math.min(...selectedIdxs.values());
-      const maxIdx = Math.max(...selectedIdxs.values());
-
-      if (e.key === 'ArrowUp' && minIdx !== 0) {
-        if (selectedPluginIdx === maxIdx) {
-          setSelectedIdxs(new Set([...selectedIdxs.values(), minIdx - 1]));
-        } else {
-          const newSet = selectedIdxs;
-          newSet.delete(maxIdx);
-          setSelectedIdxs(newSet);
-          forceUpdate();
-        }
-      }
-      if (e.key === 'ArrowDown' && maxIdx !== pluginBundleIds.length - 1) {
-        if (selectedPluginIdx === minIdx) {
-          setSelectedIdxs(new Set([...selectedIdxs.values(), maxIdx + 1]));
-        } else {
-          const newSet = selectedIdxs;
-          newSet.delete(minIdx);
-          setSelectedIdxs(newSet);
-          forceUpdate();
-        }
-      }
-    } else {
-      if (e.key === 'ArrowUp' && selectedPluginIdx !== 0) {
-        const minIdx = Math.min(...selectedIdxs.values());
-        setSelectedPluginIdx(minIdx - 1);
-        setSelectedIdxs(new Set([minIdx - 1]));
-      }
-      if (
-        e.key === 'ArrowDown' &&
-        selectedPluginIdx !== pluginBundleIds.length - 1
-      ) {
-        const maxIdx = Math.max(...selectedIdxs.values());
-        setSelectedPluginIdx(maxIdx + 1);
-        setSelectedIdxs(new Set([maxIdx + 1]));
-      }
-    }
-  };
-
-  const fetchAndSetReadme = () => {
-    if (selectedPluginIdx === -1) return;
-    if (!pluginBundleIds.length) return;
-    if (tabIndex !== tabInfo.indexOf('README')) return;
-
-    const { bundleId, creator, name, readme } = plugins[pluginBundleId];
-
-    if (readme) {
-      setPluginReadme(readme);
-    } else {
-      pAny([
-        getGithubReadmeContent(creator, name),
-        getGithubReadmeContent('arvis-plugins', name),
-      ])
-        .then((readmeContent) => {
-          setPluginReadme(readmeContent);
-          Core.overwriteExtensionInfo(
-            'plugin',
-            bundleId!,
-            'readme',
-            readmeContent
-          );
-          return null;
-        })
-        .catch((err) => {
-          if (err.status === 404) {
-            setPluginReadme('Readme data not found.');
-            return;
-          }
-          if (err.status === 403) {
-            setPluginReadme('Rate limit exceeded. Please try again later.');
-            return;
-          }
-          console.error(err);
-        });
-    }
-  };
-
-  const renderPluginItems = () => {
-    if (pluginBundleIds.length === 0) {
-      return (
-        <EmptyItemContainer>
-          <PluginItemContainer>List is empty!</PluginItemContainer>
-        </EmptyItemContainer>
-      );
-    }
-
-    return _.map(pluginBundleIds, (bundleId, idx) => {
-      return renderItem(plugins[bundleId], idx);
-    });
-  };
-
   useEffect(() => {
     pluginBundleIdsRef.current = pluginBundleIds;
-    selectedPluginIdxRef.current = selectedPluginIdx;
+    selectedPluginIdxRef.current = selectedItemIdx;
   });
 
   useEffect(() => {
@@ -574,10 +416,6 @@ export default function Plugin() {
       );
     };
   }, []);
-
-  useEffect(() => {
-    fetchAndSetReadme();
-  }, [tabIndex, plugins, pluginBundleId]);
 
   return (
     <OuterContainer
@@ -608,7 +446,7 @@ export default function Plugin() {
             spinning={false}
           />
         </SearchbarContainer>
-        <PluginListOrderedList>{renderPluginItems()}</PluginListOrderedList>
+        {itemList}
       </PluginListView>
       <PluginDescContainer>
         <TabNavigatorContainer>
@@ -629,34 +467,20 @@ export default function Plugin() {
             </TabPanel>
             <TabPanel>
               {pluginBundleId && (
-                <JsonEditor
-                  ref={setVariableTblRef}
-                  statusBar={false}
-                  sortObjectKeys={false}
-                  navigationBar={false}
-                  history={false}
-                  search={false}
-                  onError={console.error}
+                <ExtensionUserVariableTable
                   value={getVariableTbl(pluginBundleId)}
-                  onBlur={variableTblChangeHandler}
-                  htmlElementProps={{
-                    onBlur: variableTblChangeHandler,
-                  }}
+                  setVariableTblRef={setVariableTblRef}
+                  variableTblChangeCallback={variableTblChangeHandler}
                 />
               )}
             </TabPanel>
             <TabPanel>
-              <MarkdownRenderer
-                width="50%"
-                height="70%"
-                dark
-                style={{
-                  marginTop: 8,
-                  borderRadius: 10,
-                  padding: 45,
-                  backgroundColor: '#0D1118',
-                }}
-                data={pluginReadme}
+              <ExtensionReadmeMarkdownRenderer
+                extensionInfo={plugins[pluginBundleId]}
+                readme={pluginReadme}
+                setReadme={setPluginReadme}
+                type="plugin"
+                useAutoFetch={tabIndex === tabInfo.indexOf('README')}
               />
             </TabPanel>
             <TabPanel
@@ -664,28 +488,7 @@ export default function Plugin() {
                 height: '85%',
               }}
             >
-              {webviewUrl && (
-                <>
-                  <webview
-                    id="webview"
-                    src={webviewUrl}
-                    allowFullScreen={false}
-                    style={{
-                      marginTop: 16,
-                      width: '90%',
-                      height: '100%',
-                    }}
-                  />
-                  <Button
-                    size="sm"
-                    style={style.openWebButton}
-                    onClick={() => open(webviewUrl)}
-                  >
-                    Open with your browser
-                  </Button>
-                </>
-              )}
-              {!webviewUrl && <div>There is no web address</div>}
+              <ExtensionInfoWebview url={webviewUrl} />
             </TabPanel>
           </Tabs>
         </TabNavigatorContainer>

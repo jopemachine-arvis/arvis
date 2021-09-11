@@ -8,14 +8,16 @@ import useSearchWindowControl from './useSearchWindowControl';
 import useStoreSearchControl from './useStoreSearchControl';
 import useSnippet from './useSnippet';
 import useIoHook from './useIoHook';
+import useItemList from './useItemList';
 import { useReserveForceUpdate } from './useReserveForceUpdate';
 
 export {
-  useIoHook,
   useAssistanceWindowControl,
   useCopyKeyCapture,
   useDoubleHotkey,
   useExtensionSearchControl,
+  useIoHook,
+  useItemList,
   useKeyRecord,
   usePressedModifier,
   useReserveForceUpdate,

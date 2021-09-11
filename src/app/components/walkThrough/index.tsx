@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-
 import React, { Fragment, useContext, useState } from 'react';
 import {
   Button,

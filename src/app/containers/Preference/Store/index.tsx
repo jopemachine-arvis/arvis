@@ -13,8 +13,11 @@ import open from 'open';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { IoMdRefresh } from 'react-icons/io';
 import semver from 'semver';
-import { Button } from 'reactstrap';
-import { SearchBar, StyledInput } from '@components/index';
+import {
+  ExtensionInfoWebview,
+  SearchBar,
+  StyledInput,
+} from '@components/index';
 import { useStoreSearchControl } from '@hooks/index';
 import { SpinnerContext } from '@helper/spinnerContext';
 import {
@@ -267,10 +270,11 @@ export default function Store(props: IProps) {
               setSortBy(key);
             }}
           >
-            <option>▼ Total download</option>
-            <option>▼ Last week download</option>
-            <option>▼ Name</option>
-            <option>▼ Uploaded time</option>
+            {Object.values(sortTxtDict).map(
+              (optionStr: string, idx: number) => (
+                <option key={`option-${idx}`}>{optionStr}</option>
+              )
+            )}
           </StyledInput>
         </SearchbarDescriptionContainer>
         <ExtensionListOrderedList>
@@ -307,28 +311,7 @@ export default function Store(props: IProps) {
                 height: '85%',
               }}
             >
-              {webviewUrl && (
-                <>
-                  <webview
-                    id="webview"
-                    src={webviewUrl}
-                    allowFullScreen={false}
-                    style={{
-                      marginTop: 16,
-                      width: '90%',
-                      height: '100%',
-                    }}
-                  />
-                  <Button
-                    size="sm"
-                    style={style.openWebButton}
-                    onClick={() => open(webviewUrl)}
-                  >
-                    Open with your browser
-                  </Button>
-                </>
-              )}
-              {!webviewUrl && <div>There is no web address</div>}
+              <ExtensionInfoWebview url={webviewUrl} />
             </TabPanel>
           </Tabs>
         </TabNavigatorContainer>

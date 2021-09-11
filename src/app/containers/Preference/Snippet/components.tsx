@@ -1,24 +1,5 @@
 import styled from 'styled-components';
 
-export const EmptyListDesc = styled.div`
-  margin-left: 11px;
-`;
-
-export const EmptyListContainer = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-export const SnippetItemTitle = styled.div`
-  font-size: 14px;
-  color: #ffffff;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
 export const OuterContainer = styled.div`
   height: 100vh;
   width: 100vh;
@@ -58,33 +39,6 @@ export const SnippetListViewFooter = styled.div`
   align-items: center;
 `;
 
-export const SnippetListOrderedList = styled.div`
-  background-color: #1f2228;
-  border-radius: 10px;
-  margin-left: 40px;
-  margin-right: 40px;
-  padding-bottom: 20px;
-  padding-right: 30px;
-  padding-left: 30px;
-  padding-top: 20px;
-  overflow: auto;
-  height: 78%;
-`;
-
-export const SnippetItemContainer = styled.div`
-  height: 65px;
-  justify-content: center;
-  align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 68px;
-  padding-right: 35px;
-  margin-bottom: 7px;
-  user-select: none;
-  position: relative;
-  max-width: 380px;
-`;
-
 export const SnippetSettingContainer = styled.div`
   margin-top: 95px;
   flex-grow: 1;
@@ -101,15 +55,6 @@ export const SnippetImg = styled.img`
   left: 15px;
 `;
 
-export const SnippetItemSubText = styled.div`
-  margin-top: 3px;
-  font-size: 10px;
-  color: #aaa;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
 export const TabNavigatorContainer = styled.div`
   width: 90%;
   height: 85%;
@@ -117,14 +62,4 @@ export const TabNavigatorContainer = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: row;
-`;
-
-export const EmptyItemContainer = styled.div`
-  padding-left: 120px;
-  padding-right: 120px;
-  height: 65px;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  position: relative;
 `;
