@@ -1,5 +1,4 @@
 /* eslint-disable import/no-webpack-loader-syntax */
-/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useState } from 'react';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { useDispatch, useSelector, useStore } from 'react-redux';

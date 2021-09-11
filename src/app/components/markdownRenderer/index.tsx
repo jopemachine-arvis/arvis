@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable promise/no-nesting */
-/* eslint-disable react/require-default-props */
 
 import React from 'react';
 import _ from 'lodash';

@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import fse from 'fs-extra';
@@ -95,7 +94,7 @@ export default (props: IProps) => {
     if (isPromise(targetData)) {
       try {
         targetData = await (data as Promise<string>);
-      } catch (err) {
+      } catch (err: any) {
         return <div>{err}</div>;
       }
     }

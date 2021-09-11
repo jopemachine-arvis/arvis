@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
 import { useDispatch, useSelector, useStore } from 'react-redux';

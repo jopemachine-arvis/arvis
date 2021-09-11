@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable jsx-a11y/iframe-has-title */
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';

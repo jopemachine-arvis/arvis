@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';

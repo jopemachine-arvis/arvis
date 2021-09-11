@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable promise/no-nesting */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';

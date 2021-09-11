@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable promise/no-nesting */
 /* eslint-disable no-nested-ternary */
 import React, { useContext, useEffect, useState } from 'react';

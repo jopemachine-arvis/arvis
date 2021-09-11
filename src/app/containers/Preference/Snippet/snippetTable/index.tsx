@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/display-name */
-/* eslint-disable react/require-default-props */
 
 import React, { useEffect, useRef } from 'react';
 import { useTable, useSortBy } from 'react-table';

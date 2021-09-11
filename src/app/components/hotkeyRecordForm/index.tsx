@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect, useState } from 'react';
 import { getHotkeyNameOnThisPlatform } from '@utils/index';
 import useKeyRecord from '@hooks/useKeyRecord';

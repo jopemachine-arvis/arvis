@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AiOutlineAppstoreAdd,

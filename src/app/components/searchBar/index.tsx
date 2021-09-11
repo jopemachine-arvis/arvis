@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { ipcRenderer } from 'electron';

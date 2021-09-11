@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/destructuring-assignment */
 
 import React, { useEffect, useRef } from 'react';
 import _ from 'lodash';

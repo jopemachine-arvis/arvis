@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',
@@ -12,6 +13,7 @@ module.exports = {
     'import/no-dynamic-require': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
+    'jsx-a11y/alt-text': 'off',
     'no-console': 'off',
     'no-continue': 'off',
     'no-lonely-if': 'off',
@@ -19,8 +21,10 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'promise/catch-or-return': 'off',
     'react-hooks/exhaustive-deps': 'off',
+    'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
-    'react/no-array-index-key': 'off'
+    'react/no-array-index-key': 'off',
+    'react/require-default-props': 'warn'
   },
   parserOptions: {
     ecmaVersion: 2020,

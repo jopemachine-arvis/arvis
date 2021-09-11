@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
-/* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import encodeUrl from 'encodeurl';
@@ -101,13 +99,14 @@ export function QuicklookWebview(props: IProps) {
         <webview
           // allowpopups
           // disablewebsecurity
+          allowFullScreen={false}
           autoFocus={false}
           id="webview"
-          useragent={userAgent}
-          src={src}
-          onFocus={preventFocus}
           onBlur={preventFocus}
-          allowFullScreen={false}
+          onFocus={preventFocus}
+          src={src}
+          title="arvis-quicklook"
+          useragent={userAgent}
           style={{
             width: '100%',
             height: '100%',
