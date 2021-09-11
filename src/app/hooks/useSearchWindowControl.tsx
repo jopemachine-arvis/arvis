@@ -370,7 +370,7 @@ const useSearchWindowControl = ({
     modifiers: any;
   }) => {
     const selectedItem = items[selectedItemIdx];
-    if (!selectedItem) return;
+    if (!selectedItem || spinning || hasDeferedPlugins) return;
 
     const item = actionFlowManager.hasEmptyTriggerStk()
       ? selectedItem
@@ -494,7 +494,6 @@ const useSearchWindowControl = ({
    * @param selectedItemIdx
    */
   const onHandleReturnByNumberKey = async (selectedItemIdx: number) => {
-    if (spinning) return;
     if (selectedItemIdx === 0 || selectedItemIdx >= items.length) {
       return;
     }
