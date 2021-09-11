@@ -5,6 +5,7 @@
 * [feature] Implement keydown event handler on Store page, Snippet page (refactoring)
 * [feature] Change mouse cursor on largeText window
 * [feature] Make default hotkeys could be empty 
+* [fix] Fix sidebar submenu collapse related bug
 
 # 0.11.1
 

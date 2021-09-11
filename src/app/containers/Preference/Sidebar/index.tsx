@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ProSidebar,
   Menu,
@@ -44,6 +44,16 @@ export default function Sidebar(props: IProps) {
 
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
+  const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (collapsed) {
+      setShowSubMenu(false);
+    } else {
+      setShowSubMenu(true);
+    }
+  }, [collapsed]);
+
   return (
     <OuterContainer
       onMouseEnter={() => {
@@ -59,7 +69,7 @@ export default function Sidebar(props: IProps) {
             marginTop: 45,
           }}
         >
-          <Menu iconShape="circle">
+          <Menu iconShape="circle" popperArrow>
             <MenuItem
               onClick={() => setPage(PreferencePage.General)}
               icon={<AiFillSetting />}
@@ -125,26 +135,30 @@ export default function Sidebar(props: IProps) {
             </MenuItem>
 
             <SubMenu title="Advanced" icon={<AiFillTool />}>
-              <MenuItem
-                onClick={() => setPage(PreferencePage.AdvancedHistory)}
-                active={page === PreferencePage.AdvancedHistory}
-              >
-                History
-              </MenuItem>
+              {showSubMenu && (
+                <>
+                  <MenuItem
+                    onClick={() => setPage(PreferencePage.AdvancedHistory)}
+                    active={page === PreferencePage.AdvancedHistory}
+                  >
+                    History
+                  </MenuItem>
 
-              <MenuItem
-                onClick={() => setPage(PreferencePage.AdvancedPlugin)}
-                active={page === PreferencePage.AdvancedPlugin}
-              >
-                Plugin
-              </MenuItem>
+                  <MenuItem
+                    onClick={() => setPage(PreferencePage.AdvancedPlugin)}
+                    active={page === PreferencePage.AdvancedPlugin}
+                  >
+                    Plugin
+                  </MenuItem>
 
-              <MenuItem
-                onClick={() => setPage(PreferencePage.AdvancedDebugging)}
-                active={page === PreferencePage.AdvancedDebugging}
-              >
-                Debugging
-              </MenuItem>
+                  <MenuItem
+                    onClick={() => setPage(PreferencePage.AdvancedDebugging)}
+                    active={page === PreferencePage.AdvancedDebugging}
+                  >
+                    Debugging
+                  </MenuItem>
+                </>
+              )}
             </SubMenu>
           </Menu>
         </SidebarContent>
@@ -168,7 +182,7 @@ export default function Sidebar(props: IProps) {
                     marginRight: 8,
                   }}
                 />
-                <span>View source</span>
+                <span>View Source</span>
               </div>
             </div>
           </SidebarFooter>
