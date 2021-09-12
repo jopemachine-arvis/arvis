@@ -129,6 +129,8 @@ export default function Snippet(props: any) {
       items,
       itemDoubleClickHandler: () => setCollectionEditModalOpened(true),
       itemRightClickCallback: () => {},
+      itemTooltip:
+        'Click to select the snippet collection.\nDouble click to edit collection information.',
     });
 
   useEffect(() => {
@@ -242,16 +244,19 @@ export default function Snippet(props: any) {
 
       <SnippetListViewFooter>
         <AiOutlinePlus
+          title="Create new snippet collection"
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => makeNewCollection()}
         />
         <AiOutlineAppstoreAdd
+          title="Install new snippet collection through arvissnippets (or alfredsnippets) file"
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestInstallSnippet()}
         />
         <AiOutlineDelete
+          title="Delete selected collection"
           className="snippet-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => callDeleteSnippetConfModal()}

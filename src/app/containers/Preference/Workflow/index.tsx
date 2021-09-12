@@ -169,6 +169,8 @@ export default function Workflow() {
       items,
       itemDoubleClickHandler,
       itemRightClickCallback,
+      itemTooltip:
+        'Click to select the workflow.\nDouble click to open arvis-workflow.json.\nRight click to select options.',
     });
 
   const { getInputProps } = useExtensionSearchControl({
@@ -519,11 +521,13 @@ export default function Workflow() {
 
       <WorkflowListViewFooter>
         <AiOutlineAppstoreAdd
+          title="Install new workflow through arvisworkflow file"
           className="workflow-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewWorkflow()}
         />
         <AiOutlineDelete
+          title="Delete selected workflow"
           className="workflow-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => callDeleteWorkflowConfModal()}

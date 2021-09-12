@@ -309,6 +309,7 @@ export default function Store(props: IProps) {
       </ExtensionDescContainer>
       <ExtensionListViewFooter>
         <IoMdRefresh
+          title="Refresh store items"
           className="extension-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => refreshStore()}

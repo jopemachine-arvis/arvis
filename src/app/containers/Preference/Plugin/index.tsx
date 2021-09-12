@@ -153,6 +153,8 @@ export default function Plugin() {
       items,
       itemDoubleClickHandler,
       itemRightClickCallback,
+      itemTooltip:
+        'Click to select the plugin.\nDouble click to open arvis-plugin.json.\nRight click to select options.',
     });
 
   const setVariableTblRef = (instance: any) => {
@@ -491,11 +493,13 @@ export default function Plugin() {
 
       <PluginListViewFooter>
         <AiOutlineAppstoreAdd
+          title="Install new plugin through arvisplugin file"
           className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => requestAddNewPlugin()}
         />
         <AiOutlineDelete
+          title="Delete selected plugin"
           className="plugin-page-buttons"
           style={style.bottomFixedBarIconStyle}
           onClick={() => callDeletePluginConfModal()}

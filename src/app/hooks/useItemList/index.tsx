@@ -19,6 +19,7 @@ export interface ItemInfo {
 
 interface IProps {
   items: ItemInfo[];
+  itemTooltip?: string;
   itemDoubleClickHandler?: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     idx: number
@@ -44,6 +45,7 @@ interface IProps {
 export default function useItemList(props: IProps) {
   const {
     items,
+    itemTooltip,
     itemDoubleClickHandler,
     itemRightClickCallback,
     renderItem: custemRenderItem,
@@ -120,6 +122,7 @@ export default function useItemList(props: IProps) {
 
     return (
       <ItemContainer
+        title={itemTooltip}
         style={itemContainerStyle}
         key={`itemListItem-${idx}`}
         onClick={(e) => itemClickHandler(e, idx)}
@@ -240,4 +243,5 @@ export default function useItemList(props: IProps) {
 useItemList.defaultProps = {
   renderItem: undefined,
   listStyle: undefined,
+  itemTooltip: undefined,
 };

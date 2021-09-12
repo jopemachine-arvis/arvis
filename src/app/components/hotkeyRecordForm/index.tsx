@@ -114,6 +114,7 @@ const HotkeyRecordForm = (props: IProps) => {
 
   return (
     <StyledInput
+      title="Press keys you want to enter"
       style={{
         textTransform: 'capitalize',
         color: 'transparent',
