@@ -6,10 +6,9 @@ import {
   MenuItemConstructorOptions,
   MenuItem,
 } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import { checkUpdateManually } from '@config/appUpdater';
 import { WindowManager } from '../../windows';
 import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
+import { checkUpdateManually } from '../../config/appUpdater';
 import { openSearchWindowDevTools } from '../../utils/devtoolsHandler';
 
 export default class TrayBuilder {

@@ -49,7 +49,7 @@ export const ItemContainer = styled.div`
   height: 65px;
   justify-content: center;
   align-items: center;
-  padding-top: 11px;
+  padding-top: 13px;
   padding-bottom: 10px;
   padding-left: 68px;
   padding-right: 35px;
