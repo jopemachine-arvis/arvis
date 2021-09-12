@@ -13,6 +13,10 @@ export const OuterContainer = styled.div`
 export const WorkflowListView = styled.div`
   overflow-y: auto;
   margin-top: 95px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 70px;
 `;
 
 export const Header = styled.div`

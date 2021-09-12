@@ -42,7 +42,7 @@ export const ItemOrderedList = styled.div`
   padding-left: 30px;
   padding-top: 20px;
   overflow: auto;
-  height: 78%;
+  height: 100%;
 `;
 
 export const ItemContainer = styled.div`

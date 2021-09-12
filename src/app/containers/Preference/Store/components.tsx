@@ -85,6 +85,10 @@ export const SearchbarDescriptionContainer = styled.div`
 export const ExtensionListView = styled.div`
   margin-top: 95px;
   overflow-y: auto;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 70px;
 `;
 
 export const Header = styled.div`

@@ -13,6 +13,10 @@ export const OuterContainer = styled.div`
 export const PluginListView = styled.div`
   margin-top: 95px;
   overflow-y: auto;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 70px;
 `;
 
 export const Header = styled.div`
