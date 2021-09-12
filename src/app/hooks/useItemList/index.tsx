@@ -3,11 +3,10 @@ import _ from 'lodash';
 import useForceUpdate from 'use-force-update';
 import { isWithCtrlOrCmd, range } from '@utils/index';
 import {
-  EmptyItemContainer,
   ItemContainer,
   ItemSubtitle,
   ItemTitle,
-  ListOrderedList,
+  ItemOrderedList,
 } from './components';
 import * as style from './style';
 
@@ -39,6 +38,7 @@ interface IProps {
       idx: number
     ) => void
   ) => JSX.Element;
+  listStyle?: React.CSSProperties;
 }
 
 export default function useItemList(props: IProps) {
@@ -47,6 +47,7 @@ export default function useItemList(props: IProps) {
     itemDoubleClickHandler,
     itemRightClickCallback,
     renderItem: custemRenderItem,
+    listStyle,
   } = props;
 
   const [selectedItemIdx, setSelectedItemIdx] = useState<number>(-1);
@@ -105,6 +106,7 @@ export default function useItemList(props: IProps) {
 
     itemRightClickCallback &&
       itemRightClickCallback(e, clickedIdx, selectedIdxs);
+
     forceUpdate();
   };
 
@@ -194,9 +196,19 @@ export default function useItemList(props: IProps) {
   const renderItems = () => {
     if (items.length === 0) {
       return (
-        <EmptyItemContainer>
-          <ItemTitle>List is empty!</ItemTitle>
-        </EmptyItemContainer>
+        <ItemContainer
+          style={{
+            padding: '0px 0px 0px 0px',
+          }}
+        >
+          <ItemTitle
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            List is empty!
+          </ItemTitle>
+        </ItemContainer>
       );
     }
 
@@ -214,7 +226,9 @@ export default function useItemList(props: IProps) {
   };
 
   return {
-    itemList: <ListOrderedList>{renderItems()}</ListOrderedList>,
+    itemList: (
+      <ItemOrderedList style={listStyle}>{renderItems()}</ItemOrderedList>
+    ),
     clearIndex,
     onKeyDownHandler,
     selectedIdxs,
@@ -225,4 +239,5 @@ export default function useItemList(props: IProps) {
 
 useItemList.defaultProps = {
   renderItem: undefined,
+  listStyle: undefined,
 };

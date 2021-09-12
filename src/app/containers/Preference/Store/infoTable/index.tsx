@@ -244,6 +244,8 @@ export default function ExtensionInfoTable(props: IProps) {
           {installBtnTxt}
         </Button>
       )}
+
+      <div style={{ height: 25 }} />
     </Form>
   );
 }

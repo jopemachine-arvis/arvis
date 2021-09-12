@@ -65,8 +65,8 @@ export const TabNavigatorContainer = styled.div`
 export const SearchbarContainer = styled.div`
   margin-left: 40px;
   margin-bottom: 20px;
+  margin-right: 40px;
   border-radius: 5px;
   background-color: #202228;
-  margin-right: 40px;
   padding-left: 30px;
 `;

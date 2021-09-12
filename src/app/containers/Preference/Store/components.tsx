@@ -111,19 +111,6 @@ export const ExtensionListViewFooter = styled.div`
   align-items: center;
 `;
 
-export const ExtensionListOrderedList = styled.div`
-  background-color: #1f2228;
-  border-radius: 10px;
-  margin-left: 40px;
-  margin-right: 40px;
-  padding-bottom: 20px;
-  padding-right: 30px;
-  padding-left: 30px;
-  padding-top: 20px;
-  overflow: auto;
-  height: 73%;
-`;
-
 export const ExtensionItemContainer = styled.div`
   height: 95px;
   justify-content: center;
@@ -135,7 +122,7 @@ export const ExtensionItemContainer = styled.div`
   margin-bottom: 7px;
   user-select: none;
   position: relative;
-  max-width: 380px;
+  width: 380px;
 `;
 
 export const ExtensionDescContainer = styled.div`

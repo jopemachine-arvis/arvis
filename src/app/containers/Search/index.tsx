@@ -327,9 +327,6 @@ export default function SearchWindow() {
 
   const loadWorkflowsInfo = useCallback(() => {
     return Core.reloadWorkflows()
-      .then(() => {
-        return null;
-      })
       .catch(console.error)
       .finally(() => {
         registerAllGlobalHotkeys();
@@ -364,11 +361,9 @@ export default function SearchWindow() {
     initilizeSearchWindowIPCHandler();
     registerRendererUpdater();
 
-    Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()])
-      .then(() => {
-        return null;
-      })
-      .catch(console.error);
+    Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()]).catch(
+      console.error
+    );
 
     ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
       sourceWindow: 'searchWindow',

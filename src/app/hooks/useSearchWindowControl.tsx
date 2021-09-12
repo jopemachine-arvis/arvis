@@ -209,20 +209,21 @@ const useSearchWindowControl = ({
 
   const handleDeferedPluginItems = (
     normalItemArr: (Command | PluginItem)[],
-    unresolvedPluginItems: PCancelable<PluginExectionResult>[]
+    deferedPluginItems: PCancelable<PluginExectionResult>[]
   ) => {
-    if (unresolvedPluginItems.length <= 0) return;
+    if (deferedPluginItems.length <= 0) return;
 
     setHasDeferedPlugins(true);
     cancelUnresolvedPluginPromises();
-    unresolvedPluginPromises = unresolvedPluginItems;
+    unresolvedPluginPromises = deferedPluginItems;
 
     let delayedResolved: PluginItem[] = [];
     let progress = 0;
 
     // To do:: To avoid flickering, renewal would be made only after all the primises are resolved.
     // If there is some method to avoid window flickering, change below logic to renew one by one.
-    unresolvedPluginItems.forEach(
+
+    deferedPluginItems.forEach(
       (notResolvedItemPromise: PCancelable<PluginExectionResult>) => {
         notResolvedItemPromise
           .then((updatedItems: PluginExectionResult) => {
@@ -237,7 +238,7 @@ const useSearchWindowControl = ({
           .finally(() => {
             progress += 1;
 
-            if (progress >= unresolvedPluginItems.length) {
+            if (progress >= deferedPluginItems.length) {
               setItems(
                 [...normalItemArr, ...delayedResolved].slice(
                   0,

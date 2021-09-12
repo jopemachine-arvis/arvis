@@ -219,6 +219,9 @@ export default function Snippet(props: any) {
               canBeEmpty
               hotkey={snippet_window_hotkey}
               onHotkeyChange={hotkeyChangeHandler}
+              style={{
+                fontSize: 12,
+              }}
             />
           </FormGroup>
         </Form>

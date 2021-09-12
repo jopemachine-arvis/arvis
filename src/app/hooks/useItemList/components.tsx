@@ -32,7 +32,7 @@ export const ListView = styled.div`
   margin-top: 95px;
 `;
 
-export const ListOrderedList = styled.div`
+export const ItemOrderedList = styled.div`
   background-color: #1f2228;
   border-radius: 10px;
   margin-left: 40px;
@@ -56,15 +56,5 @@ export const ItemContainer = styled.div`
   margin-bottom: 7px;
   user-select: none;
   position: relative;
-  max-width: 380px;
-`;
-
-export const EmptyItemContainer = styled.div`
-  padding-left: 120px;
-  padding-right: 120px;
-  height: 65px;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  position: relative;
+  width: 380px;
 `;
