@@ -24,9 +24,10 @@ type IProps = {
 const recommendList = [
   'jopemachine.arvis-app-launcher-plugin',
   'jopemachine.arvis-calculator-plugin',
+  'jopemachine.arvis-chrome-workflow',
   'jopemachine.arvis-convert-unit-plugin',
   'jopemachine.arvis-filesearch-plugin',
-  'jopemachine.arvis-freedict-plugin',
+  'jopemachine.arvis-open-setting-plugin',
   'jopemachine.arvis-simple-websearch-plugin',
 ].sort(alphaSort({ natural: true }));
 

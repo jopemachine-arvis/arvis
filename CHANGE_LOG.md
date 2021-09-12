@@ -6,6 +6,7 @@
 * [feature] Change mouse cursor on largeText window
 * [feature] Make default hotkeys could be empty 
 * [fix] Fix sidebar submenu collapse related bug
+* [fix] Fix style bugs
 
 # 0.11.1
 
