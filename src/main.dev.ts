@@ -22,7 +22,7 @@ import {
 } from './app/ipc/mainProcessIPCManager';
 import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
 import { arvisRenewExtensionFlagFilePath } from './app/config/path';
-import AppUpdater from './app/config/appUpdater';
+import { checkUpdate } from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import { handleFirstRun } from './app/helper/handleFirstRun';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
@@ -97,7 +97,7 @@ app.on('ready', () => {
     const windowManager = WindowManager.getInstance();
 
     if (process.env.NODE_ENV === 'production') {
-      new AppUpdater();
+      checkUpdate();
     }
 
     if (openFile) {

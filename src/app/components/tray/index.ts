@@ -6,6 +6,8 @@ import {
   MenuItemConstructorOptions,
   MenuItem,
 } from 'electron';
+import { autoUpdater } from 'electron-updater';
+import { checkUpdateManually } from '@config/appUpdater';
 import { WindowManager } from '../../windows';
 import toggleSearchWindow from '../../windows/utils/toggleSearchWindow';
 import { openSearchWindowDevTools } from '../../utils/devtoolsHandler';
@@ -43,6 +45,17 @@ export default class TrayBuilder {
       toolTip: 'Open Debugging Window',
       click: () => {
         openSearchWindowDevTools();
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Check for updates..',
+      type: 'normal',
+      toolTip: 'Check for arvis update',
+      click: () => {
+        checkUpdateManually();
       },
     },
     {

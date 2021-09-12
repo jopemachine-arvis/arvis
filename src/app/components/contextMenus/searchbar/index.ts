@@ -2,6 +2,7 @@ import { Menu, MenuItem, app } from 'electron';
 import { IPCMainEnum } from '../../../ipc/ipcEventEnum';
 import { WindowManager } from '../../../windows';
 import { openSearchWindowDevTools } from '../../../utils/devtoolsHandler';
+import { checkUpdateManually } from '../../../config/appUpdater';
 
 class SearchbarContextMenu extends Menu {
   constructor({ isPinned }: { isPinned: boolean }) {
@@ -47,6 +48,17 @@ class SearchbarContextMenu extends Menu {
         toolTip: 'Open Search window Debugger Window',
         click() {
           openSearchWindowDevTools();
+        },
+      })
+    );
+    super.append(new MenuItem({ type: 'separator' }));
+    super.append(
+      new MenuItem({
+        type: 'normal',
+        label: 'Check for updates..',
+        toolTip: 'Check for arvis update',
+        click() {
+          checkUpdateManually();
         },
       })
     );

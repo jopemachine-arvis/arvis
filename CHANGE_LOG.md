@@ -1,3 +1,8 @@
+# 0.11.3
+
+* [feature] Create check for update button, improve app update logic
+* [fix] LargeText window text cutting bug fix
+
 # 0.11.2
 
 ## What’s Changed
