@@ -122,10 +122,7 @@ const SearchResultItem = (props: IProps) => {
               errorIcons.set(icon, false);
             }
 
-            if (
-              extensionDefaultIcon &&
-              (await pathExists(extensionDefaultIcon))
-            ) {
+            if (extensionDefaultIcon) {
               (
                 document.getElementById(
                   `searchResultItemIcon-${offset}`
@@ -196,7 +193,7 @@ const SearchResultItem = (props: IProps) => {
           {subtitle ? String(subtitle) : ''}
         </SubTitle>
       </InnerContainer>
-      {/* Small screen does not display OffsetText. */}
+      {/* Does not display OffsetText in small screen. */}
       {searchWindowWidth >= 850 && offset <= 8 && (
         <OffsetText
           style={{
