@@ -119,7 +119,7 @@ export const ExtensionItemContainer = styled.div`
   height: 95px;
   justify-content: center;
   align-items: center;
-  padding-top: 15px;
+  padding-top: 17px;
   padding-bottom: 10px;
   padding-left: 70px;
   padding-right: 35px;

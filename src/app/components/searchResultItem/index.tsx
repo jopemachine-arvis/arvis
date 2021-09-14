@@ -3,7 +3,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import { applyAlphaColor } from '@utils/index';
-import pathExists from 'path-exists';
 import QuickLRU from 'quick-lru';
 import DefaultImg from './defaultIcon';
 import IconNotFoundImg from '../../../../assets/images/iconNotFound.png';

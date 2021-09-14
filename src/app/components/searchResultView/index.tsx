@@ -7,7 +7,9 @@ import SearchResultItem from '../searchResultItem';
 import { InnerContainer, OuterContainer } from './components';
 
 // Store icon paths occuring not found errors to prevent continuously occuring not found error
-const cache: QuickLRU<string, boolean> = new QuickLRU({ maxSize: 1000 });
+const errorIconsCache: QuickLRU<string, boolean> = new QuickLRU({
+  maxSize: 1000,
+});
 
 type IProps = {
   iconRightMargin: number;
@@ -73,7 +75,7 @@ const SearchResultView = (props: IProps) => {
               <SearchResultItem
                 arg={(command as ScriptFilterItem).arg}
                 autocomplete={(command as ScriptFilterItem).autocomplete}
-                errorIcons={cache}
+                errorIcons={errorIconsCache}
                 extensionDefaultIcon={Core.determineDefaultIconPath(
                   command as Command
                 )}
