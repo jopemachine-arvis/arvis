@@ -317,7 +317,7 @@
     "electron-log": "^4.4.0",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.4.4",
-    "electron-util": "^0.17.0",
+    "electron-util": "^0.17.1",
     "encodeurl": "^1.0.2",
     "execa": "5.1.1",
     "filenamify": "4.3.0",

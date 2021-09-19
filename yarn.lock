@@ -5446,10 +5446,10 @@ electron-updater@^4.4.4:
     lodash.isequal "^4.5.0"
     semver "^7.3.5"
 
-electron-util@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/electron-util/-/electron-util-0.17.0.tgz#9cb27a0a583a9ecbb10821702b4a705b6e69f196"
-  integrity sha512-61+NEPdIN68EBC9XDPNAKs14HlPdc7HsL6lfQ+QTiya+3BMzayBqUsvN1LrT7IoGpPuuZns+iaCKf1N78dEF+w==
+electron-util@^0.17.1:
+  version "0.17.2"
+  resolved "https://registry.yarnpkg.com/electron-util/-/electron-util-0.17.2.tgz#6b0fe798ae0154585e7e0e96a707bfeae592be05"
+  integrity sha512-4Kg/aZxJ2BZklgyfH86px/D2GyROPyIcnAZar+7KiNmKI2I5l09pwQTP7V95zM3FVhgDQwV9iuJta5dyEvuWAw==
   dependencies:
     electron-is-dev "^1.1.0"
     new-github-issue-url "^0.2.1"
