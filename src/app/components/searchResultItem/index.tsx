@@ -114,10 +114,10 @@ const SearchResultItem = (props: IProps) => {
         ref={iconRef}
         style={iconStyle}
         src={icon ?? extensionDefaultIcon}
-        onError={async (e) => {
+        onError={(e) => {
           try {
             if (icon && errorIcons) {
-              console.log(`'${icon}' is not found.`);
+              console.log(`'${icon}' icon file is not found.`);
               errorIcons.set(icon, false);
             }
 
