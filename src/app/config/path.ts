@@ -43,14 +43,14 @@ const getArvisAssetsPath = () => path.resolve(getProjectRootPath(), 'assets');
 
 const getArvisScriptsPath = () => path.resolve(getArvisAssetsPath(), 'scripts');
 
-const getScriptExecutorPath = () =>
+const getExecaPath = () =>
   path.resolve(getArvisScriptsPath(), 'execa', 'index.js');
 
 export {
   getArvisAssetsPath,
   getArvisScriptsPath,
   getProjectRootPath,
-  getScriptExecutorPath,
+  getExecaPath,
   arvisReduxStoreResetFlagPath,
   arvisRenewExtensionFlagFilePath,
   arvisSnippetCollectionPath,

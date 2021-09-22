@@ -4,7 +4,6 @@ import { ipcRenderer, clipboard } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd, isSupportedImageFormat } from '@utils/index';
 import _ from 'lodash';
-import PCancelable from 'p-cancelable';
 import path from 'path';
 import isUrl from 'is-url';
 import { isText } from 'istextorbinary';
@@ -56,6 +55,8 @@ const useSearchWindowControl = ({
 
   const [autoSuggestion, setAutoSuggestion] = useState<string>('');
 
+  const itemsRef = useRef<any>(items);
+
   const inputStr = inputRef.current
     ? (inputRef.current! as HTMLInputElement).value
     : '';
@@ -68,7 +69,7 @@ const useSearchWindowControl = ({
 
   const pressingModifiers = usePressedModifier();
 
-  const [hasDeferedPlugins, setHasDeferedPlugins] = useState<boolean>(false);
+  const hasDeferedPlugins = Core.pluginWorkspace.isExecutingDeferedPlugins();
 
   const {
     alt: pressingAlt,
@@ -77,11 +78,13 @@ const useSearchWindowControl = ({
     shift: pressingShift,
   } = pressingModifiers;
 
-  let unresolvedPluginPromises: PCancelable<PluginExectionResult>[] = [];
-
   useEffect(() => {
     isPinnedRef.current = isPinned;
   }, [isPinned]);
+
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
 
   /**
    */
@@ -197,63 +200,6 @@ const useSearchWindowControl = ({
     return false;
   };
 
-  const cancelUnresolvedPluginPromises = (): void => {
-    unresolvedPluginPromises.forEach(
-      (item: PCancelable<PluginExectionResult>) => {
-        if (!item.isCanceled) {
-          item.cancel();
-        }
-      }
-    );
-  };
-
-  const handleDeferedPluginItems = (
-    normalItemArr: (Command | PluginItem)[],
-    deferedPluginItems: PCancelable<PluginExectionResult>[]
-  ) => {
-    if (deferedPluginItems.length <= 0) return;
-
-    setHasDeferedPlugins(true);
-    cancelUnresolvedPluginPromises();
-    unresolvedPluginPromises = deferedPluginItems;
-
-    let delayedResolved: PluginItem[] = [];
-    let progress = 0;
-
-    // To do:: To avoid flickering, renewal would be made only after all the primises are resolved.
-    // If there is some method to avoid window flickering, change below logic to renew one by one.
-
-    deferedPluginItems.forEach(
-      (notResolvedItemPromise: PCancelable<PluginExectionResult>) => {
-        notResolvedItemPromise
-          .then((updatedItems: PluginExectionResult) => {
-            Core.pluginWorkspace.appendPluginItemAttr(inputStr, [updatedItems]);
-
-            delayedResolved = [...delayedResolved, ...updatedItems.items];
-            return null;
-          })
-          .catch((err) => {
-            if (err.name !== 'CancelError') console.error(err);
-          })
-          .finally(() => {
-            progress += 1;
-
-            if (progress >= deferedPluginItems.length) {
-              setItems(
-                [...normalItemArr, ...delayedResolved].slice(
-                  0,
-                  maxRetrieveCount
-                )
-              );
-
-              unresolvedPluginPromises = [];
-              setHasDeferedPlugins(false);
-            }
-          });
-      }
-    );
-  };
-
   /**
    * @param updatedInput
    */
@@ -270,26 +216,18 @@ const useSearchWindowControl = ({
       setAutoSuggestion('');
     }
 
-    cancelUnresolvedPluginPromises();
-
     const handler = async () => {
       clearTimeout(timer);
 
       const searchCommands = async () => {
-        const { items: itemArr, deferedItems } = await Core.findCommands(
-          updatedInput
-        );
+        const { items: itemArr } = await Core.findCommands(updatedInput);
 
         setItems(itemArr.slice(0, maxRetrieveCount));
 
-        const scriptfilterExecuted = handleScriptFilterAutoExecute({
+        handleScriptFilterAutoExecute({
           itemArr,
           updatedInput,
         });
-
-        if (!scriptfilterExecuted) {
-          handleDeferedPluginItems(itemArr, deferedItems);
-        }
       };
 
       // Search workflow commands, builtInCommands
@@ -372,7 +310,11 @@ const useSearchWindowControl = ({
     modifiers: any;
   }) => {
     const selectedItem = items[selectedItemIdx];
-    if (!selectedItem || spinning || Core.pluginWorkspace.executingAsyncPlugins)
+    if (
+      Core.pluginWorkspace.isExecutingAsyncPlugins() ||
+      spinning ||
+      !selectedItem
+    )
       return;
 
     const item = actionFlowManager.hasEmptyTriggerStk()
@@ -741,7 +683,6 @@ const useSearchWindowControl = ({
         data: undefined,
         active: false,
       });
-      cancelUnresolvedPluginPromises();
       (document.getElementById('searchBar') as HTMLInputElement).value = '';
       ipcRenderer.send(IPCRendererEnum.hideSearchWindow);
     }
@@ -818,6 +759,37 @@ const useSearchWindowControl = ({
       data: undefined,
     };
   };
+
+  const handleDeferedPlugins = (
+    deferedPluginResults: PluginExectionResult[]
+  ) => {
+    const deferedItems = deferedPluginResults.reduce(
+      (result: PluginItem[], deferedPluginResult: PluginExectionResult) => {
+        result.push(...deferedPluginResult.items);
+        return result;
+      },
+      []
+    );
+
+    setItems([...itemsRef.current, ...deferedItems].slice(0, maxRetrieveCount));
+  };
+
+  useEffect(() => {
+    Core.pluginWorkspace.deferedPluginEventEmitter.on(
+      'deferedPluginExecution',
+      ({ id, payload }: { id: number; payload: string }) => {
+        if (
+          Core.pluginWorkspace.requestIsLatest(id) &&
+          Core.ActionFlowManager.getInstance().hasEmptyTriggerStk()
+        ) {
+          const deferedPluginResults: PluginExectionResult[] =
+            JSON.parse(payload);
+
+          handleDeferedPlugins(deferedPluginResults);
+        }
+      }
+    );
+  }, []);
 
   useEffect(() => {
     hideSearchWindowByBlurCbRef.current = () => {

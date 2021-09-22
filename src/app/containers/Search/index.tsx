@@ -29,7 +29,7 @@ import {
 } from '@config/shortcuts/globalShortcutHandler';
 import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcutCallbacks';
 import { executeAction } from '@helper/executeAction';
-import { getScriptExecutorPath } from '@config/path';
+import { getExecaPath } from '@config/path';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
 import { OuterContainer } from './components';
 
@@ -339,9 +339,10 @@ export default function SearchWindow() {
     );
   }, []);
 
-  const initializeScriptExecutor = () => {
+  const initializeWorkerProcesses = () => {
     Core.setUseExecutorProcess(true);
-    Core.startScriptExecutor({ execa: getScriptExecutorPath() });
+    Core.startScriptExecutor({ execa: getExecaPath() });
+    Core.startPluginExecutor();
   };
 
   useEffect(() => {
@@ -361,18 +362,17 @@ export default function SearchWindow() {
     initilizeSearchWindowIPCHandler();
     registerRendererUpdater();
 
-    Promise.allSettled([loadWorkflowsInfo(), loadPluginsInfo()]).catch(
-      console.error
-    );
-
     ipcRenderer.send(IPCRendererEnum.getElectronEnvs, {
       sourceWindow: 'searchWindow',
     });
 
+    loadWorkflowsInfo().catch(console.error);
+
     Core.getShellPaths()
       .then((result) => {
         Core.setShellPathEnv(result);
-        initializeScriptExecutor();
+        initializeWorkerProcesses();
+        loadPluginsInfo().catch(console.error);
         return null;
       })
       .catch(console.error);

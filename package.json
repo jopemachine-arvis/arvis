@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.11.2",
+  "version": "0.12.0",
   "description": "Cross-platform launcher that help you run, edit, create any workflow simple",
   "homepage": "https://jopemachine.github.io/arvis.com/",
   "scripts": {
@@ -46,7 +46,7 @@
   ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "cross-env NODE_ENV=development eslint --cache"
+      "cross-env NODE_ENV=development eslint --cache --fix"
     ],
     "{*.json,.{babelrc,eslintrc,prettierrc}}": [
       "prettier --ignore-path .eslintignore --parser json --write"
@@ -236,7 +236,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "arvis-core": "^0.15.0",
+    "arvis-core": "^0.16.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.2.2",

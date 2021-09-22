@@ -78,7 +78,13 @@ export default function Markdown(props: IProps) {
         rehypePlugins={[rehypeRaw]}
         skipHtml={false}
       >
-        {data}
+        {/* data might be error object or something when error occured */}
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {typeof data === 'string'
+          ? data
+          : (data as any).toString
+          ? (data as any).toString()
+          : 'Data is not valid!'}
       </ReactMarkdown>
     </OuterContainer>
   );
