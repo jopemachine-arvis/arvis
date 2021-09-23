@@ -10,8 +10,8 @@ import rehypeRaw from 'rehype-raw';
 import '../../../external/github-markdown-css/dark.css';
 
 type IProps = {
-  width: string;
-  height: string;
+  width: number | string;
+  height: number | string;
   data: string;
   dark?: boolean;
   padding?: number;
@@ -50,6 +50,10 @@ const OuterContainer = styled(({ padding, children, ...rest }) => (
 
   .markdown-body p {
     font-size: 100% !important;
+  }
+
+  .markdown-body li {
+    list-style: disc;
   }
 
   .markdown-body-dark p {

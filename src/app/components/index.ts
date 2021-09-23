@@ -1,3 +1,4 @@
+import ChangeLogModal from './changeLogModal';
 import ExtensionInfoWebview from './extensionInfoWebview';
 import ExtensionReadmeMarkdownRenderer from './extensionReadmeMarkdownRenderer';
 import ExtensionUserVariableTable from './extensionUserVariableTable';
@@ -14,9 +15,10 @@ import SearchWindowSpinner from './searchWindowSpinner';
 import Spinner from './spinner';
 import StyledInput from './styledInput';
 import TrayBuilder from './tray';
-import WalkThroughModal from './walkThrough';
+import WalkThroughModal from './walkThroughModal';
 
 export {
+  ChangeLogModal,
   ExtensionUserVariableTable,
   ExtensionReadmeMarkdownRenderer,
   ExtensionInfoWebview,

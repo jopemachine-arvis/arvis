@@ -1,6 +1,9 @@
 # 0.12.0
 
+## What’s Changed
+
 - [feature] Create check for update button, improve app update logic
+- [feature] Implement change log modal box
 - [fix] LargeText window text cutting bug fix
 - [fix] Improve plugin performance significantly through separating plugin executor process from main process
 

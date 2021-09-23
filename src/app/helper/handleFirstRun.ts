@@ -15,3 +15,9 @@ export const handleFirstRun = () => {
     .getPreferenceWindow()
     .webContents.send(IPCMainEnum.openWalkThroughModalbox);
 };
+
+export const handleThisVersionFirstRun = () => {
+  WindowManager.getInstance()
+    .getPreferenceWindow()
+    .webContents.send(IPCMainEnum.openChangeLogModalbox);
+};

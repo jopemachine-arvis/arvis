@@ -24,9 +24,13 @@ import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
 import { arvisRenewExtensionFlagFilePath } from './app/config/path';
 import { checkUpdate } from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
-import { handleFirstRun } from './app/helper/handleFirstRun';
+import {
+  handleFirstRun,
+  handleThisVersionFirstRun,
+} from './app/helper/handleFirstRun';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
 import { reduxStoreResetHandler } from './app/store/reduxStoreResetHandler';
+import { isThisVersionFirstLaunching } from './app/utils/isThisVersionFirstLaunching';
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -106,6 +110,10 @@ app.on('ready', () => {
 
     if (isFirstAppLaunch()) {
       windowManager.registerFirstRunCallback(handleFirstRun);
+    } else {
+      if (isThisVersionFirstLaunching()) {
+        windowManager.registerFirstRunCallback(handleThisVersionFirstRun);
+      }
     }
 
     startFileWatcher();

@@ -7,7 +7,12 @@ import fse from 'fs-extra';
 import _ from 'lodash';
 import { searchMostTotalDownload } from 'arvis-store';
 import { StateType } from '@redux/reducers/types';
-import { ScreenCover, Spinner, WalkThroughModal } from '@components/index';
+import {
+  ScreenCover,
+  Spinner,
+  WalkThroughModal,
+  ChangeLogModal,
+} from '@components/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { checkExtensionsUpdate } from '@helper/extensionUpdateChecker';
@@ -52,6 +57,9 @@ export default function PreferenceWindow() {
   const [allStoreExtensions, setAllStoreExtensions] = useState<any[]>([]);
 
   const [walkThroughModalOpened, setWalkThroughModalOpened] =
+    useState<boolean>(false);
+
+  const [changeLogModalOpened, setChangeLogModalOpened] =
     useState<boolean>(false);
 
   const store = useStore();
@@ -172,6 +180,10 @@ export default function PreferenceWindow() {
     openWalkThroughModalbox: (e: IpcRendererEvent) => {
       setWalkThroughModalOpened(true);
     },
+
+    openChangeLogModalbox: (e: IpcRendererEvent) => {
+      setChangeLogModalOpened(true);
+    },
   };
 
   const preventInvalidReduxState = () => {
@@ -258,6 +270,10 @@ export default function PreferenceWindow() {
       IPCMainEnum.openWalkThroughModalbox,
       ipcCallbackTbl.openWalkThroughModalbox
     );
+    ipcRenderer.on(
+      IPCMainEnum.openChangeLogModalbox,
+      ipcCallbackTbl.openChangeLogModalbox
+    );
 
     return () => {
       ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
@@ -286,6 +302,10 @@ export default function PreferenceWindow() {
       ipcRenderer.off(
         IPCMainEnum.openWalkThroughModalbox,
         ipcCallbackTbl.openWalkThroughModalbox
+      );
+      ipcRenderer.off(
+        IPCMainEnum.openChangeLogModalbox,
+        ipcCallbackTbl.openChangeLogModalbox
       );
     };
   }, []);
@@ -359,6 +379,10 @@ export default function PreferenceWindow() {
         <WalkThroughModal
           opened={walkThroughModalOpened}
           setOpened={setWalkThroughModalOpened}
+        />
+        <ChangeLogModal
+          opened={changeLogModalOpened}
+          setOpened={setChangeLogModalOpened}
         />
       </SpinnerContext.Provider>
     </OuterContainer>
