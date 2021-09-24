@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { ipcRenderer, clipboard } from 'electron';
-import { IPCRendererEnum } from '@ipc/ipcEventEnum';
+import { clipboard } from 'electron';
 import { keyCodeToString } from '@utils/iohook/keyUtils';
 import { isWithCtrlOrCmd } from '@utils/index';
-import { actionTypes } from '@redux/actions/clipboardHistory';
+import * as ClipboardHistory from '@store/clipboardHistoryStorage';
 import useIoHook from './useIoHook';
 
 export default () => {
@@ -22,15 +21,9 @@ export default () => {
   const copyKeyPressedHandler = (e: IOHookKeyEvent) => {
     setTimeout(() => {
       const copiedText = clipboard.readText();
+
       if (copiedText !== '') {
-        ipcRenderer.send(IPCRendererEnum.dispatchAction, {
-          destWindow: 'assistanceWindow',
-          actionType: actionTypes.PUSH_CLIPBOARD_STORE,
-          args: JSON.stringify({
-            text: copiedText,
-            date: new Date().getTime(),
-          }),
-        });
+        ClipboardHistory.push({ date: new Date().getTime(), text: copiedText });
       }
     }, 25);
   };

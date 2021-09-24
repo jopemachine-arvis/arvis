@@ -4,8 +4,8 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
-import 'github-markdown-css';
 import rehypeRaw from 'rehype-raw';
+import 'github-markdown-css';
 // To do:: Replace below css with 'github-markdown-css' dark theme file after dark theme PR is merged
 import '../../../external/github-markdown-css/dark.css';
 
@@ -48,16 +48,14 @@ const OuterContainer = styled(({ padding, children, ...rest }) => (
     padding: ${({ padding }) => padding || 0}px;
   }
 
-  .markdown-body p {
-    font-size: 100% !important;
-  }
-
-  .markdown-body li {
-    list-style: disc;
-  }
-
+  .markdown-body p,
   .markdown-body-dark p {
     font-size: 100% !important;
+  }
+
+  .markdown-body li,
+  .markdown-body-dark li {
+    list-style: disc;
   }
 
   .markdown-body h1,

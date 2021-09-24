@@ -3,7 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { makeDefaultActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
-import { useAssistanceWindowControl, useSnippet } from '@hooks/index';
+import {
+  useAssistanceWindowControl,
+  useCopyKeyCapture,
+  useSnippet,
+} from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SearchWindowScrollbar,
@@ -17,6 +21,7 @@ import './index.css';
 import useClipboardHistoryMode from './mode/useClipboardHistory';
 import useUniversalActionMode from './mode/useUniversalAction';
 import useSnippetMode from './mode/useSnippet';
+import * as ClipboardHistory from '../../store/clipboardHistoryStorage';
 
 const maxShowOnScreen = 15;
 
@@ -24,12 +29,14 @@ const maxShowOnWindow = 50;
 
 const onWindowOpenEventHandlers = new Map<AssistanceWindowType, () => void>();
 
+ClipboardHistory.importClipboardHistoryStorage();
+
 export default function AssistanceWindow() {
   const { global_font } = useSelector(
     (state: StateType) => state.global_config
   );
 
-  const { apply_mouse_hover_event } = useSelector(
+  const { apply_mouse_hover_event, max_size } = useSelector(
     (state: StateType) => state.clipboard_history
   );
 
@@ -49,6 +56,8 @@ export default function AssistanceWindow() {
   const [mode, setMode] = useState<AssistanceWindowType | undefined>(undefined);
 
   const { snippets, snippetCollectionInfos } = useSnippet();
+
+  useCopyKeyCapture();
 
   useSnippetKeywords({ snippets, collectionInfo: snippetCollectionInfos });
 
@@ -75,6 +84,7 @@ export default function AssistanceWindow() {
 
   const { renderInfoContent: renderClipboardHistoryInfoContent } =
     useClipboardHistoryMode({
+      store: ClipboardHistory.store!,
       items,
       setItems,
       originalItems,
@@ -172,6 +182,10 @@ export default function AssistanceWindow() {
       ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     };
   }, []);
+
+  useEffect(() => {
+    ClipboardHistory.setStoreMaxSize(max_size);
+  }, [max_size]);
 
   const infoContainerOnWheelHandler = () => {
     setSearchContainerScrollbarVisible(false);

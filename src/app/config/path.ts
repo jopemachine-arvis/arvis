@@ -17,6 +17,11 @@ const arvisSnippetCollectionPath = path.resolve(
   'snippets'
 );
 
+const arvisClipboardHistoryStore = path.resolve(
+  Core.path.installedDataPath,
+  'clipboard-history.json'
+);
+
 const arvisReduxStoreResetFlagPath = path.resolve(
   Core.path.installedDataPath,
   'arvis-redux-store-reset'
@@ -51,6 +56,7 @@ export {
   getArvisScriptsPath,
   getProjectRootPath,
   getExecaPath,
+  arvisClipboardHistoryStore,
   arvisReduxStoreResetFlagPath,
   arvisRenewExtensionFlagFilePath,
   arvisSnippetCollectionPath,

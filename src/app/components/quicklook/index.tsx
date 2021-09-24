@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import fse from 'fs-extra';
@@ -58,6 +59,16 @@ const useModalAnimation = ({
     reverse,
   });
 
+const renderLoading = () => {
+  return (
+    <Spinner
+      style={{
+        top: '50%',
+      }}
+    />
+  );
+};
+
 export default (props: IProps) => {
   const {
     hovering,
@@ -69,13 +80,13 @@ export default (props: IProps) => {
     setQuicklookData,
   } = props;
 
-  const { active, data, type } = quicklookData;
+  const { active, data, type, script } = quicklookData;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
 
   const [handleBarOffset, setHandlerBarOffset] = useState<number>(0);
 
-  const [contents, setContents] = useState<any>();
+  const [contents, setContents] = useState<any>(renderLoading());
 
   const [onResizing, setOnResizing] = useState<boolean>(false);
   const onResizingRef = useRef<boolean>(onResizing);
@@ -179,18 +190,9 @@ export default (props: IProps) => {
     quicklookResizeHandler(e.clientX);
   };
 
-  const renderLoading = () => {
-    return (
-      <Spinner
-        style={{
-          top: '50%',
-        }}
-      />
-    );
-  };
-
   const updateContent = () => {
     setContents(renderLoading());
+
     getInnerContainer().then(setContents).catch(console.error);
   };
 
@@ -208,6 +210,12 @@ export default (props: IProps) => {
   useEffect(() => {
     updateContent();
   }, [data]);
+
+  useEffect(() => {
+    if (script) {
+      eval(script);
+    }
+  }, [contents]);
 
   useEffect(() => {
     if (initialRendering) {

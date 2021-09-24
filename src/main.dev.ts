@@ -110,6 +110,7 @@ app.on('ready', () => {
 
     if (isFirstAppLaunch()) {
       windowManager.registerFirstRunCallback(handleFirstRun);
+      isThisVersionFirstLaunching();
     } else {
       if (isThisVersionFirstLaunching()) {
         windowManager.registerFirstRunCallback(handleThisVersionFirstRun);

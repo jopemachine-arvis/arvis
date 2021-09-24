@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import path from 'path';
 import { getArvisAssetsPath } from '@config/path';
-import { useSelector } from 'react-redux';
-import { StateType } from '@redux/reducers/types';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import useForceUpdate from 'use-force-update';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
@@ -32,6 +30,7 @@ const transform = (store: any[]): any[] => {
 /**
  */
 const useClipboardHistoryMode = ({
+  store,
   items,
   setItems,
   originalItems,
@@ -43,6 +42,7 @@ const useClipboardHistoryMode = ({
   maxShowOnWindow,
   onWindowOpenEventHandlers,
 }: {
+  store: any[];
   items: any[];
   setItems: (items: any[]) => void;
   originalItems: any[];
@@ -54,8 +54,6 @@ const useClipboardHistoryMode = ({
   maxShowOnWindow: number;
   onWindowOpenEventHandlers: Map<string, () => void>;
 }) => {
-  const { store } = useSelector((state: StateType) => state.clipboard_history);
-
   const maxShowOnWindowRef = useRef<number>(maxShowOnWindow);
 
   const forceUpdate = useForceUpdate();

@@ -9,11 +9,7 @@ import {
   SearchWindowScrollbar,
   Quicklook,
 } from '@components/index';
-import {
-  useSearchWindowControl,
-  useDoubleHotkey,
-  useCopyKeyCapture,
-} from '@hooks/index';
+import { useSearchWindowControl, useDoubleHotkey } from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
 import { applyAlphaColor, makeDefaultActionCreator } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
@@ -118,8 +114,6 @@ export default function SearchWindow() {
   const store = useStore();
 
   useDoubleHotkey();
-
-  useCopyKeyCapture();
 
   const {
     autoSuggestion,

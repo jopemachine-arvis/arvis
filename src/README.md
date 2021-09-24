@@ -6,15 +6,15 @@ Arvis is builted with [electron-react-boilerplate](https://github.com/electron-r
 
 ## Other packages
 
-* [arvis-core](https://github.com/jopemachine/arvis-core)
+- [arvis-core](https://github.com/jopemachine/arvis-core)
 
 Arvis module not directly related to electron, renderer
 
 ## Build from sources
 
-* [Windows](./build-windows.md)
-* [Macos](./build-macos.md)
-* [Linux](./build-linux.md)
+- [Windows](https://jopemachine.github.io/arvis-docs/documents/build/build-windows/)
+- [Macos](https://jopemachine.github.io/arvis-docs/documents/build/build-macos/)
+- [Linux](https://jopemachine.github.io/arvis-docs/documents/build/build-linux/)
 
 ## Module aliasing
 
@@ -32,7 +32,7 @@ So, If `node` or `electron` version is updated, the `iohook` config of `package.
 
 ## Config file pathes
 
-[Click to view config file pathes](../documents/config-file-paths.md)
+[Click to view config file pathes](https://jopemachine.github.io/arvis-docs/documents/extension-development/advanced/config-file-paths/)
 
 ## External packages
 

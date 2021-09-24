@@ -49,7 +49,6 @@ export type StateType = {
   clipboard_history: {
     apply_mouse_hover_event: boolean;
     max_size: number;
-    store: object[];
   };
 };
 

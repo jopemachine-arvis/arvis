@@ -1,8 +1,16 @@
+# 0.12.1
+
+## What’s Changed
+
+- [feature, experimental] Add `script` to quicklook for further interactions.
+- [fix, refactoring] Change clipboard history store from redux to custom storage. This improve slightly arvis performance, fix possible json parsing bug.
+- [fix] Fix some markdown renderer bugs
+
 # 0.12.0
 
 ## What’s Changed
 
-- [feature] Create check for update button, improve app update logic
+- [feature] Create 'check for update' button, improve app update logic
 - [feature] Implement change log modal box
 - [fix] LargeText window text cutting bug fix
 - [fix] Improve plugin performance significantly through separating plugin executor process from main process
@@ -199,7 +207,6 @@
 ## What’s Changed
 
 - [fix] Fix icon errors using lru cache (#19) @jopemachine
-- [Snyk] Upgrade got from 11.8.0 to 11.8.2 (#16) @snyk-bot
 - [feature] Improve readme feature handling on workflow, plugin page
 - [feature] Apply dark theme to readme of workflow, plguin page
 - [feature] Implement quicklook feature
@@ -222,14 +229,12 @@
 
 ## What’s Changed
 
-- [Snyk] Upgrade regenerator-runtime from 0.13.7 to 0.13.8 (#15) @snyk-bot
 - [feature] Support multiple delayed plugins (bug fix)
 
 # 0.7.0
 
 ## What’s Changed
 
-- [Snyk] Upgrade electron-util from 0.16.0 to 0.17.0 (#13) @snyk-bot
 - [feature] Now Arvis support delayed async plugin.
 - [feature] Add alfred-like theme
 

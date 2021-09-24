@@ -7,22 +7,6 @@ const { actionTypes: ClipboardHistoryActionTypes } = ClipboardHistoryActions;
 export default (state: any = {}, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case ClipboardHistoryActionTypes.CLEAR_CLIPBOARD_STORE:
-      return {
-        ...state,
-        store: [],
-      };
-    case ClipboardHistoryActionTypes.PUSH_CLIPBOARD_STORE:
-      if (state['max_size'] <= state['store'].length) {
-        state['store'] = state['store'].slice(
-          state['store'].length - state['max_size'] + 1
-        );
-      }
-
-      state['store'].push(JSON.parse(payload.arg));
-      return {
-        ...state,
-      };
     case ClipboardHistoryActionTypes.SET_MAX_CLIPBOARD_STORE_SIZE:
       return {
         ...state,
@@ -44,8 +28,4 @@ export function getApplyMouseHoverEvent(state: StateType) {
 
 export function getMaxSize(state: StateType) {
   return state.clipboard_history.max_size;
-}
-
-export function getClipboardStore(state: StateType) {
-  return state.clipboard_history.store;
 }

@@ -50,6 +50,5 @@ export default {
   clipboard_history: {
     apply_mouse_hover_event: true,
     max_size: 400,
-    store: [],
   },
 };
