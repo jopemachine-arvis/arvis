@@ -349,7 +349,7 @@
     "react-spring": "^9.2.4",
     "react-table": "^7.7.0",
     "react-tabs": "^3.2.2",
-    "reactstrap": "^8.9.0",
+    "reactstrap": "^8.10.0",
     "readdirp": "^3.6.0",
     "redux": "^4.1.1",
     "redux-logger": "^3.0.6",
