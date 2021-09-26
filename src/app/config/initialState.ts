@@ -6,7 +6,8 @@ export default {
     max_item_count_to_show: 9,
     search_window_hotkey:
       process.platform === 'darwin' ? 'Cmd + Space' : 'Ctrl + Space',
-    clipboard_history_window_hotkey: 'Ctrl + Alt + C',
+    clipboard_history_window_hotkey:
+      process.platform === 'darwin' ? 'Meta + Alt + C' : 'Ctrl + Alt + C',
     universal_action_window_hotkey:
       process.platform === 'darwin' ? 'Meta + Shift + .' : 'Alt + Shift + .',
     snippet_window_hotkey:

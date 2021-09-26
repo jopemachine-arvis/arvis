@@ -1,4 +1,5 @@
 import { clipboard } from 'electron';
+import robot from 'robotjs';
 import { sync as readFilePathsFromClipboard } from 'read-filepath-from-clipboard';
 import { WindowManager } from '../windowManager';
 import { IPCMainEnum } from '../../ipc/ipcEventEnum';
@@ -37,11 +38,19 @@ const resolveUniversalActionTarget = () => {
 const toggleUniversalActionWindow = ({ showsUp }: { showsUp?: boolean }) => {
   const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
 
-  assistanceWindow.webContents.send(IPCMainEnum.captureUniversalActionTarget, {
-    target: resolveUniversalActionTarget(),
-  });
+  // To do:: Fix me! it seems that control + c not working
+  robot.keyTap('c', [process.platform === 'darwin' ? 'command' : 'control']);
 
-  toggleAssistanceWindow({ showsUp });
+  setTimeout(() => {
+    assistanceWindow.webContents.send(
+      IPCMainEnum.captureUniversalActionTarget,
+      {
+        target: resolveUniversalActionTarget(),
+      }
+    );
+
+    toggleAssistanceWindow({ showsUp });
+  });
 };
 
 const toggleSnippetWindow = ({ showsUp }: { showsUp?: boolean }) => {
