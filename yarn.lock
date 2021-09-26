@@ -11472,6 +11472,14 @@ read-config-file@6.0.0:
     json5 "^2.1.2"
     lazy-val "^1.0.4"
 
+read-filepath-from-clipboard@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/read-filepath-from-clipboard/-/read-filepath-from-clipboard-0.0.3.tgz#5950c9f64ea3ab2fe7e97234212bde27f5d13416"
+  integrity sha512-twgei8zJXk2KORUkwnQFsAHOYYW3EuGHq7aehAwqIgLYHO0hsYBIR6zqB2no2QUtoqren33dGwMm1CAwANK8xA==
+  dependencies:
+    clipboardy "^2.3.0"
+    execa "^5.1.1"
+
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"

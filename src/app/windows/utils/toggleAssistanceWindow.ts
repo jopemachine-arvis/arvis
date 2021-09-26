@@ -1,5 +1,5 @@
 import { clipboard } from 'electron';
-import robot from 'robotjs';
+import { sync as readFilePathsFromClipboard } from 'read-filepath-from-clipboard';
 import { WindowManager } from '../windowManager';
 import { IPCMainEnum } from '../../ipc/ipcEventEnum';
 
@@ -27,22 +27,21 @@ const toggleClipboardHistory = ({ showsUp }: { showsUp?: boolean }) => {
   assistanceWindow.webContents.send(IPCMainEnum.renewClipboardStore);
 };
 
+const resolveUniversalActionTarget = () => {
+  const selectedFilePaths = readFilePathsFromClipboard();
+  return selectedFilePaths.length > 0
+    ? selectedFilePaths.join(' ')
+    : clipboard.readText();
+};
+
 const toggleUniversalActionWindow = ({ showsUp }: { showsUp?: boolean }) => {
   const assistanceWindow = WindowManager.getInstance().getAssistanceWindow();
 
-  // To do:: Fix me! it seems that control + c not working
-  robot.keyTap('c', [process.platform === 'darwin' ? 'command' : 'control']);
+  assistanceWindow.webContents.send(IPCMainEnum.captureUniversalActionTarget, {
+    target: resolveUniversalActionTarget(),
+  });
 
-  setTimeout(() => {
-    assistanceWindow.webContents.send(
-      IPCMainEnum.captureUniversalActionTarget,
-      {
-        target: clipboard.readText(),
-      }
-    );
-
-    toggleAssistanceWindow({ showsUp });
-  }, 50);
+  toggleAssistanceWindow({ showsUp });
 };
 
 const toggleSnippetWindow = ({ showsUp }: { showsUp?: boolean }) => {
