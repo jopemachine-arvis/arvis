@@ -13638,10 +13638,10 @@ untildify@^4.0.0:
   resolved "https://registry.yarnpkg.com/untildify/-/untildify-4.0.0.tgz#2bc947b953652487e4600949fb091e3ae8cd919b"
   integrity sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==
 
-unused-filename@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unused-filename/-/unused-filename-3.0.0.tgz#f8aa01c94495ab06d7e9b9a79a1946d4f8e285a8"
-  integrity sha512-YJbSon9TiwV/80zn0iy3V3DAJL62GQgUTNexjfZS40D7N7BADhpkUCdfMS4d2VK5YT9WyEsDJVpTTTiMrdB50g==
+unused-filename@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/unused-filename/-/unused-filename-3.0.1.tgz#41b0600f8909e39cbdbbcf2467591bd3dd83fa7b"
+  integrity sha512-UbMRaEaT+/3mGh40GBRnF2++1VqFG1w0Kjzd5q/uQjagKn5pkCS8goJTgYDpQ6e0tB2GywamMJy1BzbSrMcIWw==
   dependencies:
     escape-string-regexp "^4.0.0"
     path-exists "^4.0.0"
