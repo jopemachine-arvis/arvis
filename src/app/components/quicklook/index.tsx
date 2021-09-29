@@ -1,8 +1,9 @@
 /* eslint-disable no-eval */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import fse from 'fs-extra';
-import isPromise from 'is-promise';
+import { Core } from 'arvis-core';
+import pDebounce from 'p-debounce';
 import Spinner from '../searchWindowSpinner';
 import { QuicklookWebview } from './quicklookWebview';
 import { QuicklookText } from './quicklookText';
@@ -80,7 +81,7 @@ export default (props: IProps) => {
     setQuicklookData,
   } = props;
 
-  const { active, data, type, script } = quicklookData;
+  const { active, data, type, script, asyncQuicklookItemUid } = quicklookData;
 
   const [initialRendering, setInitialRendering] = useState<boolean>(true);
 
@@ -97,14 +98,24 @@ export default (props: IProps) => {
     handleBarOffset,
   });
 
-  const getInnerContainer = async () => {
+  const setVisible = useCallback((visible: boolean) => {
+    setQuicklookData({
+      ...quicklookData,
+      active: visible,
+    });
+  }, []);
+
+  const getInnerContainer = useCallback(async () => {
     let targetData = data;
 
     if (!type || !targetData) return <div>No data to display</div>;
 
-    if (isPromise(targetData)) {
+    if (asyncQuicklookItemUid) {
       try {
-        targetData = await (data as Promise<string>);
+        targetData = await pDebounce(
+          Core.pluginWorkspace.requestAsyncQuicklookRender,
+          25
+        )(asyncQuicklookItemUid);
       } catch (err: any) {
         return <div>{err}</div>;
       }
@@ -118,12 +129,7 @@ export default (props: IProps) => {
           <QuicklookWebview
             data={targetData as string}
             visible={hovering || active}
-            setVisible={(visible) =>
-              setQuicklookData({
-                ...quicklookData,
-                active: visible,
-              })
-            }
+            setVisible={setVisible}
           />
         );
 
@@ -156,45 +162,55 @@ export default (props: IProps) => {
     }
 
     throw new Error(`Not proper quicklook data type:\n${type}`);
-  };
+  }, [active, data]);
 
-  const onMouseEnterEventHandler = () => {
+  const onMouseEnterEventHandler = useCallback(() => {
     setHovering(true);
-  };
+  }, []);
 
-  const onMouseLeaveEventHandler = () => {
+  const onMouseLeaveEventHandler = useCallback(() => {
     setHovering(false);
-  };
+  }, []);
 
-  const onMouseDownEventHandler = (e: React.MouseEvent<HTMLInputElement>) => {
-    setOnResizing(true);
-    onResizingRef.current = true;
-    if (handleBarOriginalPos === -1) {
-      handleBarOriginalPos = e.clientX;
-    }
-  };
+  const onMouseDownEventHandler = useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      setOnResizing(true);
+      onResizingRef.current = true;
+      if (handleBarOriginalPos === -1) {
+        handleBarOriginalPos = e.clientX;
+      }
+    },
+    []
+  );
 
-  const onMouseUpEventHandler = (
-    e: React.MouseEvent<HTMLInputElement> | MouseEvent
-  ) => {
-    onResizingRef.current = false;
-    setOnResizing(false);
-  };
+  const onMouseUpEventHandler = useCallback(
+    (e: React.MouseEvent<HTMLInputElement> | MouseEvent) => {
+      onResizingRef.current = false;
+      setOnResizing(false);
+    },
+    []
+  );
 
-  const quicklookResizeHandler = (clientX: number) => {
-    setHandlerBarOffset(handleBarOriginalPos - clientX + resizedWindowOffset);
-  };
+  const quicklookResizeHandler = useCallback(
+    (clientX: number) => {
+      setHandlerBarOffset(handleBarOriginalPos - clientX + resizedWindowOffset);
+    },
+    [handleBarOriginalPos, resizedWindowOffset]
+  );
 
-  const onMouseMoveEventHandler = (e: MouseEvent) => {
-    if (!onResizingRef.current || handleBarOriginalPos === -1) return;
-    quicklookResizeHandler(e.clientX);
-  };
+  const onMouseMoveEventHandler = useCallback(
+    (e: MouseEvent) => {
+      if (!onResizingRef.current || handleBarOriginalPos === -1) return;
+      quicklookResizeHandler(e.clientX);
+    },
+    [handleBarOriginalPos]
+  );
 
-  const updateContent = () => {
+  const updateContent = useCallback(() => {
     setContents(renderLoading());
 
     getInnerContainer().then(setContents).catch(console.error);
-  };
+  }, [active, data]);
 
   useEffect(() => {
     (document.getElementById('searchWindow') as HTMLDivElement).onmousemove =
@@ -209,7 +225,7 @@ export default (props: IProps) => {
 
   useEffect(() => {
     updateContent();
-  }, [data]);
+  }, [active, data]);
 
   useEffect(() => {
     if (script) {
@@ -275,8 +291,10 @@ export default (props: IProps) => {
     >
       {contents}
       <HandleBar
+        title="Resize quicklook's size by dragging handle bar, double click to close quicklook"
         onMouseDown={onMouseDownEventHandler}
         onMouseUp={onMouseUpEventHandler as (e: React.MouseEvent) => void}
+        onDoubleClick={() => setVisible(false)}
       >
         <InnerHandleBarColor />
         <InnerHandleBarColor style={{ marginLeft: 2 }} />

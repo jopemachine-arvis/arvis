@@ -2,9 +2,10 @@ export {};
 
 declare global {
   export interface QuicklookData {
-    type?: 'html' | 'image' | 'markdown' | 'text' | 'pdf';
-    data?: string | Promise<string>;
     active: boolean;
+    asyncQuicklookItemUid?: string;
+    data?: string | Promise<string>;
     script?: string;
+    type?: 'html' | 'image' | 'markdown' | 'text' | 'pdf';
   }
 }

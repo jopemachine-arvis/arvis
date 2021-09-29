@@ -8,7 +8,7 @@ type IProps = {
   setOpened: (opened: boolean) => void;
 };
 
-const API =
+const arvisChangeLogAPI =
   'https://raw.githubusercontent.com/jopemachine/arvis/master/CHANGE_LOG.md';
 
 const ChangeLogModal = (props: IProps) => {
@@ -18,7 +18,7 @@ const ChangeLogModal = (props: IProps) => {
   const toggle = () => setOpened(!opened);
 
   useEffect(() => {
-    got.get(API).then((response) => setContent(response.body));
+    got.get(arvisChangeLogAPI).then((response) => setContent(response.body));
   }, []);
 
   return (

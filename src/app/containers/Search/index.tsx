@@ -94,7 +94,7 @@ export default function SearchWindow() {
 
   const actionFlowManager = Core.ActionFlowManager.getInstance();
 
-  const setDebuggingOptions = () => {
+  const setDebuggingOptions = useCallback(() => {
     actionFlowManager.printActionType = debuggingConfig.debugging_action;
     actionFlowManager.printVariables = debuggingConfig.debugging_variables;
     actionFlowManager.printPluginItems = debuggingConfig.debugging_plugin;
@@ -103,7 +103,7 @@ export default function SearchWindow() {
     actionFlowManager.printScriptOutput = debuggingConfig.debugging_script;
     actionFlowManager.printTriggerStack =
       debuggingConfig.debugging_trigger_stack;
-  };
+  }, [debuggingConfig]);
 
   useEffect(() => {
     setDebuggingOptions();
@@ -150,11 +150,11 @@ export default function SearchWindow() {
     Core.Renderer.setOnWorkEndHandler(onWorkEndHandler);
   }, []);
 
-  const initializeCustomActions = () => {
+  const initializeCustomActions = useCallback(() => {
     Core.registerCustomAction('notification', notificationActionHandler);
     Core.registerCustomAction('clipboard', clipboardActionHandler);
     Core.registerCustomAction('keyDispatching', keyDispatchingActionHandler);
-  };
+  }, []);
 
   const registerAllGlobalHotkeys = () => {
     const defaultHotkeyTbls = _.pickBy(
@@ -333,11 +333,11 @@ export default function SearchWindow() {
     );
   }, []);
 
-  const initializeWorkerProcesses = () => {
+  const initializeWorkerProcesses = useCallback(() => {
     Core.setUseExecutorProcess(true);
     Core.startScriptExecutor({ execa: getExecaPath() });
-    Core.startPluginExecutor();
-  };
+    Core.pluginWorkspace.startPluginExecutor();
+  }, []);
 
   useEffect(() => {
     return unloadIOHook;

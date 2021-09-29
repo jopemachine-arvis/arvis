@@ -4,6 +4,7 @@ import { isWithCtrlOrCmd } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import _ from 'lodash';
 import useForceUpdate from 'use-force-update';
+import pDebounce from 'p-debounce';
 import useKey from '../../external/use-key-capture/src';
 
 type IndexInfo = {
@@ -386,7 +387,7 @@ const useAssistanceWindowControl = ({
     });
 
     const searchByNextInput = () =>
-      setTimeout(
+      pDebounce(
         () =>
           handleNormalInput(
             originalItemsRef.current,

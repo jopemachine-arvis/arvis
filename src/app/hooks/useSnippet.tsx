@@ -1,9 +1,9 @@
-import { arvisSnippetCollectionPath } from '@config/path';
-import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
+import React, { useEffect, useState } from 'react';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import path from 'path';
 import pathExists from 'path-exists';
-import React, { useEffect, useState } from 'react';
+import { arvisSnippetCollectionPath } from '@config/path';
+import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import {
   fetchSnippetCollection,
   loadSnippetCollection,

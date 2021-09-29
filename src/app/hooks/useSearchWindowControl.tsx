@@ -4,6 +4,7 @@ import { ipcRenderer, clipboard } from 'electron';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { isWithCtrlOrCmd, isSupportedImageFormat } from '@utils/index';
 import _ from 'lodash';
+import pDebounce from 'p-debounce';
 import path from 'path';
 import isUrl from 'is-url';
 import { isText } from 'istextorbinary';
@@ -608,7 +609,7 @@ const useSearchWindowControl = ({
     });
 
     const searchByNextInput = () =>
-      setTimeout(
+      pDebounce(
         () =>
           handleNormalInput(
             (document.getElementById('searchBar') as HTMLInputElement).value
@@ -776,7 +777,7 @@ const useSearchWindowControl = ({
 
   useEffect(() => {
     Core.pluginWorkspace.deferedPluginEventEmitter.on(
-      'deferedPluginExecution',
+      'render',
       ({ id, payload }: { id: number; payload: string }) => {
         if (
           Core.pluginWorkspace.requestIsLatest(id) &&

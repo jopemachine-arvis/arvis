@@ -1,10 +1,12 @@
-# 0.12.1
+# 0.13.0
 
 ## What’s Changed
 
 - [feature, experimental] Add `script` to quicklook for further interactions.
 - [fix, refactoring] Change clipboard history store from redux to custom storage. This improve slightly arvis performance, fix possible json parsing bug.
 - [fix] Fix some markdown renderer bugs
+- [fix] Fix asyncQuicklookPromises issue
+- [optimization] Performance slightly up
 
 # 0.12.0
 

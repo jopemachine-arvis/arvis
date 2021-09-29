@@ -9,7 +9,6 @@ import useStoreSearchControl from './useStoreSearchControl';
 import useSnippet from './useSnippet';
 import useIoHook from './useIoHook';
 import useItemList from './useItemList';
-import { useReserveForceUpdate } from './useReserveForceUpdate';
 
 export {
   useAssistanceWindowControl,
@@ -20,7 +19,6 @@ export {
   useItemList,
   useKeyRecord,
   usePressedModifier,
-  useReserveForceUpdate,
   useSearchWindowControl,
   useSnippet,
   useStoreSearchControl,

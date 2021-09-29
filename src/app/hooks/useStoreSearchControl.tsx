@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { isWithCtrlOrCmd } from '@utils/index';
+import pDebounce from 'p-debounce';
 import _ from 'lodash';
 import useKey from '../../external/use-key-capture/src';
 
@@ -104,7 +105,7 @@ const useStoreSearchControl = ({
     });
 
     const searchByNextInput = () =>
-      setTimeout(
+      pDebounce(
         () =>
           handleNormalInput(
             originalItemsRef.current,

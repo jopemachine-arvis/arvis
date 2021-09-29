@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { ipcRenderer } from 'electron';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input, AutoSuggestion } from './components';
@@ -59,27 +59,36 @@ const SearchBar = (props: IProps) => {
     }
   }, [originalRef]);
 
-  const preventUpAndDownArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-      e.preventDefault();
-    }
-    // For quicklook feature, prevent adding space when quicklook shortcut is pressed
-    if (e.key === ' ' && e.shiftKey) {
-      e.preventDefault();
-    }
-  };
+  const preventUpAndDownArrow = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+      }
+      // For quicklook feature, prevent adding space when quicklook shortcut is pressed
+      if (e.key === ' ' && e.shiftKey) {
+        e.preventDefault();
+      }
+    },
+    []
+  );
 
-  const preventBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    originalRef && originalRef.current && originalRef.current.focus();
-  };
-
-  const rightClickHandler = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (hasContextMenu) {
+  const preventBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
       e.preventDefault();
-      ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu, { isPinned });
-    }
-  };
+      originalRef && originalRef.current && originalRef.current.focus();
+    },
+    [originalRef.current]
+  );
+
+  const rightClickHandler = useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      if (hasContextMenu) {
+        e.preventDefault();
+        ipcRenderer.send(IPCRendererEnum.popupSearchbarItemMenu, { isPinned });
+      }
+    },
+    [hasContextMenu, isPinned]
+  );
 
   return (
     <OuterContainer
