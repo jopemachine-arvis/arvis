@@ -307,7 +307,7 @@
     "about-window": "^1.14.0",
     "alpha-sort": "^5.0.0",
     "arvis-store": "^0.2.11",
-    "bootstrap": "^5.1.0",
+    "bootstrap": "^5.1.1",
     "chokidar": "^3.5.2",
     "connected-react-router": "^6.9.1",
     "dot-prop": "^6.0.1",
