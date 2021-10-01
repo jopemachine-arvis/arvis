@@ -360,7 +360,7 @@
     "regenerator-runtime": "^0.13.8",
     "rehype-raw": "^5.1.0",
     "semver": "^7.3.5",
-    "source-map-support": "^0.5.19",
+    "source-map-support": "^0.5.20",
     "styled-components": "^5.3.1",
     "unused-filename": "^3.0.1",
     "use-force-update": "^1.0.7",
