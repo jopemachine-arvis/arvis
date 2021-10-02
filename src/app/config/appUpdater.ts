@@ -2,7 +2,22 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { dialog } from 'electron';
 import semver from 'semver';
+import _ from 'lodash';
 import pkg from './pkg';
+
+const askForUpdate = () => {
+  const btnIndex = dialog.showMessageBoxSync({
+    type: 'question',
+    buttons: ['Ok', 'Cancel'],
+    defaultId: 0,
+    title: 'Confirm Update',
+    message: 'Update available. Would you like to install new version?',
+  });
+
+  if (btnIndex === 0) {
+    autoUpdater.quitAndInstall();
+  }
+};
 
 export const checkUpdateManually = () => {
   return autoUpdater
@@ -22,11 +37,13 @@ export const checkUpdateManually = () => {
     });
 };
 
-export const checkUpdate = () => {
-  autoUpdater.logger = log;
-  autoUpdater.allowPrerelease = true;
+export const autoCheckUpdateAtStartup = () => {
   autoUpdater.allowDowngrade = false;
-  autoUpdater.autoInstallOnAppQuit = true;
+  autoUpdater.allowPrerelease = true;
+  autoUpdater.autoDownload = true;
+  autoUpdater.autoInstallOnAppQuit = false;
+  autoUpdater.logger = log;
+
   autoUpdater.setFeedURL({
     private: false,
     provider: 'github',
@@ -36,21 +53,20 @@ export const checkUpdate = () => {
 
   autoUpdater.checkForUpdates();
 
-  autoUpdater.on('update-downloaded', (info) => {
-    const btnIndex = dialog.showMessageBoxSync({
-      type: 'question',
-      buttons: ['Ok', 'Cancel'],
-      defaultId: 0,
-      title: 'Confirm Update',
-      message:
-        'Update available. Would you like to download and install new version?',
-      detail:
-        'Application will automatically restart to apply update after download',
-    });
+  autoUpdater.on('update-downloaded', askForUpdate);
 
-    if (btnIndex === 0) {
-      autoUpdater.quitAndInstall();
-    }
+  autoUpdater.on('update-not-available', (info) => {
+    dialog.showMessageBoxSync({
+      title: 'Update not available',
+      message: `update-not-available!\n${info}`,
+    });
+  });
+
+  autoUpdater.on('error', (err) => {
+    dialog.showMessageBoxSync({
+      title: 'Error',
+      message: `Error occurs\n${err}`,
+    });
   });
 
   // Check every 10 hour for new updates

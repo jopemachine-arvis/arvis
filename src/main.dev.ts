@@ -22,7 +22,7 @@ import {
 } from './app/ipc/mainProcessIPCManager';
 import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
 import { arvisRenewExtensionFlagFilePath } from './app/config/path';
-import { checkUpdate } from './app/config/appUpdater';
+import { autoCheckUpdateAtStartup } from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
 import {
   handleFirstRun,
@@ -101,7 +101,7 @@ app.on('ready', () => {
     const windowManager = WindowManager.getInstance();
 
     if (process.env.NODE_ENV === 'production') {
-      checkUpdate();
+      autoCheckUpdateAtStartup();
     }
 
     if (openFile) {
