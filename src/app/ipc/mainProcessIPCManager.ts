@@ -21,6 +21,7 @@ import { hideAssistanceWindow } from './mainProcessEventHandler/windowManage/hid
 import { resizeSearchWindowHeight } from './mainProcessEventHandler/windowManage/resizeSearchWindowHeight';
 import { setSearchWindowWidth } from './mainProcessEventHandler/windowManage/setSearchWindowWidth';
 import { showLargeTextWindow } from './mainProcessEventHandler/windowManage/showLargeTextWindow';
+import { willQuitRet } from './mainProcessEventHandler/windowManage/willQuit';
 
 import { openPluginInstallFileDialog } from './mainProcessEventHandler/modal/openPluginInstallFileDialog';
 import { openWorkflowInstallFileDialog } from './mainProcessEventHandler/modal/openWorkflowInstallFileDialog';
@@ -89,6 +90,7 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.toggleMacDock, toggleMacDock);
   ipcMain.on(IPCRendererEnum.triggerKeyDownEvent, triggerKeyDownEvent);
   ipcMain.on(IPCRendererEnum.unregisterAllShortcuts, unregisterAllShortcuts);
+  ipcMain.on(IPCRendererEnum.willQuitRet, willQuitRet);
 
   ipcMain.on(
     IPCRendererEnum.toggleClipboardHistoryWindow,
@@ -140,10 +142,4 @@ export const initIPCHandlers = () => {
     IPCRendererEnum.resizeSearchWindowHeight,
     resizeSearchWindowHeight
   );
-};
-
-/**
- */
-export const cleanUpIPCHandlers = () => {
-  ipcMain.removeAllListeners();
 };

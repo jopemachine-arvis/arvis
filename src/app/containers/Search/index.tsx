@@ -27,6 +27,7 @@ import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcu
 import { executeAction } from '@helper/executeAction';
 import { getExecaPath } from '@config/path';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
+import { writeClipboardHistoryStorage } from '@store/clipboardHistoryStorage';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -266,9 +267,15 @@ export default function SearchWindow() {
     ) => {
       setResizedWindowWidth(width);
     },
+
+    willQuit: (e: IpcRendererEvent) => {
+      Core.history.writeHistory();
+      ipcRenderer.send(IPCRendererEnum.willQuitRet);
+    },
   };
 
   const initilizeSearchWindowIPCHandler = useCallback(() => {
+    ipcRenderer.on(IPCMainEnum.willQuit, ipcCallbackTbl.willQuit);
     ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
     ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);

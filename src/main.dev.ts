@@ -16,11 +16,8 @@ import { Core } from 'arvis-core';
 import { isFirstAppLaunch } from 'electron-util';
 import TrayBuilder from './app/components/tray';
 import { WindowManager } from './app/windows';
-import {
-  cleanUpIPCHandlers,
-  initIPCHandlers,
-} from './app/ipc/mainProcessIPCManager';
-import { startFileWatcher, stopFileWatcher } from './app/helper/fileWatcher';
+import { initIPCHandlers } from './app/ipc/mainProcessIPCManager';
+import { startFileWatcher } from './app/helper/fileWatcher';
 import { arvisRenewExtensionFlagFilePath } from './app/config/path';
 import { autoCheckUpdateAtStartup } from './app/config/appUpdater';
 import MenuBuilder from './app/components/menus';
@@ -28,9 +25,11 @@ import {
   handleFirstRun,
   handleThisVersionFirstRun,
 } from './app/helper/handleFirstRun';
+import { quitArvis } from './app/helper/quitArvis';
 import { openArvisFile } from './app/helper/openArvisFileHandler';
 import { reduxStoreResetHandler } from './app/store/reduxStoreResetHandler';
 import { isThisVersionFirstLaunching } from './app/utils/isThisVersionFirstLaunching';
+import { IPCMainEnum } from './app/ipc/ipcEventEnum';
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -66,10 +65,12 @@ app.disableHardwareAcceleration();
 app.allowRendererProcessReuse = false;
 
 app.on('before-quit', () => {
-  WindowManager.getInstance().windowAllClose();
-  stopFileWatcher();
-  cleanUpIPCHandlers();
-  app.exit();
+  const searchWindow = WindowManager.getInstance().getSearchWindow();
+  if (searchWindow) {
+    searchWindow.webContents.send(IPCMainEnum.willQuit);
+  } else {
+    quitArvis();
+  }
 });
 
 // To do:: open-file is triggered only in macos.

@@ -1,3 +1,9 @@
+# 0.13.1
+
+## What’s Changed
+
+- [optimization] Performance up by refactoring history API
+
 # 0.13.0
 
 ## What’s Changed

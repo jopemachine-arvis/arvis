@@ -46,6 +46,7 @@ export enum IPCRendererEnum {
   triggerKeyDownEvent                        = '@ipcRenderer/triggerKeyDownEvent',
   triggerSingleKeyPressEvent                 = '@ipcRenderer/triggerSingleKeyPressEvent',
   unregisterAllShortcuts                     = '@ipcRenderer/unregisterAllShortcuts',
+  willQuitRet                                = '@ipcRenderer/willQuitRet',
 }
 
 /**
@@ -84,4 +85,5 @@ export enum IPCMainEnum {
   setSearchbarInput                          = '@ipcMain/setSearchbarInput',
   togglePluginsEnabled                       = '@ipcMain/togglePluginsEnabled',
   toggleWorkflowsEnabled                     = '@ipcMain/toggleWorkflowsEnabled',
+  willQuit                                   = '@ipcMain/willQuit',
 }
