@@ -1,3 +1,9 @@
+# 0.13.3
+
+## What’s Changed
+
+- [hotfix] Fix appearance page bug
+
 # 0.13.2
 
 ## What’s Changed

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { ipcRenderer } from 'electron';
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input, AutoSuggestion } from './components';
@@ -72,13 +72,10 @@ const SearchBar = (props: IProps) => {
     []
   );
 
-  const preventBlur = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      originalRef && originalRef.current && originalRef.current.focus();
-    },
-    [originalRef.current]
-  );
+  const preventBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    originalRef && originalRef.current && originalRef.current.focus();
+  };
 
   const rightClickHandler = useCallback(
     (e: React.MouseEvent<HTMLInputElement>) => {
@@ -113,7 +110,7 @@ const SearchBar = (props: IProps) => {
         type={type}
         onKeyDown={preventUpAndDownArrow}
         onContextMenu={rightClickHandler}
-        onBlur={alwaysFocus ? preventBlur : () => {}}
+        onBlur={alwaysFocus ? preventBlur : undefined}
       />
       {autoSuggestion && (
         <AutoSuggestion
