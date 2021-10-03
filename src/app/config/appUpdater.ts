@@ -55,13 +55,6 @@ export const autoCheckUpdateAtStartup = () => {
 
   autoUpdater.on('update-downloaded', askForUpdate);
 
-  autoUpdater.on('update-not-available', (info) => {
-    dialog.showMessageBoxSync({
-      title: 'Update not available',
-      message: `update-not-available!\n${info}`,
-    });
-  });
-
   autoUpdater.on('error', (err) => {
     dialog.showMessageBoxSync({
       title: 'Error',

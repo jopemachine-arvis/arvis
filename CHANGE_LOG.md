@@ -1,3 +1,9 @@
+# 0.13.2
+
+## What’s Changed
+
+- [fix] Notarize to macos binaries
+
 # 0.13.1
 
 ## What’s Changed
