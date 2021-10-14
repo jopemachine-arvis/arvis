@@ -342,7 +342,7 @@
     "react-hot-loader": "^4.13.0",
     "react-icons": "^4.2.0",
     "react-markdown": "^6.0.3",
-    "react-pro-sidebar": "^0.6.0",
+    "react-pro-sidebar": "^0.7.0",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.2.1",
     "react-spring": "^9.2.4",
