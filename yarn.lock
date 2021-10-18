@@ -6459,10 +6459,10 @@ follow-redirects@^1.0.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.1.tgz#d9114ded0a1cfdd334e164e6662ad02bfd91ff43"
   integrity sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
 
-font-list@^1.2.15:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/font-list/-/font-list-1.3.1.tgz#b6527e94045601b92971572220ce691714452aed"
-  integrity sha512-/TvQbGLIdyfH4SBZkDwWlX0JNDVH98Q29SkgMJlIdmc4ObKu+RnB/B493lskB2Z8XZ2FZ532QOem4/PDgtoXUQ==
+font-list@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/font-list/-/font-list-1.4.0.tgz#5a34e5e5633a45529468245c90f7093409e1de6e"
+  integrity sha512-UjBFmaQ3tqAnpdc7dJiT9uT5dWF2fxrtw8PwYnECrdGeslutzSNj5KSsWc5mc8F7sbAAGEHu8ykRnEHOk0k/6Q==
 
 for-in@^1.0.2:
   version "1.0.2"

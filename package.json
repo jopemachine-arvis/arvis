@@ -320,7 +320,7 @@
     "encodeurl": "^1.0.2",
     "execa": "5.1.1",
     "filenamify": "4.3.0",
-    "font-list": "^1.2.15",
+    "font-list": "^1.4.0",
     "github-markdown-css": "^4.0.0",
     "got": "11.8.2",
     "history": "^5.0.1",
