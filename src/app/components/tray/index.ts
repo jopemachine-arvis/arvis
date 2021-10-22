@@ -53,6 +53,7 @@ export default class TrayBuilder {
       label: 'Check for updates..',
       type: 'normal',
       toolTip: 'Check for arvis update',
+      enabled: process.platform === 'win32',
       click: () => {
         checkUpdateManually();
       },

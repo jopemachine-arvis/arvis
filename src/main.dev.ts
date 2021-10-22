@@ -101,7 +101,7 @@ app.on('ready', () => {
 
     const windowManager = WindowManager.getInstance();
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && process.platform === 'win32') {
       autoCheckUpdateAtStartup();
     }
 

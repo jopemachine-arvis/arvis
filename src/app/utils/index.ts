@@ -19,6 +19,7 @@ import { hideWindowAndRestoreFocus } from './hideWindowAndRestoreFocus';
 import { getHotkeyNameOnThisPlatform } from './getHotkeyNameOnThisPlatform';
 import { onNumberChangeHandler } from './onNumberChangeHandler';
 import { getGithubReadmeContent } from './getGithubReadme';
+import { readJson5 } from './readJson5';
 
 export {
   applyAlphaColor,
@@ -36,6 +37,7 @@ export {
   objectFlip,
   onNumberChangeHandler,
   range,
+  readJson5,
   sleep,
   supportedImageFormats,
 };

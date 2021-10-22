@@ -1,7 +1,7 @@
 {
   "name": "arvis",
   "productName": "Arvis",
-  "version": "0.13.3",
+  "version": "0.14.0",
   "description": "Extendable cross-platform launcher that aims to help you run, edit, create any workflow simply",
   "homepage": "https://jopemachine.github.io/arvis.com/",
   "scripts": {
@@ -235,7 +235,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "arvis-core": "^0.18.0",
+    "arvis-core": "^0.19.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.2.2",
@@ -327,6 +327,7 @@
     "is-admin": "^3.0.0",
     "is-url": "^1.2.4",
     "istextorbinary": "^5.14.0",
+    "json5": "^2.2.0",
     "jsoneditor": "^9.5.6",
     "jsoneditor-react": "^3.1.1",
     "open": "^8.2.1",

@@ -15,6 +15,7 @@ import {
   createGlobalConfigChangeHandler,
   getRandomColor,
   onNumberChangeHandler,
+  readJson5,
 } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import _ from 'lodash';
@@ -127,7 +128,7 @@ export default function Appearance() {
   };
 
   const importTheme = (themePath: string) => {
-    fse.readJson(themePath).then(applyTheme).catch(console.error);
+    readJson5(themePath).then(applyTheme).catch(console.error);
   };
 
   const ipcCallbackTbl = {

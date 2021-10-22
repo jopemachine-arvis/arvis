@@ -56,6 +56,7 @@ class SearchbarContextMenu extends Menu {
       new MenuItem({
         type: 'normal',
         label: 'Check for updates..',
+        enabled: process.platform === 'win32',
         toolTip: 'Check for arvis update',
         click() {
           checkUpdateManually();

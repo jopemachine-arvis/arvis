@@ -1,3 +1,10 @@
+# 0.14.0
+
+## What’s Changed
+
+- [feature] Supports `JSON 5` in `arvis-workflow.json`, `arvis-plugin.json`, `arvistheme`, `user-config.json` formats.
+- [fix] Remove auto update feature in macos, linux.
+
 # 0.13.3
 
 ## What’s Changed
