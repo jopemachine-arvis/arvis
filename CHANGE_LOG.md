@@ -1,3 +1,9 @@
+# 0.14.1
+
+## What’s Changed
+
+- [chore] Dependency update
+
 # 0.14.0
 
 ## What’s Changed
