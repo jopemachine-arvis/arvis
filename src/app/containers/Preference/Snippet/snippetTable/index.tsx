@@ -13,12 +13,13 @@ import { arvisSnippetCollectionPath } from '@config/path';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer } from './components';
 import { EditableCell } from './editableCell';
-import { filenamifyPath } from '../utils';
+import { filenamifyPath, snippetInfoChangeHandler } from '../utils';
 
 type IProps = {
   snippets?: SnippetItem[];
   reloadSnippets: () => void;
   collectionInfo?: SnippetCollectionInfo;
+  snippetTableDoubleClickHandler: (idx: number) => void;
 };
 
 function SnippetTable({
@@ -26,11 +27,13 @@ function SnippetTable({
   data,
   updateSnippet,
   collectionInfo,
+  snippetTableDoubleClickHandler,
 }: {
   columns: any;
   data: SnippetItem[];
   updateSnippet: any;
   collectionInfo?: SnippetCollectionInfo;
+  snippetTableDoubleClickHandler: (idx: number) => void;
 }) {
   const dataRef = useRef<any>(data);
   const collectionInfoRef =
@@ -39,13 +42,18 @@ function SnippetTable({
   const defaultColumn = React.useMemo(
     () => ({
       Cell: (cellArgs: any) => {
-        if (!dataRef.current[cellArgs.row.index]) return null;
-        const { type } = dataRef.current[cellArgs.row.index];
+        const snippetIdx = cellArgs.row.index;
+        if (!dataRef.current[snippetIdx]) return null;
+        const { type } = dataRef.current[snippetIdx];
 
         return EditableCell({
-          type,
-          collectionInfo: collectionInfoRef.current,
           ...cellArgs,
+          type,
+          options: {
+            collectionInfo: collectionInfoRef.current,
+            onDoubleClickHandler: () =>
+              snippetTableDoubleClickHandler(snippetIdx),
+          },
         });
       },
     }),
@@ -124,7 +132,12 @@ function SnippetTable({
 }
 
 export default function (props: IProps) {
-  const { snippets, reloadSnippets, collectionInfo } = props;
+  const {
+    snippets,
+    reloadSnippets,
+    collectionInfo,
+    snippetTableDoubleClickHandler,
+  } = props;
 
   const columns = React.useMemo(
     () => [
@@ -168,43 +181,6 @@ export default function (props: IProps) {
     return fse.rename(oldPath, newPath);
   };
 
-  const snippetInfoChangeHandler = (
-    snippet: SnippetItem,
-    target: string,
-    value: string | boolean
-  ) => {
-    // Update snippet by updating json file
-    const snippetFileName = filenamifyPath(
-      `${snippet.name} [${snippet.uid}].json`
-    );
-
-    const snippetPath = path.resolve(
-      arvisSnippetCollectionPath,
-      snippet.collection,
-      snippetFileName
-    );
-
-    const data: Record<string, any> = {
-      snippet: snippet.snippet,
-      dontautoexpand: !snippet.useAutoExpand,
-      name: snippet.name,
-      keyword: snippet.keyword,
-      uid: snippet.uid,
-    };
-
-    if (target === 'useAutoExpand') {
-      data.dontautoexpand = value;
-    } else {
-      data[target] = value;
-    }
-
-    return fse.writeJson(
-      snippetPath,
-      { arvissnippet: data },
-      { encoding: 'utf8', spaces: 4 }
-    );
-  };
-
   const updateSnippet = (
     rowIndex: number,
     columnId: string,
@@ -232,6 +208,7 @@ export default function (props: IProps) {
         data={snippets ?? []}
         updateSnippet={updateSnippet}
         collectionInfo={collectionInfo}
+        snippetTableDoubleClickHandler={snippetTableDoubleClickHandler}
       />
     </OuterContainer>
   );

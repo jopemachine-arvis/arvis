@@ -358,7 +358,7 @@ export default function PreferenceWindow() {
     }
 
     setMainContent(main);
-  }, [page, fontList]);
+  }, [page, fontList, snippets]);
 
   const renderMain = () => {
     return <MainContainer>{mainContent}</MainContainer>;

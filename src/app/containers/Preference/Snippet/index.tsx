@@ -22,6 +22,7 @@ import useItemList, { ItemInfo } from '@hooks/useItemList';
 import { createGlobalConfigChangeHandler } from '@utils/createGlobalConfigChangeHandler';
 import * as style from './style';
 import CollectionInfoModal from './collectionInfoModal';
+import SnippetInfoModal from './snippetInfoModal';
 import SnippetTable from './snippetTable';
 import {
   OuterContainer,
@@ -33,7 +34,13 @@ import {
 } from './components';
 import './index.css';
 
-export default function Snippet(props: any) {
+type IProps = {
+  snippets: SnippetItem[];
+  snippetCollectionInfos: Map<CollectionName, SnippetCollectionInfo>;
+  reloadSnippets: () => void;
+};
+
+export default function Snippet(props: IProps) {
   const { snippets, snippetCollectionInfos, reloadSnippets } = props;
 
   const snippetsByCollection = useMemo(
@@ -41,13 +48,20 @@ export default function Snippet(props: any) {
     [snippets]
   );
 
+  useEffect(() => console.log(snippets), snippets);
+
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
-  const selectedCollection = useRef<string | undefined>();
+  const selectedCollection = useRef<CollectionName | undefined>();
   const selectedCollectionInfo = useRef<SnippetCollectionInfo | undefined>();
 
   const [collectionEditModalOpened, setCollectionEditModalOpened] =
     useState<boolean>(false);
+
+  const [snippetInfoModalOpened, setSnippetInfoModalOpened] =
+    useState<boolean>(false);
+
+  const [clickedSnippetIdx, setClickedSnippetIdx] = useState<number>(0);
 
   const forceUpdate = useForceUpdate();
 
@@ -197,6 +211,11 @@ export default function Snippet(props: any) {
     };
   }, []);
 
+  const snippetTableDoubleClickHandler = (idx: number) => {
+    setClickedSnippetIdx(idx);
+    setSnippetInfoModalOpened(true);
+  };
+
   return (
     <OuterContainer
       id="snippet-page-container"
@@ -227,18 +246,18 @@ export default function Snippet(props: any) {
             />
           </FormGroup>
         </Form>
-
         {itemList}
       </SnippetListView>
       <SnippetSettingContainer>
         <SnippetTable
+          collectionInfo={selectedCollectionInfo.current}
+          reloadSnippets={reloadSnippets}
+          snippetTableDoubleClickHandler={snippetTableDoubleClickHandler}
           snippets={
             selectedCollection.current
               ? snippetsByCollection[selectedCollection.current]
               : undefined
           }
-          collectionInfo={selectedCollectionInfo.current}
-          reloadSnippets={reloadSnippets}
         />
       </SnippetSettingContainer>
 
@@ -267,6 +286,12 @@ export default function Snippet(props: any) {
         setOpened={setCollectionEditModalOpened}
         collection={selectedCollection.current}
         collectionInfo={selectedCollectionInfo.current}
+        reloadSnippets={reloadSnippets}
+      />
+      <SnippetInfoModal
+        snippetInfo={snippets[clickedSnippetIdx]}
+        opened={snippetInfoModalOpened}
+        setOpened={setSnippetInfoModalOpened}
         reloadSnippets={reloadSnippets}
       />
     </OuterContainer>

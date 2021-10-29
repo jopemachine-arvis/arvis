@@ -33,7 +33,44 @@ export const filenamifyPath = (str: string, options?: any) => {
     return path.resolve(path.dirname(str), removeMultipleSpace(filename));
   }
 
-  return removeMultipleSpace(filenamify(str));
+  return removeMultipleSpace(filenamify(str, { replacement: ' ' }));
+};
+
+export const snippetInfoChangeHandler = (
+  snippet: SnippetItem,
+  target: string,
+  value: string | boolean
+) => {
+  // Update snippet by updating json file
+  const snippetFileName = filenamifyPath(
+    `${snippet.name} [${snippet.uid}].json`
+  );
+
+  const snippetPath = path.resolve(
+    arvisSnippetCollectionPath,
+    snippet.collection,
+    snippetFileName
+  );
+
+  const data: Record<string, any> = {
+    snippet: snippet.snippet,
+    dontautoexpand: !snippet.useAutoExpand,
+    name: snippet.name,
+    keyword: snippet.keyword,
+    uid: snippet.uid,
+  };
+
+  if (target === 'useAutoExpand') {
+    data.dontautoexpand = value;
+  } else {
+    data[target] = value;
+  }
+
+  return fse.writeJson(
+    snippetPath,
+    { arvissnippet: data },
+    { encoding: 'utf8', spaces: 4 }
+  );
 };
 
 export const createEmptySnippet = async (collectionDirName: string) => {

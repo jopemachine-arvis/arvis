@@ -1,3 +1,10 @@
+# 0.14.2
+
+## What’s Changed
+
+- [fix] Fix Snippet page's bugs
+- [feature] Add Snippet editing modal box
+
 # 0.14.1
 
 ## What’s Changed

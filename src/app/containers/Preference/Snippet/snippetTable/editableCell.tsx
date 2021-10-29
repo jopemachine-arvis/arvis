@@ -3,21 +3,28 @@ import { Input } from 'reactstrap';
 import StyledInput from '@components/styledInput';
 import './index.css';
 
+type SnippetTableCellOptions = {
+  collectionInfo?: SnippetCollectionInfo;
+  onDoubleClickHandler?: () => void;
+};
+
 export const EditableCell = ({
   value: initialValue,
   row: { index },
   column: { id },
   updateSnippet,
   type,
-  collectionInfo,
+  options = {},
 }: {
   value: any;
   row: any;
   column: any;
   updateSnippet: any;
   type: string;
-  collectionInfo?: SnippetCollectionInfo;
+  options: SnippetTableCellOptions;
 }) => {
+  const { collectionInfo, onDoubleClickHandler } = options;
+
   const prefix = collectionInfo
     ? collectionInfo.snippetKeywordPrefix ?? ''
     : '';
@@ -78,6 +85,7 @@ export const EditableCell = ({
       onChange={onChangeHandler}
       onBlur={onBlurHandler}
       onFocus={onFocusHandler}
+      onDoubleClick={onDoubleClickHandler}
       style={{
         height: 20,
         padding: 3,
@@ -90,8 +98,4 @@ export const EditableCell = ({
       }}
     />
   );
-};
-
-EditableCell.defaultProps = {
-  collectionInfo: undefined,
 };
