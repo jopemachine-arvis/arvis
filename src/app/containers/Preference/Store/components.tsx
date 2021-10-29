@@ -70,6 +70,7 @@ export const SearchResultText = styled.div`
   font-size: 12px;
   color: #777;
   margin-right: 20px;
+  user-select: none;
 `;
 
 export const SearchbarDescriptionContainer = styled.div`

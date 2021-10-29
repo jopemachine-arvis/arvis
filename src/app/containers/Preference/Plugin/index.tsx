@@ -452,6 +452,7 @@ export default function Plugin() {
             onSelect={setTabIndex}
             style={{
               width: '100%',
+              userSelect: 'none',
             }}
           >
             <TabList>

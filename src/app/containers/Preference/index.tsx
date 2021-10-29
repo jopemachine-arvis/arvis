@@ -371,8 +371,12 @@ export default function PreferenceWindow() {
         fontFamily: global_font,
       }}
     >
-      {(!initResourced || isSpinning) && <ScreenCover />}
-      {(!initResourced || isSpinning) && <Spinner center />}
+      {(!initResourced || isSpinning) && (
+        <>
+          <Spinner center />
+          <ScreenCover />
+        </>
+      )}
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>
         <Sidebar page={page} setPage={setPage} />
         {renderMain()}

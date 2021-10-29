@@ -470,6 +470,7 @@ export default function Workflow() {
             onSelect={setTabIndex}
             style={{
               width: '100%',
+              userSelect: 'none',
             }}
           >
             <TabList>

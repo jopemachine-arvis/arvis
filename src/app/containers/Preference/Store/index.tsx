@@ -254,6 +254,7 @@ export default function Store(props: IProps) {
               fontSize: 11,
               height: 28,
               color: '#888',
+              userSelect: 'none',
             }}
             type="select"
             value={sortTxtDict[sortBy]}
@@ -279,6 +280,7 @@ export default function Store(props: IProps) {
           <Tabs
             style={{
               width: '100%',
+              userSelect: 'none',
             }}
           >
             <TabList>

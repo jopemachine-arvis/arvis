@@ -147,7 +147,7 @@ export default function General(props: IProps) {
           </FormDescription>
         </FormGroup>
 
-        <FormGroup style={formGroupStyle}>
+        <FormGroup style={{ ...formGroupStyle, paddingBottom: 35 }}>
           <Label style={labelStyle}>Fonts</Label>
           <Dropdown
             isOpen={fontListDrawerOpen}
