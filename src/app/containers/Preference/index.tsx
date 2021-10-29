@@ -373,8 +373,8 @@ export default function PreferenceWindow() {
     >
       {(!initResourced || isSpinning) && (
         <>
-          <Spinner center />
           <ScreenCover />
+          <Spinner center />
         </>
       )}
       <SpinnerContext.Provider value={[isSpinning, setSpinning]}>

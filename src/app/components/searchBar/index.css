@@ -1,3 +1,8 @@
+.searchBarContainerWithBorder {
+  border: 1px solid #2f323c !important;
+  border-radius: 7px;
+}
+
 .searchBar::selection {
   color: white;
   background: #888888;

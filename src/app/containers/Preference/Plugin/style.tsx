@@ -21,7 +21,7 @@ export const defaultIconStyle: React.CSSProperties = {
 export const searchBarStyle: Record<string, any> = {
   itemHeight: 35,
   footerHeight: 15,
-  itemLeftPadding: 10,
+  itemLeftPadding: 45,
   searchbarHeight: 35,
   searchbarFontSize: 12,
   itemFontSize: 14,

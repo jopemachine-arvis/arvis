@@ -73,5 +73,4 @@ export const SearchbarContainer = styled.div`
   margin-right: 40px;
   border-radius: 5px;
   background-color: #202228;
-  padding-left: 30px;
 `;

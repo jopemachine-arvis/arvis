@@ -450,10 +450,13 @@ export default function Workflow() {
           <SearchBar
             alwaysFocus={false}
             getInputProps={getInputProps}
-            hasDragger={false}
+            hasBorder
             hasContextMenu={false}
+            hasDragger={false}
+            hasSearchIcon
             isPinned={false}
             itemLeftPadding={style.searchBarStyle.itemLeftPadding}
+            placeholder="Search installed workflows"
             searchbarAutomatchFontColor="#fff"
             searchbarFontColor="#fff"
             searchbarFontSize={style.searchBarStyle.searchbarFontSize}

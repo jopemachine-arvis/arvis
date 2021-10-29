@@ -34,6 +34,7 @@ export const ListView = styled.div`
 
 export const ItemOrderedList = styled.div`
   background-color: #1f2228;
+  border: 1px solid #2f323c !important;
   border-radius: 10px;
   margin-left: 40px;
   margin-right: 40px;

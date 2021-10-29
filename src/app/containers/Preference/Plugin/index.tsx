@@ -431,11 +431,14 @@ export default function Plugin() {
         <SearchbarContainer>
           <SearchBar
             alwaysFocus={false}
-            hasDragger={false}
             getInputProps={getInputProps}
+            hasBorder
             hasContextMenu={false}
+            hasDragger={false}
+            hasSearchIcon
             isPinned={false}
             itemLeftPadding={style.searchBarStyle.itemLeftPadding}
+            placeholder="Search installed plugins"
             searchbarAutomatchFontColor="#fff"
             searchbarFontColor="#fff"
             searchbarFontSize={style.searchBarStyle.searchbarFontSize}

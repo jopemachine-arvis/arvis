@@ -231,11 +231,14 @@ export default function Store(props: IProps) {
         <SearchbarContainer>
           <SearchBar
             alwaysFocus={false}
-            hasDragger={false}
             getInputProps={getInputProps}
+            hasBorder
             hasContextMenu={false}
+            hasDragger={false}
+            hasSearchIcon
             isPinned={false}
             itemLeftPadding={style.searchBarStyle.itemLeftPadding}
+            placeholder="Search arvis extensions"
             searchbarAutomatchFontColor="#fff"
             searchbarFontColor="#fff"
             searchbarFontSize={style.searchBarStyle.searchbarFontSize}

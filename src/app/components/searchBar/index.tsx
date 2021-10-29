@@ -2,6 +2,7 @@
 
 import { ipcRenderer } from 'electron';
 import React, { useCallback, useEffect } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
 import SearchWindowSpinner from '../searchWindowSpinner';
 import { IPCRendererEnum } from '../../ipc/ipcEventEnum';
 import { OuterContainer, Input, AutoSuggestion } from './components';
@@ -11,12 +12,15 @@ import './index.css';
 type IProps = {
   alwaysFocus: boolean;
   autoSuggestion?: string;
-  hasDragger?: boolean;
   draggerColor?: string;
   getInputProps?: Function;
+  hasBorder?: boolean;
   hasContextMenu?: boolean;
+  hasDragger?: boolean;
+  hasSearchIcon?: boolean;
   isPinned?: boolean;
   itemLeftPadding: number;
+  placeholder?: string;
   searchbarAutomatchFontColor: string;
   searchbarFontColor: string;
   searchbarFontSize: number;
@@ -30,10 +34,13 @@ const SearchBar = (props: IProps) => {
     autoSuggestion,
     draggerColor,
     getInputProps,
+    hasBorder,
     hasContextMenu,
     hasDragger,
+    hasSearchIcon,
     isPinned,
     itemLeftPadding,
+    placeholder,
     searchbarAutomatchFontColor,
     searchbarFontColor,
     searchbarFontSize,
@@ -89,12 +96,21 @@ const SearchBar = (props: IProps) => {
 
   return (
     <OuterContainer
+      className={hasBorder ? 'searchBarContainerWithBorder' : undefined}
       style={{
         height: searchbarHeight,
       }}
     >
       {spinning && (
         <SearchWindowSpinner style={{ left: undefined, right: '55px' }} />
+      )}
+      {hasSearchIcon && (
+        <AiOutlineSearch
+          style={{
+            position: 'absolute',
+            left: 60,
+          }}
+        />
       )}
       <Input
         id="searchBar"
@@ -111,6 +127,7 @@ const SearchBar = (props: IProps) => {
         onKeyDown={preventUpAndDownArrow}
         onContextMenu={rightClickHandler}
         onBlur={alwaysFocus ? preventBlur : undefined}
+        placeholder={placeholder}
       />
       {autoSuggestion && (
         <AutoSuggestion
