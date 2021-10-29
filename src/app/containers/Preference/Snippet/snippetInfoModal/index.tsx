@@ -28,7 +28,7 @@ const SnippetInfoModal = (props: IProps) => {
   const [snippet, setSnippet] = useState<string>('');
 
   useEffect(() => {
-    if (snippetInfo.snippet) {
+    if (snippetInfo && snippetInfo.snippet) {
       setSnippet(snippetInfo.snippet);
     } else {
       setSnippet('');

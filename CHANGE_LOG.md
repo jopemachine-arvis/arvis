@@ -1,3 +1,9 @@
+# 0.14.3
+
+## What’s Changed
+
+- [hotfix] Fix Snippet page's critical bug.
+
 # 0.14.2
 
 ## What’s Changed
