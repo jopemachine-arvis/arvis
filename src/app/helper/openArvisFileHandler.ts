@@ -41,9 +41,7 @@ const openHandler = (
  * @param file
  */
 export const openArvisFile = (file: string) => {
-  const preferenceWindow = WindowManager.getInstance().getPreferenceWindow();
-
-  preferenceWindow.show();
+  WindowManager.getInstance().getPreferenceWindow().show();
 
   switch (path.extname(file)) {
     case '.arvisworkflow':

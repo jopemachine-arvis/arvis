@@ -1,4 +1,3 @@
-import React from 'react';
 import readdirp from 'readdirp';
 import { arvisSnippetCollectionPath } from '@config/path';
 import path from 'path';

@@ -27,11 +27,6 @@ export const OuterContainer = styled.div`
   justify-content: flex-start;
 `;
 
-export const ListView = styled.div`
-  overflow-y: auto;
-  margin-top: 95px;
-`;
-
 export const ItemOrderedList = styled.div`
   background-color: #1f2228;
   border: 1px solid #2f323c !important;

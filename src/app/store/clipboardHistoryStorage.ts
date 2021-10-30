@@ -30,18 +30,18 @@ export const clear = () => {
   store = [];
 };
 
-const validateJson = (json: any) => {
-  return json!.items || json!.items.length;
+const validateClipboardHistory = (clipboardHistoryData: any) => {
+  return clipboardHistoryData!.items || clipboardHistoryData!.items.length;
 };
 
 export const importClipboardHistoryStorage = () => {
   try {
-    const json = fse.readJSONSync(arvisClipboardHistoryStore, {
+    const clipboardHistoryData = fse.readJSONSync(arvisClipboardHistoryStore, {
       encoding: 'utf8',
     });
-    if (!validateJson(json)) throw new Error();
+    if (!validateClipboardHistory(clipboardHistoryData)) throw new Error();
 
-    store = json.items;
+    store = clipboardHistoryData.items;
   } catch (err) {
     store = [];
   }

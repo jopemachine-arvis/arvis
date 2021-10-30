@@ -59,6 +59,10 @@ export function getMaxActionLogCount(state: StateType) {
   return state.advanced_config.max_action_log_count;
 }
 
+export function getIsOnDebuggingVariables(state: StateType) {
+  return state.advanced_config.debugging_variables;
+}
+
 export function getIsOnDebuggingAction(state: StateType) {
   return state.advanced_config.debugging_action;
 }

@@ -8,7 +8,8 @@ import {
   ItemTitle,
   ItemOrderedList,
 } from './components';
-import * as style from './style';
+import * as styles from './style';
+import './index.css';
 
 export interface ItemInfo {
   title: string;
@@ -115,9 +116,9 @@ export default function useItemList(props: IProps) {
   const renderItem = (itemInfo: ItemInfo, idx: number) => {
     if (!itemInfo) return <React.Fragment key={`itemListItem-${idx}`} />;
 
-    const applyDisabledStyle = itemInfo.enabled ? {} : style.disabledStyle;
+    const applyDisabledStyle = itemInfo.enabled ? {} : styles.disabledStyle;
     const itemContainerStyle = selectedIdxs.has(idx)
-      ? style.selectedItemStyle
+      ? styles.selectedItemStyle
       : {};
 
     return (
