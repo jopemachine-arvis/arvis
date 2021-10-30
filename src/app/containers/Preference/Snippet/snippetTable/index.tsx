@@ -6,14 +6,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { Table } from 'reactstrap';
-import fse from 'fs-extra';
-import path from 'path';
 import { ipcRenderer } from 'electron';
-import { arvisSnippetCollectionPath } from '@config/path';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer } from './components';
 import { EditableCell } from './editableCell';
-import { filenamifyPath, snippetInfoChangeHandler } from '../utils';
+import { snippetInfoChangeHandler, snippetNameChangeHandler } from '../utils';
 
 type IProps = {
   snippets?: SnippetItem[];
@@ -160,26 +157,6 @@ export default function (props: IProps) {
     ],
     []
   );
-
-  const snippetNameChangeHandler = (snippet: SnippetItem, value: string) => {
-    // Update snippet by changing file name
-    const oldFileName = filenamifyPath(`${snippet.name} [${snippet.uid}].json`);
-    const newFileName = filenamifyPath(`${value} [${snippet.uid}].json`);
-
-    const oldPath = path.resolve(
-      arvisSnippetCollectionPath,
-      snippet.collection,
-      oldFileName
-    );
-
-    const newPath = path.resolve(
-      arvisSnippetCollectionPath,
-      snippet.collection,
-      newFileName
-    );
-
-    return fse.rename(oldPath, newPath);
-  };
 
   const updateSnippet = (
     rowIndex: number,

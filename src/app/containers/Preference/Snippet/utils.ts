@@ -3,6 +3,8 @@ import path from 'path';
 import plist from 'plist';
 import fse from 'fs-extra';
 import { v4 as generateUuid } from 'uuid';
+import _ from 'lodash';
+import pathExists from 'path-exists';
 import { arvisSnippetCollectionPath } from '../../../config/path';
 
 export const generateSnippetUid = () => {
@@ -36,11 +38,14 @@ export const filenamifyPath = (str: string, options?: any) => {
   return removeMultipleSpace(filenamify(str, { replacement: ' ' }));
 };
 
-export const snippetInfoChangeHandler = (
+export const snippetInfosChangeHandler = (
   snippet: SnippetItem,
-  target: string,
-  value: string | boolean
+  targets: string[],
+  values: (string | boolean)[]
 ) => {
+  if (targets.length !== values.length)
+    throw new Error('targets length should be equal to values length');
+
   // Update snippet by updating json file
   const snippetFileName = filenamifyPath(
     `${snippet.name} [${snippet.uid}].json`
@@ -60,10 +65,14 @@ export const snippetInfoChangeHandler = (
     uid: snippet.uid,
   };
 
-  if (target === 'useAutoExpand') {
-    data.dontautoexpand = value;
-  } else {
-    data[target] = value;
+  for (const newData of _.unzip([targets, values] as (string | boolean)[][])) {
+    const [target, value] = newData;
+
+    if (target === 'useAutoExpand') {
+      data.dontautoexpand = value;
+    } else {
+      data[target as string] = value;
+    }
   }
 
   return fse.writeJson(
@@ -71,6 +80,14 @@ export const snippetInfoChangeHandler = (
     { arvissnippet: data },
     { encoding: 'utf8', spaces: 4 }
   );
+};
+
+export const snippetInfoChangeHandler = (
+  snippet: SnippetItem,
+  target: string,
+  value: string | boolean
+) => {
+  return snippetInfosChangeHandler(snippet, [target], [value]);
 };
 
 export const createEmptySnippet = async (collectionDirName: string) => {
@@ -97,6 +114,34 @@ export const createEmptySnippet = async (collectionDirName: string) => {
     },
     { encoding: 'utf8', spaces: 4 }
   );
+};
+
+export const snippetNameChangeHandler = async (
+  snippet: SnippetItem,
+  newName: string
+) => {
+  // Update snippet by changing file name
+  const oldFileName = filenamifyPath(`${snippet.name} [${snippet.uid}].json`);
+  const newFileName = filenamifyPath(`${newName} [${snippet.uid}].json`);
+
+  const oldPath = path.resolve(
+    arvisSnippetCollectionPath,
+    snippet.collection,
+    oldFileName
+  );
+
+  const newPath = path.resolve(
+    arvisSnippetCollectionPath,
+    snippet.collection,
+    newFileName
+  );
+
+  return fse.rename(oldPath, newPath).then(async () => {
+    if (await pathExists(oldPath)) {
+      await fse.remove(oldPath);
+    }
+    return null;
+  });
 };
 
 export const deleteSnippet = (snippet: SnippetItem) => {

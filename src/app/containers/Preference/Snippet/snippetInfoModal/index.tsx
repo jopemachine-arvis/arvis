@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import { OuterContainer } from './components';
 import * as styles from './style';
-import { snippetInfoChangeHandler } from '../utils';
+import { snippetInfosChangeHandler, snippetNameChangeHandler } from '../utils';
 
 type IProps = {
   opened: boolean;
@@ -25,19 +25,29 @@ const SnippetInfoModal = (props: IProps) => {
 
   const toggle = () => setOpened(!opened);
 
+  const [name, setName] = useState<string>('');
   const [snippet, setSnippet] = useState<string>('');
+  const [keyword, setKeyword] = useState<string>('');
 
   useEffect(() => {
-    if (snippetInfo && snippetInfo.snippet) {
-      setSnippet(snippetInfo.snippet);
+    if (snippetInfo) {
+      setName(snippetInfo.name ?? '');
+      setSnippet(snippetInfo.snippet ?? '');
+      setKeyword(snippetInfo.keyword ?? '');
     } else {
+      setName('');
       setSnippet('');
+      setKeyword('');
     }
   }, [snippetInfo]);
 
   const editSnippetInfo = () => {
-    snippetInfoChangeHandler(snippetInfo, 'snippet', snippet).then(() => {
-      reloadSnippets();
+    snippetInfosChangeHandler(
+      snippetInfo,
+      ['name', 'snippet', 'keyword'],
+      [name, snippet, keyword]
+    ).then(() => {
+      snippetNameChangeHandler(snippetInfo, name).then(reloadSnippets);
       return null;
     });
   };
@@ -63,10 +73,29 @@ const SnippetInfoModal = (props: IProps) => {
         <ModalBody>
           <FormGroup check>
             <Label check style={styles.labelStyle}>
+              Name
+            </Label>
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup check>
+            <Label check style={styles.labelStyle}>
+              Keyword
+            </Label>
+            <Input
+              type="text"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup check>
+            <Label check style={styles.labelStyle}>
               Snippet
             </Label>
             <Input
-              name="text"
               type="textarea"
               value={snippet}
               onChange={(e) => setSnippet(e.target.value)}

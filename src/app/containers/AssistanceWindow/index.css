@@ -1,9 +1,9 @@
 ::-webkit-scrollbar {
-  width: 2px !important;
+  width: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #fff !important;
+  background-color: #fff;
 }
 
 #assistanceWindowOuterContainer {
