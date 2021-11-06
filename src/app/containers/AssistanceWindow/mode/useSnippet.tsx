@@ -47,7 +47,7 @@ const useSnippetMode = ({
       );
 
       return store.map((snippet) => {
-        const iconPath = snippetCollectionInfos.get(snippet.collection)!.hasIcon
+        const iconPath = snippetCollectionInfos.get(snippet.collection)?.hasIcon
           ? path.resolve(
               arvisSnippetCollectionPath,
               snippet.collection,
@@ -61,6 +61,7 @@ const useSnippetMode = ({
           snippet: snippet.snippet,
           collection: snippet.collection,
           keyword: snippet.keyword,
+          useAutoExpand: snippet.useAutoExpand,
           icon: {
             path: iconPath,
           },
@@ -102,7 +103,9 @@ const useSnippetMode = ({
         >
           {`${snippet.split(' ').length} Words, ${snippet.length} Characters`}
           <br />
-          {`Keyword: ${items[indexInfo.selectedItemIdx].keyword ?? ''}`}
+          {items[indexInfo.selectedItemIdx].useAutoExpand
+            ? `Keyword: ${items[indexInfo.selectedItemIdx].keyword ?? ''}`
+            : ''}
         </SubInfoText>
       </>
     );

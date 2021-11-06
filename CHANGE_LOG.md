@@ -5,6 +5,7 @@
 - [style] Change preference window's styles
 - [fix] Remove duplicated text store in clipboard history
 - [feature] Add name, keyword fields on snippetInfoModal
+- [feature] Remove snippet keyword displaying when useAutoExpand is false
 
 # 0.14.3
 
