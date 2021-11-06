@@ -21,19 +21,6 @@ export const labelStyle: React.CSSProperties = {
   marginRight: 15,
 };
 
-export const descriptionContainerStyle: React.CSSProperties = {
-  justifyContent: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  paddingTop: 10,
-  paddingBottom: 10,
-  borderRadius: 10,
-  marginLeft: 20,
-  marginRight: 60,
-  userSelect: 'none',
-};
-
 export const defaultIconStyle: React.CSSProperties = {
   userSelect: 'none',
   objectFit: 'scale-down',
@@ -42,13 +29,4 @@ export const defaultIconStyle: React.CSSProperties = {
   height: 40,
   top: 14,
   left: 15,
-};
-
-export const searchBarStyle: Record<string, any> = {
-  itemHeight: 35,
-  footerHeight: 15,
-  itemLeftPadding: 10,
-  searchbarHeight: 35,
-  searchbarFontSize: 12,
-  itemFontSize: 14,
 };

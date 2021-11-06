@@ -58,12 +58,3 @@ export const SnippetImg = styled.img`
   top: 14px;
   left: 15px;
 `;
-
-export const TabNavigatorContainer = styled.div`
-  width: 90%;
-  height: 85%;
-  margin-left: 50px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-`;

@@ -7,6 +7,15 @@ import _ from 'lodash';
 import pathExists from 'path-exists';
 import { arvisSnippetCollectionPath } from '../../../config/path';
 
+type FilenamifyOptions = {
+  replacement: string;
+};
+
+type SnippetPlist = {
+  snippetkeywordprefix?: string;
+  snippetkeywordsuffix?: string;
+};
+
 export const generateSnippetUid = () => {
   return generateUuid();
 };
@@ -15,7 +24,7 @@ export const removeMultipleSpace = (str: string) => {
   return str.replace(/\s\s+/g, ' ');
 };
 
-export const rebuildPlist = (plistPath: string, info: any) => {
+export const rebuildPlist = (plistPath: string, info: SnippetPlist) => {
   const plistStr = plist.build(info, {
     allowEmpty: true,
     pretty: true,
@@ -26,7 +35,7 @@ export const rebuildPlist = (plistPath: string, info: any) => {
   return fse.writeFile(plistPath, plistStr, { encoding: 'utf8' });
 };
 
-export const filenamifyPath = (str: string, options?: any) => {
+export const filenamifyPath = (str: string, options?: FilenamifyOptions) => {
   if (path.isAbsolute(str)) {
     const filename = filenamify(
       path.basename(str),
