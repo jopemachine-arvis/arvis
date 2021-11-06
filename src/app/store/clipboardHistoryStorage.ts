@@ -1,5 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import fse from 'fs-extra';
+import _ from 'lodash';
 import { arvisClipboardHistoryStore } from '../config/path';
 
 export let store: any[] | undefined;
@@ -10,7 +11,7 @@ export const push = async ({ date, text }: { date: number; text: string }) => {
   if (!store) throw new Error('clipboardHistoryStore is not initialized!');
 
   // Avoid copying duplicated texts
-  if (store[store.length - 1].text === text) return;
+  if (!_.isEmpty(store) && store[store.length - 1].text === text) return;
 
   if (max <= store.length) {
     store = store.slice(store.length - max + 1);
