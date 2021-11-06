@@ -19,6 +19,7 @@ export enum IPCRendererEnum {
   popupPluginItemMenu                        = '@ipcRenderer/popupPluginItemMenu',
   popupSearchbarItemMenu                     = '@ipcRenderer/popupSearchbarItemMenu',
   popupSnippetItemMenu                       = '@ipcRenderer/popupSnippetItemMenu',
+  popupSnippetCollectionItemMenu             = '@ipcRenderer/popupSnippetCollectionItemMenu',
   popupWorkflowItemMenu                      = '@ipcRenderer/popupWorkflowItemMenu',
   popupWorkflowTriggerTableItem              = '@ipcRenderer/popupWorkflowTriggerTableItem',
   registerAllShortcuts                       = '@ipcRenderer/registerAllShortcuts',

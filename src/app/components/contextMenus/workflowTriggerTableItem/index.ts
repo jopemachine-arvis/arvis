@@ -13,7 +13,7 @@ class WorkflowTriggerTableItemContextMenu extends Menu {
   }: {
     bundleId: string;
     triggerPath: string;
-    workflowInfo: any;
+    workflowInfo: WorkflowConfigFile;
   }) {
     super();
 

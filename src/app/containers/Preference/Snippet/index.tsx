@@ -136,11 +136,34 @@ export default function Snippet(props: IProps) {
 
   const items = _.map(Object.keys(snippetsByCollection), makeItem);
 
+  const itemRightClickCallback = (
+    e: React.MouseEvent<HTMLInputElement>,
+    clickedIdx: number,
+    selectedIdxs: Set<number>
+  ) => {
+    e.preventDefault();
+
+    const selectedItemInfos = [];
+
+    for (const idx of selectedIdxs) {
+      const { title } = items[idx];
+
+      selectedItemInfos.push({
+        collectionName: title,
+        collectionPath: path.resolve(arvisSnippetCollectionPath, title),
+      });
+    }
+
+    ipcRenderer.send(IPCRendererEnum.popupSnippetCollectionItemMenu, {
+      items: JSON.stringify(selectedItemInfos),
+    });
+  };
+
   const { itemList, onKeyDownHandler, selectedItemIdx, clearIndex } =
     useItemList({
       items,
       itemDoubleClickHandler: () => setCollectionEditModalOpened(true),
-      itemRightClickCallback: () => {},
+      itemRightClickCallback,
       itemTooltip:
         'Click to select the snippet collection.\nDouble click to edit collection information.',
     });

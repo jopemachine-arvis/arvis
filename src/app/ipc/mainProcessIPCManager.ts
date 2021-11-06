@@ -55,6 +55,7 @@ import {
   toggleUniversalActionWindow,
 } from './mainProcessEventHandler/windowManage/toggleAssistanceWindow';
 import { toggleSearchWindow } from './mainProcessEventHandler/windowManage/toggleSearchWindow';
+import { popupSnippetCollectionItemMenu } from './mainProcessEventHandler/contextMenu/popupSnippetCollectionItemMenu';
 
 /**
  * Register ipc callbacks
@@ -72,6 +73,10 @@ export const initIPCHandlers = () => {
   ipcMain.on(IPCRendererEnum.popupSearchbarItemMenu, popupSearchbarItemMenu);
   ipcMain.on(IPCRendererEnum.popupSnippetItemMenu, popupSnippetItemMenu);
   ipcMain.on(IPCRendererEnum.popupWorkflowItemMenu, popupWorkflowItemMenu);
+  ipcMain.on(
+    IPCRendererEnum.popupSnippetCollectionItemMenu,
+    popupSnippetCollectionItemMenu
+  );
   ipcMain.on(IPCRendererEnum.registerAllShortcuts, registerAllShortcuts);
   ipcMain.on(IPCRendererEnum.registerWorkflowHotkeys, registerWorkflowHotkeys);
   ipcMain.on(IPCRendererEnum.reloadApplication, reloadApplication);

@@ -10,7 +10,7 @@ type IProps = {
   type: 'workflow' | 'plugin';
   setReadme: (readme: string) => void;
   useAutoFetch: boolean;
-  extensionInfo: any;
+  extensionInfo: WorkflowConfigFile | PluginConfigFile;
 };
 
 export default function Markdown(props: IProps) {
