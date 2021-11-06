@@ -49,7 +49,7 @@ export const loadSnippetCollectionInfo = async (
         fse
           .readFile(filePath, { encoding: 'utf8' })
           .then(async (info) => {
-            const collectionInfo: any = plist.parse(info);
+            const collectionInfo = plist.parse(info) as AlfredSnippetPlist;
             const snippetKeywordPrefix = collectionInfo.snippetkeywordprefix;
             const snippetKeywordSuffix = collectionInfo.snippetkeywordsuffix;
 

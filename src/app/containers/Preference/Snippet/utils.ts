@@ -11,11 +11,6 @@ type FilenamifyOptions = {
   replacement: string;
 };
 
-type SnippetPlist = {
-  snippetkeywordprefix?: string;
-  snippetkeywordsuffix?: string;
-};
-
 export const generateSnippetUid = () => {
   return generateUuid();
 };
@@ -24,7 +19,7 @@ export const removeMultipleSpace = (str: string) => {
   return str.replace(/\s\s+/g, ' ');
 };
 
-export const rebuildPlist = (plistPath: string, info: SnippetPlist) => {
+export const rebuildPlist = (plistPath: string, info: AlfredSnippetPlist) => {
   const plistStr = plist.build(info, {
     allowEmpty: true,
     pretty: true,

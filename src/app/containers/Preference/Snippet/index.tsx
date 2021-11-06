@@ -48,8 +48,6 @@ export default function Snippet(props: IProps) {
     [snippets]
   );
 
-  useEffect(() => console.log(snippets), snippets);
-
   const [isSpinning, setSpinning] = useContext(SpinnerContext) as any;
 
   const selectedCollection = useRef<CollectionName | undefined>();
