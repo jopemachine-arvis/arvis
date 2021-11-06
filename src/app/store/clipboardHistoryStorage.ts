@@ -9,6 +9,9 @@ let max = -1;
 export const push = async ({ date, text }: { date: number; text: string }) => {
   if (!store) throw new Error('clipboardHistoryStore is not initialized!');
 
+  // Avoid copying duplicated texts
+  if (store[store.length - 1].text === text) return;
+
   if (max <= store.length) {
     store = store.slice(store.length - max + 1);
   }
@@ -18,7 +21,7 @@ export const push = async ({ date, text }: { date: number; text: string }) => {
     text,
   });
 
-  return fse.writeJSON(
+  fse.writeJSON(
     arvisClipboardHistoryStore,
     { items: store },
     { encoding: 'utf8' }

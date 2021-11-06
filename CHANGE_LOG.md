@@ -1,3 +1,11 @@
+# 0.14.4
+
+## What’s Changed
+
+- [style] Change preference window's styles
+- [fix] Remove duplicated text store in clipboard history
+- [feature] Add name, keyword fields on snippetInfoModal
+
 # 0.14.3
 
 ## What’s Changed
