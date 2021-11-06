@@ -3,7 +3,11 @@ import fse from 'fs-extra';
 import _ from 'lodash';
 import { arvisClipboardHistoryStore } from '../config/path';
 
-export let store: any[] | undefined;
+export let store: ClipboardHistoryItem[] | undefined;
+
+interface ClipboardHistoryItemData {
+  items: ClipboardHistoryItem[];
+}
 
 let max = -1;
 
@@ -34,8 +38,10 @@ export const clear = () => {
   store = [];
 };
 
-const validateClipboardHistory = (clipboardHistoryData: any) => {
-  return clipboardHistoryData!.items || clipboardHistoryData!.items.length;
+const validateClipboardHistory = (
+  clipboardHistoryData: ClipboardHistoryItemData
+) => {
+  return clipboardHistoryData.items && clipboardHistoryData.items.length;
 };
 
 export const importClipboardHistoryStorage = () => {
