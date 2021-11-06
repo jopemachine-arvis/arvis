@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Core } from 'arvis-core';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import _ from 'lodash';
 import {
@@ -9,9 +9,13 @@ import {
   SearchWindowScrollbar,
   Quicklook,
 } from '@components/index';
-import { useSearchWindowControl, useDoubleHotkey } from '@hooks/index';
+import {
+  useSearchWindowControl,
+  useDoubleHotkey,
+  useReduxFetcher,
+} from '@hooks/index';
 import { StateType } from '@redux/reducers/types';
-import { applyAlphaColor, makeDefaultActionCreator } from '@utils/index';
+import { applyAlphaColor } from '@utils/index';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import {
@@ -27,7 +31,6 @@ import { initializeDoubleKeyShortcuts } from '@config/shortcuts/doubleKeyShortcu
 import { executeAction } from '@helper/executeAction';
 import { getExecaPath } from '@config/path';
 import { unloadIOHook } from '@utils/iohook/unloadIOHook';
-import { writeClipboardHistoryStorage } from '@store/clipboardHistoryStorage';
 import { OuterContainer } from './components';
 
 export default function SearchWindow() {
@@ -110,11 +113,11 @@ export default function SearchWindow() {
     setDebuggingOptions();
   }, [debuggingConfig]);
 
-  const dispatch = useDispatch();
-
   const store = useStore();
 
   useDoubleHotkey();
+
+  useReduxFetcher();
 
   const {
     autoSuggestion,
@@ -193,13 +196,6 @@ export default function SearchWindow() {
   };
 
   const ipcCallbackTbl = {
-    fetchAction: (
-      e: IpcRendererEvent,
-      { actionType, args }: { actionType: string; args: any }
-    ) => {
-      dispatch(makeDefaultActionCreator(actionType)(args));
-    },
-
     setSearchbarInput: (e: IpcRendererEvent, { str }: { str: string }) => {
       setInputStr({ str, needItemsUpdate: true });
     },
@@ -277,7 +273,6 @@ export default function SearchWindow() {
   const initilizeSearchWindowIPCHandler = useCallback(() => {
     ipcRenderer.on(IPCMainEnum.willQuit, ipcCallbackTbl.willQuit);
     ipcRenderer.on(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
-    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
     ipcRenderer.on(IPCMainEnum.pinSearchWindow, ipcCallbackTbl.pinSearchWindow);
@@ -301,7 +296,6 @@ export default function SearchWindow() {
 
   const unsubscribe = useCallback(() => {
     ipcRenderer.off(IPCMainEnum.executeAction, ipcCallbackTbl.executeAction);
-    ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.off(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
     ipcRenderer.off(

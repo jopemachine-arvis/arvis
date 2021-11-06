@@ -1,11 +1,11 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React, { useEffect, useRef, useState } from 'react';
 import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
-import { makeDefaultActionCreator } from '@utils/index';
 import { StateType } from '@redux/reducers/types';
 import {
   useAssistanceWindowControl,
   useCopyKeyCapture,
+  useReduxFetcher,
   useSnippet,
 } from '@hooks/index';
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,6 +58,8 @@ export default function AssistanceWindow() {
   const { snippets, snippetCollectionInfos } = useSnippet();
 
   useCopyKeyCapture();
+
+  useReduxFetcher();
 
   useSnippetKeywords({ snippets, collectionInfo: snippetCollectionInfos });
 
@@ -145,13 +147,6 @@ export default function AssistanceWindow() {
       }
     },
 
-    fetchAction: (
-      e: IpcRendererEvent,
-      { actionType, args }: { actionType: string; args: any }
-    ) => {
-      dispatch(makeDefaultActionCreator(actionType)(args));
-    },
-
     pinAssistanceWindow: (e: IpcRendererEvent, { bool }: { bool: boolean }) => {
       setIsPinned(bool);
     },
@@ -171,7 +166,6 @@ export default function AssistanceWindow() {
       IPCMainEnum.pinAssistanceWindow,
       ipcCallbackTbl.pinAssistanceWindow
     );
-    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
 
     return () => {
       ipcRenderer.off(IPCMainEnum.setMode, ipcCallbackTbl.setMode);
@@ -179,7 +173,6 @@ export default function AssistanceWindow() {
         IPCMainEnum.pinAssistanceWindow,
         ipcCallbackTbl.pinAssistanceWindow
       );
-      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     };
   }, []);
 

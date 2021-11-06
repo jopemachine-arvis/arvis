@@ -17,11 +17,10 @@ import { IPCMainEnum, IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { SpinnerContext } from '@helper/spinnerContext';
 import { checkExtensionsUpdate } from '@helper/extensionUpdateChecker';
 import { validate as reduxStoreValidate } from '@store/reduxStoreValidator';
-import { makeDefaultActionCreator } from '@utils/index';
 import { UIConfigActions } from '@redux/actions';
 import { extractGuiConfig } from '@store/extractGuiConfig';
 import { arvisReduxStoreResetFlagPath } from '@config/path';
-import { useSnippet } from '@hooks/index';
+import { useReduxFetcher, useSnippet } from '@hooks/index';
 import ioHook from 'iohook';
 import Sidebar from './Sidebar';
 import { PreferencePage } from './preferencePageEnum';
@@ -70,6 +69,8 @@ export default function PreferenceWindow() {
     (state: StateType) => state.global_config
   );
 
+  useReduxFetcher();
+
   const loadWorkflowsInfo = useCallback(() => {
     return Core.reloadWorkflows().catch((err) => {
       ipcRenderer.send(IPCRendererEnum.showNotification, {
@@ -113,13 +114,6 @@ export default function PreferenceWindow() {
    * Used to receive dispatched action from different window
    */
   const ipcCallbackTbl = {
-    fetchAction: (
-      e: IpcRendererEvent,
-      { actionType, args }: { actionType: string; args: any }
-    ) => {
-      dispatch(makeDefaultActionCreator(actionType)(args));
-    },
-
     reloadWorkflow: (
       e: IpcRendererEvent,
       { bundleIds }: { bundleIds: string }
@@ -246,7 +240,6 @@ export default function PreferenceWindow() {
   }, []);
 
   useEffect(() => {
-    ipcRenderer.on(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
     ipcRenderer.on(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
     ipcRenderer.on(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
     ipcRenderer.on(IPCMainEnum.reloadWorkflow, ipcCallbackTbl.reloadWorkflow);
@@ -276,7 +269,6 @@ export default function PreferenceWindow() {
     );
 
     return () => {
-      ipcRenderer.off(IPCMainEnum.fetchAction, ipcCallbackTbl.fetchAction);
       ipcRenderer.off(IPCMainEnum.getSystemFontRet, ipcCallbackTbl.setFont);
       ipcRenderer.off(IPCMainEnum.reloadPlugin, ipcCallbackTbl.reloadPlugin);
       ipcRenderer.off(
