@@ -1,6 +1,7 @@
 import { IpcMainEvent } from 'electron';
-import { getDestWindow } from '../../../windows/utils/getDestWindow';
 import { IPCMainEnum } from '../../ipcEventEnum';
+import { getDestWindow } from '../../../windows/utils/getDestWindow';
+import { WindowManager } from '../../../windows/windowManager';
 
 /**
  * When some action is dispatched from some window, the action is not dispatched to other windows.
@@ -12,17 +13,28 @@ import { IPCMainEnum } from '../../ipcEventEnum';
 export const dispatchAction = (
   e: IpcMainEvent,
   {
-    destWindow,
     actionType,
     args,
+    destWindow,
   }: {
-    destWindow: string;
     actionType: string;
     args: any;
+    destWindow?: string;
   }
 ) => {
-  getDestWindow(destWindow).webContents.send(IPCMainEnum.fetchAction, {
-    actionType,
-    args,
-  });
+  if (destWindow) {
+    getDestWindow(destWindow).webContents.send(IPCMainEnum.fetchAction, {
+      actionType,
+      args,
+    });
+  } else {
+    WindowManager.getInstance()
+      .getAllWindows()
+      .forEach((window) => {
+        window.webContents.send(IPCMainEnum.fetchAction, {
+          actionType,
+          args,
+        });
+      });
+  }
 };

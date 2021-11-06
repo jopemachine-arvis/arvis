@@ -12,7 +12,7 @@ import './index.css';
 import { SearchBar, SearchResultView, StyledInput } from '@components/index';
 import { actionTypes as UIActionTypes } from '@redux/actions/uiConfig';
 import {
-  createGlobalConfigChangeHandler,
+  globalConfigChangeHandler,
   getRandomColor,
   onNumberChangeHandler,
   readJson5,
@@ -99,11 +99,6 @@ export default function Appearance() {
   const [previewBackgroundColor, setPreviewBackgroundColor] =
     useState<string>('#000000');
 
-  const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindow: 'searchWindow',
-    dispatch,
-  });
-
   const createFormEvent = (value: any) => {
     return {
       currentTarget: {
@@ -120,9 +115,10 @@ export default function Appearance() {
     for (const key of Object.keys(themeJson)) {
       const setHandlerName = `SET_${key.toUpperCase()}`;
 
-      configChangeHandler(
+      globalConfigChangeHandler(
         createFormEvent(themeJson[key]),
-        (UIActionTypes as any)[setHandlerName]
+        (UIActionTypes as any)[setHandlerName],
+        { self: true, dispatch }
       );
     }
   };
@@ -290,7 +286,6 @@ export default function Appearance() {
                   min: 400,
                   max: 2000,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_WIDTH,
-                  dispatch,
                 })
               }
             />
@@ -308,7 +303,6 @@ export default function Appearance() {
                   min: 0,
                   max: 100,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_FOOTER_HEIGHT,
-                  dispatch,
                 })
               }
             />
@@ -326,7 +320,6 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_BORDER_RADIUS,
-                  dispatch,
                 })
               }
             />
@@ -345,7 +338,6 @@ export default function Appearance() {
                   min: 0,
                   max: 255,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_TRANSPARENCY,
-                  dispatch,
                 })
               }
             />
@@ -363,7 +355,6 @@ export default function Appearance() {
                   min: 10,
                   max: 150,
                   actionType: UIActionTypes.SET_ITEM_HEIGHT,
-                  dispatch,
                 })
               }
             />
@@ -375,7 +366,10 @@ export default function Appearance() {
               type="color"
               value={item_background_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_ITEM_BACKGROUND_COLOR)
+                globalConfigChangeHandler(
+                  e,
+                  UIActionTypes.SET_ITEM_BACKGROUND_COLOR
+                )
               }
             />
           </FormGroup>
@@ -386,7 +380,7 @@ export default function Appearance() {
               type="color"
               value={item_default_icon_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
+                globalConfigChangeHandler(
                   e,
                   UIActionTypes.SET_ITEM_DEFAULT_ICON_COLOR
                 )
@@ -400,7 +394,7 @@ export default function Appearance() {
               type="color"
               value={selected_item_background_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
+                globalConfigChangeHandler(
                   e,
                   UIActionTypes.SET_SELECTED_ITEM_BACKGROUND_COLOR
                 )
@@ -420,7 +414,6 @@ export default function Appearance() {
                   min: 8,
                   max: 50,
                   actionType: UIActionTypes.SET_TITLE_FONT_SIZE,
-                  dispatch,
                 })
               }
             />
@@ -438,7 +431,6 @@ export default function Appearance() {
                   min: 8,
                   max: 50,
                   actionType: UIActionTypes.SET_SUBTITLE_FONT_SIZE,
-                  dispatch,
                 })
               }
             />
@@ -450,7 +442,7 @@ export default function Appearance() {
               type="color"
               value={item_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_ITEM_FONT_COLOR)
+                globalConfigChangeHandler(e, UIActionTypes.SET_ITEM_FONT_COLOR)
               }
             />
           </FormGroup>
@@ -461,7 +453,7 @@ export default function Appearance() {
               type="color"
               value={selected_item_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
+                globalConfigChangeHandler(
                   e,
                   UIActionTypes.SET_SELECTED_ITEM_FONT_COLOR
                 )
@@ -475,7 +467,10 @@ export default function Appearance() {
               type="color"
               value={searchbar_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(e, UIActionTypes.SET_SEARCHBAR_FONT_COLOR)
+                globalConfigChangeHandler(
+                  e,
+                  UIActionTypes.SET_SEARCHBAR_FONT_COLOR
+                )
               }
             />
           </FormGroup>
@@ -486,7 +481,7 @@ export default function Appearance() {
               type="color"
               value={searchbar_automatch_font_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
+                globalConfigChangeHandler(
                   e,
                   UIActionTypes.SET_SEARCHBAR_AUTOMATCH_FONT_COLOR
                 )
@@ -500,7 +495,7 @@ export default function Appearance() {
               type="color"
               value={searchbar_dragger_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
+                globalConfigChangeHandler(
                   e,
                   UIActionTypes.SET_SEARCHBAR_DRAGGER_COLOR
                 )
@@ -520,7 +515,6 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_ITEM_LEFT_PADDING,
-                  dispatch,
                 })
               }
             />
@@ -538,7 +532,6 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_ITEM_TITLE_SUBTITLE_MARGIN,
-                  dispatch,
                 })
               }
             />
@@ -556,7 +549,6 @@ export default function Appearance() {
                   min: 40,
                   max: 180,
                   actionType: UIActionTypes.SET_SEARCHBAR_HEIGHT,
-                  dispatch,
                 })
               }
             />
@@ -574,7 +566,6 @@ export default function Appearance() {
                   min: 0,
                   max: 30,
                   actionType: UIActionTypes.SET_ICON_RIGHT_MARGIN,
-                  dispatch,
                 })
               }
             />
@@ -592,7 +583,6 @@ export default function Appearance() {
                   min: 8,
                   max: 30,
                   actionType: UIActionTypes.SET_SEARCHBAR_FONT_SIZE,
-                  dispatch,
                 })
               }
             />
@@ -604,7 +594,7 @@ export default function Appearance() {
               type="color"
               value={search_window_scrollbar_color}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                configChangeHandler(
+                globalConfigChangeHandler(
                   e,
                   UIActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_COLOR
                 )
@@ -624,7 +614,6 @@ export default function Appearance() {
                   min: 0,
                   max: 8,
                   actionType: UIActionTypes.SET_SEARCH_WINDOW_SCROLLBAR_WIDTH,
-                  dispatch,
                 })
               }
             />

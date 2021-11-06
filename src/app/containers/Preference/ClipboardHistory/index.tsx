@@ -5,10 +5,7 @@ import { StyledInput, HotkeyRecordForm } from '@components/index';
 import { actionTypes as ClipboardHistoryActionTypes } from '@redux/actions/clipboardHistory';
 import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
 import { StateType } from '@redux/reducers/types';
-import {
-  onNumberChangeHandler,
-  createGlobalConfigChangeHandler,
-} from '@utils/index';
+import { onNumberChangeHandler, globalConfigChangeHandler } from '@utils/index';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
 
@@ -23,14 +20,8 @@ export default function ClipboardHistory() {
 
   const dispatch = useDispatch();
 
-  const configChangeHandler = (destWindows: string[]) =>
-    createGlobalConfigChangeHandler({
-      destWindows,
-      dispatch,
-    });
-
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    configChangeHandler(['searchWindow'])(
+    globalConfigChangeHandler(
       e,
       GlobalConfigActionTypes.SET_CLIPBOARD_HISTORY_WINDOW_HOTKEY
     );
@@ -65,8 +56,6 @@ export default function ClipboardHistory() {
                 max: 99999,
                 actionType:
                   ClipboardHistoryActionTypes.SET_MAX_CLIPBOARD_STORE_SIZE,
-                dispatch,
-                destWindow: 'assistanceWindow',
               })
             }
           />
@@ -78,7 +67,7 @@ export default function ClipboardHistory() {
               type="checkbox"
               defaultChecked={apply_mouse_hover_event}
               onChange={(e) =>
-                configChangeHandler(['assistanceWindow', 'preferenceWindow'])(
+                globalConfigChangeHandler(
                   { currentTarget: { value: !apply_mouse_hover_event } } as any,
                   ClipboardHistoryActionTypes.SET_APPLY_MOUSE_HOVER_EVENT_FLAG
                 )

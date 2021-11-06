@@ -30,8 +30,6 @@ export default function AdvancedHistory() {
                 min: 1,
                 max: 999999,
                 actionType: AdvancedActionTypes.SET_ASYNC_PLUGIN_TIMER,
-                dispatch,
-                destWindows: ['searchWindow'],
               })
             }
           />

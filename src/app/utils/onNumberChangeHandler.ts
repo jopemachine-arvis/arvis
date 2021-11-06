@@ -1,5 +1,4 @@
-import { Dispatch } from 'react';
-import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
+import { globalConfigChangeHandler } from './globalConfigChangeHandler';
 
 export const onNumberChangeHandler = (
   e: React.FormEvent<HTMLInputElement>,
@@ -7,16 +6,10 @@ export const onNumberChangeHandler = (
     min,
     max,
     actionType,
-    dispatch,
-    destWindow,
-    destWindows,
   }: {
     min: number;
     max: number;
     actionType: string;
-    dispatch: Dispatch<any>;
-    destWindow?: string;
-    destWindows?: string[];
   }
 ) => {
   const mockEvent = {
@@ -33,9 +26,5 @@ export const onNumberChangeHandler = (
     mockEvent.currentTarget.value = max.toString();
   }
 
-  createGlobalConfigChangeHandler({
-    destWindow: destWindow ?? 'searchWindow',
-    destWindows: destWindows ?? undefined,
-    dispatch,
-  })(e, actionType);
+  globalConfigChangeHandler(e, actionType);
 };

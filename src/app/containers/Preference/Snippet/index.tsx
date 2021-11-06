@@ -19,7 +19,7 @@ import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalCon
 import HotkeyRecordForm from '@components/hotkeyRecordForm';
 import { StateType } from '@redux/reducers/types';
 import useItemList, { ItemInfo } from '@hooks/useItemList';
-import { createGlobalConfigChangeHandler } from '@utils/createGlobalConfigChangeHandler';
+import { globalConfigChangeHandler } from '@utils/globalConfigChangeHandler';
 import * as style from './style';
 import CollectionInfoModal from './collectionInfoModal';
 import SnippetInfoModal from './snippetInfoModal';
@@ -199,13 +199,11 @@ export default function Snippet(props: IProps) {
     });
   };
 
-  const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindows: ['searchWindow', 'preferenceWindow'],
-    dispatch,
-  });
-
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    configChangeHandler(e, GlobalConfigActionTypes.SET_SNIPPET_WINDOW_HOTKEY);
+    globalConfigChangeHandler(
+      e,
+      GlobalConfigActionTypes.SET_SNIPPET_WINDOW_HOTKEY
+    );
   };
 
   useEffect(() => {

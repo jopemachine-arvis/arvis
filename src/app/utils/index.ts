@@ -9,7 +9,7 @@ import {
   isSupportedImageFormat,
 } from './isSupportedImage';
 import getRandomColor from './getRandomColor';
-import { createGlobalConfigChangeHandler } from './createGlobalConfigChangeHandler';
+import { globalConfigChangeHandler } from './globalConfigChangeHandler';
 import { sleep } from './sleep';
 import { range } from './range';
 import { objectFlip } from './objectFlip';
@@ -23,7 +23,7 @@ import { readJson5 } from './readJson5';
 
 export {
   applyAlphaColor,
-  createGlobalConfigChangeHandler,
+  globalConfigChangeHandler,
   extractJson,
   getGithubReadmeContent,
   getHotkeyNameOnThisPlatform,

@@ -35,8 +35,6 @@ export default function AdvancedHistory() {
                 min: 0,
                 max: 99999,
                 actionType: AdvancedActionTypes.SET_MAX_ACTION_LOG_COUNT,
-                dispatch,
-                destWindows: ['searchWindow'],
               })
             }
           />

@@ -27,6 +27,15 @@ export class WindowManager {
 
   private assistanceWindow: BrowserWindow;
 
+  public getAllWindows() {
+    return [
+      this.largeTextWindow,
+      this.preferenceWindow,
+      this.searchWindow,
+      this.assistanceWindow,
+    ];
+  }
+
   public static getEventHandler(windowName: string, eventName: string) {
     if (!WindowManager.eventHandlers.has(`${windowName}#${eventName}`))
       throw new Error(`${eventName} Event Not Registered in ${windowName}`);
@@ -66,17 +75,10 @@ export class WindowManager {
   }
 
   public windowAllClose() {
-    if (this.searchWindow && this.searchWindow.closable) {
-      this.searchWindow.close();
-    }
-    if (this.largeTextWindow && this.largeTextWindow.closable) {
-      this.largeTextWindow.close();
-    }
-    if (this.preferenceWindow && this.preferenceWindow.closable) {
-      this.preferenceWindow.close();
-    }
-    if (this.assistanceWindow && this.assistanceWindow.closable) {
-      this.assistanceWindow.close();
-    }
+    this.getAllWindows().forEach((window) => {
+      if (window && window.closable) {
+        window.close();
+      }
+    });
   }
 }

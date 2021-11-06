@@ -15,7 +15,7 @@ import { StateType } from '@redux/reducers/types';
 import { GlobalConfigActions } from '@redux/actions';
 import { StyledInput, HotkeyRecordForm } from '@components/index';
 import { actionTypes as GlobalConfigActionTypes } from '@redux/actions/globalConfig';
-import { createGlobalConfigChangeHandler } from '@utils/index';
+import { globalConfigChangeHandler } from '@utils/index';
 import { IPCRendererEnum } from '@ipc/ipcEventEnum';
 import { OuterContainer, FormDescription } from './components';
 import { formGroupStyle, labelStyle } from './style';
@@ -41,14 +41,9 @@ export default function General(props: IProps) {
   const toggleFontListDrawerOpen = () =>
     setFontListDrawerOpen((prevState) => !prevState);
 
-  const configChangeHandler = createGlobalConfigChangeHandler({
-    destWindows: ['searchWindow', 'assistanceWindow'],
-    dispatch,
-  });
-
   const fontSelectEventHandler = (font: string) => {
     dispatch(GlobalConfigActions.setGlobalFont(font));
-    configChangeHandler(
+    globalConfigChangeHandler(
       {
         currentTarget: {
           value: font,
@@ -67,7 +62,10 @@ export default function General(props: IProps) {
   };
 
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    configChangeHandler(e, GlobalConfigActionTypes.SET_SEARCH_WINDOW_HOTKEY);
+    globalConfigChangeHandler(
+      e,
+      GlobalConfigActionTypes.SET_SEARCH_WINDOW_HOTKEY
+    );
   };
 
   return (
@@ -105,7 +103,7 @@ export default function General(props: IProps) {
             type="select"
             value={max_item_count_to_show}
             onChange={(e: React.FormEvent<HTMLInputElement>) => {
-              configChangeHandler(
+              globalConfigChangeHandler(
                 e,
                 GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SHOW
               );
@@ -134,7 +132,7 @@ export default function General(props: IProps) {
             type="number"
             value={max_item_count_to_search}
             onChange={(e: React.FormEvent<HTMLInputElement>) => {
-              configChangeHandler(
+              globalConfigChangeHandler(
                 e,
                 GlobalConfigActionTypes.SET_MAX_ITEM_COUNT_TO_SEARCH
               );
