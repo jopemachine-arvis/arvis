@@ -1,3 +1,10 @@
+# 0.14.5
+
+## What’s Changed
+
+- [hotfix] Bug fixed in ClipboardHistory
+- [feature] Add context menu to snippet page
+
 # 0.14.4
 
 ## What’s Changed
