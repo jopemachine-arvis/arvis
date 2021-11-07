@@ -18,8 +18,6 @@ export default function ClipboardHistory() {
     (state: StateType) => state.clipboard_history
   );
 
-  const dispatch = useDispatch();
-
   const hotkeyChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     globalConfigChangeHandler(
       e,
