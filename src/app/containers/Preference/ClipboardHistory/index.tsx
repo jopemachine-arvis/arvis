@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { StyledInput, HotkeyRecordForm } from '@components/index';
 import { actionTypes as ClipboardHistoryActionTypes } from '@redux/actions/clipboardHistory';

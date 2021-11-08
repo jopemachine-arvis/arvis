@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
 import StyledInput from '@components/styledInput';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
@@ -17,8 +17,6 @@ export default function AdvancedHistory() {
   useEffect(() => {
     Core.history.setMaxLogCnt(max_action_log_count);
   }, [max_action_log_count]);
-
-  const dispatch = useDispatch();
 
   return (
     <OuterContainer>

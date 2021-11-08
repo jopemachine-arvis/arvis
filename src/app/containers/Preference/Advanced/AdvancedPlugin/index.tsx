@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Form, FormGroup, Label } from 'reactstrap';
 import StyledInput from '@components/styledInput';
 import { actionTypes as AdvancedActionTypes } from '@redux/actions/advancedConfig';
@@ -12,8 +12,6 @@ export default function AdvancedHistory() {
   const { async_plugin_timer } = useSelector(
     (state: StateType) => state.advanced_config
   );
-
-  const dispatch = useDispatch();
 
   return (
     <OuterContainer>
