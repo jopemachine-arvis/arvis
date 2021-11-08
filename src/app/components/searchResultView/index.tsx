@@ -63,6 +63,11 @@ const SearchResultView = (props: IProps) => {
     [props]
   );
 
+  const trimDisplayingText = (text: string) => {
+    // Assume text more than 2000 chars cannot be visible (so meaningless) to users
+    return text.slice(0, 2000);
+  };
+
   return (
     <OuterContainer id="searchResultView">
       {_.map(
@@ -97,13 +102,13 @@ const SearchResultView = (props: IProps) => {
                 selected={itemIdx === selectedItemIdx}
                 selectedItemBackgroundColor={selectedItemBackgroundColor}
                 selectedItemFontColor={selectedItemFontColor}
-                subtitle={command.subtitle ?? ''}
+                subtitle={trimDisplayingText(command.subtitle ?? '')}
                 subtitleFontSize={subtitleFontSize}
                 text={(command as ScriptFilterItem | PluginItem).text}
                 // If there is no title, shows command
-                title={
+                title={trimDisplayingText(
                   command.title ?? (command as Command).command ?? '(no title)'
-                }
+                )}
                 titleFontSize={titleFontSize}
                 valid={(command as ScriptFilterItem | PluginItem).valid}
                 variables={(command as ScriptFilterItem | PluginItem).variables}

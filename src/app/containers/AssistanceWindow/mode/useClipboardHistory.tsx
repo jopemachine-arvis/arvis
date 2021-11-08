@@ -5,6 +5,7 @@ import { ipcRenderer, IpcRendererEvent } from 'electron';
 import useForceUpdate from 'use-force-update';
 import { IPCMainEnum } from '@ipc/ipcEventEnum';
 import { SubInfoText, InfoInnerContainer } from '../components';
+import { trimDisplayText } from './utils';
 
 const transform = (store: any[]): any[] => {
   const iconPath = path.resolve(
@@ -104,18 +105,24 @@ const useClipboardHistoryMode = ({
     };
   }, []);
 
+  const clipboardItemText = items[indexInfo.selectedItemIdx]?.title ?? '';
+
   const renderInfoContent = () => (
     <>
       <InfoInnerContainer>
-        {items[indexInfo.selectedItemIdx]
-          ? items[indexInfo.selectedItemIdx].title
-          : ''}
+        {clipboardItemText ? trimDisplayText(clipboardItemText) : ''}
       </InfoInnerContainer>
-      <SubInfoText>
-        {items[indexInfo.selectedItemIdx] &&
+      <SubInfoText style={{ height: '1.5%' }}>
+        {clipboardItemText &&
           `Copied on ${new Date(
-            items[indexInfo.selectedItemIdx].date
+            items[indexInfo.selectedItemIdx]!.date
           ).toLocaleString()}`}
+      </SubInfoText>
+      <SubInfoText>
+        {clipboardItemText &&
+          `${clipboardItemText.split(' ').length} Words, ${
+            clipboardItemText.length
+          } Characters`}
       </SubInfoText>
     </>
   );

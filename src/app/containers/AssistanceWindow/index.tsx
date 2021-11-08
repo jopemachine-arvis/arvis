@@ -8,7 +8,7 @@ import {
   useReduxFetcher,
   useSnippet,
 } from '@hooks/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   SearchWindowScrollbar,
   SearchBar,
@@ -48,8 +48,6 @@ export default function AssistanceWindow() {
     useState<boolean>(true);
 
   const [isPinned, setIsPinned] = useState<boolean>(false);
-
-  const dispatch = useDispatch();
 
   const renewHandler = useRef<() => void>(() => {});
 

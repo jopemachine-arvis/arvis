@@ -1,3 +1,10 @@
+# 0.14.6
+
+## What’s Changed
+
+- [feature] Add line, word counter to clipboardHistory window
+- [optimize] Optimize assistance window performance through trimming texts in searchResultView
+
 # 0.14.5
 
 ## What’s Changed
