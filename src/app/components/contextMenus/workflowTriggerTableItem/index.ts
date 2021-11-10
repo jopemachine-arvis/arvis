@@ -22,47 +22,48 @@ class WorkflowTriggerTableItemContextMenu extends Menu {
     const hasParentTrigger: any =
       triggerPath.split('.').slice(0, -1).join('.') !== 'commands';
 
-    super.append(
-      new MenuItem({
-        type: 'normal',
-        label: 'Assign hotkey',
-        toolTip: 'Assign hotkey',
-        enabled: targetTrigger.type !== 'hotkey' && !hasParentTrigger,
-        click() {
-          const { commands } = workflowInfo;
+    if (targetTrigger.type !== 'hotkey' && !hasParentTrigger) {
+      super.append(
+        new MenuItem({
+          type: 'normal',
+          label: `Assign hotkey for '${targetTrigger.command}''`,
+          toolTip: `Assign hotkey for '${targetTrigger.command}''`,
+          click() {
+            const { commands } = workflowInfo;
 
-          const targetTriggerIdx = commands.indexOf(targetTrigger);
-          commands[targetTriggerIdx] = {
-            type: 'hotkey',
-            hotkey: '',
-            actions: [targetTrigger],
-          };
+            const targetTriggerIdx = commands.indexOf(targetTrigger);
+            commands[targetTriggerIdx] = {
+              type: 'hotkey',
+              hotkey: '',
+              actions: [targetTrigger],
+            };
 
-          workflowInfo.bundleId = undefined;
-          workflowInfo.commands = commands;
+            workflowInfo.bundleId = undefined;
+            workflowInfo.commands = commands;
 
-          fse
-            .writeJSON(
-              Core.path.getWorkflowConfigJsonPath(bundleId),
-              workflowInfo,
-              {
-                encoding: 'utf-8',
-                spaces: 4,
-              }
-            )
-            .then(() => {
-              WindowManager.getInstance()
-                .getPreferenceWindow()
-                .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
-              WindowManager.getInstance()
-                .getSearchWindow()
-                .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
-              return null;
-            })
-            .catch(console.error);
-        },
-      })
-    );
+            fse
+              .writeJSON(
+                Core.path.getWorkflowConfigJsonPath(bundleId),
+                workflowInfo,
+                {
+                  encoding: 'utf-8',
+                  spaces: 4,
+                }
+              )
+              .then(() => {
+                WindowManager.getInstance()
+                  .getPreferenceWindow()
+                  .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
+                WindowManager.getInstance()
+                  .getSearchWindow()
+                  .webContents.send(IPCMainEnum.reloadWorkflow, { bundleId });
+                return null;
+              })
+              .catch(console.error);
+          },
+        })
+      );
+    }
   }
 }
 

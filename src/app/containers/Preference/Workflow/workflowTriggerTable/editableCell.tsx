@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StyledInput from '@components/styledInput';
 import HotkeyRecordForm from '@components/hotkeyRecordForm';
 import './index.css';
@@ -38,7 +38,7 @@ export const EditableCell = ({
     setFocusedValue(value);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
 
@@ -101,6 +101,8 @@ export const EditableCell = ({
     color: getTextColor(),
     textAlign: getTextAlign(),
     textShadow: undefined,
+    // not working
+    userSelect: id === 'type' ? 'none' : undefined,
   };
 
   if (id === 'command' && type === 'hotkey') {

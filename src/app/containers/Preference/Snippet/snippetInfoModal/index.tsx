@@ -70,8 +70,8 @@ const SnippetInfoModal = (props: IProps) => {
         }}
       >
         <ModalHeader toggle={toggle}>Edit snippet information</ModalHeader>
-        <ModalBody>
-          <FormGroup check>
+        <ModalBody style={{ paddingLeft: 0, paddingRight: 20 }}>
+          <FormGroup check style={styles.formGroupStyle}>
             <Label check style={styles.labelStyle}>
               Name
             </Label>
@@ -81,7 +81,7 @@ const SnippetInfoModal = (props: IProps) => {
               onChange={(e) => setName(e.target.value)}
             />
           </FormGroup>
-          <FormGroup check>
+          <FormGroup check style={styles.formGroupStyle}>
             <Label check style={styles.labelStyle}>
               Keyword
             </Label>
@@ -91,13 +91,16 @@ const SnippetInfoModal = (props: IProps) => {
               onChange={(e) => setKeyword(e.target.value)}
             />
           </FormGroup>
-          <FormGroup check>
+          <FormGroup check style={styles.formGroupStyle}>
             <Label check style={styles.labelStyle}>
               Snippet
             </Label>
             <Input
               type="textarea"
               value={snippet}
+              style={{
+                height: 300,
+              }}
               onChange={(e) => setSnippet(e.target.value)}
             />
           </FormGroup>
