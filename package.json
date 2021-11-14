@@ -331,7 +331,7 @@
     "json5": "^2.2.0",
     "jsoneditor": "^9.5.6",
     "jsoneditor-react": "^3.1.1",
-    "open": "^8.2.1",
+    "open": "^8.4.0",
     "p-any": "^4.0.0",
     "p-cancelable": "2.1.1",
     "p-debounce": "2.1.0",
