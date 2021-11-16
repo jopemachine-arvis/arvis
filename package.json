@@ -357,7 +357,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "redux-persist-electron-storage": "^2.1.0",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "^2.4.0",
     "regenerator-runtime": "^0.13.8",
     "rehype-raw": "^5.1.0",
     "semver": "^7.3.5",
