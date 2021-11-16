@@ -304,7 +304,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "about-window": "1.14.0",
+    "about-window": "1.15.1",
     "alpha-sort": "^5.0.0",
     "arvis-store": "^0.3.1",
     "bootstrap": "^5.1.2",
