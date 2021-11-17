@@ -345,7 +345,7 @@
     "react-icons": "^4.3.0",
     "react-markdown": "^6.0.3",
     "react-pro-sidebar": "^0.7.1",
-    "react-redux": "^7.2.5",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.1",
     "react-spring": "^9.2.6",
     "react-table": "^7.7.0",
