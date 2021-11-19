@@ -349,7 +349,7 @@
     "react-router-dom": "^5.2.1",
     "react-spring": "^9.2.6",
     "react-table": "^7.7.0",
-    "react-tabs": "^3.2.2",
+    "react-tabs": "^3.2.3",
     "reactstrap": "^8.10.1",
     "read-filepath-from-clipboard": "^0.0.6",
     "readdirp": "^3.6.0",
