@@ -22,14 +22,14 @@
     "win32",
     "linux"
   ],
-  "readme": "https://github.com/jopemachine/arvis#README.md",
+  "readme": "https://github.com/jopemachine-arvis/arvis#README.md",
   "contributors": [],
   "bugs": {
-    "url": "https://github.com/jopemachine/arvis/issues",
+    "url": "https://github.com/jopemachine-arvis/arvis/issues",
     "email": "jopemachine@gmail.com"
   },
   "repository": {
-    "url": "https://github.com/jopemachine/arvis",
+    "url": "https://github.com/jopemachine-arvis/arvis",
     "email": "jopemachine@gmail.com"
   },
   "keywords": [

@@ -9,7 +9,7 @@ type IProps = {
 };
 
 const arvisChangeLogAPI =
-  'https://raw.githubusercontent.com/jopemachine/arvis/master/CHANGE_LOG.md';
+  'https://raw.githubusercontent.com/jopemachine-arvis/arvis/master/CHANGE_LOG.md';
 
 const ChangeLogModal = (props: IProps) => {
   const { opened, setOpened } = props;

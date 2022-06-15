@@ -6,7 +6,7 @@ Arvis is builted with [electron-react-boilerplate](https://github.com/electron-r
 
 ## Other packages
 
-- [arvis-core](https://github.com/jopemachine/arvis-core)
+- [arvis-core](https://github.com/jopemachine-arvis/arvis-core)
 
 Arvis module not directly related to electron, renderer
 

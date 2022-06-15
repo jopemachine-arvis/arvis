@@ -123,7 +123,7 @@ export default (mainWindow: BrowserWindow) => {
         label: 'License',
         click() {
           shell.openExternal(
-            'https://github.com/jopemachine/arvis/blob/master/LICENSE'
+            'https://github.com/jopemachine-arvis/arvis/blob/master/LICENSE'
           );
         },
       },
@@ -137,21 +137,23 @@ export default (mainWindow: BrowserWindow) => {
         label: 'Change Logs',
         click() {
           shell.openExternal(
-            'https://github.com/jopemachine/arvis/blob/master/CHANGE_LOG.md'
+            'https://github.com/jopemachine-arvis/arvis/blob/master/CHANGE_LOG.md'
           );
         },
       },
       {
         label: 'Search Issues',
         click() {
-          shell.openExternal('https://github.com/jopemachine/arvis/issues');
+          shell.openExternal(
+            'https://github.com/jopemachine-arvis/arvis/issues'
+          );
         },
       },
       {
         label: 'Bug Report / Feature Request',
         click() {
           shell.openExternal(
-            'https://github.com/jopemachine/arvis/issues/new/choose'
+            'https://github.com/jopemachine-arvis/arvis/issues/new/choose'
           );
         },
       },

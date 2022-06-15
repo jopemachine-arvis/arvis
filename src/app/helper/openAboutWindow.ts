@@ -11,7 +11,7 @@ export const openAboutWindow = () => {
     homepage: pkg.homepage,
     description: pkg.description,
     bug_report_url: pkg.bugs.url,
-    license: 'https://github.com/jopemachine/arvis/blob/master/LICENSE',
+    license: 'https://github.com/jopemachine-arvis/arvis/blob/master/LICENSE',
     adjust_window_size: true,
     use_version_info: true,
     open_devtools: process.env.NODE_ENV !== 'production',

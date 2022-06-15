@@ -166,7 +166,7 @@ export default function Sidebar(props: IProps) {
         {!collapsed && (
           <SidebarFooter
             onClick={() => {
-              open('https://github.com/jopemachine/arvis');
+              open('https://github.com/jopemachine-arvis/arvis');
             }}
             style={{ textAlign: 'center' }}
           >

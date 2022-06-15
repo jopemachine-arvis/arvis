@@ -1,11 +1,11 @@
 <div align="center">
   <h1>Arvis</h1>
     <p>
-      <img src="https://www.codefactor.io/repository/github/jopemachine/arvis/badge" />
-      <img src="https://img.shields.io/github/downloads/jopemachine/arvis/total.svg" />
+      <img src="https://www.codefactor.io/repository/github/jopemachine-arvis/arvis/badge" />
+      <img src="https://img.shields.io/github/downloads/jopemachine-arvis/arvis/total.svg" />
       <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
       <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" />
-      <img src="https://img.shields.io/github/issues/jopemachine/arvis.svg" />
+      <img src="https://img.shields.io/github/issues/jopemachine-arvis/arvis.svg" />
       <img src="https://badges.gitter.im/arvis-gitter/community.svg" />
     </p>
   <p>
@@ -18,19 +18,19 @@
   <br>
 </div>
 
-* Fully support cross-platform.
+- Fully support cross-platform.
 
-* Compatable with lots of [Alfred 4 workflows](https://www.alfredapp.com/workflows/).
+- Compatable with lots of [Alfred 4 workflows](https://www.alfredapp.com/workflows/).
 
-* Search and install the extension from store easily.
+- Search and install the extension from store easily.
 
-* Make your own styles.
+- Make your own styles.
 
-* Support clipboard history.
+- Support clipboard history.
 
-* Partially support universal actions.
+- Partially support universal actions.
 
-* (Experimental) Support snippets compatible with Alfred.
+- (Experimental) Support snippets compatible with Alfred.
 
 📹: [Overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 
@@ -46,19 +46,19 @@ I've thought many useful alfred-workflows can run in "cross-platform"; that's wh
 
 `Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
-* [:control_knobs: Check basic usage of Arvis](https://jopemachine.github.io/arvis-docs/documents/basic-usage/)
+- [:control_knobs: Check basic usage of Arvis](https://jopemachine.github.io/arvis-docs/documents/basic-usage/)
 
 ## 🌈 How to Install
 
-Click [this link](https://github.com/jopemachine/arvis/releases) and download your platform's binary.
+Click [this link](https://github.com/jopemachine-arvis/arvis/releases) and download your platform's binary.
 
 Note that you should install some [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
-* [Windows](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-windows/)
+- [Windows](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-windows/)
 
-* [Mac](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-mac/)
+- [Mac](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-mac/)
 
-* [Linux](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-linux/)
+- [Linux](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-linux/)
 
 ## 🌟 Contribution
 

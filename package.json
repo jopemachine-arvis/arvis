@@ -149,7 +149,7 @@
     "jopemachine"
   ],
   "contributors": [],
-  "readme": "https://github.com/jopemachine/arvis#README.md",
+  "readme": "https://github.com/jopemachine-arvis/arvis#README.md",
   "author": {
     "name": "jopemachine",
     "email": "jopemachine@gmail.com",
@@ -157,11 +157,11 @@
   },
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/jopemachine/arvis",
+    "url": "https://github.com/jopemachine-arvis/arvis",
     "email": "jopemachine@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/jopemachine/arvis/issues",
+    "url": "https://github.com/jopemachine-arvis/arvis/issues",
     "email": "jopemachine@gmail.com"
   },
   "jest": {
