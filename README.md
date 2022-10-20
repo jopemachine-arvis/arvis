@@ -34,7 +34,7 @@
 
 📹: [Overview video](https://www.youtube.com/watch?v=arRfdSaGM8I)
 
-📚: [Check for more documentations](https://jopemachine.github.io/arvis-docs/)
+📚: [Check for more documentations](https://jopemachine-arvis.github.io/arvis-docs/)
 
 ## 💬 What is Arvis? why it is needed?
 
@@ -46,7 +46,7 @@ I've thought many useful alfred-workflows can run in "cross-platform"; that's wh
 
 `Arvis` is intentionally built similar to Alfred, but there could be some different points.
 
-- [:control_knobs: Check basic usage of Arvis](https://jopemachine.github.io/arvis-docs/documents/basic-usage/)
+- [:control_knobs: Check basic usage of Arvis](https://jopemachine-arvis.github.io/arvis-docs/documents/basic-usage/)
 
 ## 🌈 How to Install
 
@@ -54,14 +54,13 @@ Click [this link](https://github.com/jopemachine-arvis/arvis/releases) and downl
 
 Note that you should install some [Extensions](#take-a-look-at-useful-workflows-plugins) to use Arvis.
 
-- [Windows](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-windows/)
+- [Windows](https://jopemachine-arvis.github.io/arvis-docs/documents/install/how-to-install-windows/)
 
-- [Mac](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-mac/)
+- [Mac](https://jopemachine-arvis.github.io/arvis-docs/documents/install/how-to-install-mac/)
 
-- [Linux](https://jopemachine.github.io/arvis-docs/documents/install/how-to-install-linux/)
+- [Linux](https://jopemachine-arvis.github.io/arvis-docs/documents/install/how-to-install-linux/)
 
 ## 🌟 Contribution
 
 Contributions of any kind are welcome: Feel free to create a `bug`, `feature request` or other things in the Issues section.
 
-If you like Arvis, don't forget to click star before leaving :)
